@@ -1,6 +1,7 @@
 """Main game file. Starts the game itself."""
 from direct.directutil import Mopath
 from direct.interval.MopathInterval import MopathInterval
+from direct.interval.IntervalGlobal import Sequence, Func
 from direct.showbase.ShowBase import ShowBase
 
 
@@ -10,26 +11,34 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
-        # load motion path
-        dir_path = self.loader.loadModel("models/bam/direct_path.bam")
-        dir_path.reparentTo(self.render)
-        dir_path.setPos(0)
-
         # load dummy model
         box = self.loader.loadModel("models/bam/box.bam")
         box.reparentTo(self.render)
         box.setPos(0)
 
-        # create motion path object and interval of moving box along it
-        path_name = Mopath.Mopath()
-        path_name.loadNodePath(dir_path)
-        path_int = MopathInterval(path_name, box, duration=2, name="Name")
+        # create first motion path object and interval of moving box along it
+        path = Mopath.Mopath(objectToLoad="models/bam/direct_path.bam")
+        path_int = MopathInterval(path, box, duration=2, name="start_path")
 
-        path_int.start()
+        seq = Sequence(path_int, Func(self._move_along_next, box))
+        seq.start()
 
-        self.cam.setPos(0, 25, 0)
+        self.cam.setPos(0, 0, 50)
         self.cam.lookAt(box)
 
+    def _move_along_next(self, box):
+        # create motion path object and interval of moving box along it
+        path = Mopath.Mopath(objectToLoad="models/bam/l90_turn_path.bam")
+        path.fFaceForward = True
 
-fo_app = ForwardOnly()
-fo_app.run()
+        path_node = self.render.attachNewNode("path_mo")
+        path_node.setPos(8, 0, 0)
+        path_node.setHpr(-90, 0, 0)
+
+        box.wrtReparentTo(path_node)
+
+        path_int2 = MopathInterval(path, box, duration=2, name="Name2")
+        path_int2.start()
+
+
+ForwardOnly().run()
