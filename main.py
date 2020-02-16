@@ -1,4 +1,6 @@
 """Main game file. Starts the game itself."""
+import random
+
 from direct.directutil import Mopath
 from direct.interval.MopathInterval import MopathInterval
 from direct.interval.IntervalGlobal import Sequence, Func
@@ -11,34 +13,73 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
+        self._rail_blocks = self._load_rail_blocks()
+
         # load dummy model
         box = self.loader.loadModel("models/bam/box.bam")
         box.reparentTo(self.render)
-        box.setPos(0)
 
-        # create first motion path object and interval of moving box along it
-        path = Mopath.Mopath(objectToLoad="models/bam/direct_path.bam")
-        path_int = MopathInterval(path, box, duration=2, name="start_path")
+        # set Train node
+        self._train = self.render.attachNewNode("Train")
+        box.wrtReparentTo(self._train)
 
-        seq = Sequence(path_int, Func(self._move_along_next, box))
-        seq.start()
+        # start moving
+        self._move_along_next(box, is_start=True)
 
-        self.cam.setPos(0, 0, 50)
+        self.cam.setPos(0, 0, 100)
         self.cam.lookAt(box)
 
-    def _move_along_next(self, box):
-        # create motion path object and interval of moving box along it
-        path = Mopath.Mopath(objectToLoad="models/bam/l90_turn_path.bam")
-        path.fFaceForward = True
+    def _move_along_next(self, model, is_start=False):
+        """Move model along the next motion path.
 
-        path_node = self.render.attachNewNode("path_mo")
-        path_node.setPos(8, 0, 0)
-        path_node.setHpr(-90, 0, 0)
+        Args:
+            model (NodePath): Model to move.
+            is_start (bool): True if this is the first rail block.
+        """
+        name = "direct" if is_start else random.choice(("l90_turn", "direct"))
 
-        box.wrtReparentTo(path_node)
+        # prepare model to move along next motion path
+        model.wrtReparentTo(self.render)
+        self._train.setPos(model.getPos())
+        self._train.setHpr(model, self._rail_blocks[name].angle)
+        model.wrtReparentTo(self._train)
 
-        path_int2 = MopathInterval(path, box, duration=2, name="Name2")
-        path_int2.start()
+        path_int2 = MopathInterval(
+            self._rail_blocks[name].mopath, model, duration=2, name="current_path"
+        )
+        seq = Sequence(path_int2, Func(self._move_along_next, model))
+        seq.start()
+
+    def _load_rail_blocks(self):
+        """Load all rail blocks into the inner index.
+
+        Returns:
+            dict: Index of rail blocks in form {name: RailBlock}.
+        """
+        blocks = {}
+
+        for key, file_name in {
+            "direct": "models/bam/direct_path.bam",
+            "l90_turn": "models/bam/l90_turn_path.bam",
+        }.items():
+            path = Mopath.Mopath(objectToLoad=file_name)
+            path.fFaceForward = True
+
+            blocks[key] = RailBlock(key, path)
+
+        return blocks
+
+
+class RailBlock:
+    """Object which represents single railway block."""
+
+    # angle to which model should be rotated
+    # to switch to the next path correctly
+    angles = {"direct": (90, 0, 0), "l90_turn": 0}
+
+    def __init__(self, name, mopath):
+        self.mopath = mopath
+        self.angle = self.angles[name]
 
 
 ForwardOnly().run()
