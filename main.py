@@ -26,7 +26,7 @@ class ForwardOnly(ShowBase):
         # start moving
         self._move_along_next(box, is_start=True)
 
-        self.cam.setPos(0, 0, 100)
+        self.cam.setPos(0, 0, 150)
         self.cam.lookAt(box)
 
     def _move_along_next(self, model, is_start=False):
@@ -36,16 +36,19 @@ class ForwardOnly(ShowBase):
             model (NodePath): Model to move.
             is_start (bool): True if this is the first rail block.
         """
-        name = "direct" if is_start else random.choice(("l90_turn", "direct"))
+        name = (
+            "direct" if is_start else random.choice(("r90_turn", "direct", "l90_turn"))
+        )
+        print(name)
 
         # prepare model to move along next motion path
         model.wrtReparentTo(self.render)
         self._train.setPos(model.getPos())
-        self._train.setHpr(model, self._rail_blocks[name].angle)
+        self._train.setHpr(model, 0)
         model.wrtReparentTo(self._train)
 
         path_int2 = MopathInterval(
-            self._rail_blocks[name].mopath, model, duration=2, name="current_path"
+            self._rail_blocks[name], model, duration=2, name="current_path"
         )
         seq = Sequence(path_int2, Func(self._move_along_next, model))
         seq.start()
@@ -56,30 +59,17 @@ class ForwardOnly(ShowBase):
         Returns:
             dict: Index of rail blocks in form {name: RailBlock}.
         """
-        blocks = {}
+        paths = {}
 
         for key, file_name in {
             "direct": "models/bam/direct_path.bam",
             "l90_turn": "models/bam/l90_turn_path.bam",
+            "r90_turn": "models/bam/r90_turn_path.bam",
         }.items():
-            path = Mopath.Mopath(objectToLoad=file_name)
-            path.fFaceForward = True
+            paths[key] = Mopath.Mopath(objectToLoad=file_name)
+            paths[key].fFaceForward = True
 
-            blocks[key] = RailBlock(key, path)
-
-        return blocks
-
-
-class RailBlock:
-    """Object which represents single railway block."""
-
-    # angle to which model should be rotated
-    # to switch to the next path correctly
-    angles = {"direct": (90, 0, 0), "l90_turn": 0}
-
-    def __init__(self, name, mopath):
-        self.mopath = mopath
-        self.angle = self.angles[name]
+        return paths
 
 
 ForwardOnly().run()
