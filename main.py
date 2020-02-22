@@ -17,7 +17,7 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
 
         self._path = RailwayGenerator().generate_path(300)
-        self._rail_blocks = self._load_rail_blocks()
+        self._rail_blocks, self._rails = self._load_rail_blocks()
 
         train = self.loader.loadModel("models/bam/locomotive.bam")
         train.reparentTo(self.render)
@@ -39,22 +39,25 @@ class ForwardOnly(ShowBase):
             model (NodePath): Model to move.
             block_num (int): Number of current path block.
         """
+        name = self._path[block_num]
+        rails = self._rails[name]
+        rails.reparentTo(self.render)
+
         # prepare model to move along next motion path
         model.wrtReparentTo(self.render)
         self._train.setPos(model.getPos())
         self._train.setHpr(model, 0)
+        rails.setPos(model.getPos())
+        rails.setHpr(self._train, 0)
         model.wrtReparentTo(self._train)
 
         path_int2 = MopathInterval(
-            self._rail_blocks[self._path[block_num]],
-            model,
-            duration=5,
-            name="current_path",
+            self._rail_blocks[name], model, duration=2, name="current_path"
         )
         Sequence(path_int2, Func(self._move_along_block, model, block_num + 1)).start()
 
         pos = self._train.getPos()
-        pos.setZ(pos.getZ() + 10)
+        pos.setZ(pos.getZ() + 20)
         pos.setX(pos.getX() + 18)
 
         self.cam.setPos(pos)
@@ -67,16 +70,26 @@ class ForwardOnly(ShowBase):
             dict: Index of rail blocks in form {name: RailBlock}.
         """
         paths = {}
+        rails = {}
 
-        for key, file_name in {
-            "direct": "models/bam/direct_path.bam",
-            "l90_turn": "models/bam/l90_turn_path.bam",
-            "r90_turn": "models/bam/r90_turn_path.bam",
-        }.items():
-            paths[key] = Mopath.Mopath(objectToLoad=file_name)
+        for key, path, model in {
+            ("direct", "models/bam/direct_path.bam", "models/bam/direct_rails.bam"),
+            (
+                "l90_turn",
+                "models/bam/l90_turn_path.bam",
+                "models/bam/l90_turn_rails.bam",
+            ),
+            (
+                "r90_turn",
+                "models/bam/r90_turn_path.bam",
+                "models/bam/r90_turn_rails.bam",
+            ),
+        }:
+            paths[key] = Mopath.Mopath(objectToLoad=path)
             paths[key].fFaceForward = True
+            rails[key] = self.loader.loadModel(model)
 
-        return paths
+        return paths, rails
 
 
 ForwardOnly().run()

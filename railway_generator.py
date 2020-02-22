@@ -1,6 +1,7 @@
 """Railways path generator."""
 import random
 
+# set minimal step not less than 0.025
 BOUND_PARAMS = (
     (-1, (0.08, 0.12), "r90_turn"),
     (-0.5, (-0.08, -0.12), "l90_turn"),
