@@ -52,6 +52,12 @@ class ForwardOnly(ShowBase):
         )
         seq = Sequence(path_int2, Func(self._move_along_next, model))
         seq.start()
+        pos = self._train.getPos()
+        pos.setZ(pos.getZ() + 10)
+        pos.setX(pos.getX() + 18)
+
+        self.cam.setPos(pos)
+        self.cam.lookAt(self._train)
 
     def _load_rail_blocks(self):
         """Load all rail blocks into the inner index.
