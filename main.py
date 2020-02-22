@@ -1,21 +1,24 @@
-"""Main game file. Starts the game itself."""
-import random
-
+"""Main game file. Starts the game itself and maintains the main systems."""
 from direct.directutil import Mopath
 from direct.interval.MopathInterval import MopathInterval
 from direct.interval.IntervalGlobal import Sequence, Func
 from direct.showbase.ShowBase import ShowBase
 
+from railway_generator import RailwayGenerator
+
 
 class ForwardOnly(ShowBase):
-    """Object, which represents the game itself."""
+    """Object, which represents the game itself.
+
+    Includes the main game systems.
+    """
 
     def __init__(self):
         ShowBase.__init__(self)
 
+        self._path = RailwayGenerator().generate_path(300)
         self._rail_blocks = self._load_rail_blocks()
 
-        # load dummy model
         train = self.loader.loadModel("models/bam/locomotive.bam")
         train.reparentTo(self.render)
 
@@ -24,23 +27,18 @@ class ForwardOnly(ShowBase):
         train.wrtReparentTo(self._train)
 
         # start moving
-        self._move_along_next(train, is_start=True)
+        self._move_along_block(train)
 
         self.cam.setPos(8, 12, 15)
         self.cam.lookAt(train)
 
-    def _move_along_next(self, model, is_start=False):
+    def _move_along_block(self, model, block_num=0):
         """Move model along the next motion path.
 
         Args:
             model (NodePath): Model to move.
-            is_start (bool): True if this is the first rail block.
+            block_num (int): Number of current path block.
         """
-        name = (
-            "direct" if is_start else random.choice(("r90_turn", "direct", "l90_turn"))
-        )
-        print(name)
-
         # prepare model to move along next motion path
         model.wrtReparentTo(self.render)
         self._train.setPos(model.getPos())
@@ -48,10 +46,13 @@ class ForwardOnly(ShowBase):
         model.wrtReparentTo(self._train)
 
         path_int2 = MopathInterval(
-            self._rail_blocks[name], model, duration=10, name="current_path"
+            self._rail_blocks[self._path[block_num]],
+            model,
+            duration=5,
+            name="current_path",
         )
-        seq = Sequence(path_int2, Func(self._move_along_next, model))
-        seq.start()
+        Sequence(path_int2, Func(self._move_along_block, model, block_num + 1)).start()
+
         pos = self._train.getPos()
         pos.setZ(pos.getZ() + 10)
         pos.setX(pos.getX() + 18)
