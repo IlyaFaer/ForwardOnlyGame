@@ -1,11 +1,10 @@
 """Railways path generator."""
 import random
 
-# TODO: set minimal step not less than 0.025
 BOUND_PARAMS = (
     (-1, (0.08, 0.12), "r90_turn"),
     (-0.5, (-0.08, -0.12), "l90_turn"),
-    (0, (-0.05, 0.05), "direct"),
+    (0, (0.022, 0.05), "direct"),
     (0.5, (0.08, 0.12), "r90_turn"),
     (1, (-0.08, -0.12), "l90_turn"),
 )
@@ -15,11 +14,11 @@ class Bound:
     """Represents a bound value for a sin-like function.
 
     When path generator made a step, which crosses this
-    bound, turn should be made to realize arcs.
+    bound, turn should be made to realize arc.
 
     Args:
         value (int): Bound value.
-        s_range (tuple): Bounds to generate step value.
+        s_range (tuple): Bounds for step value generation.
         model (str): Name of the model related to this bound.
     """
 
@@ -37,9 +36,9 @@ class Bound:
         if self._model == "direct":
             return "l90_turn" if prev_value < 0 else "r90_turn"
 
-        first = "r" if self._model[0] == "l" else "l"
+        direction = "r" if self._model[0] == "l" else "l"
 
-        return first + self._model[1:]
+        return direction + self._model[1:]
 
     def is_crossed(self, prev, current):
         """Check if this bound crossed.
@@ -63,6 +62,9 @@ class Bound:
             (float, str): New step value, turn model name.
         """
         step = random.uniform(*self._s_range)
+        if self.value == 0:
+            step *= random.choice((1, -1))
+
         prev_value = prev_bound.value if prev_bound else 0
 
         if abs(prev_value) > abs(self.value):
@@ -108,8 +110,11 @@ class RailwayGenerator:
     def _choose_block(self):
         """Choose next block for the path.
 
+        If any bound has been crosed, make a turn. Return
+        straight block otherwise.
+
         Returns:
-            str: Current block model name.
+            str: Chosen block name.
         """
         for bound in self._bounds:
             if self._prev_bound != bound:
@@ -127,7 +132,7 @@ class RailwayGenerator:
             size (int): Blocks number.
 
         Returns:
-            path (list): Names of motion paths.
+            path (list): Names of blocks.
         """
         path = []
         self.current = self._step
