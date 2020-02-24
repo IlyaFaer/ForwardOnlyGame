@@ -1,14 +1,6 @@
 """Railways path generator."""
 import random
 
-BOUND_PARAMS = (
-    (-1, (0.08, 0.12), "r90_turn"),
-    (-0.5, (-0.08, -0.12), "l90_turn"),
-    (0, (0.022, 0.05), "direct"),
-    (0.5, (0.08, 0.12), "r90_turn"),
-    (1, (-0.08, -0.12), "l90_turn"),
-)
-
 
 class Bound:
     """Represents a bound value for a sin-like function.
@@ -88,9 +80,13 @@ class RailwayGenerator:
         self._current = 0
         self._step = random.uniform(-0.05, 0.05)
 
-        self._bounds = [
-            Bound(value, s_range, model) for value, s_range, model in BOUND_PARAMS
-        ]
+        self._bounds = (
+            Bound(-1, (0.08, 0.12), "r90_turn"),
+            Bound(-0.5, (-0.08, -0.12), "l90_turn"),
+            Bound(0, (0.4, 0.4), "direct"),
+            Bound(0.5, (0.08, 0.12), "r90_turn"),
+            Bound(1, (-0.08, -0.12), "l90_turn"),
+        )
 
     @property
     def current(self):

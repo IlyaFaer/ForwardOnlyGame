@@ -5,6 +5,7 @@ from direct.interval.IntervalGlobal import Sequence, Func
 from direct.showbase.ShowBase import ShowBase
 
 from railway_generator import RailwayGenerator
+from world import World
 
 MOD_DIR = "models/bam/"
 
@@ -17,6 +18,8 @@ class ForwardOnly(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
+
+        self._world = World(self.render)
 
         self._path_map = RailwayGenerator().generate_path(300)
         self._paths, self._rails = self._load_rail_blocks()
@@ -33,14 +36,15 @@ class ForwardOnly(ShowBase):
         # start moving
         self._move_along_block(train_mod, 0)
 
-        self.cam.setPos(10, -14, 17)
+        self.cam.reparentTo(train_mod)
+        self.cam.setPos(0, -2, 3)
         self.cam.lookAt(train_mod)
 
     def _move_along_block(self, train_mod, block_num):
         """Move Train model along the next motion path.
 
         Args:
-            train_mod (NodePath): Train nodel to move.
+            train_mod (NodePath): Train model to move.
             block_num (int): Current path block number.
         """
         # prepare model to move along next motion path
@@ -57,12 +61,11 @@ class ForwardOnly(ShowBase):
         train_mod.wrtReparentTo(self._train)
 
         # move camera
-        cam_pos = self._train.getPos()
-        cam_pos.setZ(cam_pos.getZ() + 17)
-        cam_pos.setX(cam_pos.getX() + 10)
-        cam_pos.setY(cam_pos.getY() - 14)
-        self.cam.setPos(cam_pos)
-        self.cam.lookAt(self._train)
+        # cam_pos = self._train.getPos()
+        # cam_pos.setY(cam_pos.getY() + 4)
+        # cam_pos.setZ(cam_pos.getZ() + 3)
+        # self.cam.setPos(cam_pos)
+        # self.cam.lookAt(self._train)
 
         # load next path block
         next_rails = self.loader.loadModel(self._rails[self._path_map[block_num + 1]])
@@ -81,7 +84,7 @@ class ForwardOnly(ShowBase):
 
         Sequence(
             MopathInterval(
-                self._paths[name], train_mod, duration=2, name="current_path"
+                self._paths[name], train_mod, duration=5, name="current_path"
             ),
             Func(self._move_along_block, train_mod, block_num + 1),
         ).start()
