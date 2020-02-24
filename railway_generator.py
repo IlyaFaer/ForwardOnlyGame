@@ -78,12 +78,12 @@ class RailwayGenerator:
         self._prev_bound = None
         self._prev = None
         self._current = 0
-        self._step = random.uniform(-0.05, 0.05)
+        self._step = random.uniform(0.025, 0.05) * random.choice((1, -1))
 
         self._bounds = (
             Bound(-1, (0.08, 0.12), "r90_turn"),
             Bound(-0.5, (-0.08, -0.12), "l90_turn"),
-            Bound(0, (0.4, 0.4), "direct"),
+            Bound(0, (0.025, 0.05), "direct"),
             Bound(0.5, (0.08, 0.12), "r90_turn"),
             Bound(1, (-0.08, -0.12), "l90_turn"),
         )

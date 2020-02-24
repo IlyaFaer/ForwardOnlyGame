@@ -37,7 +37,7 @@ class ForwardOnly(ShowBase):
         self._move_along_block(train_mod, 0)
 
         self.cam.reparentTo(train_mod)
-        self.cam.setPos(0, -2, 3)
+        self.cam.setPos(2, 2, 3)
         self.cam.lookAt(train_mod)
 
     def _move_along_block(self, train_mod, block_num):
@@ -60,13 +60,6 @@ class ForwardOnly(ShowBase):
         self._train.setHpr(train_mod, 0)
         train_mod.wrtReparentTo(self._train)
 
-        # move camera
-        # cam_pos = self._train.getPos()
-        # cam_pos.setY(cam_pos.getY() + 4)
-        # cam_pos.setZ(cam_pos.getZ() + 3)
-        # self.cam.setPos(cam_pos)
-        # self.cam.lookAt(self._train)
-
         # load next path block
         next_rails = self.loader.loadModel(self._rails[self._path_map[block_num + 1]])
         next_rails.reparentTo(self._last_block)
@@ -84,7 +77,7 @@ class ForwardOnly(ShowBase):
 
         Sequence(
             MopathInterval(
-                self._paths[name], train_mod, duration=5, name="current_path"
+                self._paths[name], train_mod, duration=4, name="current_path"
             ),
             Func(self._move_along_block, train_mod, block_num + 1),
         ).start()
