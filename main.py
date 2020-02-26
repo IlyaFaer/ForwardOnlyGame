@@ -1,13 +1,14 @@
 """Main game file. Starts the game itself and maintains the main systems."""
 from direct.directutil import Mopath
 from direct.interval.MopathInterval import MopathInterval
-from direct.interval.IntervalGlobal import Sequence, Func
+from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.showbase.ShowBase import ShowBase
 
 from railway_generator import RailwayGenerator
 from world import World
 
 MOD_DIR = "models/bam/"
+PATH_SPEED = 4
 
 
 class ForwardOnly(ShowBase):
@@ -33,14 +34,18 @@ class ForwardOnly(ShowBase):
         self._last_block = self.loader.loadModel(self._rails["direct"])
         self._last_block.reparentTo(self.render)
 
-        # start moving
-        self._move_along_block(train_mod, 0)
+        # set camera
+        cam_node = self.render.attachNewNode("camera_node")
+        cam_node.reparentTo(self._train)
 
-        self.cam.reparentTo(train_mod)
-        self.cam.setPos(2, 2, 3)
+        self.cam.reparentTo(cam_node)
+        self.cam.setPos(2, 0, 3)
         self.cam.lookAt(train_mod)
 
-    def _move_along_block(self, train_mod, block_num):
+        # start moving
+        self._move_along_block(train_mod, cam_node, 0)
+
+    def _move_along_block(self, train_mod, cam_node, block_num):
         """Move Train model along the next motion path.
 
         Args:
@@ -49,16 +54,30 @@ class ForwardOnly(ShowBase):
         """
         # prepare model to move along next motion path
         train_mod.wrtReparentTo(self.render)
-        pos = train_mod.getPos()
-        hpr = train_mod.getHpr()
+        cam_node.wrtReparentTo(self.render)
 
         # round Train position to avoid increasing position error
-        train_mod.setPos(round(pos.getX()), round(pos.getY()), round(pos.getZ()))
-        train_mod.setHpr(round(hpr.getX()), round(hpr.getY()), round(hpr.getZ()))
+        mod_pos = (
+            round(train_mod.getX()),
+            round(train_mod.getY()),
+            round(train_mod.getZ()),
+        )
+        mod_hpr = (
+            round(train_mod.getH()),
+            round(train_mod.getP()),
+            round(train_mod.getR()),
+        )
 
-        self._train.setPos(train_mod.getPos(self.render))
+        train_mod.setPos(mod_pos)
+        train_mod.setHpr(mod_hpr)
+
+        cam_node.setPos(mod_pos)
+
+        self._train.setPos(mod_pos)
         self._train.setHpr(train_mod, 0)
+
         train_mod.wrtReparentTo(self._train)
+        cam_node.wrtReparentTo(self._train)
 
         # load next path block
         next_rails = self.loader.loadModel(self._rails[self._path_map[block_num + 1]])
@@ -66,7 +85,9 @@ class ForwardOnly(ShowBase):
 
         name = self._path_map[block_num]
         final_pos = self._paths[name].getFinalState()[0]
-        next_rails.setPos(final_pos)
+        next_rails.setPos(
+            round(final_pos.getX()), round(final_pos.getY()), round(final_pos.getZ())
+        )
 
         if name == "r90_turn":
             next_rails.setH(-90)
@@ -76,10 +97,21 @@ class ForwardOnly(ShowBase):
         self._last_block = next_rails
 
         Sequence(
-            MopathInterval(
-                self._paths[name], train_mod, duration=4, name="current_path"
+            Parallel(
+                MopathInterval(
+                    self._paths[name],
+                    train_mod,
+                    duration=PATH_SPEED,
+                    name="current_path",
+                ),
+                MopathInterval(
+                    self._paths["cam_" + name],
+                    cam_node,
+                    duration=PATH_SPEED,
+                    name="current_camera_path",
+                ),
             ),
-            Func(self._move_along_block, train_mod, block_num + 1),
+            Func(self._move_along_block, train_mod, cam_node, block_num + 1),
         ).start()
 
     def _load_rail_blocks(self):
@@ -91,14 +123,18 @@ class ForwardOnly(ShowBase):
         paths = {}
         rails = {}
 
-        for key, path, model in {
+        for name, path, model in {
             ("direct", "direct_path.bam", "direct_rails.bam"),
             ("l90_turn", "l90_turn_path.bam", "l90_turn_rails.bam"),
             ("r90_turn", "r90_turn_path.bam", "r90_turn_rails.bam"),
         }:
-            paths[key] = Mopath.Mopath(objectToLoad=MOD_DIR + path)
-            paths[key].fFaceForward = True
-            rails[key] = MOD_DIR + model
+            path_mod = self.loader.loadModel(MOD_DIR + path)
+
+            paths[name] = Mopath.Mopath(objectToLoad=path_mod)
+            paths[name].fFaceForward = True
+
+            paths["cam_" + name] = Mopath.Mopath(objectToLoad=path_mod)
+            rails[name] = MOD_DIR + model
 
         return paths, rails
 
