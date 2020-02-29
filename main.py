@@ -21,7 +21,7 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
-        self._world = World(self.render)
+        World(self.render)
 
         self._path_map = RailwayGenerator().generate_path(300)
         self._paths, self._rails = self._load_rail_blocks()
@@ -47,14 +47,16 @@ class ForwardOnly(ShowBase):
         """Move Train model along the next motion path.
 
         Args:
-            train_mod (NodePath): Train model to move.
+            train_mod (panda3d.core.NodePath): Train model to move.
+            cam_node (panda3d.core.NodePath): Camera node.
             block_num (int): Current path block number.
         """
         # prepare model to move along next motion path
         train_mod.wrtReparentTo(self.render)
         cam_node.wrtReparentTo(self.render)
 
-        # round Train position to avoid increasing position error
+        # round Train position to avoid increasing
+        # position/rotation errors
         mod_pos = (
             round(train_mod.getX()),
             round(train_mod.getY()),
