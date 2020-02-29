@@ -1,7 +1,8 @@
 """Main game file. Starts the game itself and maintains the main systems."""
 from direct.directutil import Mopath
-from direct.interval.MopathInterval import MopathInterval
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
+from direct.interval.LerpInterval import LerpPosInterval
+from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
 
 from railway_generator import RailwayGenerator
@@ -20,6 +21,7 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
+        self._set_camera_controls()
         self._world = World(self.render)
 
         self._path_map = RailwayGenerator().generate_path(300)
@@ -35,15 +37,28 @@ class ForwardOnly(ShowBase):
         self._last_block.reparentTo(self.render)
 
         # set camera
-        cam_node = self.render.attachNewNode("camera_node")
-        cam_node.reparentTo(self._train)
+        self._cam_node = self.render.attachNewNode("camera_node")
+        self._cam_node.reparentTo(self._train)
 
-        self.cam.reparentTo(cam_node)
+        self.cam.reparentTo(self._cam_node)
         self.cam.setPos(2, 0, 3)
         self.cam.lookAt(train_mod)
 
         # start moving
-        self._move_along_block(train_mod, cam_node, 0)
+        self._move_along_block(train_mod, self._cam_node, 0)
+
+    def _set_camera_controls(self):
+        base.disableMouse()
+
+        self.accept("arrow_up", self._move_camera_x, [1, None, 1.5])
+        self.accept("arrow_down", self._move_camera_x, [2, None, 0.75])
+        self.accept("arrow_left", self._move_camera_x, [None, -1.1, 0.9])
+        self.accept("arrow_right", self._move_camera_x, [None, 1.1, 0.9])
+
+        self.accept("arrow_up-up", self._stop_camera)
+        self.accept("arrow_down-up", self._stop_camera)
+        self.accept("arrow_left-up", self._stop_camera)
+        self.accept("arrow_right-up", self._stop_camera)
 
     def _move_along_block(self, train_mod, cam_node, block_num):
         """Move Train model along the next motion path.
@@ -113,6 +128,18 @@ class ForwardOnly(ShowBase):
             ),
             Func(self._move_along_block, train_mod, cam_node, block_num + 1),
         ).start()
+
+    def _move_camera_x(self, x, y, time):
+        self._move_int = LerpPosInterval(
+            self.cam,
+            time,
+            (x or self.cam.getX(), y or self.cam.getY(), 3),
+            other=self._cam_node,
+        )
+        self._move_int.start()
+
+    def _stop_camera(self):
+        self._move_int.pause()
 
     def _load_rail_blocks(self):
         """Load all rail blocks.
