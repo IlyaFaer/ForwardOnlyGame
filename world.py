@@ -17,5 +17,5 @@ class World:
         directional = DirectionalLight("main_dir_light")
         directional.setColor((0.7, 0.7, 0.7, 1))
         dlnp = self._render.attachNewNode(directional)
-        dlnp.setHpr(180, 0, 0)
+        dlnp.setHpr(150, 45, 0)
         self._render.setLight(dlnp)
