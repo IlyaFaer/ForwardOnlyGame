@@ -7,7 +7,7 @@ class CameraController:
     """Object to configure camera and its controls."""
 
     def __init__(self):
-        self._target = Vec3(0, 0, 3)  # final pos of the current movement
+        self._target = Vec3(2, 0, 3)  # final pos of the current movement
         self._move_int = None  # current move interval
 
     def set_camera_controls(self, game, cam, train_node, train_mod):
@@ -26,7 +26,7 @@ class CameraController:
         cam_np.reparentTo(train_node)
 
         cam.reparentTo(cam_np)
-        cam.setPos(2, 0, 3)
+        cam.setPos(self._target)
         cam.lookAt(train_mod)
 
         # key pressed - start movement
