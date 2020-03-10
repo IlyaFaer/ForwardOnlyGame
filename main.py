@@ -35,7 +35,7 @@ class ForwardOnly(ShowBase):
         self._last_block = self.loader.loadModel(self._rails["direct"])
         self._last_block.reparentTo(self.render)
 
-        base.disableMouse()
+        base.disableMouse()  # noqa: F821
         cam_node = CameraController().set_camera_controls(
             self, self.cam, self._train, train_mod
         )
