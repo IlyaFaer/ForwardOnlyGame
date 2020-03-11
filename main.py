@@ -3,6 +3,7 @@ from direct.directutil import Mopath
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
+from panda3d.core import WindowProperties
 
 from camera_controller import CameraController
 from railway_generator import RailwayGenerator
@@ -20,6 +21,15 @@ class ForwardOnly(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
+
+        # set fullscreen mode and proper resolution
+        props = WindowProperties()
+        props.setFullscreen(True)
+
+        props.setSize(
+            base.pipe.getDisplayWidth(), base.pipe.getDisplayHeight()  # noqa: F821
+        )
+        base.openDefaultWindow(props=props)  # noqa: F821
 
         World(self.render)
 
