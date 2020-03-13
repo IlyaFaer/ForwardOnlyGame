@@ -76,9 +76,9 @@ class RailwayGenerator:
 
     def __init__(self):
         self._prev_bound = None
-        self._prev = None
-        self._current = 0
+        self._prev = 0
         self._step = random.uniform(0.025, 0.05) * random.choice((1, -1))
+        self._current = self._step
 
         self._bounds = (
             Bound(-1, (0.08, 0.12), "r90_turn"),
@@ -121,20 +121,12 @@ class RailwayGenerator:
 
         return "direct"
 
-    def generate_path(self, size):
-        """Generate sin-like path of the given size.
-
-        Args:
-            size (int): Blocks number.
+    def generate_block(self):
+        """Generate rails block according to sin-like function.
 
         Returns:
-            path (list): Names of blocks.
+            block (str): Block name.
         """
-        path = []
-        self.current = self._step
-
-        for _ in range(size):
-            path.append(self._choose_block())
-            self.current += self._step
-
-        return path
+        block = self._choose_block()
+        self.current += self._step
+        return block
