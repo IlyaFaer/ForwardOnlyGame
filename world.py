@@ -6,8 +6,9 @@ from panda3d.core import DirectionalLight, AmbientLight
 
 from railway_generator import RailwayGenerator
 
+ANGLES = (0, 90, 180, 270)
 MOD_DIR = "models/bam/"
-SURFACES = ("surface1", "surface2")
+SURFACES = {"direct": ("surface1", "surface2", "surface3")}
 
 
 class Block:
@@ -24,13 +25,25 @@ class Block:
 
     def __init__(self, rails_mod_name, path, cam_path, name):
         self._rails_mod_name = rails_mod_name
-        self._left_surface = random.choice(SURFACES)
-        self._right_surface = random.choice(SURFACES)
 
         self.rails_mod = None
         self.path = path
         self.name = name
         self.cam_path = cam_path
+
+        if self.name == "direct":
+            self._l_surface, self._l_turn = self._generate_surface()
+            self._r_surface, self._r_turn = self._generate_surface()
+
+    def _generate_surface(self):
+        """Generate surface block.
+
+        Randomly choose one of the surface blocks proper for this
+        rails block. Randomly rotate it.
+        """
+        surface = MOD_DIR + random.choice(SURFACES[self.name]) + ".bam"
+        turn = random.choice(ANGLES)
+        return surface, turn
 
     def prepare(self, loader, current_block):
         """Load models, which represents this block content.
@@ -57,6 +70,17 @@ class Block:
                 self.rails_mod.setH(-90)
             elif current_block.name == "l90_turn":
                 self.rails_mod.setH(90)
+
+        if self.name == "direct":
+            l_surf = loader.loadModel(self._l_surface)
+            l_surf.reparentTo(self.rails_mod)
+            l_surf.setPos(-4, 4, 0)
+            l_surf.setH(self._l_turn)
+
+            r_surf = loader.loadModel(self._r_surface)
+            r_surf.reparentTo(self.rails_mod)
+            r_surf.setPos(4, 4, 0)
+            r_surf.setH(self._l_turn)
 
         return self
 
@@ -90,7 +114,7 @@ class World:
         directional = DirectionalLight("main_dir_light")
         directional.setColor((0.7, 0.7, 0.7, 1))
         dlnp = render.attachNewNode(directional)
-        dlnp.setHpr(150, 45, 0)
+        dlnp.setHpr(150, 190, 0)
         render.setLight(dlnp)
 
     def _load_rails_models(self):
