@@ -1,5 +1,4 @@
 """Main game file. Starts the game itself and maintains the main systems."""
-from direct.directutil import Mopath
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase

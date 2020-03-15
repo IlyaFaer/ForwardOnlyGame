@@ -8,7 +8,11 @@ from railway_generator import RailwayGenerator
 
 ANGLES = (0, 90, 180, 270)
 MOD_DIR = "models/bam/"
-SURFACES = {"direct": ("surface1", "surface2", "surface3")}
+SURFACES = {
+    "direct": ("surface1", "surface2", "surface3"),
+    "l90_turn": ("l90_turn_surface1", "l90_turn_surface2"),
+    "r90_turn": ("r90_turn_surface1", "r90_turn_surface2"),
+}
 
 
 class Block:
@@ -31,19 +35,40 @@ class Block:
         self.name = name
         self.cam_path = cam_path
 
-        if self.name == "direct":
-            self._l_surface, self._l_turn = self._generate_surface()
-            self._r_surface, self._r_turn = self._generate_surface()
+        self._l_surface, self._l_turn = self._generate_surface()
+        self._r_surface, self._r_turn = self._generate_surface()
 
     def _generate_surface(self):
         """Generate surface block.
 
         Randomly choose one of the surface blocks proper for this
         rails block. Randomly rotate it.
+
+        Returns:
+            str, int: Surface model name, angle.
         """
         surface = MOD_DIR + random.choice(SURFACES[self.name]) + ".bam"
-        turn = random.choice(ANGLES)
-        return surface, turn
+        if self.name == "direct":
+            return surface, random.choice(ANGLES)
+
+        return surface, 0
+
+    def _load_surface_block(self, loader, name, x_pos, y_pos, angle):
+        """Load surface model and set it to the given coords.
+
+        Surface model will be reparented to the rails model of this Block.
+
+        Args:
+            loader (direct.showbase.Loader.Loader): Panda3d models loader.
+            name (str): Surface model name.
+            x_pos (int): Position on X axis.
+            y_pos (int): Position on Y axis.
+            angle (int): Angle to rotate the model
+        """
+        model = loader.loadModel(name)
+        model.reparentTo(self.rails_mod)
+        model.setPos(x_pos, y_pos, 0)
+        model.setH(angle)
 
     def prepare(self, loader, current_block):
         """Load models, which represents this block content.
@@ -71,16 +96,13 @@ class Block:
             elif current_block.name == "l90_turn":
                 self.rails_mod.setH(90)
 
-        if self.name == "direct":
-            l_surf = loader.loadModel(self._l_surface)
-            l_surf.reparentTo(self.rails_mod)
-            l_surf.setPos(-4, 4, 0)
-            l_surf.setH(self._l_turn)
+        self._load_surface_block(loader, self._l_surface, -4, 4, self._l_turn)
+        self._load_surface_block(loader, self._r_surface, 4, 4, self._r_turn)
 
-            r_surf = loader.loadModel(self._r_surface)
-            r_surf.reparentTo(self.rails_mod)
-            r_surf.setPos(4, 4, 0)
-            r_surf.setH(self._l_turn)
+        if self.name == "l90_turn":
+            self._load_surface_block(loader, self._r_surface, -4, 12, self._l_turn)
+        elif self.name == "r90_turn":
+            self._load_surface_block(loader, self._l_surface, 4, 12, self._r_turn)
 
         return self
 
