@@ -2,7 +2,7 @@
 import random
 
 from direct.directutil import Mopath
-from panda3d.core import DirectionalLight, AmbientLight
+from panda3d.core import DirectionalLight, AmbientLight, TextureStage, Texture
 
 from railway_generator import RailwayGenerator
 
@@ -12,6 +12,16 @@ SURFACES = {
     "direct": ("surface1", "surface2", "surface3"),
     "l90_turn": ("l90_turn_surface1", "l90_turn_surface2"),
     "r90_turn": ("r90_turn_surface1", "r90_turn_surface2"),
+}
+FLOWER_RANGES = {
+    (0, "l"): {"u": (45, 65), "v": (-80, 60)},
+    (90, "l"): {"u": (-80, 60), "v": (-85, -60)},
+    (180, "l"): {"u": (-80, -60), "v": (-85, 60)},
+    (270, "l"): {"u": (-80, 60), "v": (40, 60)},
+    (0, "r"): {"u": (-80, -60), "v": (-85, 60)},
+    (90, "r"): {"u": (-80, 60), "v": (40, 60)},
+    (180, "r"): {"u": (45, 65), "v": (-80, 60)},
+    (270, "r"): {"u": (-80, 60), "v": (-85, -60)},
 }
 
 
@@ -53,7 +63,7 @@ class Block:
 
         return surface, 0
 
-    def _load_surface_block(self, loader, name, x_pos, y_pos, angle):
+    def _load_surface_block(self, loader, name, x_pos, y_pos, angle, side=None):
         """Load surface model and set it to the given coords.
 
         Surface model will be reparented to the rails model of this Block.
@@ -63,12 +73,35 @@ class Block:
             name (str): Surface model name.
             x_pos (int): Position on X axis.
             y_pos (int): Position on Y axis.
-            angle (int): Angle to rotate the model
+            angle (int): Angle to rotate the model.
+            side (str): Left or right side.
         """
         model = loader.loadModel(name)
         model.reparentTo(self.rails_mod)
         model.setPos(x_pos, y_pos, 0)
         model.setH(angle)
+
+        if not side:
+            return
+
+        for i in range(random.randint(0, 3)):
+            ts = TextureStage("ts_flower{}".format(str(i)))
+            ts.setMode(TextureStage.MDecal)
+
+            tex = loader.loadTexture(
+                MOD_DIR + "tex/flower{}.png".format(str(random.randint(1, 5)))
+            )
+            tex.setWrapU(Texture.WMClamp)
+            tex.setWrapV(Texture.WMClamp)
+
+            model.setTexture(ts, tex)
+            model.setTexPos(
+                ts,
+                random.randint(*FLOWER_RANGES[(angle, side)]["u"]),
+                random.randint(*FLOWER_RANGES[(angle, side)]["v"]),
+                0,
+            )
+            model.setTexScale(ts, 20, 20)
 
     def prepare(self, loader, current_block):
         """Load models, which represents this block content.
@@ -96,8 +129,8 @@ class Block:
             elif current_block.name == "l90_turn":
                 self.rails_mod.setH(90)
 
-        self._load_surface_block(loader, self._l_surface, -4, 4, self._l_turn)
-        self._load_surface_block(loader, self._r_surface, 4, 4, self._r_turn)
+        self._load_surface_block(loader, self._l_surface, -4, 4, self._l_turn, "l")
+        self._load_surface_block(loader, self._r_surface, 4, 4, self._r_turn, "r")
 
         if self.name == "l90_turn":
             self._load_surface_block(loader, self._r_surface, -4, 12, self._l_turn)
