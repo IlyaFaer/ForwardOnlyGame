@@ -2,8 +2,13 @@
 import random
 
 from direct.directutil import Mopath
-from panda3d.core import DirectionalLight, AmbientLight, TextureStage, Texture
-
+from panda3d.core import (
+    DirectionalLight,
+    AmbientLight,
+    TextureStage,
+    Texture,
+    GeomVertexReader,
+)
 from railway_generator import RailwayGenerator
 
 ANGLES = (0, 90, 180, 270)
@@ -48,6 +53,27 @@ class Block:
         self._l_surface, self._l_turn = self._generate_surface()
         self._r_surface, self._r_turn = self._generate_surface()
 
+        self._env_mods = {"l": self._gen_env_mods(), "r": self._gen_env_mods()}
+
+    def _gen_env_mods(self):
+        """Select and arrange environment models.
+
+        Every surface have 1024 vertices. Choose on which
+        vertex to positionate an environment model.
+
+        Returns:
+            dict: Numbers of vertices to set models on, and models names themselves.
+        """
+        points = set()
+        for _ in range(random.randint(0, 30)):
+            points.add(random.randint(0, 1023))
+
+        models = {}
+        for point in points:
+            models[point] = MOD_DIR + "sp_grass{}.bam".format(random.randint(1, 7))
+
+        return models
+
     def _generate_surface(self):
         """Generate surface block.
 
@@ -76,14 +102,43 @@ class Block:
             angle (int): Angle to rotate the model.
             side (str): Left or right side.
         """
-        model = loader.loadModel(name)
-        model.reparentTo(self.rails_mod)
-        model.setPos(x_pos, y_pos, 0)
-        model.setH(angle)
+        # load surface
+        surf_mod = loader.loadModel(name)
+        surf_mod.reparentTo(self.rails_mod)
+        surf_mod.setPos(x_pos, y_pos, 0)
+        surf_mod.setH(angle)
 
         if not side:
             return
 
+        # load environment models
+        env_mods = self._env_mods[side]
+        if env_mods:
+            v_reader = GeomVertexReader(
+                surf_mod.findAllMatches("**/+GeomNode")[0]
+                .node()
+                .getGeom(0)
+                .getVertexData(),
+                "vertex",
+            )
+            for i in range(max(env_mods.keys())):
+                pos = v_reader.getData3()
+                if i in env_mods.keys():
+                    if pos.is_nan():
+                        continue
+
+                    # don't set a model onto rails
+                    if (
+                        pos.getX() != 4
+                        and pos.getY() != 4
+                        and not ("turn" in name and abs(pos.getZ()) < 0.0001)
+                    ):
+                        env_mod = loader.loadModel(env_mods[i])
+                        env_mod.reparentTo(surf_mod)
+                        env_mod.setPos(pos)
+                        env_mod.setH(random.randint(1, 359))
+
+        # generate texture flowers
         for i in range(random.randint(0, 3)):
             ts = TextureStage("ts_flower{}".format(str(i)))
             ts.setMode(TextureStage.MDecal)
@@ -94,14 +149,14 @@ class Block:
             tex.setWrapU(Texture.WMClamp)
             tex.setWrapV(Texture.WMClamp)
 
-            model.setTexture(ts, tex)
-            model.setTexPos(
+            surf_mod.setTexture(ts, tex)
+            surf_mod.setTexPos(
                 ts,
                 random.randint(*FLOWER_RANGES[(angle, side)]["u"]),
                 random.randint(*FLOWER_RANGES[(angle, side)]["v"]),
                 0,
             )
-            model.setTexScale(ts, 20, 20)
+            surf_mod.setTexScale(ts, 20, 20)
 
     def prepare(self, loader, current_block):
         """Load models, which represents this block content.
