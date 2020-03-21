@@ -1,6 +1,4 @@
 """Main game file. Starts the game itself and maintains the main systems."""
-import glob
-
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
@@ -22,7 +20,6 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self._configurate_window()
-        self._warmup_models_cache()
 
         self._world = World(self.render, self.loader)
         self._world.generate_location("Plains", 300)
@@ -42,11 +39,6 @@ class ForwardOnly(ShowBase):
         )
         # start moving
         self._move_along_block(train_mod, cam_node, 0)
-
-    def _warmup_models_cache(self):
-        """Load all of the game models once to cache them."""
-        for path in glob.glob("models/bam/*.bam"):
-            self.loader.loadModel(path)
 
     def _configurate_window(self):
         """Configurate game window.
