@@ -61,31 +61,42 @@ class World:
 
             # read and remember surface vertices
             if "surface" in path:
-                surf_vertices = []
-
-                v_reader = GeomVertexReader(
-                    mod.findAllMatches("**/+GeomNode")[0]
-                    .node()
-                    .getGeom(0)
-                    .getVertexData(),
-                    "vertex",
+                all_surf_vertices[path.replace("\\", "/")] = self._read_vertices(
+                    mod, path
                 )
-                while not v_reader.isAtEnd():
-                    pos = v_reader.getData3()
-                    if pos.is_nan():
-                        continue
-
-                    # don't set a model onto rails
-                    if (
-                        pos.getX() not in (-4, 4)
-                        and pos.getY() not in (-4, 4)
-                        and not ("turn" in path and abs(pos.getZ()) < 0.0001)
-                    ):
-                        surf_vertices.append(pos)
-
-                all_surf_vertices[path.replace("\\", "/")] = surf_vertices
 
         return all_surf_vertices
+
+    def _read_vertices(self, mod, path):
+        """Read model vertices and build a list of their positions.
+
+        Args:
+            mod (panda3d.core.NodePath): Model to read vertices from.
+            path (str): Model filename.
+
+        Returns:
+            list: List of vertices positions.
+        """
+        v_reader = GeomVertexReader(
+            mod.findAllMatches("**/+GeomNode")[0].node().getGeom(0).getVertexData(),
+            "vertex",
+        )
+        surf_vertices = []
+
+        while not v_reader.isAtEnd():
+            pos = v_reader.getData3()
+            if pos.is_nan():
+                continue
+
+            # don't set a model onto rails
+            if (
+                pos.getX() not in (-4, 4)
+                and pos.getY() not in (-4, 4)
+                and not ("turn" in path and abs(pos.getZ()) < 0.0001)
+            ):
+                surf_vertices.append(pos)
+
+        return surf_vertices
 
     def _load_rails_models(self):
         """Load all rails models and paths.

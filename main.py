@@ -2,13 +2,15 @@
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import WindowProperties
+from panda3d.core import WindowProperties, loadPrcFileData
 
 from camera_controller import CameraController
 from world import World
 
 MOD_DIR = "models/bam/"
 PATH_SPEED = 4
+
+loadPrcFileData("", "threading-model Cull/Draw")
 
 
 class ForwardOnly(ShowBase):
