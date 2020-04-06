@@ -34,11 +34,11 @@ class World:
             render (panda3d.core.NodePath): Game render.
         """
         ambient = AmbientLight("main_amb_light")
-        ambient.setColor((0.5, 0.5, 0.5, 1))
+        ambient.setColor((0.6, 0.6, 0.6, 1))
         render.setLight(render.attachNewNode(ambient))
 
         directional = DirectionalLight("main_dir_light")
-        directional.setColor((0.7, 0.7, 0.7, 1))
+        directional.setColor((0.8, 0.8, 0.8, 1))
         dlnp = render.attachNewNode(directional)
         dlnp.setHpr(150, 190, 0)
         render.setLight(dlnp)

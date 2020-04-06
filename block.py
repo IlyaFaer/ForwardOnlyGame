@@ -61,6 +61,9 @@ class Block:
         for _ in range(random.randint(0, 30)):
             models.append(MOD_DIR + "sp_grass{}.bam".format(random.randint(1, 7)))
 
+        for _ in range(random.randint(10, 20)):
+            models.append(MOD_DIR + "tree{}.bam".format(random.randint(1, 3)))
+
         return models
 
     def _generate_surface(self):
