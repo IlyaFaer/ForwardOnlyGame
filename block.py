@@ -58,11 +58,14 @@ class Block:
             list: Environment models names.
         """
         models = []
-        for _ in range(random.randint(0, 30)):
+        for _ in range(random.randint(10, 40)):
             models.append(MOD_DIR + "sp_grass{}.bam".format(random.randint(1, 7)))
 
         for _ in range(random.randint(10, 20)):
             models.append(MOD_DIR + "tree{}.bam".format(random.randint(1, 3)))
+
+        for _ in range(random.randint(2, 8)):
+            models.append(MOD_DIR + "stone1.bam")
 
         return models
 
