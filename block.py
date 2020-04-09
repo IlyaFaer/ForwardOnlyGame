@@ -47,12 +47,10 @@ class Block:
         self._r_surface, self._r_turn = self._generate_surface()
 
         self._env_mods = {"l": self._gen_env_mods(), "r": self._gen_env_mods()}
+        self._railways_model = self._gen_railways_model()
 
     def _gen_env_mods(self):
-        """Select and arrange environment models.
-
-        Every surface have 1024 vertices. Choose on which
-        vertex to positionate an environment model.
+        """Select environment models.
 
         Returns:
             list: Environment models names.
@@ -68,6 +66,20 @@ class Block:
             models.append(MOD_DIR + "stone1.bam")
 
         return models
+
+    def _gen_railways_model(self):
+        """Select railways model and generate its coordinates.
+
+        Returns:
+            list: Railways model name, x and y coords.
+        """
+        if self.name != "direct" or random.randint(1, 100) < 85:
+            return None
+
+        return (
+            MOD_DIR + "light_post1.bam",
+            (random.choice((0.15, -0.15)), random.randint(0, 8)),
+        )
 
     def _generate_surface(self):
         """Generate surface block.
@@ -112,6 +124,8 @@ class Block:
         # load environment models
         vertices = copy.copy(surface_vertices[name])
         for mod_name in self._env_mods[side]:
+            # every surface model have 1024 vertices. Choose on
+            # which vertex to positionate an environment model.
             pos = random.choice(vertices)
             vertices.remove(pos)
 
@@ -119,6 +133,13 @@ class Block:
             env_mod.reparentTo(surf_mod)
             env_mod.setPos(pos)
             env_mod.setH(random.randint(1, 359))
+
+        # load railways models
+        if self._railways_model:
+            railways_mod = loader.loadModel(self._railways_model[0])
+            railways_mod.reparentTo(self.rails_mod)
+            railways_mod.setX(self._railways_model[1][0])
+            railways_mod.setY(self._railways_model[1][1])
 
         # generate texture flowers
         for i in range(random.randint(0, 3)):
