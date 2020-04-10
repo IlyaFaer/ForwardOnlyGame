@@ -73,11 +73,12 @@ class Block:
         Returns:
             list: Railways model name, x and y coords.
         """
-        if self.name != "direct" or random.randint(1, 100) < 85:
+        if self.name != "direct" or random.randint(1, 100) < 87:
             return None
 
+        model = "light_post{}.bam".format(random.randint(1, 2))
         return (
-            MOD_DIR + "light_post1.bam",
+            MOD_DIR + model,
             (random.choice((0.15, -0.15)), random.randint(0, 8)),
         )
 
