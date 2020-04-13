@@ -20,12 +20,12 @@ class World:
         loader (direct.showbase.Loader.Loader): Panda3d models loader.
     """
 
-    def __init__(self, render, loader):
+    def __init__(self, game):
         self._world_map = []  # world blocks
-        self._loader = loader
+        self._game = game
 
-        self._surf_vertices = self._cache_warmup(loader)
-        self._set_general_lights(render)
+        self._surf_vertices = self._cache_warmup(game.loader)
+        self._set_general_lights(game.render)
 
     def _set_general_lights(self, render):
         """Set general world lights.
@@ -112,7 +112,7 @@ class World:
             ("l90_turn", "l90_turn_path.bam", "l90_turn_rails.bam"),
             ("r90_turn", "r90_turn_path.bam", "r90_turn_rails.bam"),
         }:
-            path_mod = self._loader.loadModel(MOD_DIR + path)
+            path_mod = self._game.loader.loadModel(MOD_DIR + path)
 
             # path for Train
             paths[name] = Mopath.Mopath(objectToLoad=path_mod)
@@ -162,7 +162,8 @@ class World:
             Block: Prepared world block.
         """
         return self._world_map[num].prepare(
-            self._loader,
+            self._game.loader,
+            self._game.taskMgr,
             current_block=self._world_map[num - 1] if num else None,
             surf_vertices=self._surf_vertices,
         )

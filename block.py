@@ -98,14 +98,16 @@ class Block:
         return surface, 0
 
     def _load_surface_block(
-        self, loader, name, x_pos, y_pos, angle, surface_vertices, side=None
+        self, loader, taskMgr, name, x_pos, y_pos, angle, surface_vertices, side=None
     ):
         """Load surface model and set it to the given coords.
 
         Surface model will be reparented to the rails model of this Block.
+        Models are loaded asynchronous to avoid freezing.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3d models loader.
+            loader (direct.showbase.Loader.Loader): Panda3D models loader.
+            taskMgr (direct.task.Task.TaskManager): Task manager.
             name (str): Surface model name.
             x_pos (int): Position on X axis.
             y_pos (int): Position on Y axis.
@@ -124,16 +126,20 @@ class Block:
 
         # load environment models
         vertices = copy.copy(surface_vertices[name])
+        delay = 0
         for mod_name in self._env_mods[side]:
             # every surface model have 1024 vertices. Choose on
             # which vertex to positionate an environment model.
             pos = random.choice(vertices)
             vertices.remove(pos)
 
-            env_mod = loader.loadModel(mod_name)
-            env_mod.reparentTo(surf_mod)
-            env_mod.setPos(pos)
-            env_mod.setH(random.randint(1, 359))
+            taskMgr.doMethodLater(
+                delay,
+                self._load_env_model,
+                "load_tree",
+                extraArgs=[loader, surf_mod, mod_name, pos],
+            )
+            delay += 0.03
 
         # load railways models
         if self._railways_model:
@@ -142,7 +148,36 @@ class Block:
             railways_mod.setX(self._railways_model[1][0])
             railways_mod.setY(self._railways_model[1][1])
 
-        # generate texture flowers
+        taskMgr.doMethodLater(
+            3,
+            self._generate_flowers,
+            "generate_flowers",
+            extraArgs=[loader, surf_mod, angle, side],
+        )
+
+    def _load_env_model(self, loader, surf_mod, mod_name, pos):
+        """Helper to load a model asinchronous.
+
+        Args:
+            loader (direct.showbase.Loader.Loader): Panda3D models loader.
+            surf_mod (panda3d.core.NodePath): Surface model.
+            mod_name (str): Name of the model to load.
+            pos (list): Position to set model on.
+        """
+        env_mod = loader.loadModel(mod_name)
+        env_mod.reparentTo(surf_mod)
+        env_mod.setPos(pos)
+        env_mod.setH(random.randint(1, 359))
+
+    def _generate_flowers(self, loader, surf_mod, angle, side):
+        """Generate texture flowers.
+
+        Args:
+            loader (direct.showbase.Loader.Loader): Panda3D models loader.
+            surf_mod (panda3d.core.NodePath): Surface model.
+            angle (int): Surface model angle.
+            side (str): Surface model side.
+        """
         for i in range(random.randint(0, 3)):
             ts = TextureStage("ts_flower{}".format(str(i)))
             ts.setMode(TextureStage.MDecal)
@@ -162,11 +197,12 @@ class Block:
             )
             surf_mod.setTexScale(ts, 20, 20)
 
-    def prepare(self, loader, current_block, surf_vertices):
+    def prepare(self, loader, taskMgr, current_block, surf_vertices):
         """Load models, which represents this block content.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3d models loader.
+            taskMgr (direct.task.Task.TaskManager): Task manager.
             current_block (Block): Block on which Train currently stands.
             surf_vertices (dict): Index of vertices of every surface model.
 
@@ -190,19 +226,18 @@ class Block:
                 self.rails_mod.setH(90)
 
         self._load_surface_block(
-            loader, self._l_surface, -4, 4, self._l_turn, surf_vertices, "l"
+            loader, taskMgr, self._l_surface, -4, 4, self._l_turn, surf_vertices, "l"
         )
         self._load_surface_block(
-            loader, self._r_surface, 4, 4, self._r_turn, surf_vertices, "r"
+            loader, taskMgr, self._r_surface, 4, 4, self._r_turn, surf_vertices, "r"
         )
 
         if self.name == "l90_turn":
             self._load_surface_block(
-                loader, self._r_surface, -4, 12, self._l_turn, surf_vertices
+                loader, taskMgr, self._r_surface, -4, 12, self._l_turn, surf_vertices
             )
         elif self.name == "r90_turn":
             self._load_surface_block(
-                loader, self._l_surface, 4, 12, self._r_turn, surf_vertices
+                loader, taskMgr, self._l_surface, 4, 12, self._r_turn, surf_vertices
             )
-
         return self

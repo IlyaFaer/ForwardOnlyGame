@@ -23,17 +23,17 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configurate_window()
 
-        self._world = World(self.render, self.loader)
+        self._world = World(self)
         self._world.generate_location("Plains", 300)
+
+        # set first world block
+        self._current_block = self._world.prepare_block(0)
+        self._current_block.rails_mod.reparentTo(self.render)
 
         # set Train
         self._train = self.render.attachNewNode("Train")
         train_mod = self.loader.loadModel(MOD_DIR + "locomotive.bam")
         train_mod.reparentTo(self._train)
-
-        # set first world block
-        self._current_block = self._world.prepare_block(0)
-        self._current_block.rails_mod.reparentTo(self.render)
 
         base.disableMouse()  # noqa: F821
         cam_node = CameraController().set_camera_controls(
