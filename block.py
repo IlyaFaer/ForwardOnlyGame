@@ -65,6 +65,9 @@ class Block:
         for _ in range(random.randint(2, 8)):
             models.append(MOD_DIR + "stone1.bam")
 
+        if random.randint(1, 100) <= 7:
+            models.append(MOD_DIR + "grave{}.bam".format(random.randint(1, 2)))
+
         return models
 
     def _gen_railways_model(self):
