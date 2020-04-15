@@ -1,8 +1,8 @@
 """World blocks API."""
 import copy
 import random
-
 from panda3d.core import TextureStage, Texture
+from utils import chance
 
 ANGLES = (0, 90, 180, 270)
 MOD_DIR = "models/bam/"
@@ -65,7 +65,7 @@ class Block:
         for _ in range(random.randint(2, 8)):
             models.append(MOD_DIR + "stone1.bam")
 
-        if random.randint(1, 100) <= 7:
+        if chance(7):
             models.append(MOD_DIR + "grave{}.bam".format(random.randint(1, 2)))
 
         return models
@@ -74,15 +74,24 @@ class Block:
         """Select railways model and generate its coordinates.
 
         Returns:
-            list: Railways model name, x and y coords.
+            list: Railways model name, x and y coords, angle.
         """
-        if self.name != "direct" or random.randint(1, 100) < 87:
+        angle = 0
+        if self.name != "direct" or chance(85):
             return None
 
-        model = "light_post{}.bam".format(random.randint(1, 2))
+        model = random.choice(
+            ("light_post{}.bam".format(random.randint(1, 2)), "lamp_post1.bam")
+        )
+        coor = random.choice((0.15, -0.15))
+
+        if model == "lamp_post1.bam" and coor > 0:
+            angle = 180
+
         return (
             MOD_DIR + model,
-            (random.choice((0.15, -0.15)), random.randint(0, 8)),
+            (coor, random.randint(0, 8)),
+            angle,
         )
 
     def _generate_surface(self):
@@ -148,8 +157,10 @@ class Block:
         if self._railways_model:
             railways_mod = loader.loadModel(self._railways_model[0])
             railways_mod.reparentTo(self.rails_mod)
+
             railways_mod.setX(self._railways_model[1][0])
             railways_mod.setY(self._railways_model[1][1])
+            railways_mod.setH(self._railways_model[2])
 
         taskMgr.doMethodLater(
             3,
