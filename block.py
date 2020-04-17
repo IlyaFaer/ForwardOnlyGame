@@ -26,10 +26,11 @@ FLOWER_RANGES = {
 class Block:
     """Single world block.
 
-    Consists of railway block, path for Train to move along, and two surface blocks.
+    Consists of railway block, path for Train to
+    move along, environment models and two surface blocks.
 
     Args:
-        rails_mod_name (str): Name of the rails block model.
+        rails_mod_name (str): Rails block model name.
         path (Mopath.Mopath): Motion path model.
         cam_path (Mopath.Mopath): Motion path model for camera.
         name (str): Block path name.
@@ -67,6 +68,9 @@ class Block:
 
         if chance(7):
             models.append(MOD_DIR + "grave{}.bam".format(random.randint(1, 2)))
+
+        if chance(7):
+            models.append(MOD_DIR + "fireplace1.bam")
 
         return models
 

@@ -1,4 +1,7 @@
-"""Main game file. Starts the game itself and maintains the main systems."""
+"""
+Main game file. Starts the game itself
+and maintains the major systems.
+"""
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
@@ -7,10 +10,9 @@ from panda3d.core import WindowProperties, loadPrcFileData
 from camera_controller import CameraController
 from world import World
 
-MOD_DIR = "models/bam/"
-PATH_SPEED = 4
-
 loadPrcFileData("", "threading-model Cull/Draw")
+
+MOD_DIR = "models/bam/"
 
 
 class ForwardOnly(ShowBase):
@@ -21,7 +23,7 @@ class ForwardOnly(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
-        self._configurate_window()
+        self._configure_window()
 
         self._world = World(self)
         self._world.generate_location("Plains", 300)
@@ -31,6 +33,8 @@ class ForwardOnly(ShowBase):
         self._current_block.rails_mod.reparentTo(self.render)
 
         # set Train
+        self._speed = 4  # seconds to pass one block
+
         self._train = self.render.attachNewNode("Train")
         train_mod = self.loader.loadModel(MOD_DIR + "locomotive.bam")
         train_mod.reparentTo(self._train)
@@ -42,8 +46,8 @@ class ForwardOnly(ShowBase):
         # start moving
         self._move_along_block(train_mod, cam_node, 0)
 
-    def _configurate_window(self):
-        """Configurate game window.
+    def _configure_window(self):
+        """Configure game window.
 
         Set fullscreen mode. Set resolution
         according to player's screen size.
@@ -57,7 +61,7 @@ class ForwardOnly(ShowBase):
         base.openDefaultWindow(props=props)  # noqa: F821
 
     def _move_along_block(self, train_mod, cam_node, block_num):
-        """Move Train model along the next world block.
+        """Move Train along the next world block.
 
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
@@ -68,20 +72,17 @@ class ForwardOnly(ShowBase):
         train_mod.wrtReparentTo(self.render)
         cam_node.wrtReparentTo(self.render)
 
-        # round Train position to avoid increasing
+        # round Train coordinates to avoid
         # position/rotation errors
         mod_pos = (
             round(train_mod.getX()),
             round(train_mod.getY()),
             round(train_mod.getZ()),
         )
-        mod_hpr = (
-            round(train_mod.getH()),
-            round(train_mod.getP()),
-            round(train_mod.getR()),
-        )
         train_mod.setPos(mod_pos)
-        train_mod.setHpr(mod_hpr)
+        train_mod.setHpr(
+            (round(train_mod.getH()), round(train_mod.getP()), round(train_mod.getR()),)
+        )
 
         cam_node.setPos(mod_pos)
 
@@ -100,13 +101,13 @@ class ForwardOnly(ShowBase):
                 MopathInterval(  # Train movement
                     self._current_block.path,
                     train_mod,
-                    duration=PATH_SPEED,
+                    duration=self._speed,
                     name="current_path",
                 ),
                 MopathInterval(  # camera movement
                     self._current_block.cam_path,
                     cam_node,
-                    duration=PATH_SPEED,
+                    duration=self._speed,
                     name="current_camera_path",
                 ),
             ),

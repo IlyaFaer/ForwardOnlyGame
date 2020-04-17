@@ -16,13 +16,12 @@ class World:
     Consists of blocks and is randomly generated.
 
     Args:
-        render (panda3d.core.NodePath): Game render.
-        loader (direct.showbase.Loader.Loader): Panda3d models loader.
+        game (ForwardOnly): Game object.
     """
 
     def __init__(self, game):
-        self._world_map = []  # world blocks
         self._game = game
+        self._world_map = []  # world blocks
 
         self._surf_vertices = self._cache_warmup(game.loader)
         self._set_general_lights(game.render)
@@ -39,12 +38,17 @@ class World:
 
         directional = DirectionalLight("main_dir_light")
         directional.setColor((0.8, 0.8, 0.8, 1))
-        dlnp = render.attachNewNode(directional)
-        dlnp.setHpr(150, 190, 0)
-        render.setLight(dlnp)
+        dl_node = render.attachNewNode(directional)
+        dl_node.setHpr(150, 190, 0)
+        render.setLight(dl_node)
 
     def _cache_warmup(self, loader):
-        """Load all of the game models and textures once to cache them.
+        """Load all the game models and textures once to cache them.
+
+        When model is loaded for the first time, render
+        can twitch a little. This can be avoid by loading
+        models before the game actually started and
+        caching them.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3d loader.
@@ -88,7 +92,8 @@ class World:
             if pos.is_nan():
                 continue
 
-            # don't set a model onto rails
+            # don't remember coordinates of vertices
+            # on which rails will be set
             if (
                 pos.getX() not in (-4, 4)
                 and pos.getY() not in (-4, 4)
@@ -124,14 +129,14 @@ class World:
 
         return paths, rails
 
-    def generate_location(self, name, size):
+    def generate_location(self, type, size):
         """Generate game location.
 
         Location consists of blocks.
 
         Args:
-            name (str):
-                Location name. Used to get the right location
+            type (str):
+                Location type. Used to get the right location
                 configurations (models, lights).
             size (int): Quantity of blocks to generate.
         """
@@ -151,9 +156,11 @@ class World:
             )
 
     def prepare_block(self, num):
-        """Prepare block with the given num.
+        """Prepare world block with the given num.
 
         Block will be taken from the generated world map.
+        All of the related environment models and textures
+        will be loaded and placed on the block.
 
         Args:
             num (int): World map index of the block to be prepared.
