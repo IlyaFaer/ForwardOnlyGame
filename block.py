@@ -80,17 +80,25 @@ class Block:
         Returns:
             list: Railways model name, x and y coords, angle.
         """
-        angle = 0
         if self.name != "direct" or chance(85):
             return None
 
         model = random.choice(
-            ("light_post{}.bam".format(random.randint(1, 2)), "lamp_post1.bam")
+            (
+                "light_post{}.bam".format(random.randint(1, 2)),
+                "lamp_post1.bam",
+                "arch1.bam",
+            )
         )
-        coor = random.choice((0.15, -0.15))
+        if model != "arch1.bam":
+            coor = random.choice((0.15, -0.15))
+        else:
+            coor = 0
 
         if model == "lamp_post1.bam" and coor > 0:
             angle = 180
+        else:
+            angle = 0
 
         return (
             MOD_DIR + model,
