@@ -69,8 +69,8 @@ class Block:
         if chance(7):
             models.append(MOD_DIR + "grave{}.bam".format(random.randint(1, 2)))
 
-        if chance(7):
-            models.append(MOD_DIR + "fireplace1.bam")
+        if chance(8):
+            models.append(MOD_DIR + random.choice(("fireplace1.bam", "tent.bam")))
 
         return models
 
