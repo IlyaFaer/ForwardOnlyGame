@@ -44,8 +44,8 @@ class Block:
         self.name = name
         self.cam_path = cam_path
 
-        self._l_surface, self._l_turn = self._generate_surface()
-        self._r_surface, self._r_turn = self._generate_surface()
+        self._l_surface, self._l_turn = self._generate_surface("l")
+        self._r_surface, self._r_turn = self._generate_surface("r")
 
         self._env_mods = {"l": self._gen_env_mods(), "r": self._gen_env_mods()}
         self._railways_model = self._gen_railways_model()
@@ -106,15 +106,24 @@ class Block:
             angle,
         )
 
-    def _generate_surface(self):
+    def _generate_surface(self, side):
         """Generate surface block.
 
         Randomly choose one of the surface blocks proper for this
         rails block. Randomly rotate it.
 
+        Args:
+            side (str): Side of the surface block.
+
         Returns:
             str, int: Surface model name, angle.
         """
+        if chance(1) and self.name == "direct":
+            surface = MOD_DIR + "surface_with_station1.bam"
+            if side == "r":
+                return surface, 180
+            return surface, 0
+
         surface = MOD_DIR + random.choice(SURFACES[self.name]) + ".bam"
         if self.name == "direct":
             return surface, random.choice(ANGLES)

@@ -98,6 +98,7 @@ class World:
                 pos.getX() not in (-4, 4)
                 and pos.getY() not in (-4, 4)
                 and not ("turn" in path and abs(pos.getZ()) < 0.0001)
+                and not ("station" in path and abs(pos.getY()) < 2.1)
             ):
                 surf_vertices.append(pos)
 
