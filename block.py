@@ -29,29 +29,33 @@ class Block:
     Consists of railway block, path for Train to
     move along, environment models and two surface blocks.
 
+    On creation it chooses surface models and arranges
+    environment models, but only coordinates and model names
+    are generated. All of that content will be loaded on
+    Block.prepare() call.
+
     Args:
         rails_mod_name (str): Rails block model name.
-        path (Mopath.Mopath): Motion path model.
-        cam_path (Mopath.Mopath): Motion path model for camera.
+        path (Mopath.Mopath): Motion path.
+        cam_path (Mopath.Mopath): Motion path for camera.
         name (str): Block path name.
     """
 
     def __init__(self, rails_mod_name, path, cam_path, name):
         self._rails_mod_name = rails_mod_name
 
-        self.rails_mod = None
         self.path = path
         self.name = name
         self.cam_path = cam_path
 
-        self._l_surface, self._l_turn = self._generate_surface("l")
-        self._r_surface, self._r_turn = self._generate_surface("r")
+        self._l_surface, self._l_turn = self._gen_surface("l")
+        self._r_surface, self._r_turn = self._gen_surface("r")
 
         self._env_mods = {"l": self._gen_env_mods(), "r": self._gen_env_mods()}
         self._railways_model = self._gen_railways_model()
 
     def _gen_env_mods(self):
-        """Select environment models.
+        """Randomly select environment models.
 
         Returns:
             list: Environment models names.
@@ -106,11 +110,11 @@ class Block:
             angle,
         )
 
-    def _generate_surface(self, side):
+    def _gen_surface(self, side):
         """Generate surface block.
 
-        Randomly choose one of the surface blocks proper for this
-        rails block. Randomly rotate it.
+        Randomly choose one of the surface blocks proper for
+        this rails block. Randomly rotate it.
 
         Args:
             side (str): Side of the surface block.
@@ -135,8 +139,9 @@ class Block:
     ):
         """Load surface model and set it to the given coords.
 
-        Surface model will be reparented to the rails model of this Block.
-        Models are loaded asynchronous to avoid freezing.
+        Surface model will be reparented to the rails model
+        of this Block. Models are loaded asynchronous to
+        avoid freezing.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3D models loader.
@@ -157,12 +162,12 @@ class Block:
         if not side:
             return
 
-        # load environment models
+        # load environment models asynchronous
         vertices = copy.copy(surface_vertices[name])
         delay = 0
         for mod_name in self._env_mods[side]:
-            # every surface model have 1024 vertices. Choose on
-            # which vertex to positionate an environment model.
+            # every surface model have 1024 vertices - choose on
+            # which of them  to positionate an environment model.
             pos = random.choice(vertices)
             vertices.remove(pos)
 
@@ -174,7 +179,7 @@ class Block:
             )
             delay += 0.03
 
-        # load railways models
+        # load railways model
         if self._railways_model:
             railways_mod = loader.loadModel(self._railways_model[0])
             railways_mod.reparentTo(self.rails_mod)
@@ -183,6 +188,7 @@ class Block:
             railways_mod.setY(self._railways_model[1][1])
             railways_mod.setH(self._railways_model[2])
 
+        # generate texture flowers
         taskMgr.doMethodLater(
             3,
             self._generate_flowers,
@@ -191,10 +197,10 @@ class Block:
         )
 
     def _load_env_model(self, loader, surf_mod, mod_name, pos):
-        """Helper to load a model asinchronous.
+        """Helper to load a model asynchronous.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3D models loader.
+            loader (direct.showbase.Loader.Loader): Panda3D loader.
             surf_mod (panda3d.core.NodePath): Surface model.
             mod_name (str): Name of the model to load.
             pos (list): Position to set model on.
@@ -208,7 +214,7 @@ class Block:
         """Generate texture flowers.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3D models loader.
+            loader (direct.showbase.Loader.Loader): Panda3D loader.
             surf_mod (panda3d.core.NodePath): Surface model.
             angle (int): Surface model angle.
             side (str): Surface model side.
@@ -232,33 +238,18 @@ class Block:
             )
             surf_mod.setTexScale(ts, 20, 20)
 
-    def prepare(self, loader, taskMgr, current_block, surf_vertices):
+    def prepare(self, loader, taskMgr, surf_vertices):
         """Load models, which represents this block content.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3d models loader.
             taskMgr (direct.task.Task.TaskManager): Task manager.
-            current_block (Block): Block on which Train currently stands.
             surf_vertices (dict): Index of vertices of every surface model.
 
         Returns:
-            Block: Return self object.
+            Block: Returns self object.
         """
         self.rails_mod = loader.loadModel(self._rails_mod_name)
-
-        if current_block:
-            self.rails_mod.reparentTo(current_block.rails_mod)
-
-            final_pos = current_block.path.getFinalState()[0]
-            self.rails_mod.setPos(
-                round(final_pos.getX()),
-                round(final_pos.getY()),
-                round(final_pos.getZ()),
-            )
-            if current_block.name == "r90_turn":
-                self.rails_mod.setH(-90)
-            elif current_block.name == "l90_turn":
-                self.rails_mod.setH(90)
 
         self._load_surface_block(
             loader, taskMgr, self._l_surface, -4, 4, self._l_turn, surf_vertices, "l"
@@ -276,7 +267,3 @@ class Block:
                 loader, taskMgr, self._l_surface, 4, 12, self._r_turn, surf_vertices
             )
         return self
-
-    def clear(self):
-        """Clear all of the models from this block."""
-        self.rails_mod.removeNode()

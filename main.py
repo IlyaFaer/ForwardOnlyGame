@@ -25,15 +25,14 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
+        # build game world
         self._world = World(self)
-        self._world.generate_location("Plains", 300)
+        self._world.generate_location(300)
 
-        # set first world block
         self._current_block = self._world.prepare_block(0)
-        self._current_block.rails_mod.reparentTo(self.render)
 
-        # set Train
-        self._speed = 4  # seconds to pass one block
+        # configurate Train
+        self._speed = 4  # seconds to pass single block
 
         self._train = self.render.attachNewNode("Train")
         train_mod = self.loader.loadModel(MOD_DIR + "locomotive.bam")
@@ -49,7 +48,7 @@ class ForwardOnly(ShowBase):
     def _configure_window(self):
         """Configure game window.
 
-        Set fullscreen mode. Set resolution
+        Set fullscreen mode, and resolution
         according to player's screen size.
         """
         props = WindowProperties()
@@ -61,7 +60,7 @@ class ForwardOnly(ShowBase):
         base.openDefaultWindow(props=props)  # noqa: F821
 
     def _move_along_block(self, train_mod, cam_node, block_num):
-        """Move Train along the next world block.
+        """Move Train along the current world block.
 
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
@@ -72,8 +71,7 @@ class ForwardOnly(ShowBase):
         train_mod.wrtReparentTo(self.render)
         cam_node.wrtReparentTo(self.render)
 
-        # round Train coordinates to avoid
-        # position/rotation errors
+        # round coordinates to avoid position/rotation errors
         mod_pos = (
             round(train_mod.getX()),
             round(train_mod.getY()),
@@ -92,9 +90,8 @@ class ForwardOnly(ShowBase):
         train_mod.wrtReparentTo(self._train)
         cam_node.wrtReparentTo(self._train)
 
-        # load next world block
+        # load next world block and clear penult
         next_block = self._world.prepare_block(block_num + 1)
-        # clear previous block
         self._world.clear_block(block_num - 2)
 
         # move along the current world block
