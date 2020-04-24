@@ -276,3 +276,7 @@ class Block:
                 loader, taskMgr, self._l_surface, 4, 12, self._r_turn, surf_vertices
             )
         return self
+
+    def clear(self):
+        """Clear all of the models from this block."""
+        self.rails_mod.removeNode()

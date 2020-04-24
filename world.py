@@ -175,3 +175,16 @@ class World:
             current_block=self._world_map[num - 1] if num else None,
             surf_vertices=self._surf_vertices,
         )
+
+    def clear_block(self, num):
+        """Clear models from old block to release memory.
+
+        Args:
+            num (int): Wrold map index of the block to be cleared.
+        """
+        if num >= 0:
+            # blocks are reparented to each other, so
+            # we need to reparent the block to be cleared
+            # to render, to avoid chain clearing
+            self._world_map[num + 1].rails_mod.wrtReparentTo(self._game.render)
+            self._world_map[num].clear()

@@ -94,6 +94,8 @@ class ForwardOnly(ShowBase):
 
         # load next world block
         next_block = self._world.prepare_block(block_num + 1)
+        # clear previous block
+        self._world.clear_block(block_num - 2)
 
         # move along the current world block
         Sequence(
