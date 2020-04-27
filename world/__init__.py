@@ -2,10 +2,11 @@
 import glob
 
 from direct.directutil import Mopath
-from panda3d.core import DirectionalLight, AmbientLight, GeomVertexReader
-from railway_generator import RailwayGenerator
+from panda3d.core import GeomVertexReader
 
-from block import Block
+from .block import Block
+from .railway_generator import RailwayGenerator
+from .sun import Sun
 
 MOD_DIR = "models/bam/"
 
@@ -24,23 +25,7 @@ class World:
         self._world_map = []  # generated world blocks
 
         self._surf_vertices = self._cache_warmup(game.loader)
-        self._set_general_lights(game.render)
-
-    def _set_general_lights(self, render):
-        """Set general world lights.
-
-        Args:
-            render (panda3d.core.NodePath): Game render.
-        """
-        ambient = AmbientLight("amb_light")
-        ambient.setColor((0.6, 0.6, 0.6, 1))
-        render.setLight(render.attachNewNode(ambient))
-
-        directional = DirectionalLight("dir_light")
-        directional.setColor((0.8, 0.8, 0.8, 1))
-        dl_node = render.attachNewNode(directional)
-        dl_node.setHpr(150, 190, 0)
-        render.setLight(dl_node)
+        Sun(game)
 
     def _cache_warmup(self, loader):
         """Load all the game models and textures to cache them.
