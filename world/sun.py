@@ -40,7 +40,8 @@ class Sun:
         self._sun_color = copy.deepcopy(next(SUN_COLORS))
         self._next_sun_color = copy.deepcopy(next(SUN_COLORS))
         self._color_step = 0
-        self._day_part_duration = 900  # day duration = 1h
+        # day duration = 90 steps * 10 sec/step = 1h
+        self._day_part_duration = 90
 
         self._color_vec = self._calc_color_vec(
             self._sun_color, self._next_sun_color, self._day_part_duration
@@ -80,13 +81,13 @@ class Sun:
             taskMgr (direct.task.Task.TaskManager): Task manager.
         """
         taskMgr.doMethodLater(
-            1,
+            10,
             self._change_sun_color,
             "change_sun_color",
             extraArgs=[sun_np],
             appendTask=True,
         )
-        sun_np.hprInterval(self._day_part_duration * 3, Vec3(-35, -165, 0)).start()
+        sun_np.hprInterval(self._day_part_duration * 30, Vec3(-35, -165, 0)).start()
 
     def _change_sun_color(self, sun_np, task):
         """Change Sun color with a small step.
@@ -108,7 +109,7 @@ class Sun:
             if self._sun_color["name"] == "night":
                 sun_np.setHpr(135, 0, -45)
                 sun_np.hprInterval(
-                    self._day_part_duration * 4, Vec3(-35, -165, 0)
+                    self._day_part_duration * 40, Vec3(-35, -165, 0)
                 ).start()
 
         # do color changing step
