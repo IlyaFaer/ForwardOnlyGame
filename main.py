@@ -2,6 +2,7 @@
 Main game file. Starts the game itself
 and maintains the major systems.
 """
+from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import Sequence, Parallel, Func
 from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
@@ -35,8 +36,11 @@ class ForwardOnly(ShowBase):
         self._speed = 4  # seconds to pass single block
 
         self._train = self.render.attachNewNode("Train")
-        train_mod = self.loader.loadModel(MOD_DIR + "locomotive.bam")
+        train_mod = Actor(MOD_DIR + "locomotive.bam")
         train_mod.reparentTo(self._train)
+
+        self._move_forward_int = train_mod.actorInterval("move_forward", playRate=10)
+        self._move_forward_int.loop()
 
         base.disableMouse()  # noqa: F821
         cam_node = CameraController().set_camera_controls(

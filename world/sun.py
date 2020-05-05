@@ -68,7 +68,7 @@ class Sun:
         dir_light = DirectionalLight("sun_dir")
         dir_light.setColor(self._sun_color["dir"])
         sun_np = render.attachNewNode(dir_light)
-        sun_np.setHpr(135, 0, -45)
+        sun_np.setHpr(80, 0, 0)
         render.setLight(sun_np)
 
         return amb_light, dir_light, sun_np
@@ -87,7 +87,7 @@ class Sun:
             extraArgs=[sun_np],
             appendTask=True,
         )
-        sun_np.hprInterval(self._day_part_duration * 30, Vec3(-35, -165, 0)).start()
+        sun_np.hprInterval(self._day_part_duration * 30, Vec3(110, -175, 0)).start()
 
     def _change_sun_color(self, sun_np, task):
         """Change Sun color with a small step.
@@ -109,7 +109,7 @@ class Sun:
             if self._sun_color["name"] == "night":
                 sun_np.setHpr(135, 0, -45)
                 sun_np.hprInterval(
-                    self._day_part_duration * 40, Vec3(-35, -165, 0)
+                    self._day_part_duration * 40, Vec3(110, -175, 0)
                 ).start()
 
         # do color changing step
