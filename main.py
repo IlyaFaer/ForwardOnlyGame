@@ -3,12 +3,10 @@ Main game file. Starts the game itself
 and maintains the major systems.
 """
 from direct.actor.Actor import Actor
-from direct.interval.IntervalGlobal import Sequence, Parallel, Func
-from direct.interval.MopathInterval import MopathInterval
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import WindowProperties, loadPrcFileData
 
-from camera_controller import CameraController
+from controls import CameraController, CommonController, TrainController
 from world import World
 
 loadPrcFileData("", "threading-model Cull/Draw")
@@ -26,6 +24,8 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
+        CommonController().set_controls(self)
+
         # build game world
         self._world = World(self)
         self._world.generate_location(300)
@@ -33,21 +33,18 @@ class ForwardOnly(ShowBase):
         self._current_block = self._world.prepare_block(0)
 
         # configurate Train
-        self._speed = 4  # seconds to pass single block
-
         self._train = self.render.attachNewNode("Train")
         train_mod = Actor(MOD_DIR + "locomotive.bam")
         train_mod.reparentTo(self._train)
 
-        self._move_forward_int = train_mod.actorInterval("move_forward", playRate=10)
-        self._move_forward_int.loop()
+        self._train_ctrl = TrainController(self, train_mod)
+        self._train_ctrl.set_controls()
 
         base.disableMouse()  # noqa: F821
-        cam_node = CameraController().set_camera_controls(
-            self, self.cam, self._train, train_mod
-        )
+        cam_np = CameraController().set_controls(self, self.cam, self._train, train_mod)
+
         # start moving
-        self._move_along_block(train_mod, cam_node, 0)
+        self._move_along_block(train_mod, cam_np, 0)
 
     def _configure_window(self):
         """Configure game window.
@@ -63,17 +60,20 @@ class ForwardOnly(ShowBase):
         )
         base.openDefaultWindow(props=props)  # noqa: F821
 
-    def _move_along_block(self, train_mod, cam_node, block_num):
+    def _move_along_block(self, train_mod, cam_np, block_num):
         """Move Train along the current world block.
+
+        While Train is moving along the current block,
+        game prepares the next one.
 
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
-            cam_node (panda3d.core.NodePath): Camera node.
+            cam_np (panda3d.core.NodePath): Camera node.
             block_num (int): Current path block number.
         """
         # prepare model to move along the next motion path
         train_mod.wrtReparentTo(self.render)
-        cam_node.wrtReparentTo(self.render)
+        cam_np.wrtReparentTo(self.render)
 
         # round coordinates to avoid position/rotation errors
         mod_pos = (
@@ -86,37 +86,23 @@ class ForwardOnly(ShowBase):
             (round(train_mod.getH()), round(train_mod.getP()), round(train_mod.getR()),)
         )
 
-        cam_node.setPos(mod_pos)
+        cam_np.setPos(mod_pos)
 
         self._train.setPos(mod_pos)
         self._train.setHpr(train_mod, 0)
 
         train_mod.wrtReparentTo(self._train)
-        cam_node.wrtReparentTo(self._train)
+        cam_np.wrtReparentTo(self._train)
 
         # load next world block and clear penult
         next_block = self._world.prepare_block(block_num + 1)
         self._world.clear_block(block_num - 2)
 
         # move along the current world block
-        Sequence(
-            Parallel(
-                MopathInterval(  # Train movement
-                    self._current_block.path,
-                    train_mod,
-                    duration=self._speed,
-                    name="current_path",
-                ),
-                MopathInterval(  # camera movement
-                    self._current_block.cam_path,
-                    cam_node,
-                    duration=self._speed,
-                    name="current_camera_path",
-                ),
-            ),
-            Func(self._move_along_block, train_mod, cam_node, block_num + 1),
-        ).start()
-
+        self._train_ctrl.move_along_block(self._current_block, cam_np)
+        self.acceptOnce(
+            "block_finished", self._move_along_block, [train_mod, cam_np, block_num + 1]
+        )
         self._current_block = next_block
 
 

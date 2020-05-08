@@ -11,7 +11,7 @@ class CameraController:
         self._move_int = None  # current move interval
         self._turn_int = None  # current rotation interval
 
-    def set_camera_controls(self, game, cam, train_node, train_mod):
+    def set_controls(self, game, cam, train_node, train_mod):
         """Configure camera, its node and set keyboard keys to control the camera.
 
         Args:
