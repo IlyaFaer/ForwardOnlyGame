@@ -29,7 +29,7 @@ class TrainController:
         self._game.accept("w-up", self._stop_speed_change)
         self._game.accept("s-up", self._stop_speed_change)
 
-    def move_along_block(self, block, cam_np):
+    def move_along_block(self, block, train_np):
         """Start Train move intervals for the given block.
 
         There are two intervals: Train movement and
@@ -37,7 +37,7 @@ class TrainController:
 
         Args:
             block (world.block.Block): World block to move along.
-            cam_np (panda3d.core.NodePath): Camera node.
+            train_np (panda3d.core.NodePath): Train node.
         """
         # use speed value from the last block
         rate = self._move_par.getPlayRate() if self._move_par else 1
@@ -47,7 +47,7 @@ class TrainController:
                 block.path, self._train_mod, duration=4, name="current_path",
             ),
             MopathInterval(  # camera movement
-                block.cam_path, cam_np, duration=4, name="current_camera_path",
+                block.cam_path, train_np, duration=4, name="current_camera_path",
             ),
         )
         self._move_par.setDoneEvent("block_finished")
