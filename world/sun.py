@@ -83,7 +83,7 @@ class Sun:
 
         sun_light = Spotlight("sun_dir")
         sun_light.setColor(self._color["dir"])
-        sun_light.setShadowCaster(True, 4096, 4096)
+        sun_light.setShadowCaster(True, 8192, 8192)
         sun_light.setLens(lens)
         sun_light.setExponent(0.5)
         sun_np = train_np.attachNewNode(sun_light)
