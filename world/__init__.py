@@ -47,7 +47,7 @@ class World:
             loader.loadTexture(path)
 
         all_surf_vertices = {}
-        for path in glob.glob("models/bam/*.bam"):
+        for path in glob.glob(MOD_DIR + "*.bam"):
             mod = loader.loadModel(path)
 
             # remember surface models vertices coordinates,
@@ -140,6 +140,7 @@ class World:
                     rails_mod_name=rails[rails_block],
                     path=paths[rails_block],
                     cam_path=paths["cam_" + rails_block],
+                    surf_vertices=self._surf_vertices,
                 )
             )
 
@@ -156,9 +157,7 @@ class World:
         Returns:
             block.Block: Prepared world block.
         """
-        block = self._world_map[num].prepare(
-            self._game.loader, self._game.taskMgr, surf_vertices=self._surf_vertices,
-        )
+        block = self._world_map[num].prepare(self._game.loader, self._game.taskMgr)
 
         if num:  # reparent the next block to the current one
             current_block = self._world_map[num - 1]

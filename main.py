@@ -28,6 +28,7 @@ class ForwardOnly(ShowBase):
 
         # configurate Train
         self._train = self.render.attachNewNode("train_root")
+        # node that holds camera and Sun
         train_np = self._train.attachNewNode("train")
 
         train_mod = Actor(MOD_DIR + "locomotive.bam")
