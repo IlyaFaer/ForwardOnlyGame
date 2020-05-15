@@ -18,16 +18,15 @@ class World:
 
     Args:
         game (ForwardOnly): Game object.
-        train_np (panda3d.core.NodePath): Train node.
-        train_mod (panda3d.core.NodePath): Train model.
+        train (train.Train): Train object.
     """
 
-    def __init__(self, game, train_np, train_mod):
+    def __init__(self, game, train):
         self._game = game
         self._world_map = []  # generated world blocks
 
         self._surf_vertices = self._cache_warmup(game.loader)
-        Sun(game, train_np, train_mod)
+        Sun(game, train)
 
     def _cache_warmup(self, loader):
         """Load all the game models and textures to cache them.

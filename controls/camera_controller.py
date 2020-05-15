@@ -11,19 +11,18 @@ class CameraController:
         self._move_int = None  # current move interval
         self._turn_int = None  # current rotation interval
 
-    def set_controls(self, game, cam, train_np, train_mod):
+    def set_controls(self, game, cam, train):
         """Configure camera, its node and set keyboard keys to control the camera.
 
         Args:
             game (ForwardOnly): Game object.
             cam (panda3d.core.NodePath): Main camera object.
-            train_np (panda3d.core.NodePath): Train node.
-            train_mod (panda3d.core.NodePath): Train model
+            train (train.Train): Train object.
         """
-        cam_np = train_np.attachNewNode("camera_node")
+        cam_np = train.node.attachNewNode("camera_node")
         cam.reparentTo(cam_np)
         cam.setPos(self._target)
-        cam.lookAt(train_mod)
+        cam.lookAt(train.model)
 
         # key pressed - start movement
         game.accept("arrow_up", self._move, [cam_np, cam, 1, None, 1.5])

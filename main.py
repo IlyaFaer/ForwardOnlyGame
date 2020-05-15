@@ -2,16 +2,15 @@
 Main game file. Starts the game itself
 and maintains the major systems.
 """
-from direct.actor.Actor import Actor
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import WindowProperties, loadPrcFileData
 
-from controls import CameraController, CommonController, TrainController
+from character import Character
+from controls import CameraController, CommonController
+from train import Train
 from world import World
 
 loadPrcFileData("", "threading-model Cull/Draw")
-
-MOD_DIR = "models/bam/"
 
 
 class ForwardOnly(ShowBase):
@@ -26,28 +25,40 @@ class ForwardOnly(ShowBase):
 
         CommonController().set_controls(self)
 
-        # configurate Train
-        self._train = self.render.attachNewNode("train_root")
-        # node that holds camera and Sun
-        train_np = self._train.attachNewNode("train")
-
-        train_mod = Actor(MOD_DIR + "locomotive.bam")
-        train_mod.reparentTo(self._train)
-
-        self._train_ctrl = TrainController(self, train_mod)
-        self._train_ctrl.set_controls()
+        self._train = Train(self)
 
         # build game world
-        self._world = World(self, train_np, train_mod)
+        self._world = World(self, self._train)
         self._world.generate_location(300)
 
         self._current_block = self._world.prepare_block(0)
 
         base.disableMouse()  # noqa: F821
-        CameraController().set_controls(self, self.cam, train_np, train_mod)
+        CameraController().set_controls(self, self.cam, self._train)
+
+        # prepare characters
+        self._characters = []  # characters under the player control
+
+        ch1 = Character()
+        ch1.generate("male")
+        ch1.load(self.loader, self._train.model)
+        ch1.move_to(self._train.parts[1])
+        self._characters.append(ch1)
+
+        ch2 = Character()
+        ch2.generate("male")
+        ch2.load(self.loader, self._train.model)
+        ch2.move_to(self._train.parts[1])
+        self._characters.append(ch2)
+
+        ch3 = Character()
+        ch3.generate("male")
+        ch3.load(self.loader, self._train.model)
+        ch3.move_to(self._train.parts[2])
+        self._characters.append(ch3)
 
         # start moving
-        self._move_along_block(train_mod, train_np, 0)
+        self._move_along_block(self._train.model, self._train.node, 0)
 
     def _configure_window(self):
         """Configure game window.
@@ -71,7 +82,7 @@ class ForwardOnly(ShowBase):
 
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
-            cam_np (panda3d.core.NodePath): Camera node.
+            train_np (panda3d.core.NodePath): Train node.
             block_num (int): Current path block number.
         """
         # prepare model to move along the next motion path
@@ -91,18 +102,18 @@ class ForwardOnly(ShowBase):
 
         train_np.setPos(mod_pos)
 
-        self._train.setPos(mod_pos)
-        self._train.setHpr(train_mod, 0)
+        self._train.root_node.setPos(mod_pos)
+        self._train.root_node.setHpr(train_mod, 0)
 
-        train_mod.wrtReparentTo(self._train)
-        train_np.wrtReparentTo(self._train)
+        train_mod.wrtReparentTo(self._train.root_node)
+        train_np.wrtReparentTo(self._train.root_node)
 
         # load next world block and clear penult
         next_block = self._world.prepare_block(block_num + 1)
         self._world.clear_block(block_num - 2)
 
         # move along the current world block
-        self._train_ctrl.move_along_block(self._current_block, train_np)
+        self._train.move_along_block(self._current_block)
         self.acceptOnce(
             "block_finished",
             self._move_along_block,

@@ -40,9 +40,10 @@ class Sun:
 
     Args:
         game (ForwardOnly): The game object.
+        train (train.Train): Train object.
     """
 
-    def __init__(self, game, train_np, train_mod):
+    def __init__(self, game, train):
         self._color = copy.deepcopy(next(SUN_COLORS))
         self._next_color = copy.deepcopy(next(SUN_COLORS))
         self._path = Mopath.Mopath(objectToLoad=MOD_DIR + "sun_path.bam")
@@ -57,9 +58,9 @@ class Sun:
         )
 
         self._amb_light, self._dir_light, sun_np = self._set_general_lights(
-            game.render, train_np
+            game.render, train.node
         )
-        self._set_day_night_cycle(sun_np, game.taskMgr, train_mod)
+        self._set_day_night_cycle(sun_np, game.taskMgr, train.model)
 
     def _set_general_lights(self, render, train_np):
         """Set initial Sun lights.
