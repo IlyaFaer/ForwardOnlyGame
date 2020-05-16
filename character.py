@@ -1,5 +1,6 @@
 """Characters and enemies API."""
 import random
+from panda3d.core import CollisionCapsule, CollisionNode
 
 NAMES = {
     "male": (
@@ -43,12 +44,16 @@ class Character:
     """Game character.
 
     Character can be generated for the given type.
+
+    Args:
+        id_ (int): Character unique id.
     """
 
-    def __init__(self):
+    def __init__(self, id_):
         self.name = None
         self.mod_name = None
         self.model = None
+        self.id = id_
 
     def generate(self, type_):
         """Generate character of the given type.
@@ -64,6 +69,8 @@ class Character:
     def load(self, loader, parent):
         """Load character model and positionate it.
 
+        Tweak collision solid.
+
         Args:
             loader (direct.showbase.Loader.Loader): Panda3D models loader.
             parent (panda3d.core.NodePath):
@@ -71,6 +78,10 @@ class Character:
         """
         self.model = loader.loadModel(self.mod_name + ".bam")
         self.model.reparentTo(parent)
+
+        col_solid = CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
+        col_node = self.model.attachNewNode(CollisionNode(str(self.id)))
+        col_node.node().addSolid(col_solid)
 
     def move_to(self, part):
         """Move this Character to the given train part.

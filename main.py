@@ -23,7 +23,10 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
-        CommonController().set_controls(self)
+        self._character_id = 0  # variable to count ids
+        self._characters = {}  # characters under the player control
+
+        CommonController(self._characters).set_controls(self)
 
         self._train = Train(self)
 
@@ -36,26 +39,16 @@ class ForwardOnly(ShowBase):
         base.disableMouse()  # noqa: F821
         CameraController().set_controls(self, self.cam, self._train)
 
-        # prepare characters
-        self._characters = []  # characters under the player control
+        # prepare default characters
+        for part in (self._train.parts[1], self._train.parts[1], self._train.parts[2]):
+            self._character_id += 1
 
-        ch1 = Character()
-        ch1.generate("male")
-        ch1.load(self.loader, self._train.model)
-        ch1.move_to(self._train.parts[1])
-        self._characters.append(ch1)
+            character = Character(self._character_id)
+            character.generate("male")
+            character.load(self.loader, self._train.model)
+            character.move_to(part)
 
-        ch2 = Character()
-        ch2.generate("male")
-        ch2.load(self.loader, self._train.model)
-        ch2.move_to(self._train.parts[1])
-        self._characters.append(ch2)
-
-        ch3 = Character()
-        ch3.generate("male")
-        ch3.load(self.loader, self._train.model)
-        ch3.move_to(self._train.parts[2])
-        self._characters.append(ch3)
+            self._characters[self._character_id] = character
 
         # start moving
         self._move_along_block(self._train.model, self._train.node, 0)
