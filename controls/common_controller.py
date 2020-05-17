@@ -12,8 +12,13 @@ MOD_DIR = "models/bam/"
 KEYS_INFO = u"""
 Game controls:
 
-"W" - hold to speed up
-"S" - hold to slow down
+Mouse Left Button - choose a character
+Mouse Right Button - move chosen character
+A - deselect character
+
+W - hold to speed up
+S - hold to slow down
+
 \u2190\u2191\u2193\u2192 - move camera
 Alt + \u2190\u2191\u2193\u2192 - rotate camera
 """
@@ -25,18 +30,22 @@ class CommonController:
     Includes controls to show game control keys info.
 
     Args:
-        characters (dict):
-            Characters under the player control index.
+        parts (dict):
+            Train parts to set characters on.
     """
 
-    def __init__(self, characters):
+    def __init__(self, parts):
         self._is_keys_shown = False
         self._keys_info = None
         self._font = None
         self._traverser = None
 
+        self._pointed_obj = ""
+        self._chosen_char = None
         self._char_pointer = None
-        self._characters = characters
+        self.chars = {}
+
+        self._parts = parts
 
     def set_controls(self, game):
         """Configure common game controls.
@@ -49,6 +58,7 @@ class CommonController:
         """
         self._font = game.loader.loadFont("arial.ttf")
         game.accept("f1", self._show_keys)
+        game.accept("a", self._deselect)
 
         # configure collisions to control characters
         self._char_pointer = game.loader.loadModel(MOD_DIR + "character_pointer.bam")
@@ -61,38 +71,62 @@ class CommonController:
 
         handler = CollisionHandlerEvent()
         handler.addInPattern("%fn-into")
+        handler.addOutPattern("%fn-out")
 
         self._traverser = CollisionTraverser("main_traverser")
         self._traverser.addCollider(mouse_np, handler)
 
-        # set events and tasks to organize
-        # pointing and clicking on characters
-        game.accept("mouse1", self._choose_character)
-        game.accept("mouse_ray-into", self._point_character)
+        # set events and tasks to organize pointing
+        # and clicking on characters and parts
+        game.accept("mouse1", self._choose_char)
+        game.accept("mouse3", self._move_char)
+        game.accept("mouse_ray-into", self._point_obj)
+        game.accept("mouse_ray-out", self._unpoint_obj)
 
-        game.taskMgr.doMethodLater(0.1, self._point_by_mouse, "point_by_mouse")
+        game.taskMgr.doMethodLater(0.09, self._collide_mouse, "collide_mouse")
         game.taskMgr.doMethodLater(
-            0.15,
+            0.1,
             self._traverse,
             extraArgs=[game.render],
             appendTask=True,
             name="main_traverse",
         )
 
-    def _choose_character(self):
-        """Event, when mouse button was pushed on a character.
+    def _deselect(self):
+        """Remove all manipulating interface."""
+        self._char_pointer.detachNode()
+        for part in self._parts.values():
+            part.hide_arrow()
 
-        Sets a cursor on the clicked character.
+    def _choose_char(self):
+        """Event: mouse button pushed on a character.
+
+        Sets a cursor on the clicked character, and
+        remembers its object. Also shows manipulation
+        interface.
         """
-        self._char_pointer.reparentTo(
-            self._characters[int(self._pointed_character)].model
-        )
+        if self._pointed_obj.startswith("character_"):
+            self._chosen_char = self.chars[self._pointed_obj]
+            self._char_pointer.reparentTo(self._chosen_char.model)
 
-    def _point_character(self, event):
-        """Event, when mouse pointer hits a character."""
-        self._pointed_character = event.getIntoNodePath().getName()
+            for part in self._parts.values():
+                part.show_arrow()
 
-    def _point_by_mouse(self, task):
+    def _move_char(self):
+        """Move chosen character to the pointed part."""
+        if self._chosen_char:
+            if self._pointed_obj.startswith("part_arrow_"):
+                self._chosen_char.move_to(self._parts[self._pointed_obj])
+
+    def _point_obj(self, event):
+        """Event: mouse pointer hits a collision."""
+        self._pointed_obj = event.getIntoNodePath().getName()
+
+    def _unpoint_obj(self, event):
+        """Event: mouse pointer moved out of an object."""
+        self._pointed_obj = ""
+
+    def _collide_mouse(self, task):
         """Organize active mouse collision object movement.
 
         Args:

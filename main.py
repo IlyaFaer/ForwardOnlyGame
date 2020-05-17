@@ -23,12 +23,11 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
-        self._character_id = 0  # variable to count ids
-        self._characters = {}  # characters under the player control
-
-        CommonController(self._characters).set_controls(self)
-
+        self._char_id = 0  # variable to count character ids
         self._train = Train(self)
+
+        self._ctrl = CommonController(self._train.parts)
+        self._ctrl.set_controls(self)
 
         # build game world
         self._world = World(self, self._train)
@@ -40,15 +39,19 @@ class ForwardOnly(ShowBase):
         CameraController().set_controls(self, self.cam, self._train)
 
         # prepare default characters
-        for part in (self._train.parts[1], self._train.parts[1], self._train.parts[2]):
-            self._character_id += 1
+        for part in (
+            self._train.parts["part_arrow_locomotive_right"],
+            self._train.parts["part_arrow_locomotive_right"],
+            self._train.parts["part_arrow_locomotive_front"],
+        ):
+            self._char_id += 1
 
-            character = Character(self._character_id)
-            character.generate("male")
-            character.load(self.loader, self._train.model)
-            character.move_to(part)
+            char = Character(self._char_id)
+            char.generate("male")
+            char.prepare(self.loader, self._train.model)
+            char.move_to(part)
 
-            self._characters[self._character_id] = character
+            self._ctrl.chars[char.id] = char
 
         # start moving
         self._move_along_block(self._train.model, self._train.node, 0)

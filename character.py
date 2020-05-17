@@ -50,10 +50,13 @@ class Character:
     """
 
     def __init__(self, id_):
+        self._current_part = None
+        self._current_pos = None
+
         self.name = None
         self.mod_name = None
         self.model = None
-        self.id = id_
+        self.id = "character_" + str(id_)
 
     def generate(self, type_):
         """Generate character of the given type.
@@ -66,7 +69,7 @@ class Character:
         self.name = random.choice(NAMES[type_])
         self.mod_name = MOD_DIR + random.choice(MODELS[type_])
 
-    def load(self, loader, parent):
+    def prepare(self, loader, parent):
         """Load character model and positionate it.
 
         Tweak collision solid.
@@ -91,6 +94,14 @@ class Character:
                 Train part to move this Character to.
         """
         pos = part.give_cell()
-        if pos:
-            self.model.setPos(pos["pos"])
-            self.model.setH(pos["angle"])
+        if not pos:  # no free cells on chosen part
+            return
+
+        if self._current_part is not None:
+            self._current_part.release_cell(self._current_pos)
+
+        self.model.setPos(pos["pos"])
+        self.model.setH(pos["angle"])
+
+        self._current_part = part
+        self._current_pos = pos
