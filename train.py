@@ -33,8 +33,8 @@ class Train:
                 self.model,
                 "part_arrow_locomotive_left",
                 positions=[
-                    {"pos": (-0.07, -0.02, 0.147), "angle": -90},
-                    {"pos": (-0.07, 0.15, 0.147), "angle": -90},
+                    {"pos": (-0.06, -0.02, 0.147), "angle": -90},
+                    {"pos": (-0.06, 0.15, 0.147), "angle": -90},
                 ],
                 arrow_pos={"pos": (-0.2, 0.09, 0.147), "angle": 90},
             ),
@@ -43,8 +43,8 @@ class Train:
                 self.model,
                 "part_arrow_locomotive_right",
                 positions=[
-                    {"pos": (0.07, -0.02, 0.147), "angle": 90},
-                    {"pos": (0.07, 0.15, 0.147), "angle": 90},
+                    {"pos": (0.06, -0.02, 0.147), "angle": 90},
+                    {"pos": (0.06, 0.15, 0.147), "angle": 90},
                 ],
                 arrow_pos={"pos": (0.2, 0.09, 0.147), "angle": -90},
             ),

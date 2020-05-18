@@ -1,5 +1,6 @@
 """Characters and enemies API."""
 import random
+from direct.actor.Actor import Actor
 from panda3d.core import CollisionCapsule, CollisionNode
 
 NAMES = {
@@ -79,7 +80,9 @@ class Character:
             parent (panda3d.core.NodePath):
                 Model to which this character should be parented.
         """
-        self.model = loader.loadModel(self.mod_name + ".bam")
+        self.model = Actor(self.mod_name + ".bam")
+        self.model.setPlayRate(0.8, "stand_and_aim")
+        self.model.loop("stand_and_aim")
         self.model.reparentTo(parent)
 
         col_solid = CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
