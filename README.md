@@ -2,6 +2,10 @@
 
 The World dies because of the terrible cataclysm called Stench - poisonous clouds that are ushering people to death with every single breath. The only way to survive is to move forward and do it quickly, as Stench spreads across Earth. Fortunately, you have a locomotive that is still running, so prepare for a big journey with a small company of heroes, who are trying to pull through the severe adversities new World brings upon.
 
+![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot1.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot2.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot3.png?raw=true)
+
 **Current stage**  
 The game is at a very early development stage (~12% done). It's developed on Python 3.7 and Panda3D game engine. All the models are created with Blender.
 
