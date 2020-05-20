@@ -225,7 +225,7 @@ class Block:
 
         # generate texture flowers
         taskMgr.doMethodLater(
-            3,
+            2.75,
             self._generate_flowers,
             "generate_flowers",
             extraArgs=[loader, surf_mod, angle, side],
@@ -295,8 +295,14 @@ class Block:
             self._load_surface_block(
                 loader, taskMgr, self._r_surface, -4, 12, self._l_turn
             )
+            self._load_surface_block(
+                loader, taskMgr, self._r_surface, 4, 12, self._l_turn
+            )
         elif self.name == "r90_turn":
             self._load_surface_block(
                 loader, taskMgr, self._l_surface, 4, 12, self._r_turn
+            )
+            self._load_surface_block(
+                loader, taskMgr, self._l_surface, -4, 12, self._r_turn
             )
         return self
