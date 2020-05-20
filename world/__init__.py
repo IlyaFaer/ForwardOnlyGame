@@ -7,8 +7,7 @@ from panda3d.core import GeomVertexReader
 from .block import Block
 from .railway_generator import RailwayGenerator
 from .sun import Sun
-
-MOD_DIR = "models/bam/"
+from utils import address, MOD_DIR
 
 
 class World:
@@ -103,11 +102,11 @@ class World:
         rails = {}
 
         for name, path, model in {
-            ("direct", "direct_path.bam", "direct_rails.bam"),
-            ("l90_turn", "l90_turn_path.bam", "l90_turn_rails.bam"),
-            ("r90_turn", "r90_turn_path.bam", "r90_turn_rails.bam"),
+            ("direct", "direct_path", "direct_rails"),
+            ("l90_turn", "l90_turn_path", "l90_turn_rails"),
+            ("r90_turn", "r90_turn_path", "r90_turn_rails"),
         }:
-            path_mod = self._game.loader.loadModel(MOD_DIR + path)
+            path_mod = self._game.loader.loadModel(address(path))
 
             # motion path for Train
             paths[name] = Mopath.Mopath(objectToLoad=path_mod)
@@ -115,7 +114,7 @@ class World:
 
             # motion path for camera
             paths["cam_" + name] = Mopath.Mopath(objectToLoad=path_mod)
-            rails[name] = MOD_DIR + model
+            rails[name] = address(model)
 
         return paths, rails
 

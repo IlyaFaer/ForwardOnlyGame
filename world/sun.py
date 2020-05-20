@@ -1,11 +1,13 @@
-"""Lighting system."""
+"""Includes game Sun systems."""
 import copy
 import itertools
+
 from direct.directutil import Mopath
 from direct.interval.MopathInterval import MopathInterval
 from panda3d.core import AmbientLight, Spotlight, Vec4, PerspectiveLens
 
-MOD_DIR = "models/bam/"
+from utils import address
+
 SUN_COLORS = itertools.cycle(
     (
         {
@@ -36,7 +38,7 @@ class Sun:
     """Game Sun. Includes ambient and directional lights.
 
     Sun changes its color according to game day time.
-    It simulates real Sun movement as well.
+    Simulates real Sun movement as well.
 
     Args:
         game (ForwardOnly): The game object.
@@ -44,12 +46,14 @@ class Sun:
     """
 
     def __init__(self, game, train):
+        self._path = Mopath.Mopath(objectToLoad=address("sun_path"))
+
         self._color = copy.deepcopy(next(SUN_COLORS))
         self._next_color = copy.deepcopy(next(SUN_COLORS))
-        self._path = Mopath.Mopath(objectToLoad=MOD_DIR + "sun_path.bam")
 
         self._color_step = 0
         # day duration = 90 steps * 10 sec/step = 15 min/part
+        # 15 min/part * 4 parts = 1 hour/day
         self._day_part_duration = 90
         self._step_duration = 10
 
@@ -70,8 +74,8 @@ class Sun:
             train_np (panda3d.core.NodePath): Train node.
 
         Returns:
-            panda3d.core.AmbientLight: World ambient light.
-            panda3d.core.DirectionalLight: World directional light.
+            panda3d.core.AmbientLight: Sun ambient light.
+            panda3d.core.DirectionalLight: Sun directional light.
             panda3d.core.NodePath: NodePath of the Sun.
         """
         amb_light = AmbientLight("sun_amb")

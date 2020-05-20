@@ -6,8 +6,12 @@ from direct.interval.MopathInterval import MopathInterval
 class TrainController:
     """Object to control Train.
 
+    Implements changing Train speed and animation.
+    Also manages moving Train along motion paths.
+
     Args:
         game (ForwardOnly): Game object.
+        train_mod (panda3d.core.NodePath): Train model.
     """
 
     def __init__(self, game, train_mod):
@@ -19,7 +23,7 @@ class TrainController:
         self._is_stopped = False
 
     def set_controls(self):
-        """Configure Train control keys."""
+        """Configure Train control keys and animation."""
         self._move_anim_int = self._train_mod.actorInterval("move_forward", playRate=10)
         self._move_anim_int.loop()
 

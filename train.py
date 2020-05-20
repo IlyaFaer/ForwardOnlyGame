@@ -1,11 +1,15 @@
-"""Train - the main game object, API."""
+"""
+Train - the main game object, API.
+
+Includes the systems of Train movement, manipulating,
+animation, and splitting Train to several parts.
+"""
 import random
 from direct.actor.Actor import Actor
 from panda3d.core import CollisionNode, CollisionPolygon, Point3
 
 from controls import TrainController
-
-MOD_DIR = "models/bam/"
+from utils import address
 
 
 class Train:
@@ -21,7 +25,7 @@ class Train:
         # node to hold camera and Sun
         self.node = self.root_node.attachNewNode("train")
 
-        self.model = Actor(MOD_DIR + "locomotive.bam")
+        self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
 
         self._ctrl = TrainController(game, self.model)
@@ -72,8 +76,9 @@ class TrainPart:
     Args:
         loader (direct.showbase.Loader.Loader): Panda3D models loader.
         parent (panda3d.core.NodePath):
-                Model, to which arrow sprite of
-                this part should be parented.
+                Model, to which arrow sprite of this part
+                should be parented. To this model will be
+                reparented characters as well.
         id_ (str): Part id.
         positions (list):
             Dicts describing possible positions and
@@ -83,12 +88,12 @@ class TrainPart:
 
     def __init__(self, loader, parent, id_, positions, arrow_pos):
         self.id = id_
+        self.parent = parent
         self._free = positions
         self._taken = []
-        self._parent = parent
 
         # organize a manipulating arrow
-        self._arrow = loader.loadModel(MOD_DIR + "train_part_arrow.bam")
+        self._arrow = loader.loadModel(address("train_part_arrow"))
         self._arrow.setPos(*arrow_pos["pos"])
         self._arrow.setH(arrow_pos["angle"])
 
@@ -128,7 +133,7 @@ class TrainPart:
 
     def show_arrow(self):
         """Show manipulating arrow if this TrainPart."""
-        self._arrow.reparentTo(self._parent)
+        self._arrow.reparentTo(self.parent)
 
     def hide_arrow(self):
         """Hide manipulating arrow if this TrainPart."""

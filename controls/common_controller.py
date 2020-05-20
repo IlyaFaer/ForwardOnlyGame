@@ -8,7 +8,8 @@ from panda3d.core import (
     TextNode,
 )
 
-MOD_DIR = "models/bam/"
+from utils import address
+
 KEYS_INFO = u"""
 Game controls:
 
@@ -61,7 +62,7 @@ class CommonController:
         game.accept("a", self._deselect)
 
         # configure collisions to control characters
-        self._char_pointer = game.loader.loadModel(MOD_DIR + "character_pointer.bam")
+        self._char_pointer = game.loader.loadModel(address("character_pointer"))
 
         # set mouse ray
         mouse_col_node = CollisionNode("mouse_ray")

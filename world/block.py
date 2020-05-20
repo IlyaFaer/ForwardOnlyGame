@@ -2,10 +2,9 @@
 import copy
 import random
 from panda3d.core import TextureStage, Texture
-from utils import chance
+from utils import chance, address
 
 ANGLES = (0, 90, 180, 270)
-MOD_DIR = "models/bam/"
 SURFACES = {
     "direct": ("surface1", "surface2", "surface3"),
     "l90_turn": ("l90_turn_surface1", "l90_turn_surface2"),
@@ -90,31 +89,31 @@ class Block:
         for _ in range(random.randint(10, 40)):
             models.append(
                 (
-                    MOD_DIR + "sp_grass{}.bam".format(random.randint(1, 7)),
+                    address("sp_grass{}".format(random.randint(1, 7))),
                     self._choose_pos(vertices),
                 )
             )
         for _ in range(random.randint(10, 20)):
             models.append(
                 (
-                    MOD_DIR + "tree{}.bam".format(random.randint(1, 3)),
+                    address("tree{}".format(random.randint(1, 3))),
                     self._choose_pos(vertices),
                 )
             )
         for _ in range(random.randint(2, 8)):
-            models.append((MOD_DIR + "stone1.bam", self._choose_pos(vertices)))
+            models.append((address("stone1"), self._choose_pos(vertices)))
 
         if chance(7):
             models.append(
                 (
-                    MOD_DIR + "grave{}.bam".format(random.randint(1, 2)),
+                    address("grave{}".format(random.randint(1, 2))),
                     self._choose_pos(vertices),
                 )
             )
         if chance(8):
             models.append(
                 (
-                    MOD_DIR + random.choice(("fireplace1.bam", "tent.bam")),
+                    address(random.choice(("fireplace1", "tent"))),
                     self._choose_pos(vertices),
                 )
             )
@@ -130,24 +129,20 @@ class Block:
             return None
 
         model = random.choice(
-            (
-                "light_post{}.bam".format(random.randint(1, 2)),
-                "lamp_post1.bam",
-                "arch1.bam",
-            )
+            ("light_post{}".format(random.randint(1, 2)), "lamp_post1", "arch1",)
         )
-        if model != "arch1.bam":
+        if model != "arch1":
             coor = random.choice((0.15, -0.15))
         else:
             coor = 0
 
-        if model == "lamp_post1.bam" and coor > 0:
+        if model == "lamp_post1" and coor > 0:
             angle = 180
         else:
             angle = 0
 
         return (
-            MOD_DIR + model,
+            address(model),
             (coor, random.randint(0, 8)),
             angle,
         )
@@ -165,12 +160,12 @@ class Block:
             str, int: Surface model name, angle.
         """
         if chance(1) and self.name == "direct":
-            surface = MOD_DIR + "surface_with_station1.bam"
+            surface = address("surface_with_station1")
             if side == "r":
                 return surface, 180
             return surface, 0
 
-        surface = MOD_DIR + random.choice(SURFACES[self.name]) + ".bam"
+        surface = address(random.choice(SURFACES[self.name]))
         if self.name == "direct":
             return surface, random.choice(ANGLES)
 

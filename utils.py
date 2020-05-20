@@ -1,6 +1,8 @@
 """Small utils for game logic."""
 import random
 
+MOD_DIR = "models/bam/"
+
 
 def chance(percent):
     """Return True with percent possibility.
@@ -12,3 +14,15 @@ def chance(percent):
         bool: Random boolean value with given possibility of True.
     """
     return random.randint(1, 100) <= percent
+
+
+def address(name):
+    """Return full address of the given model.
+
+    Args:
+        name (str): Model name.
+
+    Returns:
+        str: Full model file address.
+    """
+    return MOD_DIR + name + ".bam"

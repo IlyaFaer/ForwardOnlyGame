@@ -26,8 +26,8 @@ class ForwardOnly(ShowBase):
         self._char_id = 0  # variable to count character ids
         self._train = Train(self)
 
-        self._ctrl = CommonController(self._train.parts)
-        self._ctrl.set_controls(self)
+        common_ctrl = CommonController(self._train.parts)
+        common_ctrl.set_controls(self)
 
         # build game world
         self._world = World(self, self._train)
@@ -48,10 +48,10 @@ class ForwardOnly(ShowBase):
 
             char = Character(self._char_id)
             char.generate("male")
-            char.prepare(self.loader, self._train.model)
+            char.prepare(self.loader)
             char.move_to(part)
 
-            self._ctrl.chars[char.id] = char
+            common_ctrl.chars[char.id] = char
 
         # start moving
         self._move_along_block(self._train.model, self._train.node, 0)

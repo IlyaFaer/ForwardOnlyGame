@@ -3,6 +3,8 @@ import random
 from direct.actor.Actor import Actor
 from panda3d.core import CollisionCapsule, CollisionNode
 
+from utils import address
+
 NAMES = {
     "male": (
         "Aaron",
@@ -36,9 +38,7 @@ NAMES = {
         "Tyler",
     )
 }
-
 MODELS = {"male": ("character1",)}
-MOD_DIR = "models/bam/"
 
 
 class Character:
@@ -68,22 +68,19 @@ class Character:
                 models to be used while character generation.
         """
         self.name = random.choice(NAMES[type_])
-        self.mod_name = MOD_DIR + random.choice(MODELS[type_])
+        self.mod_name = address(random.choice(MODELS[type_]))
 
-    def prepare(self, loader, parent):
+    def prepare(self, loader):
         """Load character model and positionate it.
 
         Tweak collision solid.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3D models loader.
-            parent (panda3d.core.NodePath):
-                Model to which this character should be parented.
         """
-        self.model = Actor(self.mod_name + ".bam")
+        self.model = Actor(self.mod_name)
         self.model.setPlayRate(0.8, "stand_and_aim")
         self.model.loop("stand_and_aim")
-        self.model.reparentTo(parent)
 
         col_solid = CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         col_node = self.model.attachNewNode(CollisionNode(str(self.id)))
@@ -97,12 +94,13 @@ class Character:
                 Train part to move this Character to.
         """
         pos = part.give_cell()
-        if not pos:  # no free cells on chosen part
+        if not pos:  # no free cells on the chosen part
             return
 
         if self._current_part is not None:
             self._current_part.release_cell(self._current_pos)
 
+        self.model.wrtReparentTo(part.parent)
         self.model.setPos(pos["pos"])
         self.model.setH(pos["angle"])
 
