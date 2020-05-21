@@ -1,15 +1,26 @@
 # ForwardOnly
 
-The World dies because of the terrible cataclysm called Stench - poisonous clouds that are ushering people to death with every single breath. The only way to survive is to move forward and do it quickly, as Stench spreads across Earth. Fortunately, you have a locomotive that is still running, so prepare for a big journey with a small company of heroes, who are trying to pull through the severe adversities new World brings upon.
+The World dies because of the terrible cataclysm, and the only way to survive is to move forward and do it quickly, as death spreads across Earth. Fortunately, you have a locomotive that is still running, so prepare for a big journey with a small company of heroes, who are trying to pull through the severe adversities new World brings upon.
+
+![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot1.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot2.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot3.png?raw=true)
+
+**The Project legal status**  
+The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md).
 
 **Current stage**  
-The game is at a very early development stage (~12% done). It's developed on Python 3.7 and Panda3D game engine. All the models are created with Blender.
+The game is at a very early development stage (~12% finished). It's developed on Python 3.7 and Panda3D game engine, models are created with Blender and MakeHuman.
 
-You can see the current stage plans in Projects tab. There are many ideas for the game, but it requires some time to implement them all. If you're interested in contributing, pushing the game forward, take any of the current issues and provide your changes with a PR! If you have an interesting idea, or you just want to add a new model, graphical effect, or somethings else, create an issue.
+You can see the current stage status and plans for the Game in Projects tab. Most part of the plan is not yet publicly proclaimed, as it is still work in progress.
 
-*Please, be careful with any changes you're proposing. Game is a big and difficult program, in which problem can occur everywhere. I hope, you and me both don't want lags, graphical artifacts, twitches, freezes, logical mistakes, and other stuff.*
+For now the Game includes:
+- Train movement system
+- some camera controls
+- day-night change cycle and shadows
+- one location of the World, which is randomly built on every game start
+- simple characters and characters manipulating system
 
-For now the game has a Train movement system, some camera controls, one location of the World that is build randomly with all of its environment models, and simple characters manipulating system.
+**Tip**: use F1 key while in Game to see the controls list.
 
-**Plans**  
-Short story of what the game should be: big roguelike challenge, in which you have to make a lot of choices on very suprising situations, manage your resources, skill your characters, customize Train, explore the randomly built World, fight with different fractions, and always be on a move to avoid Stench.
+The Game is not yet built from the Source Code into the final state, so the only way to play it is to install Python 3.7 and Panda3D game engine (version 1.10.5 is recommended), and run it from the Source Code.
