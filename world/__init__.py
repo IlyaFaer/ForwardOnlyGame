@@ -1,4 +1,9 @@
-"""Game world systems."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Game world systems.
+"""
 import glob
 
 from direct.directutil import Mopath

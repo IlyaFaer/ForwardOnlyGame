@@ -1,4 +1,9 @@
-"""Characters and enemies API."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Characters and enemies API.
+"""
 import random
 from direct.actor.Actor import Actor
 from panda3d.core import CollisionCapsule, CollisionNode

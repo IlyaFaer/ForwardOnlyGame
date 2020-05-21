@@ -1,4 +1,9 @@
-"""World blocks API."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+World blocks API.
+"""
 import copy
 import random
 from panda3d.core import TextureStage, Texture

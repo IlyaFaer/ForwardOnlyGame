@@ -1,4 +1,9 @@
-"""Common game controls."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Common game controls.
+"""
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import (
     CollisionHandlerEvent,

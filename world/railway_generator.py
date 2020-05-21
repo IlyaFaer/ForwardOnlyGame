@@ -1,4 +1,9 @@
-"""Railways path generator."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Railways path generator.
+"""
 import random
 
 

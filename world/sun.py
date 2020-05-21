@@ -1,4 +1,9 @@
-"""Includes game Sun systems."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Includes game Sun systems.
+"""
 import copy
 import itertools
 

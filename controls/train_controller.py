@@ -1,4 +1,9 @@
-"""API to control Train."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+API to control Train.
+"""
 from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
 

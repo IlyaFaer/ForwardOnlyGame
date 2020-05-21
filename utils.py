@@ -1,4 +1,9 @@
-"""Small utils for game logic."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Small utils for game logic.
+"""
 import random
 
 MOD_DIR = "models/bam/"

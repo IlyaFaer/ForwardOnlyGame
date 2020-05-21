@@ -1,4 +1,9 @@
-"""Camera configuring and controls."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+
+Camera configuring and controls.
+"""
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
 from panda3d.core import Vec3
 
