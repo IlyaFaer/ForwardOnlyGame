@@ -2,9 +2,9 @@
 
 The World dies because of the terrible cataclysm, and the only way to survive is to move forward and do it quickly, as death spreads across Earth. Fortunately, you have a locomotive that is still running, so prepare for a big journey with a small company of heroes, who are trying to pull through the severe adversities new World brings upon.
 
-![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot1.png?raw=true)
-![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot2.png?raw=true)
-![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot3.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot1.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
+![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
 **The Project legal status**
 The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
