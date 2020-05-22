@@ -6,13 +6,13 @@ Copyright (C) Ilya "Faer" Gurov (ilya.faer@mail.ru)
 DEFINITIONS
 
 "The Game" refers to the computer program, originally located in
-[the GitHub repository](https://github.com/IlyaFaer/ForwardOnly), in any state,
+[the GitHub repository](https://github.com/IlyaFaer/ForwardOnlyGame), in any state,
 compiled or represented with the source
 code, developed by Ilya "Faer" Gurov (ilya.faer@mail.ru). All the 3D models and other resources 
 located in the given repository included.
   
 "The Original Repository" refers to the GitHub repository where The
-Game originally developed: https://github.com/IlyaFaer/ForwardOnly
+Game originally developed: https://github.com/IlyaFaer/ForwardOnlyGame
   
 "Commercial Way" of use includes selling The Game copies, parts of
 The Game source code, its 3D models and other resources used by
