@@ -1,6 +1,6 @@
 "Forward Only" the Game PUBLIC LICENSE  
-Version 1, 21 May 2020  
-Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)  
+Version 1, 22 May 2020  
+Copyright (C) Ilya "Faer" Gurov (ilya.faer@mail.ru)  
 
 
 DEFINITIONS
@@ -22,18 +22,18 @@ Receiving donations and crowdfunding are not included into this term.
 TERMS AND CONDITIONS
   
 1. **Legal status of the Game**  
-The Game is an author product. It is a product which itself, or its alter versions, can't be used in
-any Commercial Way without author's permission. The Game itself is invented and developed from the ground zero using free-to-use
+The Game is an author product, which itself, or its alternative versions, can't be used in
+any Commercial Way without author's permission. The Game is invented and developed from the ground zero using free-to-use
 tools and resources.
 
 2. **Source code**  
-The Game source code is free to study for self-education, learning programming and game development techniques without any
+The Game source code is free to study for self-education, learning programming and game development techniques, without any
 restrictions. However, The Game source code on the whole is still an author product - using more than 1/3 of The Game source code
-as-is (or adaptive copies of it written on other programming languages) in other projects/products is not allowed (see item
+as-is (or adapted copies written on other programming languages) in other projects/products is not allowed (see item
 4 for alternative versions cases).
   
 3. **Contributing**  
-Contributing into the original Game, in any sense, is not allowed
+Contributing into the original version of The Game is not allowed
 without author's permission.
 
 4. **Forking and alternative versions**  
@@ -41,11 +41,11 @@ You're able to use more than 1/3 of the original Game source code
 in other projects/products in case of preserving its copyright,
 URL to The Original Repository and this license file.
 The name of such a project must start with "Forward Only" substring.
-Example: "Forward Only: The Endless Night". Such an alter versions
+Example: "Forward Only: The Endless Night". Such an alternative versions
 of The Game can't be used in Commercial Way without the
-original Game author's permission. Still, the alter version
+original Game author's permission. Still, alternative version
 developers are allowed to ask for donations and crowdfunding for
-the alternative version they develop.
+the alternative version of The Game they develop.
   
 5. **Copying and conveying**  
 You're free to copy and convey The Game and its source code as-is in
@@ -56,4 +56,4 @@ Repository and preserving the original Game name.
 You're completely free to play The Game in any way you like
 without any time limits.
   
-Copyright (С) 21 May 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+Copyright (С) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
