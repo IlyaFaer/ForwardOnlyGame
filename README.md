@@ -23,4 +23,4 @@ For now the Game includes:
 
 **Tip**: use F1 key while in Game to see the controls list.
 
-The Game is not yet built from the Source Code into the final state, so the only way to play it is to install Python 3.7 and Panda3D game engine (version 1.10.5 is recommended), and run it from the Source Code.
+The Game is not yet built from the source code into the final state, so the only way to play it is to install Python 3.7 and Panda3D game engine (version 1.10.5 is recommended), and run it from the source code.
