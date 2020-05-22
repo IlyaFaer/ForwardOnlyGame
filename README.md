@@ -6,10 +6,10 @@ The World dies because of the terrible cataclysm, and the only way to survive is
 ![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnly/blob/master/preview/screenshot3.png?raw=true)
 
-**The Project legal status**  
-The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md).
+**The Project legal status**
+The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
 
-**Current stage**  
+**Current stage**
 The game is at a very early development stage (~12% finished). It's developed on Python 3.7 and Panda3D game engine, models are created with Blender and MakeHuman.
 
 You can see the current stage status and plans for the Game in Projects tab. Most part of the plan is not yet publicly proclaimed, as it is still work in progress.

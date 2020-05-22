@@ -1,6 +1,6 @@
 """
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
-License: https://github.com/IlyaFaer/ForwardOnly/blob/master/LICENSE.md
+License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Camera configuring and controls.
 """
