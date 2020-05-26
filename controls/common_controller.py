@@ -27,6 +27,7 @@ S - hold to slow down
 
 \u2190\u2191\u2193\u2192 - move camera
 Alt + \u2190\u2191\u2193\u2192 - rotate camera
+C - toggle centered view
 """
 
 

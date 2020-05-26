@@ -27,25 +27,25 @@ class ForwardOnly(ShowBase):
         self._configure_window()
 
         self._char_id = 0  # variable to count character ids
-        self._train = Train(self)
+        self.train = Train(self)
 
-        common_ctrl = CommonController(self._train.parts)
+        common_ctrl = CommonController(self.train.parts)
         common_ctrl.set_controls(self)
 
         # build game world
-        self._world = World(self, self._train)
+        self._world = World(self, self.train)
         self._world.generate_location(300)
 
         self._current_block = self._world.prepare_block(0)
 
         base.disableMouse()  # noqa: F821
-        CameraController().set_controls(self, self.cam, self._train)
+        CameraController().set_controls(self, self.cam, self.train)
 
         # prepare default characters
         for part in (
-            self._train.parts["part_arrow_locomotive_right"],
-            self._train.parts["part_arrow_locomotive_right"],
-            self._train.parts["part_arrow_locomotive_front"],
+            self.train.parts["part_arrow_locomotive_right"],
+            self.train.parts["part_arrow_locomotive_right"],
+            self.train.parts["part_arrow_locomotive_front"],
         ):
             self._char_id += 1
 
@@ -57,7 +57,7 @@ class ForwardOnly(ShowBase):
             common_ctrl.chars[char.id] = char
 
         # start moving
-        self._move_along_block(self._train.model, self._train.node, 0)
+        self._move_along_block(self.train.model, self.train.node, 0)
 
     def _configure_window(self):
         """Configure game window.
@@ -101,18 +101,18 @@ class ForwardOnly(ShowBase):
 
         train_np.setPos(mod_pos)
 
-        self._train.root_node.setPos(mod_pos)
-        self._train.root_node.setHpr(train_mod, 0)
+        self.train.root_node.setPos(mod_pos)
+        self.train.root_node.setHpr(train_mod, 0)
 
-        train_mod.wrtReparentTo(self._train.root_node)
-        train_np.wrtReparentTo(self._train.root_node)
+        train_mod.wrtReparentTo(self.train.root_node)
+        train_np.wrtReparentTo(self.train.root_node)
 
         # load next world block and clear penult
         next_block = self._world.prepare_block(block_num + 1)
         self._world.clear_block(block_num - 2)
 
         # move along the current world block
-        self._train.move_along_block(self._current_block)
+        self.train.move_along_block(self._current_block)
         self.acceptOnce(
             "block_finished",
             self._move_along_block,
