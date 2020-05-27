@@ -9,7 +9,14 @@ animation, and splitting Train to several parts.
 """
 import random
 from direct.actor.Actor import Actor
-from panda3d.core import CollisionNode, CollisionPolygon, Point3
+from panda3d.core import (
+    CollisionNode,
+    CollisionPolygon,
+    PerspectiveLens,
+    Point3,
+    PointLight,
+    Spotlight,
+)
 
 from controls import TrainController
 from utils import address
@@ -31,8 +38,8 @@ class Train:
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
 
-        self._ctrl = TrainController(game, self.model)
-        self._ctrl.set_controls()
+        self._ctrl = TrainController(self.model)
+        self._ctrl.set_controls(game, self)
 
         self.parts = {
             "part_arrow_locomotive_left": TrainPart(
@@ -64,6 +71,9 @@ class Train:
             ),
         }
 
+        self._lights_on = False
+        self._lights = self._set_lights()
+
     def move_along_block(self, block):
         """Move Train along the given world block.
 
@@ -71,6 +81,58 @@ class Train:
             block (world.block.Block): world block to move along.
         """
         self._ctrl.move_along_block(block, self.node)
+
+    def _set_lights(self):
+        """Configure Train lights.
+
+        Sets the main Train lighter and lights above the
+        doors.
+
+        Returns:
+            list: NodePath's of the Train lights.
+        """
+        lens = PerspectiveLens()
+        lens.setNearFar(0, 100)
+        lens.setFov(60, 60)
+
+        lighter = Spotlight("train_lighter")
+        lighter.setColor((1, 1, 1, 1))
+        lighter.setLens(lens)
+        lighter.setExponent(0.4)
+        lighter_np = self.model.attachNewNode(lighter)
+        lighter_np.setPos(0, 0.34, 0.3)
+
+        train_lights = [lighter_np]
+
+        for name, coors in (
+            ("train_right_door_light", (0.071, -0.176, 0.245)),
+            ("train_left_door_light", (-0.071, -0.176, 0.245)),
+            ("train_back_door_light", (0, -0.5, 0.245)),
+        ):
+            lamp = PointLight(name)
+            lamp.setColor((0.99, 0.91, 0.5, 1))
+            lamp.setAttenuation((3, 3, 3))
+            lamp_np = self.model.attachNewNode(lamp)
+            lamp_np.setPos(*coors)
+
+            train_lights.append(lamp_np)
+
+        return train_lights
+
+    def toggle_lights(self, render):
+        """Toggle all the Train lights.
+
+        Args:
+            render (panda3d.core.NodePath): Game render.
+        """
+        if not self._lights_on:
+            for light in self._lights:
+                render.setLight(light)
+        else:
+            for light in self._lights:
+                render.clearLight(light)
+
+        self._lights_on = not self._lights_on
 
 
 class TrainPart:

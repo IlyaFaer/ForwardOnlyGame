@@ -15,28 +15,33 @@ class TrainController:
     Also manages moving Train along motion paths.
 
     Args:
-        game (ForwardOnly): Game object.
         train_mod (panda3d.core.NodePath): Train model.
     """
 
-    def __init__(self, game, train_mod):
-        self._game = game
+    def __init__(self, train_mod):
         self._train_mod = train_mod
         self._move_anim_int = None
         # parallel with train model and camera move intervals
         self._move_par = None
         self._is_stopped = False
 
-    def set_controls(self):
-        """Configure Train control keys and animation."""
+    def set_controls(self, game, train):
+        """Configure Train control keys and animation.
+
+        Args:
+            game (ForwardOnly): The game object.
+            train (train.Train): Train object.
+        """
         self._move_anim_int = self._train_mod.actorInterval("move_forward", playRate=10)
         self._move_anim_int.loop()
 
         # speed smoothly changes with holding w/s keys pressed
-        self._game.accept("w", self._change_speed_delayed, [0.05])
-        self._game.accept("s", self._change_speed_delayed, [-0.05])
-        self._game.accept("w-up", self._stop_speed_change)
-        self._game.accept("s-up", self._stop_speed_change)
+        game.accept("w", self._change_speed_delayed, [game.taskMgr, 0.05])
+        game.accept("s", self._change_speed_delayed, [game.taskMgr, -0.05])
+        game.accept("w-up", self._stop_speed_change, [game.taskMgr])
+        game.accept("s-up", self._stop_speed_change, [game.taskMgr])
+
+        game.accept("f", train.toggle_lights, [game.render])
 
     def move_along_block(self, block, train_np):
         """Start Train move intervals for the given block.
@@ -63,19 +68,24 @@ class TrainController:
         self._move_par.start()
         self._move_par.setPlayRate(rate)
 
-    def _stop_speed_change(self):
-        """Stop the task which is changing Train speed."""
-        self._game.taskMgr.remove("change_train_speed")
+    def _stop_speed_change(self, taskMgr):
+        """Stop the task which is changing Train speed.
 
-    def _change_speed_delayed(self, diff):
+        Args:
+            taskMgr (direct.task.Task.TaskManager): Task manager.
+        """
+        taskMgr.remove("change_train_speed")
+
+    def _change_speed_delayed(self, taskMgr, diff):
         """Start changing Train speed.
 
         To make speed changing smoother delayed task is used.
 
         Args:
+            taskMgr (direct.task.Task.TaskManager): Task manager.
             diff (float): Coefficient to change Train speed.
         """
-        self._game.taskMgr.doMethodLater(
+        taskMgr.doMethodLater(
             0.6,
             self._change_speed,
             "change_train_speed",
