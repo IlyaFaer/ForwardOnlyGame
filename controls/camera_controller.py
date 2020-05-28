@@ -7,12 +7,14 @@ Camera configuring and controls.
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
 from panda3d.core import Vec3
 
+MAX_Z = 3
+
 
 class CameraController:
     """Object to configure camera and its controls."""
 
     def __init__(self):
-        self._target = Vec3(2, 0, 3)  # final pos of the current movement
+        self._target = Vec3(2, 0, MAX_Z)  # final pos of the current movement
         self._move_int = None  # current move interval
         self._turn_int = None  # current rotation interval
         self._is_centered = False
@@ -21,6 +23,8 @@ class CameraController:
         self._last_cam_pos = None
         self._last_cam_hpr = None
         self._last_cam_np_hpr = None
+
+        base.camLens.setNear(0.5)  # noqa: F821
 
     def set_controls(self, game, cam, train):
         """Configure camera, its node and set keyboard keys to control the camera.
@@ -52,11 +56,34 @@ class CameraController:
             self._move_int.pause()
 
         if x:
+            # if camera moves forward, consider Z coordinate
+            # to calibrate move limits when zoomed
+            if x == 1:
+                x -= MAX_Z - cam.getZ()
+
             self._target.setX(x)
         else:
             self._target.setY(y)
 
         self._move_int = LerpPosInterval(cam, time, self._target, other=cam_np)
+        self._move_int.start()
+
+    def _zoom(self, cam_np, cam, x, z):
+        """Zoom camera.
+
+        Args:
+            cam_np (panda3d.core.NodePath): Camera node.
+            cam (panda3d.core.NodePath): Camera object.
+            x (float): Translation along x axis.
+            z (float): Translation along z axis.
+        """
+        if self._move_int is not None:
+            self._move_int.pause()
+
+        self._target.setX(x)
+        self._target.setZ(z)
+
+        self._move_int = LerpPosInterval(cam, 1.75, self._target, other=cam_np)
         self._move_int.start()
 
     def _turn(self, cam_np, h, r):
@@ -73,7 +100,7 @@ class CameraController:
         self._turn_int = LerpHprInterval(cam_np, 4, (cam_np.getH() + h, 0, r))
         self._turn_int.start()
 
-    def _stop(self, cam_np, cam, stop_x, is_hard=False):
+    def _stop(self, cam_np, cam, stop_x, stop_zoom=False, is_hard=False):
         """Stop moving and rotating camera (on key release).
 
         Args:
@@ -82,6 +109,8 @@ class CameraController:
             stop_x (bool):
                 True - movement along x axis should be stopped.
                 False - movement along y axis should be stopped.
+            stop_zoom (bool):
+                True if camera stopped zoom movement.
             is_hard (bool):
                 If False, camera will be stopped with an deceleration
                 interval. If True, stopping will be immediate.
@@ -92,7 +121,9 @@ class CameraController:
         if self._turn_int is not None:
             self._turn_int.pause()
 
-        if stop_x:
+        if stop_zoom:
+            self._target = cam.getPos()
+        elif stop_x:
             self._target.setX(cam.getX())
         else:
             self._target.setY(cam.getY())
@@ -126,6 +157,12 @@ class CameraController:
         game.accept("alt-arrow_right", self._turn, [cam_np, 360, 0])
         game.accept("alt-arrow_up", self._turn, [cam_np, 0, -60])
         game.accept("alt-arrow_down", self._turn, [cam_np, 0, 25])
+
+        # camera zooming controls
+        game.accept("+", self._zoom, [cam_np, cam, 0.7, 1.2])
+        game.accept("-", self._zoom, [cam_np, cam, 2, 3])
+        game.accept("+-up", self._stop, [cam_np, cam, False, True, True])
+        game.accept("--up", self._stop, [cam_np, cam, False, True, True])
 
     def _toggle_centered_view(self, game, cam_np, cam):
         """Set camera onto default position.
