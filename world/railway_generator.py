@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Railways path generator.
 """
 import random
+from utils import chance
 
 
 class Bound:
@@ -123,6 +124,9 @@ class RailwayGenerator:
                     self._step, model = bound.make_turn(self._prev_bound)
                     self._prev_bound = bound
                     return model
+
+        if chance(10):
+            return random.choice(("rs", "ls"))
 
         return "direct"
 

@@ -14,6 +14,8 @@ SURFACES = {
     "direct": ("surface1", "surface2", "surface3"),
     "l90_turn": ("l90_turn_surface1", "l90_turn_surface2"),
     "r90_turn": ("r90_turn_surface1", "r90_turn_surface2"),
+    "ls": ("surface1", "surface2", "surface3"),
+    "rs": ("surface1", "surface2", "surface3"),
 }
 FLOWER_RANGES = {
     (0, "l"): {"u": (45, 65), "v": (-80, 60)},

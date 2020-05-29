@@ -110,6 +110,8 @@ class World:
             ("direct", "direct_path", "direct_rails"),
             ("l90_turn", "l90_turn_path", "l90_turn_rails"),
             ("r90_turn", "r90_turn_path", "r90_turn_rails"),
+            ("ls", "ls_path", "ls_rails"),
+            ("rs", "rs_path", "rs_rails"),
         }:
             path_mod = self._game.loader.loadModel(address(path))
 
