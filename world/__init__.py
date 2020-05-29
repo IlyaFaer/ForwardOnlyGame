@@ -97,33 +97,30 @@ class World:
 
         return surf_vertices
 
-    def _load_rails_models(self):
-        """Load all rails models and motion paths.
+    def _load_motion_paths(self):
+        """Load all motion path models into index.
 
         Returns:
-            (dict, dict): Index of paths, index of rails models.
+            dict: Index of paths.
         """
         paths = {}
-        rails = {}
 
-        for name, path, model in {
-            ("direct", "direct_path", "direct_rails"),
-            ("l90_turn", "l90_turn_path", "l90_turn_rails"),
-            ("r90_turn", "r90_turn_path", "r90_turn_rails"),
-            ("ls", "ls_path", "ls_rails"),
-            ("rs", "rs_path", "rs_rails"),
-        }:
-            path_mod = self._game.loader.loadModel(address(path))
+        for name in (
+            "direct",
+            "l90_turn",
+            "r90_turn",
+            "ls",
+            "rs",
+        ):
+            path_mod = self._game.loader.loadModel(address(name + "_path"))
 
             # motion path for Train
             paths[name] = Mopath.Mopath(objectToLoad=path_mod)
             paths[name].fFaceForward = True
-
             # motion path for camera
             paths["cam_" + name] = Mopath.Mopath(objectToLoad=path_mod)
-            rails[name] = address(model)
 
-        return paths, rails
+        return paths
 
     def generate_location(self, size):
         """Generate game location.
@@ -134,7 +131,7 @@ class World:
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
-        paths, rails = self._load_rails_models()
+        paths = self._load_motion_paths()
 
         for _ in range(size):
             rails_block = rails_gen.generate_block()
@@ -142,7 +139,6 @@ class World:
             self._world_map.append(
                 Block(
                     name=rails_block,
-                    rails_mod_name=rails[rails_block],
                     path=paths[rails_block],
                     cam_path=paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,

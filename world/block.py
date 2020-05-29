@@ -41,22 +41,19 @@ class Block:
     Block.prepare() call.
 
     Args:
-        rails_mod_name (str): Rails block model name.
         path (Mopath.Mopath): Motion path.
         cam_path (Mopath.Mopath): Motion path for camera.
         name (str): Block path name.
         surf_vertices (dict): Vertices index of every surface model.
     """
 
-    def __init__(self, rails_mod_name, path, cam_path, name, surf_vertices):
-        self._rails_mod_name = rails_mod_name
-
-        self.path = path
+    def __init__(self, path, cam_path, name, surf_vertices):
         self.name = name
+        self.path = path
         self.cam_path = cam_path
 
-        self._l_surface, self._l_turn = self._gen_surface("l")
-        self._r_surface, self._r_turn = self._gen_surface("r")
+        self._l_surface, self._l_angle = self._gen_surface("l")
+        self._r_surface, self._r_angle = self._gen_surface("r")
 
         self._env_mods = {
             "l": self._gen_env_mods(copy.copy(surf_vertices[self._l_surface])),
@@ -133,7 +130,7 @@ class Block:
             list: Railways model name, x and y coords, angle.
         """
         if self.name != "direct" or chance(85):
-            return None
+            return
 
         model = random.choice(
             ("light_post{}".format(random.randint(1, 2)), "lamp_post1", "arch1",)
@@ -284,27 +281,27 @@ class Block:
         Returns:
             Block: Returns self object.
         """
-        self.rails_mod = loader.loadModel(self._rails_mod_name)
+        self.rails_mod = loader.loadModel(address(self.name + "_rails"))
 
         self._load_surface_block(
-            loader, taskMgr, self._l_surface, -4, 4, self._l_turn, "l"
+            loader, taskMgr, self._l_surface, -4, 4, self._l_angle, "l"
         )
         self._load_surface_block(
-            loader, taskMgr, self._r_surface, 4, 4, self._r_turn, "r"
+            loader, taskMgr, self._r_surface, 4, 4, self._r_angle, "r"
         )
 
         if self.name == "l90_turn":
             self._load_surface_block(
-                loader, taskMgr, self._r_surface, -4, 12, self._l_turn
+                loader, taskMgr, self._r_surface, -4, 12, self._l_angle
             )
             self._load_surface_block(
-                loader, taskMgr, self._r_surface, 4, 12, self._l_turn
+                loader, taskMgr, self._r_surface, 4, 12, self._l_angle
             )
         elif self.name == "r90_turn":
             self._load_surface_block(
-                loader, taskMgr, self._l_surface, 4, 12, self._r_turn
+                loader, taskMgr, self._l_surface, 4, 12, self._r_angle
             )
             self._load_surface_block(
-                loader, taskMgr, self._l_surface, -4, 12, self._r_turn
+                loader, taskMgr, self._l_surface, -4, 12, self._r_angle
             )
         return self
