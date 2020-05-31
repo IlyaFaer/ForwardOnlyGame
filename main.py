@@ -51,7 +51,7 @@ class ForwardOnly(ShowBase):
 
             char = Character(self._char_id)
             char.generate("male")
-            char.prepare(self.loader)
+            char.prepare(self.loader, self.taskMgr)
             char.move_to(part)
 
             common_ctrl.chars[char.id] = char

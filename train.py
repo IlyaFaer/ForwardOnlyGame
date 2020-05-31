@@ -66,7 +66,7 @@ class Train:
                 game.loader,
                 self.model,
                 "part_arrow_locomotive_front",
-                positions=[{"pos": (0, 0.42, 0.147), "angle": 180}],
+                positions=[{"pos": (0, 0.41, 0.147), "angle": 180}],
                 arrow_pos={"pos": (0, 0.55, 0.147), "angle": 0},
             ),
         }

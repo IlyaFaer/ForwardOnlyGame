@@ -6,6 +6,7 @@ Characters and enemies API.
 """
 import random
 from direct.actor.Actor import Actor
+from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
 from panda3d.core import CollisionCapsule, CollisionNode
 
 from utils import address
@@ -75,18 +76,29 @@ class Character:
         self.name = random.choice(NAMES[type_])
         self.mod_name = address(random.choice(MODELS[type_]))
 
-    def prepare(self, loader):
+    def prepare(self, loader, taskMgr):
         """Load character model and positionate it.
 
         Tweak collision solid.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3D models loader.
+            taskMgr (direct.task.Task.TaskManager): Task manager.
         """
         self.model = Actor(self.mod_name)
-        self.model.setPlayRate(0.8, "stand_and_aim")
-        self.model.loop("stand_and_aim")
+        self.model.enableBlend()
+        self.model.setControlEffect("stand", 1)
 
+        self.model.setPlayRate(0.8, "stand_and_aim")
+        self.model.setPlayRate(0.6, "stand")
+
+        self.model.loop("stand")
+
+        taskMgr.doMethodLater(
+            random.randint(40, 60),
+            self._idle_animation,
+            "{id_}_idle_anim".format(id_=self.id),
+        )
         col_solid = CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         col_node = self.model.attachNewNode(CollisionNode(str(self.id)))
         col_node.node().addSolid(col_solid)
@@ -111,3 +123,20 @@ class Character:
 
         self._current_part = part
         self._current_pos = pos
+
+    def _idle_animation(self, task):
+        """Play one of the idle animations.
+
+        Args:
+            task (panda3d.core.PythonTask): Task object.
+        """
+        new_anim = random.choice(("turn_head1", "release_gun"))
+        LerpAnimInterval(self.model, 0.3, "stand", new_anim).start()
+
+        Sequence(
+            self.model.actorInterval(new_anim, playRate=0.75),
+            LerpAnimInterval(self.model, 0.3, new_anim, "stand"),
+        ).start()
+
+        task.delayTime = random.randint(40, 60)
+        return task.again
