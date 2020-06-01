@@ -14,6 +14,7 @@ from train import Train
 from world import World
 
 loadPrcFileData("", "threading-model Cull/Draw")
+loadPrcFileData("", "audio-library-name p3fmod_audio")
 
 
 class ForwardOnly(ShowBase):

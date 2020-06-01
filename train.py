@@ -9,6 +9,7 @@ animation, and splitting Train to several parts.
 """
 import random
 from direct.actor.Actor import Actor
+from direct.showbase import Audio3DManager
 from panda3d.core import (
     CollisionNode,
     CollisionPolygon,
@@ -39,7 +40,7 @@ class Train:
         self.model.reparentTo(self.root_node)
 
         self._ctrl = TrainController(self.model)
-        self._ctrl.set_controls(game, self)
+        self._ctrl.set_controls(game, self, self._set_sounds(game.cam))
 
         self.parts = {
             "part_arrow_locomotive_left": TrainPart(
@@ -118,6 +119,26 @@ class Train:
             train_lights.append(lamp_np)
 
         return train_lights
+
+    def _set_sounds(self, cam):
+        """Configure Train sounds.
+
+        Args:
+            cam (panda3d.core.NodePath): Main camera object.
+
+        Returns:
+            panda3d.core.AudioSound: Train movement sound.
+        """
+        sound_mgr = Audio3DManager.Audio3DManager(
+            base.sfxManagerList[0], cam  # noqa: F821
+        )
+        train_move_sound = sound_mgr.loadSfx("sounds/train_moves1.wav")
+        sound_mgr.attachSoundToObject(train_move_sound, self.model)
+        sound_mgr.setDropOffFactor(5)
+
+        train_move_sound.setLoop(True)
+        train_move_sound.play()
+        return train_move_sound
 
     def toggle_lights(self, render):
         """Toggle all the Train lights.
