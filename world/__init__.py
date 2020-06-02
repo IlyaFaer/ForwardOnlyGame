@@ -71,13 +71,17 @@ class World:
             path (str): Model filename.
 
         Returns:
-            list: List of vertices positions.
+            dict:
+                Dict with two lists of points: "wide" - most
+                part of the block, and "narrow" - smaller
+                part of the block with big paddings on
+                every side.
         """
         v_reader = GeomVertexReader(
             mod.findAllMatches("**/+GeomNode")[0].node().getGeom(0).getVertexData(),
             "vertex",
         )
-        surf_vertices = []
+        surf_vertices = {"wide": [], "narrow": []}
 
         while not v_reader.isAtEnd():
             pos = v_reader.getData3()
@@ -93,7 +97,10 @@ class World:
                 # don't remember vertices of station models
                 and not ("station" in path and abs(pos.getY()) < 2.1)
             ):
-                surf_vertices.append(pos)
+                surf_vertices["wide"].append(pos)
+
+                if abs(pos.getX()) < 3 and abs(pos.getY()) < 3:
+                    surf_vertices["narrow"].append(pos)
 
         return surf_vertices
 

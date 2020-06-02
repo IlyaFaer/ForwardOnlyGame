@@ -7,6 +7,8 @@ World blocks API.
 import copy
 import random
 from panda3d.core import TextureStage, Texture
+
+from .locations import LOCATIONS
 from utils import chance, address
 
 ANGLES = (0, 90, 180, 270)
@@ -56,8 +58,8 @@ class Block:
         self._r_surface, self._r_angle = self._gen_surface("r")
 
         self._env_mods = {
-            "l": self._gen_env_mods(copy.copy(surf_vertices[self._l_surface])),
-            "r": self._gen_env_mods(copy.copy(surf_vertices[self._r_surface])),
+            "l": self._gen_env_mods(copy.deepcopy(surf_vertices[self._l_surface])),
+            "r": self._gen_env_mods(copy.deepcopy(surf_vertices[self._r_surface])),
         }
         self._railways_model = self._gen_railways_model()
 
@@ -90,37 +92,22 @@ class Block:
         """
         models = []
 
-        for _ in range(random.randint(10, 40)):
-            models.append(
-                (
-                    address("sp_grass{}".format(random.randint(1, 7))),
-                    self._choose_pos(vertices),
+        for models_conf in LOCATIONS["Plains"]["with_quantity"]:
+            for _ in range(random.randint(*models_conf["quantity"])):
+                models.append(
+                    (
+                        address(random.choice(models_conf["models"])),
+                        self._choose_pos(vertices[models_conf["square"]]),
+                    )
                 )
-            )
-        for _ in range(random.randint(10, 20)):
-            models.append(
-                (
-                    address("tree{}".format(random.randint(1, 3))),
-                    self._choose_pos(vertices),
+        for models_conf in LOCATIONS["Plains"]["with_chance"]:
+            if chance(models_conf["chance"]):
+                models.append(
+                    (
+                        address(random.choice(models_conf["models"])),
+                        self._choose_pos(vertices[models_conf["square"]]),
+                    )
                 )
-            )
-        for _ in range(random.randint(2, 8)):
-            models.append((address("stone1"), self._choose_pos(vertices)))
-
-        if chance(7):
-            models.append(
-                (
-                    address("grave{}".format(random.randint(1, 2))),
-                    self._choose_pos(vertices),
-                )
-            )
-        if chance(8):
-            models.append(
-                (
-                    address(random.choice(("fireplace1", "tent"))),
-                    self._choose_pos(vertices),
-                )
-            )
         return models
 
     def _gen_railways_model(self):
