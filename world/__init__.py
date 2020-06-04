@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Game world systems.
 """
 import glob
+import random
 
 from direct.directutil import Mopath
 from panda3d.core import GeomVertexReader
@@ -12,7 +13,7 @@ from panda3d.core import GeomVertexReader
 from .block import Block
 from .railway_generator import RailwayGenerator
 from .sun import Sun
-from utils import address, MOD_DIR
+from utils import address, chance, MOD_DIR
 
 
 class World:
@@ -28,8 +29,13 @@ class World:
     def __init__(self, game, train):
         self._game = game
         self._world_map = []  # generated world blocks
+        # index of the block, which is
+        # processed by World now
+        self._block_num = -1
+        self._et_blocks = 0
 
         self._surf_vertices = self._cache_warmup(game.loader)
+        self._paths = self._load_motion_paths()
         Sun(game, train)
 
     def _cache_warmup(self, loader):
@@ -112,13 +118,7 @@ class World:
         """
         paths = {}
 
-        for name in (
-            "direct",
-            "l90_turn",
-            "r90_turn",
-            "ls",
-            "rs",
-        ):
+        for name in ("direct", "l90_turn", "r90_turn", "ls", "rs"):
             path_mod = self._game.loader.loadModel(address(name + "_path"))
 
             # motion path for Train
@@ -129,6 +129,25 @@ class World:
 
         return paths
 
+    def _prepare_et_block(self):
+        """Prepare enemy territory block.
+
+        Returns:
+            world.block.Block: Prepared enemy territory block.
+        """
+        name = random.choice(("rs", "ls")) if chance(5) else "direct"
+
+        block = Block(
+            name=name,
+            path=self._paths[name],
+            cam_path=self._paths["cam_" + name],
+            surf_vertices=self._surf_vertices,
+            enemy_territory=True,
+        ).prepare(self._game.loader, self._game.taskMgr)
+
+        self._world_map.insert(self._block_num, block)
+        return block
+
     def generate_location(self, size):
         """Generate game location.
 
@@ -138,37 +157,43 @@ class World:
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
-        paths = self._load_motion_paths()
-
         for _ in range(size):
             rails_block = rails_gen.generate_block()
 
             self._world_map.append(
                 Block(
                     name=rails_block,
-                    path=paths[rails_block],
-                    cam_path=paths["cam_" + rails_block],
+                    path=self._paths[rails_block],
+                    cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
                 )
             )
 
-    def prepare_block(self, num):
-        """Prepare world block with the given num.
+    def prepare_next_block(self):
+        """Prepare the next world block.
 
         Block configurations will be taken from the generated
         world map. All of its environment models and
         textures will be loaded and placed on the block.
 
-        Args:
-            num (int): World map index of the block to be prepared.
-
         Returns:
             block.Block: Prepared world block.
         """
-        block = self._world_map[num].prepare(self._game.loader, self._game.taskMgr)
+        self._block_num += 1
 
-        if num:  # reparent the next block to the current one
-            current_block = self._world_map[num - 1]
+        if chance(5) and not self._et_blocks:
+            self._et_blocks = 5
+
+        if self._et_blocks:
+            block = self._prepare_et_block()
+            self._et_blocks -= 1
+        else:
+            block = self._world_map[self._block_num].prepare(
+                self._game.loader, self._game.taskMgr
+            )
+
+        if self._block_num:  # reparent the next block to the current one
+            current_block = self._world_map[self._block_num - 1]
             block.rails_mod.reparentTo(current_block.rails_mod)
 
             final_pos = current_block.path.getFinalState()[0]
@@ -186,15 +211,17 @@ class World:
 
         return block
 
-    def clear_block(self, num):
-        """Clear models from old block to release memory.
-
-        Args:
-            num (int): World map index of the block to be cleared.
-        """
+    def clear_prev_block(self):
+        """Clear models from old block to release memory."""
+        num = self._block_num - 3
         if num >= 0:
             # blocks are reparented to each other, so
             # we need to reparent the block to the render
             # before clearing, to avoid chain reaction
             self._world_map[num + 1].rails_mod.wrtReparentTo(self._game.render)
             self._world_map[num].rails_mod.removeNode()
+
+            # don't keep enemy territory in the world
+            if self._world_map[num].enemy_territory:
+                self._world_map.pop(num)
+                self._block_num -= 1

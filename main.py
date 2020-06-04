@@ -37,7 +37,7 @@ class ForwardOnly(ShowBase):
         self._world = World(self, self.train)
         self._world.generate_location(300)
 
-        self._current_block = self._world.prepare_block(0)
+        self._current_block = self._world.prepare_next_block()
 
         base.disableMouse()  # noqa: F821
         CameraController().set_controls(self, self.cam, self.train)
@@ -58,7 +58,7 @@ class ForwardOnly(ShowBase):
             common_ctrl.chars[char.id] = char
 
         # start moving
-        self._move_along_block(self.train.model, self.train.node, 0)
+        self._move_along_block(self.train.model, self.train.node)
 
     def _configure_window(self):
         """Configure game window.
@@ -74,7 +74,7 @@ class ForwardOnly(ShowBase):
         )
         base.openDefaultWindow(props=props)  # noqa: F821
 
-    def _move_along_block(self, train_mod, train_np, block_num):
+    def _move_along_block(self, train_mod, train_np):
         """Move Train along the current world block.
 
         While Train is moving along the current block,
@@ -83,7 +83,6 @@ class ForwardOnly(ShowBase):
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
             train_np (panda3d.core.NodePath): Train node.
-            block_num (int): Current path block number.
         """
         # prepare model to move along the next motion path
         train_mod.wrtReparentTo(self.render)
@@ -109,15 +108,13 @@ class ForwardOnly(ShowBase):
         train_np.wrtReparentTo(self.train.root_node)
 
         # load next world block and clear penult
-        next_block = self._world.prepare_block(block_num + 1)
-        self._world.clear_block(block_num - 2)
+        next_block = self._world.prepare_next_block()
+        self._world.clear_prev_block()
 
         # move along the current world block
         self.train.move_along_block(self._current_block)
         self.acceptOnce(
-            "block_finished",
-            self._move_along_block,
-            [train_mod, train_np, block_num + 1],
+            "block_finished", self._move_along_block, [train_mod, train_np],
         )
         self._current_block = next_block
 

@@ -47,12 +47,16 @@ class Block:
         cam_path (Mopath.Mopath): Motion path for camera.
         name (str): Block path name.
         surf_vertices (dict): Vertices index of every surface model.
+        enemy_territory (bool): This block is an enemy territory.
     """
 
-    def __init__(self, path, cam_path, name, surf_vertices):
+    def __init__(self, path, cam_path, name, surf_vertices, enemy_territory=False):
+        self.rails_mod = None
+
         self.name = name
         self.path = path
         self.cam_path = cam_path
+        self.enemy_territory = enemy_territory
 
         self._l_surface, self._l_angle = self._gen_surface("l")
         self._r_surface, self._r_angle = self._gen_surface("r")
@@ -91,8 +95,9 @@ class Block:
                 its position.
         """
         models = []
+        et_suf = "et_" if self.enemy_territory else ""
 
-        for models_conf in LOCATIONS["Plains"]["with_quantity"]:
+        for models_conf in LOCATIONS["Plains"][et_suf + "with_quantity"]:
             for _ in range(random.randint(*models_conf["quantity"])):
                 models.append(
                     (
@@ -100,7 +105,7 @@ class Block:
                         self._choose_pos(vertices[models_conf["square"]]),
                     )
                 )
-        for models_conf in LOCATIONS["Plains"]["with_chance"]:
+        for models_conf in LOCATIONS["Plains"][et_suf + "with_chance"]:
             if chance(models_conf["chance"]):
                 models.append(
                     (
@@ -120,7 +125,7 @@ class Block:
             return
 
         model = random.choice(
-            ("light_post{}".format(random.randint(1, 2)), "lamp_post1", "arch1",)
+            ("light_post{}".format(random.randint(1, 2)), "lamp_post1", "arch1")
         )
         if model != "arch1":
             coor = random.choice((0.15, -0.15))
@@ -132,17 +137,14 @@ class Block:
         else:
             angle = 0
 
-        return (
-            address(model),
-            (coor, random.randint(0, 8)),
-            angle,
-        )
+        return (address(model), (coor, random.randint(0, 8)), angle)
 
     def _gen_surface(self, side):
         """Generate surface block.
 
         Randomly choose one of the surface blocks proper for
-        this rails block. Randomly rotate it.
+        this rails block. Randomly rotate it. Use special
+        surface blocks for enemy territory.
 
         Args:
             side (str): Side of the surface block.
@@ -150,6 +152,10 @@ class Block:
         Returns:
             str, int: Surface model name, angle.
         """
+        if self.enemy_territory:
+            surface = address("surface_en1")
+            return surface, random.choice(ANGLES)
+
         if chance(1) and self.name == "direct":
             surface = address("surface_with_station1")
             if side == "r":
