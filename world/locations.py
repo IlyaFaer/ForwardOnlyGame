@@ -17,6 +17,7 @@ PLAINS_GRASS = (
 
 LOCATIONS = {
     "Plains": {
+        "enemy": "Skinheads",
         "with_quantity": (
             {"models": PLAINS_GRASS, "quantity": (10, 40), "square": "wide"},
             {"models": PLAINS_TREES, "quantity": (10, 20), "square": "wide"},

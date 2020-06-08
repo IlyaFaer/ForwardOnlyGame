@@ -5,7 +5,6 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Game world systems.
 """
 import glob
-import random
 
 from direct.directutil import Mopath
 from panda3d.core import GeomVertexReader
@@ -13,6 +12,8 @@ from panda3d.core import GeomVertexReader
 from .block import Block
 from .railway_generator import RailwayGenerator
 from .sun import Sun
+from .locations import LOCATIONS
+from enemy import Enemy
 from utils import address, chance, MOD_DIR
 
 
@@ -28,6 +29,8 @@ class World:
 
     def __init__(self, game, train):
         self._game = game
+        self._train = train
+        self._enemy = None
         self._world_map = []  # generated world blocks
         # index of the block, which is
         # processed by World now
@@ -135,12 +138,10 @@ class World:
         Returns:
             world.block.Block: Prepared enemy territory block.
         """
-        name = random.choice(("rs", "ls")) if chance(5) else "direct"
-
         block = Block(
-            name=name,
-            path=self._paths[name],
-            cam_path=self._paths["cam_" + name],
+            name="direct",
+            path=self._paths["direct"],
+            cam_path=self._paths["cam_" + "direct"],
             surf_vertices=self._surf_vertices,
             enemy_territory=True,
         ).prepare(self._game.loader, self._game.taskMgr)
@@ -148,12 +149,13 @@ class World:
         self._world_map.insert(self._block_num, block)
         return block
 
-    def generate_location(self, size):
+    def generate_location(self, location, size):
         """Generate game location.
 
-        Location consists of blocks.
+        Location consists of blocks and enemy fraction.
 
         Args:
+            location (str): Location name.
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
@@ -168,6 +170,7 @@ class World:
                     surf_vertices=self._surf_vertices,
                 )
             )
+        self._enemy = Enemy(LOCATIONS[location]["enemy"], self._game.taskMgr)
 
     def prepare_next_block(self):
         """Prepare the next world block.
@@ -182,11 +185,14 @@ class World:
         self._block_num += 1
 
         if chance(5) and not self._et_blocks:
-            self._et_blocks = 5
+            self._et_blocks = 20
+            self._enemy.prepare(self._train.model)
 
         if self._et_blocks:
             block = self._prepare_et_block()
             self._et_blocks -= 1
+            if self._et_blocks == 0:
+                self._enemy.stop_attack()
         else:
             block = self._world_map[self._block_num].prepare(
                 self._game.loader, self._game.taskMgr

@@ -35,7 +35,7 @@ class ForwardOnly(ShowBase):
 
         # build game world
         self._world = World(self, self.train)
-        self._world.generate_location(300)
+        self._world.generate_location("Plains", 300)
 
         self._current_block = self._world.prepare_next_block()
 
@@ -96,7 +96,7 @@ class ForwardOnly(ShowBase):
         )
         train_mod.setPos(mod_pos)
         train_mod.setHpr(
-            (round(train_mod.getH()), round(train_mod.getP()), round(train_mod.getR()),)
+            (round(train_mod.getH()), round(train_mod.getP()), round(train_mod.getR()))
         )
 
         train_np.setPos(mod_pos)
@@ -113,9 +113,7 @@ class ForwardOnly(ShowBase):
 
         # move along the current world block
         self.train.move_along_block(self._current_block)
-        self.acceptOnce(
-            "block_finished", self._move_along_block, [train_mod, train_np],
-        )
+        self.acceptOnce("block_finished", self._move_along_block, [train_mod, train_np])
         self._current_block = next_block
 
 
