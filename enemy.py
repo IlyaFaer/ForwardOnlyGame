@@ -4,7 +4,12 @@ from direct.actor.Actor import Actor
 from direct.interval.LerpInterval import LerpPosInterval
 from utils import address, chance
 
-FRACTIONS = {"Skinheads": ("skinhead_shooter1",)}
+FRACTIONS = {
+    "Skinheads": {
+        "models": ("skinhead_shooter1",),
+        "attack_chances": {"morning": 0, "noon": 3, "evening": 5, "night": 2},
+    }
+}
 
 
 class Enemy:
@@ -21,15 +26,40 @@ class Enemy:
         self._task_mgr = taskMgr
         self._unit_id = 0
         self._active_units = []
+        self._is_cooldown = False
 
         self._y_positions = []
         for gain in range(1, 14):
             self._y_positions.append(round(0.15 + gain * 0.05, 2))
             self._y_positions.append(round(-0.15 - gain * 0.05, 2))
 
-        self._models = FRACTIONS[fraction]
+        self._models = FRACTIONS[fraction]["models"]
+        self._attack_chances = FRACTIONS[fraction]["attack_chances"]
+
         self._motocycle1_model = Actor(address("motocycle1"))
         self._motocycle1_model.setPlayRate(1.5, "ride")
+
+    def going_to_attack(self, day_part, lights_on):
+        """Checks if enemy is going to attack.
+
+        Args:
+            day_part (str): Day part name.
+            lights_on (bool): True if Train lights are on.
+
+        Returns:
+            bool: True if enemy is going to attack, False otherwise.
+        """
+        if self._is_cooldown:
+            return False
+
+        if chance(self._attack_chances[day_part] + 2 if lights_on else 0):
+            self._is_cooldown = True
+            self._task_mgr.doMethodLater(
+                600, self._stop_cooldown, "stop_attack_cooldown"
+            )
+            return True
+
+        return False
 
     def prepare(self, train_mod):
         """Load all the enemies and make them follow Train.
@@ -59,6 +89,11 @@ class Enemy:
             enemy.stop(self._task_mgr)
 
         self._task_mgr.doMethodLater(12, self._clear_enemies, "clear_enemies")
+
+    def _stop_cooldown(self, task):
+        """Ends cool down period."""
+        self._is_cooldown = False
+        return task.done
 
     def _load_enemy(self, train_mod, id_):
         """Load single enemy unit.

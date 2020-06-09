@@ -71,6 +71,15 @@ class Sun:
         )
         self._set_day_night_cycle(sun_np, game.taskMgr, train.model)
 
+    @property
+    def day_part(self):
+        """Day part name.
+
+        Returns:
+            str: day part name.
+        """
+        return self._color["name"]
+
     def _set_general_lights(self, render, train_np):
         """Set initial Sun lights.
 

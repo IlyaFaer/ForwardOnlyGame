@@ -72,8 +72,8 @@ class Train:
             ),
         }
 
-        self._lights_on = False
         self._lights = self._set_lights()
+        self.lights_on = False
 
     def move_along_block(self, block):
         """Move Train along the given world block.
@@ -141,19 +141,16 @@ class Train:
         return train_move_sound
 
     def toggle_lights(self, render):
-        """Toggle all the Train lights.
+        """Toggle Train lights.
 
         Args:
             render (panda3d.core.NodePath): Game render.
         """
-        if not self._lights_on:
-            for light in self._lights:
-                render.setLight(light)
-        else:
-            for light in self._lights:
-                render.clearLight(light)
+        method = render.clearLight if self.lights_on else render.setLight
+        for light in self._lights:
+            method(light)
 
-        self._lights_on = not self._lights_on
+        self.lights_on = not self.lights_on
 
 
 class TrainPart:

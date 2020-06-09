@@ -14,7 +14,7 @@ from .railway_generator import RailwayGenerator
 from .sun import Sun
 from .locations import LOCATIONS
 from enemy import Enemy
-from utils import address, chance, MOD_DIR
+from utils import address, MOD_DIR
 
 
 class World:
@@ -39,7 +39,7 @@ class World:
 
         self._surf_vertices = self._cache_warmup(game.loader)
         self._paths = self._load_motion_paths()
-        Sun(game, train)
+        self._sun = Sun(game, train)
 
     def _cache_warmup(self, loader):
         """Load all the game models and textures to cache them.
@@ -184,7 +184,9 @@ class World:
         """
         self._block_num += 1
 
-        if chance(5) and not self._et_blocks:
+        if not self._et_blocks and self._enemy.going_to_attack(
+            self._sun.day_part, self._train.lights_on
+        ):
             self._et_blocks = 20
             self._enemy.prepare(self._train.model)
 

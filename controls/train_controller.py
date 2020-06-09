@@ -24,6 +24,7 @@ class TrainController:
         # parallel with train model and camera move intervals
         self._move_par = None
         self._is_stopped = False
+        self._on_et = False
 
     def set_controls(self, game, train, train_move_sound):
         """Configure Train control keys and animation.
@@ -58,15 +59,16 @@ class TrainController:
             block (world.block.Block): World block to move along.
             train_np (panda3d.core.NodePath): Train node.
         """
+        self._on_et = block.enemy_territory
         # use speed value from the last block
         rate = self._move_par.getPlayRate() if self._move_par else 1
 
         self._move_par = Parallel(
             MopathInterval(  # Train movement
-                block.path, self._train_mod, duration=4, name="current_path",
+                block.path, self._train_mod, duration=4, name="current_path"
             ),
             MopathInterval(  # camera movement
-                block.cam_path, train_np, duration=4, name="current_camera_path",
+                block.cam_path, train_np, duration=4, name="current_camera_path"
             ),
         )
         self._move_par.setDoneEvent("block_finished")
@@ -117,6 +119,9 @@ class TrainController:
             self._is_stopped = False
 
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
+        # don't stop on enemy territory
+        if self._on_et and new_rate <= 0.35:
+            return task.again
 
         # change speed
         if 0 < new_rate <= 1:
