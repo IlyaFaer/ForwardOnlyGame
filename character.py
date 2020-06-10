@@ -76,13 +76,12 @@ class Character:
         self.name = random.choice(NAMES[type_])
         self.mod_name = address(random.choice(MODELS[type_]))
 
-    def prepare(self, loader, taskMgr):
+    def prepare(self, taskMgr):
         """Load character model and positionate it.
 
         Tweak collision solid.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3D models loader.
             taskMgr (direct.task.Task.TaskManager): Task manager.
         """
         self.model = Actor(self.mod_name)

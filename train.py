@@ -43,7 +43,6 @@ class Train:
 
         self.parts = {
             "part_arrow_locomotive_left": TrainPart(
-                game.loader,
                 self.model,
                 "part_arrow_locomotive_left",
                 positions=[
@@ -53,7 +52,6 @@ class Train:
                 arrow_pos={"pos": (-0.2, 0.09, 0.147), "angle": 90},
             ),
             "part_arrow_locomotive_right": TrainPart(
-                game.loader,
                 self.model,
                 "part_arrow_locomotive_right",
                 positions=[
@@ -63,7 +61,6 @@ class Train:
                 arrow_pos={"pos": (0.2, 0.09, 0.147), "angle": -90},
             ),
             "part_arrow_locomotive_front": TrainPart(
-                game.loader,
                 self.model,
                 "part_arrow_locomotive_front",
                 positions=[{"pos": (0, 0.41, 0.147), "angle": 180}],
@@ -153,7 +150,6 @@ class TrainPart:
     """Train part where characters can be set.
 
     Args:
-        loader (direct.showbase.Loader.Loader): Panda3D models loader.
         parent (panda3d.core.NodePath):
                 Model, to which arrow sprite of this part
                 should be parented. To this model will be
@@ -165,14 +161,14 @@ class TrainPart:
         arrow_pos (dict): Arrow sprite position and rotation.
     """
 
-    def __init__(self, loader, parent, id_, positions, arrow_pos):
+    def __init__(self, parent, id_, positions, arrow_pos):
         self.id = id_
         self.parent = parent
         self._free = positions
         self._taken = []
 
         # organize a manipulating arrow
-        self._arrow = loader.loadModel(address("train_part_arrow"))
+        self._arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
         self._arrow.setPos(*arrow_pos["pos"])
         self._arrow.setH(arrow_pos["angle"])
 

@@ -37,11 +37,11 @@ class World:
         self._block_num = -1
         self._et_blocks = 0
 
-        self._surf_vertices = self._cache_warmup(game.loader, game.sound_mgr)
+        self._surf_vertices = self._cache_warmup(game.sound_mgr)
         self._paths = self._load_motion_paths()
         self._sun = Sun(game, train)
 
-    def _cache_warmup(self, loader, sound_mgr):
+    def _cache_warmup(self, sound_mgr):
         """Load all the game resources once to cache them.
 
         When a resource is loaded for the first time,
@@ -50,18 +50,17 @@ class World:
         and caching them.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3d loader.
             sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
 
         Returns:
             dict: Index of vertices of every surface model.
         """
         for path in glob.glob("just_tex/*.png"):
-            loader.loadTexture(path)
+            loader.loadTexture(path)  # noqa: F821
 
         all_surf_vertices = {}
         for path in glob.glob(MOD_DIR + "*.bam"):
-            mod = loader.loadModel(path)
+            mod = loader.loadModel(path)  # noqa: F821
 
             # remember surface models vertices coordinates,
             # later they will be used to positionate
@@ -126,7 +125,7 @@ class World:
         paths = {}
 
         for name in ("direct", "l90_turn", "r90_turn", "ls", "rs"):
-            path_mod = self._game.loader.loadModel(address(name + "_path"))
+            path_mod = loader.loadModel(address(name + "_path"))  # noqa: F821
 
             # motion path for Train
             paths[name] = Mopath.Mopath(objectToLoad=path_mod)
@@ -148,7 +147,7 @@ class World:
             cam_path=self._paths["cam_" + "direct"],
             surf_vertices=self._surf_vertices,
             enemy_territory=True,
-        ).prepare(self._game.loader, self._game.taskMgr)
+        ).prepare(self._game.taskMgr)
 
         self._world_map.insert(self._block_num, block)
         return block
@@ -202,9 +201,7 @@ class World:
             if self._et_blocks == 0:
                 self._enemy.stop_attack()
         else:
-            block = self._world_map[self._block_num].prepare(
-                self._game.loader, self._game.taskMgr
-            )
+            block = self._world_map[self._block_num].prepare(self._game.taskMgr)
 
         if self._block_num:  # reparent the next block to the current one
             current_block = self._world_map[self._block_num - 1]

@@ -168,9 +168,7 @@ class Block:
 
         return surface, 0
 
-    def _load_surface_block(
-        self, loader, taskMgr, name, x_pos, y_pos, angle, side=None
-    ):
+    def _load_surface_block(self, taskMgr, name, x_pos, y_pos, angle, side=None):
         """Load surface model and set it to the given coords.
 
         Surface model will be reparented to the rails model
@@ -178,7 +176,6 @@ class Block:
         avoid freezing.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3D models loader.
             taskMgr (direct.task.Task.TaskManager): Task manager.
             name (str): Surface model name.
             x_pos (int): Position on X axis.
@@ -187,7 +184,7 @@ class Block:
             side (str): Left or right side.
         """
         # load surface
-        surf_mod = loader.loadModel(name)
+        surf_mod = loader.loadModel(name)  # noqa: F821
         surf_mod.reparentTo(self.rails_mod)
         surf_mod.setPos(x_pos, y_pos, 0)
         surf_mod.setH(angle)
@@ -202,13 +199,13 @@ class Block:
                 delay,
                 self._load_env_model,
                 "load_env_model",
-                extraArgs=[loader, surf_mod, env_mod],
+                extraArgs=[surf_mod, env_mod],
             )
             delay += 0.03
 
         # load railways model
         if self._railways_model:
-            railways_mod = loader.loadModel(self._railways_model[0])
+            railways_mod = loader.loadModel(self._railways_model[0])  # noqa: F821
             railways_mod.reparentTo(self.rails_mod)
 
             railways_mod.setX(self._railways_model[1][0])
@@ -220,27 +217,25 @@ class Block:
             2.75,
             self._generate_flowers,
             "generate_flowers",
-            extraArgs=[loader, surf_mod, angle, side],
+            extraArgs=[surf_mod, angle, side],
         )
 
-    def _load_env_model(self, loader, surf_mod, env_mod):
+    def _load_env_model(self, surf_mod, env_mod):
         """Helper to load a model asynchronous.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3D loader.
             surf_mod (panda3d.core.NodePath): Surface model.
             env_mod (str): Name of the model to load and its position.
         """
-        mod = loader.loadModel(env_mod[0])
+        mod = loader.loadModel(env_mod[0])  # noqa: F821
         mod.reparentTo(surf_mod)
         mod.setPos(env_mod[1])
         mod.setH(random.randint(1, 359))
 
-    def _generate_flowers(self, loader, surf_mod, angle, side):
+    def _generate_flowers(self, surf_mod, angle, side):
         """Generate texture flowers.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3D loader.
             surf_mod (panda3d.core.NodePath): Surface model.
             angle (int): Surface model angle.
             side (str): Surface model side.
@@ -249,7 +244,7 @@ class Block:
             ts = TextureStage("ts_flower{}".format(str(i)))
             ts.setMode(TextureStage.MDecal)
 
-            tex = loader.loadTexture(
+            tex = loader.loadTexture(  # noqa: F821
                 "just_tex/flower{}.png".format(str(random.randint(1, 5)))
             )
             tex.setWrapU(Texture.WMClamp)
@@ -264,37 +259,36 @@ class Block:
             )
             surf_mod.setTexScale(ts, 20, 20)
 
-    def prepare(self, loader, taskMgr):
+    def prepare(self, taskMgr):
         """Load models, which represents this block content.
 
         Args:
-            loader (direct.showbase.Loader.Loader): Panda3d models loader.
             taskMgr (direct.task.Task.TaskManager): Task manager.
 
         Returns:
             Block: Returns self object.
         """
-        self.rails_mod = loader.loadModel(address(self.name + "_rails"))
+        self.rails_mod = loader.loadModel(address(self.name + "_rails"))  # noqa: F821
 
         self._load_surface_block(
-            loader, taskMgr, self._l_surface, -4, 4, self._l_angle, "l"
+            taskMgr, self._l_surface, -4, 4, self._l_angle, "l"  # noqa: F821
         )
         self._load_surface_block(
-            loader, taskMgr, self._r_surface, 4, 4, self._r_angle, "r"
+            taskMgr, self._r_surface, 4, 4, self._r_angle, "r"  # noqa: F821
         )
 
         if self.name == "l90_turn":
             self._load_surface_block(
-                loader, taskMgr, self._r_surface, -4, 12, self._l_angle
+                taskMgr, self._r_surface, -4, 12, self._l_angle  # noqa: F821
             )
             self._load_surface_block(
-                loader, taskMgr, self._r_surface, 4, 12, self._l_angle
+                taskMgr, self._r_surface, 4, 12, self._l_angle  # noqa: F821
             )
         elif self.name == "r90_turn":
             self._load_surface_block(
-                loader, taskMgr, self._l_surface, 4, 12, self._r_angle
+                taskMgr, self._l_surface, 4, 12, self._r_angle  # noqa: F821
             )
             self._load_surface_block(
-                loader, taskMgr, self._l_surface, -4, 12, self._r_angle
+                taskMgr, self._l_surface, -4, 12, self._r_angle  # noqa: F821
             )
         return self

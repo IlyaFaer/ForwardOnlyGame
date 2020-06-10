@@ -66,12 +66,14 @@ class CommonController:
         Args:
             game (ForwardOnly): Game object.
         """
-        self._font = game.loader.loadFont("arial.ttf")
+        self._font = loader.loadFont("arial.ttf")  # noqa: F821
         game.accept("f1", self._show_keys)
         game.accept("a", self._deselect)
 
         # configure collisions to control characters
-        self._char_pointer = game.loader.loadModel(address("character_pointer"))
+        self._char_pointer = loader.loadModel(  # noqa: F821
+            address("character_pointer")
+        )
 
         # set mouse ray
         mouse_col_node = CollisionNode("mouse_ray")
