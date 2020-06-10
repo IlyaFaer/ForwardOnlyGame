@@ -19,11 +19,13 @@ class Enemy:
 
     Args:
         fraction (str): Enemy fraction name.
-        taskMgr (direct.task.Task.TaskManager): Task manager.
+        task_mgr (direct.task.Task.TaskManager): Task manager.
+        sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
     """
 
-    def __init__(self, fraction, taskMgr):
-        self._task_mgr = taskMgr
+    def __init__(self, fraction, task_mgr, sound_mgr):
+        self._sound_mgr = sound_mgr
+        self._task_mgr = task_mgr
         self._unit_id = 0
         self._active_units = []
         self._is_cooldown = False
@@ -112,9 +114,30 @@ class Enemy:
         enemy.model.reparentTo(train_mod)
         self._active_units.append(enemy)
 
+        # load sounds asynchronously
+        self._task_mgr.doMethodLater(
+            4,
+            self._add_enemy_sounds,
+            "load_enemy_sounds_" + str(id_),
+            extraArgs=[enemy],
+            appendTask=True,
+        )
+
+    def _add_enemy_sounds(self, enemy, task):
+        """Load and attach enemy sounds asynchronous.
+
+        Args:
+            enemy (EnemyUnit): Enemy unit object.
+        """
+        sound = self._sound_mgr.loadSfx("sounds/moto_moves1.ogg")
+        self._sound_mgr.attachSoundToObject(sound, enemy.transport)
+        enemy.set_sounds(sound)
+        return task.done
+
     def _clear_enemies(self, task):
         """Delete all enemy units to release memory."""
         for enemy in self._active_units:
+            self._sound_mgr.detach_sound(enemy.transport_snd)
             enemy.clear()
 
         self._active_units.clear()
@@ -150,6 +173,7 @@ class EnemyUnit:
 
         self.transport = self.model.attachNewNode("moto_" + self.id)
         moto_mod.instanceTo(self.transport)
+        self.transport_snd = None
 
         self._move((30, 47), (self._y_pos, random.uniform(-0.05, 0.4), 0))
         taskMgr.doMethodLater(49, self._float_move, self.id + "_float_move")
@@ -189,6 +213,18 @@ class EnemyUnit:
 
         task.delayTime = random.randint(7, 9)
         return task.again
+
+    def set_sounds(self, transport_snd):
+        """Set sounds for this unit.
+
+        Args:
+            transport_snd (panda3d.core.AudioSound): Transport sound.
+        """
+        self.transport_snd = transport_snd
+        self.transport_snd.setLoop(True)
+        self.transport_snd.setPlayRate(random.uniform(0.8, 1))
+        self.transport_snd.setVolume(0.4)
+        self.transport_snd.play()
 
     def stop(self, taskMgr):
         """Smoothly stop this unit following Train."""

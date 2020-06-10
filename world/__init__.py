@@ -37,20 +37,21 @@ class World:
         self._block_num = -1
         self._et_blocks = 0
 
-        self._surf_vertices = self._cache_warmup(game.loader)
+        self._surf_vertices = self._cache_warmup(game.loader, game.sound_mgr)
         self._paths = self._load_motion_paths()
         self._sun = Sun(game, train)
 
-    def _cache_warmup(self, loader):
-        """Load all the game models and textures to cache them.
+    def _cache_warmup(self, loader, sound_mgr):
+        """Load all the game resources once to cache them.
 
-        When model is loaded for the first time, render
-        can twitch a little. This can be avoid by loading
-        models before the game actually started and
-        caching them.
+        When a resource is loaded for the first time,
+        render can twitch a little. This can be avoid by
+        loading models before the game actually started
+        and caching them.
 
         Args:
             loader (direct.showbase.Loader.Loader): Panda3d loader.
+            sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
 
         Returns:
             dict: Index of vertices of every surface model.
@@ -69,6 +70,9 @@ class World:
                 all_surf_vertices[path.replace("\\", "/")] = self._read_vertices(
                     mod, path
                 )
+
+        for path in glob.glob("sounds/*.ogg"):
+            sound_mgr.loadSfx(path)
 
         return all_surf_vertices
 
@@ -170,7 +174,9 @@ class World:
                     surf_vertices=self._surf_vertices,
                 )
             )
-        self._enemy = Enemy(LOCATIONS[location]["enemy"], self._game.taskMgr)
+        self._enemy = Enemy(
+            LOCATIONS[location]["enemy"], self._game.taskMgr, self._game.sound_mgr
+        )
 
     def prepare_next_block(self):
         """Prepare the next world block.

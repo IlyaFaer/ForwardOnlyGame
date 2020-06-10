@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Main game file. Starts the game itself
 and maintains the major systems.
 """
+from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import WindowProperties, loadPrcFileData
 
@@ -26,6 +27,11 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self._configure_window()
+
+        self.sound_mgr = Audio3DManager.Audio3DManager(
+            base.sfxManagerList[0], self.cam  # noqa: F821
+        )
+        self.sound_mgr.setDropOffFactor(5)
 
         self._char_id = 0  # variable to count character ids
         self.train = Train(self)
