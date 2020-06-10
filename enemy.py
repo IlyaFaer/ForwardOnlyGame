@@ -170,13 +170,19 @@ class EnemyUnit:
         self.model = model
         self.model.setPos(self._io_dist, -7, 0)
         self.model.pose("ride", 1)
+        self.model.setPlayRate(0.6, "aim_left")
+        self.model.setPlayRate(0.6, "aim_right")
 
         self.transport = self.model.attachNewNode("moto_" + self.id)
         moto_mod.instanceTo(self.transport)
         self.transport_snd = None
 
-        self._move((30, 47), (self._y_pos, random.uniform(-0.05, 0.4), 0))
-        taskMgr.doMethodLater(49, self._float_move, self.id + "_float_move")
+        time_to_overtake = random.randint(30, 47)
+        self._move(time_to_overtake, (self._y_pos, random.uniform(-0.05, 0.4), 0))
+        taskMgr.doMethodLater(
+            time_to_overtake + 2, self._float_move, self.id + "_float_move"
+        )
+        taskMgr.doMethodLater(time_to_overtake - 2, self._aim, self.id + "_aim")
 
     @property
     def _io_dist(self):
@@ -196,7 +202,7 @@ class EnemyUnit:
             self._move_int.pause()
 
         self._move_int = LerpPosInterval(
-            self.model, random.randint(*period), new_pos, blendType="easeInOut"
+            self.model, period, new_pos, blendType="easeInOut"
         )
         self._move_int.start()
 
@@ -209,10 +215,21 @@ class EnemyUnit:
                 self._y_pos = self._y_pos + shift
                 self._y_positions.remove(self._y_pos)
 
-        self._move((3, 6), (self._y_pos, random.uniform(-0.25, 0.35) + 0.05, 0))
+        self._move(
+            random.randint(3, 6), (self._y_pos, random.uniform(-0.25, 0.35) + 0.05, 0)
+        )
 
         task.delayTime = random.randint(7, 9)
         return task.again
+
+    def _aim(self, task):
+        """Aim to Train when got close enough."""
+        if self._y_pos < 0:
+            self.model.play("aim_right")
+        else:
+            self.model.play("aim_left")
+
+        return task.done
 
     def set_sounds(self, transport_snd):
         """Set sounds for this unit.
@@ -230,8 +247,13 @@ class EnemyUnit:
         """Smoothly stop this unit following Train."""
         taskMgr.remove(self.id + "_float_move")
 
-        self._move((9, 11), (self._io_dist, -7, 0))
+        self._move(random.randint(9, 11), (self._io_dist, -7, 0))
         self._y_positions.append(self._y_pos)
+
+        self.model.setPlayRate(-0.6, "aim_left")
+        self.model.setPlayRate(-0.6, "aim_right")
+
+        taskMgr.doMethodLater(2, self._aim, self.id + "_unaim")
 
     def clear(self):
         """Clear all the graphical data of this unit."""
