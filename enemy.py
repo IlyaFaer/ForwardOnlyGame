@@ -1,7 +1,9 @@
 """Enemy systems."""
 import random
 from direct.actor.Actor import Actor
-from direct.interval.LerpInterval import LerpPosInterval
+from direct.interval.IntervalGlobal import Sequence, Parallel
+from direct.interval.LerpInterval import LerpPosInterval, LerpScaleInterval
+from direct.interval.SoundInterval import SoundInterval
 from utils import address, chance
 
 FRACTIONS = {
@@ -129,15 +131,20 @@ class Enemy:
         Args:
             enemy (EnemyUnit): Enemy unit object.
         """
-        sound = self._sound_mgr.loadSfx("sounds/moto_moves1.ogg")
-        self._sound_mgr.attachSoundToObject(sound, enemy.transport)
-        enemy.set_sounds(sound)
+        transport_snd = self._sound_mgr.loadSfx("sounds/moto_moves1.ogg")
+        shot_snd = self._sound_mgr.loadSfx("sounds/smg_shot1.ogg")
+
+        self._sound_mgr.attachSoundToObject(transport_snd, enemy.transport)
+        self._sound_mgr.attachSoundToObject(shot_snd, enemy.model)
+
+        enemy.set_sounds(transport_snd, shot_snd)
         return task.done
 
     def _clear_enemies(self, task):
         """Delete all enemy units to release memory."""
         for enemy in self._active_units:
             self._sound_mgr.detach_sound(enemy.transport_snd)
+            self._sound_mgr.detach_sound(enemy.shot_snd)
             enemy.clear()
 
         self._active_units.clear()
@@ -160,6 +167,7 @@ class EnemyUnit:
 
     def __init__(self, taskMgr, model, id_, y_positions, moto_mod):
         self._move_int = None
+        self._shoot_anim = None
 
         self._y_positions = y_positions
         self._y_pos = random.choice(self._y_positions)
@@ -173,16 +181,25 @@ class EnemyUnit:
         self.model.setPlayRate(0.6, "aim_left")
         self.model.setPlayRate(0.6, "aim_right")
 
+        # prepare transport
         self.transport = self.model.attachNewNode("moto_" + self.id)
         moto_mod.instanceTo(self.transport)
         self.transport_snd = None
 
+        # organize movement and aiming tasks
         time_to_overtake = random.randint(30, 47)
         self._move(time_to_overtake, (self._y_pos, random.uniform(-0.05, 0.4), 0))
         taskMgr.doMethodLater(
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
         )
-        taskMgr.doMethodLater(time_to_overtake - 2, self._aim, self.id + "_aim")
+        taskMgr.doMethodLater(
+            time_to_overtake - 2,
+            self._aim,
+            self.id + "_aim",
+            extraArgs=[False],
+            appendTask=True,
+        )
+        taskMgr.doMethodLater(time_to_overtake, self._shoot, self.id + "_shoot")
 
     @property
     def _io_dist(self):
@@ -222,26 +239,59 @@ class EnemyUnit:
         task.delayTime = random.randint(7, 9)
         return task.again
 
-    def _aim(self, task):
-        """Aim to Train when got close enough."""
+    def _aim(self, back, task):
+        """Aim to Train when got close enough.
+
+        Args:
+            back (bool): Unaim.
+        """
         if self._y_pos < 0:
             self.model.play("aim_right")
+            pos, h = (0.04, 0.022, 0.057), 35
         else:
             self.model.play("aim_left")
+            pos, h = (-0.04, 0.019, 0.058), -35
+
+        if not back:
+            # prepare gun fire sequence
+            fire = loader.loadModel("models/bam/gun_fire1.bam")  # noqa: F821
+            fire.reparentTo(self.model)
+            fire.setScale(1, 0.0001, 1)
+
+            shoot_seq = Parallel(
+                Sequence(
+                    LerpScaleInterval(fire, 0.12, (1, 1, 1)),
+                    LerpScaleInterval(fire, 0.12, (1, 0.0001, 1)),
+                ),
+                SoundInterval(self.shot_snd, duration=0.3),
+            )
+            self._shoot_anim = Sequence(shoot_seq, shoot_seq, shoot_seq)
+
+            fire.setPos(*pos)
+            fire.setH(h)
 
         return task.done
 
-    def set_sounds(self, transport_snd):
+    def _shoot(self, task):
+        """Play shooting animation."""
+        self._shoot_anim.start()
+        task.delayTime = 1.7 + random.uniform(0.1, 0.9)
+        return task.again
+
+    def set_sounds(self, transport_snd, shot_snd):
         """Set sounds for this unit.
 
         Args:
             transport_snd (panda3d.core.AudioSound): Transport sound.
+            shot_snd (panda3d.core.AudioSound): Shooting sound.
         """
         self.transport_snd = transport_snd
         self.transport_snd.setLoop(True)
         self.transport_snd.setPlayRate(random.uniform(0.8, 1))
         self.transport_snd.setVolume(0.4)
         self.transport_snd.play()
+
+        self.shot_snd = shot_snd
 
     def stop(self, taskMgr):
         """Smoothly stop this unit following Train."""
@@ -253,7 +303,10 @@ class EnemyUnit:
         self.model.setPlayRate(-0.6, "aim_left")
         self.model.setPlayRate(-0.6, "aim_right")
 
-        taskMgr.doMethodLater(2, self._aim, self.id + "_unaim")
+        taskMgr.doMethodLater(
+            2, self._aim, self.id + "_unaim", extraArgs=[True], appendTask=True
+        )
+        taskMgr.remove(self.id + "_shoot")
 
     def clear(self):
         """Clear all the graphical data of this unit."""
