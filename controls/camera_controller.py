@@ -34,6 +34,8 @@ class CameraController:
             cam (panda3d.core.NodePath): Main camera object.
             train (train.Train): Train object.
         """
+        base.disableMouse()  # noqa: F821
+
         cam_np = train.node.attachNewNode("camera_node")
         cam.reparentTo(cam_np)
         cam.setPos(self._target)

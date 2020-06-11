@@ -66,9 +66,7 @@ class Sun:
             self._color, self._next_color, self._day_part_duration
         )
 
-        self._amb_light, self._dir_light, sun_np = self._set_general_lights(
-            game.render, train.node
-        )
+        self._amb_light, self._dir_light, sun_np = self._set_general_lights(train.node)
         self._set_day_night_cycle(sun_np, game.taskMgr, train.model)
 
     @property
@@ -80,11 +78,10 @@ class Sun:
         """
         return self._color["name"]
 
-    def _set_general_lights(self, render, train_np):
+    def _set_general_lights(self, train_np):
         """Set initial Sun lights.
 
         Args:
-            render (panda3d.core.NodePath): Game render.
             train_np (panda3d.core.NodePath): Train node.
 
         Returns:
@@ -94,7 +91,7 @@ class Sun:
         """
         amb_light = AmbientLight("sun_amb")
         amb_light.setColor(self._color["amb"])
-        render.setLight(render.attachNewNode(amb_light))
+        render.setLight(render.attachNewNode(amb_light))  # noqa: F821
 
         lens = PerspectiveLens()
         lens.setNearFar(1, 100)
@@ -107,8 +104,8 @@ class Sun:
         sun_light.setExponent(0.5)
         sun_np = train_np.attachNewNode(sun_light)
 
-        render.setShaderAuto()
-        render.setLight(sun_np)
+        render.setShaderAuto()  # noqa: F821
+        render.setLight(sun_np)  # noqa: F821
 
         return amb_light, sun_light, sun_np
 

@@ -1,4 +1,9 @@
-"""Enemy systems."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
+
+Enemy systems.
+"""
 import random
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import Sequence, Parallel

@@ -20,7 +20,8 @@ class TrainController:
 
     def __init__(self, train_mod):
         self._train_mod = train_mod
-        self._move_anim_int = None
+        self._move_anim_int = train_mod.actorInterval("move_forward", playRate=10)
+        self._move_anim_int.loop()
         # parallel with train model and camera move intervals
         self._move_par = None
         self._is_stopped = False
@@ -34,9 +35,6 @@ class TrainController:
             train (train.Train): Train object.
             train_move_sound (panda3d.core.AudioSound): Train movement sound.
         """
-        self._move_anim_int = self._train_mod.actorInterval("move_forward", playRate=10)
-        self._move_anim_int.loop()
-
         # speed smoothly changes with holding w/s keys pressed
         game.accept(
             "w", self._change_speed_delayed, [game.taskMgr, train_move_sound, 0.05]
@@ -44,8 +42,8 @@ class TrainController:
         game.accept(
             "s", self._change_speed_delayed, [game.taskMgr, train_move_sound, -0.05]
         )
-        game.accept("w-up", self._stop_speed_change, [game.taskMgr])
-        game.accept("s-up", self._stop_speed_change, [game.taskMgr])
+        game.accept("w-up", game.taskMgr.remove, ["change_train_speed"])
+        game.accept("s-up", game.taskMgr.remove, ["change_train_speed"])
 
         game.accept("f", train.toggle_lights, [game.render])
 
@@ -74,14 +72,6 @@ class TrainController:
         self._move_par.setDoneEvent("block_finished")
         self._move_par.start()
         self._move_par.setPlayRate(rate)
-
-    def _stop_speed_change(self, taskMgr):
-        """Stop the task which is changing Train speed.
-
-        Args:
-            taskMgr (direct.task.Task.TaskManager): Task manager.
-        """
-        taskMgr.remove("change_train_speed")
 
     def _change_speed_delayed(self, taskMgr, train_move_sound, diff):
         """Start changing Train speed.
@@ -138,7 +128,6 @@ class TrainController:
         if new_rate == 0:
             self._move_par.pause()
             self._move_anim_int.pause()
-
             train_move_sound.stop()
 
             self._is_stopped = True

@@ -21,7 +21,9 @@ loadPrcFileData("", "audio-library-name p3fmod_audio")
 class ForwardOnly(ShowBase):
     """Object, which represents the game itself.
 
-    Includes the main game systems.
+    Includes the major game systems. The main mechanism
+    represents infinite Train movement along World
+    blocks, which are loaded and unloaded on a fly.
     """
 
     def __init__(self):
@@ -42,10 +44,8 @@ class ForwardOnly(ShowBase):
         # build game world
         self._world = World(self, self.train)
         self._world.generate_location("Plains", 300)
-
         self._current_block = self._world.prepare_next_block()
 
-        base.disableMouse()  # noqa: F821
         CameraController().set_controls(self, self.cam, self.train)
 
         # prepare default characters
@@ -63,8 +63,7 @@ class ForwardOnly(ShowBase):
 
             common_ctrl.chars[char.id] = char
 
-        # start moving
-        self._move_along_block(self.train.model, self.train.node)
+        self._move_along_block()
 
     def _configure_window(self):
         """Configure game window.
@@ -80,38 +79,13 @@ class ForwardOnly(ShowBase):
         )
         base.openDefaultWindow(props=props)  # noqa: F821
 
-    def _move_along_block(self, train_mod, train_np):
+    def _move_along_block(self):
         """Move Train along the current world block.
 
         While Train is moving along the current block,
-        game prepares the next one.
-
-        Args:
-            train_mod (panda3d.core.NodePath): Train model to move.
-            train_np (panda3d.core.NodePath): Train node.
+        the game prepares the next one.
         """
-        # prepare model to move along the next motion path
-        train_mod.wrtReparentTo(self.render)
-        train_np.wrtReparentTo(self.render)
-
-        # round coordinates to avoid position/rotation errors
-        mod_pos = (
-            round(train_mod.getX()),
-            round(train_mod.getY()),
-            round(train_mod.getZ()),
-        )
-        train_mod.setPos(mod_pos)
-        train_mod.setHpr(
-            (round(train_mod.getH()), round(train_mod.getP()), round(train_mod.getR()))
-        )
-
-        train_np.setPos(mod_pos)
-
-        self.train.root_node.setPos(mod_pos)
-        self.train.root_node.setHpr(train_mod, 0)
-
-        train_mod.wrtReparentTo(self.train.root_node)
-        train_np.wrtReparentTo(self.train.root_node)
+        self.train.switch_to_current_block()
 
         # load next world block and clear penult
         next_block = self._world.prepare_next_block()
@@ -119,7 +93,7 @@ class ForwardOnly(ShowBase):
 
         # move along the current world block
         self.train.move_along_block(self._current_block)
-        self.acceptOnce("block_finished", self._move_along_block, [train_mod, train_np])
+        self.acceptOnce("block_finished", self._move_along_block)
         self._current_block = next_block
 
 

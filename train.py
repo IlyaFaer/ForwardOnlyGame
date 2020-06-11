@@ -30,8 +30,7 @@ class Train:
     """
 
     def __init__(self, game):
-        # root Train node
-        self.root_node = game.render.attachNewNode("train_root")
+        self.root_node = render.attachNewNode("train_root")  # noqa: F821
         # node to hold camera and Sun
         self.node = self.root_node.attachNewNode("train")
 
@@ -79,6 +78,37 @@ class Train:
         """
         self._ctrl.move_along_block(block, self.node)
 
+    def switch_to_current_block(self):
+        """Switch to the current world block.
+
+        Train root node must be moved to the end of the
+        prev block motion path = start of the current one.
+        """
+        self.model.wrtReparentTo(render)  # noqa: F821
+        self.node.wrtReparentTo(render)  # noqa: F821
+
+        # round coordinates to avoid position/rotation errors
+        mod_pos = (
+            round(self.model.getX()),
+            round(self.model.getY()),
+            round(self.model.getZ()),
+        )
+        self.model.setPos(mod_pos)
+        self.model.setHpr(
+            (
+                round(self.model.getH()),
+                round(self.model.getP()),
+                round(self.model.getR()),
+            )
+        )
+        self.node.setPos(mod_pos)
+
+        self.root_node.setPos(mod_pos)
+        self.root_node.setHpr(self.model, 0)
+
+        self.model.wrtReparentTo(self.root_node)
+        self.node.wrtReparentTo(self.root_node)
+
     def _set_lights(self):
         """Configure Train lights.
 
@@ -108,7 +138,7 @@ class Train:
         ):
             lamp = PointLight(name)
             lamp.setColor((0.99, 0.91, 0.5, 1))
-            lamp.setAttenuation((3, 3, 3))
+            lamp.setAttenuation((3))
             lamp_np = self.model.attachNewNode(lamp)
             lamp_np.setPos(*coors)
 
@@ -154,15 +184,14 @@ class TrainPart:
                 Model, to which arrow sprite of this part
                 should be parented. To this model will be
                 reparented characters as well.
-        id_ (str): Part id.
+        name (str): Part name.
         positions (list):
             Dicts describing possible positions and
             rotations on this TrainPart.
         arrow_pos (dict): Arrow sprite position and rotation.
     """
 
-    def __init__(self, parent, id_, positions, arrow_pos):
-        self.id = id_
+    def __init__(self, parent, name, positions, arrow_pos):
         self.parent = parent
         self._free = positions
         self._taken = []
@@ -178,12 +207,11 @@ class TrainPart:
             Point3(0.06, 0.06, 0),
             Point3(0.06, -0.06, 0),
         )
-        col_solid.flip()
-        col_node = self._arrow.attachNewNode(CollisionNode(self.id))
+        col_node = self._arrow.attachNewNode(CollisionNode(name))
         col_node.node().addSolid(col_solid)
 
     def give_cell(self):
-        """Choose non taken cell.
+        """Choose a non taken cell.
 
         Returns:
             dict: Position and rotation to set character.
@@ -207,9 +235,9 @@ class TrainPart:
         self._free.append(position)
 
     def show_arrow(self):
-        """Show manipulating arrow if this TrainPart."""
+        """Show manipulating arrow of this TrainPart."""
         self._arrow.reparentTo(self.parent)
 
     def hide_arrow(self):
-        """Hide manipulating arrow if this TrainPart."""
+        """Hide manipulating arrow of this TrainPart."""
         self._arrow.detachNode()

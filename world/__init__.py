@@ -31,7 +31,7 @@ class World:
         self._game = game
         self._train = train
         self._enemy = None
-        self._world_map = []  # generated world blocks
+        self._map = []  # all the generated world blocks
         # index of the block, which is
         # processed by World now
         self._block_num = -1
@@ -149,7 +149,7 @@ class World:
             enemy_territory=True,
         ).prepare(self._game.taskMgr)
 
-        self._world_map.insert(self._block_num, block)
+        self._map.insert(self._block_num, block)
         return block
 
     def generate_location(self, location, size):
@@ -165,7 +165,7 @@ class World:
         for _ in range(size):
             rails_block = rails_gen.generate_block()
 
-            self._world_map.append(
+            self._map.append(
                 Block(
                     name=rails_block,
                     path=self._paths[rails_block],
@@ -201,10 +201,10 @@ class World:
             if self._et_blocks == 0:
                 self._enemy.stop_attack()
         else:
-            block = self._world_map[self._block_num].prepare(self._game.taskMgr)
+            block = self._map[self._block_num].prepare(self._game.taskMgr)
 
         if self._block_num:  # reparent the next block to the current one
-            current_block = self._world_map[self._block_num - 1]
+            current_block = self._map[self._block_num - 1]
             block.rails_mod.reparentTo(current_block.rails_mod)
 
             final_pos = current_block.path.getFinalState()[0]
@@ -229,10 +229,10 @@ class World:
             # blocks are reparented to each other, so
             # we need to reparent the block to the render
             # before clearing, to avoid chain reaction
-            self._world_map[num + 1].rails_mod.wrtReparentTo(self._game.render)
-            self._world_map[num].rails_mod.removeNode()
+            self._map[num + 1].rails_mod.wrtReparentTo(self._game.render)
+            self._map[num].rails_mod.removeNode()
 
             # don't keep enemy territory in the world
-            if self._world_map[num].enemy_territory:
-                self._world_map.pop(num)
+            if self._map[num].enemy_territory:
+                self._map.pop(num)
                 self._block_num -= 1
