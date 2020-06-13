@@ -7,9 +7,9 @@ and maintains the major systems.
 """
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import WindowProperties, loadPrcFileData
+from panda3d.core import CollisionTraverser, WindowProperties, loadPrcFileData
 
-from character import Character
+from character import Team
 from controls import CameraController, CommonController
 from train import Train
 from world import World
@@ -35,33 +35,22 @@ class ForwardOnly(ShowBase):
         )
         self.sound_mgr.setDropOffFactor(5)
 
-        self._char_id = 0  # variable to count character ids
+        self.traverser = CollisionTraverser("main_traverser")
+
         self.train = Train(self)
 
-        common_ctrl = CommonController(self.train.parts)
-        common_ctrl.set_controls(self)
+        team = Team()
+        team.gen_default(self.train.parts)
+
+        common_ctrl = CommonController(self.train.parts, team.chars)
+        common_ctrl.set_controls()
 
         # build game world
-        self._world = World(self, self.train)
+        self._world = World(self, self.train, team)
         self._world.generate_location("Plains", 300)
         self._current_block = self._world.prepare_next_block()
 
         CameraController().set_controls(self, self.cam, self.train)
-
-        # prepare default characters
-        for part in (
-            self.train.parts["part_arrow_locomotive_right"],
-            self.train.parts["part_arrow_locomotive_right"],
-            self.train.parts["part_arrow_locomotive_front"],
-        ):
-            self._char_id += 1
-
-            char = Character(self._char_id)
-            char.generate("male")
-            char.prepare(self.taskMgr)
-            char.move_to(part)
-
-            common_ctrl.chars[char.id] = char
 
         self._move_along_block()
 

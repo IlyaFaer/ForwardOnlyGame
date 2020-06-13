@@ -25,11 +25,13 @@ class World:
     Args:
         game (ForwardOnly): Game object.
         train (train.Train): Train object.
+        team (character.Team): Player units.
     """
 
-    def __init__(self, game, train):
+    def __init__(self, game, train, team):
         self._game = game
         self._train = train
+        self._team = team
         self._enemy = None
         self._map = []  # all the generated world blocks
         # index of the block, which is
@@ -194,6 +196,7 @@ class World:
         ):
             self._et_blocks = 20
             self._enemy.prepare(self._train.model)
+            self._team.prepare_to_fight(self._enemy.active_units)
 
         if self._et_blocks:
             block = self._prepare_et_block()

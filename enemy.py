@@ -5,10 +5,14 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Enemy systems.
 """
 import random
+
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import Sequence, Parallel
 from direct.interval.LerpInterval import LerpPosInterval, LerpScaleInterval
 from direct.interval.SoundInterval import SoundInterval
+from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionSphere
+
+from const import MOUSE_MASK, SHOT_RANGE_MASK
 from utils import address, chance
 
 FRACTIONS = {
@@ -31,13 +35,14 @@ class Enemy:
     """
 
     def __init__(self, fraction, task_mgr, sound_mgr):
+        self.active_units = {}
+        self._unit_id = 0
+        self._is_cooldown = False
+        self._y_positions = []
+
         self._sound_mgr = sound_mgr
         self._task_mgr = task_mgr
-        self._unit_id = 0
-        self._active_units = []
-        self._is_cooldown = False
 
-        self._y_positions = []
         for gain in range(1, 14):
             self._y_positions.append(round(0.15 + gain * 0.05, 2))
             self._y_positions.append(round(-0.15 - gain * 0.05, 2))
@@ -47,6 +52,11 @@ class Enemy:
 
         self._motocycle1_model = Actor(address("motocycle1"))
         self._motocycle1_model.setPlayRate(1.5, "ride")
+
+        # set enemy collisions handler
+        self._handler = CollisionHandlerEvent()
+        self._handler.addInPattern("into-%in")
+        self._handler.addOutPattern("out-%in")
 
     def going_to_attack(self, day_part, lights_on):
         """Checks if enemy is going to attack.
@@ -94,7 +104,7 @@ class Enemy:
 
     def stop_attack(self):
         """Make all the unit smoothly stop following Train."""
-        for enemy in self._active_units:
+        for enemy in self.active_units.values():
             enemy.stop(self._task_mgr)
 
         self._task_mgr.doMethodLater(12, self._clear_enemies, "clear_enemies")
@@ -117,9 +127,10 @@ class Enemy:
             id_,
             self._y_positions,
             self._motocycle1_model,
+            self._handler,
         )
         enemy.model.reparentTo(train_mod)
-        self._active_units.append(enemy)
+        self.active_units[enemy.id] = enemy
 
         # load sounds asynchronously
         self._task_mgr.doMethodLater(
@@ -147,12 +158,12 @@ class Enemy:
 
     def _clear_enemies(self, task):
         """Delete all enemy units to release memory."""
-        for enemy in self._active_units:
+        for enemy in self.active_units.values():
             self._sound_mgr.detach_sound(enemy.transport_snd)
             self._sound_mgr.detach_sound(enemy.shot_snd)
             enemy.clear()
 
-        self._active_units.clear()
+        self.active_units.clear()
         self._motocycle1_model.stop()
         return task.done
 
@@ -168,9 +179,10 @@ class EnemyUnit:
         id_ (int): Enemy unit id.
         y_positions (list): Free positions along Y.
         moto (actor.Actor): Motocycle model.
+        enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
     """
 
-    def __init__(self, taskMgr, model, id_, y_positions, moto_mod):
+    def __init__(self, taskMgr, model, id_, y_positions, moto_mod, enemy_handler):
         self._move_int = None
         self._shoot_anim = None
 
@@ -185,6 +197,13 @@ class EnemyUnit:
         self.model.pose("ride", 1)
         self.model.setPlayRate(0.6, "aim_left")
         self.model.setPlayRate(0.6, "aim_right")
+
+        en_col_node = CollisionNode(self.id)
+        en_col_node.setIntoCollideMask(MOUSE_MASK)
+        en_col_node.setFromCollideMask(SHOT_RANGE_MASK)
+        en_col_node.addSolid(CollisionSphere(0, 0, 0.05, 0.05))
+        col_np = self.model.attachNewNode(en_col_node)
+        base.traverser.addCollider(col_np, enemy_handler)  # noqa: F821
 
         # prepare transport
         self.transport = self.model.attachNewNode("moto_" + self.id)
@@ -270,7 +289,7 @@ class EnemyUnit:
                 ),
                 SoundInterval(self.shot_snd, duration=0.3),
             )
-            self._shoot_anim = Sequence(shoot_seq, shoot_seq, shoot_seq)
+            self._shoot_anim = Sequence(shoot_seq, shoot_seq)
 
             fire.setPos(*pos)
             fire.setH(h)

@@ -5,14 +5,9 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Common game controls.
 """
 from direct.gui.OnscreenText import OnscreenText
-from panda3d.core import (
-    CollisionHandlerEvent,
-    CollisionNode,
-    CollisionRay,
-    CollisionTraverser,
-    TextNode,
-)
+from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionRay, TextNode
 
+from const import MOUSE_MASK, NO_MASK
 from utils import address
 
 KEYS_INFO = u"""
@@ -37,71 +32,64 @@ F - toggle Train lights
 class CommonController:
     """Common controller.
 
-    Includes controls to show game control keys info.
+    Includes controls to show game control keys info
+    and mouse clicking.
 
     Args:
-        parts (dict):
-            Train parts to set characters on.
+        parts (dict): Train parts to set characters on.
+        chars (dict): Characters index.
     """
 
-    def __init__(self, parts):
-        self._is_keys_shown = False
-        self._keys_info = None
-        self._font = None
-        self._traverser = None
+    def __init__(self, parts, chars):
+        self._parts = parts
+        self.chars = chars
 
+        self._is_keys_shown = False
+        self._keys_info = None  # on screen text
         self._pointed_obj = ""
         self._chosen_char = None
-        self._char_pointer = None
-        self.chars = {}
 
-        self._parts = parts
-
-    def set_controls(self, game):
-        """Configure common game controls.
-
-        Configure major keys, collisions system
-        and controls to manipulate characters.
-
-        Args:
-            game (ForwardOnly): Game object.
-        """
         self._font = loader.loadFont("arial.ttf")  # noqa: F821
-        game.accept("f1", self._show_keys)
-        game.accept("a", self._deselect)
-
-        # configure collisions to control characters
         self._char_pointer = loader.loadModel(  # noqa: F821
             address("character_pointer")
         )
 
-        # set mouse ray
+    def set_controls(self):
+        """Configure common game controls.
+
+        Configure major keys, collisions system
+        and controls to manipulate characters.
+        """
+        base.accept("f1", self._show_keys)  # noqa: F821
+        base.accept("a", self._deselect)  # noqa: F821
+
+        # configure mouse collisions
         mouse_col_node = CollisionNode("mouse_ray")
-        mouse_np = game.cam.attachNewNode(mouse_col_node)
+        mouse_col_node.setIntoCollideMask(NO_MASK)
+        mouse_col_node.setFromCollideMask(MOUSE_MASK)
         self._mouse_ray = CollisionRay()
         mouse_col_node.addSolid(self._mouse_ray)
 
+        # set common collisions handler
         handler = CollisionHandlerEvent()
         handler.addInPattern("%fn-into")
         handler.addOutPattern("%fn-out")
 
-        self._traverser = CollisionTraverser("main_traverser")
-        self._traverser.addCollider(mouse_np, handler)
-
+        base.traverser.addCollider(  # noqa: F821
+            base.cam.attachNewNode(mouse_col_node), handler  # noqa: F821
+        )
         # set events and tasks to organize pointing
         # and clicking on characters and parts
-        game.accept("mouse1", self._choose_char)
-        game.accept("mouse3", self._move_char)
-        game.accept("mouse_ray-into", self._point_obj)
-        game.accept("mouse_ray-out", self._unpoint_obj)
+        base.accept("mouse1", self._choose_char)  # noqa: F821
+        base.accept("mouse3", self._move_char)  # noqa: F821
+        base.accept("mouse_ray-into", self._point_obj)  # noqa: F821
+        base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
 
-        game.taskMgr.doMethodLater(0.09, self._collide_mouse, "collide_mouse")
-        game.taskMgr.doMethodLater(
-            0.1,
-            self._traverse,
-            extraArgs=[game.render],
-            appendTask=True,
-            name="main_traverse",
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.09, self._collide_mouse, "collide_mouse"
+        )
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.1, self._traverse, name="main_traverse"
         )
 
     def _deselect(self):
@@ -127,7 +115,7 @@ class CommonController:
     def _move_char(self):
         """Move chosen character to the pointed part."""
         if self._chosen_char:
-            if self._pointed_obj.startswith("part_arrow_"):
+            if self._pointed_obj.startswith("part_"):
                 self._chosen_char.move_to(self._parts[self._pointed_obj])
 
     def _point_obj(self, event):
@@ -148,9 +136,9 @@ class CommonController:
         self._mouse_ray.setFromLens(base.camNode, mpos.x, mpos.y)  # noqa: F821
         return task.again
 
-    def _traverse(self, render, task):
+    def _traverse(self, task):
         """Main traverser task."""
-        self._traverser.traverse(render)
+        base.traverser.traverse(render)  # noqa: F821
         return task.again
 
     def _show_keys(self):
