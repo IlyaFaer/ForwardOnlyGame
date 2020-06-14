@@ -30,18 +30,16 @@ class Enemy:
 
     Args:
         fraction (str): Enemy fraction name.
-        task_mgr (direct.task.Task.TaskManager): Task manager.
         sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
     """
 
-    def __init__(self, fraction, task_mgr, sound_mgr):
+    def __init__(self, fraction, sound_mgr):
         self.active_units = {}
         self._unit_id = 0
         self._is_cooldown = False
         self._y_positions = []
 
         self._sound_mgr = sound_mgr
-        self._task_mgr = task_mgr
 
         for gain in range(1, 14):
             self._y_positions.append(round(0.15 + gain * 0.05, 2))
@@ -73,7 +71,7 @@ class Enemy:
 
         if chance(self._attack_chances[day_part] + 2 if lights_on else 0):
             self._is_cooldown = True
-            self._task_mgr.doMethodLater(
+            base.taskMgr.doMethodLater(  # noqa: F821
                 600, self._stop_cooldown, "stop_attack_cooldown"
             )
             return True
@@ -94,7 +92,7 @@ class Enemy:
         delay = 0
         for _ in range(random.randint(2, 10)):
             self._unit_id += 1
-            self._task_mgr.doMethodLater(
+            base.taskMgr.doMethodLater(  # noqa: F821
                 delay,
                 self._load_enemy,
                 "load_enemy_" + str(self._unit_id),
@@ -105,9 +103,11 @@ class Enemy:
     def stop_attack(self):
         """Make all the unit smoothly stop following Train."""
         for enemy in self.active_units.values():
-            enemy.stop(self._task_mgr)
+            enemy.stop()
 
-        self._task_mgr.doMethodLater(12, self._clear_enemies, "clear_enemies")
+        base.taskMgr.doMethodLater(  # noqa: F821
+            12, self._clear_enemies, "clear_enemies"
+        )
 
     def _stop_cooldown(self, task):
         """Ends cool down period."""
@@ -122,7 +122,6 @@ class Enemy:
             id_ (int): Unit id.
         """
         enemy = EnemyUnit(
-            self._task_mgr,
             Actor(address(random.choice(self._models))),
             id_,
             self._y_positions,
@@ -133,7 +132,7 @@ class Enemy:
         self.active_units[enemy.id] = enemy
 
         # load sounds asynchronously
-        self._task_mgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             4,
             self._add_enemy_sounds,
             "load_enemy_sounds_" + str(id_),
@@ -174,7 +173,6 @@ class EnemyUnit:
     Includes character and his transport.
 
     Args:
-        taskMgr (direct.task.Task.TaskManager): Task manager.
         model (actor.Actor): Enemy character model.
         id_ (int): Enemy unit id.
         y_positions (list): Free positions along Y.
@@ -182,7 +180,7 @@ class EnemyUnit:
         enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
     """
 
-    def __init__(self, taskMgr, model, id_, y_positions, moto_mod, enemy_handler):
+    def __init__(self, model, id_, y_positions, moto_mod, enemy_handler):
         self._move_int = None
         self._shoot_anim = None
 
@@ -213,17 +211,19 @@ class EnemyUnit:
         # organize movement and aiming tasks
         time_to_overtake = random.randint(30, 47)
         self._move(time_to_overtake, (self._y_pos, random.uniform(-0.05, 0.4), 0))
-        taskMgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
         )
-        taskMgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake - 2,
             self._aim,
             self.id + "_aim",
             extraArgs=[False],
             appendTask=True,
         )
-        taskMgr.doMethodLater(time_to_overtake, self._shoot, self.id + "_shoot")
+        base.taskMgr.doMethodLater(  # noqa: F821
+            time_to_overtake, self._shoot, self.id + "_shoot"
+        )
 
     @property
     def _io_dist(self):
@@ -317,9 +317,9 @@ class EnemyUnit:
 
         self.shot_snd = shot_snd
 
-    def stop(self, taskMgr):
+    def stop(self):
         """Smoothly stop this unit following Train."""
-        taskMgr.remove(self.id + "_float_move")
+        base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
 
         self._move(random.randint(9, 11), (self._io_dist, -7, 0))
         self._y_positions.append(self._y_pos)
@@ -327,10 +327,10 @@ class EnemyUnit:
         self.model.setPlayRate(-0.6, "aim_left")
         self.model.setPlayRate(-0.6, "aim_right")
 
-        taskMgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             2, self._aim, self.id + "_unaim", extraArgs=[True], appendTask=True
         )
-        taskMgr.remove(self.id + "_shoot")
+        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
 
     def clear(self):
         """Clear all the graphical data of this unit."""

@@ -215,7 +215,7 @@ class Block:
         # generate texture flowers
         taskMgr.doMethodLater(
             2.75,
-            self._generate_flowers,
+            self._gen_flowers,
             "generate_flowers",
             extraArgs=[surf_mod, angle, side],
         )
@@ -232,7 +232,7 @@ class Block:
         mod.setPos(env_mod[1])
         mod.setH(random.randint(1, 359))
 
-    def _generate_flowers(self, surf_mod, angle, side):
+    def _gen_flowers(self, surf_mod, angle, side):
         """Generate texture flowers.
 
         Args:

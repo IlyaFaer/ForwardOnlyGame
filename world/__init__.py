@@ -175,9 +175,7 @@ class World:
                     surf_vertices=self._surf_vertices,
                 )
             )
-        self._enemy = Enemy(
-            LOCATIONS[location]["enemy"], self._game.taskMgr, self._game.sound_mgr
-        )
+        self._enemy = Enemy(LOCATIONS[location]["enemy"], self._game.sound_mgr)
 
     def prepare_next_block(self):
         """Prepare the next world block.
