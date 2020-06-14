@@ -6,6 +6,8 @@ The World dies because of the terrible cataclysm, and the only way to survive is
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
+See also a [demo video](https://drive.google.com/file/d/1E8EnEnbomHXIljwfrR-726Gdo5TCugIc/view?usp=sharing) on Google Drive
+
 **The Project legal status**
 The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
 
