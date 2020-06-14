@@ -6,7 +6,13 @@ Characters (player units) API.
 """
 import random
 from direct.actor.Actor import Actor
-from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
+from direct.interval.IntervalGlobal import (
+    LerpAnimInterval,
+    LerpScaleInterval,
+    Parallel,
+    Sequence,
+    SoundInterval,
+)
 from panda3d.core import CollisionCapsule, CollisionNode
 
 from const import MOUSE_MASK, NO_MASK
@@ -102,6 +108,8 @@ class Character:
         self._idle_seq = None
         self._target = None  # target enemy id
         self._attacking_enemies = None
+        self._shoot_anim = None
+        self._shoot_snd = None
 
         self.name = None
         self.mod_name = None
@@ -144,6 +152,25 @@ class Character:
         col_node.setIntoCollideMask(MOUSE_MASK)
         col_node.addSolid(CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035))
         self.model.attachNewNode(col_node)
+
+        self._shot_snd = base.sound_mgr.loadSfx("sounds/rifle_shot1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._shot_snd, self.model)  # noqa: F821
+
+        # prepare shooting animations and sounds
+        fire = loader.loadModel(address("gun_fire1"))  # noqa: F821
+        fire.reparentTo(self.model)
+        fire.setPos(0.004, 0.045, 0.064)
+        fire.setH(97)
+        fire.setScale(1, 0.0001, 1)
+
+        shoot_seq = Parallel(
+            Sequence(
+                LerpScaleInterval(fire, 0.12, (1, 1, 1)),
+                LerpScaleInterval(fire, 0.12, (1, 0.0001, 1)),
+            ),
+            SoundInterval(self._shot_snd, duration=0.3),
+        )
+        self._shoot_anim = Sequence(shoot_seq, shoot_seq)
 
     def move_to(self, part):
         """Move this Character to the given train part.
@@ -197,6 +224,7 @@ class Character:
         if self._current_part.enemies_in_range:
             self._target = random.choice(self._current_part.enemies_in_range)
             base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
+            base.taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
             return task.done
 
         # enemies retreated - return to passive state
@@ -212,6 +240,8 @@ class Character:
             self.model.headsUp(self._attacking_enemies[self._target].model)
             return task.again
 
+        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+
         if self._attacking_enemies:
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._choose_target, self.id + "_choose_target"
@@ -222,8 +252,15 @@ class Character:
         self._calm_down()
         return task.done
 
+    def _shoot(self, task):
+        """Play shooting animation and sound."""
+        self._shoot_anim.start()
+        task.delayTime = 1.7 + random.uniform(0.1, 0.9)
+        return task.again
+
     def _calm_down(self):
         """Return to passive state."""
+        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
         self.model.hprInterval(2, (self._current_pos["angle"], 0, 0)).start()
 
         LerpAnimInterval(self.model, 0.8, "stand_and_aim", "stand").start()

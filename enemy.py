@@ -278,7 +278,7 @@ class EnemyUnit:
 
         if not back:
             # prepare gun fire sequence
-            fire = loader.loadModel("models/bam/gun_fire1.bam")  # noqa: F821
+            fire = loader.loadModel(address("gun_fire1"))  # noqa: F821
             fire.reparentTo(self.model)
             fire.setScale(1, 0.0001, 1)
 
@@ -297,7 +297,7 @@ class EnemyUnit:
         return task.done
 
     def _shoot(self, task):
-        """Play shooting animation."""
+        """Play shooting animation and sound."""
         self._shoot_anim.start()
         task.delayTime = 1.7 + random.uniform(0.1, 0.9)
         return task.again
