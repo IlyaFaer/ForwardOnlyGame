@@ -40,7 +40,7 @@ class Train:
         self.model.reparentTo(self.root_node)
 
         self._ctrl = TrainController(self.model)
-        self._ctrl.set_controls(game, self, self._set_sounds(game.sound_mgr, game.cam))
+        self._ctrl.set_controls(game, self, self._set_sounds(game.sound_mgr))
 
         self.parts = {
             "part_locomotive_left": TrainPart(
@@ -148,12 +148,11 @@ class Train:
 
         return train_lights
 
-    def _set_sounds(self, sound_mgr, cam):
+    def _set_sounds(self, sound_mgr):
         """Configure Train sounds.
 
         Args:
             sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
-            cam (panda3d.core.NodePath): Main camera object.
 
         Returns:
             panda3d.core.AudioSound: Train movement sound.
@@ -165,13 +164,9 @@ class Train:
         train_move_sound.play()
         return train_move_sound
 
-    def toggle_lights(self, render):
-        """Toggle Train lights.
-
-        Args:
-            render (panda3d.core.NodePath): Game render.
-        """
-        method = render.clearLight if self.lights_on else render.setLight
+    def toggle_lights(self):
+        """Toggle Train lights."""
+        method = render.clearLight if self.lights_on else render.setLight  # noqa: F821
         for light in self._lights:
             method(light)
 
@@ -197,7 +192,6 @@ class TrainPart:
         self.parent = parent
         self.enemies_in_range = []
         self._free = positions
-        self._taken = []
 
         # organize a manipulating arrow
         self._arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
@@ -251,7 +245,6 @@ class TrainPart:
 
         position = random.choice(self._free)
         self._free.remove(position)
-        self._taken.append(position)
         return position
 
     def release_cell(self, position):
@@ -261,7 +254,6 @@ class TrainPart:
             position (dict):
                 Position and rotation of the taken cell.
         """
-        self._taken.remove(position)
         self._free.append(position)
 
     def show_arrow(self):

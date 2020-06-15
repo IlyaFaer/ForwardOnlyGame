@@ -26,30 +26,28 @@ class CameraController:
 
         base.camLens.setNear(0.5)  # noqa: F821
 
-    def set_controls(self, game, cam, train):
+    def set_controls(self, game, train):
         """Configure camera, its node and set keyboard keys to control the camera.
 
         Args:
             game (ForwardOnly): Game object.
-            cam (panda3d.core.NodePath): Main camera object.
             train (train.Train): Train object.
         """
         base.disableMouse()  # noqa: F821
 
         cam_np = train.node.attachNewNode("camera_node")
-        cam.reparentTo(cam_np)
-        cam.setPos(self._target)
-        cam.lookAt(train.model)
+        base.cam.reparentTo(cam_np)  # noqa: F821
+        base.cam.setPos(self._target)  # noqa: F821
+        base.cam.lookAt(train.model)  # noqa: F821
 
-        self._set_move_keys(game, cam_np, cam)
-        game.accept("c", self._toggle_centered_view, [game, cam_np, cam])
+        self._set_move_keys(game, cam_np)
+        game.accept("c", self._toggle_centered_view, [game, cam_np])
 
-    def _move(self, cam_np, cam, x, y, time):
+    def _move(self, cam_np, x, y, time):
         """Start camera movement with a single interval (on key press).
 
         Args:
             cam_np (panda3d.core.NodePath): Camera node.
-            cam (panda3d.core.NodePath): Camera object.
             x (float): Translation along x axis.
             y (float): Translation along y axis.
             time (float): Interval length.
@@ -61,21 +59,22 @@ class CameraController:
             # if camera moves forward, consider Z coordinate
             # to calibrate move limits when zoomed
             if x == 1:
-                x -= MAX_Z - cam.getZ()
+                x -= MAX_Z - base.cam.getZ()  # noqa: F821
 
             self._target.setX(x)
         else:
             self._target.setY(y)
 
-        self._move_int = LerpPosInterval(cam, time, self._target, other=cam_np)
+        self._move_int = LerpPosInterval(
+            base.cam, time, self._target, other=cam_np  # noqa: F821
+        )
         self._move_int.start()
 
-    def _zoom(self, cam_np, cam, x, z):
+    def _zoom(self, cam_np, x, z):
         """Zoom camera.
 
         Args:
             cam_np (panda3d.core.NodePath): Camera node.
-            cam (panda3d.core.NodePath): Camera object.
             x (float): Translation along x axis.
             z (float): Translation along z axis.
         """
@@ -85,7 +84,9 @@ class CameraController:
         self._target.setX(x)
         self._target.setZ(z)
 
-        self._move_int = LerpPosInterval(cam, 1.75, self._target, other=cam_np)
+        self._move_int = LerpPosInterval(
+            base.cam, 1.75, self._target, other=cam_np  # noqa: F821
+        )
         self._move_int.start()
 
     def _turn(self, cam_np, h, r):
@@ -102,12 +103,11 @@ class CameraController:
         self._turn_int = LerpHprInterval(cam_np, 4, (cam_np.getH() + h, 0, r))
         self._turn_int.start()
 
-    def _stop(self, cam_np, cam, stop_x, stop_zoom=False, is_hard=False):
+    def _stop(self, cam_np, stop_x, stop_zoom=False, is_hard=False):
         """Stop moving and rotating camera (on key release).
 
         Args:
             cam_np (panda3d.core.NodePath): Camera node.
-            cam (panda3d.core.NodePath): Camera object.
             stop_x (bool):
                 True - movement along x axis should be stopped.
                 False - movement along y axis should be stopped.
@@ -124,35 +124,36 @@ class CameraController:
             self._turn_int.pause()
 
         if stop_zoom:
-            self._target = cam.getPos()
+            self._target = base.cam.getPos()  # noqa: F821
         elif stop_x:
-            self._target.setX(cam.getX())
+            self._target.setX(base.cam.getX())  # noqa: F821
         else:
-            self._target.setY(cam.getY())
+            self._target.setY(base.cam.getY())  # noqa: F821
 
         if not is_hard:
-            self._move_int = LerpPosInterval(cam, 0.75, self._target, other=cam_np)
+            self._move_int = LerpPosInterval(
+                base.cam, 0.75, self._target, other=cam_np  # noqa: F821
+            )
             self._move_int.start()
 
-    def _set_move_keys(self, game, cam_np, cam):
+    def _set_move_keys(self, game, cam_np):
         """Set camera move and rotate keys.
 
         Args:
             game (ForwardOnly): Game object.
             cam_np (panda3d.core.NodePath): Camera node object.
-            cam (panda3d.core.NodePath): Main camera object.
         """
         # key pressed - start movement
-        game.accept("arrow_up", self._move, [cam_np, cam, 1, None, 1.5])
-        game.accept("arrow_down", self._move, [cam_np, cam, 2, None, 0.75])
-        game.accept("arrow_left", self._move, [cam_np, cam, None, -1.1, 0.9])
-        game.accept("arrow_right", self._move, [cam_np, cam, None, 1.1, 0.9])
+        game.accept("arrow_up", self._move, [cam_np, 1, None, 1.5])
+        game.accept("arrow_down", self._move, [cam_np, 2, None, 0.75])
+        game.accept("arrow_left", self._move, [cam_np, None, -1.1, 0.9])
+        game.accept("arrow_right", self._move, [cam_np, None, 1.1, 0.9])
 
         # key released - stop
-        game.accept("arrow_up-up", self._stop, [cam_np, cam, True])
-        game.accept("arrow_down-up", self._stop, [cam_np, cam, True])
-        game.accept("arrow_left-up", self._stop, [cam_np, cam, False])
-        game.accept("arrow_right-up", self._stop, [cam_np, cam, False])
+        game.accept("arrow_up-up", self._stop, [cam_np, True])
+        game.accept("arrow_down-up", self._stop, [cam_np, True])
+        game.accept("arrow_left-up", self._stop, [cam_np, False])
+        game.accept("arrow_right-up", self._stop, [cam_np, False])
 
         # key pressed - start turning
         game.accept("alt-arrow_left", self._turn, [cam_np, -360, 0])
@@ -161,12 +162,12 @@ class CameraController:
         game.accept("alt-arrow_down", self._turn, [cam_np, 0, 25])
 
         # camera zooming controls
-        game.accept("+", self._zoom, [cam_np, cam, 0.7, 1.2])
-        game.accept("-", self._zoom, [cam_np, cam, 2, 3])
-        game.accept("+-up", self._stop, [cam_np, cam, False, True, True])
-        game.accept("--up", self._stop, [cam_np, cam, False, True, True])
+        game.accept("+", self._zoom, [cam_np, 0.7, 1.2])
+        game.accept("-", self._zoom, [cam_np, 2, 3])
+        game.accept("+-up", self._stop, [cam_np, False, True, True])
+        game.accept("--up", self._stop, [cam_np, False, True, True])
 
-    def _toggle_centered_view(self, game, cam_np, cam):
+    def _toggle_centered_view(self, game, cam_np):
         """Set camera onto default position.
 
         Centered position is optimal for characters
@@ -176,18 +177,17 @@ class CameraController:
         Args:
             game (ForwardOnly): Game object.
             cam_np (panda3d.core.NodePath): Camera node object.
-            cam (panda3d.core.NodePath): Main camera object.
         """
         if not self._is_centered:
-            self._stop(cam_np, cam, False, is_hard=True)
+            self._stop(cam_np, False, is_hard=True)
 
-            self._last_cam_pos = cam.getPos()
-            self._last_cam_hpr = cam.getHpr()
+            self._last_cam_pos = base.cam.getPos()  # noqa: F821
+            self._last_cam_hpr = base.cam.getHpr()  # noqa: F821
             self._last_cam_np_hpr = cam_np.getHpr()
 
-            cam.wrtReparentTo(game.train.model)
-            cam.setPos(0, 0, 1.8)
-            cam.setHpr(90, -90, 0)
+            base.cam.wrtReparentTo(game.train.model)  # noqa: F821
+            base.cam.setPos(0, 0, 1.8)  # noqa: F821
+            base.cam.setHpr(90, -90, 0)  # noqa: F821
             cam_np.setHpr(0, 0, 0)
 
             for key in (
@@ -206,11 +206,11 @@ class CameraController:
             ):
                 game.ignore(key)
         else:
-            cam.wrtReparentTo(cam_np)
-            self._set_move_keys(game, cam_np, cam)
+            base.cam.wrtReparentTo(cam_np)  # noqa: F821
+            self._set_move_keys(game, cam_np)
 
-            cam.setPos(*self._last_cam_pos)
-            cam.setHpr(*self._last_cam_hpr)
+            base.cam.setPos(*self._last_cam_pos)  # noqa: F821
+            base.cam.setHpr(*self._last_cam_hpr)  # noqa: F821
             cam_np.setHpr(*self._last_cam_np_hpr)
 
         self._is_centered = not self._is_centered

@@ -45,7 +45,7 @@ class TrainController:
         game.accept("w-up", game.taskMgr.remove, ["change_train_speed"])
         game.accept("s-up", game.taskMgr.remove, ["change_train_speed"])
 
-        game.accept("f", train.toggle_lights, [game.render])
+        game.accept("f", train.toggle_lights)
 
     def move_along_block(self, block, train_np):
         """Start Train move intervals for the given block.

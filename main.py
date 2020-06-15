@@ -30,6 +30,7 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
+        base.disableAllAudio()  # noqa: F821
         self.sound_mgr = Audio3DManager.Audio3DManager(
             base.sfxManagerList[0], self.cam  # noqa: F821
         )
@@ -38,6 +39,8 @@ class ForwardOnly(ShowBase):
         self.traverser = CollisionTraverser("main_traverser")
 
         self.train = Train(self)
+
+        CameraController().set_controls(self, self.train)
 
         team = Team()
         team.gen_default(self.train.parts)
@@ -50,8 +53,7 @@ class ForwardOnly(ShowBase):
         self._world.generate_location("Plains", 300)
         self._current_block = self._world.prepare_next_block()
 
-        CameraController().set_controls(self, self.cam, self.train)
-
+        base.enableAllAudio()  # noqa: F821
         self._move_along_block()
 
     def _configure_window(self):

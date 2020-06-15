@@ -215,14 +215,14 @@ class EnemyUnit:
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            time_to_overtake - 2,
+            time_to_overtake - 6,
             self._aim,
             self.id + "_aim",
             extraArgs=[False],
             appendTask=True,
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            time_to_overtake, self._shoot, self.id + "_shoot"
+            time_to_overtake - 4, self._shoot, self.id + "_shoot"
         )
 
     @property
