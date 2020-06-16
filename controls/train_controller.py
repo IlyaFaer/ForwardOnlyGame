@@ -7,6 +7,8 @@ API to control Train.
 from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
 
+MIN_SPEED = 0.35
+
 
 class TrainController:
     """Object to control Train.
@@ -16,10 +18,12 @@ class TrainController:
 
     Args:
         train_mod (panda3d.core.NodePath): Train model.
+        train_move_sound (panda3d.core.AudioSound): Train movement sound.
     """
 
-    def __init__(self, train_mod):
+    def __init__(self, train_mod, train_move_sound):
         self._train_mod = train_mod
+        self._train_move_sound = train_move_sound
         self._move_anim_int = train_mod.actorInterval("move_forward", playRate=10)
         self._move_anim_int.loop()
         # parallel with train model and camera move intervals
@@ -27,21 +31,16 @@ class TrainController:
         self._is_stopped = False
         self._on_et = False
 
-    def set_controls(self, game, train, train_move_sound):
+    def set_controls(self, game, train):
         """Configure Train control keys and animation.
 
         Args:
             game (ForwardOnly): The game object.
             train (train.Train): Train object.
-            train_move_sound (panda3d.core.AudioSound): Train movement sound.
         """
         # speed smoothly changes with holding w/s keys pressed
-        game.accept(
-            "w", self._change_speed_delayed, [game.taskMgr, train_move_sound, 0.05]
-        )
-        game.accept(
-            "s", self._change_speed_delayed, [game.taskMgr, train_move_sound, -0.05]
-        )
+        game.accept("w", self._change_speed_delayed, [0.05])
+        game.accept("s", self._change_speed_delayed, [-0.05])
         game.accept("w-up", game.taskMgr.remove, ["change_train_speed"])
         game.accept("s-up", game.taskMgr.remove, ["change_train_speed"])
 
@@ -73,29 +72,26 @@ class TrainController:
         self._move_par.start()
         self._move_par.setPlayRate(rate)
 
-    def _change_speed_delayed(self, taskMgr, train_move_sound, diff):
+    def _change_speed_delayed(self, diff):
         """Start changing Train speed.
 
         To make speed changing smoother delayed task is used.
 
         Args:
-            taskMgr (direct.task.Task.TaskManager): Task manager.
-            train_move_sound (panda3d.core.AudioSound): Train movement sound.
             diff (float): Coefficient to change Train speed.
         """
-        taskMgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             0.6,
             self._change_speed,
             "change_train_speed",
-            extraArgs=[train_move_sound, diff],
+            extraArgs=[diff],
             appendTask=True,
         )
 
-    def _change_speed(self, train_move_sound, diff, task):
+    def _change_speed(self, diff, task):
         """Actually change Train speed.
 
         Args:
-            train_move_sound (panda3d.core.AudioSound): Train movement sound.
             diff (float): Coefficient to change Train speed.
             task (panda3d.core.PythonTask): Task object.
         """
@@ -103,14 +99,13 @@ class TrainController:
         if self._is_stopped and diff > 0:
             self._move_par.resume()
             self._move_anim_int.resume()
-
-            train_move_sound.play()
+            self._train_move_sound.play()
 
             self._is_stopped = False
 
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         # don't stop on enemy territory
-        if self._on_et and new_rate <= 0.35:
+        if self._on_et and new_rate <= MIN_SPEED and diff < 0:
             return task.again
 
         # change speed
@@ -120,7 +115,7 @@ class TrainController:
 
             new_sound_rate = new_rate * 1.2
             if 0.25 <= new_sound_rate <= 1:
-                train_move_sound.setPlayRate(new_sound_rate)
+                self._train_move_sound.setPlayRate(new_sound_rate)
 
             return task.again
 
@@ -128,8 +123,29 @@ class TrainController:
         if new_rate == 0:
             self._move_par.pause()
             self._move_anim_int.pause()
-            train_move_sound.stop()
+            self._train_move_sound.stop()
 
             self._is_stopped = True
 
         return task.done
+
+    def speed_to_min(self):
+        """Accelerate to minimum combat speed."""
+        play_rate = self._move_anim_int.getPlayRate()
+        if play_rate >= MIN_SPEED:
+            return
+
+        # calculate the length of the acceleration
+        speed_steps = (MIN_SPEED - play_rate) / 0.05
+
+        # start accelerating
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6, self._change_speed, "speed_up_train", extraArgs=[0.05], appendTask=True
+        )
+        # stop accelerating
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6 * speed_steps + 0.2,
+            base.taskMgr.remove,  # noqa: F821
+            "stop_speedind_up",
+            extraArgs=["speed_up_train"],
+        )

@@ -13,7 +13,7 @@ from .block import Block
 from .railway_generator import RailwayGenerator
 from .sun import Sun
 from .locations import LOCATIONS
-from enemy import Enemy
+from personage.enemy import Enemy
 from utils import address, MOD_DIR
 
 
@@ -25,7 +25,7 @@ class World:
     Args:
         game (ForwardOnly): Game object.
         train (train.Train): Train object.
-        team (character.Team): Player units.
+        team (personage.character.Team): Player units.
     """
 
     def __init__(self, game, train, team):
@@ -175,7 +175,7 @@ class World:
                     surf_vertices=self._surf_vertices,
                 )
             )
-        self._enemy = Enemy(LOCATIONS[location]["enemy"], self._game.sound_mgr)
+        self._enemy = Enemy(LOCATIONS[location]["enemy"])
 
     def prepare_next_block(self):
         """Prepare the next world block.
@@ -195,6 +195,7 @@ class World:
             self._et_blocks = 20
             self._enemy.prepare(self._train.model)
             self._team.prepare_to_fight(self._enemy.active_units)
+            self._train.speed_to_min()
 
         if self._et_blocks:
             block = self._prepare_et_block()

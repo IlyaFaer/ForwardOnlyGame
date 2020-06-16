@@ -9,7 +9,7 @@ from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import CollisionTraverser, WindowProperties, loadPrcFileData
 
-from character import Team
+from personage.character import Team
 from controls import CameraController, CommonController
 from train import Train
 from world import World

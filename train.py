@@ -39,8 +39,8 @@ class Train:
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
 
-        self._ctrl = TrainController(self.model)
-        self._ctrl.set_controls(game, self, self._set_sounds(game.sound_mgr))
+        self._ctrl = TrainController(self.model, self._set_sounds(game.sound_mgr))
+        self._ctrl.set_controls(game, self)
 
         self.parts = {
             "part_locomotive_left": TrainPart(
@@ -171,6 +171,10 @@ class Train:
             method(light)
 
         self.lights_on = not self.lights_on
+
+    def speed_to_min(self):
+        """Accelerate Train to minimum combat speed."""
+        self._ctrl.speed_to_min()
 
 
 class TrainPart:
