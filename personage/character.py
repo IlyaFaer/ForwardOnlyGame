@@ -249,7 +249,7 @@ class Character(Shooter):
             task (panda3d.core.PythonTask): Task object.
         """
         self._current_anim = random.choice(
-            ("turn_head1", "release_gun", "gun_up", "incline1")
+            ("incline1", "gun_up", "release_gun", "tread1", "turn_head1")
         )
         LerpAnimInterval(self.model, 0.3, "stand", self._current_anim).start()
 
