@@ -167,12 +167,19 @@ class World:
         for _ in range(size):
             rails_block = rails_gen.generate_block()
 
+            if rails_block == "station":
+                rails_block = "direct"
+                is_station = True
+            else:
+                is_station = False
+
             self._map.append(
                 Block(
                     name=rails_block,
                     path=self._paths[rails_block],
                     cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
+                    is_station=is_station,
                 )
             )
         self._enemy = Enemy(LOCATIONS[location]["enemy"])

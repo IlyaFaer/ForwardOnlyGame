@@ -48,15 +48,26 @@ class Block:
         name (str): Block path name.
         surf_vertices (dict): Vertices index of every surface model.
         enemy_territory (bool): This block is an enemy territory.
+        is_station (bool): Station must be set on this block.
     """
 
-    def __init__(self, path, cam_path, name, surf_vertices, enemy_territory=False):
+    def __init__(
+        self,
+        path,
+        cam_path,
+        name,
+        surf_vertices,
+        enemy_territory=False,
+        is_station=False,
+    ):
         self.rails_mod = None
 
         self.name = name
         self.path = path
         self.cam_path = cam_path
         self.enemy_territory = enemy_territory
+
+        self._station_side = random.choice(("l", "r")) if is_station else None
 
         self._l_surface, self._l_angle = self._gen_surface("l")
         self._r_surface, self._r_angle = self._gen_surface("r")
@@ -156,7 +167,7 @@ class Block:
             surface = address("surface_en1")
             return surface, random.choice(ANGLES)
 
-        if chance(1) and self.name == "direct":
+        if side == self._station_side:
             surface = address("surface_with_station1")
             if side == "r":
                 return surface, 180
