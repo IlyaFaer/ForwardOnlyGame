@@ -72,6 +72,9 @@ class Train:
         self._lights = self._set_lights()
         self.lights_on = False
 
+        self._lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
+        self._lighter_snd.setVolume(0.8)
+
     def move_along_block(self, block):
         """Move Train along the given world block.
 
@@ -166,6 +169,7 @@ class Train:
 
     def toggle_lights(self):
         """Toggle Train lights."""
+        self._lighter_snd.play()
         method = render.clearLight if self.lights_on else render.setLight  # noqa: F821
         for light in self._lights:
             method(light)
