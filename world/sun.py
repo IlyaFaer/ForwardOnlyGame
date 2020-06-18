@@ -46,11 +46,10 @@ class Sun:
     Simulates real Sun movement as well.
 
     Args:
-        game (ForwardOnly): The game object.
         train (train.Train): Train object.
     """
 
-    def __init__(self, game, train):
+    def __init__(self, train):
         self._path = Mopath.Mopath(objectToLoad=address("sun_path"))
 
         self._color = copy.deepcopy(next(SUN_COLORS))
@@ -67,7 +66,7 @@ class Sun:
         )
 
         self._amb_light, self._dir_light, sun_np = self._set_general_lights(train.node)
-        self._set_day_night_cycle(sun_np, game.taskMgr, train.model)
+        self._set_day_night_cycle(sun_np, train.model)
 
     @property
     def day_part(self):
@@ -109,15 +108,14 @@ class Sun:
 
         return amb_light, sun_light, sun_np
 
-    def _set_day_night_cycle(self, sun_np, taskMgr, train_mod):
+    def _set_day_night_cycle(self, sun_np, train_mod):
         """Set intervals and methods for day-night cycle.
 
         Args:
             sun_np (panda3d.core.NodePath): Sun node path.
-            taskMgr (direct.task.Task.TaskManager): Task manager.
             train_mod (panda3d.core.NodePath): Train model.
         """
-        taskMgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             self._step_duration,
             self._change_sun_state,
             "change_sun_color",
@@ -131,7 +129,7 @@ class Sun:
             name="sun_interval",
         ).start()
 
-        taskMgr.doMethodLater(
+        base.taskMgr.doMethodLater(  # noqa: F821
             0.1, sun_np.lookAt, extraArgs=[train_mod], name="turn_sun"
         )
 

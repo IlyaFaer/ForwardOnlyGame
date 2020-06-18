@@ -17,6 +17,7 @@ PLAINS_GRASS = (
 
 LOCATIONS = {
     "Plains": {
+        "ambient_sounds": ("meadow_noon", "meadow_night"),
         "enemy": "Skinheads",
         "with_quantity": (
             {"models": PLAINS_GRASS, "quantity": (10, 40), "square": "wide"},

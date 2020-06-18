@@ -7,7 +7,7 @@ Game world systems.
 import glob
 
 from direct.directutil import Mopath
-from panda3d.core import GeomVertexReader
+from panda3d.core import AudioSound, GeomVertexReader
 
 from .block import Block
 from .railway_generator import RailwayGenerator
@@ -33,6 +33,8 @@ class World:
         self._train = train
         self._team = team
         self._enemy = None
+        self._noon_ambient_snd = None
+        self._night_ambient_snd = None
         self._map = []  # all the generated world blocks
         # index of the block, which is
         # processed by World now
@@ -41,7 +43,7 @@ class World:
 
         self._surf_vertices = self._cache_warmup(game.sound_mgr)
         self._paths = self._load_motion_paths()
-        self._sun = Sun(game, train)
+        self._sun = Sun(train)
 
     def _cache_warmup(self, sound_mgr):
         """Load all the game resources once to cache them.
@@ -154,6 +156,49 @@ class World:
         self._map.insert(self._block_num, block)
         return block
 
+    def _track_ambient_sound(self, task):
+        """Check if ambient sounds should be changed."""
+        if self._sun.day_part == "evening":
+            base.taskMgr.doMethodLater(  # noqa: F821
+                2,
+                self._change_amb_snd,
+                "change_ambient_sound",
+                extraArgs=[self._noon_ambient_snd, self._night_ambient_snd],
+                appendTask=True,
+            )
+        if self._sun.day_part == "night":
+            base.taskMgr.doMethodLater(  # noqa: F821
+                2,
+                self._change_amb_snd,
+                "change_ambient_sound",
+                extraArgs=[self._night_ambient_snd, self._noon_ambient_snd],
+                appendTask=True,
+            )
+        return task.again
+
+    def _change_amb_snd(self, from_snd, to_snd, task):
+        """Make smooth change between two ambient sounds.
+
+        Args:
+            from_snd (panda3d.core.AudioSound):
+                Sound to fade.
+            from_snd (panda3d.core.AudioSound):
+                Sound to make main.
+        """
+        from_volume = from_snd.getVolume()
+
+        if from_volume > 0:
+            if to_snd.status() != AudioSound.PLAYING:
+                to_snd.play()
+
+            from_snd.setVolume(from_volume - 0.05)
+            to_snd.setVolume(to_snd.getVolume() + 0.05)
+
+            return task.again
+
+        from_snd.stop()
+        return task.done
+
     def generate_location(self, location, size):
         """Generate game location.
 
@@ -182,7 +227,32 @@ class World:
                     is_station=is_station,
                 )
             )
+        self._set_sounds(location)
         self._enemy = Enemy(LOCATIONS[location]["enemy"])
+
+    def _set_sounds(self, location):
+        """Configure World sounds.
+
+        Args:
+            location (str):
+                Location for which sounds must be loaded.
+        """
+        self._noon_ambient_snd = base.loader.loadSfx(  # noqa: F821
+            "sounds/{name}.ogg".format(name=LOCATIONS[location]["ambient_sounds"][0])
+        )
+        self._noon_ambient_snd.setLoop(True)
+        self._noon_ambient_snd.setVolume(1)
+        self._noon_ambient_snd.play()
+
+        self._night_ambient_snd = base.loader.loadSfx(  # noqa: F821
+            "sounds/{name}.ogg".format(name=LOCATIONS[location]["ambient_sounds"][1])
+        )
+        self._night_ambient_snd.setVolume(0)
+        self._night_ambient_snd.setLoop(True)
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            300, self._track_ambient_sound, "track_ambient_sounds"
+        )
 
     def prepare_next_block(self):
         """Prepare the next world block.
