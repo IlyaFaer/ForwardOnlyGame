@@ -105,6 +105,9 @@ class CommonController:
         remembers its object. Also shows manipulation
         interface.
         """
+        if not self._pointed_obj:
+            self._deselect()
+
         if self._pointed_obj.startswith("character_"):
             self._chosen_char = self.chars[self._pointed_obj]
             self._char_pointer.reparentTo(self._chosen_char.model)
