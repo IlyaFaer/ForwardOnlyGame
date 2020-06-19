@@ -21,11 +21,16 @@ class Shooter:
 
     def __init__(self):
         self._shoot_anim = None
+        self._target = None  # target enemy object
+        self.current_part = None
         self.shot_snd = None
+        self.health = 100
 
     def _shoot(self, task):
-        """Play shooting animation and sound."""
+        """Play shooting animation and sound, make damage."""
         self._shoot_anim.start()
+        self._target.health -= random.choice((1, 4))
+
         task.delayTime = 1.7 + random.uniform(0.1, 0.9)
         return task.again
 

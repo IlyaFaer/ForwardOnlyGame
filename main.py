@@ -30,17 +30,15 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
-        base.disableAllAudio()  # noqa: F821
-        self.sound_mgr = Audio3DManager.Audio3DManager(
-            base.sfxManagerList[0], self.cam  # noqa: F821
-        )
+        self.disableAllAudio()
+        self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
 
-        self.traverser = CollisionTraverser("main_traverser")
+        self.traverser = CollisionTraverser("traverser")
 
-        self.train = Train(self)
+        self.train = Train()
 
-        CameraController().set_controls(self, self.train)
+        CameraController().set_controls(self.train)
 
         team = Team()
         team.gen_default(self.train.parts)
@@ -49,11 +47,11 @@ class ForwardOnly(ShowBase):
         common_ctrl.set_controls()
 
         # build game world
-        self._world = World(self, self.train, team)
-        self._world.generate_location("Plains", 300)
-        self._current_block = self._world.prepare_next_block()
+        self.world = World(self, self.train, team)
+        self.world.generate_location("Plains", 300)
+        self._current_block = self.world.prepare_next_block()
 
-        base.enableAllAudio()  # noqa: F821
+        self.enableAllAudio()
         self._move_along_block()
 
     def _configure_window(self):
@@ -64,11 +62,8 @@ class ForwardOnly(ShowBase):
         """
         props = WindowProperties()
         props.setFullscreen(True)
-
-        props.setSize(
-            base.pipe.getDisplayWidth(), base.pipe.getDisplayHeight()  # noqa: F821
-        )
-        base.openDefaultWindow(props=props)  # noqa: F821
+        props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
+        self.openDefaultWindow(props=props)
 
     def _move_along_block(self):
         """Move Train along the current world block.
@@ -79,8 +74,8 @@ class ForwardOnly(ShowBase):
         self.train.switch_to_current_block()
 
         # load next world block and clear penult
-        next_block = self._world.prepare_next_block()
-        self._world.clear_prev_block()
+        next_block = self.world.prepare_next_block()
+        self.world.clear_prev_block()
 
         # move along the current world block
         self.train.move_along_block(self._current_block)

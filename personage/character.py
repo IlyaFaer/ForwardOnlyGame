@@ -98,11 +98,9 @@ class Character(Shooter):
 
     def __init__(self, id_):
         super().__init__()
-        self._current_part = None
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None
-        self._target = None  # target enemy id
         self._attacking_enemies = None
 
         self.name = None
@@ -157,18 +155,18 @@ class Character(Shooter):
             part (train.TrainPart):
                 Train part to move this Character to.
         """
-        pos = part.give_cell()
+        pos = part.give_cell(self)
         if not pos:  # no free cells on the chosen part
             return
 
-        if self._current_part is not None:
-            self._current_part.release_cell(self._current_pos)
+        if self.current_part is not None:
+            self.current_part.release_cell(self._current_pos, self)
 
         self.model.wrtReparentTo(part.parent)
         self.model.setPos(pos["pos"])
         self.model.setH(pos["angle"])
 
-        self._current_part = part
+        self.current_part = part
         self._current_pos = pos
 
     def prepare_to_fight(self, enemies):
@@ -199,8 +197,8 @@ class Character(Shooter):
         Only an enemy from the Train part shooting
         range can be chosen as a target.
         """
-        if self._current_part.enemies_in_range:
-            self._target = random.choice(self._current_part.enemies_in_range)
+        if self.current_part.enemies:
+            self._target = random.choice(self.current_part.enemies)
             base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
             base.taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
             return task.done
@@ -214,8 +212,8 @@ class Character(Shooter):
 
     def _aim(self, task):
         """Rotate the character to aim on enemy."""
-        if self._target in self._current_part.enemies_in_range:
-            self.model.headsUp(self._attacking_enemies[self._target].model)
+        if self._target in self.current_part.enemies:
+            self.model.headsUp(self._target.model)
             return task.again
 
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821

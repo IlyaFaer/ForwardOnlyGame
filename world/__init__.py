@@ -29,10 +29,10 @@ class World:
     """
 
     def __init__(self, game, train, team):
+        self.enemy = None
         self._game = game
         self._train = train
         self._team = team
-        self._enemy = None
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the generated world blocks
@@ -228,7 +228,7 @@ class World:
                 )
             )
         self._set_sounds(location)
-        self._enemy = Enemy(LOCATIONS[location]["enemy"])
+        self.enemy = Enemy(LOCATIONS[location]["enemy"])
 
     def _set_sounds(self, location):
         """Configure World sounds.
@@ -266,19 +266,20 @@ class World:
         """
         self._block_num += 1
 
-        if not self._et_blocks and self._enemy.going_to_attack(
+        if not self._et_blocks and self.enemy.going_to_attack(
             self._sun.day_part, self._train.lights_on
         ):
             self._et_blocks = 20
-            self._enemy.prepare(self._train.model)
-            self._team.prepare_to_fight(self._enemy.active_units)
+            self.enemy.prepare(self._train.model)
+            self._team.prepare_to_fight(self.enemy.active_units)
             self._train.speed_to_min()
 
         if self._et_blocks:
             block = self._prepare_et_block()
+            self._map[self._block_num - 1].enemy_territory = True
             self._et_blocks -= 1
             if self._et_blocks == 0:
-                self._enemy.stop_attack()
+                self.enemy.stop_attack()
         else:
             block = self._map[self._block_num].prepare(self._game.taskMgr)
 

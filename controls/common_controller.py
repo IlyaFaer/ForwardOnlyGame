@@ -14,8 +14,7 @@ KEYS_INFO = u"""
 Game controls:
 
 Mouse Left Button - choose a character
-Mouse Right Button - move chosen character
-A - deselect character
+Mouse Right Button On Arrow - move chosen character
 
 W - hold to speed up
 S - hold to slow down
@@ -61,7 +60,6 @@ class CommonController:
         and controls to manipulate characters.
         """
         base.accept("f1", self._show_keys)  # noqa: F821
-        base.accept("a", self._deselect)  # noqa: F821
 
         # configure mouse collisions
         mouse_col_node = CollisionNode("mouse_ray")
@@ -73,6 +71,7 @@ class CommonController:
         # set common collisions handler
         handler = CollisionHandlerEvent()
         handler.addInPattern("%fn-into")
+        handler.addAgainPattern("%fn-again")
         handler.addOutPattern("%fn-out")
 
         base.traverser.addCollider(  # noqa: F821
@@ -83,13 +82,14 @@ class CommonController:
         base.accept("mouse1", self._choose_char)  # noqa: F821
         base.accept("mouse3", self._move_char)  # noqa: F821
         base.accept("mouse_ray-into", self._point_obj)  # noqa: F821
+        base.accept("mouse_ray-again", self._point_obj)  # noqa: F821
         base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.09, self._collide_mouse, "collide_mouse"
+            0.06, self._collide_mouse, "collide_mouse"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.1, self._traverse, name="main_traverse"
+            0.07, self._traverse, name="main_traverse"
         )
 
     def _deselect(self):

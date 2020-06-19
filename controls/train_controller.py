@@ -31,20 +31,19 @@ class TrainController:
         self._is_stopped = False
         self._on_et = False
 
-    def set_controls(self, game, train):
+    def set_controls(self, train):
         """Configure Train control keys and animation.
 
         Args:
-            game (ForwardOnly): The game object.
             train (train.Train): Train object.
         """
         # speed smoothly changes with holding w/s keys pressed
-        game.accept("w", self._change_speed_delayed, [0.05])
-        game.accept("s", self._change_speed_delayed, [-0.05])
-        game.accept("w-up", game.taskMgr.remove, ["change_train_speed"])
-        game.accept("s-up", game.taskMgr.remove, ["change_train_speed"])
+        base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
+        base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
+        base.accept("w-up", base.taskMgr.remove, ["change_train_speed"])  # noqa: F821
+        base.accept("s-up", base.taskMgr.remove, ["change_train_speed"])  # noqa: F821
 
-        game.accept("f", train.toggle_lights)
+        base.accept("f", train.toggle_lights)  # noqa: F821
 
     def move_along_block(self, block, train_np):
         """Start Train move intervals for the given block.
@@ -88,6 +87,20 @@ class TrainController:
             appendTask=True,
         )
 
+    def _start_move(self):
+        """Start Train movement."""
+        self._move_par.resume()
+        self._move_anim_int.resume()
+        self._train_move_sound.play()
+        self._is_stopped = False
+
+    def _stop_move(self):
+        """Stop Train movement."""
+        self._move_par.pause()
+        self._move_anim_int.pause()
+        self._train_move_sound.stop()
+        self._is_stopped = True
+
     def _change_speed(self, diff, task):
         """Actually change Train speed.
 
@@ -95,13 +108,8 @@ class TrainController:
             diff (float): Coefficient to change Train speed.
             task (panda3d.core.PythonTask): Task object.
         """
-        # start movement
         if self._is_stopped and diff > 0:
-            self._move_par.resume()
-            self._move_anim_int.resume()
-            self._train_move_sound.play()
-
-            self._is_stopped = False
+            self._start_move()
 
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         # don't stop on enemy territory
@@ -119,18 +127,14 @@ class TrainController:
 
             return task.again
 
-        # stop
         if new_rate == 0:
-            self._move_par.pause()
-            self._move_anim_int.pause()
-            self._train_move_sound.stop()
-
-            self._is_stopped = True
+            self._stop_move()
 
         return task.done
 
     def speed_to_min(self):
         """Accelerate to minimum combat speed."""
+        base.taskMgr.remove("change_train_speed")  # noqa: F821
         play_rate = self._move_anim_int.getPlayRate()
         if play_rate >= MIN_SPEED:
             return

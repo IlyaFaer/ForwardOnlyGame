@@ -185,20 +185,10 @@ class EnemyUnit(Shooter):
         moto_mod.instanceTo(self.transport)
 
         # organize movement and aiming tasks
-        time_to_overtake = random.randint(30, 47)
+        time_to_overtake = random.randint(33, 50)
         self._move(time_to_overtake, (self._y_pos, random.uniform(-0.05, 0.4), 0))
         base.taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
-            time_to_overtake - 6,
-            self._aim,
-            self.id + "_aim",
-            extraArgs=[False],
-            appendTask=True,
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
-            time_to_overtake - 4, self._shoot, self.id + "_shoot"
         )
 
     @property
@@ -235,11 +225,10 @@ class EnemyUnit(Shooter):
         self._move(
             random.randint(3, 6), (self._y_pos, random.uniform(-0.25, 0.35) + 0.05, 0)
         )
-
         task.delayTime = random.randint(7, 9)
         return task.again
 
-    def _aim(self, back, task):
+    def _aim(self, back):
         """Aim to Train when got close enough.
 
         Args:
@@ -255,7 +244,26 @@ class EnemyUnit(Shooter):
         if not back:
             self._shoot_anim = self._set_shoot_anim(pos, h)
 
-        return task.done
+    def _choose_target(self, task):
+        """Choose a character as a target.
+
+        Character will be chosen from the list of
+        characters set to the TrainPart, in which
+        range this enemy is now.
+        """
+        if self._target not in self.current_part.chars:
+            self._target = None
+            base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+
+            if self.current_part.chars:
+                self._target = random.choice(self.current_part.chars)
+
+                base.taskMgr.doMethodLater(  # noqa: F821
+                    0.5, self._shoot, self.id + "_shoot"
+                )
+
+        task.delayTime = 0.5
+        return task.again
 
     def set_sounds(self, task):
         """Set sounds for this unit."""
@@ -273,20 +281,38 @@ class EnemyUnit(Shooter):
         self.shot_snd = self._set_shoot_snd("smg_shot1")
         return task.done
 
+    def enter_the_part(self, part):
+        """Start fighting in the given part.
+
+        Args:
+            part (train.TrainPart): Train part this enemy entered.
+        """
+        self.current_part = part
+        self._aim(False)
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            1.5, self._choose_target, self.id + "_choose_target"
+        )
+
+    def leave_the_part(self):
+        """Stop fighting in the current part."""
+        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
+
+        self.model.setPlayRate(-0.6, "aim_left")
+        self.model.setPlayRate(-0.6, "aim_right")
+
+        self._aim(True)
+
+        self.current_part = None
+        self._target = None
+
     def stop(self):
         """Smoothly stop this unit following Train."""
         base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
 
         self._move(random.randint(9, 11), (self._io_dist, -7, 0))
         self._y_positions.append(self._y_pos)
-
-        self.model.setPlayRate(-0.6, "aim_left")
-        self.model.setPlayRate(-0.6, "aim_right")
-
-        base.taskMgr.doMethodLater(  # noqa: F821
-            2, self._aim, self.id + "_unaim", extraArgs=[True], appendTask=True
-        )
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
 
     def clear(self):
         """Clear all the graphical data of this unit."""

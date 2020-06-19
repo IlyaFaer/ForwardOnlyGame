@@ -27,11 +27,11 @@ from utils import address
 class Train:
     """Train object. The main game object.
 
-    Args:
-        game (ForwardOnly): Game object.
+    Includes train model, lights, parts to set characters
+    and sounds.
     """
 
-    def __init__(self, game):
+    def __init__(self):
         self.root_node = render.attachNewNode("train_root")  # noqa: F821
         # node to hold camera and Sun
         self.node = self.root_node.attachNewNode("train")
@@ -39,8 +39,10 @@ class Train:
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
 
-        self._ctrl = TrainController(self.model, self._set_sounds(game.sound_mgr))
-        self._ctrl.set_controls(game, self)
+        train_move_snd, self._lighter_snd = self._set_sounds()
+
+        self._ctrl = TrainController(self.model, train_move_snd)
+        self._ctrl.set_controls(self)
 
         self.parts = {
             "part_locomotive_left": TrainPart(
@@ -71,9 +73,6 @@ class Train:
 
         self._lights = self._set_lights()
         self.lights_on = False
-
-        self._lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
-        self._lighter_snd.setVolume(0.8)
 
     def move_along_block(self, block):
         """Move Train along the given world block.
@@ -151,25 +150,29 @@ class Train:
 
         return train_lights
 
-    def _set_sounds(self, sound_mgr):
+    def _set_sounds(self):
         """Configure Train sounds.
 
-        Args:
-            sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
-
         Returns:
-            panda3d.core.AudioSound: Train movement sound.
+            (panda3d.core.AudioSound, panda3d.core.AudioSound):
+                Train movement, lighter toggle sounds.
         """
-        train_move_sound = sound_mgr.loadSfx("sounds/train_moves1.ogg")
-        sound_mgr.attachSoundToObject(train_move_sound, self.model)
+        train_move_sound = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/train_moves1.ogg"
+        )
+        base.sound_mgr.attachSoundToObject(train_move_sound, self.model)  # noqa: F821
 
         train_move_sound.setLoop(True)
         train_move_sound.play()
-        return train_move_sound
+
+        lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
+        lighter_snd.setVolume(0.8)
+        return train_move_sound, lighter_snd
 
     def toggle_lights(self):
         """Toggle Train lights."""
         self._lighter_snd.play()
+
         method = render.clearLight if self.lights_on else render.setLight  # noqa: F821
         for light in self._lights:
             method(light)
@@ -183,6 +186,9 @@ class Train:
 
 class TrainPart:
     """Train part where characters can be set.
+
+    Contains characters set to this part and enemies
+    within its shooting range.
 
     Args:
         parent (panda3d.core.NodePath):
@@ -198,8 +204,10 @@ class TrainPart:
 
     def __init__(self, parent, name, positions, arrow_pos):
         self.parent = parent
-        self.enemies_in_range = []
-        self._free = positions
+        self.chars = []
+        # enemies within shooting range of this part
+        self.enemies = []
+        self._cells = positions
 
         # organize a manipulating arrow
         self._arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
@@ -235,34 +243,51 @@ class TrainPart:
         base.accept("out-shoot_zone_" + name, self.enemy_leave)  # noqa: F821
 
     def enemy_came(self, event):
-        """Enemy unit entered this TrainPart shooting range."""
-        self.enemies_in_range.append(event.getFromNodePath().getName())
+        """Enemy unit entered this part shooting range."""
+        enemy = base.world.enemy.active_units[  # noqa: F821
+            event.getFromNodePath().getName()
+        ]
+        self.enemies.append(enemy)
+        enemy.enter_the_part(self)
 
     def enemy_leave(self, event):
-        """Enemy unit leaved this TrainPart shooting range."""
-        self.enemies_in_range.remove(event.getFromNodePath().getName())
+        """Enemy unit leaved this part shooting range."""
+        enemy = base.world.enemy.active_units[  # noqa: F821
+            event.getFromNodePath().getName()
+        ]
+        self.enemies.remove(enemy)
+        enemy.leave_the_part()
 
-    def give_cell(self):
+    def give_cell(self, character):
         """Choose a non taken cell.
+
+        Args:
+            character (personage.character.Character):
+                Unit to set to this part.
 
         Returns:
             dict: Position and rotation to set character.
         """
-        if not self._free:
+        if not self._cells:
             return
 
-        position = random.choice(self._free)
-        self._free.remove(position)
+        position = random.choice(self._cells)
+        self._cells.remove(position)
+
+        self.chars.append(character)
         return position
 
-    def release_cell(self, position):
+    def release_cell(self, position, character):
         """Release cell taken earlier.
 
         Args:
             position (dict):
                 Position and rotation of the taken cell.
+            character (personage.character.Character):
+                Character to remove from this part.
         """
-        self._free.append(position)
+        self._cells.append(position)
+        self.chars.remove(character)
 
     def show_arrow(self):
         """Show manipulating arrow of this TrainPart."""

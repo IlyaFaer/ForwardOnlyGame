@@ -26,11 +26,10 @@ class CameraController:
 
         base.camLens.setNear(0.5)  # noqa: F821
 
-    def set_controls(self, game, train):
+    def set_controls(self, train):
         """Configure camera, its node and set keyboard keys to control the camera.
 
         Args:
-            game (ForwardOnly): Game object.
             train (train.Train): Train object.
         """
         base.disableMouse()  # noqa: F821
@@ -40,11 +39,11 @@ class CameraController:
         base.cam.setPos(self._target)  # noqa: F821
         base.cam.lookAt(train.model)  # noqa: F821
 
-        self._set_move_keys(game, cam_np)
-        game.accept("c", self._toggle_centered_view, [game, cam_np])
+        self._set_move_keys(cam_np)
+        base.accept("c", self._toggle_centered_view, [cam_np])  # noqa: F821
 
     def _move(self, cam_np, x, y, time):
-        """Start camera movement with a single interval (on key press).
+        """Start camera movement with an interval (on key press).
 
         Args:
             cam_np (panda3d.core.NodePath): Camera node.
@@ -136,38 +135,37 @@ class CameraController:
             )
             self._move_int.start()
 
-    def _set_move_keys(self, game, cam_np):
+    def _set_move_keys(self, cam_np):
         """Set camera move and rotate keys.
 
         Args:
-            game (ForwardOnly): Game object.
             cam_np (panda3d.core.NodePath): Camera node object.
         """
         # key pressed - start movement
-        game.accept("arrow_up", self._move, [cam_np, 1, None, 1.5])
-        game.accept("arrow_down", self._move, [cam_np, 2, None, 0.75])
-        game.accept("arrow_left", self._move, [cam_np, None, -1.1, 0.9])
-        game.accept("arrow_right", self._move, [cam_np, None, 1.1, 0.9])
+        base.accept("arrow_up", self._move, [cam_np, 1, None, 1.5])  # noqa: F821
+        base.accept("arrow_down", self._move, [cam_np, 2, None, 0.75])  # noqa: F821
+        base.accept("arrow_left", self._move, [cam_np, None, -1.1, 0.9])  # noqa: F821
+        base.accept("arrow_right", self._move, [cam_np, None, 1.1, 0.9])  # noqa: F821
 
         # key released - stop
-        game.accept("arrow_up-up", self._stop, [cam_np, True])
-        game.accept("arrow_down-up", self._stop, [cam_np, True])
-        game.accept("arrow_left-up", self._stop, [cam_np, False])
-        game.accept("arrow_right-up", self._stop, [cam_np, False])
+        base.accept("arrow_up-up", self._stop, [cam_np, True])  # noqa: F821
+        base.accept("arrow_down-up", self._stop, [cam_np, True])  # noqa: F821
+        base.accept("arrow_left-up", self._stop, [cam_np, False])  # noqa: F821
+        base.accept("arrow_right-up", self._stop, [cam_np, False])  # noqa: F821
 
         # key pressed - start turning
-        game.accept("alt-arrow_left", self._turn, [cam_np, -360, 0])
-        game.accept("alt-arrow_right", self._turn, [cam_np, 360, 0])
-        game.accept("alt-arrow_up", self._turn, [cam_np, 0, -60])
-        game.accept("alt-arrow_down", self._turn, [cam_np, 0, 25])
+        base.accept("alt-arrow_left", self._turn, [cam_np, -360, 0])  # noqa: F821
+        base.accept("alt-arrow_right", self._turn, [cam_np, 360, 0])  # noqa: F821
+        base.accept("alt-arrow_up", self._turn, [cam_np, 0, -60])  # noqa: F821
+        base.accept("alt-arrow_down", self._turn, [cam_np, 0, 25])  # noqa: F821
 
         # camera zooming controls
-        game.accept("+", self._zoom, [cam_np, 0.7, 1.2])
-        game.accept("-", self._zoom, [cam_np, 2, 3])
-        game.accept("+-up", self._stop, [cam_np, False, True, True])
-        game.accept("--up", self._stop, [cam_np, False, True, True])
+        base.accept("+", self._zoom, [cam_np, 0.7, 1.2])  # noqa: F821
+        base.accept("-", self._zoom, [cam_np, 2, 3])  # noqa: F821
+        base.accept("+-up", self._stop, [cam_np, False, True, True])  # noqa: F821
+        base.accept("--up", self._stop, [cam_np, False, True, True])  # noqa: F821
 
-    def _toggle_centered_view(self, game, cam_np):
+    def _toggle_centered_view(self, cam_np):
         """Set camera onto default position.
 
         Centered position is optimal for characters
@@ -175,7 +173,6 @@ class CameraController:
         the previous position.
 
         Args:
-            game (ForwardOnly): Game object.
             cam_np (panda3d.core.NodePath): Camera node object.
         """
         if not self._is_centered:
@@ -185,7 +182,7 @@ class CameraController:
             self._last_cam_hpr = base.cam.getHpr()  # noqa: F821
             self._last_cam_np_hpr = cam_np.getHpr()
 
-            base.cam.wrtReparentTo(game.train.model)  # noqa: F821
+            base.cam.wrtReparentTo(base.train.model)  # noqa: F821
             base.cam.setPos(0, 0, 1.8)  # noqa: F821
             base.cam.setHpr(90, -90, 0)  # noqa: F821
             cam_np.setHpr(0, 0, 0)
@@ -204,10 +201,10 @@ class CameraController:
                 "alt-arrow_up",
                 "alt-arrow_down",
             ):
-                game.ignore(key)
+                base.ignore(key)  # noqa: F821
         else:
             base.cam.wrtReparentTo(cam_np)  # noqa: F821
-            self._set_move_keys(game, cam_np)
+            self._set_move_keys(cam_np)
 
             base.cam.setPos(*self._last_cam_pos)  # noqa: F821
             base.cam.setHpr(*self._last_cam_hpr)  # noqa: F821
