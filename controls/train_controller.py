@@ -7,7 +7,7 @@ API to control Train.
 from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
 
-MIN_SPEED = 0.35
+MIN_SPEED = 0.5
 
 
 class TrainController:

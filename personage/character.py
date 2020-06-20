@@ -233,7 +233,7 @@ class Character(Shooter):
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
         self.model.hprInterval(2, (self._current_pos["angle"], 0, 0)).start()
 
-        LerpAnimInterval(self.model, 0.8, "stand_and_aim", "stand").start()
+        LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
         base.taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60),
             self._idle_animation,

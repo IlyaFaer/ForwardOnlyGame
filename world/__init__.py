@@ -7,7 +7,8 @@ Game world systems.
 import glob
 
 from direct.directutil import Mopath
-from panda3d.core import AudioSound, GeomVertexReader
+from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
+from panda3d.core import AudioSound, GeomVertexReader, Vec3
 
 from .block import Block
 from .railway_generator import RailwayGenerator
@@ -44,6 +45,28 @@ class World:
         self._surf_vertices = self._cache_warmup(game.sound_mgr)
         self._paths = self._load_motion_paths()
         self._sun = Sun(train)
+
+        self.phys_mgr = self._set_physics()
+
+        base.taskMgr.add(self._update_physics, "update")  # noqa: F821
+
+    def _set_physics(self):
+        """Set world physics."""
+        world = BulletWorld()
+        world.setGravity(Vec3(0, 0, -0.5))
+
+        shape = BulletPlaneShape(Vec3(0, 0, 1), 0.02)
+        node = BulletRigidBodyNode("Ground")
+        node.addShape(shape)
+
+        render.attachNewNode(node)  # noqa: F821
+        world.attachRigidBody(node)
+        return world
+
+    def _update_physics(self, task):
+        """Update physic calculations."""
+        self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
+        return task.cont
 
     def _cache_warmup(self, sound_mgr):
         """Load all the game resources once to cache them.

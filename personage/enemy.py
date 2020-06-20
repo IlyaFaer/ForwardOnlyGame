@@ -4,13 +4,18 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Enemy systems.
 """
-import copy
 import random
 
 from direct.actor.Actor import Actor
-from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
-from direct.interval.IntervalGlobal import Sequence, Parallel, SoundInterval, Func
-from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionSphere
+from direct.interval.LerpInterval import LerpPosInterval
+from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
+from panda3d.core import (
+    CollisionHandlerEvent,
+    CollisionNode,
+    CollisionSphere,
+    Point3,
+    Vec3,
+)
 
 from const import MOUSE_MASK, SHOT_RANGE_MASK
 from .shooter import Shooter
@@ -168,12 +173,12 @@ class EnemyUnit(Shooter):
         self.id = "enemy_" + str(id_)
 
         self.model = model
-        self.model.setPos(self._io_dist, -7, 0)
         self.model.pose("ride", 1)
         self.model.setPlayRate(0.6, "aim_left")
         self.model.setPlayRate(0.6, "aim_right")
 
         self.node = render.attachNewNode(self.id + "_node")  # noqa: F821
+        self.node.setPos(self._io_dist, -7, 0)
         self.model.reparentTo(self.node)
 
         self.transport_snd = None
@@ -214,7 +219,7 @@ class EnemyUnit(Shooter):
             self._move_int.pause()
 
         self._move_int = LerpPosInterval(
-            self.model, period, new_pos, blendType="easeInOut"
+            self.node, period, new_pos, blendType="easeInOut"
         )
         self._move_int.start()
 
@@ -283,12 +288,6 @@ class EnemyUnit(Shooter):
             self.transport_snd, self.transport
         )
 
-        self.transport_crash_snd = base.sound_mgr.loadSfx(  # noqa: F821
-            "sounds/moto_crash1.ogg"
-        )
-        base.sound_mgr.attachSoundToObject(  # noqa: F821
-            self.transport_crash_snd, self.transport
-        )
         self.shot_snd = self._set_shoot_snd("smg_shot1")
         return task.done
 
@@ -337,46 +336,36 @@ class EnemyUnit(Shooter):
         self._shoot_anim.finish()
 
         self.model.play("die")
-
-        # build animation of enemy failing
-        death_dur = random.uniform(1.2, 1.7)
-        top_pos = self.node.getPos()
-        bottom_pos = copy.copy(top_pos)
-        bottom_pos.setZ(0.01)
-
-        top_pos.setZ(top_pos.getZ() + random.uniform(0.07, 0.14))
-
-        Sequence(
-            Parallel(
-                # move up and down sequence
-                Sequence(
-                    LerpPosInterval(
-                        self.node, death_dur / 2, top_pos, blendType="easeOut"
-                    ),
-                    LerpPosInterval(
-                        self.node, death_dur / 2, bottom_pos, blendType="easeIn"
-                    ),
-                ),
-                # turnovering interval
-                LerpHprInterval(
-                    self.model,
-                    death_dur,
-                    (
-                        random.randint(-30, 30),
-                        random.choice((0, 180, 360)),
-                        random.choice((270, 450, 630, -270, -450, -630)),
-                    ),
-                ),
-            ),
-            # sound and clearing func
-            Parallel(SoundInterval(self.transport_crash_snd), Func(self._detach)),
-        ).start()
-
         if self.id in base.world.enemy.active_units:  # noqa: F821
             base.world.enemy.active_units.pop(self.id)  # noqa: F821
             self.current_part.enemies.remove(self)
 
-            base.taskMgr.doMethodLater(8, self.clear, self.id + "_clear")  # noqa: F821
+            base.taskMgr.doMethodLater(15, self.clear, self.id + "_clear")  # noqa: F821
+
+        self._explode()
+
+    def _explode(self):
+        """Set physics for this enemy and explode."""
+        rb_node = BulletRigidBodyNode(self.id + "_physics")
+        rb_node.setMass(80)
+        rb_node.addShape(BulletBoxShape(Vec3(0.02, 0.04, 0.028)))
+        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
+
+        self.model.reparentTo(phys_node)
+        self.model.setPos(0, -0.01, -0.025)
+        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+
+        # boom impulse
+        rb_node.applyForce(
+            Vec3(0, random.randint(5000, 7000), random.randint(1500, 2500)), Point3(0)
+        )
+        rb_node.applyTorque(
+            Vec3(
+                random.randint(-45, 45),
+                random.randint(-45, 45),
+                random.randint(-45, 45),
+            )
+        )
 
     def _detach(self):
         """Reparent this enemy to the render to left behind."""
@@ -392,13 +381,11 @@ class EnemyUnit(Shooter):
     def clear(self, task=None):
         """Clear all the graphical data of this unit."""
         base.sound_mgr.detach_sound(self.transport_snd)  # noqa: F821
-        base.sound_mgr.detach_sound(self.transport_crash_snd)  # noqa: F821
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
 
         self._move_int.finish()
         self.model.cleanup()
-        self.model.removeNode()
-        self.transport.removeNode()
+        self.node.removeNode()
 
         if task is not None:
             return task.done
