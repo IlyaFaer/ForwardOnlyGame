@@ -14,9 +14,9 @@ KEYS_INFO = u"""
 Game controls:
 
 Mouse Left Button - choose a character
-Mouse Right Button On Arrow - move chosen character
+Mouse Right Button On Arrow - move character
 
-W - hold to speed up
+W - hold to accelerate
 S - hold to slow down
 
 \u2190\u2191\u2193\u2192 - move camera

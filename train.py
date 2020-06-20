@@ -244,19 +244,21 @@ class TrainPart:
 
     def enemy_came(self, event):
         """Enemy unit entered this part shooting range."""
-        enemy = base.world.enemy.active_units[  # noqa: F821
+        enemy = base.world.enemy.active_units.get(  # noqa: F821
             event.getFromNodePath().getName()
-        ]
-        self.enemies.append(enemy)
-        enemy.enter_the_part(self)
+        )
+        if enemy is not None:
+            self.enemies.append(enemy)
+            enemy.enter_the_part(self)
 
     def enemy_leave(self, event):
         """Enemy unit leaved this part shooting range."""
-        enemy = base.world.enemy.active_units[  # noqa: F821
+        enemy = base.world.enemy.active_units.get(  # noqa: F821
             event.getFromNodePath().getName()
-        ]
-        self.enemies.remove(enemy)
-        enemy.leave_the_part()
+        )
+        if enemy is not None:
+            self.enemies.remove(enemy)
+            enemy.leave_the_part()
 
     def give_cell(self, character):
         """Choose a non taken cell.

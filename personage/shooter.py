@@ -22,14 +22,27 @@ class Shooter:
     def __init__(self):
         self._shoot_anim = None
         self._target = None  # target enemy object
+        self._is_dead = False
         self.current_part = None
         self.shot_snd = None
         self.health = 100
 
+    def get_damage(self, damage):
+        """Getting damage.
+
+        Start dying if needed.
+
+        Args:
+            damage (int): Damage points to get.
+        """
+        self.health -= damage
+        if self.health <= 0:
+            self._die()
+
     def _shoot(self, task):
         """Play shooting animation and sound, make damage."""
         self._shoot_anim.start()
-        self._target.health -= random.choice((1, 4))
+        self._target.get_damage(random.choice((5, 10)))
 
         task.delayTime = 1.7 + random.uniform(0.1, 0.9)
         return task.again

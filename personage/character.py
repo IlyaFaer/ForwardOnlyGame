@@ -259,3 +259,7 @@ class Character(Shooter):
 
         task.delayTime = random.randint(40, 60)
         return task.again
+
+    def _die(self):
+        """Character death code."""
+        pass
