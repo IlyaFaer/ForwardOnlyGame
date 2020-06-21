@@ -205,7 +205,9 @@ class Character(Shooter):
 
         # enemies retreated - return to passive state
         if not self._attacking_enemies:
-            self._calm_down()
+            base.taskMgr.doMethodLater(  # noqa: F821
+                3, self._calm_down, self.id + "_calm_down"
+            )
             return task.done
 
         return task.again
@@ -225,10 +227,12 @@ class Character(Shooter):
             return task.done
 
         self._target = None
-        self._calm_down()
+        base.taskMgr.doMethodLater(  # noqa: F821
+            3, self._calm_down, self.id + "_calm_down"
+        )
         return task.done
 
-    def _calm_down(self):
+    def _calm_down(self, task):
         """Return to passive state."""
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
         self.model.hprInterval(2, (self._current_pos["angle"], 0, 0)).start()
@@ -239,6 +243,7 @@ class Character(Shooter):
             self._idle_animation,
             "{id_}_idle_anim".format(id_=self.id),
         )
+        return task.done
 
     def _idle_animation(self, task):
         """Play one of the idle animations.

@@ -51,6 +51,8 @@ class ForwardOnly(ShowBase):
         self.world.generate_location("Plains", 300)
         self._current_block = self.world.prepare_next_block()
 
+        self.enableParticles()
+
         self.enableAllAudio()
         self._move_along_block()
 
