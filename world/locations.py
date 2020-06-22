@@ -22,6 +22,7 @@ LOCATIONS = {
         "with_quantity": (
             {"models": PLAINS_GRASS, "quantity": (10, 40), "square": "wide"},
             {"models": PLAINS_TREES, "quantity": (10, 20), "square": "wide"},
+            {"models": ("small_tree1",), "quantity": (1, 3), "square": "wide"},
             {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),
         "with_chance": (
@@ -32,6 +33,7 @@ LOCATIONS = {
         "et_with_quantity": (
             {"models": PLAINS_GRASS, "quantity": (10, 40), "square": "wide"},
             {"models": PLAINS_TREES, "quantity": (5, 10), "square": "narrow"},
+            {"models": ("small_tree1",), "quantity": (1, 3), "square": "narrow"},
             {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),
         "et_with_chance": (),
