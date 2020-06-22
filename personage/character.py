@@ -70,7 +70,7 @@ class Team:
         ):
             self._char_id += 1
 
-            char = Character(self._char_id)
+            char = Character(self._char_id, self)
             char.generate("male")
             char.prepare()
             char.move_to(part)
@@ -94,10 +94,13 @@ class Character(Shooter):
 
     Args:
         id_ (int): Character unique id.
+        team (Team): Team object.
     """
 
-    def __init__(self, id_):
+    def __init__(self, id_, team):
         super().__init__()
+        self._team = team
+
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None
@@ -143,7 +146,7 @@ class Character(Shooter):
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(MOUSE_MASK)
         col_node.addSolid(CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035))
-        self.model.attachNewNode(col_node)
+        self._col_node = self.model.attachNewNode(col_node)
 
         self.shot_snd = self._set_shoot_snd("rifle_shot1")
         self._shoot_anim = self._set_shoot_anim((0.004, 0.045, 0.064), 97)
@@ -266,5 +269,42 @@ class Character(Shooter):
         return task.again
 
     def _die(self):
-        """Character death code."""
-        pass
+        """Character death code.
+
+        Stop all the character's tasks, play death
+        animation and plan character clearing.
+        """
+        if not self._is_dead:
+            self._is_dead = True
+
+            base.taskMgr.remove(self.id + "_aim")  # noqa: F821
+            base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+            base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
+            self._col_node.removeNode()
+
+            self._shoot_anim.finish()
+            LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
+            self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
+            self.model.play("die")
+
+            base.taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
+            base.taskMgr.doMethodLater(  # noqa: F821
+                3.5, self._clear, self.id + "_clear"
+            )
+
+    def _hide(self, task):
+        """Hide the main model."""
+        self.model.hide()
+        return task.done
+
+    def _clear(self, task):
+        """Clear this character."""
+        self.model.cleanup()
+        self.model.removeNode()
+        base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
+
+        self._team.chars.pop(self.id)
+        self.current_part.release_cell(self._current_pos, self)
+        self.current_part = None
+
+        return task.done
