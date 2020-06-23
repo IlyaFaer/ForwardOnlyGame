@@ -26,8 +26,9 @@ LOCATIONS = {
             {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),
         "with_chance": (
-            {"models": ("grave1", "grave2"), "chance": 7, "square": "wide"},
-            {"models": ("fireplace1", "tent"), "chance": 8, "square": "wide"},
+            {"models": ("grave1", "grave2"), "chance": 6, "square": "wide"},
+            {"models": ("fireplace1", "tent"), "chance": 7, "square": "wide"},
+            {"models": ("stump1",), "chance": 7, "square": "wide"},
         ),
         # enemy territory configurations
         "et_with_quantity": (
