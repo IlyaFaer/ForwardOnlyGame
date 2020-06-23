@@ -173,7 +173,9 @@ class Block:
             return surface, random.choice(ANGLES)
 
         if side == self._station_side:
-            surface = address("surface_with_station1")
+            surface = address(
+                random.choice(("surface_with_station1", "surface_with_station2"))
+            )
             if side == "r":
                 return surface, 180
             return surface, 0
