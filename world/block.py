@@ -136,9 +136,14 @@ class Block:
             return
 
         model = random.choice(
-            ("light_post{}".format(random.randint(1, 2)), "lamp_post1", "arch1")
+            (
+                "arch1",
+                "light_post{}".format(random.randint(1, 2)),
+                "lamp_post1",
+                "transparant1",
+            )
         )
-        if model != "arch1":
+        if model not in ("arch1", "transparant1"):
             coor = random.choice((0.15, -0.15))
         else:
             coor = 0
