@@ -38,7 +38,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(0, 0, 0.03),
+            pos=(0.02, 0, 0.03),
         )
         self.char_type = DirectLabel(
             parent=char_int_fr,
@@ -46,7 +46,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=(0.51, 0.54, 0.59, 1),
-            pos=(0.15, 0, 0.028),
+            pos=(0.14, 0, 0.028),
         )
         DirectLabel(
             parent=char_int_fr,
