@@ -171,6 +171,7 @@ class EnemyUnit(Shooter):
         self._y_pos = random.choice(self._y_positions)
         self._y_positions.remove(self._y_pos)
 
+        self.damage = (2, 3)
         self.id = "enemy_" + str(id_)
 
         self.model = model
@@ -335,10 +336,10 @@ class EnemyUnit(Shooter):
         Play death sequence of movements and sounds,
         stop all the tasks for this enemy, plan clearing.
         """
-        if self._is_dead:
+        if self.is_dead:
             return
 
-        self._is_dead = True
+        self.is_dead = True
 
         base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821

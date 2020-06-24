@@ -107,6 +107,8 @@ class CommonController:
         """
         if not self._pointed_obj:
             self._deselect()
+            base.interface.clear_char_info()  # noqa: F821
+            return
 
         if self._pointed_obj.startswith("character_"):
             self._chosen_char = self.chars[self._pointed_obj]
@@ -114,6 +116,8 @@ class CommonController:
 
             for part in self._parts.values():
                 part.show_arrow()
+
+            base.interface.show_char_info(self._chosen_char)  # noqa: F821
 
     def _move_char(self):
         """Move chosen character to the pointed part."""

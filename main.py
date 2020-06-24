@@ -9,8 +9,9 @@ from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import CollisionTraverser, WindowProperties, loadPrcFileData
 
-from personage.character import Team
 from controls import CameraController, CommonController
+from gui.interface import CharacterInterface
+from personage.character import Team
 from train import Train
 from world import World
 
@@ -52,6 +53,8 @@ class ForwardOnly(ShowBase):
         self._current_block = self.world.prepare_next_block()
 
         self.enableParticles()
+
+        self.interface = CharacterInterface()
 
         self.enableAllAudio()
         self._move_along_block()

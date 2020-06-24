@@ -27,9 +27,11 @@ NAMES = {
         "Craig",
         "Donnie",
         "Ed",
+        "Elijah",
         "Eric",
         "Frank",
         "James",
+        "Jerome",
         "Josh",
         "Justin",
         "Max",
@@ -107,8 +109,11 @@ class Character(Shooter):
         self._attacking_enemies = None
 
         self.name = None
+        self.type = None
         self.mod_name = None
         self.model = None
+
+        self.damage = (3, 5)
         self.id = "character_" + str(id_)
 
     def generate(self, type_):
@@ -120,6 +125,7 @@ class Character(Shooter):
                 models to be used while character generation.
         """
         self.name = random.choice(NAMES[type_])
+        self.type = "Soldier"
         self.mod_name = address(random.choice(MODELS[type_]))
 
     def prepare(self):
@@ -274,8 +280,8 @@ class Character(Shooter):
         Stop all the character's tasks, play death
         animation and plan character clearing.
         """
-        if not self._is_dead:
-            self._is_dead = True
+        if not self.is_dead:
+            self.is_dead = True
 
             base.taskMgr.remove(self.id + "_aim")  # noqa: F821
             base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
