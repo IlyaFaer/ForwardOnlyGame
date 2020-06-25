@@ -10,7 +10,7 @@ from direct.showbase.ShowBase import ShowBase
 from panda3d.core import CollisionTraverser, WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
-from gui.interface import CharacterInterface
+from gui.interface import CharacterInterface, TrainInterface
 from personage.character import Team
 from train import Train
 from world import World
@@ -41,20 +41,21 @@ class ForwardOnly(ShowBase):
 
         CameraController().set_controls(self.train)
 
-        team = Team()
-        team.gen_default(self.train.parts)
+        self.team = Team()
+        self.team.gen_default(self.train.parts)
 
-        common_ctrl = CommonController(self.train.parts, team.chars)
+        common_ctrl = CommonController(self.train.parts, self.team.chars)
         common_ctrl.set_controls()
 
         # build game world
-        self.world = World(self, self.train, team)
+        self.world = World(self, self.train, self.team)
         self.world.generate_location("Plains", 300)
         self._current_block = self.world.prepare_next_block()
 
         self.enableParticles()
 
-        self.interface = CharacterInterface()
+        self.char_interface = CharacterInterface()
+        self.train_interface = TrainInterface()
 
         self.enableAllAudio()
         self._move_along_block()

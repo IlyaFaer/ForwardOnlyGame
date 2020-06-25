@@ -74,6 +74,8 @@ class Train:
         self._lights = self._set_lights()
         self.lights_on = False
 
+        self.damnability = 1000
+
     def move_along_block(self, block):
         """Move Train along the given world block.
 
@@ -182,6 +184,26 @@ class Train:
     def speed_to_min(self):
         """Accelerate Train to minimum combat speed."""
         self._ctrl.speed_to_min()
+
+    def get_damage(self, damage):
+        """Get damage from an enemy.
+
+        If damage become critical, stop Train.
+
+        Args:
+            damage (int): Damage points to get.
+        """
+        self.damnability -= damage
+        base.train_interface.update_indicators(  # noqa: F821
+            damnability=self.damnability
+        )
+        if self.damnability <= 0:
+            if not self._ctrl.critical_damage:
+                self._ctrl.critical_damage = True
+                self._ctrl.stop()
+
+                base.world.enemy.capture_train()  # noqa: F821
+                base.team.surrender()  # noqa: F821
 
 
 class TrainPart:

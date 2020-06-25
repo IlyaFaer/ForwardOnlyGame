@@ -52,8 +52,8 @@ class Enemy:
         self._models = FRACTIONS[fraction]["models"]
         self._attack_chances = FRACTIONS[fraction]["attack_chances"]
 
-        self._motocycle1_model = Actor(address("motocycle1"))
-        self._motocycle1_model.setPlayRate(1.5, "ride")
+        self._motocycle_model = Actor(address("motocycle1"))
+        self._motocycle_model.setPlayRate(1.5, "ride")
 
         # set enemy collisions handler
         self._handler = CollisionHandlerEvent()
@@ -91,7 +91,7 @@ class Enemy:
         Args:
             train_mod (panda3d.core.NodePath): Train model.
         """
-        self._motocycle1_model.loop("ride")
+        self._motocycle_model.loop("ride")
 
         delay = 0
         for _ in range(random.randint(2, 10)):
@@ -113,6 +113,20 @@ class Enemy:
             12, self._clear_enemies, "clear_enemies"
         )
 
+    def capture_train(self):
+        """Train got critical damage - stop near it."""
+        for enemy in self.active_units.values():
+            base.taskMgr.remove(enemy.id + "_float_move")  # noqa: F821
+            base.taskMgr.remove(enemy.id + "_shoot")  # noqa: F821
+            base.taskMgr.remove(enemy.id + "_choose_target")  # noqa: F821
+
+    def stop_ride_anim(self, task):
+        """Stop riding animation and sounds."""
+        for enemy in self.active_units.values():
+            enemy.stop_ride()
+        self._motocycle_model.stop()
+        return task.done
+
     def _stop_cooldown(self, task):
         """Ends cool down period."""
         self._is_cooldown = False
@@ -129,7 +143,7 @@ class Enemy:
             Actor(address(random.choice(self._models))),
             id_,
             self._y_positions,
-            self._motocycle1_model,
+            self._motocycle_model,
             self._handler,
         )
         enemy.node.reparentTo(train_mod)
@@ -146,7 +160,7 @@ class Enemy:
             enemy.clear()
 
         self.active_units.clear()
-        self._motocycle1_model.stop()
+        self._motocycle_model.stop()
         return task.done
 
 
@@ -261,22 +275,19 @@ class EnemyUnit(Shooter):
             self._shoot_anim = self._set_shoot_anim(pos, h)
 
     def _choose_target(self, task):
-        """Choose a character as a target.
+        """Choose a character/Train as a target.
 
         Character will be chosen from the list of
         characters set to the TrainPart, in which
         range this enemy is now.
         """
-        if self._target not in self.current_part.chars:
-            self._target = None
-            base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        targets = self.current_part.chars + [base.train]  # noqa: F821
 
-            if self.current_part.chars:
-                self._target = random.choice(self.current_part.chars)
-
-                base.taskMgr.doMethodLater(  # noqa: F821
-                    0.5, self._shoot, self.id + "_shoot"
-                )
+        if self._target not in targets:
+            self._target = random.choice(targets)
+            base.taskMgr.doMethodLater(  # noqa: F821
+                0.5, self._shoot, self.id + "_shoot"
+            )
 
         task.delayTime = 0.5
         return task.again
@@ -401,6 +412,9 @@ class EnemyUnit(Shooter):
 
         self._move(random.randint(9, 11), (self._io_dist, -7, 0))
         self._y_positions.append(self._y_pos)
+
+    def stop_ride(self):
+        self.transport_snd.stop()
 
     def clear(self, task=None):
         """Clear all the graphical data of this unit."""

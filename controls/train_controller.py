@@ -31,6 +31,8 @@ class TrainController:
         self._is_stopped = False
         self._on_et = False
 
+        self.critical_damage = False
+
     def set_controls(self, train):
         """Configure Train control keys and animation.
 
@@ -113,7 +115,14 @@ class TrainController:
 
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         # don't stop on enemy territory
-        if self._on_et and new_rate <= MIN_SPEED and diff < 0:
+        if (
+            self._on_et
+            and new_rate <= MIN_SPEED
+            and diff < 0
+            # stop on enemy territory only
+            # in case of critical damage
+            and not self.critical_damage
+        ):
             return task.again
 
         # change speed
@@ -152,4 +161,29 @@ class TrainController:
             base.taskMgr.remove,  # noqa: F821
             "stop_speedind_up",
             extraArgs=["speed_up_train"],
+        )
+
+    def stop(self):
+        """Completely stop Train."""
+        base.ignore("w")  # noqa: F821
+        base.ignore("s")  # noqa: F821
+
+        base.taskMgr.remove("change_train_speed")  # noqa: F821
+
+        # calculate the length of the deceleration
+        play_rate = self._move_anim_int.getPlayRate()
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6, self._change_speed, "stop_train", extraArgs=[-0.05], appendTask=True
+        )
+        # stop decelerating
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6 * (play_rate / 0.05) + 0.8,
+            base.taskMgr.remove,  # noqa: F821
+            "finish_stopping",
+            extraArgs=["stop_train"],
+        )
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6 * (play_rate / 0.05) + 0.2,
+            base.world.enemy.stop_ride_anim,  # noqa: F821
+            "stop_riding",
         )

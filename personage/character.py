@@ -88,6 +88,11 @@ class Team:
         for char in self.chars.values():
             char.prepare_to_fight(attacking_enemies)
 
+    def surrender(self):
+        """Make the whole team surrender."""
+        for char in self.chars.values():
+            char.surrender()
+
 
 class Character(Shooter):
     """Game character.
@@ -199,6 +204,18 @@ class Character(Shooter):
         base.taskMgr.doMethodLater(  # noqa: F821
             0.5, self._choose_target, self.id + "_choose_target"
         )
+
+    def surrender(self):
+        """Stop fighting, surrender."""
+        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        base.taskMgr.remove(self.id + "_aim")  # noqa: F821
+        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
+        self._col_node.removeNode()
+
+        self._shoot_anim.finish()
+
+        LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
+        self.model.play("surrender")
 
     def _choose_target(self, task):
         """Choose an enemy to shoot.
