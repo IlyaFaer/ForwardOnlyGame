@@ -43,7 +43,8 @@ class Shooter:
     def _shoot(self, task):
         """Play shooting animation and sound, make damage."""
         self._shoot_anim.start()
-        self._target.get_damage(random.randint(*self.damage))
+        if not self._missed_shot():
+            self._target.get_damage(random.randint(*self.damage))
 
         task.delayTime = 1.7 + random.uniform(0.1, 0.9)
         return task.again

@@ -44,8 +44,8 @@ class World:
 
         self._surf_vertices = self._cache_warmup(game.sound_mgr)
         self._paths = self._load_motion_paths()
-        self._sun = Sun(train)
 
+        self.sun = Sun(train)
         self.phys_mgr = self._set_physics()
 
         base.taskMgr.add(self._update_physics, "update")  # noqa: F821
@@ -181,7 +181,7 @@ class World:
 
     def _track_ambient_sound(self, task):
         """Check if ambient sounds should be changed."""
-        if self._sun.day_part == "evening":
+        if self.sun.day_part == "evening":
             base.taskMgr.doMethodLater(  # noqa: F821
                 2,
                 self._change_amb_snd,
@@ -189,7 +189,7 @@ class World:
                 extraArgs=[self._noon_ambient_snd, self._night_ambient_snd],
                 appendTask=True,
             )
-        if self._sun.day_part == "night":
+        if self.sun.day_part == "night":
             base.taskMgr.doMethodLater(  # noqa: F821
                 2,
                 self._change_amb_snd,
@@ -290,7 +290,7 @@ class World:
         self._block_num += 1
 
         if not self._et_blocks and self.enemy.going_to_attack(
-            self._sun.day_part, self._train.lights_on
+            self.sun.day_part, self._train.lights_on
         ):
             self._et_blocks = 25
             self.enemy.prepare(self._train.model)

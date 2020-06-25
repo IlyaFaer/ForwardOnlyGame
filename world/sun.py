@@ -77,6 +77,17 @@ class Sun:
         """
         return self._color["name"]
 
+    @property
+    def is_dark(self):
+        """Returns True if it's too dark to shoot."""
+        if self.day_part == "evening" and self._color_step > 45:
+            return True
+
+        if self.day_part == "night" and self._color_step < 45:
+            return True
+
+        return False
+
     def _set_general_lights(self, train_np):
         """Set initial Sun lights.
 

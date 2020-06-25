@@ -124,6 +124,7 @@ class Enemy:
         """Stop riding animation and sounds."""
         for enemy in self.active_units.values():
             enemy.stop_ride()
+
         self._motocycle_model.stop()
         return task.done
 
@@ -405,6 +406,14 @@ class EnemyUnit(Shooter):
     def _detach(self):
         """Reparent this enemy to the render to left behind."""
         self.model.wrtReparentTo(render)  # noqa: F821
+
+    def _missed_shot(self):
+        """Calculate if enemy missed the current shot.
+
+        Returns:
+            bool: True if enemy missed, False otherwise.
+        """
+        return False
 
     def stop(self):
         """Smoothly stop this unit following Train."""

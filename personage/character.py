@@ -11,7 +11,7 @@ from panda3d.core import CollisionCapsule, CollisionNode
 
 from const import MOUSE_MASK, NO_MASK
 from .shooter import Shooter
-from utils import address
+from utils import address, chance
 
 NAMES = {
     "male": (
@@ -331,3 +331,14 @@ class Character(Shooter):
         self.current_part = None
 
         return task.done
+
+    def _missed_shot(self):
+        """Calculate if character missed the current shot.
+
+        Returns:
+            bool: True if character missed, False otherwise.
+        """
+        if base.world.sun.is_dark:  # noqa: F821
+            return chance(20)
+
+        return False
