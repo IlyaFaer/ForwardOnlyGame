@@ -292,7 +292,7 @@ class World:
         if not self._et_blocks and self.enemy.going_to_attack(
             self.sun.day_part, self._train.lights_on
         ):
-            self._et_blocks = 25
+            self._et_blocks = 30
             self.enemy.prepare(self._train.model)
             self._team.prepare_to_fight(self.enemy.active_units)
             self._train.speed_to_min()

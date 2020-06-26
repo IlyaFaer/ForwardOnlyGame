@@ -338,7 +338,12 @@ class Character(Shooter):
         Returns:
             bool: True if character missed, False otherwise.
         """
-        if base.world.sun.is_dark:  # noqa: F821
-            return chance(20)
+        miss_chance = 0
+        if self.type == "Soldier":
+            if abs(self._target.node.getX()) < 0.5:
+                miss_chance += 20
 
-        return False
+        if base.world.sun.is_dark:  # noqa: F821
+            miss_chance += 20
+
+        return chance(miss_chance)
