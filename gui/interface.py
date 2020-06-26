@@ -1,5 +1,6 @@
 """Game graphical interface API."""
 from direct.gui.DirectGui import DirectFrame, DirectLabel, DirectWaitBar
+from direct.gui.OnscreenText import OnscreenText
 
 RUST_COL = (0.71, 0.25, 0.05, 1)
 
@@ -63,6 +64,14 @@ class CharacterInterface:
             barColor=(0.85, 0.2, 0.28, 1),
             pos=(0.05, 0, -0.023),
         )
+        self._tip = OnscreenText(
+            parent=base.render2d,  # noqa: F821
+            text="",
+            scale=(0.021, 0.027),
+            fg=(0.51, 0.54, 0.59, 1),
+            bg=(0, 0, 0, 0.4),
+        )
+        self._tip.hide()
 
         self.clear_char_info()
 
@@ -94,6 +103,30 @@ class CharacterInterface:
 
         base.taskMgr.remove("track_char_info")  # noqa: F821
         self._char = None
+
+    def show_pers_tip(self, pers, is_enemy=False):
+        """Show personage tooltip.
+
+        If mouse points on a character, his/her name will
+        be shown. If on enemy unit, his/her fraction and
+        type will be shown.
+
+        Args:
+            pers (Union[
+                    personage.character.Character,
+                    personage.enemy.Enemy
+                ]):
+                Pointed character or enemy unit object.
+            is_enemy (bool): True, if enemy pointed, False otherwise.
+        """
+        self._tip.setText(pers.name + (" - " + pers.type if is_enemy else ""))
+        self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
+        self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
+        self._tip.show()
+
+    def hide_pers_tip(self):
+        """Hide personage tooltip."""
+        self._tip.hide()
 
     def _update_char_info(self, task):
         """Track character parameters on the interface."""

@@ -188,6 +188,8 @@ class EnemyUnit(Shooter):
 
         self.damage = (2, 3)
         self.id = "enemy_" + str(id_)
+        self.name = "Skinhead"
+        self.type = "Shooter"
 
         self.model = model
         self.model.pose("ride", 1)
