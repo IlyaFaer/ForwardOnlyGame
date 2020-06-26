@@ -344,6 +344,15 @@ class EnemyUnit(Shooter):
         self.current_part = None
         self._target = None
 
+    def get_damage(self, damage):
+        """Take damage points and change model color.
+
+        Args:
+            damage (int): Damage points to get.
+        """
+        super().get_damage(damage)
+        self.model.setColorScale(self.model.getColorScale()[0] + 0.018, 1, 1, 1)
+
     def _die(self):
         """Make this enemy die.
 
@@ -354,6 +363,7 @@ class EnemyUnit(Shooter):
             return
 
         self.is_dead = True
+        self.model.setColorScale(1, 1, 1, 1)
 
         base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
