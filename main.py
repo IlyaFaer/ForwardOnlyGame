@@ -37,6 +37,8 @@ class ForwardOnly(ShowBase):
 
         self.traverser = CollisionTraverser("traverser")
 
+        self.enableParticles()
+
         self.train = Train()
 
         CameraController().set_controls(self.train)
@@ -51,8 +53,6 @@ class ForwardOnly(ShowBase):
         self.world = World(self, self.train, self.team)
         self.world.generate_location("Plains", 300)
         self._current_block = self.world.prepare_next_block()
-
-        self.enableParticles()
 
         self.char_interface = CharacterInterface()
         self.train_interface = TrainInterface()

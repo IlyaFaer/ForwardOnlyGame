@@ -9,6 +9,7 @@ animation, and splitting Train to several parts.
 """
 import random
 from direct.actor.Actor import Actor
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import (
     CollisionBox,
     CollisionNode,
@@ -38,6 +39,11 @@ class Train:
 
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
+
+        self.smoke = ParticleEffect()
+        self.smoke.loadConfig("effects/smoke1.ptf")
+        self.smoke.setPos(0, 0.32, 0.28)
+        self.smoke.start(self.model, render)  # noqa: F821
 
         train_move_snd, self._lighter_snd = self._set_sounds()
 
