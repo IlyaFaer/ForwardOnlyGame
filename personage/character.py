@@ -183,6 +183,16 @@ class Character(Shooter):
         self.current_part = part
         self._current_pos = pos
 
+    def attack(self, enemy_unit):
+        """Make the given enemy unit this character's target.
+
+        Args:
+            enemy_unit (personage.enemy.EnemyUnit):
+                Enemy unit to attack.
+        """
+        if enemy_unit in self.current_part.enemies:
+            self._target = enemy_unit
+
     def prepare_to_fight(self, enemies):
         """Prepare the character to fight.
 

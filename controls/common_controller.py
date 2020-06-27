@@ -80,7 +80,7 @@ class CommonController:
         # set events and tasks to organize pointing
         # and clicking on characters and parts
         base.accept("mouse1", self._choose_char)  # noqa: F821
-        base.accept("mouse3", self._move_char)  # noqa: F821
+        base.accept("mouse3", self._char_action)  # noqa: F821
         base.accept("mouse_ray-into", self._point_obj)  # noqa: F821
         base.accept("mouse_ray-again", self._point_obj)  # noqa: F821
         base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
@@ -119,11 +119,17 @@ class CommonController:
 
             base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
 
-    def _move_char(self):
-        """Move chosen character to the pointed part."""
+    def _char_action(self):
+        """Make chosen character do an action on the pointed object."""
         if self._chosen_char:
             if self._pointed_obj.startswith("part_"):
                 self._chosen_char.move_to(self._parts[self._pointed_obj])
+                return
+
+            if self._pointed_obj.startswith("enemy_"):
+                self._chosen_char.attack(
+                    base.world.enemy.active_units[self._pointed_obj]  # noqa: F821
+                )
 
     def _point_obj(self, event):
         """Event: mouse pointer hits a collision."""
