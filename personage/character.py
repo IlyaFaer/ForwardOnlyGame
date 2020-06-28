@@ -117,6 +117,7 @@ class Character(Shooter):
         self.type = None
         self.mod_name = None
         self.model = None
+        self.energy = 100
 
         self.damage = (3, 5)
         self.id = "character_" + str(id_)
@@ -161,6 +162,10 @@ class Character(Shooter):
 
         self.shot_snd = self._set_shoot_snd("rifle_shot1")
         self._shoot_anim = self._set_shoot_anim((0.004, 0.045, 0.064), 97)
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            30, self._reduce_energy, self.id + "_reduce_energy"
+        )
 
     def move_to(self, part):
         """Move this Character to the given train part.
@@ -227,6 +232,17 @@ class Character(Shooter):
         LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
         self.model.play("surrender")
 
+    def _reduce_energy(self, task):
+        """
+        Reduce the character energy according to day part
+        and status: fighting or not.
+        """
+        task.delayTime = (
+            20 if base.world.sun.is_dark or self._target else 30  # noqa: F821
+        )
+        self.energy -= 1
+        return task.again
+
     def _choose_target(self, task):
         """Choose an enemy to shoot.
 
@@ -255,6 +271,7 @@ class Character(Shooter):
             return task.again
 
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        self._target = None
 
         if self._attacking_enemies:
             base.taskMgr.doMethodLater(  # noqa: F821
@@ -262,7 +279,6 @@ class Character(Shooter):
             )
             return task.done
 
-        self._target = None
         base.taskMgr.doMethodLater(  # noqa: F821
             3, self._calm_down, self.id + "_calm_down"
         )
@@ -313,6 +329,7 @@ class Character(Shooter):
             base.taskMgr.remove(self.id + "_aim")  # noqa: F821
             base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
             base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
+            base.taskMgr.remove(self.id + "_reduce_energy")  # noqa: F821
             self._col_node.removeNode()
 
             self._shoot_anim.finish()
@@ -356,4 +373,5 @@ class Character(Shooter):
         if base.world.sun.is_dark:  # noqa: F821
             miss_chance += 20
 
+        miss_chance += (100 - self.energy) // 5
         return chance(miss_chance)

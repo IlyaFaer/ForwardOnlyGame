@@ -13,8 +13,8 @@ class CharacterInterface:
 
         char_int_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.3, 0.3, -0.075, 0.075),
-            pos=(0.3, 0, -1.925),
+            frameSize=(-0.3, 0.3, -0.1, 0.1),
+            pos=(0.3, 0, -1.9),
             frameTexture="gui/tex/metal1.jpg",
         )
         DirectLabel(
@@ -23,7 +23,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.24, 0, 0.03),
+            pos=(-0.24, 0, 0.04),
         )
         self._char_name = DirectLabel(
             parent=char_int_fr,
@@ -31,7 +31,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=(0.51, 0.54, 0.59, 1),
-            pos=(-0.12, 0, 0.028),
+            pos=(-0.12, 0, 0.038),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -39,7 +39,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(0.02, 0, 0.03),
+            pos=(0.02, 0, 0.04),
         )
         self._char_type = DirectLabel(
             parent=char_int_fr,
@@ -47,7 +47,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=(0.51, 0.54, 0.59, 1),
-            pos=(0.14, 0, 0.028),
+            pos=(0.14, 0, 0.038),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -55,14 +55,29 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.24, 0, -0.03),
+            pos=(-0.24, 0, -0.015),
         )
         self._char_health = DirectWaitBar(
             parent=char_int_fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.85, 0.2, 0.28, 1),
-            pos=(0.05, 0, -0.023),
+            pos=(0.05, 0, -0.008),
+        )
+        DirectLabel(
+            parent=char_int_fr,
+            text="Energy",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=(0.03, 0.03),
+            text_fg=RUST_COL,
+            pos=(-0.236, 0, -0.06),
+        )
+        self._char_energy = DirectWaitBar(
+            parent=char_int_fr,
+            frameSize=(-0.17, 0.17, -0.002, 0.002),
+            value=0,
+            barColor=(0.46, 0.61, 0.53, 1),
+            pos=(0.05, 0, -0.053),
         )
         self._tip = OnscreenText(
             parent=base.render2d,  # noqa: F821
@@ -85,10 +100,12 @@ class CharacterInterface:
         self._char_name["text"] = character.name
         self._char_type["text"] = character.type
         self._char_health["value"] = character.health
+        self._char_energy["value"] = character.energy
 
         self._char_name.show()
         self._char_type.show()
         self._char_health.show()
+        self._char_energy.show()
 
         self._char = character
         base.taskMgr.doMethodLater(  # noqa: F821
@@ -100,6 +117,7 @@ class CharacterInterface:
         self._char_name.hide()
         self._char_type.hide()
         self._char_health.hide()
+        self._char_energy.hide()
 
         base.taskMgr.remove("track_char_info")  # noqa: F821
         self._char = None
@@ -135,6 +153,7 @@ class CharacterInterface:
             return task.done
 
         self._char_health["value"] = self._char.health
+        self._char_energy["value"] = self._char.energy
         return task.again
 
 
