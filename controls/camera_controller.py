@@ -69,13 +69,27 @@ class CameraController:
         )
         self._move_int.start()
 
-    def _zoom(self, cam_np, x, z):
+    def _zoom_timed(self, cam_np, x, z):
+        """Zoom camera for some time.
+
+        Args:
+            cam_np (panda3d.core.NodePath): Camera node.
+            x (float): Translation along x axis.
+            z (float): Translation along z axis.
+        """
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.12, self._stop, "zoom_stop", extraArgs=[cam_np, False, True, True]
+        )
+        self._zoom(cam_np, x, z, 0.2)
+
+    def _zoom(self, cam_np, x, z, zoom_time):
         """Zoom camera.
 
         Args:
             cam_np (panda3d.core.NodePath): Camera node.
             x (float): Translation along x axis.
             z (float): Translation along z axis.
+            zoom_time (float): Time to zoom.
         """
         if self._move_int is not None:
             self._move_int.pause()
@@ -84,7 +98,7 @@ class CameraController:
         self._target.setZ(z)
 
         self._move_int = LerpPosInterval(
-            base.cam, 1.75, self._target, other=cam_np  # noqa: F821
+            base.cam, zoom_time, self._target, other=cam_np  # noqa: F821
         )
         self._move_int.start()
 
@@ -160,10 +174,13 @@ class CameraController:
         base.accept("alt-arrow_down", self._turn, [cam_np, 0, 25])  # noqa: F821
 
         # camera zooming controls
-        base.accept("+", self._zoom, [cam_np, 0.7, 1.2])  # noqa: F821
-        base.accept("-", self._zoom, [cam_np, 2, 3])  # noqa: F821
+        base.accept("+", self._zoom, [cam_np, 0.7, 1.2, 1.75])  # noqa: F821
+        base.accept("-", self._zoom, [cam_np, 2, 3, 1.75])  # noqa: F821
         base.accept("+-up", self._stop, [cam_np, False, True, True])  # noqa: F821
         base.accept("--up", self._stop, [cam_np, False, True, True])  # noqa: F821
+
+        base.accept("wheel_up", self._zoom_timed, [cam_np, 0.7, 1.2])  # noqa: F821
+        base.accept("wheel_down", self._zoom_timed, [cam_np, 2, 3])  # noqa: F821
 
     def _toggle_centered_view(self, cam_np):
         """Set camera onto default position.
