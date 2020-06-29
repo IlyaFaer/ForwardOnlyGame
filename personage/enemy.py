@@ -206,8 +206,8 @@ class EnemyUnit(Shooter):
         en_col_node.setIntoCollideMask(MOUSE_MASK)
         en_col_node.setFromCollideMask(SHOT_RANGE_MASK)
         en_col_node.addSolid(CollisionSphere(0, 0, 0.05, 0.05))
-        col_np = self.model.attachNewNode(en_col_node)
-        base.traverser.addCollider(col_np, enemy_handler)  # noqa: F821
+        self._col_node = self.model.attachNewNode(en_col_node)
+        base.traverser.addCollider(self._col_node, enemy_handler)  # noqa: F821
 
         # prepare transport
         self.transport = self.model.attachNewNode("moto_" + self.id)
@@ -363,6 +363,7 @@ class EnemyUnit(Shooter):
             return
 
         self.is_dead = True
+        self._col_node.stash()
         self.model.setColorScale(1, 1, 1, 1)
 
         base.taskMgr.remove(self.id + "_float_move")  # noqa: F821

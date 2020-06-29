@@ -78,8 +78,8 @@ class CommonController:
             base.cam.attachNewNode(mouse_col_node), handler  # noqa: F821
         )
         # set events and tasks to organize pointing
-        # and clicking on characters and parts
-        base.accept("mouse1", self._choose_char)  # noqa: F821
+        # and clicking on characters and Train parts
+        base.accept("mouse1", self._choose_obj)  # noqa: F821
         base.accept("mouse3", self._char_action)  # noqa: F821
         base.accept("mouse_ray-into", self._point_obj)  # noqa: F821
         base.accept("mouse_ray-again", self._point_obj)  # noqa: F821
@@ -92,14 +92,23 @@ class CommonController:
             0.07, self._traverse, name="main_traverse"
         )
 
+    def choose_resting_char(self, char_id):
+        """Choose a character from a rest zone.
+
+        Args:
+            char_id (str): Id of the Character to choose.
+        """
+        self._pointed_obj = char_id
+        self._choose_obj()
+
     def _deselect(self):
         """Remove all manipulating interface."""
         self._char_pointer.detachNode()
         for part in self._parts.values():
             part.hide_arrow()
 
-    def _choose_char(self):
-        """Event: mouse button pushed on a character.
+    def _choose_obj(self):
+        """Event: mouse button pushed on active object.
 
         Sets a cursor on the clicked character, and
         remembers its object. Also shows manipulation
@@ -118,6 +127,12 @@ class CommonController:
                 part.show_arrow()
 
             base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
+            return
+
+        if self._pointed_obj.startswith("part_rest_"):
+            base.char_interface.show_resting_chars(  # noqa: F821
+                base.train.parts[self._pointed_obj]  # noqa: F821
+            )
 
     def _char_action(self):
         """Make chosen character do an action on the pointed object."""

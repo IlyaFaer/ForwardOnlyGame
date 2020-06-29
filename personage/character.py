@@ -181,6 +181,12 @@ class Character(Shooter):
         if self.current_part is not None:
             self.current_part.release_cell(self._current_pos, self)
 
+            if self.current_part.name.startswith("part_rest_"):
+                self._stop_rest()
+
+        if part.name.startswith("part_rest_"):
+            self._rest()
+
         self.model.wrtReparentTo(part.parent)
         self.model.setPos(pos["pos"])
         self.model.setH(pos["angle"])
@@ -232,6 +238,45 @@ class Character(Shooter):
         LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
         self.model.play("surrender")
 
+    def _rest(self):
+        """Make this character rest.
+
+        Stops all the active tasks and starts
+        energy regaining.
+        """
+        for task in (
+            "_reduce_energy",
+            "_shoot",
+            "_aim",
+            "_choose_target",
+            "_idle_anim",
+        ):
+            base.taskMgr.remove(self.id + task)  # noqa: F821
+
+        self.model.hide()
+        self._col_node.stash()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.05, self._calm_down, self.id + "_calm_down"
+        )
+        base.taskMgr.doMethodLater(  # noqa: F821
+            50, self._gain_energy, self.id + "_gain_energy"
+        )
+
+    def _stop_rest(self):
+        """Stop this character rest."""
+        self.model.show()
+        self._col_node.unstash()
+        base.char_interface.destroy_char_button(self.id)  # noqa: F821
+
+        base.taskMgr.remove(self.id + "_gain_energy")  # noqa: F821
+        base.taskMgr.doMethodLater(  # noqa: F821
+            30, self._reduce_energy, self.id + "_reduce_energy"
+        )
+
+        if base.world.enemy.active_units:  # noqa: F821
+            self.prepare_to_fight(self._attacking_enemies)
+
     def _reduce_energy(self, task):
         """
         Reduce the character energy according to day part
@@ -241,6 +286,11 @@ class Character(Shooter):
             20 if base.world.sun.is_dark or self._target else 30  # noqa: F821
         )
         self.energy -= 1
+        return task.again
+
+    def _gain_energy(self, task):
+        """Regain this character energy."""
+        self.energy += 3
         return task.again
 
     def _choose_target(self, task):

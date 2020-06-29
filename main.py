@@ -46,8 +46,8 @@ class ForwardOnly(ShowBase):
         self.team = Team()
         self.team.gen_default(self.train.parts)
 
-        common_ctrl = CommonController(self.train.parts, self.team.chars)
-        common_ctrl.set_controls()
+        self.common_ctrl = CommonController(self.train.parts, self.team.chars)
+        self.common_ctrl.set_controls()
 
         # build game world
         self.world = World(self, self.train, self.team)
