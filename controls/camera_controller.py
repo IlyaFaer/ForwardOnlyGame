@@ -17,6 +17,8 @@ class CameraController:
         self._target = Vec3(2, 0, MAX_Z)  # final pos of the current movement
         self._move_int = None  # current move interval
         self._turn_int = None  # current rotation interval
+        self._with_mouse_move = None  # camera is in move by mouse
+        self._with_mouse_move_x = None
         self._is_centered = False
 
         # camera position before toggling centered view
@@ -41,6 +43,52 @@ class CameraController:
 
         self._set_move_keys(cam_np)
         base.accept("c", self._toggle_centered_view, [cam_np])  # noqa: F821
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.2,
+            self._move_with_mouse,
+            "move_camera_with_mouse",
+            extraArgs=[cam_np],
+            appendTask=True,
+        )
+
+    def _move_with_mouse(self, cam_np, task):
+        """Implement moving camera with mouse.
+
+        If mouse pointer touches a screen edge, move
+        camera in this direction.
+
+        Args:
+            cam_np (panda3d.core.NodePath): Camera node.
+        """
+        x = round(base.mouseWatcherNode.getMouseX(), 2)  # noqa: F821
+        z = round(base.mouseWatcherNode.getMouseY(), 2)  # noqa: F821
+
+        if x == 1:
+            self._with_mouse_move = True
+            self._move(cam_np, None, 1.1, 0.9)
+            self._with_mouse_move_x = False
+            return task.again
+        if x == -1:
+            self._with_mouse_move = True
+            self._move(cam_np, None, -1.1, 0.9)
+            self._with_mouse_move_x = False
+            return task.again
+        if z == 1:
+            self._with_mouse_move = True
+            self._move(cam_np, 1, None, 1.5)
+            self._with_mouse_move_x = True
+            return task.again
+        if z == -1:
+            self._with_mouse_move = True
+            self._move(cam_np, 2, None, 0.75)
+            self._with_mouse_move_x = True
+            return task.again
+
+        if self._with_mouse_move:
+            self._stop(cam_np, self._with_mouse_move_x)
+            self._with_mouse_move = False
+
+        return task.again
 
     def _move(self, cam_np, x, y, time):
         """Start camera movement with an interval (on key press).
