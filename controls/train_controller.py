@@ -24,7 +24,7 @@ class TrainController:
     def __init__(self, train_mod, train_move_sound):
         self._train_mod = train_mod
         self._train_move_sound = train_move_sound
-        self._move_anim_int = train_mod.actorInterval("move_forward", playRate=10)
+        self._move_anim_int = train_mod.actorInterval("move_forward", playRate=14)
         self._move_anim_int.loop()
         # parallel with train model and camera move intervals
         self._move_par = None

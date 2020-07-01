@@ -3,6 +3,7 @@ from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectW
 from direct.gui.OnscreenText import OnscreenText
 
 RUST_COL = (0.71, 0.25, 0.05, 1)
+SILVER_COL = (0.51, 0.54, 0.59, 1)
 
 
 class CharacterInterface:
@@ -32,7 +33,7 @@ class CharacterInterface:
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
-            text_fg=(0.51, 0.54, 0.59, 1),
+            text_fg=SILVER_COL,
             pos=(-0.12, 0, 0.038),
         )
         DirectLabel(
@@ -48,7 +49,7 @@ class CharacterInterface:
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
-            text_fg=(0.51, 0.54, 0.59, 1),
+            text_fg=SILVER_COL,
             pos=(0.14, 0, 0.038),
         )
         DirectLabel(
@@ -85,7 +86,7 @@ class CharacterInterface:
             parent=base.render2d,  # noqa: F821
             text="",
             scale=(0.021, 0.027),
-            fg=(0.51, 0.54, 0.59, 1),
+            fg=SILVER_COL,
             bg=(0, 0, 0, 0.4),
         )
         self._tip.hide()
@@ -179,7 +180,7 @@ class CharacterInterface:
             self._rest_buttons[char.id] = DirectButton(
                 pos=(x, 0, z + shift),
                 text=char.name,
-                text_fg=(0.51, 0.54, 0.59, 1),
+                text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.6),
                 command=base.common_ctrl.choose_resting_char,  # noqa: F821
                 extraArgs=[char.id],

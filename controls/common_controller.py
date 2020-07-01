@@ -52,6 +52,7 @@ class CommonController:
         self._char_pointer = loader.loadModel(  # noqa: F821
             address("character_pointer")
         )
+        self._char_pointer.setLightOff()
 
     def set_controls(self):
         """Configure common game controls.
