@@ -213,33 +213,33 @@ class TrainInterface:
     """Train parameters interface."""
 
     def __init__(self):
-        train_int_fr = DirectFrame(
+        frame = DirectFrame(
             parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.03, 0.03, -0.3, 0.3),
             pos=(-0.03, 0, 0.3),
             frameTexture="gui/tex/metal1.jpg",
         )
         DirectFrame(
-            parent=train_int_fr,  # noqa: F821
+            parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             pos=(0, 0, 0.265),
             frameTexture="gui/tex/icon_train.png",
         )
-        self._train_damnability = DirectWaitBar(
-            parent=train_int_fr,
+        self._damnability = DirectWaitBar(
+            parent=frame,
             frameSize=(-0.25, 0.25, -0.002, 0.002),
             range=1000,
             value=1000,
             barColor=(0.42, 0.42, 0.8, 1),
             pos=(0, 0, -0.023),
         )
-        self._train_damnability.setR(-90)
+        self._damnability.setR(-90)
 
     def update_indicators(self, **params):
-        """Update Train interface with given parameters.
+        """Update Train interface with the given parameters.
 
         Args:
             params (dict): New parameters values.
         """
         if "damnability" in params.keys():
-            self._train_damnability["value"] = params["damnability"]
+            self._damnability["value"] = params["damnability"]

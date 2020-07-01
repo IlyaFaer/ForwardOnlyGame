@@ -44,12 +44,9 @@ class Sun:
 
     Sun changes its color according to game day time.
     Simulates real Sun movement as well.
-
-    Args:
-        train (train.Train): Train object.
     """
 
-    def __init__(self, train):
+    def __init__(self):
         self._path = Mopath.Mopath(objectToLoad=address("sun_path"))
 
         self._color = copy.deepcopy(next(SUN_COLORS))
@@ -65,8 +62,10 @@ class Sun:
             self._color, self._next_color, self._day_part_duration
         )
 
-        self._amb_light, self._dir_light, sun_np = self._set_general_lights(train.node)
-        self._set_day_night_cycle(sun_np, train.model)
+        self._amb_light, self._dir_light, sun_np = self._set_general_lights(
+            base.train.node  # noqa: F821
+        )
+        self._set_day_night_cycle(sun_np, base.train.model)  # noqa: F821
 
     @property
     def day_part(self):

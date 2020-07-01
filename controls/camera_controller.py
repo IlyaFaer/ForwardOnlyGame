@@ -29,7 +29,7 @@ class CameraController:
         base.camLens.setNear(0.5)  # noqa: F821
 
     def set_controls(self, train):
-        """Configure camera, its node and set keyboard keys to control the camera.
+        """Configure camera and its controls.
 
         Args:
             train (train.Train): Train object.

@@ -4,8 +4,9 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Train - the main game object, API.
 
-Includes the systems of Train movement, manipulating,
-animation, and splitting Train to several parts.
+Includes the systems of Train loading, preparations,
+animation, sounds, lights. Train is splitted into
+several parts.
 """
 import random
 from direct.actor.Actor import Actor
@@ -22,14 +23,15 @@ from panda3d.core import (
 
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from controls import TrainController
+from gui.interface import TrainInterface
 from utils import address
 
 
 class Train:
     """Train object. The main game object.
 
-    Includes train model, lights, parts to set characters
-    and sounds.
+    Includes train model, lights, sounds, parts to set
+    characters and controller.
     """
 
     def __init__(self):
@@ -40,14 +42,14 @@ class Train:
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
 
-        self.smoke = ParticleEffect()
-        self.smoke.loadConfig("effects/smoke1.ptf")
-        self.smoke.setPos(0, 0.32, 0.28)
-        self.smoke.start(self.model, render)  # noqa: F821
+        smoke = ParticleEffect()
+        smoke.loadConfig("effects/smoke1.ptf")
+        smoke.setPos(0, 0.32, 0.28)
+        smoke.start(self.model, render)  # noqa: F821
 
-        train_move_snd, self._lighter_snd = self._set_sounds()
+        move_snd, self._lighter_snd = self._set_sounds()
 
-        self._ctrl = TrainController(self.model, train_move_snd)
+        self._ctrl = TrainController(self.model, move_snd)
         self._ctrl.set_controls(self)
 
         self.parts = {
@@ -81,6 +83,7 @@ class Train:
         self._lights = self._set_lights()
         self.lights_on = False
 
+        self._interface = TrainInterface()
         self.damnability = 1000
 
     def move_along_block(self, block):
@@ -100,7 +103,7 @@ class Train:
         self.model.wrtReparentTo(render)  # noqa: F821
         self.node.wrtReparentTo(render)  # noqa: F821
 
-        # round coordinates to avoid position/rotation errors
+        # round coordinates to fix position/rotation errors
         mod_pos = (
             round(self.model.getX()),
             round(self.model.getY()),
@@ -125,8 +128,8 @@ class Train:
     def _set_lights(self):
         """Configure Train lights.
 
-        Sets the main Train lighter and lights above the
-        doors.
+        Sets the main Train lighter and lights above
+        the doors.
 
         Returns:
             list: NodePath's of the Train lights.
@@ -166,17 +169,15 @@ class Train:
             (panda3d.core.AudioSound, panda3d.core.AudioSound):
                 Train movement, lighter toggle sounds.
         """
-        train_move_sound = base.sound_mgr.loadSfx(  # noqa: F821
-            "sounds/train_moves1.ogg"
-        )
-        base.sound_mgr.attachSoundToObject(train_move_sound, self.model)  # noqa: F821
+        move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(move_snd, self.model)  # noqa: F821
 
-        train_move_sound.setLoop(True)
-        train_move_sound.play()
+        move_snd.setLoop(True)
+        move_snd.play()
 
         lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
-        return train_move_sound, lighter_snd
+        return move_snd, lighter_snd
 
     def toggle_lights(self):
         """Toggle Train lights."""
@@ -201,11 +202,10 @@ class Train:
             damage (int): Damage points to get.
         """
         self.damnability -= damage
-        base.train_interface.update_indicators(  # noqa: F821
-            damnability=self.damnability
-        )
-        if self.damnability <= 0:
-            if not self._ctrl.critical_damage:
+        self._interface.update_indicators(damnability=self.damnability)
+
+        if not self._ctrl.critical_damage:
+            if self.damnability <= 0:
                 self._ctrl.critical_damage = True
                 self._ctrl.stop()
 
@@ -222,13 +222,13 @@ class TrainPart:
     Args:
         parent (panda3d.core.NodePath):
                 Model, to which arrow sprite of this part
-                should be parented. To this model will be
-                reparented characters as well.
+                must be parented. Characters will be
+                parented to this model as well.
         name (str): Part name.
         positions (list):
             Dicts describing possible positions and
             rotations on this TrainPart.
-        arrow_pos (dict): Arrow sprite position and rotation.
+        arrow_pos (dict): Arrow position and rotation.
     """
 
     def __init__(self, parent, name, positions, arrow_pos):
@@ -267,9 +267,7 @@ class TrainPart:
         col_np.setPos(arrow_pos["pos"][0], arrow_pos["pos"][1], 0)
         col_np.setH(arrow_pos["angle"])
 
-        # set event of enemy coming
         base.accept("into-shoot_zone_" + name, self.enemy_came)  # noqa: F821
-        # set event of enemy leaving
         base.accept("out-shoot_zone_" + name, self.enemy_leave)  # noqa: F821
 
     def enemy_came(self, event):
@@ -310,7 +308,7 @@ class TrainPart:
         return position
 
     def release_cell(self, position, character):
-        """Release cell taken earlier.
+        """Release a cell taken earlier.
 
         Args:
             position (dict):
@@ -331,7 +329,9 @@ class TrainPart:
 
 
 class RestPart:
-    """Part of Train on which characters can rest to regain energy.
+    """Part of Train on which characters can rest.
+
+    Rest helps to regain energy.
 
     Args:
         parent (panda3d.core.NodePath):

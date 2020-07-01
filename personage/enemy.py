@@ -207,7 +207,9 @@ class EnemyUnit(Shooter):
         en_col_node.setFromCollideMask(SHOT_RANGE_MASK)
         en_col_node.addSolid(CollisionSphere(0, 0, 0.05, 0.05))
         self._col_node = self.model.attachNewNode(en_col_node)
-        base.traverser.addCollider(self._col_node, enemy_handler)  # noqa: F821
+        base.common_ctrl.traverser.addCollider(  # noqa: F821
+            self._col_node, enemy_handler
+        )
 
         # prepare transport
         self.transport = self.model.attachNewNode("moto_" + self.id)

@@ -19,21 +19,13 @@ from utils import address, MOD_DIR
 
 
 class World:
-    """Object which represents the game world.
+    """Object which represents the Game world.
 
     Consists of blocks and is randomly generated.
-
-    Args:
-        game (ForwardOnly): Game object.
-        train (train.Train): Train object.
-        team (personage.character.Team): Player units.
     """
 
-    def __init__(self, game, train, team):
+    def __init__(self):
         self.enemy = None
-        self._game = game
-        self._train = train
-        self._team = team
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the generated world blocks
@@ -42,16 +34,16 @@ class World:
         self._block_num = -1
         self._et_blocks = 0
 
-        self._surf_vertices = self._cache_warmup(game.sound_mgr)
+        self._surf_vertices = self._cache_warmup(base.sound_mgr)  # noqa: F821
         self._paths = self._load_motion_paths()
 
-        self.sun = Sun(train)
-        self.phys_mgr = self._set_physics()
+        self.sun = Sun()
 
+        self.phys_mgr = self._set_physics()
         base.taskMgr.add(self._update_physics, "update")  # noqa: F821
 
     def _set_physics(self):
-        """Set world physics."""
+        """Set the world physics."""
         world = BulletWorld()
         world.setGravity(Vec3(0, 0, -0.5))
 
@@ -64,7 +56,7 @@ class World:
         return world
 
     def _update_physics(self, task):
-        """Update physic calculations."""
+        """Update physics calculations."""
         self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
         return task.cont
 
@@ -174,13 +166,13 @@ class World:
             cam_path=self._paths["cam_" + "direct"],
             surf_vertices=self._surf_vertices,
             enemy_territory=True,
-        ).prepare(self._game.taskMgr)
+        ).prepare()
 
         self._map.insert(self._block_num, block)
         return block
 
-    def _track_ambient_sound(self, task):
-        """Check if ambient sounds should be changed."""
+    def _track_amb_snd(self, task):
+        """Check if current ambient sound should be changed."""
         if self.sun.day_part == "evening":
             base.taskMgr.doMethodLater(  # noqa: F821
                 2,
@@ -274,7 +266,7 @@ class World:
         self._night_ambient_snd.setLoop(True)
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            300, self._track_ambient_sound, "track_ambient_sounds"
+            300, self._track_amb_snd, "track_ambient_sounds"
         )
 
     def prepare_next_block(self):
@@ -290,12 +282,12 @@ class World:
         self._block_num += 1
 
         if not self._et_blocks and self.enemy.going_to_attack(
-            self.sun.day_part, self._train.lights_on
+            self.sun.day_part, base.train.lights_on  # noqa: F821
         ):
             self._et_blocks = 30
-            self.enemy.prepare(self._train.model)
-            self._team.prepare_to_fight(self.enemy.active_units)
-            self._train.speed_to_min()
+            self.enemy.prepare(base.train.model)  # noqa: F821
+            base.team.prepare_to_fight()  # noqa: F821
+            base.train.speed_to_min()  # noqa: F821
 
         if self._et_blocks:
             block = self._prepare_et_block()
@@ -304,7 +296,7 @@ class World:
             if self._et_blocks == 0:
                 self.enemy.stop_attack()
         else:
-            block = self._map[self._block_num].prepare(self._game.taskMgr)
+            block = self._map[self._block_num].prepare()
 
         if self._block_num:  # reparent the next block to the current one
             current_block = self._map[self._block_num - 1]
@@ -320,19 +312,19 @@ class World:
                 block.rails_mod.setH(-90)
             elif current_block.name == "l90_turn":
                 block.rails_mod.setH(90)
-        else:  # reparent the first world block to the render
-            block.rails_mod.reparentTo(self._game.render)
+        else:  # reparent the first block to the render
+            block.rails_mod.reparentTo(render)  # noqa: F821
 
         return block
 
     def clear_prev_block(self):
-        """Clear models from old block to release memory."""
+        """Clear the block to release memory."""
         num = self._block_num - 3
         if num >= 0:
             # blocks are reparented to each other, so
             # we need to reparent the block to the render
             # before clearing, to avoid chain reaction
-            self._map[num + 1].rails_mod.wrtReparentTo(self._game.render)
+            self._map[num + 1].rails_mod.wrtReparentTo(render)  # noqa: F821
             self._map[num].rails_mod.removeNode()
 
             # don't keep enemy territory in the world

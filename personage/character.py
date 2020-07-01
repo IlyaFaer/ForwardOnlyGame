@@ -79,14 +79,10 @@ class Team:
 
             self.chars[char.id] = char
 
-    def prepare_to_fight(self, attacking_enemies):
-        """Prepare every character to fight.
-
-        Args:
-            attacking_enemies (dict): Attacking units index.
-        """
+    def prepare_to_fight(self):
+        """Prepare every character to fight."""
         for char in self.chars.values():
-            char.prepare_to_fight(attacking_enemies)
+            char.prepare_to_fight()
 
     def surrender(self):
         """Make the whole team surrender."""
@@ -111,7 +107,6 @@ class Character(Shooter):
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None
-        self._attacking_enemies = None
 
         self.name = None
         self.type = None
@@ -168,7 +163,7 @@ class Character(Shooter):
         )
 
     def move_to(self, part):
-        """Move this Character to the given train part.
+        """Move this Character to the given Train part.
 
         Args:
             part (train.TrainPart):
@@ -204,16 +199,11 @@ class Character(Shooter):
         if enemy_unit in self.current_part.enemies:
             self._target = enemy_unit
 
-    def prepare_to_fight(self, enemies):
+    def prepare_to_fight(self):
         """Prepare the character to fight.
 
         Switch animations and run a task to choose a target.
-
-        Args:
-            enemies (dict): Attacking enemies index.
         """
-        self._attacking_enemies = enemies
-
         base.taskMgr.remove(self.id + "_idle_anim")  # noqa: F821
         if self._idle_seq is not None:
             self._idle_seq.finish()
@@ -273,9 +263,8 @@ class Character(Shooter):
         base.taskMgr.doMethodLater(  # noqa: F821
             30, self._reduce_energy, self.id + "_reduce_energy"
         )
-
         if base.world.enemy.active_units:  # noqa: F821
-            self.prepare_to_fight(self._attacking_enemies)
+            self.prepare_to_fight()
 
     def _reduce_energy(self, task):
         """
@@ -306,7 +295,7 @@ class Character(Shooter):
             return task.done
 
         # enemies retreated - return to passive state
-        if not self._attacking_enemies:
+        if not base.world.enemy.active_units:  # noqa: F821
             base.taskMgr.doMethodLater(  # noqa: F821
                 3, self._calm_down, self.id + "_calm_down"
             )
@@ -323,7 +312,7 @@ class Character(Shooter):
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
         self._target = None
 
-        if self._attacking_enemies:
+        if base.world.enemy.active_units:  # noqa: F821
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._choose_target, self.id + "_choose_target"
             )

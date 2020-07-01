@@ -5,7 +5,13 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Common game controls.
 """
 from direct.gui.OnscreenText import OnscreenText
-from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionRay, TextNode
+from panda3d.core import (
+    CollisionHandlerEvent,
+    CollisionNode,
+    CollisionRay,
+    CollisionTraverser,
+    TextNode,
+)
 
 from const import MOUSE_MASK, NO_MASK
 from utils import address
@@ -31,8 +37,8 @@ F - toggle Train lights
 class CommonController:
     """Common controller.
 
-    Includes controls to show game control keys info
-    and mouse clicking.
+    Includes controls to show game control keys info,
+    mouse clicking and enemy collisions.
 
     Args:
         parts (dict): Train parts to set characters on.
@@ -63,11 +69,11 @@ class CommonController:
         base.accept("f1", self._show_keys)  # noqa: F821
 
         # configure mouse collisions
-        mouse_col_node = CollisionNode("mouse_ray")
-        mouse_col_node.setIntoCollideMask(NO_MASK)
-        mouse_col_node.setFromCollideMask(MOUSE_MASK)
+        col_node = CollisionNode("mouse_ray")
+        col_node.setIntoCollideMask(NO_MASK)
+        col_node.setFromCollideMask(MOUSE_MASK)
         self._mouse_ray = CollisionRay()
-        mouse_col_node.addSolid(self._mouse_ray)
+        col_node.addSolid(self._mouse_ray)
 
         # set common collisions handler
         handler = CollisionHandlerEvent()
@@ -75,8 +81,9 @@ class CommonController:
         handler.addAgainPattern("%fn-again")
         handler.addOutPattern("%fn-out")
 
-        base.traverser.addCollider(  # noqa: F821
-            base.cam.attachNewNode(mouse_col_node), handler  # noqa: F821
+        self.traverser = CollisionTraverser("traverser")
+        self.traverser.addCollider(
+            base.cam.attachNewNode(col_node), handler  # noqa: F821
         )
         # set events and tasks to organize pointing
         # and clicking on characters and Train parts
@@ -103,7 +110,7 @@ class CommonController:
         self._choose_obj()
 
     def _deselect(self):
-        """Remove all manipulating interface."""
+        """Hide manipulating interface."""
         self._char_pointer.detachNode()
         for part in self._parts.values():
             part.hide_arrow()
@@ -136,7 +143,7 @@ class CommonController:
             )
 
     def _char_action(self):
-        """Make chosen character do an action on the pointed object."""
+        """Make the chosen character act on the pointed object."""
         if self._chosen_char:
             if self._pointed_obj.startswith("part_"):
                 self._chosen_char.move_to(self._parts[self._pointed_obj])
@@ -185,7 +192,7 @@ class CommonController:
 
     def _traverse(self, task):
         """Main traverser task."""
-        base.traverser.traverse(render)  # noqa: F821
+        self.traverser.traverse(render)  # noqa: F821
         return task.again
 
     def _show_keys(self):

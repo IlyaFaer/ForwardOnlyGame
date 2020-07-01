@@ -277,11 +277,8 @@ class Block:
             )
             surf_mod.setTexScale(ts, 20, 20)
 
-    def prepare(self, taskMgr):
+    def prepare(self):
         """Load models, which represents this block content.
-
-        Args:
-            taskMgr (direct.task.Task.TaskManager): Task manager.
 
         Returns:
             Block: Returns self object.
@@ -289,24 +286,24 @@ class Block:
         self.rails_mod = loader.loadModel(address(self.name + "_rails"))  # noqa: F821
 
         self._load_surface_block(
-            taskMgr, self._l_surface, -4, 4, self._l_angle, "l"  # noqa: F821
+            base.taskMgr, self._l_surface, -4, 4, self._l_angle, "l"  # noqa: F821
         )
         self._load_surface_block(
-            taskMgr, self._r_surface, 4, 4, self._r_angle, "r"  # noqa: F821
+            base.taskMgr, self._r_surface, 4, 4, self._r_angle, "r"  # noqa: F821
         )
 
         if self.name == "l90_turn":
             self._load_surface_block(
-                taskMgr, self._r_surface, -4, 12, self._l_angle  # noqa: F821
+                base.taskMgr, self._r_surface, -4, 12, self._l_angle  # noqa: F821
             )
             self._load_surface_block(
-                taskMgr, self._r_surface, 4, 12, self._l_angle  # noqa: F821
+                base.taskMgr, self._r_surface, 4, 12, self._l_angle  # noqa: F821
             )
         elif self.name == "r90_turn":
             self._load_surface_block(
-                taskMgr, self._l_surface, 4, 12, self._r_angle  # noqa: F821
+                base.taskMgr, self._l_surface, 4, 12, self._r_angle  # noqa: F821
             )
             self._load_surface_block(
-                taskMgr, self._l_surface, -4, 12, self._r_angle  # noqa: F821
+                base.taskMgr, self._l_surface, -4, 12, self._r_angle  # noqa: F821
             )
         return self

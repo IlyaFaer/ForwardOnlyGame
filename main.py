@@ -7,10 +7,10 @@ and maintains the major systems.
 """
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import CollisionTraverser, WindowProperties, loadPrcFileData
+from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
-from gui.interface import CharacterInterface, TrainInterface
+from gui.interface import CharacterInterface
 from personage.character import Team
 from train import Train
 from world import World
@@ -35,8 +35,6 @@ class ForwardOnly(ShowBase):
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
 
-        self.traverser = CollisionTraverser("traverser")
-
         self.enableParticles()
 
         self.train = Train()
@@ -50,18 +48,19 @@ class ForwardOnly(ShowBase):
         self.common_ctrl.set_controls()
 
         # build game world
-        self.world = World(self, self.train, self.team)
+        self.world = World()
         self.world.generate_location("Plains", 300)
         self._current_block = self.world.prepare_next_block()
 
         self.char_interface = CharacterInterface()
-        self.train_interface = TrainInterface()
 
         self.enableAllAudio()
+
         self._move_along_block()
+        self.accept("block_finished", self._move_along_block)
 
     def _configure_window(self):
-        """Configure game window.
+        """Configure the game window.
 
         Set fullscreen mode, and resolution
         according to player's screen size.
@@ -75,17 +74,14 @@ class ForwardOnly(ShowBase):
         """Move Train along the current world block.
 
         While Train is moving along the current block,
-        the game prepares the next one.
+        the game prepares the next one and clears penalt.
         """
         self.train.switch_to_current_block()
 
-        # load next world block and clear penult
         next_block = self.world.prepare_next_block()
         self.world.clear_prev_block()
 
-        # move along the current world block
         self.train.move_along_block(self._current_block)
-        self.acceptOnce("block_finished", self._move_along_block)
         self._current_block = next_block
 
 
