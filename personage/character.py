@@ -7,7 +7,7 @@ Characters (player units) API.
 import random
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
-from panda3d.core import CollisionCapsule, CollisionNode
+from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
 from .shooter import Shooter
@@ -48,7 +48,6 @@ NAMES = {
         "Tyler",
     )
 }
-MODELS = {"male": ("character1",)}
 
 
 class Team:
@@ -72,8 +71,7 @@ class Team:
         ):
             self._char_id += 1
 
-            char = Character(self._char_id, self)
-            char.generate("male")
+            char = generate_char(self._char_id, "soldier", "male", self)
             char.prepare()
             char.move_to(part)
 
@@ -93,48 +91,53 @@ class Team:
 class Character(Shooter):
     """Game character.
 
-    Character can be generated for the given type.
-
     Args:
         id_ (int): Character unique id.
+        name (str): Character name.
+        class_ (str): Unit class.
+        mod_name (str): Character model name.
+        sex (str): Character gender.
         team (Team): Team object.
     """
 
-    def __init__(self, id_, team):
-        super().__init__()
+    def __init__(self, id_, name, class_, mod_name, sex, team):
+        super().__init__("character_" + str(id_), class_)
         self._team = team
+        self._mod_name = mod_name
 
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None
 
-        self.name = None
-        self.type = None
-        self.mod_name = None
-        self.model = None
+        self.name = name
         self.energy = 100
-
+        self.sex = sex
         self.damage = (3, 5)
-        self.id = "character_" + str(id_)
 
-    def generate(self, type_):
-        """Generate a character of the given type.
+    @property
+    def tooltip(self):
+        """Tooltip to show on mouse pointing to this character.
 
-        Args:
-            type_ (str):
-                Character type name. Describes names and
-                models to be used while character generation.
+        Returns:
+            str: This character name.
         """
-        self.name = random.choice(NAMES[type_])
-        self.type = "Soldier"
-        self.mod_name = address(random.choice(MODELS[type_]))
+        return self.name
+
+    @property
+    def clear_delay(self):
+        """Delay between this character's death and clearing.
+
+        Returns:
+            float: Seconds to hold the character before delete.
+        """
+        return 3.5
 
     def prepare(self):
         """Load the character model and positionate it.
 
         Tweak collision solid as well.
         """
-        self.model = Actor(self.mod_name)
+        self.model = Actor(self._mod_name)
         self.model.enableBlend()
         self.model.setControlEffect("stand", 1)
 
@@ -148,13 +151,10 @@ class Character(Shooter):
             self._idle_animation,
             "{id_}_idle_anim".format(id_=self.id),
         )
-        # set character collisions
-        col_node = CollisionNode(self.id)
-        col_node.setFromCollideMask(NO_MASK)
-        col_node.setIntoCollideMask(MOUSE_MASK)
-        col_node.addSolid(CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035))
-        self._col_node = self.model.attachNewNode(col_node)
 
+        self._col_node = self._init_col_node(
+            NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
+        )
         self.shot_snd = self._set_shoot_snd("rifle_shot1")
         self._shoot_anim = self._set_shoot_anim((0.004, 0.045, 0.064), 97)
 
@@ -362,31 +362,23 @@ class Character(Shooter):
         Stop all the character's tasks, play death
         animation and plan character clearing.
         """
-        if not self.is_dead:
-            self.is_dead = True
+        if not super()._die():
+            return
 
-            base.taskMgr.remove(self.id + "_aim")  # noqa: F821
-            base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
-            base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
-            base.taskMgr.remove(self.id + "_reduce_energy")  # noqa: F821
-            self._col_node.removeNode()
+        base.taskMgr.remove(self.id + "_reduce_energy")  # noqa: F821
 
-            self._shoot_anim.finish()
-            LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
-            self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
-            self.model.play("die")
+        LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
+        self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
+        self.model.play("die")
 
-            base.taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
-            base.taskMgr.doMethodLater(  # noqa: F821
-                3.5, self._clear, self.id + "_clear"
-            )
+        base.taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
 
     def _hide(self, task):
         """Hide the main model."""
         self.model.hide()
         return task.done
 
-    def _clear(self, task):
+    def clear(self, task):
         """Clear this character."""
         self.model.cleanup()
         self.model.removeNode()
@@ -405,7 +397,7 @@ class Character(Shooter):
             bool: True if character missed, False otherwise.
         """
         miss_chance = 0
-        if self.type == "Soldier":
+        if self.class_ == "soldier":
             if abs(self._target.node.getX()) < 0.5:
                 miss_chance += 20
 
@@ -414,3 +406,20 @@ class Character(Shooter):
 
         miss_chance += (100 - self.energy) // 5
         return chance(miss_chance)
+
+
+def generate_char(id_, class_, sex, team=None):
+    """Generate character with the given parameters.
+
+    Args:
+        id_ (str): Character id.
+        class_ (str): Character class.
+        sex (str): Character gender.
+        team (Team): Optional. Team to add new character into.
+
+    Returns:
+        Character: The generated character.
+    """
+    return Character(
+        id_, random.choice(NAMES[sex]), class_, address(sex + "_" + class_), sex, team
+    )

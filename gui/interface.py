@@ -44,7 +44,7 @@ class CharacterInterface:
             text_fg=RUST_COL,
             pos=(0.02, 0, 0.04),
         )
-        self._char_type = DirectLabel(
+        self._char_class = DirectLabel(
             parent=char_int_fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
@@ -101,12 +101,12 @@ class CharacterInterface:
                 Chosen character object.
         """
         self._char_name["text"] = character.name
-        self._char_type["text"] = character.type
+        self._char_class["text"] = character.class_.capitalize()
         self._char_health["value"] = character.health
         self._char_energy["value"] = character.energy
 
         self._char_name.show()
-        self._char_type.show()
+        self._char_class.show()
         self._char_health.show()
         self._char_energy.show()
 
@@ -118,7 +118,7 @@ class CharacterInterface:
     def clear_char_info(self):
         """Clear the interface."""
         self._char_name.hide()
-        self._char_type.hide()
+        self._char_class.hide()
         self._char_health.hide()
         self._char_energy.hide()
 
@@ -130,28 +130,23 @@ class CharacterInterface:
 
         self._rest_list_active = False
 
-    def show_pers_tip(self, pers, is_enemy=False):
+    def show_unit_tip(self, unit):
         """Show personage tooltip.
 
-        If mouse points on a character, his/her name will
-        be shown. If on enemy unit, his/her fraction and
-        type will be shown.
-
         Args:
-            pers (Union[
+            unit (Union[
                     personage.character.Character,
-                    personage.enemy.Enemy
+                    personage.enemy.EnemyUnit
                 ]):
-                Pointed character or enemy unit object.
-            is_enemy (bool): True, if enemy pointed, False otherwise.
+                Pointed unit object.
         """
-        self._tip.setText(pers.name + (" - " + pers.type if is_enemy else ""))
+        self._tip.setText(unit.tooltip)
         self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
         self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
         self._tip.show()
 
-    def hide_pers_tip(self):
-        """Hide personage tooltip."""
+    def hide_unit_tip(self):
+        """Hide unit tooltip."""
         self._tip.hide()
 
     def show_resting_chars(self, part):

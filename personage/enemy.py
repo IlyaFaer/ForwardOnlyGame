@@ -10,13 +10,7 @@ from direct.actor.Actor import Actor
 from direct.interval.LerpInterval import LerpPosInterval
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
-from panda3d.core import (
-    CollisionHandlerEvent,
-    CollisionNode,
-    CollisionSphere,
-    Point3,
-    Vec3,
-)
+from panda3d.core import CollisionHandlerEvent, CollisionSphere, Point3, Vec3
 
 from const import MOUSE_MASK, SHOT_RANGE_MASK
 from .shooter import Shooter
@@ -190,7 +184,8 @@ class EnemyUnit(Shooter):
     """
 
     def __init__(self, model, id_, y_positions, moto_mod, enemy_handler):
-        super().__init__()
+        super().__init__("enemy_" + str(id_), "Shooter")
+        self._tooltip = "Skinhead - " + self.class_
         self._move_int = None
 
         self._y_positions = y_positions
@@ -198,9 +193,6 @@ class EnemyUnit(Shooter):
         self._y_positions.remove(self._y_pos)
 
         self.damage = (2, 3)
-        self.id = "enemy_" + str(id_)
-        self.name = "Skinhead"
-        self.type = "Shooter"
 
         self.model = model
         self.model.pose("ride", 1)
@@ -213,11 +205,9 @@ class EnemyUnit(Shooter):
 
         self.transport_snd = None
 
-        en_col_node = CollisionNode(self.id)
-        en_col_node.setIntoCollideMask(MOUSE_MASK)
-        en_col_node.setFromCollideMask(SHOT_RANGE_MASK)
-        en_col_node.addSolid(CollisionSphere(0, 0, 0.05, 0.05))
-        self._col_node = self.model.attachNewNode(en_col_node)
+        self._col_node = self._init_col_node(
+            SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
+        )
         base.common_ctrl.traverser.addCollider(  # noqa: F821
             self._col_node, enemy_handler
         )
@@ -236,6 +226,24 @@ class EnemyUnit(Shooter):
         base.taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
         )
+
+    @property
+    def tooltip(self):
+        """Tooltip to show on mouse pointing to this enemy.
+
+        Returns:
+            str: This unit fraction and class.
+        """
+        return self._tooltip
+
+    @property
+    def clear_delay(self):
+        """Delay between this character's death and clearing.
+
+        Returns:
+            int: Seconds to hold the unit before delete.
+        """
+        return 15
 
     @property
     def _io_dist(self):
@@ -372,26 +380,17 @@ class EnemyUnit(Shooter):
         Play death sequence of movements and sounds,
         stop all the tasks for this enemy, plan clearing.
         """
-        if self.is_dead:
+        if not super()._die():
             return
 
-        self.is_dead = True
-        self._col_node.stash()
         self.model.setColorScale(1, 1, 1, 1)
-
         base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
-        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
-
         self._move_int.pause()
-        self._shoot_anim.finish()
 
         self.model.play("die")
         if self.id in base.world.enemy.active_units:  # noqa: F821
             base.world.enemy.active_units.pop(self.id)  # noqa: F821
             self.current_part.enemies.remove(self)
-
-            base.taskMgr.doMethodLater(15, self.clear, self.id + "_clear")  # noqa: F821
 
         self._explode()
 

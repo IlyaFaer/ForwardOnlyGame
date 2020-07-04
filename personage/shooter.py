@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 API for shooting personages.
 """
+import abc
 import random
 
 from direct.interval.IntervalGlobal import (
@@ -14,31 +15,24 @@ from direct.interval.IntervalGlobal import (
 )
 
 from utils import address
+from .unit import Unit
 
 
-class Shooter:
-    """Base class for shooters."""
+class Shooter(Unit, metaclass=abc.ABCMeta):
+    """Base class for shooters.
 
-    def __init__(self):
+    Args:
+        id_ (str): This unit id.
+        class_ (str): Unit class.
+    """
+
+    def __init__(self, id_, class_):
+        super().__init__(id_, 100, class_)
         self._shoot_anim = None
         self._target = None  # target enemy object
 
-        self.is_dead = False
         self.current_part = None
         self.shot_snd = None
-        self.health = 100
-
-    def get_damage(self, damage):
-        """Getting damage.
-
-        Start dying if needed.
-
-        Args:
-            damage (int): Damage points to get.
-        """
-        self.health -= damage
-        if self.health <= 0:
-            self._die()
 
     def _shoot(self, task):
         """Play shooting animation and sound, make damage."""
@@ -89,3 +83,30 @@ class Shooter:
         )
         base.sound_mgr.attachSoundToObject(shot_snd, self.model)  # noqa: F821
         return shot_snd
+
+    def _die(self):
+        """Die actions for this shooter.
+
+        Returns:
+            bool: True, if this shooter dies for the first time.
+        """
+        if not super()._die():
+            return False
+
+        base.taskMgr.remove(self.id + "_aim")  # noqa: F821
+        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
+
+        self._shoot_anim.finish()
+        return True
+
+    @abc.abstractmethod
+    def _missed_shot(self):
+        """Method to calculate if shooter missed the shot.
+
+        Returns:
+            bool: True, if this shooter missed the shot.
+        """
+        raise NotImplementedError(
+            "Every shooter class must have _missed_shot() method."
+        )

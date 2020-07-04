@@ -164,21 +164,20 @@ class CommonController:
 
         # show_tooltip
         if self._pointed_obj.startswith("character_"):
-            base.char_interface.show_pers_tip(  # noqa: F821
+            base.char_interface.show_unit_tip(  # noqa: F821
                 self.chars[self._pointed_obj]
             )
             return
 
         if self._pointed_obj.startswith("enemy_"):
-            base.char_interface.show_pers_tip(  # noqa: F821
-                base.world.enemy.active_units[self._pointed_obj],  # noqa: F821
-                is_enemy=True,
+            base.char_interface.show_unit_tip(  # noqa: F821
+                base.world.enemy.active_units[self._pointed_obj]  # noqa: F821
             )
 
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
-        base.char_interface.hide_pers_tip()  # noqa: F821
+        base.char_interface.hide_unit_tip()  # noqa: F821
 
     def _collide_mouse(self, task):
         """Organize active mouse collision object movement.
