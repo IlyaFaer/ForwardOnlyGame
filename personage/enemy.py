@@ -24,7 +24,7 @@ from utils import address, chance
 
 FRACTIONS = {
     "Skinheads": {
-        "models": ("skinhead_shooter1",),
+        "classes": ({"model": "skinhead_shooter1", "score": 3},),
         "attack_chances": {"morning": 0, "noon": 3, "evening": 5, "night": 2},
     }
 }
@@ -44,12 +44,13 @@ class Enemy:
         self._unit_id = 0
         self._is_cooldown = False
         self._y_positions = []
+        self._score = 3
 
         for gain in range(1, 14):
             self._y_positions.append(round(0.15 + gain * 0.05, 2))
             self._y_positions.append(round(-0.15 - gain * 0.05, 2))
 
-        self._models = FRACTIONS[fraction]["models"]
+        self._classes = FRACTIONS[fraction]["classes"]
         self._attack_chances = FRACTIONS[fraction]["attack_chances"]
 
         self._motocycle_model = Actor(address("motocycle1"))
@@ -93,19 +94,28 @@ class Enemy:
         """
         self._motocycle_model.loop("ride")
 
+        available = [
+            en_class for en_class in self._classes if en_class["score"] <= self._score
+        ]
+
         delay = 0
-        for _ in range(random.randint(2, 10)):
+        wave_score = 0
+        while wave_score < self._score:
+            unit_class = random.choice(available)
+
             self._unit_id += 1
             base.taskMgr.doMethodLater(  # noqa: F821
                 delay,
                 self._load_enemy,
                 "load_enemy_" + str(self._unit_id),
-                extraArgs=[train_mod, self._unit_id],
+                extraArgs=[train_mod, unit_class["model"], self._unit_id],
             )
             delay += 0.035
+            wave_score += unit_class["score"]
 
     def stop_attack(self):
         """Make all the unit smoothly stop following Train."""
+        self._score += 1
         for enemy in self.active_units.values():
             enemy.stop()
 
@@ -133,15 +143,16 @@ class Enemy:
         self._is_cooldown = False
         return task.done
 
-    def _load_enemy(self, train_mod, id_):
+    def _load_enemy(self, train_mod, model, id_):
         """Load single enemy unit.
 
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
+            model (panda3d.core.NodePath): Unit model.
             id_ (int): Unit id.
         """
         enemy = EnemyUnit(
-            Actor(address(random.choice(self._models))),
+            Actor(address(model)),
             id_,
             self._y_positions,
             self._motocycle_model,
