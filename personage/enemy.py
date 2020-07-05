@@ -8,7 +8,6 @@ import random
 
 from direct.actor.Actor import Actor
 from direct.interval.LerpInterval import LerpPosInterval
-from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
 from panda3d.core import CollisionHandlerEvent, CollisionSphere, Point3, Vec3
 
@@ -216,9 +215,7 @@ class EnemyUnit(Shooter):
         self.transport = self.model.attachNewNode("moto_" + self.id)
         moto_mod.instanceTo(self.transport)
 
-        self._explode_sparks = ParticleEffect()
-        self._explode_sparks.loadConfig("effects/explode_sparks.ptf")
-        self._explode_sparks.setY(0.3)
+        self._explosion = base.effects_mgr.explosion(self)  # noqa: F821
 
         # organize movement and aiming tasks
         time_to_overtake = random.randint(33, 50)
@@ -330,13 +327,6 @@ class EnemyUnit(Shooter):
         )
 
         self.shot_snd = self._set_shoot_snd("smg_shot1")
-
-        self.explosion_snd = base.sound_mgr.loadSfx(  # noqa: F821
-            "sounds/explosion1.ogg"
-        )
-        base.sound_mgr.attachSoundToObject(  # noqa: F821
-            self.explosion_snd, self.transport
-        )
         return task.done
 
     def enter_the_part(self, part):
@@ -396,11 +386,7 @@ class EnemyUnit(Shooter):
 
     def _explode(self):
         """Set physics for this enemy and explode."""
-        self.explosion_snd.play()
-        self._explode_sparks.start(self.model, render)  # noqa: F821
-        base.taskMgr.doMethodLater(  # noqa: F821
-            4.8, self._stop_explosion, self.id + "_disable_exlode_sparks"
-        )
+        self._explosion.play()
 
         rb_node = BulletRigidBodyNode(self.id + "_physics")
         rb_node.setMass(80)
@@ -422,11 +408,6 @@ class EnemyUnit(Shooter):
                 random.randint(-45, 45),
             )
         )
-
-    def _stop_explosion(self, task):
-        """Disable explosion effect."""
-        self._explode_sparks.disable()
-        return task.done
 
     def _detach(self):
         """Reparent this enemy to the render to left behind."""
@@ -454,9 +435,7 @@ class EnemyUnit(Shooter):
         """Clear all the graphical data of this unit."""
         base.sound_mgr.detach_sound(self.transport_snd)  # noqa: F821
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
-        base.sound_mgr.detach_sound(self.explosion_snd)  # noqa: F821
 
-        self._explode_sparks.cleanup()
         self._move_int.finish()
         self.model.cleanup()
         self.node.removeNode()

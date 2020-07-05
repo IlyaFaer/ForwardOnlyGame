@@ -10,6 +10,7 @@ from direct.showbase.ShowBase import ShowBase
 from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
+from effects import EffectsManager
 from gui.interface import CharacterInterface
 from personage.character import Team
 from train import Train
@@ -36,6 +37,7 @@ class ForwardOnly(ShowBase):
         self.sound_mgr.setDropOffFactor(5)
 
         self.enableParticles()
+        self.effects_mgr = EffectsManager()
 
         self.train = Train()
 
