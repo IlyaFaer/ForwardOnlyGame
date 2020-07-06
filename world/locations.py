@@ -30,6 +30,7 @@ LOCATIONS = {
             {"models": ("fireplace1", "tent"), "chance": 7, "square": "wide"},
             {"models": ("stump1",), "chance": 7, "square": "wide"},
             {"models": ("tire1",), "chance": 2, "square": "wide"},
+            {"models": ("cart1",), "chance": 4, "square": "wide"},
         ),
         # enemy territory configurations
         "et_with_quantity": (
@@ -38,6 +39,9 @@ LOCATIONS = {
             {"models": ("small_tree1",), "quantity": (1, 3), "square": "narrow"},
             {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),
-        "et_with_chance": (),
+        "et_with_chance": (
+            {"models": ("stump1",), "chance": 7, "square": "narrow"},
+            {"models": ("cart1",), "chance": 4, "square": "narrow"},
+        ),
     }
 }
