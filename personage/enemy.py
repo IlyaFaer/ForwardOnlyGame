@@ -398,9 +398,17 @@ class EnemyUnit(Shooter):
         base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
 
         # boom impulse
-        rb_node.applyForce(
-            Vec3(0, random.randint(5000, 7000), random.randint(1500, 2500)), Point3(0)
-        )
+        angle = self.model.getH(render)  # noqa: F821
+        x = 0
+        y = 0
+        if angle == 0:
+            y = random.randint(5000, 7000)
+        elif angle == 90:
+            x = -random.randint(5000, 7000)
+        elif angle == -90:
+            x = random.randint(5000, 7000)
+
+        rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
         rb_node.applyTorque(
             Vec3(
                 random.randint(-45, 45),
