@@ -46,7 +46,42 @@ NAMES = {
         "Tim",
         "Thomas",
         "Tyler",
-    )
+    ),
+    "female": (
+        "Adriana",
+        "Angelina",
+        "Barbara",
+        "Casey",
+        "Charlotte",
+        "Christine",
+        "Dolores",
+        "Elizabeth",
+        "Emily",
+        "Emma",
+        "Eva",
+        "Gillian",
+        "Helena",
+        "Isabela",
+        "Jennifer",
+        "Jessica",
+        "Kate",
+        "Laura",
+        "Maeve",
+        "Megan",
+        "Melissa",
+        "Mia",
+        "Miranda",
+        "Naomi",
+        "Olivia",
+        "Rachael",
+        "Samara",
+        "Sara",
+        "Scarlett",
+        "Sofia",
+        "Stephanie",
+        "Vanessa",
+        "Victoria",
+    ),
 }
 
 
@@ -64,14 +99,14 @@ class Team:
             train_pargs (dict):
                 Train parts to set characters on.
         """
-        for part in (
-            train_parts["part_locomotive_right"],
-            train_parts["part_locomotive_right"],
-            train_parts["part_locomotive_front"],
+        for part, sex in (
+            (train_parts["part_locomotive_right"], "male"),
+            (train_parts["part_locomotive_right"], "male"),
+            (train_parts["part_locomotive_front"], "female"),
         ):
             self._char_id += 1
 
-            char = generate_char(self._char_id, "soldier", "male", self)
+            char = generate_char(self._char_id, "soldier", sex, self)
             char.prepare()
             char.move_to(part)
 
@@ -137,7 +172,20 @@ class Character(Shooter):
 
         Tweak collision solid as well.
         """
-        self.model = Actor(self._mod_name)
+        self.model = Actor(
+            self._mod_name,
+            {
+                "die": address("soldier-die"),
+                "gun_up": address("soldier-gun_up"),
+                "incline1": address("soldier-incline1"),
+                "release_gun": address("soldier-release_gun"),
+                "stand_and_aim": address("soldier-stand_and_aim"),
+                "stand": address("soldier-stand"),
+                "surrender": address("soldier-surrender"),
+                "tread1": address("soldier-tread1"),
+                "turn_head1": address("soldier-turn_head1"),
+            },
+        )
         self.model.enableBlend()
         self.model.setControlEffect("stand", 1)
 
