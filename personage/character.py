@@ -271,9 +271,16 @@ class Character(Shooter):
         Reduce the character energy according to day part
         and status: fighting or not.
         """
-        task.delayTime = (
-            20 if base.world.sun.is_dark or self._target else 30  # noqa: F821
-        )
+        if self._target:
+            task.delayTime = 20
+        elif base.world.sun.is_dark:  # noqa: F821
+            if base.train.lights_on:  # noqa: F821
+                task.delayTime = 20
+            else:
+                task.delayTime = 15
+        else:
+            task.delayTime = 30
+
         self.energy -= 1
         return task.again
 
