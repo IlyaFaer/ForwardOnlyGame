@@ -1,6 +1,10 @@
-"""Base API for all the Game units."""
-import abc
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
+Base API for all the Game units.
+"""
+import abc
 from panda3d.core import CollisionNode
 
 
@@ -9,13 +13,15 @@ class Unit(metaclass=abc.ABCMeta):
 
     Args:
         id_ (str): Unit id.
-        health (int): Health points.
         class_ (str): Unit class.
+        class_data (dict):
+            Unit class definition, including max health points.
     """
 
-    def __init__(self, id_, health, class_):
+    def __init__(self, id_, class_, class_data):
         self.id = id_
-        self.health = health
+        self.class_data = class_data
+        self.health = class_data["health"]
         self.is_dead = False
         self.model = None
         self.class_ = class_

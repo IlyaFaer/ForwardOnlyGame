@@ -102,6 +102,8 @@ class CharacterInterface:
         """
         self._char_name["text"] = character.name
         self._char_class["text"] = character.class_.capitalize()
+
+        self._char_health["range"] = character.class_data["health"]
         self._char_health["value"] = character.health
         self._char_energy["value"] = character.energy
 

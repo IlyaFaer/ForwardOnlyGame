@@ -183,7 +183,7 @@ class EnemyUnit(Shooter):
     """
 
     def __init__(self, model, id_, y_positions, moto_mod, enemy_handler):
-        super().__init__("enemy_" + str(id_), "Shooter")
+        super().__init__("enemy_" + str(id_), "Shooter", {"health": 100})
         self._tooltip = "Skinhead - " + self.class_
         self._move_int = None
 

@@ -24,10 +24,12 @@ class Shooter(Unit, metaclass=abc.ABCMeta):
     Args:
         id_ (str): This unit id.
         class_ (str): Unit class.
+        class_data (dict):
+            Unit class definition, including max health points.
     """
 
-    def __init__(self, id_, class_):
-        super().__init__(id_, 100, class_)
+    def __init__(self, id_, class_, class_data):
+        super().__init__(id_, class_, class_data)
         self._shoot_anim = None
         self._target = None  # target enemy object
 

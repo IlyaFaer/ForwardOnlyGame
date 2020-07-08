@@ -5,84 +5,15 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Characters (player units) API.
 """
 import random
+
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
 from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
-from .shooter import Shooter
 from utils import address, chance
-
-NAMES = {
-    "male": (
-        "Aaron",
-        "Alex",
-        "Alexis",
-        "Arnold",
-        "Ben",
-        "Bruce",
-        "Chris",
-        "Cody",
-        "Cory",
-        "Craig",
-        "Donnie",
-        "Ed",
-        "Elijah",
-        "Eric",
-        "Frank",
-        "James",
-        "Jerome",
-        "Josh",
-        "Justin",
-        "Max",
-        "Mike",
-        "Nathan",
-        "Paul",
-        "Peter",
-        "Roy",
-        "Shawn",
-        "Sid",
-        "Steven",
-        "Tim",
-        "Thomas",
-        "Tyler",
-    ),
-    "female": (
-        "Adriana",
-        "Angelina",
-        "Barbara",
-        "Casey",
-        "Charlotte",
-        "Christine",
-        "Dolores",
-        "Elizabeth",
-        "Emily",
-        "Emma",
-        "Eva",
-        "Gillian",
-        "Helena",
-        "Isabela",
-        "Jennifer",
-        "Jessica",
-        "Kate",
-        "Laura",
-        "Maeve",
-        "Megan",
-        "Melissa",
-        "Mia",
-        "Miranda",
-        "Naomi",
-        "Olivia",
-        "Rachael",
-        "Samara",
-        "Sara",
-        "Scarlett",
-        "Sofia",
-        "Stephanie",
-        "Vanessa",
-        "Victoria",
-    ),
-}
+from .personage_data import NAMES, CLASSES
+from .shooter import Shooter
 
 
 class Team:
@@ -136,7 +67,7 @@ class Character(Shooter):
     """
 
     def __init__(self, id_, name, class_, mod_name, sex, team):
-        super().__init__("character_" + str(id_), class_)
+        super().__init__("character_" + str(id_), class_, CLASSES[sex + "_" + class_])
         self._team = team
         self._mod_name = mod_name
 
@@ -145,8 +76,8 @@ class Character(Shooter):
         self._idle_seq = None
 
         self.name = name
-        self.energy = 100
         self.sex = sex
+        self.energy = 100
         self.damage = (3, 5)
 
     @property
@@ -204,7 +135,9 @@ class Character(Shooter):
             NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         )
         self.shot_snd = self._set_shoot_snd("rifle_shot1")
-        self._shoot_anim = self._set_shoot_anim((0.004, 0.045, 0.064), 97)
+        self._shoot_anim = self._set_shoot_anim(
+            (0.004, 0.045, 0.064 if self.sex == "male" else 0.062), 97
+        )
 
         base.taskMgr.doMethodLater(  # noqa: F821
             30, self._reduce_energy, self.id + "_reduce_energy"
@@ -298,7 +231,7 @@ class Character(Shooter):
             0.05, self._calm_down, self.id + "_calm_down"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            50, self._gain_energy, self.id + "_gain_energy"
+            self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
         )
 
     def _stop_rest(self):
@@ -335,6 +268,12 @@ class Character(Shooter):
     def _gain_energy(self, task):
         """Regain this character energy."""
         self.energy += 3
+
+        for char in self.current_part.chars:
+            if char.sex == "female" and self.id != char.id:
+                task.delayTime = self.class_data["energy_gain"] - 5
+                return task.again
+
         return task.again
 
     def _choose_target(self, task):
