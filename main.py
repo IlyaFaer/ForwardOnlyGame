@@ -11,7 +11,7 @@ from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
-from gui.interface import CharacterInterface
+from gui.interface import CharacterInterface, ResourcesInterface
 from personage.character import Team
 from train import Train
 from world import World
@@ -55,11 +55,14 @@ class ForwardOnly(ShowBase):
         self._current_block = self.world.prepare_next_block()
 
         self.char_interface = CharacterInterface()
+        ResourcesInterface()
 
         self.enableAllAudio()
 
         self._move_along_block()
         self.accept("block_finished", self._move_along_block)
+
+        self.dollars = 300
 
     def _configure_window(self):
         """Configure the game window.

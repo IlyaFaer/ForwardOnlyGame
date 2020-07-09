@@ -240,3 +240,29 @@ class TrainInterface:
         """
         if "damnability" in params.keys():
             self._damnability["value"] = params["damnability"]
+
+
+class ResourcesInterface:
+    """Interface to show the current amount of player resources."""
+
+    def __init__(self):
+        frame = DirectFrame(
+            parent=base.a2dTopLeft,  # noqa: F821
+            frameSize=(-0.075, 0.075, -0.025, 0.025),
+            pos=(0.075, 0, -0.025),
+            frameTexture="gui/tex/metal1.jpg",
+        )
+        DirectFrame(
+            parent=frame,  # noqa: F821
+            frameSize=(-0.023, 0.023, -0.023, 0.023),
+            pos=(-0.05, 0, 0),
+            frameTexture="gui/tex/icon_dollar.png",
+        )
+        self._dollars = DirectLabel(
+            parent=frame,
+            text="300",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=(0.035, 0.035),
+            text_fg=RUST_COL,
+            pos=(0.01, 0, -0.008),
+        )
