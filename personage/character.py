@@ -233,6 +233,7 @@ class Character(Shooter):
         base.taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
         )
+        base.taskMgr.doMethodLater(30, self._heal, self.id + "_heal")  # noqa: F821
 
     def _stop_rest(self):
         """Stop this character rest."""
@@ -241,6 +242,7 @@ class Character(Shooter):
         base.char_interface.destroy_char_button(self.id)  # noqa: F821
 
         base.taskMgr.remove(self.id + "_gain_energy")  # noqa: F821
+        base.taskMgr.remove(self.id + "_heal")  # noqa: F821
         base.taskMgr.doMethodLater(  # noqa: F821
             30, self._reduce_energy, self.id + "_reduce_energy"
         )
@@ -275,6 +277,14 @@ class Character(Shooter):
                 return task.again
 
         return task.again
+
+    def _heal(self, task):
+        """Regain this character health."""
+        if self.health < self.class_data["health"]:
+            self.health += 1
+            return task.again
+
+        return task.done
 
     def _choose_target(self, task):
         """Choose an enemy to shoot.
