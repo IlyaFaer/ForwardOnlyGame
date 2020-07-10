@@ -49,6 +49,7 @@ class Block:
         surf_vertices (dict): Vertices index of every surface model.
         enemy_territory (bool): This block is an enemy territory.
         is_station (bool): Station must be set on this block.
+        outing_available (str): An outing type available on this block.
     """
 
     def __init__(
@@ -59,6 +60,7 @@ class Block:
         surf_vertices,
         enemy_territory=False,
         is_station=False,
+        outing_available=None,
     ):
         self.rails_mod = None
 
@@ -66,6 +68,7 @@ class Block:
         self.path = path
         self.cam_path = cam_path
         self.enemy_territory = enemy_territory
+        self.outing_available = outing_available
 
         self._station_side = random.choice(("l", "r")) if is_station else None
 

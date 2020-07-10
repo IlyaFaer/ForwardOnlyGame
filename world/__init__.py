@@ -10,12 +10,14 @@ from direct.directutil import Mopath
 from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
 from panda3d.core import AudioSound, GeomVertexReader, Vec3
 
-from .block import Block
-from .railway_generator import RailwayGenerator
-from .sun import Sun
-from .locations import LOCATIONS
 from personage.enemy import Enemy
 from utils import address, MOD_DIR
+
+from .block import Block
+from .locations import LOCATIONS
+from .outing import OutingsManager
+from .railway_generator import RailwayGenerator
+from .sun import Sun
 
 
 class World:
@@ -26,6 +28,7 @@ class World:
 
     def __init__(self):
         self.enemy = None
+        self._outings_mgr = None
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the generated world blocks
@@ -214,16 +217,27 @@ class World:
         from_snd.stop()
         return task.done
 
+    def start_outing(self, type_):
+        """Start an outing with the given type.
+
+        Args:
+            type_ (str): Outing type.
+        """
+        self._outings_mgr.start_outing(type_)
+
     def generate_location(self, location, size):
         """Generate game location.
 
-        Location consists of blocks and enemy fraction.
+        Location consists of blocks, enemy fraction and
+        a list of available outings.
 
         Args:
             location (str): Location name.
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
+        self._outings_mgr = OutingsManager(location)
+
         for _ in range(size):
             rails_block = rails_gen.generate_block()
 
@@ -240,6 +254,7 @@ class World:
                     cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
                     is_station=is_station,
+                    outing_available=self._outings_mgr.plan_outing(),
                 )
             )
         self._set_sounds(location)
@@ -315,6 +330,11 @@ class World:
         else:  # reparent the first block to the render
             block.rails_mod.reparentTo(render)  # noqa: F821
 
+        # track upcoming outings
+        if self._map[self._block_num + 2].outing_available:
+            self._outings_mgr.show_upcoming(
+                self._map[self._block_num + 2].outing_available
+            )
         return block
 
     def clear_prev_block(self):

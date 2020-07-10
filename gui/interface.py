@@ -266,3 +266,16 @@ class ResourcesInterface:
             text_fg=RUST_COL,
             pos=(0.01, 0, -0.008),
         )
+
+
+class OutingsInterface:
+    """Outings dialog GUI."""
+
+    def __init__(self):
+        pass
+
+    def show_upcoming(self, type_):
+        pass
+
+    def start(self, outing):
+        pass

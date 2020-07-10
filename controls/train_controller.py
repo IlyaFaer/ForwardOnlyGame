@@ -31,6 +31,7 @@ class TrainController:
         self._move_par = None
         self._is_stopped = False
         self._on_et = False
+        self._outing_available = None
 
         self.critical_damage = False
 
@@ -59,6 +60,7 @@ class TrainController:
             train_np (panda3d.core.NodePath): Train node.
         """
         self._on_et = block.enemy_territory
+        self._outing_available = block.outing_available
         # use speed value from the last block
         rate = self._move_par.getPlayRate() if self._move_par else 1
 
@@ -103,6 +105,9 @@ class TrainController:
         self._move_anim_int.pause()
         self._move_snd.stop()
         self._is_stopped = True
+
+        if self._outing_available:
+            base.world.start_outing(self._outing_available)  # noqa: F821
 
     def _change_speed(self, diff, task):
         """Actually change Train speed.
