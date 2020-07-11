@@ -67,3 +67,11 @@ class OutingsManager:
     def hide_outing(self):
         """Hide outing icon."""
         self._interface.hide_outing()
+
+    def go_for_outing(self, outing):
+        """Make characters go for outing.
+
+        Args:
+            outing (dict): Outing description.
+        """
+        pass

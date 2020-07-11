@@ -28,7 +28,7 @@ class World:
 
     def __init__(self):
         self.enemy = None
-        self._outings_mgr = None
+        self.outings_mgr = None
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the generated world blocks
@@ -223,7 +223,7 @@ class World:
         Args:
             type_ (str): Outing type.
         """
-        self._outings_mgr.start_outing(type_)
+        self.outings_mgr.start_outing(type_)
 
     def generate_location(self, location, size):
         """Generate game location.
@@ -236,7 +236,7 @@ class World:
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
-        self._outings_mgr = OutingsManager(location)
+        self.outings_mgr = OutingsManager(location)
 
         for _ in range(size):
             rails_block = rails_gen.generate_block()
@@ -254,7 +254,7 @@ class World:
                     cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
                     is_station=is_station,
-                    outing_available=self._outings_mgr.plan_outing(),
+                    outing_available=self.outings_mgr.plan_outing(),
                 )
             )
         self._set_sounds(location)
@@ -287,15 +287,15 @@ class World:
     def _track_outings(self):
         """Track outing abilities."""
         if self._map[self._block_num + 1].outing_available:
-            self._outings_mgr.show_upcoming(
+            self.outings_mgr.show_upcoming(
                 self._map[self._block_num + 1].outing_available
             )
         elif self._map[self._block_num].outing_available:
-            self._outings_mgr.show_upcoming_closer()
+            self.outings_mgr.show_upcoming_closer()
         elif self._map[self._block_num - 1].outing_available:
-            self._outings_mgr.show_can_start()
+            self.outings_mgr.show_can_start()
         elif self._map[self._block_num - 2].outing_available:
-            self._outings_mgr.hide_outing()
+            self.outings_mgr.hide_outing()
 
     def prepare_next_block(self):
         """Prepare the next world block.

@@ -277,6 +277,10 @@ class OutingsInterface:
     """Outing dialogs GUI."""
 
     def __init__(self):
+        self._outing_widgets = []
+        self._going_for_outing = []
+        self._char_buttons = {}
+
         self._blink_step = 0
         self._upcome_icon = DirectFrame(
             frameSize=(-0.1, 0.1, -0.1, 0.1),
@@ -294,6 +298,30 @@ class OutingsInterface:
             pos=(0, 0, 0.65),
         )
         self._upcome_text.hide()
+
+        self._list = DirectFrame(
+            frameSize=(-0.73, 0.73, -0.9, 0.9), frameTexture="gui/tex/paper1.png"
+        )
+        self._list.setTransparency(TransparencyAttrib.MAlpha)
+        self._list.hide()
+
+    def _assign_for_outing(self):
+        """Assign the chosen character for the outing."""
+        char = base.common_ctrl.chosen_char  # noqa: F821
+        if char in self._going_for_outing:
+            return
+
+        self._going_for_outing.append(char)
+        self._char_buttons[char.id].setX(0.35)
+
+    def _unassign_for_outing(self):
+        """Exclude the chosen character from the outing."""
+        char = base.common_ctrl.chosen_char  # noqa: F821
+        if char not in self._going_for_outing:
+            return
+
+        self._going_for_outing.remove(char)
+        self._char_buttons[char.id].setX(-0.35)
 
     def _blink_upcome_icon(self, task):
         """Blink upcoming outing icon to attract attention."""
@@ -338,14 +366,126 @@ class OutingsInterface:
         self._upcome_text["text"] = "Stop to start outing"
 
     def hide_outing(self):
-        """Hide outing icon and text."""
+        """Hide all the outings gui."""
         self._upcome_text.hide()
         self._upcome_icon.hide()
 
+        self._list.hide()
+        for wid in self._outing_widgets:
+            wid.destroy()
+
+        self._outing_widgets.clear()
+
     def start(self, outing):
         """Start outing scenario.
+
+        Draw an interface with outing description.
 
         Args:
             outing (dict): Outing description.
         """
         self.hide_outing()
+        self._list.show()
+
+        self._outing_widgets.append(
+            DirectLabel(
+                parent=self._list,
+                text=outing["name"],
+                frameSize=(0.4, 0.4, 0.4, 0.4),
+                text_scale=(0.05),
+                pos=(-0.4, 0, 0.7),
+            )
+        )
+        self._outing_widgets.append(
+            DirectLabel(
+                parent=self._list,
+                text=outing["type"],
+                frameSize=(0.4, 0.4, 0.4, 0.4),
+                text_scale=(0.035),
+                pos=(-0.13, 0, 0.699),
+            )
+        )
+        self._outing_widgets.append(
+            DirectLabel(
+                parent=self._list,
+                text=outing["desc"],
+                frameSize=(0.6, 0.6, 0.6, 0.6),
+                text_scale=(0.04),
+                pos=(0, 0, 0.4),
+            )
+        )
+        self._outing_widgets.append(
+            DirectLabel(
+                parent=self._list,
+                text="Team:",
+                frameSize=(0.6, 0.6, 0.6, 0.6),
+                text_scale=(0.035),
+                pos=(-0.35, 0, 0),
+            )
+        )
+        shift = -0.07
+        for id_, char in base.team.chars.items():  # noqa: F821
+            but = DirectButton(
+                pos=(-0.35, 0, shift),
+                text=char.name,
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=base.common_ctrl.choose_resting_char,  # noqa: F821
+                extraArgs=[char.id],
+                scale=(0.04, 0, 0.03),
+            )
+            self._char_buttons[id_] = but
+            self._outing_widgets.append(but)
+
+            shift -= 0.04
+
+        self._outing_widgets.append(
+            DirectLabel(
+                parent=self._list,
+                text="People to send:",
+                frameSize=(0.6, 0.6, 0.6, 0.6),
+                text_scale=(0.035),
+                pos=(0.35, 0, 0),
+            )
+        )
+        self._outing_widgets.append(
+            DirectButton(
+                pos=(0, 0, -0.15),
+                text=">",
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=self._assign_for_outing,  # noqa: F821
+                scale=(0.075, 0, 0.075),
+            )
+        )
+        self._outing_widgets.append(
+            DirectButton(
+                pos=(0, 0, -0.21),
+                text="<",
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=self._unassign_for_outing,  # noqa: F821
+                scale=(0.075, 0, 0.075),
+            )
+        )
+        self._outing_widgets.append(
+            DirectButton(
+                pos=(-0.15, 0, -0.75),
+                text="Don't send",
+                text_fg=RUST_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=self.hide_outing,  # noqa: F821
+                scale=(0.05, 0, 0.05),
+            )
+        )
+        self._outing_widgets.append(
+            DirectButton(
+                pos=(0.15, 0, -0.75),
+                text="Send",
+                text_fg=RUST_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=base.world.outings_mgr.go_for_outing,  # noqa: F821
+                extraArgs=[outing],
+                scale=(0.05, 0, 0.05),
+            )
+        )

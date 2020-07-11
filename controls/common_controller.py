@@ -60,6 +60,16 @@ class CommonController:
         )
         self._char_pointer.setLightOff()
 
+    @property
+    def chosen_char(self):
+        """Returns the chosen character.
+
+        Returns:
+            personage.character.Chatacter:
+                The currently chosen character.
+        """
+        return self._chosen_char
+
     def set_controls(self):
         """Configure common game controls.
 
@@ -108,6 +118,7 @@ class CommonController:
         """
         self._pointed_obj = char_id
         self._choose_obj()
+        self._pointed_obj = None
 
     def _deselect(self):
         """Hide manipulating interface."""
