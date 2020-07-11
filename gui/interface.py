@@ -1,6 +1,7 @@
 """Game graphical interface API."""
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from direct.gui.OnscreenText import OnscreenText
+from panda3d.core import TransparencyAttrib
 
 RUST_COL = (0.71, 0.25, 0.05, 1)
 SILVER_COL = (0.51, 0.54, 0.59, 1)
@@ -18,15 +19,17 @@ class CharacterInterface:
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.3, 0.3, -0.1, 0.1),
             pos=(0.3, 0, -1.9),
-            frameTexture="gui/tex/metal1.jpg",
+            frameTexture="gui/tex/metal1.png",
         )
+        char_int_fr.setTransparency(TransparencyAttrib.MAlpha)
+
         DirectLabel(
             parent=char_int_fr,
             text="Name:",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.24, 0, 0.04),
+            pos=(-0.23, 0, 0.04),
         )
         self._char_name = DirectLabel(
             parent=char_int_fr,
@@ -34,7 +37,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
-            pos=(-0.12, 0, 0.038),
+            pos=(-0.11, 0, 0.038),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -42,7 +45,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(0.02, 0, 0.04),
+            pos=(0.03, 0, 0.04),
         )
         self._char_class = DirectLabel(
             parent=char_int_fr,
@@ -50,7 +53,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
-            pos=(0.14, 0, 0.038),
+            pos=(0.15, 0, 0.038),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -58,14 +61,14 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.24, 0, -0.015),
+            pos=(-0.23, 0, -0.015),
         )
         self._char_health = DirectWaitBar(
             parent=char_int_fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.85, 0.2, 0.28, 1),
-            pos=(0.05, 0, -0.008),
+            pos=(0.06, 0, -0.008),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -73,14 +76,14 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.236, 0, -0.06),
+            pos=(-0.226, 0, -0.06),
         )
         self._char_energy = DirectWaitBar(
             parent=char_int_fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.46, 0.61, 0.53, 1),
-            pos=(0.05, 0, -0.053),
+            pos=(0.06, 0, -0.053),
         )
         self._tip = OnscreenText(
             parent=base.render2d,  # noqa: F821
@@ -214,8 +217,9 @@ class TrainInterface:
             parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.03, 0.03, -0.3, 0.3),
             pos=(-0.03, 0, 0.3),
-            frameTexture="gui/tex/metal1.jpg",
+            frameTexture="gui/tex/metal1.png",
         )
+        frame.setTransparency(TransparencyAttrib.MAlpha)
         DirectFrame(
             parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
@@ -250,8 +254,9 @@ class ResourcesInterface:
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.075, 0.075, -0.025, 0.025),
             pos=(0.075, 0, -0.025),
-            frameTexture="gui/tex/metal1.jpg",
+            frameTexture="gui/tex/metal1.png",
         )
+        frame.setTransparency(TransparencyAttrib.MAlpha)
         DirectFrame(
             parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
@@ -269,13 +274,78 @@ class ResourcesInterface:
 
 
 class OutingsInterface:
-    """Outings dialog GUI."""
+    """Outing dialogs GUI."""
 
     def __init__(self):
-        pass
+        self._blink_step = 0
+        self._upcome_icon = DirectFrame(
+            frameSize=(-0.1, 0.1, -0.1, 0.1),
+            pos=(0, 0, 0.8),
+            frameTexture="gui/tex/icon_looting.png",
+        )
+        self._upcome_icon.setTransparency(TransparencyAttrib.MAlpha)
+        self._upcome_icon.hide()
+
+        self._upcome_text = DirectLabel(
+            text="",
+            frameSize=(0.4, 0.4, 0.4, 0.4),
+            text_scale=(0.04, 0.04),
+            text_fg=RUST_COL,
+            pos=(0, 0, 0.65),
+        )
+        self._upcome_text.hide()
+
+    def _blink_upcome_icon(self, task):
+        """Blink upcoming outing icon to attract attention."""
+        self._blink_step += 1
+        if self._blink_step in (2, 4, 6):
+            self._upcome_icon.show()
+            if self._blink_step == 6:
+                self._blink_step = 0
+                return task.done
+
+            return task.again
+
+        self._upcome_icon.hide()
+        return task.again
 
     def show_upcoming(self, type_):
-        pass
+        """Show upcoming outing icon.
+
+        Args:
+            type_ (str): Outing type.
+        """
+        self._upcome_text[
+            "text"
+        ] = '"{type}" outing available\n in {miles} miles'.format(
+            type=type_.capitalize(), miles=2
+        )
+        self._upcome_text.show()
+        self._upcome_icon.show()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.3, self._blink_upcome_icon, "blink_outing_icon"
+        )
+
+    def show_upcoming_closer(self):
+        """Show that 1 mile left until available outing."""
+        self._upcome_text["text"] = self._upcome_text["text"].replace(
+            "2 miles", "1 mile"
+        )
+
+    def show_can_start(self):
+        """Show that outing can be started."""
+        self._upcome_text["text"] = "Stop to start outing"
+
+    def hide_outing(self):
+        """Hide outing icon and text."""
+        self._upcome_text.hide()
+        self._upcome_icon.hide()
 
     def start(self, outing):
-        pass
+        """Start outing scenario.
+
+        Args:
+            outing (dict): Outing description.
+        """
+        self.hide_outing()

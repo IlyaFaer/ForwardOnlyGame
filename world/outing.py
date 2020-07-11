@@ -55,3 +55,15 @@ class OutingsManager:
             type(str): Outing type.
         """
         self._interface.show_upcoming(type_)
+
+    def show_upcoming_closer(self):
+        """Show that 1 mile left until available outing."""
+        self._interface.show_upcoming_closer()
+
+    def show_can_start(self):
+        """Show that outing can be started."""
+        self._interface.show_can_start()
+
+    def hide_outing(self):
+        """Hide outing icon."""
+        self._interface.hide_outing()

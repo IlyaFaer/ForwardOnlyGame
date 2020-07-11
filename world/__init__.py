@@ -284,6 +284,19 @@ class World:
             300, self._track_amb_snd, "track_ambient_sounds"
         )
 
+    def _track_outings(self):
+        """Track outing abilities."""
+        if self._map[self._block_num + 1].outing_available:
+            self._outings_mgr.show_upcoming(
+                self._map[self._block_num + 1].outing_available
+            )
+        elif self._map[self._block_num].outing_available:
+            self._outings_mgr.show_upcoming_closer()
+        elif self._map[self._block_num - 1].outing_available:
+            self._outings_mgr.show_can_start()
+        elif self._map[self._block_num - 2].outing_available:
+            self._outings_mgr.hide_outing()
+
     def prepare_next_block(self):
         """Prepare the next world block.
 
@@ -330,11 +343,7 @@ class World:
         else:  # reparent the first block to the render
             block.rails_mod.reparentTo(render)  # noqa: F821
 
-        # track upcoming outings
-        if self._map[self._block_num + 2].outing_available:
-            self._outings_mgr.show_upcoming(
-                self._map[self._block_num + 2].outing_available
-            )
+        self._track_outings()
         return block
 
     def clear_prev_block(self):
