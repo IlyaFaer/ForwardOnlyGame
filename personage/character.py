@@ -77,6 +77,8 @@ class Character(Shooter):
 
         self.name = name
         self.sex = sex
+        self.heshe = "he" if sex == "male" else "she"
+        self.hisher = "his" if sex == "male" else "her"
         self.energy = 100
         self.damage = (3, 5)
 

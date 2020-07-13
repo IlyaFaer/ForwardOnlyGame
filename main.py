@@ -11,7 +11,7 @@ from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
-from gui.interface import CharacterInterface, ResourcesInterface
+from gui import CharacterInterface, ResourcesInterface
 from personage.character import Team
 from train import Train
 from world import World

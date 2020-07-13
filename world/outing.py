@@ -7,7 +7,7 @@ API to manage outings.
 import copy
 import random
 
-from gui.interface import OutingsInterface
+from gui import OutingsInterface
 from utils import chance
 from .outings_data import OUTINGS
 
@@ -68,10 +68,63 @@ class OutingsManager:
         """Hide outing icon."""
         self._interface.hide_outing()
 
-    def go_for_outing(self, outing):
+    def go_for_outing(self, outing, chars):
         """Make characters go for outing.
+
+        Calculate the result according to the outing
+        specifics and bring the effects.
 
         Args:
             outing (dict): Outing description.
+            chars (list): Chars assigned for the outing.
         """
-        pass
+        cond_score = 0
+        class_score = 0
+        cond_max = 20 / len(chars)
+        for char in chars:
+            cond_score += calc_condition_score(cond_max, char)
+            class_score += outing["class_weights"][char.class_]
+
+        score = cond_score
+        score = class_score
+        score += outing["day_part_weights"][base.world.sun.day_part]  # noqa: F821
+        score = round(score)
+
+        desc = None
+        for result in outing["results"]:
+            if score in result[0]:
+                desc = result[1]
+                break
+
+        for index, char in enumerate(chars, start=1):
+            desc = desc.format(
+                **{
+                    "name" + str(index): char.name,
+                    "heshe" + str(index): char.heshe,
+                    "hisher" + str(index): char.hisher,
+                }
+            )
+        self._interface.show_result(
+            desc,
+            score,
+            cond_score,
+            class_score,
+            outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
+        )
+
+
+def calc_condition_score(cond_max, char):
+    """Calculate score according to characters condition.
+
+    Condition consists of health and energy points.
+
+    Args:
+        cond_max (float):
+            Maximum points to get from a single character.
+        char (personage.character.Character):
+            Character to calculate.
+
+    Returns:
+        float: Score from the given character.
+    """
+    return (char.health + char.energy) / char.class_data["health"] / 2 * cond_max
