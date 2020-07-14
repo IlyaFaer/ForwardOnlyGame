@@ -237,6 +237,19 @@ class Character(Shooter):
         )
         base.taskMgr.doMethodLater(30, self._heal, self.id + "_heal")  # noqa: F821
 
+    def do_effects(self, effects):
+        """Do outing effects to this character.
+
+        Args:
+            effects (dict): Effects and their values.
+        """
+        if effects is None:
+            return
+
+        for key, value in effects.items():
+            if hasattr(self, key):
+                setattr(self, key, getattr(self, key) + value)
+
     def _stop_rest(self):
         """Stop this character rest."""
         self.model.show()

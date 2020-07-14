@@ -212,6 +212,17 @@ class Train:
                 base.world.enemy.capture_train()  # noqa: F821
                 base.team.surrender()  # noqa: F821
 
+    def do_effects(self, effects):
+        """Do outing effects to Train.
+
+        Args:
+            effects (dict): Effects and their values.
+        """
+        for key, value in effects.items():
+            if hasattr(self, key):
+                setattr(self, key, getattr(self, key) + value)
+                self._interface.update_indicators(**{key: getattr(self, key)})
+
 
 class TrainPart:
     """Train part where characters can be set.

@@ -91,9 +91,11 @@ class OutingsManager:
         score = round(score)
 
         desc = None
+        effects = {}
         for result in outing["results"]:
-            if score in result[0]:
-                desc = result[1]
+            if score in result["score"]:
+                desc = result["desc"]
+                effects = result["effects"]
                 break
 
         for index, char in enumerate(chars, start=1):
@@ -104,6 +106,8 @@ class OutingsManager:
                     "hisher" + str(index): char.hisher,
                 }
             )
+            char.do_effects(effects.get("char_" + str(index)))
+
         self._interface.show_result(
             desc,
             score,
@@ -111,6 +115,8 @@ class OutingsManager:
             class_score,
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
         )
+        if "train" in effects:
+            base.train.do_effects(effects["train"])  # noqa: F821)
 
 
 def calc_condition_score(cond_max, char):
