@@ -68,7 +68,7 @@ class OutingsInterface:
     def _assign_for_outing(self):
         """Assign the chosen character for the outing."""
         char = base.common_ctrl.chosen_char  # noqa: F821
-        if char in self._going_for_outing:
+        if char is None or char in self._going_for_outing:
             return
 
         self._going_for_outing.append(char)
@@ -229,7 +229,9 @@ class OutingsInterface:
             )
         )
 
-    def show_result(self, desc, score, cond_score, class_score, day_part_score):
+    def show_result(
+        self, desc, score, cond_score, class_score, day_part_score, selected_effect
+    ):
         """Show outing results gui.
 
         Args:
@@ -241,6 +243,8 @@ class OutingsInterface:
                 Score from characters classes.
             day_part_score (int):
                 Day part bonus and special skills score.
+            selected_effect (dict):
+                Effect which requires to choose a target.
         """
         for wid in self._outing_widgets:
             wid.destroy()
@@ -291,16 +295,18 @@ class OutingsInterface:
             0.04,
             self._animate_bars,
             "animate_outing_bars",
-            extraArgs=[bars, score],
+            extraArgs=[bars, score, selected_effect],
             appendTask=True,
         )
 
-    def _animate_bars(self, bars, score, task):
+    def _animate_bars(self, bars, score, selected_effect, task):
         """Animate filling the bars.
 
         Args:
             bars (list): Widget to fill.
             score (int): Total outing score.
+            selected_effect (dict):
+                Effect which requires to choose a target.
         """
         all_filled = True
         for bar in bars:
@@ -338,10 +344,79 @@ class OutingsInterface:
                     text="Done",
                     text_fg=RUST_COL,
                     frameColor=(0, 0, 0, 0.3),
-                    command=self.hide_outing,  # noqa: F821
+                    command=self._finish_outing,  # noqa: F821
+                    extraArgs=[selected_effect],
                     scale=(0.05, 0, 0.05),
                 )
             )
             return task.done
 
         return task.again
+
+    def _finish_outing(self, selected_effect):
+        """Show effect selector if needed, and finish the outing.
+
+        Args:
+            selected_effect (dict):
+                Effect which requires to choose a target.
+        """
+        for wid in self._outing_widgets:
+            wid.destroy()
+        self._outing_widgets.clear()
+
+        if not selected_effect:
+            self.hide_outing()
+            return
+
+        effect_str = ""
+        for key, value in selected_effect.items():
+            effect_str += key + " " + ("+" if value > 0 else "-") + str(value) + "\n"
+
+        self._outing_widgets.append(
+            DirectLabel(
+                parent=self._list,
+                text="""Selected one character as a target for the effect:
+{effect}""".format(
+                    effect=effect_str
+                ),
+                frameSize=(0.6, 0.6, 0.6, 0.6),
+                text_scale=(0.045),
+                pos=(0, 0, 0.2),
+            )
+        )
+        shift = 0.05
+        for id_, char in base.team.chars.items():  # noqa: F821
+            but = DirectButton(
+                pos=(0, 0, shift),
+                text=char.name,
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=base.common_ctrl.choose_resting_char,  # noqa: F821
+                extraArgs=[char.id],
+                scale=(0.04, 0, 0.03),
+            )
+            self._char_buttons[id_] = but
+            self._outing_widgets.append(but)
+
+            shift -= 0.04
+
+        self._outing_widgets.append(
+            DirectButton(
+                pos=(0, 0, -0.75),
+                text="Done",
+                text_fg=RUST_COL,
+                frameColor=(0, 0, 0, 0.3),
+                command=self._do_effect_and_finish,  # noqa: F821
+                extraArgs=[selected_effect],
+                scale=(0.05, 0, 0.05),
+            )
+        )
+
+    def _do_effect_and_finish(self, effect):
+        """Do effects for selected characters and finish the outing.
+
+        Args:
+            effect (dict): Effect to do.
+        """
+        base.common_ctrl.chosen_char.do_effects(effect)  # noqa: F821
+        self.hide_outing()

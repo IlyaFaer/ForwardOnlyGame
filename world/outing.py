@@ -111,12 +111,14 @@ class OutingsManager:
             )
             char.do_effects(effects.get("char_" + str(index)))
 
+        selected_effect = effects.get("select_char")
         self._interface.show_result(
             desc,
             score,
             cond_score,
             class_score,
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
+            selected_effect,
         )
         self._looting_snd.play()
         if "train" in effects:

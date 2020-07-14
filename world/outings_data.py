@@ -66,7 +66,7 @@ the car, every movement raises the dense fug, but {hisher1} search
 doesn't end with nothing. It appeared that a first aid kit is still there,
 and opening it {name1} sees that it contains several not overdue meds!
 That can help to regain 10 points of health of a single character.""",
-                        "effects": {},
+                        "effects": {"select_char": {"health": 10}},
                     },
                     {
                         "score": range(60, 80),
