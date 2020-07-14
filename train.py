@@ -47,9 +47,9 @@ class Train:
         smoke.setPos(0, 0.32, 0.28)
         smoke.start(self.model, render)  # noqa: F821
 
-        move_snd, self._lighter_snd = self._set_sounds()
+        move_snd, stop_snd, self._lighter_snd = self._set_sounds()
 
-        self._ctrl = TrainController(self.model, move_snd)
+        self._ctrl = TrainController(self.model, move_snd, stop_snd)
         self._ctrl.set_controls(self)
 
         self.parts = {
@@ -167,17 +167,19 @@ class Train:
 
         Returns:
             (panda3d.core.AudioSound, panda3d.core.AudioSound):
-                Train movement, lighter toggle sounds.
+                Train movement, stopping, lighter toggle sounds.
         """
         move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(move_snd, self.model)  # noqa: F821
-
         move_snd.setLoop(True)
         move_snd.play()
 
+        stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(stop_snd, self.model)  # noqa: F821
+
         lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
-        return move_snd, lighter_snd
+        return move_snd, stop_snd, lighter_snd
 
     def toggle_lights(self):
         """Toggle Train lights."""

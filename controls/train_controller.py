@@ -19,11 +19,13 @@ class TrainController:
     Args:
         model (panda3d.core.NodePath): Train model.
         move_snd (panda3d.core.AudioSound): Train movement sound.
+        stop_snd (panda3d.core.AudioSound): Train stopping sound.
     """
 
-    def __init__(self, model, move_snd):
+    def __init__(self, model, move_snd, stop_snd):
         self._model = model
         self._move_snd = move_snd
+        self._stop_snd = stop_snd
 
         self._move_anim_int = model.actorInterval("move_forward", playRate=14)
         self._move_anim_int.loop()
@@ -101,6 +103,9 @@ class TrainController:
 
     def _stop_move(self):
         """Stop Train movement."""
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6, self._play_stop_snd, "train_stop_snd"
+        )
         self._move_par.pause()
         self._move_anim_int.pause()
         self._move_snd.stop()
@@ -108,6 +113,11 @@ class TrainController:
 
         if self._outing_available:
             base.world.start_outing(self._outing_available)  # noqa: F821
+
+    def _play_stop_snd(self, task):
+        """Play Train stop sounds with delay."""
+        self._stop_snd.play()
+        return task.done
 
     def _change_speed(self, diff, task):
         """Actually change Train speed.

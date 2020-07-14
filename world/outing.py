@@ -26,6 +26,9 @@ class OutingsManager:
         self._threshold = 70
         self._outings = copy.deepcopy(OUTINGS[location])
         self._types = tuple(self._outings.keys())
+        self._looting_snd = base.loader.loadSfx(  # noqa: F821
+            "sounds/looting_result.ogg"
+        )
         self._interface = OutingsInterface()
 
     def start_outing(self, type_):
@@ -115,6 +118,7 @@ class OutingsManager:
             class_score,
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
         )
+        self._looting_snd.play()
         if "train" in effects:
             base.train.do_effects(effects["train"])  # noqa: F821)
 
