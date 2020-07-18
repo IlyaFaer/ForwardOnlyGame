@@ -15,21 +15,12 @@ from direct.interval.IntervalGlobal import (
 )
 
 from utils import address
-from .unit import Unit
 
 
-class Shooter(Unit, metaclass=abc.ABCMeta):
-    """Base class for shooters.
+class Shooter(metaclass=abc.ABCMeta):
+    """Base class for shooters."""
 
-    Args:
-        id_ (str): This unit id.
-        class_ (str): Unit class.
-        class_data (dict):
-            Unit class definition, including max health points.
-    """
-
-    def __init__(self, id_, class_, class_data):
-        super().__init__(id_, class_, class_data)
+    def __init__(self):
         self._shoot_anim = None
         self._target = None  # target enemy object
 
@@ -92,7 +83,7 @@ class Shooter(Unit, metaclass=abc.ABCMeta):
         Returns:
             bool: True, if this shooter dies for the first time.
         """
-        if not super()._die():
+        if self.is_dead:
             return False
 
         base.taskMgr.remove(self.id + "_aim")  # noqa: F821

@@ -6,6 +6,7 @@ API to control Train and its movement.
 """
 from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
+from panda3d.core import AudioSound
 
 MIN_SPEED = 0.5
 
@@ -20,12 +21,14 @@ class TrainController:
         model (panda3d.core.NodePath): Train model.
         move_snd (panda3d.core.AudioSound): Train movement sound.
         stop_snd (panda3d.core.AudioSound): Train stopping sound.
+        brake_snd (panda3d.core.AudioSound): Train braking sound.
     """
 
-    def __init__(self, model, move_snd, stop_snd):
+    def __init__(self, model, move_snd, stop_snd, brake_snd):
         self._model = model
         self._move_snd = move_snd
         self._stop_snd = stop_snd
+        self._brake_snd = brake_snd
 
         self._move_anim_int = model.actorInterval("move_forward", playRate=14)
         self._move_anim_int.loop()
@@ -36,6 +39,7 @@ class TrainController:
         self._outing_available = None
 
         self.critical_damage = False
+        self.max_speed = 1
 
     def set_controls(self, train):
         """Configure Train control keys.
@@ -106,6 +110,7 @@ class TrainController:
         base.taskMgr.doMethodLater(  # noqa: F821
             0.6, self._play_stop_snd, "train_stop_snd"
         )
+        base.train.stop_sparks()  # noqa: F821
         self._move_par.pause()
         self._move_anim_int.pause()
         self._move_snd.stop()
@@ -132,12 +137,15 @@ class TrainController:
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         if (
             self._on_et  # don't stop on enemy territory
-            and new_rate <= MIN_SPEED
+            and new_rate < MIN_SPEED
             and diff < 0
             # stop on enemy territory only
             # in case of critical damage
             and not self.critical_damage
         ):
+            return task.again
+
+        if new_rate > self.max_speed and diff > 0:
             return task.again
 
         # change speed
@@ -178,6 +186,56 @@ class TrainController:
             extraArgs=["speed_up_train"],
         )
 
+    def slow_down_to(self, target):
+        """Slow down Train to the given speed.
+
+        Args:
+            target (float): Target speed.
+        """
+        base.taskMgr.remove("change_train_speed")  # noqa: F821
+
+        if self._brake_snd.status() == AudioSound.PLAYING:
+            self._brake_snd.setVolume(1)
+        else:
+            self._brake_snd.play()
+            base.taskMgr.doMethodLater(  # noqa: F821
+                3, self._drown_brake_snd, "drown_brake_snd"
+            )
+
+        speed = self._move_anim_int.getPlayRate()
+        if speed <= target:
+            return
+
+        # calculate deceleration length
+        acc_steps = (speed - target) / 0.05
+
+        # start decelerating
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6,
+            self._change_speed,
+            "slow_down_train",
+            extraArgs=[-0.05],
+            appendTask=True,
+        )
+        # stop decelerating
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6 * acc_steps + 0.2,
+            base.taskMgr.remove,  # noqa: F821
+            "stop_slowing_down",
+            extraArgs=["slow_down_train"],
+        )
+
+    def _drown_brake_snd(self, task):
+        """Drown braking sound not to anooy players."""
+        volume = self._brake_snd.getVolume()
+        if volume <= 0:
+            self._brake_snd.stop()
+            self._brake_snd.setVolume(1)
+            return task.done
+
+        self._brake_snd.setVolume(volume - 0.1)
+        return task.again
+
     def stop(self):
         """Completely stop Train."""
         base.ignore("w")  # noqa: F821
@@ -192,13 +250,16 @@ class TrainController:
         )
         # stop decelerating
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.6 * (speed / 0.05) + 0.8,
-            base.taskMgr.remove,  # noqa: F821
-            "finish_stopping",
-            extraArgs=["stop_train"],
+            0.6 * (speed / 0.05) + 0.8, self._finish_stopping, "finish_stopping"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
             0.6 * (speed / 0.05) + 0.2,
             base.world.enemy.stop_ride_anim,  # noqa: F821
             "stop_riding",
         )
+
+    def _finish_stopping(self, task):
+        """Finish stopping damaged Train."""
+        base.taskMgr.remove("stop_train")  # noqa: F821
+        base.train.stop_sparks()  # noqa: F821
+        return task.done

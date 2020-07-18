@@ -12,8 +12,10 @@ from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
 from utils import address, chance
+
 from .personage_data import NAMES, CLASSES
 from .shooter import Shooter
+from .unit import Unit
 
 
 class Team:
@@ -54,7 +56,7 @@ class Team:
             char.surrender()
 
 
-class Character(Shooter):
+class Character(Shooter, Unit):
     """Game character.
 
     Args:
@@ -67,7 +69,11 @@ class Character(Shooter):
     """
 
     def __init__(self, id_, name, class_, mod_name, sex, team):
-        super().__init__("character_" + str(id_), class_, CLASSES[sex + "_" + class_])
+        Unit.__init__(
+            self, "character_" + str(id_), class_, CLASSES[sex + "_" + class_]
+        )
+        Shooter.__init__(self)
+
         self._team = team
         self._mod_name = mod_name
 
@@ -381,8 +387,10 @@ class Character(Shooter):
         Stop all the character's tasks, play death
         animation and plan character clearing.
         """
-        if not super()._die():
-            return
+        if not Shooter._die(self):
+            return False
+
+        Unit._die(self)
 
         base.taskMgr.remove(self.id + "_reduce_energy")  # noqa: F821
 

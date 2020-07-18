@@ -47,9 +47,9 @@ class Train:
         smoke.setPos(0, 0.32, 0.28)
         smoke.start(self.model, render)  # noqa: F821
 
-        move_snd, stop_snd, self._lighter_snd = self._set_sounds()
+        move_snd, stop_snd, brake_snd, self._lighter_snd = self._set_sounds()
 
-        self._ctrl = TrainController(self.model, move_snd, stop_snd)
+        self._ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
         self._ctrl.set_controls(self)
 
         self.parts = {
@@ -85,6 +85,63 @@ class Train:
 
         self._interface = TrainInterface()
         self.damnability = 1000
+
+        self.l_brake = False
+        self.r_brake = False
+
+        self._l_brake_sparks = ParticleEffect()
+        self._l_brake_sparks.loadConfig("effects/brake_sparks2.ptf")
+        self._l_brake_sparks.setPos(-0.058, 0.38, 0.025)
+
+        self._r_brake_sparks = ParticleEffect()
+        self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
+        self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
+
+    def brake(self, side, brake):
+        """Start braking.
+
+        Args:
+            side (str): Side label: 'l' or 'r'.
+            brake (panda3d.core.NodePath):
+                Brake model to drop.
+        """
+        sparks = self._l_brake_sparks if side == "l" else self._r_brake_sparks
+        sparks.start(self.model, self.model)
+        sparks.softStart()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            30,
+            self._clear_brake,
+            side + "_clear_brake",
+            extraArgs=[side, brake],
+            appendTask=True,
+        )
+        if self.l_brake and self.r_brake:
+            self._ctrl.max_speed = 0.5
+            self._ctrl.slow_down_to(0.5)
+            return
+
+        self._ctrl.max_speed = 0.75
+        self._ctrl.slow_down_to(0.75)
+
+    def _clear_brake(self, side, brake, task):
+        """Stop braking.
+
+        Args:
+            side (str): Side label: 'l' or 'r'.
+            brake (panda3d.core.NodePath):
+                Brake model to drop.
+        """
+        if side == "l":
+            self._l_brake_sparks.softStop()
+            self.l_brake = False
+        else:
+            self._r_brake_sparks.softStop()
+            self.r_brake = False
+
+        self._ctrl.max_speed += 0.25
+        brake.removeNode()
+        return task.done
 
     def move_along_block(self, block):
         """Move Train along the given world block.
@@ -167,7 +224,8 @@ class Train:
 
         Returns:
             (panda3d.core.AudioSound, panda3d.core.AudioSound):
-                Train movement, stopping, lighter toggle sounds.
+                Train movement, stopping, braking, lighter
+                toggle sounds.
         """
         move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(move_snd, self.model)  # noqa: F821
@@ -177,9 +235,13 @@ class Train:
         stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(stop_snd, self.model)  # noqa: F821
 
+        brake_snd = base.sound_mgr.loadSfx("sounds/train_brake.ogg")  # noqa: F821
+        brake_snd.setLoop(True)
+        base.sound_mgr.attachSoundToObject(brake_snd, self.model)  # noqa: F821
+
         lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
-        return move_snd, stop_snd, lighter_snd
+        return move_snd, stop_snd, brake_snd, lighter_snd
 
     def toggle_lights(self):
         """Toggle Train lights."""
@@ -224,6 +286,11 @@ class Train:
             if hasattr(self, key):
                 setattr(self, key, getattr(self, key) + value)
                 self._interface.update_indicators(**{key: getattr(self, key)})
+
+    def stop_sparks(self):
+        """Stop sparks effects."""
+        self._l_brake_sparks.softStop()
+        self._r_brake_sparks.softStop()
 
 
 class TrainPart:
@@ -299,7 +366,7 @@ class TrainPart:
         )
         if enemy is not None:
             self.enemies.remove(enemy)
-            enemy.leave_the_part()
+            enemy.leave_the_part(self)
 
     def give_cell(self, character):
         """Choose a non taken cell.
