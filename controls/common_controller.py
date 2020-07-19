@@ -38,7 +38,7 @@ class CommonController:
     """Common controller.
 
     Includes controls to show game control keys info,
-    mouse clicking and enemy collisions.
+    mouse clicking and common collisions.
 
     Args:
         parts (dict): Train parts to set characters on.
@@ -126,16 +126,16 @@ class CommonController:
         for part in self._parts.values():
             part.hide_arrow()
 
-    def _choose_obj(self):
-        """Event: mouse button pushed on active object.
+        base.char_interface.clear_char_info()  # noqa: F821
 
-        Sets a cursor on the clicked character, and
-        remembers its object. Also shows manipulation
-        interface.
+    def _choose_obj(self):
+        """Event: left mouse button clicked.
+
+        Organizes clicking on active objects: characters,
+        rest zones.
         """
         if not self._pointed_obj:
             self._deselect()
-            base.char_interface.clear_char_info()  # noqa: F821
             return
 
         if self._pointed_obj.startswith("character_"):
@@ -154,7 +154,10 @@ class CommonController:
             )
 
     def _char_action(self):
-        """Make the chosen character act on the pointed object."""
+        """Event: right mouse button pressed.
+
+        Make the chosen character act on the pointed object.
+        """
         if self._chosen_char:
             if self._pointed_obj.startswith("part_"):
                 self._chosen_char.move_to(self._parts[self._pointed_obj])
@@ -207,7 +210,9 @@ class CommonController:
 
     def _show_keys(self):
         """Show/hide control keys info."""
-        if not self._is_keys_shown:
+        if self._is_keys_shown:
+            self._keys_info.destroy()
+        else:
             self._keys_info = OnscreenText(
                 text=KEYS_INFO,
                 align=TextNode.ACenter,
@@ -215,7 +220,5 @@ class CommonController:
                 pos=(0, 0.7),
                 fg=(0.7, 0.7, 0.7, 1),
             )
-        else:
-            self._keys_info.destroy()
 
         self._is_keys_shown = not self._is_keys_shown

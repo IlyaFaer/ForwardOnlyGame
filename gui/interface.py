@@ -102,7 +102,7 @@ class CharacterInterface:
         self.clear_char_info()
 
     def show_char_info(self, character):
-        """Show character parameters.
+        """Show the given character parameters.
 
         Args:
             character (personage.character.Character):
@@ -126,7 +126,7 @@ class CharacterInterface:
         )
 
     def clear_char_info(self):
-        """Clear the interface."""
+        """Clear the character interface."""
         self._char_name.hide()
         self._char_class.hide()
         self._char_health.hide()

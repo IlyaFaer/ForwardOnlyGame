@@ -32,7 +32,7 @@ class TrainController:
 
         self._move_anim_int = model.actorInterval("move_forward", playRate=14)
         self._move_anim_int.loop()
-        # parallel with train model and camera move intervals
+        # parallel with the train model and camera move intervals
         self._move_par = None
         self._is_stopped = False
         self._on_et = False

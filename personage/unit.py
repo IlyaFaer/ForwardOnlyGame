@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Base API for all the Game units.
+Base API for all the Game units, both characters and enemies.
 """
 import abc
 from panda3d.core import CollisionNode

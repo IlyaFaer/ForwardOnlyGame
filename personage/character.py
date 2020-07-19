@@ -80,12 +80,12 @@ class Character(Shooter, Unit):
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None
+        self._energy = 100
 
         self.name = name
         self.sex = sex
         self.heshe = "he" if sex == "male" else "she"
         self.hisher = "his" if sex == "male" else "her"
-        self._energy = 100
         self.damage = (3, 5)
 
     @property
@@ -152,11 +152,8 @@ class Character(Shooter, Unit):
         self.model.loop("stand")
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            random.randint(40, 60),
-            self._idle_animation,
-            "{id_}_idle_anim".format(id_=self.id),
+            random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
-
         self._col_node = self._init_col_node(
             NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         )
@@ -164,7 +161,6 @@ class Character(Shooter, Unit):
         self._shoot_anim = self._set_shoot_anim(
             (0.004, 0.045, 0.064 if self.sex == "male" else 0.062), 97
         )
-
         base.taskMgr.doMethodLater(  # noqa: F821
             30, self._reduce_energy, self.id + "_reduce_energy"
         )
@@ -228,8 +224,8 @@ class Character(Shooter, Unit):
         base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
         base.taskMgr.remove(self.id + "_aim")  # noqa: F821
         base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
-        self._col_node.removeNode()
 
+        self._col_node.removeNode()
         self._shoot_anim.finish()
 
         LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
@@ -374,9 +370,7 @@ class Character(Shooter, Unit):
 
         LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
         base.taskMgr.doMethodLater(  # noqa: F821
-            random.randint(40, 60),
-            self._idle_animation,
-            "{id_}_idle_anim".format(id_=self.id),
+            random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
         return task.done
 

@@ -1,10 +1,15 @@
-"""Visual effects API."""
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
+
+Visual effects API.
+"""
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import PointLight
 
 
 class EffectsManager:
-    """Manager to initiate effects."""
+    """Manager to control visual effects."""
 
     def __init__(self):
         self._explosion_lights = self._set_explosion_lights()
@@ -64,7 +69,7 @@ class Explosion:
         base.sound_mgr.attachSoundToObject(self._snd, parent.model)  # noqa: F821
 
     def play(self):
-        """Make actual explosion and plan clearing."""
+        """Make actual explosion and plan its clearing."""
         self._snd.play()
         self._sparks.start(self._parent.model, render)  # noqa: F821
         self._fire.start(self._parent.model, render)  # noqa: F821
@@ -83,10 +88,10 @@ class Explosion:
             )
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            4.95, self._stop_sparks, self._parent.id + "_disable_exlode_sparks"
+            0.9, self._stop_fire, self._parent.id + "_disable_exlode_fire"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.9, self._stop_fire, self._parent.id + "_disable_exlode_fire"
+            4.95, self._stop_sparks, self._parent.id + "_disable_exlode_sparks"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
             5.05, self._clear, self._parent.id + "_clear_explode"

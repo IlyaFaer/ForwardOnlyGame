@@ -18,7 +18,7 @@ from utils import address
 
 
 class Shooter(metaclass=abc.ABCMeta):
-    """Base class for shooters."""
+    """Base class for all shooters."""
 
     def __init__(self):
         self._shoot_anim = None

@@ -31,6 +31,20 @@ class OutingsManager:
         )
         self._interface = OutingsInterface()
 
+    def _get_result(self, score, results):
+        """Get outing results for the given score.
+
+        Args:
+            score (int): Outing score.
+            results (list): All the outing results.
+
+        Returns:
+            str, dict: Result description and effects.
+        """
+        for result in results:
+            if score in result["score"]:
+                return result["desc"], result["effects"]
+
     def start_outing(self, type_):
         """Choose and start outing scenario.
 
@@ -72,10 +86,10 @@ class OutingsManager:
         self._interface.hide_outing()
 
     def go_for_outing(self, outing, chars):
-        """Make characters go for outing.
+        """Make characters go for the given outing.
 
         Calculate the result according to the outing
-        specifics and bring the effects.
+        specifics and do the effects.
 
         Args:
             outing (dict): Outing description.
@@ -89,18 +103,11 @@ class OutingsManager:
             class_score += outing["class_weights"][char.class_]
 
         score = cond_score
-        score = class_score
+        score += class_score
         score += outing["day_part_weights"][base.world.sun.day_part]  # noqa: F821
         score = round(score)
 
-        desc = None
-        effects = {}
-        for result in outing["results"]:
-            if score in result["score"]:
-                desc = result["desc"]
-                effects = result["effects"]
-                break
-
+        desc, effects = self._get_result(score, outing["results"])
         for index, char in enumerate(chars, start=1):
             desc = desc.format(
                 **{
