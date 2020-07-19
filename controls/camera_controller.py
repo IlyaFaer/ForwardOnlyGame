@@ -205,7 +205,7 @@ class CameraController:
         """
         # key pressed - start movement
         base.accept("arrow_up", self._move, [cam_np, 1, None, 1.5])  # noqa: F821
-        base.accept("arrow_down", self._move, [cam_np, 2, None, 0.75])  # noqa: F821
+        base.accept("arrow_down", self._move, [cam_np, 2.5, None, 0.75])  # noqa: F821
         base.accept("arrow_left", self._move, [cam_np, None, -1.1, 0.9])  # noqa: F821
         base.accept("arrow_right", self._move, [cam_np, None, 1.1, 0.9])  # noqa: F821
 

@@ -12,6 +12,7 @@ OUTINGS = {
                 "name": "Abandoned Car",
                 "type": "Looting",
                 "class_weights": {"soldier": 25},
+                "max_assignees": 1,
                 "day_part_weights": {
                     "night": 0,
                     "morning": 3,

@@ -22,6 +22,7 @@ from const import MOUSE_MASK, SHOT_RANGE_MASK
 from utils import chance, address
 from .shooter import Shooter
 from .unit import Unit
+from utils import take_random
 
 
 class EnemyUnit(Unit):
@@ -44,8 +45,7 @@ class EnemyUnit(Unit):
         self._tooltip = "Skinhead - " + self.class_
 
         self._y_positions = y_positions
-        self._y_pos = random.choice(self._y_positions)
-        self._y_positions.remove(self._y_pos)
+        self._y_pos = take_random(self._y_positions)
 
         self._x_range = (-0.3, 0.4) if self.class_data["part"] == "side" else (0.6, 1.3)
 
@@ -158,6 +158,7 @@ class EnemyUnit(Unit):
             self.current_part.enemies.remove(self)
 
         self._explode()
+        self._y_positions.append(self._y_pos)
 
     def _explode(self):
         """Set physics for this enemy and explode."""
@@ -271,7 +272,6 @@ class MotoShooter(Shooter, EnemyUnit):
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._shoot, self.id + "_shoot"
             )
-
         task.delayTime = 0.5
         return task.again
 
@@ -405,9 +405,6 @@ class BrakeDropper(EnemyUnit):
         base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
         self._move_int.pause()
 
-        brake = random.choice(self._brakes)
-        self._brakes.remove(brake)
-
         base.taskMgr.doMethodLater(  # noqa: F821
             0.15, self._jump_snd.play, self.id + "_jump_sound", extraArgs=[]
         )
@@ -415,7 +412,10 @@ class BrakeDropper(EnemyUnit):
             1.5, self._fall_snd.play, self.id + "_fall_sound", extraArgs=[]
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            1, self._drop_brake, self.id + "_drop_brake", extraArgs=[brake]
+            1,
+            self._drop_brake,
+            self.id + "_drop_brake",
+            extraArgs=[take_random(self._brakes)],
         )
         self._jump_int = Sequence(
             MopathInterval(

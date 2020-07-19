@@ -31,3 +31,19 @@ def address(name):
         str: Full model file address.
     """
     return MOD_DIR + name + ".bam"
+
+
+def take_random(list_):
+    """Take a random element from the given list.
+
+    The chosen element will be deleted from the list.
+
+    Args:
+        list_ (list): List to take an element from.
+
+    Returns:
+        Any: The chosen element.
+    """
+    element = random.choice(list_)
+    list_.remove(element)
+    return element

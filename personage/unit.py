@@ -21,10 +21,31 @@ class Unit(metaclass=abc.ABCMeta):
     def __init__(self, id_, class_, class_data):
         self.id = id_
         self.class_data = class_data
-        self.health = class_data["health"]
         self.is_dead = False
         self.model = None
         self.class_ = class_
+
+        self._health = class_data["health"]
+
+    @property
+    def health(self):
+        """Unit health.
+
+        Returns:
+            int: This unit health points.
+        """
+        return self._health
+
+    @health.setter
+    def health(self, value):
+        """Health setter.
+
+        Limits health points to [0: class_max_health]
+
+        Args:
+            value (int): New health value.
+        """
+        self._health = min(max(value, 0), self.class_data["health"])
 
     def get_damage(self, damage):
         """Getting damage.

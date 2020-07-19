@@ -113,11 +113,23 @@ class TrainController:
         base.train.stop_sparks()  # noqa: F821
         self._move_par.pause()
         self._move_anim_int.pause()
-        self._move_snd.stop()
         self._is_stopped = True
-
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.06, self._drown_move_snd, "drown_move_snd"
+        )
         if self._outing_available:
             base.world.start_outing(self._outing_available)  # noqa: F821
+
+    def _drown_move_snd(self, task):
+        """Drown move sound to make stop smoother."""
+        volume = self._move_snd.getVolume()
+        if volume <= 0:
+            self._move_snd.stop()
+            self._move_snd.setVolume(1)
+            return task.done
+
+        self._move_snd.setVolume(volume - 0.1)
+        return task.again
 
     def _play_stop_snd(self, task):
         """Play Train stop sounds with delay."""

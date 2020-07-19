@@ -85,8 +85,26 @@ class Character(Shooter, Unit):
         self.sex = sex
         self.heshe = "he" if sex == "male" else "she"
         self.hisher = "his" if sex == "male" else "her"
-        self.energy = 100
+        self._energy = 100
         self.damage = (3, 5)
+
+    @property
+    def energy(self):
+        """This character energy.
+
+        Returns:
+            int: This character energy points.
+        """
+        return self._energy
+
+    @energy.setter
+    def energy(self, value):
+        """This character energy setter.
+
+        Args:
+            value (int): New energy value.
+        """
+        self._energy = min(max(value, 0), 100)
 
     @property
     def tooltip(self):
@@ -241,7 +259,8 @@ class Character(Shooter, Unit):
         base.taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
         )
-        base.taskMgr.doMethodLater(30, self._heal, self.id + "_heal")  # noqa: F821
+        if self.health < self.class_data["health"]:
+            base.taskMgr.doMethodLater(30, self._heal, self.id + "_heal")  # noqa: F821
 
     def do_effects(self, effects):
         """Do outing effects to this character.
@@ -425,7 +444,10 @@ class Character(Shooter, Unit):
         """
         miss_chance = 0
         if self.class_ == "soldier":
-            if abs(self._target.node.getX()) < 0.5:
+            if (
+                abs(self._target.node.getX()) < 0.5
+                and abs(self._target.node.getY()) < 0.95
+            ):
                 miss_chance += 20
 
         if base.world.sun.is_dark:  # noqa: F821

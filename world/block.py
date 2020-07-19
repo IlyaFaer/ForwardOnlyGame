@@ -9,7 +9,7 @@ import random
 from panda3d.core import TextureStage, Texture
 
 from .locations import LOCATIONS
-from utils import chance, address
+from utils import address, chance, take_random
 
 ANGLES = (0, 90, 180, 270)
 SURFACES = {
@@ -81,21 +81,6 @@ class Block:
         }
         self._railways_model = self._gen_railways_model()
 
-    def _choose_pos(self, vertices):
-        """
-        Every surface model have 1024 vertices - choose on
-        which of them to positionate an environment model.
-
-        Args:
-            vertices (list): List of vertices.
-
-        Returns:
-            list: Vertex position.
-        """
-        pos = random.choice(vertices)
-        vertices.remove(pos)
-        return pos
-
     def _gen_env_mods(self, vertices):
         """Randomly select and arrange environment models.
 
@@ -116,7 +101,7 @@ class Block:
                 models.append(
                     (
                         address(random.choice(models_conf["models"])),
-                        self._choose_pos(vertices[models_conf["square"]]),
+                        take_random(vertices[models_conf["square"]]),
                     )
                 )
         for models_conf in LOCATIONS["Plains"][et_suf + "with_chance"]:
@@ -124,7 +109,7 @@ class Block:
                 models.append(
                     (
                         address(random.choice(models_conf["models"])),
-                        self._choose_pos(vertices[models_conf["square"]]),
+                        take_random(vertices[models_conf["square"]]),
                     )
                 )
         return models

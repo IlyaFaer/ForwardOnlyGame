@@ -8,7 +8,6 @@ Includes the systems of Train loading, preparations,
 animation, sounds, lights. Train is splitted into
 several parts.
 """
-import random
 from direct.actor.Actor import Actor
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import (
@@ -24,7 +23,7 @@ from panda3d.core import (
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from controls import TrainController
 from gui.interface import TrainInterface
-from utils import address
+from utils import address, take_random
 
 
 class Train:
@@ -47,7 +46,9 @@ class Train:
         smoke.setPos(0, 0.32, 0.28)
         smoke.start(self.model, render)  # noqa: F821
 
-        move_snd, stop_snd, brake_snd, self._lighter_snd = self._set_sounds()
+        move_snd, stop_snd, brake_snd, self._clunk_snd, self._lighter_snd = (
+            self._set_sounds()
+        )
 
         self._ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
         self._ctrl.set_controls(self)
@@ -105,6 +106,7 @@ class Train:
             brake (panda3d.core.NodePath):
                 Brake model to drop.
         """
+        self._clunk_snd.play()
         sparks = self._l_brake_sparks if side == "l" else self._r_brake_sparks
         sparks.start(self.model, self.model)
         sparks.softStart()
@@ -239,9 +241,12 @@ class Train:
         brake_snd.setLoop(True)
         base.sound_mgr.attachSoundToObject(brake_snd, self.model)  # noqa: F821
 
+        clunk_snd = base.sound_mgr.loadSfx("sounds/metal_clunk1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(clunk_snd, self.model)  # noqa: F821
+
         lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
-        return move_snd, stop_snd, brake_snd, lighter_snd
+        return move_snd, stop_snd, brake_snd, clunk_snd, lighter_snd
 
     def toggle_lights(self):
         """Toggle Train lights."""
@@ -381,11 +386,8 @@ class TrainPart:
         if not self._cells:
             return
 
-        position = random.choice(self._cells)
-        self._cells.remove(position)
-
         self.chars.append(character)
-        return position
+        return take_random(self._cells)
 
     def release_cell(self, position, character):
         """Release a cell taken earlier.
