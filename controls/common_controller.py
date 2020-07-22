@@ -104,10 +104,10 @@ class CommonController:
         base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.06, self._collide_mouse, "collide_mouse"
+            0.05, self._collide_mouse, "collide_mouse"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.07, self._traverse, name="main_traverse"
+            0.06, self._traverse, name="main_traverse"
         )
 
     def choose_resting_char(self, char_id):
@@ -171,22 +171,26 @@ class CommonController:
     def _point_obj(self, event):
         """Event: mouse pointer hits a collision."""
         pointed_obj = event.getIntoNodePath().getName()
-        if pointed_obj == self._pointed_obj:
+        if pointed_obj == self._pointed_obj and pointed_obj is not None:
             return
 
         self._pointed_obj = pointed_obj
 
         # show_tooltip
         if self._pointed_obj.startswith("character_"):
-            base.char_interface.show_unit_tip(  # noqa: F821
-                self.chars[self._pointed_obj]
+            base.char_interface.show_tooltip(  # noqa: F821
+                self.chars[self._pointed_obj].tooltip
             )
             return
 
         if self._pointed_obj.startswith("enemy_"):
-            base.char_interface.show_unit_tip(  # noqa: F821
-                base.world.enemy.active_units[self._pointed_obj]  # noqa: F821
+            base.char_interface.show_tooltip(  # noqa: F821
+                base.world.enemy.active_units[self._pointed_obj].tooltip  # noqa: F821
             )
+            return
+
+        if self._pointed_obj.startswith("part_rest_"):
+            base.char_interface.show_tooltip("Rest zone")  # noqa: F821
 
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""

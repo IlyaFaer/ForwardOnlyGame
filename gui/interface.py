@@ -140,17 +140,13 @@ class CharacterInterface:
 
         self._rest_list_active = False
 
-    def show_unit_tip(self, unit):
-        """Show personage tooltip.
+    def show_tooltip(self, text):
+        """Show tooltip with the given text.
 
         Args:
-            unit (Union[
-                    personage.character.Character,
-                    personage.enemy.EnemyUnit
-                ]):
-                Pointed unit object.
+            unit (str): Text to show in the tooltip.
         """
-        self._tip.setText(unit.tooltip)
+        self._tip.setText(text)
         self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
         self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
         self._tip.show()
@@ -168,6 +164,7 @@ class CharacterInterface:
         if self._rest_list_active:
             return
 
+        self._tip.hide()
         self._rest_list_active = True
 
         x = base.mouseWatcherNode.getMouseX()  # noqa: F821
