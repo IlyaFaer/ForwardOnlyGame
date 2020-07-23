@@ -98,6 +98,8 @@ class Train:
         self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
         self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
 
+        self._miles = 0
+
     def brake(self, side, brake):
         """Start braking.
 
@@ -151,6 +153,9 @@ class Train:
         Args:
             block (world.block.Block): world block to move along.
         """
+        self._miles += 1
+        self._interface.update_miles(self._miles)
+
         self._ctrl.move_along_block(block, self.node)
 
     def switch_to_current_block(self):

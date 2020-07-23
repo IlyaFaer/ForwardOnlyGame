@@ -238,6 +238,28 @@ class TrainInterface:
         )
         self._damnability.setR(-90)
 
+        frame_miles = DirectFrame(
+            frameSize=(-0.1, 0.1, -0.03, 0.03),
+            pos=(0.0, 0, -0.97),
+            frameTexture="gui/tex/metal1.png",
+        )
+        self._miles_meter = DirectLabel(
+            parent=frame_miles,
+            text="0000000",
+            frameSize=(0.1, 0.1, 0.15, 0.15),
+            text_scale=(0.035, 0.04),
+            text_fg=RUST_COL,
+            pos=(0, 0, -0.01),
+        )
+
+    def update_miles(self, new_miles):
+        """Update miles meter widget.
+
+        Args:
+            new_miles (int): New milesmeter value.
+        """
+        self._miles_meter["text"] = str(new_miles).rjust(7, "0")
+
     def update_indicators(self, **params):
         """Update Train interface with the given parameters.
 
