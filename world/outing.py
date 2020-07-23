@@ -95,6 +95,9 @@ class OutingsManager:
             outing (dict): Outing description.
             chars (list): Chars assigned for the outing.
         """
+        if len(chars) != outing["max_assignees"]:
+            return
+
         cond_score = 0
         class_score = 0
         cond_max = 20 / len(chars)
@@ -108,15 +111,19 @@ class OutingsManager:
         score = round(score)
 
         desc, effects = self._get_result(score, outing["results"])
+        format_dict = {}
         for index, char in enumerate(chars, start=1):
-            desc = desc.format(
-                **{
+            format_dict.update(
+                {
                     "name" + str(index): char.name,
                     "heshe" + str(index): char.heshe,
                     "hisher" + str(index): char.hisher,
+                    "himher" + str(index): char.himher,
                 }
             )
             char.do_effects(effects.get("char_" + str(index)))
+
+        desc = desc.format(**format_dict)
 
         selected_effect = effects.get("select_char")
         self._interface.show_result(

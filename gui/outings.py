@@ -195,16 +195,15 @@ class OutingsInterface:
         self._outing_widgets.append(
             DirectLabel(
                 parent=self._list,
-                text="""Selected one character as a target for the effect:
+                text="""Select one character as a target for the effect:
 {effect}""".format(
                     effect=effect_str
                 ),
                 frameSize=(0.6, 0.6, 0.6, 0.6),
                 text_scale=(0.045),
-                pos=(0, 0, 0.2),
             )
         )
-        shift = 0.05
+        shift = -0.15
         for id_, char in base.team.chars.items():  # noqa: F821
             but = DirectButton(
                 pos=(0, 0, shift),

@@ -96,6 +96,106 @@ as there is a diesel fuel for 40 more miles.""",
                     },
                 ),
             },
+            {
+                "name": "Meadow Tent",
+                "type": "Looting",
+                "class_weights": {"soldier": 15},
+                "max_assignees": 2,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 7,
+                    "noon": 10,
+                    "evening": 3,
+                },
+                "desc": """The big dark green spot on the meadow attracted your
+attention in the same moment. What do we have here? Seems to be an
+abandoned tent. There are no any signs of a bonfire, smoke, or any
+human, so the camp is probably long forsaken. Still something useful
+can remain there, who knows. It's worth checking. The place seems to be
+open, quite and calm, but it's little bit distant. If something will
+go wrong it'll be a long way back for your teammates. So a couple of
+people should be sent for a surprise case.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're sending {name1} and {name2} as a loot party.
+Closing to the place they see several backpacks lying around
+the tent. "I'll check the tent" - {name1} says and moves towards
+it. {name2} takes {hisher2} hands on backpacks. One by one {heshe2}
+opens them and sees ropes, climber equipment, fishing stuff, but there
+is definitely no anything we can use. Suddenly {heshe2} hears {name1}
+shouting from the tent. {name2} takes {hisher2} gun and jumps to the
+teammate. "Snake! A God damn snake!" - {heshe1} shouts and shows a bloody
+hand. With a short gaze {name2} sees that there is no supplies in the
+tent, so {heshe2} takes {name1} and pulls {himher1} back to Train.
+{name1} getting -50 energy and -30 health
+{name2} getting -20 energy""",
+                        "effects": {
+                            "char_1": {"energy": -50, "health": -30},
+                            "char_2": {"energy": -20},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} and {name2} are moving to the tent by your
+command. The vibrations of the train still tremble at their feet, but the
+still ground feels good. Air smells with grass and flowers, and warm
+soft wind complements the place. But in the next moment {name1} feels
+something else. Rotten meat. {name2} glances at {himher1} as {heshe2}
+smells the same. Closing to the tent they are starting to understand
+what is the source of that stink. {name2} moves forward. "Let me do
+this!" - {heshe2} pulls the zipper, and directs a lantern into the tent. Bodies!
+Two rotten bodies, with bones sticking out, maggots, and nothing more.
+Both characters are getting -30 energy.""",
+                        "effects": {
+                            "char_1": {"energy": -30},
+                            "char_2": {"energy": -30},
+                        },
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You've decided to send {name1} and {name2} to check the place.
+They are taking their guns and moving to the tent, while you're looking
+for possible threats. The meadow seems to be still and quiet though.
+Your people are closing to the tent and starting to walk around it and
+prowl. It appears there are several backpacks at the forsaken camp place,
+but {name1} and {name2} doesn't take anything with them. Nothing
+interesting? You're waiting for several more minutes, but nothing
+changes. Finally, {name1} and {name2} are opening the tent, taking a
+quick look, and turning back to Train. Obviously, there was nothing
+useful in there. At all.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """{name1} and {name2} are taking their things and moving to the
+camp place. The meadow looks still, smells with grass and flowers,
+warm wind makes the way pleasant. Closing to the tent {name1} and
+{name2} are starting to search for supplies through the things left
+in the camp. Ropes, empty cans, some climber stuff, even an album with
+old photos. Finding nothing {name1} decides to take a look at the tent
+- {heshe1} pulls the zipper and stick his head into the stifling inners.
+The tent looks empty at the first gaze, but suddenly {name1} caughts
+{hisher1} eyes on a bottle of an energy drink. "Well, it's something!"
+ - {heshe1} pronounces and takes the bottle.
+Single character can get +40 energy""",
+                        "effects": {"select_char": {"energy": 40}},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're sending {name1} and {name2} to search the camp for
+anything useful. Your people are getting to the forsaken tent in two
+minutes and starting a find. You're seeing them rummaging in bags left
+there, but nothing gives a sign of lucky find. Done with backpacks
+{name2} opens the tent zipper and moves inside. It takes a few minutes
+for {himher2} to deal with the inner stuff, but to everyone's joy
+{heshe2} shows up with a big canister. Smiling both {name1} and {name2}
+are returning to Train with this burden.
+You're getting diesel fuel for 35 more miles.""",
+                        "effects": {},
+                    },
+                ),
+            },
         )
     }
 }

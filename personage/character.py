@@ -86,6 +86,7 @@ class Character(Shooter, Unit):
         self.sex = sex
         self.heshe = "he" if sex == "male" else "she"
         self.hisher = "his" if sex == "male" else "her"
+        self.himher = "him" if sex == "male" else "her"
         self.damage = (3, 5)
 
     @property
