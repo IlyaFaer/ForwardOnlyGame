@@ -17,13 +17,21 @@ from .personage_data import NAMES, CLASSES
 from .shooter import Shooter
 from .unit import Unit
 
+COHESION_FACTORS = {("soldier", "soldier"): 0.5}
+
 
 class Team:
     """All characters (player units) object."""
 
     def __init__(self):
         self._char_id = 0  # variable to count character ids
+        self._relations = {}
         self.chars = {}
+        self.cohesion = 0
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            360, self._calc_cohesion, "calc_cohesion"
+        )
 
     def gen_default(self, train_parts):
         """Generate default team.
@@ -54,6 +62,39 @@ class Team:
         """Make the whole team surrender."""
         for char in self.chars.values():
             char.surrender()
+
+    def _calc_cohesion(self, task):
+        """Calculate the current team cohesion.
+
+        Relations between all the characters are tracked.
+        While characters are staying together, cohesion
+        between them increases. Total cohesion is calculated
+        as a sum of all relations relatively to the number
+        of all relations in team. Different unit classes
+        have different cohesion factors.
+        """
+        for char1 in self.chars.values():
+            for char2 in self.chars.values():
+                if char1.id == char2.id:
+                    continue
+
+                rel_id = tuple(sorted([char1.id, char2.id]))
+                if rel_id in self._relations:
+                    self._relations[rel_id] += COHESION_FACTORS[
+                        (char1.class_, char2.class_)
+                    ]
+                else:
+                    self._relations[rel_id] = COHESION_FACTORS[
+                        (char1.class_, char2.class_)
+                    ]
+
+        rel_max = 100 / len(self._relations)
+        cohesion = 0
+        for relation in self._relations.values():
+            cohesion += relation / 100 * rel_max
+
+        self.cohesion = min(100, cohesion)
+        return task.again
 
 
 class Character(Shooter, Unit):
