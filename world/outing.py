@@ -135,8 +135,15 @@ class OutingsManager:
             selected_effect,
         )
         self._looting_snd.play()
+
         if "train" in effects:
-            base.train.do_effects(effects["train"])  # noqa: F821)
+            base.train.do_effects(effects["train"])  # noqa: F821
+        if "money" in effects:
+            base.dollars += effects["money"]  # noqa: F821
+            base.res_interface.update_money(base.dollars)  # noqa: F821
+        if "all" in effects:
+            for char in base.team.chars.values():  # noqa: F821
+                char.do_effects(effects["all"])
 
 
 def calc_condition_score(cond_max, char):

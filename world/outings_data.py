@@ -79,7 +79,7 @@ the results. {name1} jumps out of the car and moves to you with a small
 box in {hisher1} hands. "That guy wasn't very thrifty, I've found only
 these tools." - {heshe1} says. Well, it's still better than nothing:
 we can repair the train a little.
-Train damnability + 100.""",
+Train damnability +100.""",
                         "effects": {"train": {"damnability": 100}},
                     },
                     {
@@ -193,6 +193,103 @@ for {himher2} to deal with the inner stuff, but to everyone's joy
 are returning to Train with this burden.
 You're getting diesel fuel for 35 more miles.""",
                         "effects": {},
+                    },
+                ),
+            },
+            {
+                "name": "Old Hut",
+                "type": "Looting",
+                "class_weights": {"soldier": 11},
+                "max_assignees": 3,
+                "day_part_weights": {
+                    "night": 8,
+                    "morning": 2,
+                    "noon": 5,
+                    "evening": 10,
+                },
+                "desc": """Called by one of your teammates, you're walking out of
+the cabin and in the same moment seeing an old hut not far from the
+railway. Putting binoculars to your eyes you're looking at it with good
+feeling. The house seems to be very old, built with dark ancient
+logs. No smoke rises from the chimney. Taking a few second to assess
+the prospects, you're thinking about sending three people to search
+the place for anything that can help you on the road. And, who knows,
+maybe someone is still living in that ancient hut...""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're commanding {name1}, {name2} and {name3}
+to gear up. People are taking their stuff and moving to the hut.
+Approaching to it they see that the house is long abandoned, but they
+moving into it for a lookup anyway. They splitting up: one person for
+one room. Finding nothing, but dust, within half of hour, almost without
+hope they open a floor basement entrance, and hooray! They see
+several tens of cans! With such a catch, you decided to throw a feast!
+But after several hours it comes clear that food expired.
+All of your teammates are getting -40 energy""",
+                        "effects": {"all": {"energy": -40}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1}, {name2} and {name3} are gearing up for
+a walk. It takes few minutes for them to reach the hut. They see an
+opened door, broken windows and wild weeds right before the entrance -
+looks like this place is long forsaken. "Well, we're already here,
+let's take a look!" - {name2} proposes. People are entering the house,
+and in the next moment {name2}, who went upfront, falls on the ground
+under a dog attack. {name1} and {name3} are raising their guns, but
+they can't shoot, as it's a big risk to shot {name2} instead of the
+big brute. Removing weapons they are getting to {himher2} to fight
+the animal with their hands.
+{name2} getting -20 health and -40 energy
+{name1} and {name3} getting -25 energy""",
+                        "effects": {
+                            "char_2": {"energy": -40, "health": -20},
+                            "char_1": {"energy": -25},
+                            "char_3": {"energy": -25},
+                        },
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're sending {name1}, {name2} and {name3} for a search.
+People are easy running to the hut and disappearing in it. You're
+looking for them from Train. Time passing, but nothing happens, so
+you're starting to get nervous. Suddenly, you hear cries and two shots.
+That doesn't sound good! Two minutes passes, and finally you're seeing
+your people. They are moving fast to Train, keeping their backside on
+sights. But no one follows them. Coming closer {name1} explains to
+you what happened back there: "Big dog, looks like it lives there.
+And we found nothing". Your people are getting on Train in
+disappointed mood, and you're commanding to move.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """{name1}, {name2} and {name3} are gearing up and taking
+direction to the hut. Approaching to it they see that wood building is long
+abandoned: weeds are crossing the door, windows are broken, and
+stillness fills the air. {name2} and {name3} are moving into the house, while
+{name1} is standing outside on a watch. It takes a lot of time for {name3}
+to check all the broken furniture in the first room, but {heshe3} finds
+nothing. {name2} appears to become more lucky: {heshe2} managed to
+find 30$ within a lady's old bag. With such a results {name2} and
+{name3} are leaving the silent and dusty house, and joining {name1}
+to get back to Train and others.""",
+                        "effects": {"money": 30},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're asking {name1}, {name2} and {name3} to go for a
+search. They're taking their things and fastly moving to the hut.
+Splitting up - one person to one room - they are rummaging through old
+broken furniture, clothes that is covering the floor with a thick layer
+of dust, metal dishes and other stuff. Nothing useful comes to your
+messengers for some time. "Oh, I got something!" - {name2} shouts loudly.
+{name1} and {name3} moving to the room {heshe2} was checking, and seeing a
+big tool kit. {name1} and {name2} are taking it together and moving
+back to Train, while {name3} is watching around for possible threats.
+Train damnability +90""",
+                        "effects": {"train": {"damnability": 90}},
                     },
                 ),
             },

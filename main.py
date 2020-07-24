@@ -55,7 +55,7 @@ class ForwardOnly(ShowBase):
         self._current_block = self.world.prepare_next_block()
 
         self.char_interface = CharacterInterface()
-        ResourcesInterface()
+        self.res_interface = ResourcesInterface()
 
         self.enableAllAudio()
 

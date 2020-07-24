@@ -295,3 +295,11 @@ class ResourcesInterface:
             text_fg=RUST_COL,
             pos=(0.01, 0, -0.008),
         )
+
+    def update_money(self, new_value):
+        """Update money indicator with the given value.
+
+        Args:
+            new_value (int): New amount of money.
+        """
+        self._dollars["text"] = str(new_value)
