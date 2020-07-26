@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Characters (player units) API.
 """
+import copy
 import random
 
 from direct.actor.Actor import Actor
@@ -26,8 +27,12 @@ class Team:
     def __init__(self):
         self._char_id = 0  # variable to count character ids
         self._relations = {}
+
         self.chars = {}
+        self.cover_fire = False
+        self.cohesion_cooldown = False
         self.cohesion = 0
+        self.hold_together = False
 
         base.taskMgr.doMethodLater(  # noqa: F821
             360, self._calc_cohesion, "calc_cohesion"
@@ -52,6 +57,98 @@ class Team:
             char.move_to(part)
 
             self.chars[char.id] = char
+
+    def cohesion_recall(self):
+        """Do cohesion ability "Recall the past"."""
+        if self.cohesion_cooldown or self.cohesion < 20:
+            return
+
+        for char in self.chars.values():
+            char.energy += 15
+
+        self._plan_cohesion_cooldown(900)
+
+    def cohesion_cover_fire(self):
+        """Do cohesion ability "Cover fire"."""
+        if self.cohesion_cooldown or self.cohesion < 40:
+            return
+
+        self.cover_fire = True
+        base.taskMgr.doMethodLater(  # noqa: F821
+            90, self._stop_cover_fire, "stop_cover_fire"
+        )
+        self._plan_cohesion_cooldown(600)
+
+    def cohesion_heal_wounded(self):
+        """Do cohesion ability "Not leaving ours"."""
+        if self.cohesion_cooldown or self.cohesion < 60:
+            return
+
+        for char in self.chars.values():
+            if char.health <= 30:
+                char.health += 20
+
+        self._plan_cohesion_cooldown(900)
+
+    def cohesion_rage(self):
+        """Do cohesion ability "Common rage"."""
+        if self.cohesion_cooldown or self.cohesion < 80:
+            return
+
+        for char in self.chars.values():
+            char.clear_damage = copy.copy(char.damage)
+            char.damage[0] = round(char.damage[0] * 1.3)
+            char.damage[1] = round(char.damage[1] * 1.3)
+
+        base.taskMgr.doMethodLater(90, self._stop_rage, "stop_rage")  # noqa: F821
+        self._plan_cohesion_cooldown(900)
+
+    def cohesion_hold_together(self):
+        """Do cohesion ability "Hold together"."""
+        if self.cohesion_cooldown or self.cohesion < 100:
+            return
+
+        self.hold_together = True
+        base.taskMgr.doMethodLater(  # noqa: F821
+            90, self._stop_hold_together, "stop_hold_together"
+        )
+        self._plan_cohesion_cooldown(1200)
+
+    def _stop_cover_fire(self, task):
+        """Stop "Cover fire" cohesion ability."""
+        self.cover_fire = False
+        return task.done
+
+    def _stop_rage(self, task):
+        """Stop "Common rage" cohesion ability."""
+        for char in self.chars.values():
+            char.damage = copy.copy(char.clear_damage)
+
+        return task.done
+
+    def _stop_hold_together(self, task):
+        """Stop "Hold together" cohesion ability."""
+        self.hold_together = False
+        return task.done
+
+    def _stop_cohesion_cooldown(self, task):
+        """End cohesion abilities cooldown."""
+        self.cohesion_cooldown = False
+        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
+        return task.done
+
+    def _plan_cohesion_cooldown(self, delay):
+        """Start cohesion abilities cooldown.
+
+        Args:
+            delay (int): Cooldown length in seconds.
+        """
+        self.cohesion_cooldown = True
+        base.res_interface.disable_cohesion()  # noqa: F821
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            delay, self._stop_cohesion_cooldown, "stop_cohesion_cooldown"
+        )
 
     def prepare_to_fight(self):
         """Prepare every character to fight."""
@@ -94,6 +191,7 @@ class Team:
             cohesion += relation / 100 * rel_max
 
         self.cohesion = min(100, cohesion)
+        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
         return task.again
 
 
@@ -128,7 +226,8 @@ class Character(Shooter, Unit):
         self.heshe = "he" if sex == "male" else "she"
         self.hisher = "his" if sex == "male" else "her"
         self.himher = "him" if sex == "male" else "her"
-        self.damage = (3, 5)
+        self.damage = [3, 5]
+        self.clear_damage = [3, 5]
 
     @property
     def energy(self):
@@ -442,6 +541,10 @@ class Character(Shooter, Unit):
         Stop all the character's tasks, play death
         animation and plan character clearing.
         """
+        if self._team.hold_together:
+            self.health = 1
+            return False
+
         if not Shooter._die(self):
             return False
 
@@ -490,6 +593,9 @@ class Character(Shooter, Unit):
             miss_chance += 20
 
         miss_chance += (100 - self.energy) // 5
+        if self._team.cover_fire:
+            miss_chance = max(0, miss_chance - 25)
+
         return chance(miss_chance)
 
 
