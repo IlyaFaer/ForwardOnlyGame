@@ -20,8 +20,8 @@ LOCATIONS = {
         "ambient_sounds": ("meadow_noon", "meadow_night"),
         "enemy": "Skinheads",
         "with_quantity": (
-            {"models": PLAINS_GRASS, "quantity": (10, 40), "square": "wide"},
-            {"models": PLAINS_TREES, "quantity": (10, 20), "square": "wide"},
+            {"models": PLAINS_GRASS, "quantity": (15, 40), "square": "wide"},
+            {"models": PLAINS_TREES, "quantity": (13, 23), "square": "wide"},
             {"models": ("small_tree1",), "quantity": (1, 3), "square": "wide"},
             {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),

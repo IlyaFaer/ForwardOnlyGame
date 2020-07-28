@@ -207,7 +207,7 @@ class Block:
                 "load_env_model",
                 extraArgs=[surf_mod, env_mod],
             )
-            delay += 0.03
+            delay += 0.0275
 
         # load railways model
         if self._railways_model:
@@ -220,7 +220,7 @@ class Block:
 
         # generate texture flowers
         taskMgr.doMethodLater(
-            2.75,
+            2.5,
             self._gen_flowers,
             "generate_flowers",
             extraArgs=[surf_mod, angle, side],
