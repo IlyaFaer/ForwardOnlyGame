@@ -1,4 +1,5 @@
 __pycache__/
+dev_utils/
 .vscode/
 *.blend1
 test_environment.py
