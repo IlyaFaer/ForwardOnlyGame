@@ -162,7 +162,13 @@ class Block:
 
         if side == self._station_side:
             surface = address(
-                random.choice(("surface_with_station1", "surface_with_station2"))
+                random.choice(
+                    (
+                        "surface_with_station1",
+                        "surface_with_station2",
+                        "surface_with_station3",
+                    )
+                )
             )
             if side == "r":
                 return surface, 180
