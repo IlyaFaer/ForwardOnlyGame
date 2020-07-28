@@ -32,7 +32,8 @@ class OutingsInterface:
             text="",
             frameSize=(0.4, 0.4, 0.4, 0.4),
             text_scale=(0.04, 0.04),
-            text_fg=RUST_COL,
+            text_fg=SILVER_COL,
+            text_bg=(0, 0, 0, 0.5),
             pos=(0, 0, 0.65),
         )
         self._upcome_text.hide()
@@ -65,19 +66,19 @@ class OutingsInterface:
             pos=(0, 0, 0.55),
         )
 
-    def _assign_for_outing(self, to_send_wid, max_assignees):
+    def _assign_for_outing(self, to_send_wid, assignees):
         """Assign the chosen character for the outing.
 
         Args:
             to_send_wid (direct.gui.DirectLabel.DirectLabel):
                 Widget with number of assigned characters.
-            max_assignees (int): Assignees limit.
+            assignees (int): Assignees limit.
         """
         char = base.common_ctrl.chosen_char  # noqa: F821
         if (
             char is None
             or char in self._going_for_outing
-            or len(self._going_for_outing) == max_assignees
+            or len(self._going_for_outing) == assignees
         ):
             return
 
@@ -85,16 +86,16 @@ class OutingsInterface:
         self._char_buttons[char.id].setX(0.35)
 
         to_send_wid["text"] = "People to send ({cur_as}/{max_as}):".format(
-            cur_as=str(len(self._going_for_outing)), max_as=str(max_assignees)
+            cur_as=str(len(self._going_for_outing)), max_as=str(assignees)
         )
 
-    def _unassign_for_outing(self, to_send_wid, max_assignees):
+    def _unassign_for_outing(self, to_send_wid, assignees):
         """Exclude the chosen character from the outing.
 
         Args:
             to_send_wid (direct.gui.DirectLabel.DirectLabel):
                 Widget with number of assigned characters.
-            max_assignees (int): Assignees limit.
+            assignees (int): Assignees limit.
         """
         char = base.common_ctrl.chosen_char  # noqa: F821
         if char not in self._going_for_outing:
@@ -104,7 +105,7 @@ class OutingsInterface:
         self._char_buttons[char.id].setX(-0.35)
 
         to_send_wid["text"] = "People to send ({cur_as}/{max_as}):".format(
-            cur_as=str(len(self._going_for_outing)), max_as=str(max_assignees)
+            cur_as=str(len(self._going_for_outing)), max_as=str(assignees)
         )
 
     def _blink_upcome_icon(self, task):
@@ -144,11 +145,16 @@ class OutingsInterface:
                 DirectLabel(
                     parent=self._list,
                     text=" + ".join(
-                        (str(bars[0][1]), str(bars[1][1]), str(bars[2][1]))
+                        (
+                            str(bars[0][1]),
+                            str(bars[1][1]),
+                            str(bars[2][1]),
+                            str(bars[3][1]),
+                        )
                     ),
                     frameSize=(0.6, 0.6, 0.6, 0.6),
                     text_scale=(0.04),
-                    pos=(0, 0, -0.4),
+                    pos=(0, 0, -0.54),
                 )
             )
             self._outing_widgets.append(
@@ -157,7 +163,7 @@ class OutingsInterface:
                     text=str(score) + "/100",
                     frameSize=(0.6, 0.6, 0.6, 0.6),
                     text_scale=(0.05),
-                    pos=(0, 0, -0.52),
+                    pos=(0, 0, -0.62),
                 )
             )
             self._outing_widgets.append(
@@ -252,9 +258,7 @@ class OutingsInterface:
         Args:
             type_ (str): Outing type.
         """
-        self._upcome_text[
-            "text"
-        ] = '"{type}" outing available\n in {miles} miles'.format(
+        self._upcome_text["text"] = '"{type}" outing available in {miles} miles'.format(
             type=type_.capitalize(), miles=2
         )
         self._upcome_text.show()
@@ -326,7 +330,7 @@ class OutingsInterface:
 
         to_send = DirectLabel(
             parent=self._list,
-            text="People to send (0/{max_as}):".format(max_as=outing["max_assignees"]),
+            text="People to send (0/{max_as}):".format(max_as=outing["assignees"]),
             frameSize=(0.6, 0.6, 0.6, 0.6),
             text_scale=(0.035),
             pos=(0.35, 0, 0),
@@ -340,7 +344,7 @@ class OutingsInterface:
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.3),
                 command=self._assign_for_outing,  # noqa: F821
-                extraArgs=[to_send, outing["max_assignees"]],
+                extraArgs=[to_send, outing["assignees"]],
                 scale=(0.075, 0, 0.075),
             )
         )
@@ -351,7 +355,7 @@ class OutingsInterface:
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.3),
                 command=self._unassign_for_outing,  # noqa: F821
-                extraArgs=[to_send, outing["max_assignees"]],
+                extraArgs=[to_send, outing["assignees"]],
                 scale=(0.075, 0, 0.075),
             )
         )
@@ -378,7 +382,14 @@ class OutingsInterface:
         )
 
     def show_result(
-        self, desc, score, cond_score, class_score, day_part_score, selected_effect
+        self,
+        desc,
+        score,
+        cond_score,
+        class_score,
+        cohesion_score,
+        day_part_score,
+        selected_effect,
     ):
         """Show outing results gui.
 
@@ -389,6 +400,8 @@ class OutingsInterface:
                 Score from characters condition.
             class_score (int):
                 Score from characters classes.
+            cohesion_score (float):
+                Characters cohesion score.
             day_part_score (int):
                 Day part bonus and special skills score.
             selected_effect (dict):
@@ -411,6 +424,7 @@ class OutingsInterface:
         for name, maximum, col, value in (
             ("Character classes fit", 50, (0.46, 0.61, 0.53, 1), class_score),
             ("Characters condition", 20, RUST_COL, cond_score),
+            ("Characters cohesion:", 20, SILVER_COL, cohesion_score),
             ("Day part and skills", 10, (0.42, 0.42, 0.8, 1), day_part_score),
         ):
             self._outing_widgets.append(

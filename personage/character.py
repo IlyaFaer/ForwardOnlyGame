@@ -35,7 +35,7 @@ class Team:
         self.hold_together = False
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            360, self._calc_cohesion, "calc_cohesion"
+            5, self._calc_cohesion, "calc_cohesion"
         )
 
     def gen_default(self, train_parts):
@@ -192,7 +192,49 @@ class Team:
 
         self.cohesion = min(100, cohesion)
         base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
+
+        task.delayTime = 360
         return task.again
+
+    def calc_cohesion_for_chars(self, chars):
+        """Calculate cohesion for an outing party.
+
+        Cohesion will be calculated only with relations
+        between the given characters. If only one character
+        given, all of his relations will be calculated.
+        Resulting sum will be relative to 20 - maximum
+        cohesion score in any outing.
+
+        Args:
+            chars (list): Characters to calculate cohesion for.
+
+        Returns:
+            float: Cohesion score for the given characters.
+        """
+        cohesion = 0
+        rel_num = 0
+        if len(chars) == 1:
+            for key in self._relations.keys():
+                if chars[0].id in key:
+                    rel_num += 1
+                    cohesion += self._relations[key] / 100
+        else:
+            used_rels = []
+            for char1 in chars:
+                for char2 in chars:
+                    if char1.id == char2.id:
+                        continue
+
+                    rel_id = tuple(sorted([char1.id, char2.id]))
+                    if rel_id in used_rels:
+                        continue
+
+                    rel_num += 1
+                    used_rels.append(rel_id)
+                    cohesion += self._relations[rel_id] / 100
+
+        cohesion = round((cohesion / rel_num) * 20, 2)
+        return cohesion
 
 
 class Character(Shooter, Unit):

@@ -95,7 +95,7 @@ class OutingsManager:
             outing (dict): Outing description.
             chars (list): Chars assigned for the outing.
         """
-        if len(chars) != outing["max_assignees"]:
+        if len(chars) != outing["assignees"]:
             return
 
         cond_score = 0
@@ -105,9 +105,14 @@ class OutingsManager:
             cond_score += calc_condition_score(cond_max, char)
             class_score += outing["class_weights"][char.class_]
 
+        cond_score = round(cond_score, 2)
+        class_score = round(class_score, 2)
+        cohesion_score = base.team.calc_cohesion_for_chars(chars)  # noqa: F821
+
         score = cond_score
         score += class_score
         score += outing["day_part_weights"][base.world.sun.day_part]  # noqa: F821
+        score += cohesion_score
         score = round(score)
 
         desc, effects = self._get_result(score, outing["results"])
@@ -131,6 +136,7 @@ class OutingsManager:
             score,
             cond_score,
             class_score,
+            cohesion_score,
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
             selected_effect,
         )
