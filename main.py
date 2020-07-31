@@ -51,7 +51,7 @@ class ForwardOnly(ShowBase):
 
         # build game world
         self.world = World()
-        self.world.generate_location("Plains", 300)
+        self.world.generate_location("Plains", 500)
         self._current_block = self.world.prepare_next_block()
 
         self.char_interface = CharacterInterface()
