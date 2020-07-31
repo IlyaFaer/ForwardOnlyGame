@@ -49,6 +49,7 @@ class Block:
         surf_vertices (dict): Vertices index of every surface model.
         enemy_territory (bool): This block is an enemy territory.
         is_station (bool): Station must be set on this block.
+        is_city (bool): This is a city block.
         outing_available (str): An outing type available on this block.
     """
 
@@ -60,6 +61,7 @@ class Block:
         surf_vertices,
         enemy_territory=False,
         is_station=False,
+        is_city=False,
         outing_available=None,
     ):
         self.rails_mod = None
@@ -69,6 +71,7 @@ class Block:
         self.cam_path = cam_path
         self.enemy_territory = enemy_territory
         self.outing_available = outing_available
+        self.is_city = is_city
 
         self._station_side = random.choice(("l", "r")) if is_station else None
 
@@ -159,6 +162,12 @@ class Block:
         if self.enemy_territory:
             surface = address("surface_en1")
             return surface, random.choice(ANGLES)
+
+        if self.is_city:
+            surface = address("surface_with_" + side + "_city")
+            if side == "r":
+                return surface, 180
+            return surface, 0
 
         if side == self._station_side:
             surface = address(
@@ -277,7 +286,12 @@ class Block:
         Returns:
             Block: Returns self object.
         """
-        self.rails_mod = loader.loadModel(address(self.name + "_rails"))  # noqa: F821
+        if self.is_city:
+            self.rails_mod = loader.loadModel(address("city1_rails"))  # noqa: F821
+        else:
+            self.rails_mod = loader.loadModel(  # noqa: F821
+                address(self.name + "_rails")
+            )
 
         self._load_surface_block(
             base.taskMgr, self._l_surface, -4, 4, self._l_angle, "l"  # noqa: F821

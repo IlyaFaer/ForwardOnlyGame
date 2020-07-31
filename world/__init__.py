@@ -125,11 +125,12 @@ class World:
             if (
                 # don't remember coordinates of vertices
                 # on which rails will be set
-                pos.getX() not in (-4, 4)
-                and pos.getY() not in (-4, 4)
+                abs(pos.getX()) < 3.99
+                and abs(pos.getY()) < 3.99
                 and not ("turn" in path and abs(pos.getZ()) < 0.0001)
-                # don't remember vertices of station models
+                # don't remember vertices of station and city models
                 and not ("station" in path and abs(pos.getY()) < 2.1)
+                and not ("city" in path and abs(pos.getY()) < 2.1)
             ):
                 surf_vertices["wide"].append(pos)
 
@@ -241,11 +242,15 @@ class World:
         for _ in range(size):
             rails_block = rails_gen.generate_block()
 
+            is_city = False
+            is_station = False
+
             if rails_block == "station":
                 rails_block = "direct"
                 is_station = True
-            else:
-                is_station = False
+            elif rails_block == "city":
+                rails_block = "direct"
+                is_city = True
 
             self._map.append(
                 Block(
@@ -254,6 +259,7 @@ class World:
                     cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
                     is_station=is_station,
+                    is_city=is_city,
                     outing_available=self.outings_mgr.plan_outing(),
                 )
             )
