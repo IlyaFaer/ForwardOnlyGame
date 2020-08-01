@@ -122,11 +122,19 @@ class Train:
         )
         if self.l_brake and self.r_brake:
             self._ctrl.max_speed = 0.5
-            self._ctrl.slow_down_to(0.5)
+            self._ctrl.brake_down_to(0.5)
             return
 
         self._ctrl.max_speed = 0.75
-        self._ctrl.slow_down_to(0.75)
+        self._ctrl.brake_down_to(0.75)
+
+    def slow_down_to(self, target):
+        """Slow down Train to the given speed.
+
+        Args:
+            target (float): Target speed.
+        """
+        self._ctrl.slow_down_to(target)
 
     def _clear_brake(self, side, brake, task):
         """Stop braking.

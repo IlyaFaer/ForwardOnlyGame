@@ -71,7 +71,11 @@ class OutingsManager:
         Args:
             type(str): Outing type.
         """
-        self._interface.show_upcoming(type_)
+        self._interface.show_upcoming_outing(type_)
+
+    def show_city(self):
+        """Show upcoming city info."""
+        self._interface.show_city()
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""

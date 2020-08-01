@@ -264,7 +264,9 @@ class World:
                     surf_vertices=self._surf_vertices,
                     is_station=is_station,
                     is_city=is_city,
-                    outing_available=self.outings_mgr.plan_outing(),
+                    outing_available=None
+                    if is_city
+                    else self.outings_mgr.plan_outing(),
                 )
             )
         self._set_sounds(location)
@@ -296,16 +298,42 @@ class World:
 
     def _track_outings(self):
         """Track outing abilities."""
+        if self._block_num < 2:
+            return
+
         if self._map[self._block_num + 1].outing_available:
             self.outings_mgr.show_upcoming(
                 self._map[self._block_num + 1].outing_available
             )
         elif self._map[self._block_num].outing_available:
             self.outings_mgr.show_upcoming_closer()
+
         elif self._map[self._block_num - 1].outing_available:
             self.outings_mgr.show_can_start()
+
         elif self._map[self._block_num - 2].outing_available:
             self.outings_mgr.hide_outing()
+
+    def _track_cities(self):
+        """Track upcoming cities.
+
+        Slow down and stop Train when approaching to a city.
+        """
+        if self._block_num < 1:
+            return
+
+        if self._map[self._block_num + 1].is_city:
+            base.ignore("w")  # noqa: F821
+            base.ignore("s")  # noqa: F821
+
+            base.train.slow_down_to(0.7)  # noqa: F821
+            self.outings_mgr.show_city()
+
+        elif self._map[self._block_num].is_city:
+            base.train.slow_down_to(0.5)  # noqa: F821
+
+        elif self._map[self._block_num - 1].is_city:
+            base.train.slow_down_to(0)  # noqa: F821
 
     def prepare_next_block(self):
         """Prepare the next world block.
@@ -354,6 +382,7 @@ class World:
             block.rails_mod.reparentTo(render)  # noqa: F821
 
         self._track_outings()
+        self._track_cities()
         return block
 
     def clear_prev_block(self):

@@ -198,14 +198,12 @@ class TrainController:
             extraArgs=["speed_up_train"],
         )
 
-    def slow_down_to(self, target):
+    def brake_down_to(self, target):
         """Slow down Train to the given speed.
 
         Args:
             target (float): Target speed.
         """
-        base.taskMgr.remove("change_train_speed")  # noqa: F821
-
         if self._brake_snd.status() == AudioSound.PLAYING:
             self._brake_snd.setVolume(1)
         else:
@@ -213,6 +211,15 @@ class TrainController:
             base.taskMgr.doMethodLater(  # noqa: F821
                 3, self._drown_brake_snd, "drown_brake_snd"
             )
+        self.slow_down_to(target)
+
+    def slow_down_to(self, target):
+        """Slow down Train to the given speed.
+
+        Args:
+            target (float): Target speed.
+        """
+        base.taskMgr.remove("change_train_speed")  # noqa: F821
 
         speed = self._move_anim_int.getPlayRate()
         if speed <= target:

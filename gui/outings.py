@@ -252,21 +252,37 @@ class OutingsInterface:
             wid.destroy()
         self._outing_widgets.clear()
 
-    def show_upcoming(self, type_):
-        """Show upcoming outing icon.
+    def show_upcoming(self, text, icon):
+        """Show upcoming event notification.
 
         Args:
-            type_ (str): Outing type.
+            text (str): Event text.
+            icon (str): Event icon.
         """
-        self._upcome_text["text"] = '"{type}" outing available in {miles} miles'.format(
-            type=type_.capitalize(), miles=2
-        )
+        self._upcome_text["text"] = text
+        self._upcome_icon["frameTexture"] = icon
+
         self._upcome_text.show()
         self._upcome_icon.show()
 
         base.taskMgr.doMethodLater(  # noqa: F821
             0.3, self._blink_upcome_icon, "blink_outing_icon"
         )
+
+    def show_upcoming_outing(self, type_):
+        """Show upcoming outing notification.
+
+        Args:
+            type_ (str): Outing type.
+        """
+        text = '"{type}" outing available in {miles} miles'.format(
+            type=type_.capitalize(), miles=2
+        )
+        self.show_upcoming(text, "gui/tex/icon_looting.png")
+
+    def show_city(self):
+        """Show upcoming city notification."""
+        self.show_upcoming("Approaching to a city", "gui/tex/city_icon.png")
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""
