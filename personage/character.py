@@ -114,6 +114,11 @@ class Team:
         )
         self._plan_cohesion_cooldown(1200)
 
+    def rest_all(self):
+        """Make all the characters rest."""
+        for char in self.chars.values():
+            char.rest()
+
     def _stop_cover_fire(self, task):
         """Stop "Cover fire" cohesion ability."""
         self.cover_fire = False
@@ -366,7 +371,7 @@ class Character(Shooter, Unit):
                 self._stop_rest()
 
         if part.name.startswith("part_rest_"):
-            self._rest()
+            self.rest()
 
         self.model.wrtReparentTo(part.parent)
         self.model.setPos(pos["pos"])
@@ -414,7 +419,7 @@ class Character(Shooter, Unit):
         LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
         self.model.play("surrender")
 
-    def _rest(self):
+    def rest(self):
         """Make this character rest.
 
         Stops all the active tasks and starts

@@ -41,10 +41,10 @@ class Train:
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
 
-        smoke = ParticleEffect()
-        smoke.loadConfig("effects/smoke1.ptf")
-        smoke.setPos(0, 0.32, 0.28)
-        smoke.start(self.model, render)  # noqa: F821
+        self._smoke = ParticleEffect()
+        self._smoke.loadConfig("effects/smoke1.ptf")
+        self._smoke.setPos(0, 0.32, 0.28)
+        self._smoke.start(self.model, render)  # noqa: F821
 
         move_snd, stop_snd, brake_snd, self._clunk_snd, self._lighter_snd = (
             self._set_sounds()
@@ -135,6 +135,11 @@ class Train:
             target (float): Target speed.
         """
         self._ctrl.slow_down_to(target)
+
+    def move_to_hangar(self):
+        """Move Train into city hangar."""
+        self.root_node.setZ(50)
+        self._smoke.disable()
 
     def _clear_brake(self, side, brake, task):
         """Stop braking.

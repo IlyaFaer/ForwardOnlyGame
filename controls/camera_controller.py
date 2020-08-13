@@ -27,7 +27,7 @@ class CameraController:
         self._last_cam_np_hpr = None
         self._is_centered = False
 
-        base.camLens.setNear(0.5)  # noqa: F821
+        base.camLens.setNear(0.25)  # noqa: F821
 
     def set_controls(self, train):
         """Configure camera and its controls.
@@ -236,21 +236,7 @@ class CameraController:
             base.cam.setHpr(90, -90, 0)  # noqa: F821
             self._cam_np.setHpr(0, 0, 0)
 
-            for key in (
-                "arrow_up",
-                "arrow_down",
-                "arrow_left",
-                "arrow_right",
-                "arrow_up-up",
-                "arrow_down-up",
-                "arrow_left-up",
-                "arrow_right-up",
-                "alt-arrow_left",
-                "alt-arrow_right",
-                "alt-arrow_up",
-                "alt-arrow_down",
-            ):
-                base.ignore(key)  # noqa: F821
+            self._disable_ctrl_keys()
         else:
             base.cam.wrtReparentTo(self._cam_np)  # noqa: F821
             self._set_move_keys()
@@ -260,3 +246,41 @@ class CameraController:
             self._cam_np.setHpr(*self._last_cam_np_hpr)
 
         self._is_centered = not self._is_centered
+
+    def _disable_ctrl_keys(self):
+        """Ignore all the camera control keys."""
+        for key in (
+            "arrow_up",
+            "arrow_down",
+            "arrow_left",
+            "arrow_right",
+            "arrow_up-up",
+            "arrow_down-up",
+            "arrow_left-up",
+            "arrow_right-up",
+            "alt-arrow_left",
+            "alt-arrow_right",
+            "alt-arrow_up",
+            "alt-arrow_down",
+            "+",
+            "-",
+            "+-up",
+            "--up",
+            "wheel_up",
+            "wheel_down",
+        ):
+            base.ignore(key)  # noqa: F821
+
+    def set_hangar_pos(self, hangar):
+        """Set camera to hangar position.
+
+        Args:
+            hangar (panda3d.core.NodePath): Hangar model.
+        """
+        base.taskMgr.remove("move_camera_with_mouse")  # noqa: F821
+        self._disable_ctrl_keys()
+        base.cam.setPos(0)  # noqa: F821
+        base.cam.setHpr(0)  # noqa: F821
+        self._cam_np.reparentTo(hangar)
+        self._cam_np.setPos(-0.35, 1.36, 0.12)
+        self._cam_np.setHpr(-163, 5, 0)
