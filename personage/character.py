@@ -611,7 +611,11 @@ class Character(Shooter, Unit):
         return task.done
 
     def clear(self, task):
-        """Clear this character."""
+        """Clear this character.
+
+        Release models and sounds memory, release the part
+        cell and delete the character from the team list.
+        """
         self.model.cleanup()
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821

@@ -298,9 +298,7 @@ class CharacterChooser:
             text_scale=(0.03, 0.03),
             pos=(0, 0, -0.01),
         )
-        self._chosen_char = base.team.chars[self._chars[self._ind]]  # noqa: F821
-        self._name["text"] = self._chosen_char.name
-        base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
+        self._show_info()
 
         DirectButton(
             parent=self._fr,
@@ -342,7 +340,7 @@ class CharacterChooser:
         self._show_info()
 
     def _show_info(self):
-        """Show character's info in characters GUI."""
+        """Show the current character's info in the GUI."""
         if self._ind == len(self._chars):
             self._ind = 0
         elif self._ind == -1:
@@ -361,3 +359,13 @@ class CharacterChooser:
         """
         self._fr.reparentTo(parent)
         self._fr.setPos(pos)
+
+    def leave_unit(self, id_):
+        """Take out the chosen unit from the widget.
+
+        Args:
+            id_ (str): Id of the unit to take out.
+        """
+        self._chars.remove(id_)
+        self._ind = 0
+        self._show_info()

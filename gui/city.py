@@ -109,6 +109,25 @@ class CityInterface:
             command=self._rest,
             extraArgs=[50],
         )
+        DirectButton(
+            parent=self._city_fr,
+            pos=(0.2, 0, 0.25),
+            text_fg=SILVER_COL,
+            text="Leave unit",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=(0.45, 0.45),
+            command=self._send_away,
+        )
+
+    def _send_away(self):
+        """Send the chosen unit away."""
+        if len(base.team.chars) == 1:  # noqa: F821
+            return
+
+        char = self._char_chooser.chosen_char
+        base.taskMgr.doMethodLater(0.25, char.clear, char.id + "_clear")  # noqa: F821
+        self._char_chooser.leave_unit(char.id)
 
     def _heal(self, value):
         """Heal the chosen character.
