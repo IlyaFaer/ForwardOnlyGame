@@ -58,6 +58,23 @@ class Team:
 
             self.chars[char.id] = char
 
+    def gen_recruits(self):
+        """Generate several recruits.
+
+        Used in cities.
+
+        Returns:
+            dict: Recruits index.
+        """
+        chars = {}
+        for _ in range(random.randint(1, 4)):
+            self._char_id += 1
+
+            chars["character_" + str(self._char_id)] = generate_char(
+                self._char_id, "soldier", random.choice(("male", "female")), self
+            )
+        return chars
+
     def cohesion_recall(self):
         """Do cohesion ability "Recall the past"."""
         if self.cohesion_cooldown or self.cohesion < 20:
@@ -609,6 +626,16 @@ class Character(Shooter, Unit):
         """Hide the main model."""
         self.model.hide()
         return task.done
+
+    def leave(self):
+        """Make this character leave, plan clearing.
+
+        Used only when sending a character away in a city.
+        """
+        base.taskMgr.remove(self.id + "_calm_down")  # noqa: F821
+        base.taskMgr.remove(self.id + "_gain_energy")  # noqa: F821
+        base.taskMgr.remove(self.id + "_heal")  # noqa: F821
+        base.taskMgr.doMethodLater(0.05, self.clear, self.id + "_clear")  # noqa: F821
 
     def clear(self, task):
         """Clear this character.

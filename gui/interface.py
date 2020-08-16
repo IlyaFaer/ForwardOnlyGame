@@ -4,8 +4,6 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Game graphical interface API.
 """
-import copy
-
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TransparencyAttrib
@@ -274,18 +272,12 @@ class TrainInterface:
 
 
 class CharacterChooser:
-    """Widget to choose single one character.
+    """Widget to choose single one character."""
 
-    Args:
-        chars (list):
-            Ids of characters which may be
-            selected with this widget.
-    """
-
-    def __init__(self, chars):
+    def __init__(self):
         self._ind = 0
-        self._chars = copy.deepcopy(chars)
         self._chosen_char = None
+        self._chars = None
 
         self._fr = DirectFrame(
             frameSize=(-0.15, 0.15, -0.025, 0.025), frameColor=(0, 0, 0, 0)
@@ -298,14 +290,12 @@ class CharacterChooser:
             text_scale=(0.03, 0.03),
             pos=(0, 0, -0.01),
         )
-        self._show_info()
-
         DirectButton(
             parent=self._fr,
             pos=(0.15, 0, -0.015),
             text=">",
             text_fg=SILVER_COL,
-            frameColor=(0, 0, 0, 0.3),
+            frameColor=(0, 0, 0, 0),
             command=self._next_char,
             scale=(0.075, 0, 0.075),
         )
@@ -314,10 +304,11 @@ class CharacterChooser:
             pos=(-0.15, 0, -0.015),
             text="<",
             text_fg=SILVER_COL,
-            frameColor=(0, 0, 0, 0.3),
+            frameColor=(0, 0, 0, 0),
             command=self._prev_char,
             scale=(0.075, 0, 0.075),
         )
+        self._fr.hide()
 
     @property
     def chosen_char(self):
@@ -341,24 +332,35 @@ class CharacterChooser:
 
     def _show_info(self):
         """Show the current character's info in the GUI."""
+        if len(self._chars) == 0:
+            self._name["text"] = ""
+            self._chosen_char = None
+            return
+
         if self._ind == len(self._chars):
             self._ind = 0
         elif self._ind == -1:
             self._ind = len(self._chars) - 1
 
-        self._chosen_char = base.team.chars[self._chars[self._ind]]  # noqa: F821
+        key = list(self._chars.keys())[self._ind]
+        self._chosen_char = self._chars[key]
+
         self._name["text"] = self._chosen_char.name
         base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
 
-    def setPos(self, parent, pos):
+    def prepare(self, parent, pos, chars):
         """Set this widget's parent and position.
 
         Args:
             parent (panda3d.core.NodePath): Parent widget.
             pos (tuple): New widget position.
+            chars (dict): Chars to show in this widget.
         """
         self._fr.reparentTo(parent)
         self._fr.setPos(pos)
+        self._fr.show()
+        self._chars = chars
+        self._show_info()
 
     def leave_unit(self, id_):
         """Take out the chosen unit from the widget.
@@ -366,6 +368,8 @@ class CharacterChooser:
         Args:
             id_ (str): Id of the unit to take out.
         """
-        self._chars.remove(id_)
+        if id_ in self._chars.keys():
+            self._chars.pop(id_)
+
         self._ind = 0
         self._show_info()

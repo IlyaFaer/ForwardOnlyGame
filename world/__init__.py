@@ -325,7 +325,9 @@ class World:
         if self._map[self._block_num + 1].is_city:
             base.ignore("w")  # noqa: F821
             base.ignore("s")  # noqa: F821
-
+            base.taskMgr.doMethodLater(  # noqa: F821
+                20, base.fade_out_screen, "fade_screen"  # noqa: F821
+            )
             base.train.slow_down_to(0.7)  # noqa: F821
             self.outings_mgr.show_city()
 

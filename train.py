@@ -100,6 +100,30 @@ class Train:
 
         self._miles = 0
 
+    def has_cell(self):
+        """Check if there is a free cell for a new unit.
+
+        Returns:
+            bool: True, if there is a free cell.
+        """
+        cells_num = 0
+        for part in self.parts.values():
+            cells_num += part.free_cells
+
+        return cells_num >= 2
+
+    def place_recruit(self, char):
+        """Place the new recruit somewhere on Train.
+
+        Args:
+            char (personage.character.Character):
+                New recruit object.
+        """
+        for part in self.parts.values():
+            if part.free_cells > 0:
+                char.move_to(part)
+                return
+
     def brake(self, side, brake):
         """Start braking.
 
@@ -373,6 +397,15 @@ class TrainPart:
         base.accept("into-shoot_zone_" + name, self.enemy_came)  # noqa: F821
         base.accept("out-shoot_zone_" + name, self.enemy_leave)  # noqa: F821
 
+    @property
+    def free_cells(self):
+        """The number of free cells on this part.
+
+        Returns:
+            int: The number of free cells
+        """
+        return len(self._cells)
+
     def enemy_came(self, event):
         """Enemy unit entered this part shooting range."""
         enemy = base.world.enemy.active_units.get(  # noqa: F821
@@ -454,6 +487,15 @@ class RestPart:
             CollisionBox(Point3(-0.09, -0.36, 0.15), Point3(0.09, -0.17, 0.27))
         )
         parent.attachNewNode(col_node)
+
+    @property
+    def free_cells(self):
+        """The number of free cells on this part.
+
+        Returns:
+            int: The number of free cells.
+        """
+        return 2 - len(self.chars)
 
     def give_cell(self, character):
         """Check if there is a free cell.
