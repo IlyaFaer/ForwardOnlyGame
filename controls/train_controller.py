@@ -55,6 +55,11 @@ class TrainController:
 
         base.accept("f", train.toggle_lights)  # noqa: F821
 
+    def unset_controls(self):
+        """Disable all the Train controls."""
+        for key in ("w", "s", "w-up", "s-up", "f"):
+            base.ignore(key)  # noqa: F821
+
     def move_along_block(self, block, train_np):
         """Start Train move intervals for the given block.
 

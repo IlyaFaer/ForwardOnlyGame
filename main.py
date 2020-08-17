@@ -12,7 +12,7 @@ from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
-from gui import CharacterInterface, ResourcesInterface
+from gui import CharacterInterface, CityInterface, ResourcesInterface
 from personage.character import Team
 from train import Train
 from world import World
@@ -61,6 +61,7 @@ class ForwardOnly(ShowBase):
 
         self.char_interface = CharacterInterface()
         self.res_interface = ResourcesInterface()
+        self.city_interface = CityInterface()
 
         self.enableAllAudio()
 

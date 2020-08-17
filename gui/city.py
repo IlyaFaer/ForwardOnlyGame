@@ -182,6 +182,34 @@ class CityInterface:
             extraArgs=[200],
         )
 
+        DirectButton(
+            parent=self._city_fr,
+            pos=(-0.2, 0, -0.63),
+            text_fg=RUST_COL,
+            text="Back on road",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=(0.5, 0.5),
+            command=self._exit_city,
+        )
+
+    def _exit_city(self):
+        """Exit the current city.
+
+        Hide city GUI, remove the hangar scene,
+        return Train back to railway.
+        """
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.1, base.fade_out_screen, "fade_out_screen"  # noqa: F821
+        )
+        base.taskMgr.doMethodLater(3.1, self._clear, "clear_city_gui")  # noqa: F821
+
+    def _clear(self, task):
+        """Remove hangar scene and hide city GUI."""
+        self._city_fr.hide()
+        base.world._unload_hangar_scene()  # noqa: F821
+        return task.done
+
     def _send_away(self):
         """Send the chosen unit away."""
         if len(base.team.chars) == 1:  # noqa: F821

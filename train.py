@@ -50,8 +50,8 @@ class Train:
             self._set_sounds()
         )
 
-        self._ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
-        self._ctrl.set_controls(self)
+        self.ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
+        self.ctrl.set_controls(self)
 
         self.parts = {
             "part_locomotive_left": TrainPart(
@@ -145,12 +145,12 @@ class Train:
             appendTask=True,
         )
         if self.l_brake and self.r_brake:
-            self._ctrl.max_speed = 0.5
-            self._ctrl.brake_down_to(0.5)
+            self.ctrl.max_speed = 0.5
+            self.ctrl.brake_down_to(0.5)
             return
 
-        self._ctrl.max_speed = 0.75
-        self._ctrl.brake_down_to(0.75)
+        self.ctrl.max_speed = 0.75
+        self.ctrl.brake_down_to(0.75)
 
     def slow_down_to(self, target):
         """Slow down Train to the given speed.
@@ -158,7 +158,7 @@ class Train:
         Args:
             target (float): Target speed.
         """
-        self._ctrl.slow_down_to(target)
+        self.ctrl.slow_down_to(target)
 
     def move_to_hangar(self):
         """Move Train into city hangar."""
@@ -180,7 +180,7 @@ class Train:
             self._r_brake_sparks.softStop()
             self.r_brake = False
 
-        self._ctrl.max_speed += 0.25
+        self.ctrl.max_speed += 0.25
         brake.removeNode()
         return task.done
 
@@ -193,7 +193,7 @@ class Train:
         self._miles += 1
         self._interface.update_miles(self._miles)
 
-        self._ctrl.move_along_block(block, self.node)
+        self.ctrl.move_along_block(block, self.node)
 
     def switch_to_current_block(self):
         """Switch to the current world block.
@@ -302,7 +302,7 @@ class Train:
 
     def speed_to_min(self):
         """Accelerate Train to minimum combat speed."""
-        self._ctrl.speed_to_min()
+        self.ctrl.speed_to_min()
 
     def get_damage(self, damage):
         """Get damage from an enemy.
@@ -315,10 +315,10 @@ class Train:
         self.damnability -= damage
         self._interface.update_indicators(damnability=self.damnability)
 
-        if not self._ctrl.critical_damage:
+        if not self.ctrl.critical_damage:
             if self.damnability <= 0:
-                self._ctrl.critical_damage = True
-                self._ctrl.stop()
+                self.ctrl.critical_damage = True
+                self.ctrl.stop()
 
                 base.world.enemy.capture_train()  # noqa: F821
                 base.team.surrender()  # noqa: F821

@@ -134,7 +134,14 @@ class Team:
     def rest_all(self):
         """Make all the characters rest."""
         for char in self.chars.values():
-            char.rest()
+            if not char.current_part.name.startswith("part_rest_"):
+                char.rest()
+
+    def stop_rest_all(self):
+        """Stop the team rest."""
+        for char in self.chars.values():
+            if not char.current_part.name.startswith("part_rest_"):
+                char.stop_rest()
 
     def _stop_cover_fire(self, task):
         """Stop "Cover fire" cohesion ability."""
@@ -385,7 +392,7 @@ class Character(Shooter, Unit):
             self.current_part.release_cell(self._current_pos, self)
 
             if self.current_part.name.startswith("part_rest_"):
-                self._stop_rest()
+                self.stop_rest()
 
         if part.name.startswith("part_rest_"):
             self.rest()
@@ -476,7 +483,7 @@ class Character(Shooter, Unit):
             if hasattr(self, key):
                 setattr(self, key, getattr(self, key) + value)
 
-    def _stop_rest(self):
+    def stop_rest(self):
         """Stop this character rest."""
         self.model.show()
         self._col_node.unstash()

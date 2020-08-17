@@ -8,7 +8,7 @@ import glob
 
 from direct.directutil import Mopath
 from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
-from panda3d.core import AudioSound, GeomVertexReader, Vec3
+from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotlight, Vec3
 
 from personage.enemy import Enemy
 from utils import address, MOD_DIR
@@ -39,6 +39,7 @@ class World:
 
         self._surf_vertices = self._cache_warmup(base.sound_mgr)  # noqa: F821
         self._paths = self._load_motion_paths()
+        self._hangar = None
 
         self.sun = Sun()
 
@@ -323,10 +324,12 @@ class World:
             return
 
         if self._map[self._block_num + 1].is_city:
-            base.ignore("w")  # noqa: F821
-            base.ignore("s")  # noqa: F821
+            base.train.ctrl.unset_controls()  # noqa: F821
             base.taskMgr.doMethodLater(  # noqa: F821
                 20, base.fade_out_screen, "fade_screen"  # noqa: F821
+            )
+            base.taskMgr.doMethodLater(  # noqa: F821
+                23, self._load_hangar_scene, "load_hangar_scene"
             )
             base.train.slow_down_to(0.7)  # noqa: F821
             self.outings_mgr.show_city()
@@ -336,6 +339,34 @@ class World:
 
         elif self._map[self._block_num - 1].is_city:
             base.train.slow_down_to(0)  # noqa: F821
+
+    def _load_hangar_scene(self, task):
+        """Load the city hangar scene.
+
+        Load the scene, move Train into the hangar,
+        build interface and hide the team.
+        """
+        self.outings_mgr.hide_outing()  # noqa: F821
+
+        self._hangar = Hangar()
+
+        base.city_interface.show()  # noqa: F821
+        base.train.move_to_hangar()  # noqa: F821
+        base.team.rest_all()  # noqa: F821
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            2, base.fade_in_screen, "fade_in_screen"  # noqa: F821
+        )
+        return task.done
+
+    def _unload_hangar_scene(self):
+        """Remove the current hangar scene."""
+        self._hangar.clear()
+        self._hangar = None
+
+        base.train.ctrl.set_controls(base.train)  # noqa: F821
+        base.camera_ctrl.enable_ctrl_keys()  # noqa: F821
+        base.team.stop_rest_all()  # noqa: F821
 
     def prepare_next_block(self):
         """Prepare the next world block.
@@ -401,3 +432,51 @@ class World:
             if self._map[num].enemy_territory:
                 self._map.pop(num)
                 self._block_num -= 1
+
+
+class Hangar:
+    """City hangar scene.
+
+    Includes hangar models, lights, camera position.
+    Remembers the last camera and Train positions
+    to return them back correctly to the positions they
+    were before moving to ther hangar.
+    """
+
+    def __init__(self):
+        self._train_pos = base.train.root_node.getPos()  # noqa: F821
+
+        self._mod = loader.loadModel(address("city_hangar"))  # noqa: F821
+
+        base.camera_ctrl.set_hangar_pos(self._mod)  # noqa: F821
+
+        self._mod.reparentTo(base.train.model)  # noqa: F821
+
+        lens = PerspectiveLens()
+        lens.setNearFar(0, 10)
+        lens.setFov(100, 100)
+
+        lighter = Spotlight("hangar_light")
+        lighter.setColor((1, 1, 1, 1))
+        lighter.setLens(lens)
+        self._lighter_np = self._mod.attachNewNode(lighter)
+        self._lighter_np.setPos(-0.3, 0.65, 4)
+        self._lighter_np.lookAt(base.train.model)  # noqa: F821
+
+        render.setLight(self._lighter_np)  # noqa: F821
+
+    def clear(self):
+        """Clear this hangar.
+
+        Remove this hangar models and lights, return
+        Train and camera back to their original positions.
+        """
+        base.camera_ctrl.unset_hangar_pos()  # noqa: F821
+        render.clearLight(self._lighter_np)  # noqa: F821
+        self._lighter_np.removeNode()
+        self._mod.removeNode()
+
+        base.train.root_node.setPos(self._train_pos)  # noqa: F821
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.2, base.fade_in_screen, "fade_in_screen"  # noqa: F821
+        )
