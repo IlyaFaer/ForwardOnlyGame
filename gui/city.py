@@ -69,7 +69,7 @@ class CityInterface:
         )
         DirectButton(
             parent=self._city_fr,
-            pos=(0.05, 0, 0.45),
+            pos=(0.07, 0, 0.45),
             text_fg=SILVER_COL,
             text="+50\n50$",
             scale=(0.075, 0, 0.075),
@@ -99,7 +99,7 @@ class CityInterface:
         )
         DirectButton(
             parent=self._city_fr,
-            pos=(0.05, 0, 0.35),
+            pos=(0.07, 0, 0.35),
             text_fg=SILVER_COL,
             text="+50\n25$",
             scale=(0.075, 0, 0.075),
@@ -135,11 +135,51 @@ class CityInterface:
             parent=self._city_fr,
             pos=(0.2, 0, 0.04),
             text_fg=SILVER_COL,
-            text="Hire unit",
+            text="Hire unit\n200$",
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=(0.45, 0.45),
             command=self._hire,
+        )
+
+        # train GUI
+        DirectLabel(
+            parent=self._city_fr,
+            text="Train",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=(0.035, 0.035),
+            text_fg=RUST_COL,
+            pos=(-0.25, 0, -0.07),
+        )
+        DirectLabel(
+            parent=self._city_fr,
+            frameColor=(0, 0, 0, 0.3),
+            text_fg=SILVER_COL,
+            text="Repair",
+            text_scale=(0.03, 0.03),
+            pos=(-0.2, 0, -0.15),
+        )
+        DirectButton(
+            parent=self._city_fr,
+            pos=(-0.05, 0, -0.15),
+            text_fg=SILVER_COL,
+            text="+50\n25$",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=(0.45, 0.45),
+            command=self._repair,
+            extraArgs=[50],
+        )
+        DirectButton(
+            parent=self._city_fr,
+            pos=(0.07, 0, -0.15),
+            text_fg=SILVER_COL,
+            text="+200\n100$",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=(0.45, 0.45),
+            command=self._repair,
+            extraArgs=[200],
         )
 
     def _send_away(self):
@@ -155,12 +195,18 @@ class CityInterface:
 
     def _hire(self):
         """Hire the chosen unit."""
-        if not base.train.has_cell():  # noqa: F821
+        if base.dollars - 200 < 0:  # noqa: F821
             return
 
         char = self._recruit_chooser.chosen_char
         if char is None:
             return
+
+        if not base.train.has_cell():  # noqa: F821
+            return
+
+        base.dollars -= 200  # noqa: F821
+        base.res_interface.update_money(base.dollars)  # noqa: F821
 
         base.team.chars[char.id] = char  # noqa: F821
         self._recruit_chooser.leave_unit(char.id)
@@ -169,6 +215,23 @@ class CityInterface:
         base.train.place_recruit(char)  # noqa: F821
         if not char.current_part.name.startswith("part_rest_"):
             char.rest()
+
+    def _repair(self, value):
+        """Repair Train.
+
+        Spends money.
+
+        Args:
+            value (int):
+                Points of Train damnability to repair.
+        """
+        spent = 25 if value == 50 else 100
+        if base.dollars - spent < 0:  # noqa: F821
+            return
+
+        base.train.get_damage(-value)  # noqa: F821
+        base.dollars -= spent  # noqa: F821
+        base.res_interface.update_money(base.dollars)  # noqa: F821
 
     def _heal(self, value):
         """Heal the chosen character.
