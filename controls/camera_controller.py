@@ -8,6 +8,10 @@ from direct.interval.LerpInterval import LerpHprInterval, LerpPosInterval
 from panda3d.core import Vec3
 
 MAX_Z = 3
+MAX_UP_MOVE = [1, None, 1.5]
+MAX_DOWN_MOVE = [2.5, None, 0.75]
+MAX_LEFT_MOVE = [None, -1.1, 0.9]
+MAX_RIGHT_MOVE = [None, 1.1, 0.9]
 
 
 class CameraController:
@@ -60,22 +64,22 @@ class CameraController:
 
         if x == 1:
             self._with_mouse_move = True
-            self._move(None, 1.1, 0.9)
+            self._move(*MAX_RIGHT_MOVE)
             self._with_mouse_move_x = False
             return task.again
         if x == -1:
             self._with_mouse_move = True
-            self._move(None, -1.1, 0.9)
+            self._move(*MAX_LEFT_MOVE)
             self._with_mouse_move_x = False
             return task.again
         if z == 1:
             self._with_mouse_move = True
-            self._move(1, None, 1.5)
+            self._move(*MAX_UP_MOVE)
             self._with_mouse_move_x = True
             return task.again
         if z == -1:
             self._with_mouse_move = True
-            self._move(2, None, 0.75)
+            self._move(*MAX_DOWN_MOVE)
             self._with_mouse_move_x = True
             return task.again
 
@@ -192,10 +196,10 @@ class CameraController:
     def _set_move_keys(self):
         """Set camera move and rotate keys."""
         # key pressed - start movement
-        base.accept("arrow_up", self._move, [1, None, 1.5])  # noqa: F821
-        base.accept("arrow_down", self._move, [2.5, None, 0.75])  # noqa: F821
-        base.accept("arrow_left", self._move, [None, -1.1, 0.9])  # noqa: F821
-        base.accept("arrow_right", self._move, [None, 1.1, 0.9])  # noqa: F821
+        base.accept("arrow_up", self._move, MAX_UP_MOVE)  # noqa: F821
+        base.accept("arrow_down", self._move, MAX_DOWN_MOVE)  # noqa: F821
+        base.accept("arrow_left", self._move, MAX_LEFT_MOVE)  # noqa: F821
+        base.accept("arrow_right", self._move, MAX_RIGHT_MOVE)  # noqa: F821
 
         # key released - stop
         base.accept("arrow_up-up", self._stop, [True])  # noqa: F821
