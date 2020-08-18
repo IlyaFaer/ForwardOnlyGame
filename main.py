@@ -68,7 +68,28 @@ class ForwardOnly(ShowBase):
         self._move_along_block()
         self.accept("block_finished", self._move_along_block)
 
-        self.dollars = 300
+        self._dollars = 300
+
+    @property
+    def dollars(self):
+        """Game money amount.
+
+        Returns:
+            int: Current player money amount.
+        """
+        return self._dollars
+
+    @dollars.setter
+    def dollars(self, value):
+        """Money setter.
+
+        Tracks money on the resources GUI.
+
+        Args:
+            value (int): New money amount value.
+        """
+        self._dollars = max(0, value)
+        self.res_interface.update_money(self._dollars)
 
     def _configure_window(self):
         """Configure the game window.

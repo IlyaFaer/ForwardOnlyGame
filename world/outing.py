@@ -150,7 +150,6 @@ class OutingsManager:
             base.train.do_effects(effects["train"])  # noqa: F821
         if "money" in effects:
             base.dollars += effects["money"]  # noqa: F821
-            base.res_interface.update_money(base.dollars)  # noqa: F821
         if "all" in effects:
             for char in base.team.chars.values():  # noqa: F821
                 char.do_effects(effects["all"])

@@ -234,7 +234,6 @@ class CityInterface:
             return
 
         base.dollars -= 200  # noqa: F821
-        base.res_interface.update_money(base.dollars)  # noqa: F821
 
         base.team.chars[char.id] = char  # noqa: F821
         self._recruit_chooser.leave_unit(char.id)
@@ -259,7 +258,6 @@ class CityInterface:
 
         base.train.get_damage(-value)  # noqa: F821
         base.dollars -= spent  # noqa: F821
-        base.res_interface.update_money(base.dollars)  # noqa: F821
 
     def _heal(self, value):
         """Heal the chosen character.
@@ -274,7 +272,6 @@ class CityInterface:
 
         self._char_chooser.chosen_char.health += value
         base.dollars -= value  # noqa: F821
-        base.res_interface.update_money(base.dollars)  # noqa: F821
 
     def _rest(self, value):
         """Regain energy of the chosen character.
@@ -290,7 +287,6 @@ class CityInterface:
 
         self._char_chooser.chosen_char.energy += value
         base.dollars -= spent  # noqa: F821
-        base.res_interface.update_money(base.dollars)  # noqa: F821
 
     def show(self):
         """Show city GUI."""
