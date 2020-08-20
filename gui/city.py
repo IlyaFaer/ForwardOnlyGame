@@ -4,6 +4,8 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Cities GUI.
 """
+import random
+
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
@@ -18,6 +20,15 @@ class CityInterface:
     """
 
     def __init__(self):
+        self._amb_snd = loader.loadSfx("sounds/hangar_ambient.ogg")  # noqa: F821
+        self._amb_snd.setVolume(0)
+        self._amb_snd.setLoop(True)
+
+        self._coins_s_snd = loader.loadSfx("sounds/coins_short.ogg")  # noqa: F821
+        self._coins_l_snd = loader.loadSfx("sounds/coins_long.ogg")  # noqa: F821
+        self._write_snd = loader.loadSfx("sounds/write.ogg")  # noqa: F821
+        self._toot_snd = loader.loadSfx("sounds/toot1.ogg")  # noqa: F821
+
         self._city_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.35, 0.35, -0.7, 0.7),
@@ -199,6 +210,11 @@ class CityInterface:
         Hide city GUI, remove the hangar scene,
         return Train back to railway.
         """
+        self._toot_snd.play()
+        base.taskMgr.remove("increase_city_snd")  # noqa: F821
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.3, self._dec_amb_snd, "decrease_city_snd"
+        )
         base.taskMgr.doMethodLater(  # noqa: F821
             0.1, base.fade_out_screen, "fade_out_screen"  # noqa: F821
         )
@@ -215,6 +231,7 @@ class CityInterface:
         if len(base.team.chars) == 1:  # noqa: F821
             return
 
+        self._write_snd.play()
         char = self._char_chooser.chosen_char
         char.leave()
         base.taskMgr.doMethodLater(  # noqa: F821
@@ -233,6 +250,7 @@ class CityInterface:
         if not base.train.has_cell():  # noqa: F821
             return
 
+        self._write_snd.play()
         base.dollars -= 200  # noqa: F821
 
         base.team.chars[char.id] = char  # noqa: F821
@@ -256,6 +274,8 @@ class CityInterface:
         if base.dollars - spent < 0:  # noqa: F821
             return
 
+        random.choice((self._coins_s_snd, self._coins_l_snd)).play()
+
         base.train.get_damage(-value)  # noqa: F821
         base.dollars -= spent  # noqa: F821
 
@@ -269,6 +289,8 @@ class CityInterface:
         """
         if base.dollars - value < 0:  # noqa: F821
             return
+
+        random.choice((self._coins_s_snd, self._coins_l_snd)).play()
 
         self._char_chooser.chosen_char.health += value
         base.dollars -= value  # noqa: F821
@@ -285,11 +307,36 @@ class CityInterface:
         if base.dollars - spent < 0:  # noqa: F821
             return
 
+        random.choice((self._coins_s_snd, self._coins_l_snd)).play()
+
         self._char_chooser.chosen_char.energy += value
         base.dollars -= spent  # noqa: F821
 
+    def _inc_amb_snd(self, task):
+        """Increase hangar ambient sound."""
+        cur_vol = round(self._amb_snd.getVolume(), 2)
+        if cur_vol == 1:
+            return task.done
+
+        self._amb_snd.setVolume(cur_vol + 0.05)
+        return task.again
+
+    def _dec_amb_snd(self, task):
+        """Decrease hangar ambient sound."""
+        cur_vol = round(self._amb_snd.getVolume(), 2)
+        if cur_vol == 0:
+            self._amb_snd.stop()
+            return task.done
+
+        self._amb_snd.setVolume(cur_vol - 0.05)
+        return task.again
+
     def show(self):
         """Show city GUI."""
+        self._amb_snd.play()
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.3, self._inc_amb_snd, "increase_city_snd"
+        )
         self._char_chooser.prepare(
             self._city_fr, (0, 0, 0.52), base.team.chars  # noqa: F821
         )
