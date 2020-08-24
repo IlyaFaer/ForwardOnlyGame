@@ -33,7 +33,7 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
-        self._main_menu = MainMenu()
+        self.main_menu = MainMenu()
 
     @property
     def dollars(self):
@@ -89,7 +89,7 @@ class ForwardOnly(ShowBase):
 
         self.accept("block_finished", self._move_along_block)
 
-        self._main_menu.hide()
+        self.main_menu.hide()
         self.doMethodLater(3, self._start_to_move, "start_to_move")
 
         self.dollars = 300

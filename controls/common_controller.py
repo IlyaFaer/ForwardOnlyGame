@@ -77,6 +77,7 @@ class CommonController:
         and controls to manipulate characters.
         """
         base.accept("f1", self._show_keys)  # noqa: F821
+        base.accept("escape", base.main_menu.show)  # noqa: F821
 
         # configure mouse collisions
         col_node = CollisionNode("mouse_ray")
