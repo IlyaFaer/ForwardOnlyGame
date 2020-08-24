@@ -22,7 +22,7 @@ from panda3d.core import (
 
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from controls import TrainController
-from gui.interface import TrainInterface
+from gui.train import TrainInterface
 from utils import address, take_random
 
 

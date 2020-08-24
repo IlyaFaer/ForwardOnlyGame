@@ -12,7 +12,7 @@ from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
-from gui import CharacterInterface, CityInterface, ResourcesInterface
+from gui import CharacterInterface, CityInterface, MainMenu, ResourcesInterface
 from personage.character import Team
 from train import Train
 from world import World
@@ -33,6 +33,30 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
+        self._main_menu = MainMenu()
+
+    @property
+    def dollars(self):
+        """Game money amount.
+
+        Returns:
+            int: Current player money amount.
+        """
+        return self._dollars
+
+    @dollars.setter
+    def dollars(self, value):
+        """Money setter.
+
+        Tracks money on the resources GUI.
+
+        Args:
+            value (int): New money amount value.
+        """
+        self._dollars = max(0, value)
+        self.res_interface.update_money(self._dollars)
+
+    def start_new_game(self, task):
         self.disableAllAudio()
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
@@ -63,33 +87,13 @@ class ForwardOnly(ShowBase):
         self.res_interface = ResourcesInterface()
         self.city_interface = CityInterface()
 
-        self.enableAllAudio()
-
-        self._move_along_block()
         self.accept("block_finished", self._move_along_block)
 
-        self._dollars = 300
+        self._main_menu.hide()
+        self.doMethodLater(3, self._start_to_move, "start_to_move")
 
-    @property
-    def dollars(self):
-        """Game money amount.
-
-        Returns:
-            int: Current player money amount.
-        """
-        return self._dollars
-
-    @dollars.setter
-    def dollars(self, value):
-        """Money setter.
-
-        Tracks money on the resources GUI.
-
-        Args:
-            value (int): New money amount value.
-        """
-        self._dollars = max(0, value)
-        self.res_interface.update_money(self._dollars)
+        self.dollars = 300
+        return task.done
 
     def _configure_window(self):
         """Configure the game window.
@@ -101,6 +105,12 @@ class ForwardOnly(ShowBase):
         props.setFullscreen(True)
         props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
         self.openDefaultWindow(props=props)
+
+    def _start_to_move(self, task):
+        """Actually start the game process."""
+        self.enableAllAudio()
+        self._move_along_block()
+        return task.done
 
     def _move_along_block(self):
         """Move Train along the current world block.

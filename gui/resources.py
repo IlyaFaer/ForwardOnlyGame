@@ -7,7 +7,7 @@ Resources GUI.
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
-from .interface import ICON_PATH, RUST_COL, SILVER_COL
+from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
 class ResourcesInterface:
@@ -32,7 +32,7 @@ class ResourcesInterface:
         )
         self._dollars = DirectLabel(
             parent=frame,
-            text="300",
+            text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
