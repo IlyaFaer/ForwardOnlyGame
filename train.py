@@ -100,6 +100,20 @@ class Train:
 
         self._miles = 0
 
+    @property
+    def condition(self):
+        """Train condition for game saving.
+
+        Returns:
+            dict: Train condition values.
+        """
+        cond = {
+            "damnability": self.damnability,
+            "speed": self.ctrl.current_speed,
+            "miles": self._miles,
+        }
+        return cond
+
     def has_cell(self):
         """Check if there is a free cell for a new unit.
 

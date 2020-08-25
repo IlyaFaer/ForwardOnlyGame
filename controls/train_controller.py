@@ -41,6 +41,15 @@ class TrainController:
         self.critical_damage = False
         self.max_speed = 1
 
+    @property
+    def current_speed(self):
+        """Current Train speed.
+
+        Returns
+            float: Current Train speed.
+        """
+        return self._move_anim_int.getPlayRate()
+
     def set_controls(self, train):
         """Configure Train control keys.
 

@@ -141,7 +141,12 @@ class ForwardOnly(ShowBase):
     def save_game(self):
         """Save the current game."""
         save = shelve.open("saves/save1")
+
         save["cur_block"] = self.world.current_block_number
+        save["train"] = self.train.condition
+        save["dollars"] = self.dollars
+        save["cohesion"] = self.team.current_cohesion
+
         save.close()
 
 

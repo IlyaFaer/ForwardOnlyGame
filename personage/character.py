@@ -38,6 +38,16 @@ class Team:
             5, self._calc_cohesion, "calc_cohesion"
         )
 
+    @property
+    def current_cohesion(self):
+        """Current team cohesion values.
+
+        Returns:
+            float, dict:
+                Total team cohesion, relations index.
+        """
+        return self.cohesion, self._relations
+
     def gen_default(self, train_parts):
         """Generate default team.
 
