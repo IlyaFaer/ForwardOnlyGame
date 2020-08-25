@@ -5,6 +5,8 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Main game file. Starts the game itself
 and maintains the major systems.
 """
+import shelve
+
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
 from direct.showbase.Transitions import Transitions
@@ -135,6 +137,12 @@ class ForwardOnly(ShowBase):
         """Smoothly fill the screen with natural colors."""
         self.transition.fadeIn(3)
         return task.done
+
+    def save_game(self):
+        """Save the current game."""
+        save = shelve.open("saves/save1")
+        save["cur_block"] = self.world.current_block_number
+        save.close()
 
 
 ForwardOnly().run()

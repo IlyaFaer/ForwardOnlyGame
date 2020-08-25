@@ -315,3 +315,25 @@ class Block:
                 base.taskMgr, self._l_surface, -4, 12, self._r_angle  # noqa: F821
             )
         return self
+
+    def description(self):
+        """Build block description.
+
+        Used to save the game world.
+
+        Returns:
+            dict: Block description.
+        """
+        desc = {
+            "name": self.name,
+            "outing_available": self.outing_available,
+            "is_city": self.is_city,
+            "station_side": self._station_side,
+            "l_surface": self._l_surface,
+            "r_surface": self._r_surface,
+            "l_angle": self._l_angle,
+            "r_angle": self._r_angle,
+            "env_mods": self._env_mods,
+            "railways_model": self._railways_model,
+        }
+        return desc

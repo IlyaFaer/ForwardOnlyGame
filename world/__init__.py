@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Game world systems.
 """
 import glob
+import shelve
 
 from direct.directutil import Mopath
 from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
@@ -45,6 +46,15 @@ class World:
 
         self.phys_mgr = self._set_physics()
         base.taskMgr.add(self._update_physics, "update")  # noqa: F821
+
+    @property
+    def current_block_number(self):
+        """Current block index in the world map.
+
+        Returns:
+            int: The current block number.
+        """
+        return self._block_num
 
     def _set_physics(self):
         """Set the world physics."""
@@ -243,6 +253,7 @@ class World:
         """
         rails_gen = RailwayGenerator()
         self.outings_mgr = OutingsManager(location)
+        map_to_save = []
 
         for _ in range(size):
             rails_block = rails_gen.generate_block()
@@ -257,19 +268,22 @@ class World:
                 rails_block = "direct"
                 is_city = True
 
-            self._map.append(
-                Block(
-                    name=rails_block,
-                    path=self._paths[rails_block],
-                    cam_path=self._paths["cam_" + rails_block],
-                    surf_vertices=self._surf_vertices,
-                    is_station=is_station,
-                    is_city=is_city,
-                    outing_available=None
-                    if is_city
-                    else self.outings_mgr.plan_outing(),
-                )
+            block = Block(
+                name=rails_block,
+                path=self._paths[rails_block],
+                cam_path=self._paths["cam_" + rails_block],
+                surf_vertices=self._surf_vertices,
+                is_station=is_station,
+                is_city=is_city,
+                outing_available=None if is_city else self.outings_mgr.plan_outing(),
             )
+            self._map.append(block)
+            map_to_save.append(block.description())
+
+        world_save = shelve.open("saves/game1")
+        world_save[location] = map_to_save
+        world_save.close()
+
         self._set_sounds(location)
         self.enemy = Enemy(LOCATIONS[location]["enemy"])
 

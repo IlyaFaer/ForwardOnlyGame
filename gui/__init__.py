@@ -84,8 +84,9 @@ class MainMenu:
             parent=self._main_fr,
             pos=(-0.998, 0, 0.3),
             text_scale=(0.05, 0.05),
-            text_fg=(0.5, 0.5, 0.5, 1),
+            text_fg=RUST_COL,
             text="Save game",
             relief=None,
+            command=base.save_game,  # noqa: F821
         )
         self._is_first_pause = False
