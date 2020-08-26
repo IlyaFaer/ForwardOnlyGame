@@ -77,6 +77,15 @@ class Sun:
         return self._color["name"]
 
     @property
+    def day_part_step(self):
+        """Exact day part step.
+
+        Returns:
+            int: Day part step.
+        """
+        return self._color_step
+
+    @property
     def is_dark(self):
         """Returns True if it's too dark to shoot."""
         if self.day_part == "evening" and self._color_step > 45:
