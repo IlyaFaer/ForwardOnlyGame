@@ -35,6 +35,15 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
+        self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
+        self.sound_mgr.setDropOffFactor(5)
+
+        self.transition = Transitions(self.loader)
+        self.transition.setFadeColor(0, 0, 0)
+
+        self.enableParticles()
+        self.effects_mgr = EffectsManager()
+
         self.main_menu = MainMenu()
 
     @property
@@ -60,14 +69,6 @@ class ForwardOnly(ShowBase):
 
     def start_new_game(self, task):
         self.disableAllAudio()
-        self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
-        self.sound_mgr.setDropOffFactor(5)
-
-        self.transition = Transitions(self.loader)
-        self.transition.setFadeColor(0, 0, 0)
-
-        self.enableParticles()
-        self.effects_mgr = EffectsManager()
 
         self.train = Train()
 
@@ -143,6 +144,8 @@ class ForwardOnly(ShowBase):
         save = shelve.open("saves/save1")
 
         save["cur_block"] = self.world.current_block_number
+        save["last_angle"] = self.world.last_cleared_block_angle
+
         save["train"] = self.train.condition
         save["dollars"] = self.dollars
         save["cohesion"] = self.team.current_cohesion
@@ -153,6 +156,42 @@ class ForwardOnly(ShowBase):
         save["team"] = self.team.description
 
         save.close()
+
+    def load_game(self, task):
+        """Load the previously saved game."""
+        save = shelve.open("saves/save1")
+
+        self.disableAllAudio()
+
+        self.train = Train(save["train"])
+
+        self.camera_ctrl = CameraController()
+        self.camera_ctrl.set_controls(self.train)
+
+        self.team = Team()
+        self.team.load(save["team"], self.train.parts)
+
+        self.common_ctrl = CommonController(self.train.parts, self.team.chars)
+        self.common_ctrl.set_controls()
+
+        # build game world
+        self.world = World()
+        self.world.load_location("Plains")
+        self._current_block = self.world.load_blocks(
+            save["cur_block"], save["last_angle"]
+        )
+
+        self.char_interface = CharacterInterface()
+        self.res_interface = ResourcesInterface()
+        self.city_interface = CityInterface()
+
+        self.accept("block_finished", self._move_along_block)
+
+        self.main_menu.hide()
+        self.doMethodLater(3, self._start_to_move, "start_to_move")
+
+        self.dollars = save["dollars"]
+        return task.done
 
 
 ForwardOnly().run()

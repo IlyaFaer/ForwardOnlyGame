@@ -31,9 +31,12 @@ class Train:
 
     Includes train model, lights, sounds, parts to set
     characters and controller.
+
+    Args:
+        description (dict): Train condition description.
     """
 
-    def __init__(self):
+    def __init__(self, description=None):
         self.root_node = render.attachNewNode("train_root")  # noqa: F821
         # node to hold camera and Sun
         self.node = self.root_node.attachNewNode("train")
@@ -85,7 +88,14 @@ class Train:
         self.lights_on = False
 
         self._interface = TrainInterface()
-        self.damnability = 1000
+
+        if description:  # loading params from the last save
+            self.damnability = description["damnability"]
+            self._miles = description["miles"] - 1
+            self.node.setHpr(description["node_angle"])
+        else:  # init params
+            self.damnability = 1000
+            self._miles = -1
 
         self.l_brake = False
         self.r_brake = False
@@ -98,8 +108,6 @@ class Train:
         self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
         self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
 
-        self._miles = 0
-
     @property
     def condition(self):
         """Train condition for game saving.
@@ -111,6 +119,7 @@ class Train:
             "damnability": self.damnability,
             "speed": self.ctrl.current_speed,
             "miles": self._miles,
+            "node_angle": self.node.getHpr(),
         }
         return cond
 

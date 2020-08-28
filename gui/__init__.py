@@ -32,7 +32,7 @@ class MainMenu:
             relief=None,
             command=self._start_new_game,
         )
-        DirectButton(
+        self._load_game_but = DirectButton(
             parent=self._main_fr,
             pos=(-0.996, 0, 0.4),
             text_scale=(0.05, 0.05),
@@ -52,6 +52,15 @@ class MainMenu:
 
     def _start_new_game(self):
         """Start a new game."""
+        self.show_loading()
+        base.doMethodLater(0.25, base.start_new_game, "start_new_game")  # noqa: F821
+
+    def _load_game(self):
+        """Load previously saved game."""
+        self.show_loading()
+        base.doMethodLater(0.25, base.load_game, "load_game")  # noqa: F821
+
+    def show_loading(self):
         self._game_load_msg = DirectLabel(
             parent=self._main_fr,
             text="Loading...",
@@ -60,7 +69,6 @@ class MainMenu:
             text_scale=(0.04),
             pos=(0, 0, -0.63),
         )
-        base.doMethodLater(0.25, base.start_new_game, "start_new_game")  # noqa: F821
 
     def hide(self):
         """Hide main menu."""
@@ -78,7 +86,9 @@ class MainMenu:
         self._game_load_msg.hide()
         self._new_game_but["text"] = "Resume"
         self._new_game_but["command"] = self.hide
-        self._new_game_but.setPos(-1.028, 0, 0.5),
+        self._new_game_but.setPos(-1.028, 0, 0.4),
+
+        self._load_game_but.destroy()
 
         DirectButton(
             parent=self._main_fr,

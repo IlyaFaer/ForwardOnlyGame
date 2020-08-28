@@ -6,7 +6,7 @@ Player characters as a single team API.
 """
 import copy
 import random
-from .character import generate_char
+from .character import generate_char, load_char
 
 COHESION_FACTORS = {("soldier", "soldier"): 0.5}
 
@@ -65,6 +65,17 @@ class Team:
             char.prepare()
             char.move_to(part)
 
+            self.chars[char.id] = char
+
+    def load(self, description, parts):
+        """Load the team according to the given description.
+
+        Args:
+            description (list): Characters descriptions.
+            parts (dict): Train parts index.
+        """
+        for char_desc in description:
+            char = load_char(char_desc, self, parts)
             self.chars[char.id] = char
 
     def gen_recruits(self):

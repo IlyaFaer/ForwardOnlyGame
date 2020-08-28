@@ -98,7 +98,7 @@ class Character(Shooter, Unit):
             dict: This character description.
         """
         desc = {
-            "id": self.id,
+            "id": int(self.id.split("_")[1]),
             "name": self.name,
             "sex": self.sex,
             "class": self.class_,
@@ -471,3 +471,32 @@ def generate_char(id_, class_, sex, team=None):
     return Character(
         id_, random.choice(NAMES[sex]), class_, address(sex + "_" + class_), sex, team
     )
+
+
+def load_char(desc, team, parts):
+    """Load a char using the given description.
+
+    Load the model, state and move to the saved position.
+
+    Args:
+        desc (dict): Character description.
+        team (team.Team): The team object.
+        parts (dict): Train parts index.
+
+    Returns:
+        character.Character: Ready-to-go character object.
+    """
+    char = Character(
+        desc["id"],
+        desc["name"],
+        desc["class"],
+        address(desc["sex"] + "_" + desc["class"]),
+        desc["sex"],
+        team,
+    )
+    char.health = desc["health"]
+    char.energy = desc["energy"]
+
+    char.prepare()
+    char.move_to(parts[desc["place"]])
+    return char

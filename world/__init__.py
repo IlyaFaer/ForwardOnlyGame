@@ -33,6 +33,7 @@ class World:
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the generated world blocks
+        self._last_angle = 0
         # index of the block, which is
         # processed by World now
         self._block_num = -1
@@ -55,6 +56,18 @@ class World:
             int: The current block number.
         """
         return self._block_num
+
+    @property
+    def last_cleared_block_angle(self):
+        """The last cleared block angle.
+
+        Need to be saved to reproduce part of
+        the path on loading a saved game.
+
+        Returns:
+            int: The block angle.
+        """
+        return self._last_angle
 
     def _set_physics(self):
         """Set the world physics."""
@@ -280,12 +293,78 @@ class World:
             self._map.append(block)
             map_to_save.append(block.description())
 
-        world_save = shelve.open("saves/game1")
+        world_save = shelve.open("saves/world")
         world_save[location] = map_to_save
         world_save.close()
 
         self._set_sounds(location)
         self.enemy = Enemy(LOCATIONS[location]["enemy"])
+
+    def load_location(self, location):
+        """Load the given location from the last world save.
+
+        Args:
+            location (str): Location name.
+        """
+        self.outings_mgr = OutingsManager(location)
+
+        world_save = shelve.open("saves/world")
+        for desc in world_save[location]:
+            block = Block(
+                name=desc["name"],
+                path=self._paths[desc["name"]],
+                cam_path=self._paths["cam_" + desc["name"]],
+                surf_vertices=self._surf_vertices,
+                is_station=desc["station_side"] is not None,
+                is_city=desc["is_city"],
+                outing_available=desc["outing_available"],
+                desc=desc,
+            )
+            self._map.append(block)
+
+        self._set_sounds(location)
+        self.enemy = Enemy(LOCATIONS[location]["enemy"])
+
+    def load_blocks(self, cur_block, angle):
+        """Load four blocks to continue saved game.
+
+        There will be prepared four blocks:
+        current - 2: block to clear
+        current - 1: previous block
+        current: the current block
+        current + 1: the next block
+
+        Args:
+            cur_block (int): The current block number.
+            angle (int): The current - 2 block angle.
+        """
+        self._block_num = cur_block - 3
+
+        block = self._map[self._block_num].prepare()
+        block.rails_mod.reparentTo(render)  # noqa: F821
+        block.rails_mod.setH(angle)
+
+        base.train.root_node.setH(angle)  # noqa: F821
+
+        final_pos = block.path.getFinalState()[0]
+        base.train.root_node.setPos(base.train.root_node, final_pos)  # noqa: F821
+
+        if block.name == "r90_turn":
+            base.train.root_node.setH(base.train.root_node, -90)  # noqa: F821
+        elif block.name == "l90_turn":
+            base.train.root_node.setH(base.train.root_node, 90)  # noqa: F821
+
+        prev_block = self.prepare_next_block()
+
+        final_pos = prev_block.path.getFinalState()[0]
+        base.train.root_node.setPos(base.train.root_node, final_pos)  # noqa: F821
+
+        if prev_block.name == "r90_turn":
+            base.train.root_node.setH(base.train.root_node, -90)  # noqa: F821
+        elif prev_block.name == "l90_turn":
+            base.train.root_node.setH(base.train.root_node, 90)  # noqa: F821
+
+        return self.prepare_next_block()
 
     def _set_sounds(self, location):
         """Configure World sounds.
@@ -439,6 +518,8 @@ class World:
             # blocks are reparented to each other, so
             # we need to reparent the block to the render
             # before clearing, to avoid chain reaction
+            self._last_angle = self._map[num].rails_mod.getH()
+
             self._map[num + 1].rails_mod.wrtReparentTo(render)  # noqa: F821
             self._map[num].rails_mod.removeNode()
 

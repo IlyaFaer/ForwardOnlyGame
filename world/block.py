@@ -51,6 +51,7 @@ class Block:
         is_station (bool): Station must be set on this block.
         is_city (bool): This is a city block.
         outing_available (str): An outing type available on this block.
+        desc (dict): Block description.
     """
 
     def __init__(
@@ -63,6 +64,7 @@ class Block:
         is_station=False,
         is_city=False,
         outing_available=None,
+        desc=None,
     ):
         self.rails_mod = None
 
@@ -73,6 +75,17 @@ class Block:
         self.outing_available = outing_available
         self.is_city = is_city
 
+        if desc:  # loading block
+            self._station_side = desc["station_side"]
+            self._l_surface = desc["l_surface"]
+            self._r_surface = desc["r_surface"]
+            self._l_angle = desc["l_angle"]
+            self._r_angle = desc["r_angle"]
+            self._env_mods = desc["env_mods"]
+            self._railways_model = desc["railways_model"]
+            return
+
+        # generating block
         self._station_side = random.choice(("l", "r")) if is_station else None
 
         self._l_surface, self._l_angle = self._gen_surface("l")
