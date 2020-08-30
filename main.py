@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Main game file. Starts the game itself
 and maintains the major systems.
 """
+import os
 import shelve
 
 from direct.showbase import Audio3DManager
@@ -34,6 +35,9 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self._configure_window()
+
+        if not os.path.exists("saves"):
+            os.mkdir("saves")
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
@@ -145,13 +149,14 @@ class ForwardOnly(ShowBase):
 
         save["cur_block"] = self.world.current_block_number
         save["last_angle"] = self.world.last_cleared_block_angle
+        save["enemy_score"] = self.world.enemy.score
 
         save["train"] = self.train.condition
         save["dollars"] = self.dollars
         save["cohesion"] = self.team.current_cohesion
         save["day_part"] = {
             "name": self.world.sun.day_part,
-            "step": self.world.sun.day_part_step,
+            "time": self.world.sun.day_part_time,
         }
         save["team"] = self.team.description
 
@@ -169,27 +174,33 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Team()
-        self.team.load(save["team"], self.train.parts)
+        self.res_interface = ResourcesInterface()
+        self.team.load(save["team"], self.train.parts, save["cohesion"])
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
         self.common_ctrl.set_controls()
 
         # build game world
-        self.world = World()
-        self.world.load_location("Plains")
+        self.world = World(save["day_part"])
+        self.world.load_location("Plains", save["enemy_score"])
         self._current_block = self.world.load_blocks(
             save["cur_block"], save["last_angle"]
         )
 
         self.char_interface = CharacterInterface()
-        self.res_interface = ResourcesInterface()
         self.city_interface = CityInterface()
 
         self.accept("block_finished", self._move_along_block)
 
         self.main_menu.hide()
         self.doMethodLater(3, self._start_to_move, "start_to_move")
-
+        self.doMethodLater(
+            3.01,
+            self.train.ctrl.load_speed,
+            "load_speed",
+            extraArgs=[save["train"]["speed"]],
+            appendTask=True,
+        )
         self.dollars = save["dollars"]
         return task.done
 

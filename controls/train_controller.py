@@ -96,6 +96,22 @@ class TrainController:
         self._move_par.start()
         self._move_par.setPlayRate(rate)
 
+    def load_speed(self, speed, task):
+        """Load previously saved Train speed.
+
+        Args:
+            speed (float):
+                Rate to set for animation, move and sound intervals.
+        """
+        self._move_par.setPlayRate(speed)
+        self._move_anim_int.setPlayRate(speed)
+
+        new_snd_rate = min(max(0.25, speed * 1.2), 1)
+        if 0.25 <= new_snd_rate <= 1:
+            self._move_snd.setPlayRate(new_snd_rate)
+
+        return task.done
+
     def _change_speed_delayed(self, diff):
         """Start changing Train speed.
 

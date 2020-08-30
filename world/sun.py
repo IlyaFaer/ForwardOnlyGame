@@ -44,19 +44,32 @@ class Sun:
 
     Sun changes its color according to game day time.
     Simulates real Sun movement as well.
+
+    Args:
+        day_part_desc (dict): Day part description.
     """
 
-    def __init__(self):
+    def __init__(self, day_part_desc):
         self._path = Mopath.Mopath(objectToLoad=address("sun_path"))
 
         self._color = copy.deepcopy(next(SUN_COLORS))
         self._next_color = copy.deepcopy(next(SUN_COLORS))
-
         self._color_step = 0
+
+        if day_part_desc:
+            while self._color["name"] != day_part_desc["name"]:
+                self._color = self._next_color
+                self._next_color = copy.deepcopy(next(SUN_COLORS))
+
+            self._color = day_part_desc["time"]["color"]
+            self._color_step = day_part_desc["time"]["step"]
+
         # day duration = 90 steps * 10 sec/step = 15 min/part
         # 15 min/part * 4 parts = 1 hour/day
         self._day_part_duration = 90
         self._step_duration = 10
+
+        self._arch_int = None
 
         self._color_vec = self._calc_color_vec(
             self._color, self._next_color, self._day_part_duration
@@ -65,7 +78,7 @@ class Sun:
         self._amb_light, self._dir_light, sun_np = self._set_general_lights(
             base.train.node  # noqa: F821
         )
-        self._set_day_night_cycle(sun_np, base.train.model)  # noqa: F821
+        self._set_day_night_cycle(sun_np, base.train.model, day_part_desc)  # noqa: F821
 
     @property
     def day_part(self):
@@ -77,13 +90,18 @@ class Sun:
         return self._color["name"]
 
     @property
-    def day_part_step(self):
+    def day_part_time(self):
         """Exact day part step.
 
         Returns:
             int: Day part step.
         """
-        return self._color_step
+        return {
+            "step": self._color_step,
+            "duration": self._arch_int.getDuration(),
+            "current": self._arch_int.getT(),
+            "color": self._color,
+        }
 
     @property
     def is_dark(self):
@@ -127,12 +145,13 @@ class Sun:
 
         return amb_light, sun_light, sun_np
 
-    def _set_day_night_cycle(self, sun_np, train_mod):
+    def _set_day_night_cycle(self, sun_np, train_mod, day_time):
         """Set intervals and methods for day-night cycle.
 
         Args:
             sun_np (panda3d.core.NodePath): Sun node path.
             train_mod (panda3d.core.NodePath): Train model.
+            day_time (dict): Day time description.
         """
         base.taskMgr.doMethodLater(  # noqa: F821
             self._step_duration,
@@ -141,12 +160,16 @@ class Sun:
             extraArgs=[sun_np, train_mod],
             appendTask=True,
         )
-        MopathInterval(
+        self._arch_int = MopathInterval(
             self._path,
             sun_np,
-            duration=self._day_part_duration * self._step_duration * 2,
+            duration=day_time["time"]["duration"]
+            if day_time
+            else self._day_part_duration * self._step_duration * 2,
             name="sun_interval",
-        ).start()
+        )
+
+        self._arch_int.start(startT=day_time["time"]["current"] if day_time else 0)
 
         base.taskMgr.doMethodLater(  # noqa: F821
             0.1, sun_np.lookAt, extraArgs=[train_mod], name="turn_sun"
@@ -170,12 +193,13 @@ class Sun:
             )
             # start Sun movement interval
             if self._color["name"] == "night":
-                MopathInterval(
+                self._arch_int = MopathInterval(
                     self._path,
                     sun_np,
                     duration=self._day_part_duration * self._step_duration * 3,
                     name="sun_interval",
-                ).start()
+                )
+                self._arch_int.start()
 
         # do color changing step
         for field in ("dir", "amb"):

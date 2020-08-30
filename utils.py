@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Small utils for game logic.
 """
 import random
+import os.path
 
 MOD_DIR = "models/bam/"
 
@@ -47,3 +48,21 @@ def take_random(list_):
     element = random.choice(list_)
     list_.remove(element)
     return element
+
+
+def save_exists():
+    """Indicates if a saved game exists.
+
+    Returns:
+        bool: True if a valid game save exists, False otherwise.
+    """
+    return all(
+        (
+            os.path.exists("saves/save1.dat"),
+            os.path.exists("saves/save1.bak"),
+            os.path.exists("saves/save1.dir"),
+            os.path.exists("saves/world.dat"),
+            os.path.exists("saves/world.bak"),
+            os.path.exists("saves/world.dir"),
+        )
+    )

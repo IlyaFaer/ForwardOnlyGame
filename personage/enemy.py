@@ -51,7 +51,7 @@ class Enemy:
         self._is_cooldown = False
         self._front_y_positions = []
         self._side_y_positions = []
-        self._score = 3
+        self.score = 3
 
         for gain in range(1, 14):
             self._side_y_positions.append(round(0.15 + gain * 0.05, 2))
@@ -103,13 +103,13 @@ class Enemy:
             train_mod (panda3d.core.NodePath): Train model.
         """
         available = [
-            en_class for en_class in self._classes if en_class["score"] <= self._score
+            en_class for en_class in self._classes if en_class["score"] <= self.score
         ]
 
         delay = 0
         wave_score = 0
         brakers = 0
-        while wave_score < self._score:
+        while wave_score < self.score:
             unit_class = random.choice(available)
 
             if unit_class["class"] == BrakeDropper:
@@ -129,7 +129,7 @@ class Enemy:
 
     def stop_attack(self):
         """Make all the unit smoothly stop following Train."""
-        self._score += 1
+        self.score += 1
         for enemy in self.active_units.values():
             enemy.stop()
 

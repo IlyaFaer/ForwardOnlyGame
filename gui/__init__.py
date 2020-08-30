@@ -6,6 +6,7 @@ Game GUI interfaces.
 """
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 
+from utils import save_exists
 from .character import CharacterInterface  # noqa: F401
 from .city import CityInterface  # noqa: F401
 from .train import ICON_PATH, RUST_COL, TrainInterface  # noqa: F401
@@ -32,13 +33,15 @@ class MainMenu:
             relief=None,
             command=self._start_new_game,
         )
+        is_save_exists = save_exists()
         self._load_game_but = DirectButton(
             parent=self._main_fr,
             pos=(-0.996, 0, 0.4),
             text_scale=(0.05, 0.05),
-            text_fg=(0.5, 0.5, 0.5, 1),
+            text_fg=RUST_COL if is_save_exists else (0.5, 0.5, 0.5, 1),
             text="Load game",
             relief=None,
+            command=self._load_game if is_save_exists else None,
         )
         DirectButton(
             parent=self._main_fr,
@@ -82,7 +85,7 @@ class MainMenu:
         if not self._is_first_pause:
             return
 
-        self._main_fr["frameColor"] = (0, 0, 0, 0.5)
+        self._main_fr["frameColor"] = (0, 0, 0, 0.6)
         self._game_load_msg.hide()
         self._new_game_but["text"] = "Resume"
         self._new_game_but["command"] = self.hide

@@ -25,9 +25,12 @@ class World:
     """Object which represents the Game world.
 
     Consists of blocks and is randomly generated.
+
+    Args:
+        day_part_desc (dict): Day part description.
     """
 
-    def __init__(self):
+    def __init__(self, day_part_desc=None):
         self.enemy = None
         self.outings_mgr = None
         self._noon_ambient_snd = None
@@ -43,7 +46,7 @@ class World:
         self._paths = self._load_motion_paths()
         self._hangar = None
 
-        self.sun = Sun()
+        self.sun = Sun(day_part_desc)
 
         self.phys_mgr = self._set_physics()
         base.taskMgr.add(self._update_physics, "update")  # noqa: F821
@@ -300,11 +303,12 @@ class World:
         self._set_sounds(location)
         self.enemy = Enemy(LOCATIONS[location]["enemy"])
 
-    def load_location(self, location):
+    def load_location(self, location, enemy_score):
         """Load the given location from the last world save.
 
         Args:
             location (str): Location name.
+            enemy_score (int): Enemy score.
         """
         self.outings_mgr = OutingsManager(location)
 
@@ -324,6 +328,7 @@ class World:
 
         self._set_sounds(location)
         self.enemy = Enemy(LOCATIONS[location]["enemy"])
+        self.enemy.score = enemy_score
 
     def load_blocks(self, cur_block, angle):
         """Load four blocks to continue saved game.

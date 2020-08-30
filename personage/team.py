@@ -67,16 +67,22 @@ class Team:
 
             self.chars[char.id] = char
 
-    def load(self, description, parts):
+    def load(self, char_desc, parts, cohesion_desc):
         """Load the team according to the given description.
 
         Args:
-            description (list): Characters descriptions.
+            char_desc (list): Characters descriptions.
             parts (dict): Train parts index.
+            cohesion_desc (tuple): Cohesion.
         """
-        for char_desc in description:
+        for char_desc in char_desc:
             char = load_char(char_desc, self, parts)
             self.chars[char.id] = char
+
+        self.cohesion = cohesion_desc[0]
+        self._relations = cohesion_desc[1]
+
+        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
 
     def gen_recruits(self):
         """Generate several recruits.
