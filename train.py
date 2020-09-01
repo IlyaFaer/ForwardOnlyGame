@@ -10,6 +10,7 @@ several parts.
 """
 from direct.actor.Actor import Actor
 from direct.particles.ParticleEffect import ParticleEffect
+from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
 from panda3d.core import (
     CollisionBox,
     CollisionNode,
@@ -18,6 +19,7 @@ from panda3d.core import (
     Point3,
     PointLight,
     Spotlight,
+    Vec3,
 )
 
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
@@ -122,6 +124,25 @@ class Train:
             "node_angle": self.node.getHpr(),
         }
         return cond
+
+    def set_physics(self, phys_mgr):
+        """Set Train physics.
+
+        Args:
+            phys_mgr (panda3d.bullet.BulletWorld):
+                Physical world.
+
+        Returns:
+            panda3d.core.NodePath: Train physical node.
+        """
+        shape = BulletCharacterControllerNode(
+            BulletBoxShape(Vec3(0.095, 0.48, 0.1)), 10, "train_shape"
+        )
+        node = self.model.attachNewNode(shape)
+        node.setZ(0.1)
+
+        phys_mgr.attachCharacter(shape)
+        return node
 
     def has_cell(self):
         """Check if there is a free cell for a new unit.

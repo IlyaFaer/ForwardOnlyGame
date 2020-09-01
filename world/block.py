@@ -6,10 +6,12 @@ World blocks API.
 """
 import copy
 import random
+
 from panda3d.core import TextureStage, Texture
 
-from .locations import LOCATIONS
 from utils import address, chance, take_random
+from .locations import LOCATIONS
+from .objects import Barrier
 
 ANGLES = (0, 90, 180, 270)
 SURFACES = {
@@ -328,6 +330,17 @@ class Block:
                 base.taskMgr, self._l_surface, -4, 12, self._r_angle  # noqa: F821
             )
         return self
+
+    def prepare_physical_objects(self):
+        """Prepare physical objects on this block.
+
+        This method must be called only after reparenting
+        the main rails_mod node of the block. Otherwise
+        all the children physical nodes will be positioned
+        relative to the game render.
+        """
+        if self.enemy_territory and chance(10):
+            Barrier(self)
 
     def description(self):
         """Build block description.

@@ -48,8 +48,13 @@ class World:
 
         self.sun = Sun(day_part_desc)
 
-        self.phys_mgr = self._set_physics()
-        base.taskMgr.add(self._update_physics, "update")  # noqa: F821
+        self.phys_mgr, train_phys_node = self._set_physics()
+        base.taskMgr.add(  # noqa: F821
+            self._update_physics,
+            "update_physics",
+            extraArgs=[train_phys_node],
+            appendTask=True,
+        )
 
     @property
     def current_block_number(self):
@@ -73,7 +78,12 @@ class World:
         return self._last_angle
 
     def _set_physics(self):
-        """Set the world physics."""
+        """Set the world physics.
+
+        Returns:
+            panda3d.bullet.BulletWorld, panda3d.core.NodePath:
+                Physical world and Train physical node.
+        """
         world = BulletWorld()
         world.setGravity(Vec3(0, 0, -0.5))
 
@@ -83,11 +93,15 @@ class World:
 
         render.attachNewNode(node)  # noqa: F821
         world.attachRigidBody(node)
-        return world
 
-    def _update_physics(self, task):
+        phys_node = base.train.set_physics(world)  # noqa: F821
+        return world, phys_node
+
+    def _update_physics(self, train_phys_node, task):
         """Update physics calculations."""
         self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
+
+        train_phys_node.setPos((0, 0, 0.1))
         return task.cont
 
     def _cache_warmup(self, sound_mgr):
@@ -498,6 +512,7 @@ class World:
         if self._block_num:  # reparent the next block to the current one
             current_block = self._map[self._block_num - 1]
             block.rails_mod.reparentTo(current_block.rails_mod)
+            block.prepare_physical_objects()
 
             final_pos = current_block.path.getFinalState()[0]
             block.rails_mod.setPos(
