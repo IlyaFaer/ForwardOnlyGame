@@ -48,13 +48,8 @@ class World:
 
         self.sun = Sun(day_part_desc)
 
-        self.phys_mgr, train_phys_node = self._set_physics()
-        base.taskMgr.add(  # noqa: F821
-            self._update_physics,
-            "update_physics",
-            extraArgs=[train_phys_node],
-            appendTask=True,
-        )
+        self.phys_mgr = self._set_physics()
+        base.taskMgr.add(self._update_physics, "update_physics")  # noqa: F821
 
     @property
     def current_block_number(self):
@@ -81,8 +76,7 @@ class World:
         """Set the world physics.
 
         Returns:
-            panda3d.bullet.BulletWorld, panda3d.core.NodePath:
-                Physical world and Train physical node.
+            panda3d.bullet.BulletWorld: Physical world.
         """
         world = BulletWorld()
         world.setGravity(Vec3(0, 0, -0.5))
@@ -94,14 +88,14 @@ class World:
         render.attachNewNode(node)  # noqa: F821
         world.attachRigidBody(node)
 
-        phys_node = base.train.set_physics(world)  # noqa: F821
-        return world, phys_node
+        base.train.set_physics(world)  # noqa: F821
+        return world
 
-    def _update_physics(self, train_phys_node, task):
+    def _update_physics(self, task):
         """Update physics calculations."""
         self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
 
-        train_phys_node.setPos((0, 0, 0.1))
+        base.train.update_physics()  # noqa: F821
         return task.cont
 
     def _cache_warmup(self, sound_mgr):

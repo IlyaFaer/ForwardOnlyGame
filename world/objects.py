@@ -22,7 +22,7 @@ class Barrier:
     """
 
     def __init__(self, block):
-        id_ = str(random.randint(1, 10000))
+        id_ = "barrier_" + str(random.randint(1, 10000))
         y_coor = random.randint(8, 16)
 
         self._prepare_physics(
@@ -53,7 +53,7 @@ class Barrier:
             y_coor (float): Y axis coordinate to set block on.
         """
         rb_node = BulletRigidBodyNode(id_ + str(x_coor))
-        rb_node.setMass(100)
+        rb_node.setMass(150)
         rb_node.addShape(BulletBoxShape(Vec3(0.05, 0.005, 0.05)))
 
         phys_np = block.rails_mod.attachNewNode(rb_node)

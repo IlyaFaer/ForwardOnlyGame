@@ -51,7 +51,7 @@ class Train:
         self._smoke.setPos(0, 0.32, 0.28)
         self._smoke.start(self.model, render)  # noqa: F821
 
-        move_snd, stop_snd, brake_snd, self._clunk_snd, self._lighter_snd = (
+        move_snd, stop_snd, brake_snd, self._clunk_snd, self._barrier_hit_snd, self._lighter_snd = (
             self._set_sounds()
         )
 
@@ -110,6 +110,8 @@ class Train:
         self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
         self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
 
+        self._phys_node = None
+
     @property
     def condition(self):
         """Train condition for game saving.
@@ -131,18 +133,22 @@ class Train:
         Args:
             phys_mgr (panda3d.bullet.BulletWorld):
                 Physical world.
-
-        Returns:
-            panda3d.core.NodePath: Train physical node.
         """
         shape = BulletCharacterControllerNode(
             BulletBoxShape(Vec3(0.095, 0.48, 0.1)), 10, "train_shape"
         )
-        node = self.model.attachNewNode(shape)
-        node.setZ(0.1)
+        self._phys_node = self.model.attachNewNode(shape)
+        self._phys_node.setZ(0.1)
 
         phys_mgr.attachCharacter(shape)
-        return node
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.1,
+            self._check_contacts,
+            "check_train_contacts",
+            extraArgs=[phys_mgr, self._phys_node.node()],
+            appendTask=True,
+        )
 
     def has_cell(self):
         """Check if there is a free cell for a new unit.
@@ -312,8 +318,8 @@ class Train:
 
         Returns:
             (panda3d.core.AudioSound, panda3d.core.AudioSound):
-                Train movement, stopping, braking, lighter
-                toggle sounds.
+                Train movement, stopping, braking, barrier hit
+                and lighter toggle sounds.
         """
         move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(move_snd, self.model)  # noqa: F821
@@ -330,9 +336,42 @@ class Train:
         clunk_snd = base.sound_mgr.loadSfx("sounds/metal_clunk1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(clunk_snd, self.model)  # noqa: F821
 
+        hit_snd = base.sound_mgr.loadSfx("sounds/concrete_hit1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(hit_snd, self.model)  # noqa: F821
+
         lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
-        return move_snd, stop_snd, brake_snd, clunk_snd, lighter_snd
+        return move_snd, stop_snd, brake_snd, clunk_snd, hit_snd, lighter_snd
+
+    def update_physics(self):
+        """Update Train physical shape."""
+        self._phys_node.setPos((0, 0, 0.1))
+
+    def _check_contacts(self, phys_mgr, phys_node, task):
+        """Check Train physical contacts.
+
+        Used to play sounds on physical objects hitting
+        and getting damage from barriers.
+
+        Args:
+            phys_mgr (panda3d.bullet.BulletWorld):
+                Physical world.
+            phys_node (panda3d.bullet.BulletCharacterControllerNode):
+                Train physical node.
+        """
+        contacts = phys_mgr.contactTest(phys_node).getContacts()
+        if not contacts:
+            return task.again
+
+        for contact in contacts:
+            if contact.getNode1().getName().startswith("barrier_"):
+                self._barrier_hit_snd.play()
+                task.delayTime = 0.3
+                self.get_damage(100)
+                return task.again
+
+        task.delayTime = 0.1
+        return task.again
 
     def toggle_lights(self):
         """Toggle Train lights."""
