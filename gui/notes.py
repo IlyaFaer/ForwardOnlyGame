@@ -1,0 +1,96 @@
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
+
+Teaching notes GUI.
+"""
+import random
+
+from direct.gui.DirectGui import DirectFrame, DirectLabel
+from panda3d.core import TransparencyAttrib
+
+from .train import ICON_PATH, SILVER_COL
+
+NOTES = (
+    """Skinheads activity is at
+maximum during evening""",
+    """Skinheads activity is at
+minimum during morning""",
+    """It's reckless to stop while
+on enemy territory""",
+    """Accuracy is affected by lighting,
+distance, character class
+and his energy level""",
+    """Send your character into a Train
+rest zone. Rest helps to regain
+energy and heal wounds.""",
+    """Switching on lights helps to save
+characters energy and to increase
+their accuracy, but also attracts
+enemy attention""",
+    """Women are nice and social, they
+reduce stress at any collective""",
+    """On "Looting" outings you can gain
+resources to repair Train, heal
+characters, regain energy""",
+    """Outing can turn dangerous, it's
+better to send people who are
+familiar with each other to
+get better chances""",
+    """You can not command your people
+while they are on outing. You
+only can choose right people
+to send.""",
+    """Women have less health points,
+but they are much more energetic""",
+    """Increasing team cohesion unlocks
+team skills. These are powerful
+temporary effects, which can
+help you to survive.""",
+)
+
+
+class TeachingNotes:
+    """GUI that shows teaching notes from time to time."""
+
+    def __init__(self):
+        self._note_text = "Press F1 key to open game\ncontrols help"
+
+        self._notes_fr = DirectFrame(
+            parent=base.a2dTopLeft,  # noqa: F821
+            frameSize=(-0.25, 0.25, -0.07, 0.07),
+            pos=(0.25, 0, -0.2),
+            frameTexture=ICON_PATH + "metal1.png",
+        )
+        self._notes_fr.setTransparency(TransparencyAttrib.MAlpha)
+
+        self._note = DirectLabel(
+            parent=self._notes_fr,
+            text="",
+            text_fg=SILVER_COL,
+            frameSize=(1, 1, 1, 1),
+            text_scale=(0.03),
+            pos=(0, 0, 0.04),
+        )
+        self._notes_fr.hide()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            20, self._show_note, "show_teaching_note"
+        )
+
+    def _show_note(self, task):
+        """Shot next teaching note."""
+        self._note["text"] = self._note_text
+        self._notes_fr.show()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            10, self._hide_note, "hide_teaching_note"
+        )
+        task.delayTime = 180
+        return task.again
+
+    def _hide_note(self, task):
+        """Hire the current note and choose the next one."""
+        self._notes_fr.hide()
+        self._note_text = random.choice(NOTES)
+        return task.done

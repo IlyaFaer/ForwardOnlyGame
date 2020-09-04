@@ -51,9 +51,14 @@ class Train:
         self._smoke.setPos(0, 0.32, 0.28)
         self._smoke.start(self.model, render)  # noqa: F821
 
-        move_snd, stop_snd, brake_snd, self._clunk_snd, self._barrier_hit_snd, self._lighter_snd = (
-            self._set_sounds()
-        )
+        (
+            move_snd,
+            stop_snd,
+            brake_snd,
+            self._clunk_snd,
+            self._barrier_hit_snd,
+            self._lighter_snd,
+        ) = self._set_sounds()
 
         self.ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
         self.ctrl.set_controls(self)

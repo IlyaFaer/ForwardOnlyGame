@@ -9,9 +9,10 @@ from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from utils import save_exists
 from .character import CharacterInterface  # noqa: F401
 from .city import CityInterface  # noqa: F401
-from .train import ICON_PATH, RUST_COL, TrainInterface  # noqa: F401
+from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
 from .resources import ResourcesInterface  # noqa: F401
+from .train import ICON_PATH, RUST_COL, TrainInterface  # noqa: F401
 
 
 class MainMenu:

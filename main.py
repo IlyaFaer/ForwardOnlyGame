@@ -15,7 +15,13 @@ from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
-from gui import CharacterInterface, CityInterface, MainMenu, ResourcesInterface
+from gui import (
+    CharacterInterface,
+    CityInterface,
+    MainMenu,
+    ResourcesInterface,
+    TeachingNotes,
+)
 from personage.team import Team
 from train import Train
 from world import World
@@ -93,6 +99,7 @@ class ForwardOnly(ShowBase):
         self.char_interface = CharacterInterface()
         self.res_interface = ResourcesInterface()
         self.city_interface = CityInterface()
+        TeachingNotes()
 
         self.accept("block_finished", self._move_along_block)
 
@@ -189,6 +196,7 @@ class ForwardOnly(ShowBase):
 
         self.char_interface = CharacterInterface()
         self.city_interface = CityInterface()
+        TeachingNotes()
 
         self.accept("block_finished", self._move_along_block)
 
