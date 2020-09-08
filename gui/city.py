@@ -217,7 +217,7 @@ class CityInterface:
             0.3, self._dec_amb_snd, "decrease_city_snd"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.1, base.fade_out_screen, "fade_out_screen"  # noqa: F821
+            0.1, base.effects_mgr.fade_out_screen, "fade_out_screen"  # noqa: F821
         )
         base.taskMgr.doMethodLater(3.1, self._clear, "clear_city_gui")  # noqa: F821
 

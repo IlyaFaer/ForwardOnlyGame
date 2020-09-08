@@ -242,6 +242,7 @@ class CameraController:
             self._cam_np.setHpr(0, 0, 0)
 
             self._disable_ctrl_keys()
+            base.taskMgr.remove("move_camera_with_mouse")  # noqa: F821
         else:
             base.cam.wrtReparentTo(self._cam_np)  # noqa: F821
             self._set_move_keys()
@@ -249,6 +250,10 @@ class CameraController:
             base.cam.setPos(*self._last_cam_pos)  # noqa: F821
             base.cam.setHpr(*self._last_cam_hpr)  # noqa: F821
             self._cam_np.setHpr(*self._last_cam_np_hpr)
+
+            base.taskMgr.doMethodLater(  # noqa: F821
+                0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+            )
 
         self._is_centered = not self._is_centered
 

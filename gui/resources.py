@@ -41,7 +41,7 @@ class ResourcesInterface:
         self._coh_frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.55, 0.55, -0.05, 0.05),
-            pos=(2.95, 0, -0.05),
+            pos=(2.95, 0, -0.047),
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._coh_frame.setTransparency(TransparencyAttrib.MAlpha)

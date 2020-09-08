@@ -432,7 +432,7 @@ class World:
         if self._map[self._block_num + 1].is_city:
             base.train.ctrl.unset_controls()  # noqa: F821
             base.taskMgr.doMethodLater(  # noqa: F821
-                20, base.fade_out_screen, "fade_screen"  # noqa: F821
+                20, base.effects_mgr.fade_out_screen, "fade_screen"  # noqa: F821
             )
             base.taskMgr.doMethodLater(  # noqa: F821
                 23, self._load_hangar_scene, "load_hangar_scene"
@@ -461,7 +461,7 @@ class World:
         base.team.rest_all()  # noqa: F821
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            2, base.fade_in_screen, "fade_in_screen"  # noqa: F821
+            2, base.effects_mgr.fade_in_screen, "fade_in_screen"  # noqa: F821
         )
         return task.done
 
@@ -587,5 +587,5 @@ class Hangar:
 
         base.train.root_node.setPos(self._train_pos)  # noqa: F821
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.2, base.fade_in_screen, "fade_in_screen"  # noqa: F821
+            0.2, base.effects_mgr.fade_in_screen, "fade_in_screen"  # noqa: F821
         )

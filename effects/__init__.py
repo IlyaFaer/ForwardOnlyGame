@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Visual effects API.
 """
 from direct.particles.ParticleEffect import ParticleEffect
+from direct.showbase.Transitions import Transitions
 from panda3d.core import PointLight
 
 
@@ -13,6 +14,9 @@ class EffectsManager:
 
     def __init__(self):
         self._explosion_lights = self._set_explosion_lights()
+
+        self._transition = Transitions(loader)  # noqa: F821
+        self._transition.setFadeColor(0, 0, 0)
 
     def _set_explosion_lights(self):
         """Prepare three explosion lights.
@@ -31,6 +35,16 @@ class EffectsManager:
             lights.append(light_np)
 
         return lights
+
+    def fade_out_screen(self, task):
+        """Smoothly fill the screen with black color."""
+        self._transition.fadeOut(3)
+        return task.done
+
+    def fade_in_screen(self, task):
+        """Smoothly fill the screen with natural colors."""
+        self._transition.fadeIn(3)
+        return task.done
 
     def explosion(self, parent):
         """Prepare an explosion effect for the given object.

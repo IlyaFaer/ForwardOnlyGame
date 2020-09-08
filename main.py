@@ -10,7 +10,6 @@ import shelve
 
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
-from direct.showbase.Transitions import Transitions
 from panda3d.core import WindowProperties, loadPrcFileData
 
 from controls import CameraController, CommonController
@@ -47,9 +46,6 @@ class ForwardOnly(ShowBase):
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
-
-        self.transition = Transitions(self.loader)
-        self.transition.setFadeColor(0, 0, 0)
 
         self.enableParticles()
         self.effects_mgr = EffectsManager()
@@ -139,16 +135,6 @@ class ForwardOnly(ShowBase):
 
         self.train.move_along_block(self._current_block)
         self._current_block = next_block
-
-    def fade_out_screen(self, task):
-        """Smoothly fill the screen with black color."""
-        self.transition.fadeOut(3)
-        return task.done
-
-    def fade_in_screen(self, task):
-        """Smoothly fill the screen with natural colors."""
-        self.transition.fadeIn(3)
-        return task.done
 
     def save_game(self):
         """Save the current game."""
