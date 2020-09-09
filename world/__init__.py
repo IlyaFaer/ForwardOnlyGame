@@ -434,6 +434,14 @@ class World:
             base.taskMgr.doMethodLater(  # noqa: F821
                 20, base.effects_mgr.fade_out_screen, "fade_screen"  # noqa: F821
             )
+            # disable camera movement to avoid flying
+            # camera away while loading a hangar scene
+            base.taskMgr.doMethodLater(  # noqa: F821
+                20,
+                base.taskMgr.remove,  # noqa: F821
+                "stop_moving_camera_with_mouse",
+                extraArgs=["move_camera_with_mouse"],
+            )
             base.taskMgr.doMethodLater(  # noqa: F821
                 23, self._load_hangar_scene, "load_hangar_scene"
             )

@@ -287,7 +287,6 @@ class CameraController:
         Args:
             hangar (panda3d.core.NodePath): Hangar model.
         """
-        base.taskMgr.remove("move_camera_with_mouse")  # noqa: F821
         self._disable_ctrl_keys()
         base.ignore("c")  # noqa: F821
 
