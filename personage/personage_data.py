@@ -13,6 +13,7 @@ CLASSES = {
 NAMES = {
     "male": (
         "Aaron",
+        "Adam",
         "Alex",
         "Alexis",
         "Arnold",
@@ -29,8 +30,11 @@ NAMES = {
         "Frank",
         "James",
         "Jerome",
+        "Jordan",
         "Josh",
         "Justin",
+        "Lewis",
+        "Mathew",
         "Max",
         "Mike",
         "Nathan",
@@ -76,6 +80,7 @@ NAMES = {
         "Scarlett",
         "Sofia",
         "Stephanie",
+        "Teresa",
         "Vanessa",
         "Victoria",
     ),
