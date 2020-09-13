@@ -116,15 +116,15 @@ class Character(Shooter, Unit):
         self.model = Actor(
             self._mod_name,
             {
-                "die": address("soldier-die"),
-                "gun_up": address("soldier-gun_up"),
-                "incline1": address("soldier-incline1"),
-                "release_gun": address("soldier-release_gun"),
-                "stand_and_aim": address("soldier-stand_and_aim"),
-                "stand": address("soldier-stand"),
-                "surrender": address("soldier-surrender"),
-                "tread1": address("soldier-tread1"),
-                "turn_head1": address("soldier-turn_head1"),
+                "die": address(self.class_ + "-die"),
+                "gun_up": address(self.class_ + "-gun_up"),
+                "incline1": address(self.class_ + "-incline1"),
+                "release_gun": address(self.class_ + "-release_gun"),
+                "stand_and_aim": address(self.class_ + "-stand_and_aim"),
+                "stand": address(self.class_ + "-stand"),
+                "surrender": address(self.class_ + "-surrender"),
+                "tread1": address(self.class_ + "-tread1"),
+                "turn_head1": address(self.class_ + "-turn_head1"),
             },
         )
         self.model.enableBlend()
@@ -141,12 +141,22 @@ class Character(Shooter, Unit):
         self._col_node = self._init_col_node(
             NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         )
-        self.shot_snd = self._set_shoot_snd("rifle_shot1")
+        self.shot_snd = self._set_shoot_snd(
+            "rifle_shot1" if self.class_ == "soldier" else "shotgun_shot1"
+        )
+
+        if self.class_ == "soldier":
+            z = 0.064 if self.sex == "male" else 0.062
+        elif self.class_ == "raider":
+            z = 0.047
+
         self._shoot_anim = self._set_shoot_anim(
-            (0.004, 0.045, 0.064 if self.sex == "male" else 0.062), 97
+            (0.004, 0.045, z), 97, 2 if self.class_ == "soldier" else 1
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            30, self._reduce_energy, self.id + "_reduce_energy"
+            self.class_data["energy_spend"],
+            self._reduce_energy,
+            self.id + "_reduce_energy",
         )
 
     def move_to(self, part):
@@ -264,7 +274,9 @@ class Character(Shooter, Unit):
         base.taskMgr.remove(self.id + "_gain_energy")  # noqa: F821
         base.taskMgr.remove(self.id + "_heal")  # noqa: F821
         base.taskMgr.doMethodLater(  # noqa: F821
-            30, self._reduce_energy, self.id + "_reduce_energy"
+            self.class_data["energy_spend"],
+            self._reduce_energy,
+            self.id + "_reduce_energy",
         )
         if base.world.enemy.active_units:  # noqa: F821
             self.prepare_to_fight()
@@ -282,7 +294,7 @@ class Character(Shooter, Unit):
             else:
                 task.delayTime = 15
         else:
-            task.delayTime = 30
+            task.delayTime = self.class_data["energy_spend"]
 
         self.energy -= 1
         return task.again

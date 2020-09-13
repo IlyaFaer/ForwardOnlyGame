@@ -11,7 +11,7 @@ OUTINGS = {
             {
                 "name": "Abandoned Car",
                 "type": "Looting",
-                "class_weights": {"soldier": 25},
+                "class_weights": {"soldier": 25, "raider": 50},
                 "assignees": 1,
                 "day_part_weights": {
                     "night": 0,
@@ -99,7 +99,7 @@ as there is a diesel fuel for 40 more miles.""",
             {
                 "name": "Meadow Tent",
                 "type": "Looting",
-                "class_weights": {"soldier": 15},
+                "class_weights": {"soldier": 15, "raider": 25},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 0,
@@ -199,7 +199,7 @@ You're getting diesel fuel for 35 more miles.""",
             {
                 "name": "Old Hut",
                 "type": "Looting",
-                "class_weights": {"soldier": 11},
+                "class_weights": {"soldier": 11, "raider": 16.5},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 8,

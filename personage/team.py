@@ -8,7 +8,12 @@ import copy
 import random
 from .character import generate_char, load_char
 
-COHESION_FACTORS = {("soldier", "soldier"): 0.5}
+COHESION_FACTORS = {
+    ("soldier", "soldier"): 0.5,
+    ("raider", "raider"): 0.5,
+    ("soldier", "raider"): 0.36,
+    ("raider", "soldier"): 0.36,
+}
 
 
 class Team:

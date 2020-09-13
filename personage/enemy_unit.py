@@ -256,7 +256,7 @@ class MotoShooter(Shooter, EnemyUnit):
             pos, h = (-0.04, 0.019, 0.058), -35
 
         if not back:
-            self._shoot_anim = self._set_shoot_anim(pos, h)
+            self._shoot_anim = self._set_shoot_anim(pos, h, 2)
 
     def _choose_target(self, task):
         """Choose a character/Train as a target.

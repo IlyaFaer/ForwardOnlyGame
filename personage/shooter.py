@@ -36,12 +36,13 @@ class Shooter(metaclass=abc.ABCMeta):
         task.delayTime = 1.7 + random.uniform(0.1, 0.9)
         return task.again
 
-    def _set_shoot_anim(self, pos, angle):
+    def _set_shoot_anim(self, pos, angle, shots):
         """Prepare gun fire animation and sounds.
 
         Args:
             pos (tuple): Position to set fire.
             angle (int): Angle to set fire.
+            shots (int): Number of shots in animation.
 
         Returns:
             direct.interval.MetaInterval.Sequence:
@@ -60,7 +61,7 @@ class Shooter(metaclass=abc.ABCMeta):
             ),
             SoundInterval(self.shot_snd, duration=0.3),
         )
-        return Sequence(shoot_seq, shoot_seq)
+        return Sequence(*(shoot_seq,) * shots)
 
     def _set_shoot_snd(self, name):
         """Attach the shooting sound to the model.

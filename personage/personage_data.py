@@ -6,8 +6,9 @@ Character and enemies classes definitions.
 """
 
 CLASSES = {
-    "male_soldier": {"health": 100, "energy_gain": 50},
-    "female_soldier": {"health": 80, "energy_gain": 40},
+    "male_soldier": {"health": 100, "energy_gain": 50, "energy_spend": 30},
+    "female_soldier": {"health": 80, "energy_gain": 40, "energy_spend": 30},
+    "male_raider": {"health": 100, "energy_gain": 35, "energy_spend": 23},
 }
 
 NAMES = {
