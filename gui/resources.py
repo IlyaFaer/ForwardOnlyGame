@@ -135,13 +135,23 @@ class ResourcesInterface:
             return
 
         self._coh_desc_shown = True
-        self._coh_frame["frameSize"] = (-0.55, 0.55, -0.6, 0.05)
+        self._coh_frame["frameSize"] = (-0.55, 0.55, -0.61, 0.05)
+        self._coh_desc_wids.append(
+            DirectLabel(
+                parent=self._coh_frame,
+                text="Cohesion skills",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.033, 0.033),
+                text_fg=SILVER_COL,
+                pos=(0, 0, -0.08),
+            )
+        )
         self._coh_desc_wids.append(
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.035, 0.035, -0.035, 0.035),
                 frameTexture=ICON_PATH + "recall_icon.png",
-                pos=(-0.45, 0, -0.11),
+                pos=(-0.45, 0, -0.13),
                 relief="flat",
             )
         )
@@ -152,7 +162,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.03, 0.03),
                 text_fg=SILVER_COL,
-                pos=(-0.29, 0, -0.097),
+                pos=(-0.29, 0, -0.117),
             )
         )
         self._coh_desc_wids.append(
@@ -162,7 +172,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.029, 0.029),
                 text_fg=SILVER_COL,
-                pos=(-0.055, 0, -0.135),
+                pos=(-0.055, 0, -0.155),
             )
         )
         self._coh_desc_wids.append(
@@ -170,7 +180,7 @@ class ResourcesInterface:
                 parent=self._coh_frame,
                 frameSize=(-0.045, 0.045, -0.045, 0.045),
                 frameTexture=ICON_PATH + "cover_icon.png",
-                pos=(-0.45, 0, -0.2),
+                pos=(-0.45, 0, -0.22),
                 relief="flat",
             )
         )
@@ -181,17 +191,17 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.03, 0.03),
                 text_fg=SILVER_COL,
-                pos=(-0.325, 0, -0.197),
+                pos=(-0.325, 0, -0.217),
             )
         )
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +20 accuracy. Cooldown: 10 min.",
+                text="Every character gets +20% accuracy. Cooldown: 10 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.029, 0.029),
                 text_fg=SILVER_COL,
-                pos=(-0.038, 0, -0.235),
+                pos=(-0.032, 0, -0.255),
             )
         )
         self._coh_desc_wids.append(
@@ -199,7 +209,7 @@ class ResourcesInterface:
                 parent=self._coh_frame,
                 frameSize=(-0.035, 0.035, -0.035, 0.035),
                 frameTexture=ICON_PATH + "heal_icon.png",
-                pos=(-0.45, 0, -0.31),
+                pos=(-0.45, 0, -0.33),
                 relief="flat",
             )
         )
@@ -210,7 +220,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.03, 0.03),
                 text_fg=SILVER_COL,
-                pos=(-0.283, 0, -0.297),
+                pos=(-0.283, 0, -0.317),
             )
         )
         self._coh_desc_wids.append(
@@ -223,7 +233,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.029, 0.029),
                 text_fg=SILVER_COL,
-                pos=(0.03, 0, -0.335),
+                pos=(0.03, 0, -0.355),
             )
         )
         self._coh_desc_wids.append(
@@ -231,7 +241,7 @@ class ResourcesInterface:
                 parent=self._coh_frame,
                 frameSize=(-0.045, 0.045, -0.045, 0.045),
                 frameTexture=ICON_PATH + "rage_icon.png",
-                pos=(-0.45, 0, -0.41),
+                pos=(-0.45, 0, -0.43),
                 relief="flat",
             )
         )
@@ -242,7 +252,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.03, 0.03),
                 text_fg=SILVER_COL,
-                pos=(-0.298, 0, -0.397),
+                pos=(-0.298, 0, -0.417),
             )
         )
         self._coh_desc_wids.append(
@@ -252,7 +262,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.029, 0.029),
                 text_fg=SILVER_COL,
-                pos=(-0.023, 0, -0.435),
+                pos=(-0.023, 0, -0.455),
             )
         )
         self._coh_desc_wids.append(
@@ -260,7 +270,7 @@ class ResourcesInterface:
                 parent=self._coh_frame,
                 frameSize=(-0.043, 0.043, -0.043, 0.043),
                 frameTexture=ICON_PATH + "heart_icon.png",
-                pos=(-0.45, 0, -0.51),
+                pos=(-0.45, 0, -0.53),
                 relief="flat",
             )
         )
@@ -271,7 +281,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.03, 0.03),
                 text_fg=SILVER_COL,
-                pos=(-0.298, 0, -0.497),
+                pos=(-0.298, 0, -0.517),
             )
         )
         self._coh_desc_wids.append(
@@ -281,7 +291,7 @@ class ResourcesInterface:
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=(0.029, 0.029),
                 text_fg=SILVER_COL,
-                pos=(-0.029, 0, -0.535),
+                pos=(-0.029, 0, -0.555),
             )
         )
 
