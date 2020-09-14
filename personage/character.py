@@ -457,6 +457,12 @@ class Character(Shooter, Unit):
                 and abs(self._target.node.getY()) < 0.95
             ):
                 miss_chance += 20
+        elif self.class_ == "raider":
+            if (
+                abs(self._target.node.getX()) > 0.5
+                and abs(self._target.node.getY()) > 0.95
+            ):
+                miss_chance += 20
 
         if base.world.sun.is_dark:  # noqa: F821
             miss_chance += 20

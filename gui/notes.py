@@ -12,24 +12,20 @@ from panda3d.core import TransparencyAttrib
 from .train import ICON_PATH, SILVER_COL
 
 NOTES = (
+    # enemy
     """Skinheads activity is at
 maximum during evening""",
     """Skinheads activity is at
 minimum during morning""",
-    """It's reckless to stop while
-on enemy territory""",
-    """Accuracy is affected by lighting,
-distance, character class
-and his energy level""",
-    """Send your character into a Train
-rest zone. Rest helps to regain
-energy and heal wounds.""",
-    """Switching on lights helps to save
-characters energy and to increase
-their accuracy, but also attracts
-enemy attention""",
-    """Women are nice and social, they
-reduce stress at any collective""",
+    # cohesion
+    """Increasing team cohesion unlocks
+team skills. These are powerful
+temporary effects, which can
+help you to survive.""",
+    """Raiders and soldiers don't like
+each other. It's hard to build
+cohesion between them.""",
+    # outings
     """On "Looting" outings you can gain
 resources to repair Train, heal
 characters, regain energy""",
@@ -41,12 +37,36 @@ get better chances""",
 while they are on outing. You
 only can choose right people
 to send.""",
+    # controls
+    """It's reckless to stop while
+on enemy territory""",
+    """Switching on lights helps to save
+characters energy and to increase
+their accuracy, but also attracts
+enemy attention""",
+    # characters and classes
+    """Women are nice and social, they
+reduce stress at any collective""",
     """Women have less health points,
-but they are much more energetic""",
-    """Increasing team cohesion unlocks
-team skills. These are powerful
-temporary effects, which can
-help you to survive.""",
+but they are much more
+energetic""",
+    """Raiders are good looters, send
+them for "Looting" outhings to
+get better results""",
+    """Raiders are good shooters at
+short distance""",
+    """Raiders are spending energy
+faster, but they also rest
+faster than others""",
+    """Soldiers are good shooters at
+medium distance""",
+    # accuracy
+    """Accuracy is affected by lighting,
+distance, character class
+and his energy level""",
+    """Send your character into a Train
+rest zone. Rest helps to regain
+energy and heal wounds.""",
 )
 
 
