@@ -98,11 +98,14 @@ class Team:
             dict: Recruits index.
         """
         chars = {}
-        for _ in range(random.randint(1, 4)):
+        for _ in range(random.randint(2, 6)):
             self._char_id += 1
 
             chars["character_" + str(self._char_id)] = generate_char(
-                self._char_id, "soldier", random.choice(("male", "female")), self
+                self._char_id,
+                random.choice(("soldier", "raider")),
+                random.choice(("male", "female")),
+                self,
             )
         return chars
 
