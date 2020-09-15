@@ -8,7 +8,6 @@ import copy
 import random
 
 from gui import OutingsInterface
-from utils import chance
 from .outings_data import OUTINGS
 
 
@@ -23,7 +22,7 @@ class OutingsManager:
     """
 
     def __init__(self, location):
-        self._threshold = 70
+        self._threshold = random.randint(60, 80)
         self._outings = copy.deepcopy(OUTINGS[location])
         self._types = tuple(self._outings.keys())
         self._looting_snd = base.loader.loadSfx(  # noqa: F821
@@ -61,8 +60,8 @@ class OutingsManager:
         """
         self._threshold -= 1
 
-        if self._threshold <= 0 and chance(40):
-            self._threshold = 70
+        if self._threshold <= 0:
+            self._threshold = random.randint(60, 80)
             return random.choice(self._types)
 
     def show_upcoming(self, type_):

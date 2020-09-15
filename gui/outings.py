@@ -8,6 +8,7 @@ Outings GUI.
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
+from .character import CharacterChooser
 from .train import RUST_COL, SILVER_COL
 
 
@@ -15,6 +16,7 @@ class OutingsInterface:
     """Outing dialogs GUI."""
 
     def __init__(self):
+        self._char_chooser = None
         self._outing_widgets = []
         self._going_for_outing = []
         self._char_buttons = {}
@@ -209,22 +211,10 @@ class OutingsInterface:
                 text_scale=(0.045),
             )
         )
-        shift = -0.15
-        for id_, char in base.team.chars.items():  # noqa: F821
-            but = DirectButton(
-                pos=(0, 0, shift),
-                text=char.name,
-                text_fg=SILVER_COL,
-                frameColor=(0, 0, 0, 0.3),
-                command=base.common_ctrl.choose_resting_char,  # noqa: F821
-                extraArgs=[char.id],
-                scale=(0.04, 0, 0.03),
-            )
-            self._char_buttons[id_] = but
-            self._outing_widgets.append(but)
-
-            shift -= 0.04
-
+        self._char_chooser = CharacterChooser(is_shadowed=True)
+        self._char_chooser.prepare(
+            self._list, (0, 0, -0.15), base.team.chars  # noqa: F821
+        )
         self._outing_widgets.append(
             DirectButton(
                 pos=(0, 0, -0.75),
@@ -243,7 +233,8 @@ class OutingsInterface:
         Args:
             effect (dict): Effect to do.
         """
-        base.common_ctrl.chosen_char.do_effects(effect)  # noqa: F821
+        self._char_chooser.chosen_char.do_effects(effect)
+        self._char_chooser.clear()
         self.hide_outing()
 
     def _clear_temporary_widgets(self):

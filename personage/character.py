@@ -13,7 +13,7 @@ from panda3d.core import CollisionCapsule
 from const import MOUSE_MASK, NO_MASK
 from utils import address, chance
 
-from .personage_data import NAMES, CLASSES
+from .character_data import NAMES, CLASSES
 from .shooter import Shooter
 from .unit import Unit
 

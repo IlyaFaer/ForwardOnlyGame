@@ -211,16 +211,21 @@ class CharacterInterface:
 
 
 class CharacterChooser:
-    """Widget to choose single one character."""
+    """Widget to choose single one character.
 
-    def __init__(self):
+    Args:
+        is_shadowed (bool): Optional. If True, a shadowed
+            font color will be used for this widget
+    """
+
+    def __init__(self, is_shadowed=False):
         self._ind = 0
         self._chosen_char = None
         self._chars = None
 
-        self._fr = DirectFrame(
-            frameSize=(-0.15, 0.15, -0.025, 0.025), frameColor=(0, 0, 0, 0)
-        )
+        font = (0, 0, 0, 0.3 if is_shadowed else 0)
+
+        self._fr = DirectFrame(frameSize=(-0.11, 0.12, -0.025, 0.024), frameColor=font)
         self._name = DirectLabel(
             parent=self._fr,
             frameColor=(0, 0, 0, 0.3),
@@ -234,7 +239,7 @@ class CharacterChooser:
             pos=(0.15, 0, -0.015),
             text=">",
             text_fg=SILVER_COL,
-            frameColor=(0, 0, 0, 0),
+            frameColor=font,
             command=self._next_char,
             scale=(0.075, 0, 0.075),
         )
@@ -243,7 +248,7 @@ class CharacterChooser:
             pos=(-0.15, 0, -0.015),
             text="<",
             text_fg=SILVER_COL,
-            frameColor=(0, 0, 0, 0),
+            frameColor=font,
             command=self._prev_char,
             scale=(0.075, 0, 0.075),
         )
@@ -312,3 +317,11 @@ class CharacterChooser:
 
         self._ind = 0
         self._show_info()
+
+    def clear(self):
+        """Clear this widget."""
+        self._fr.destroy()
+
+        self._ind = 0
+        self._chosen_char = None
+        self._chars = None
