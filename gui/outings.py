@@ -441,7 +441,7 @@ class OutingsInterface:
             ("Character classes fit", 50, (0.46, 0.61, 0.53, 1), class_score),
             ("Characters condition", 20, RUST_COL, cond_score),
             ("Characters cohesion:", 20, SILVER_COL, cohesion_score),
-            ("Day part and skills", 10, (0.42, 0.42, 0.8, 1), day_part_score),
+            ("Day part and traits", 10, (0.42, 0.42, 0.8, 1), day_part_score),
         ):
             self._outing_widgets.append(
                 DirectLabel(

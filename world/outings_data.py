@@ -293,6 +293,111 @@ Train damnability +90""",
                     },
                 ),
             },
+            {
+                "name": "Monastery",
+                "type": "Looting",
+                "class_weights": {"soldier": 11, "raider": 16.5},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 10,
+                    "morning": 2,
+                    "noon": 5,
+                    "evening": 8,
+                },
+                "desc": """You've caught your eyes on some kind of big dark spike
+from a very long distance. It was difficult to understand what it
+actually is, but when the Train went around a hill, and the building
+appeared before you in its best, you're seeing an old monastery. Its
+black wood looks rotten, and the big hole on roof makes it clear that
+this building was left years ago. Still the monastery in such a
+wilderness place should have had a big supplies storage. Monks
+probably didn't take everything when they were leaving.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're sending {name1}, {name2} and {name3} to
+the monastery. {name1} and {name3} are entering the old building,
+while {name2} stays outside to cover team mates retreat in case of
+problems. For some time {heshe2} doesn't hear anything, so {heshe2}
+relaxes a little. But in the next minute eerie noise comes from
+the monastery. Taking a look inside {name2} sees that part of the
+roof collapsed! Jumping inside {heshe2} start to call for {name1}
+and {name3}: fortunately both are alive, though it takes some
+time to dig them out of the wreck.
+{name1} and {name3} getting -30 health
+{name2} getting -30 energy""",
+                        "effects": {
+                            "char_1": {"health": -30},
+                            "char_2": {"energy": -30},
+                            "char_3": {"health": -30},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1}, {name2} and {name3} are moving to the
+monastery. Entering it they see dust, web and a lot of wood wreck.
+Looks like this building is looted long ago. Still {name1}, {name2}
+and {name3} are splitting to search through the place faster.
+Everything goes okay, until {name2} and {name3} hear an awful noise
+and {name1} cry. They run to the sounds source, and find {name1}
+felt through the old wood floor. Putting the guns down they are
+getting to the hole to lift {himher1} from it. Its luck that {heshe1}
+didn't get any injury, only a couple of big scratches.
+{name1} getting -10 health and -15 energy
+{name2} and {name3} getting -10 energy""",
+                        "effects": {
+                            "char_1": {"energy": -15, "health": -10},
+                            "char_2": {"energy": -10},
+                            "char_3": {"energy": -10},
+                        },
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're letting {name1}, {name2} and {name3} to go for a find.
+They are closing to the monastery fast, but in some moment hear
+strange sounds and shouts. Moving closer to the building they decide
+to take a look through the window. {name2} sets a knee to give a lift
+to {name3}, while {name1} stands near on a watch for troubles, as in
+this noise they hear human voices, and they are many. Lifting up {name3}
+takes a look inside the monastery, and sees at least forty people
+in there. Dirty, unkempt and completely crazy, they are ripping to shreds
+several animals and eating them raw, all covered in blood. Seems like kind
+of cultists are celebrating the End of the World. {name3} moves down and
+silently explains what {heshe3} saw. Deciding not to disturb this mad
+gathering they your people returning back to the Train.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """On your command {name1}, {name2} and {name3} are moving
+to the monastery. First they are approaching the building quietly, but
+soon they see it's completely forsaken long time ago. Entering inside
+they find a lot of wood wreck. Air smells mold and dust, strong silence
+soar in the old monastery. Walking along the building your people
+discover a huge wall icon, which seems untouched by time. Colors are
+saturated, lack of any cracks or dirt - it looks surprisingly well
+for this place. {name1}, {name2} and {name3} spending a couple of
+minutes staring at the art object, and its beauty in the midst of
+the old monastery devastation inspires them.
+{name1}, {name2} and {name3} getting +20 energy""",
+                        "effects": {"all": {"energy": 20}},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """By your command {name1}, {name2} and {name3} going to the
+monastery. Entering the old building they see a lot of wood and metal
+wreck. Nothing valuable though, so they are splitting for a more
+careful search. {name3} chooses the basement and goes down into it.
+Walls looking wet, spider web is everywhere, but {heshe3} sees a big chest
+in the first second. The rusty lock doesn't want to broke, so {name3}
+calls others. {name1} and {name2} are coming into the basement and with
+strength of the three they manage to open the chest. What's the pleasure
+when they see gold dishes in it! These can be sold for a good money!
+You're getting +40$""",
+                        "effects": {"money": 40},
+                    },
+                ),
+            },
         )
     }
 }
