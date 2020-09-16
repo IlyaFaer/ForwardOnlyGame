@@ -267,8 +267,10 @@ class MotoShooter(Shooter, EnemyUnit):
         """
         targets = self.current_part.chars + [base.train]  # noqa: F821
 
-        if self._target not in targets:
+        if self._target not in targets or chance(5):
             self._target = random.choice(targets)
+
+            base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._shoot, self.id + "_shoot"
             )

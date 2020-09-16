@@ -224,7 +224,7 @@ class CityInterface:
     def _clear(self, task):
         """Remove hangar scene and hide city GUI."""
         self._city_fr.hide()
-        base.world._unload_hangar_scene()  # noqa: F821
+        base.world.unload_hangar_scene()  # noqa: F821
         return task.done
 
     def _send_away(self):

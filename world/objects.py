@@ -58,6 +58,7 @@ class Barrier:
 
         phys_np = block.rails_mod.attachNewNode(rb_node)
         phys_np.setPos(x_coor, y_coor, 0.07)
+        phys_np.setH(random.randint(-20, 20))
         model.reparentTo(phys_np)
 
         base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821

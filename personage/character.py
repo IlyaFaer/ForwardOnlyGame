@@ -25,19 +25,17 @@ class Character(Shooter, Unit):
         id_ (int): Character unique id.
         name (str): Character name.
         class_ (str): Unit class.
-        mod_name (str): Character model name.
         sex (str): Character gender.
         team (team.Team): Team object.
     """
 
-    def __init__(self, id_, name, class_, mod_name, sex, team):
+    def __init__(self, id_, name, class_, sex, team):
         Unit.__init__(
             self, "character_" + str(id_), class_, CLASSES[sex + "_" + class_]
         )
         Shooter.__init__(self)
 
         self._team = team
-        self._mod_name = mod_name
 
         self._current_pos = None
         self._current_anim = None
@@ -114,7 +112,7 @@ class Character(Shooter, Unit):
         Tweak collision solid as well.
         """
         self.model = Actor(
-            self._mod_name,
+            address(self.sex + "_" + self.class_),
             {
                 "die": address(self.class_ + "-die"),
                 "gun_up": address(self.class_ + "-gun_up"),
@@ -141,9 +139,7 @@ class Character(Shooter, Unit):
         self._col_node = self._init_col_node(
             NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         )
-        self.shot_snd = self._set_shoot_snd(
-            "rifle_shot1" if self.class_ == "soldier" else "shotgun_shot1"
-        )
+        self.shot_snd = self._set_shoot_snd(self.class_data["shot_snd"])
 
         if self.class_ == "soldier":
             z = 0.064 if self.sex == "male" else 0.062
@@ -151,7 +147,7 @@ class Character(Shooter, Unit):
             z = 0.047
 
         self._shoot_anim = self._set_shoot_anim(
-            (0.004, 0.045, z), 97, 2 if self.class_ == "soldier" else 1
+            (0.004, 0.045, z), 97, self.class_data["shots_num"]
         )
         base.taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_spend"],
@@ -486,9 +482,7 @@ def generate_char(id_, class_, sex, team=None):
     Returns:
         Character: The generated character.
     """
-    return Character(
-        id_, random.choice(NAMES[sex]), class_, address(sex + "_" + class_), sex, team
-    )
+    return Character(id_, random.choice(NAMES[sex]), class_, sex, team)
 
 
 def load_char(desc, team, parts):
@@ -504,14 +498,7 @@ def load_char(desc, team, parts):
     Returns:
         character.Character: Ready-to-go character object.
     """
-    char = Character(
-        desc["id"],
-        desc["name"],
-        desc["class"],
-        address(desc["sex"] + "_" + desc["class"]),
-        desc["sex"],
-        team,
-    )
+    char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team)
     char.health = desc["health"]
     char.energy = desc["energy"]
 

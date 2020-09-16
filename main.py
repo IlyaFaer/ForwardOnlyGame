@@ -95,7 +95,7 @@ class ForwardOnly(ShowBase):
         self.char_interface = CharacterInterface()
         self.res_interface = ResourcesInterface()
         self.city_interface = CityInterface()
-        TeachingNotes()
+        self.notes = TeachingNotes()
 
         self.accept("block_finished", self._move_along_block)
 

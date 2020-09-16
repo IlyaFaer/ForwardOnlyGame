@@ -114,3 +114,16 @@ class TeachingNotes:
         self._notes_fr.hide()
         self._note_text = random.choice(NOTES)
         return task.done
+
+    def stop(self):
+        """Stop showing teaching notes."""
+        self._notes_fr.hide()
+        base.taskMgr.remove("show_teaching_note")  # noqa: F821
+        base.taskMgr.remove("hide_teaching_note")  # noqa: F821
+
+    def resume(self):
+        """Resume showing teaching notes."""
+        self._note_text = random.choice(NOTES)
+        base.taskMgr.doMethodLater(  # noqa: F821
+            180, self._show_note, "show_teaching_note"
+        )

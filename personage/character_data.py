@@ -6,10 +6,34 @@ Character and enemies classes definitions.
 """
 
 CLASSES = {
-    "male_soldier": {"health": 100, "energy_gain": 50, "energy_spend": 30},
-    "female_soldier": {"health": 80, "energy_gain": 40, "energy_spend": 30},
-    "male_raider": {"health": 100, "energy_gain": 35, "energy_spend": 23},
-    "female_raider": {"health": 80, "energy_gain": 30, "energy_spend": 23},
+    "male_soldier": {
+        "health": 100,
+        "energy_gain": 50,
+        "energy_spend": 30,
+        "shots_num": 2,
+        "shot_snd": "rifle_shot1",
+    },
+    "female_soldier": {
+        "health": 80,
+        "energy_gain": 40,
+        "energy_spend": 30,
+        "shots_num": 2,
+        "shot_snd": "rifle_shot1",
+    },
+    "male_raider": {
+        "health": 100,
+        "energy_gain": 35,
+        "energy_spend": 23,
+        "shots_num": 1,
+        "shot_snd": "shotgun_shot1",
+    },
+    "female_raider": {
+        "health": 80,
+        "energy_gain": 30,
+        "energy_spend": 23,
+        "shots_num": 1,
+        "shot_snd": "shotgun_shot1",
+    },
 }
 
 NAMES = {

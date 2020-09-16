@@ -431,20 +431,6 @@ class World:
 
         if self._map[self._block_num + 1].is_city:
             base.train.ctrl.unset_controls()  # noqa: F821
-            base.taskMgr.doMethodLater(  # noqa: F821
-                20, base.effects_mgr.fade_out_screen, "fade_screen"  # noqa: F821
-            )
-            # disable camera movement to avoid flying
-            # camera away while loading a hangar scene
-            base.taskMgr.doMethodLater(  # noqa: F821
-                20,
-                base.taskMgr.remove,  # noqa: F821
-                "stop_moving_camera_with_mouse",
-                extraArgs=["move_camera_with_mouse"],
-            )
-            base.taskMgr.doMethodLater(  # noqa: F821
-                23, self._load_hangar_scene, "load_hangar_scene"
-            )
             base.train.slow_down_to(0.7)  # noqa: F821
             self.outings_mgr.show_city()
 
@@ -453,6 +439,21 @@ class World:
 
         elif self._map[self._block_num - 1].is_city:
             base.train.slow_down_to(0)  # noqa: F821
+            base.notes.stop()  # noqa: F821
+            base.taskMgr.doMethodLater(  # noqa: F821
+                10, base.effects_mgr.fade_out_screen, "fade_screen"  # noqa: F821
+            )
+            # disable camera movement to avoid flying
+            # camera away while loading a hangar scene
+            base.taskMgr.doMethodLater(  # noqa: F821
+                10,
+                base.taskMgr.remove,  # noqa: F821
+                "stop_moving_camera_with_mouse",
+                extraArgs=["move_camera_with_mouse"],
+            )
+            base.taskMgr.doMethodLater(  # noqa: F821
+                13, self._load_hangar_scene, "load_hangar_scene"
+            )
 
     def _load_hangar_scene(self, task):
         """Load the city hangar scene.
@@ -473,7 +474,7 @@ class World:
         )
         return task.done
 
-    def _unload_hangar_scene(self):
+    def unload_hangar_scene(self):
         """Remove the current hangar scene."""
         self._hangar.clear()
         self._hangar = None
@@ -481,6 +482,7 @@ class World:
         base.train.ctrl.set_controls(base.train)  # noqa: F821
         base.camera_ctrl.enable_ctrl_keys()  # noqa: F821
         base.team.stop_rest_all()  # noqa: F821
+        base.notes.resume()  # noqa: F821
 
     def prepare_next_block(self):
         """Prepare the next world block.
