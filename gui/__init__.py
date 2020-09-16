@@ -12,7 +12,7 @@ from .city import CityInterface  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
 from .resources import ResourcesInterface  # noqa: F401
-from .train import ICON_PATH, RUST_COL, TrainInterface  # noqa: F401
+from .train import ICON_PATH, RUST_COL, SILVER_COL, TrainInterface  # noqa: F401
 
 
 class MainMenu:
@@ -22,6 +22,8 @@ class MainMenu:
     """
 
     def __init__(self):
+        self._save_but = None
+
         self._is_first_pause = True
         self._main_fr = DirectFrame(frameSize=(-2, 2, -1, 1), frameColor=(0, 0, 0, 1))
 
@@ -84,6 +86,12 @@ class MainMenu:
         self._main_fr.show()
         base.accept("escape", self.hide)  # noqa: F821
         if not self._is_first_pause:
+            if base.train.ctrl.critical_damage:  # noqa: F821
+                self._save_but["text_fg"] = SILVER_COL
+                self._save_but["command"] = None
+            else:
+                self._save_but["text_fg"] = RUST_COL
+                self._save_but["command"] = base.save_game  # noqa: F821
             return
 
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
@@ -94,13 +102,17 @@ class MainMenu:
 
         self._load_game_but.destroy()
 
-        DirectButton(
+        self._save_but = DirectButton(
             parent=self._main_fr,
             pos=(-0.998, 0, 0.3),
             text_scale=(0.05, 0.05),
-            text_fg=RUST_COL,
+            text_fg=SILVER_COL
+            if base.train.ctrl.critical_damage  # noqa: F821
+            else RUST_COL,
             text="Save game",
             relief=None,
-            command=base.save_game,  # noqa: F821
+            command=None
+            if base.train.ctrl.critical_damage  # noqa: F821
+            else base.save_game,  # noqa: F821
         )
         self._is_first_pause = False
