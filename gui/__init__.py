@@ -55,6 +55,15 @@ class MainMenu:
             relief=None,
             command=exit,
         )
+        DirectLabel(
+            parent=self._main_fr,
+            pos=(0, 0, -0.87),
+            text_scale=(0.03, 0.03),
+            text_fg=SILVER_COL,
+            frameColor=(0, 0, 0, 0),
+            text="""This is an alpha build. Some things are not balanced yet, some are in
+development and some may change in future. Anyway, enjoy your play!""",
+        )
 
     def _start_new_game(self):
         """Start a new game."""

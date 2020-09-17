@@ -257,6 +257,7 @@ class Character(Shooter, Unit):
         if effects is None:
             return
 
+        self.get_damage(-effects.pop("health", 0))
         for key, value in effects.items():
             if hasattr(self, key):
                 setattr(self, key, getattr(self, key) + value)
