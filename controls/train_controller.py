@@ -35,9 +35,9 @@ class TrainController:
         # parallel with the train model and camera move intervals
         self._move_par = None
         self._is_stopped = False
-        self._on_et = False
         self._outing_available = None
 
+        self.on_et = False
         self.critical_damage = False
         self.max_speed = 1
 
@@ -79,7 +79,7 @@ class TrainController:
             block (world.block.Block): World block to move along.
             train_np (panda3d.core.NodePath): Train node.
         """
-        self._on_et = block.enemy_territory
+        self.on_et = block.enemy_territory
         self._outing_available = block.outing_available
         # use speed value from the last block
         rate = self._move_par.getPlayRate() if self._move_par else 1
@@ -178,7 +178,7 @@ class TrainController:
 
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         if (
-            self._on_et  # don't stop on enemy territory
+            self.on_et  # don't stop on enemy territory
             and new_rate < MIN_SPEED
             and diff < 0
             # stop on enemy territory only

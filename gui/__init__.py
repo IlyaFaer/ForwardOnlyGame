@@ -94,13 +94,19 @@ development and some may change in future. Anyway, enjoy your play!""",
         """Show main menu."""
         self._main_fr.show()
         base.accept("escape", self.hide)  # noqa: F821
+
+        can_save = not (
+            base.train.ctrl.critical_damage  # noqa: F821
+            or base.world.is_in_city  # noqa: F821
+            or base.train.ctrl.on_et  # noqa: F821
+        )
         if not self._is_first_pause:
-            if base.train.ctrl.critical_damage or base.world.is_in_city:  # noqa: F821
-                self._save_but["text_fg"] = SILVER_COL
-                self._save_but["command"] = None
-            else:
+            if can_save:
                 self._save_but["text_fg"] = RUST_COL
                 self._save_but["command"] = base.save_game  # noqa: F821
+            else:
+                self._save_but["text_fg"] = SILVER_COL
+                self._save_but["command"] = None
             return
 
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
@@ -115,13 +121,9 @@ development and some may change in future. Anyway, enjoy your play!""",
             parent=self._main_fr,
             pos=(-0.998, 0, 0.3),
             text_scale=(0.05, 0.05),
-            text_fg=SILVER_COL
-            if base.train.ctrl.critical_damage or base.world.is_in_city  # noqa: F821
-            else RUST_COL,
+            text_fg=RUST_COL if can_save else SILVER_COL,
             text="Save game",
             relief=None,
-            command=None
-            if base.train.ctrl.critical_damage or base.world.is_in_city  # noqa: F821
-            else base.save_game,  # noqa: F821
+            command=base.save_game if can_save else None,  # noqa: F821
         )
         self._is_first_pause = False
