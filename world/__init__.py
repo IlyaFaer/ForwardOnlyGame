@@ -46,10 +46,26 @@ class World:
         self._paths = self._load_motion_paths()
         self._hangar = None
 
+        self._is_in_city = False
+
         self.sun = Sun(day_part_desc)
 
         self.phys_mgr = self._set_physics()
         base.taskMgr.add(self._update_physics, "update_physics")  # noqa: F821
+
+    @property
+    def is_in_city(self):
+        """Indicates if the Train is near a city.
+
+        Returns:
+            bool: True if the Train is near a city.
+        """
+        return (
+            self._is_in_city
+            or self._map[self._block_num - 1].is_city
+            or self._map[self._block_num - 2].is_city
+            or self._map[self._block_num - 3].is_city
+        )
 
     @property
     def current_block_number(self):
@@ -430,6 +446,7 @@ class World:
             return
 
         if self._map[self._block_num + 1].is_city:
+            self._is_in_city = True
             base.train.ctrl.unset_controls()  # noqa: F821
             base.train.slow_down_to(0.7)  # noqa: F821
             self.outings_mgr.show_city()
@@ -483,6 +500,7 @@ class World:
         base.camera_ctrl.enable_ctrl_keys()  # noqa: F821
         base.team.stop_rest_all()  # noqa: F821
         base.notes.resume()  # noqa: F821
+        self._is_in_city = False
 
     def prepare_next_block(self):
         """Prepare the next world block.

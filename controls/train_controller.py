@@ -48,7 +48,7 @@ class TrainController:
         Returns
             float: Current Train speed.
         """
-        return self._move_anim_int.getPlayRate()
+        return 0 if self._is_stopped else self._move_anim_int.getPlayRate()
 
     def set_controls(self, train):
         """Configure Train control keys.
