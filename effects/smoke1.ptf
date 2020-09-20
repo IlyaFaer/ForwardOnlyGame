@@ -28,6 +28,8 @@ p0.renderer.setAlphaMode(BaseParticleRenderer.PRALPHAOUT)
 p0.renderer.setUserAlpha(1.00)
 # Geom parameters
 geomRef = loader.loadModel("effects/smoke1.bam")
+geomRef.setBin("transparent", 30)
+geomRef.setDepthWrite(False)
 p0.renderer.setGeomNode(geomRef.node())
 p0.geomReference = "smoke1.bam"
 p0.renderer.setXScaleFlag(1)

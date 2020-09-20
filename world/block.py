@@ -248,13 +248,14 @@ class Block:
             railways_mod.setY(self._railways_model[1][1])
             railways_mod.setH(self._railways_model[2])
 
-        # generate texture flowers
-        taskMgr.doMethodLater(
-            2.5,
-            self._gen_flowers,
-            "generate_flowers",
-            extraArgs=[surf_mod, angle, side],
-        )
+        if not base.world.sun.is_dark:  # noqa: F821
+            # generate texture flowers
+            taskMgr.doMethodLater(
+                2.5,
+                self._gen_flowers,
+                "generate_flowers",
+                extraArgs=[surf_mod, angle, side],
+            )
 
     def _load_env_model(self, surf_mod, env_mod):
         """Helper to load a model asynchronous.
