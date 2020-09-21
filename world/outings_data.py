@@ -398,6 +398,100 @@ You're getting +40$""",
                     },
                 ),
             },
+            {
+                "name": "Wrecked truck",
+                "type": "Looting",
+                "class_weights": {"soldier": 16, "raider": 25},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 2,
+                    "morning": 4,
+                    "noon": 10,
+                    "evening": 8,
+                },
+                "desc": """You're looking at the horizon line trying to find a sign of
+a civilization. A couple of hours passed, and there were no single building,
+litter or any other sign of human. What are these wild plains? But once
+a distant grey spot attracts your eyes. You're taking a look at it through
+your binocular. Truck! Even from that big distance you can say it is
+damaged bad: at least one wheel is ripped off and the metal cargo hold
+is dented. Still, you can afford a short stop and fast recon of the
+transport crash site. It's not accurate to say from that distance, but
+looks like there are a lot of things scattered around it.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """{name1} and {name2} are going to the distant truck in
+hope to find something valuable there. It takes at least a half of hour
+for them to get to the transport. Looking through a binocular you see
+them walking around the car, squatting, touching some stuff lying
+all around the truck... Time passes and passes, but you don't detect
+any signs of a lucky find. Spending few more minutes there {name1}
+and {name2} are returning back to the Train. "Someone outstripped
+us." - {name2} explains. - "And didn't left a tiny bit of the cargo." """,
+                        "effects": {},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """You're commanding {name1} and {name2} to go to the
+truck and do a search through its last resting place. They are running to
+the spot energetically and starting to rummage in the broken plastic boxes
+lying near the car. Most part of them are already emptied by someone
+else, but {name1} and {name2} not losing hope. And after rummaging not
+less than twenty containers they finally see one untouched. Opening it
+they are staring at a bunch of metal details. And tools! "With this stuff
+we can repair our Train a little!" - {name2} whopping. They are taking
+the box together and returning back to you with it.
+Train damnability +40""",
+                        "effects": {"train": {"damnability": 90}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're sending {name1} with {name2} to take a look
+at the crash site. {name2} takes a fuel tank in hope there will be
+something to bring back. Both they are moving to the damaged truck
+and starting to search through the plastic boxes scatter around the
+place. At the first minute they understand that someone already emptied
+every container at the place, probably, the same one who attacked the
+truck - they see a lot of sleeves and shot holes. Taking a look
+inside the car cabin {name2} finds that it also emptied. Almost without
+hope {heshe2} moves to the gas tank, and... Yes! There is petrol! Inhaling
+its strong smell {name2} drains the gasoline, and, satisfied, your people
+are returning back to the Train.
+You're getting diesel fuel for 50 more miles.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """{name1} and {name2} are taking their guns and going
+to the damaged truck. Fastly closing to it they see a lot of sleeves and
+shot holes - it's not just a crash, someone attacked the transport! There
+are no bodies around, but your people notice several big and dark blood
+spots. They are exchanging their glances and starting to open plastic
+containers left right on the road one by one. Mostly they are empty, but
+in one of them {name1} finds a couple of aid kits. The first one seems
+damaged bad, but the second looks okay, so {name1} grabs it. As {name2}
+didn't find anything, but broken containers, your people returning
+back to the Train with this only find.
+You're getting +1 medicine box""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """By your command {name1} and {name2} are gearing up and
+taking a walk to the truck. Coming closer to it they see that a big fight
+was here. Looks like a gang attacked the transport to rob it or something
+like that. {name1} and {name2} starting to rummage through the boxes
+scattered all around. The fight site appears to be looted several times
+by different people, hopes to find something useful are fading with every
+second, but suddenly {name2} sees an untouched container with energy
+drinks. "Hey, {name1}, come here!" - {heshe2} shouts They are taking
+the box together to bring it back to the Train.
+Every character getting +35 energy""",
+                        "effects": {"all": {"energy": 35}},
+                    },
+                ),
+            },
         )
     }
 }

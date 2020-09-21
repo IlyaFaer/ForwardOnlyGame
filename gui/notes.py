@@ -50,9 +50,10 @@ reduce stress at any collective""",
     """Women have less health points,
 but they are much more
 energetic""",
-    """Raiders are good looters, send
-them for "Looting" outhings to
-get better results""",
+    """Raider's life is mostly about
+looting. They know how to find
+useful things.
+""",
     """Raiders are good shooters at
 short distance""",
     """Raiders are spending energy
