@@ -159,7 +159,7 @@ class Character(Shooter, Unit):
         """Move this Character to the given Train part.
 
         Args:
-            part (train.TrainPart):
+            part (train_part.TrainPart):
                 Train part to move this Character to.
         """
         pos = part.give_cell(self)

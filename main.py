@@ -74,6 +74,7 @@ class ForwardOnly(ShowBase):
         self.res_interface.update_money(self._dollars)
 
     def start_new_game(self, task):
+        """Start a new game, replacing the saved one."""
         self.disableAllAudio()
 
         self.train = Train()
@@ -109,7 +110,7 @@ class ForwardOnly(ShowBase):
         """Configure the game window.
 
         Set fullscreen mode, and resolution
-        according to player's screen size.
+        according to the player's screen size.
         """
         props = WindowProperties()
         props.setFullscreen(True)
@@ -144,7 +145,7 @@ class ForwardOnly(ShowBase):
         save["last_angle"] = self.world.last_cleared_block_angle
         save["enemy_score"] = self.world.enemy.score
 
-        save["train"] = self.train.condition
+        save["train"] = self.train.description
         save["dollars"] = self.dollars
         save["cohesion"] = self.team.current_cohesion
         save["day_part"] = {
@@ -182,7 +183,7 @@ class ForwardOnly(ShowBase):
 
         self.char_interface = CharacterInterface()
         self.city_interface = CityInterface()
-        TeachingNotes()
+        self.notes = TeachingNotes()
 
         self.accept("block_finished", self._move_along_block)
 

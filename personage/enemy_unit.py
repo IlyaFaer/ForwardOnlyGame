@@ -281,7 +281,7 @@ class MotoShooter(Shooter, EnemyUnit):
         """Start fighting in the given part.
 
         Args:
-            part (train.TrainPart): Train part this enemy entered.
+            part (train_part.TrainPart): Train part this enemy entered.
         """
         self.current_part = part
         self._aim(False)
@@ -480,7 +480,7 @@ class BrakeDropper(EnemyUnit):
         """Start fighting in the given part.
 
         Args:
-            part (train.TrainPart): Train part this enemy entered.
+            part (train_part.TrainPart): Train part this enemy entered.
         """
         if not part.name.endswith("_front"):
             return

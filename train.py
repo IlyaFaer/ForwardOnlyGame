@@ -5,27 +5,17 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Train - the main game object, API.
 
 Includes the systems of Train loading, preparations,
-animation, sounds, lights. Train is splitted into
-several parts.
+animation, sounds, lights.
 """
 from direct.actor.Actor import Actor
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
-from panda3d.core import (
-    CollisionBox,
-    CollisionNode,
-    CollisionPolygon,
-    PerspectiveLens,
-    Point3,
-    PointLight,
-    Spotlight,
-    Vec3,
-)
+from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 
-from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from controls import TrainController
 from gui.train import TrainInterface
-from utils import address, take_random
+from train_part import RestPart, TrainPart
+from utils import address
 
 
 class Train:
@@ -35,7 +25,9 @@ class Train:
     characters and controller.
 
     Args:
-        description (dict): Train condition description.
+        description (dict):
+            The Train condition description. Used for
+            loading a saved Train condition.
     """
 
     def __init__(self, description=None):
@@ -45,11 +37,6 @@ class Train:
 
         self.model = Actor(address("locomotive"))
         self.model.reparentTo(self.root_node)
-
-        self._smoke = ParticleEffect()
-        self._smoke.loadConfig("effects/smoke1.ptf")
-        self._smoke.setPos(0, 0.32, 0.28)
-        self._smoke.start(self.model, render)  # noqa: F821
 
         (
             move_snd,
@@ -96,6 +83,8 @@ class Train:
 
         self._interface = TrainInterface()
 
+        self._damnability = None
+
         if description:  # loading params from the last save
             self.damnability = description["damnability"]
             self._miles = description["miles"] - 1
@@ -107,22 +96,35 @@ class Train:
         self.l_brake = False
         self.r_brake = False
 
-        self._l_brake_sparks = ParticleEffect()
-        self._l_brake_sparks.loadConfig("effects/brake_sparks2.ptf")
-        self._l_brake_sparks.setPos(-0.058, 0.38, 0.025)
-
-        self._r_brake_sparks = ParticleEffect()
-        self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
-        self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
-
         self._phys_node = None
 
+        self._prepare_particles()
+
     @property
-    def condition(self):
-        """Train condition for game saving.
+    def damnability(self):
+        """Train damnability.
 
         Returns:
-            dict: Train condition values.
+            int: Current Train damnability.
+        """
+        return self._damnability
+
+    @damnability.setter
+    def damnability(self, value):
+        """Set new Train damnability value.
+
+        Args:
+            value (int): New value.
+        """
+        self._damnability = max(0, min(1000, value))
+        self._interface.update_indicators(damnability=self.damnability)
+
+    @property
+    def description(self):
+        """The Train state description for game saving.
+
+        Returns:
+            dict: Saveable Train state.
         """
         cond = {
             "damnability": self.damnability,
@@ -132,8 +134,26 @@ class Train:
         }
         return cond
 
+    def _prepare_particles(self):
+        """
+        Prepare the Train particle effects: smoke and
+        sparks.
+        """
+        self._smoke = ParticleEffect()
+        self._smoke.loadConfig("effects/smoke1.ptf")
+        self._smoke.setPos(0, 0.32, 0.28)
+        self._smoke.start(self.model, render)  # noqa: F821
+
+        self._l_brake_sparks = ParticleEffect()
+        self._l_brake_sparks.loadConfig("effects/brake_sparks2.ptf")
+        self._l_brake_sparks.setPos(-0.058, 0.38, 0.025)
+
+        self._r_brake_sparks = ParticleEffect()
+        self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
+        self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
+
     def set_physics(self, phys_mgr):
-        """Set Train physics.
+        """Set the Train physics.
 
         Args:
             phys_mgr (panda3d.bullet.BulletWorld):
@@ -165,7 +185,10 @@ class Train:
         for part in self.parts.values():
             cells_num += part.free_cells
 
-        return cells_num >= 2
+            if cells_num >= 2:
+                return True
+
+        return False
 
     def place_recruit(self, char):
         """Place the new recruit somewhere on Train.
@@ -185,9 +208,10 @@ class Train:
         Args:
             side (str): Side label: 'l' or 'r'.
             brake (panda3d.core.NodePath):
-                Brake model to drop.
+                Brake shoe model.
         """
         self._clunk_snd.play()
+
         sparks = self._l_brake_sparks if side == "l" else self._r_brake_sparks
         sparks.start(self.model, self.model)
         sparks.softStart()
@@ -208,7 +232,7 @@ class Train:
         self.ctrl.brake_down_to(0.75)
 
     def slow_down_to(self, target):
-        """Slow down Train to the given speed.
+        """Slow down the Train to the given speed.
 
         Args:
             target (float): Target speed.
@@ -216,12 +240,12 @@ class Train:
         self.ctrl.slow_down_to(target)
 
     def move_to_hangar(self):
-        """Move Train into city hangar."""
+        """Move the Train into city hangar."""
         self.root_node.setZ(50)
         self._smoke.disable()
 
     def _clear_brake(self, side, brake, task):
-        """Stop braking.
+        """Stop braking on the given side.
 
         Args:
             side (str): Side label: 'l' or 'r'.
@@ -240,10 +264,11 @@ class Train:
         return task.done
 
     def move_along_block(self, block):
-        """Move Train along the given world block.
+        """Move the Train along the given world block.
 
         Args:
-            block (world.block.Block): world block to move along.
+            block (world.block.Block):
+                The world block to move along.
         """
         self._miles += 1
         self._interface.update_miles(self._miles)
@@ -294,7 +319,7 @@ class Train:
         lens.setNearFar(0, 100)
         lens.setFov(60, 60)
 
-        lighter = Spotlight("train_lighter")
+        lighter = Spotlight("train_main_lighter")
         lighter.setColor((1, 1, 1, 1))
         lighter.setLens(lens)
         lighter.setExponent(0.4)
@@ -349,7 +374,7 @@ class Train:
         return move_snd, stop_snd, brake_snd, clunk_snd, hit_snd, lighter_snd
 
     def update_physics(self):
-        """Update Train physical shape."""
+        """Update the Train physical shape."""
         self._phys_node.setPos((0, 0, 0.1))
 
     def _check_contacts(self, phys_mgr, phys_node, task):
@@ -371,8 +396,9 @@ class Train:
         for contact in contacts:
             if contact.getNode1().getName().startswith("barrier_"):
                 self._barrier_hit_snd.play()
-                task.delayTime = 0.3
                 self.get_damage(100)
+
+                task.delayTime = 0.3
                 return task.again
 
         task.delayTime = 0.1
@@ -389,7 +415,7 @@ class Train:
         self.lights_on = not self.lights_on
 
     def speed_to_min(self):
-        """Accelerate Train to minimum combat speed."""
+        """Accelerate the Train to minimum fight speed."""
         self.ctrl.speed_to_min()
 
     def get_damage(self, damage):
@@ -401,7 +427,6 @@ class Train:
             damage (int): Damage points to get.
         """
         self.damnability -= damage
-        self._interface.update_indicators(damnability=self.damnability)
 
         if not self.ctrl.critical_damage:
             if self.damnability <= 0:
@@ -412,7 +437,7 @@ class Train:
                 base.team.surrender()  # noqa: F821
 
     def do_effects(self, effects):
-        """Do outing effects to Train.
+        """Do outing effects to the Train.
 
         Args:
             effects (dict): Effects and their values.
@@ -426,196 +451,3 @@ class Train:
         """Stop sparks effects."""
         self._l_brake_sparks.softStop()
         self._r_brake_sparks.softStop()
-
-
-class TrainPart:
-    """Train part where characters can be set.
-
-    Contains characters set to this part and enemies
-    within its shooting range.
-
-    Args:
-        parent (panda3d.core.NodePath):
-                Model, to which arrow sprite of this part
-                must be parented. Characters will be
-                parented to this model as well.
-        name (str): Part name.
-        positions (list):
-            Dicts describing possible positions and
-            rotations on this TrainPart.
-        arrow_pos (dict): Arrow position and rotation.
-    """
-
-    def __init__(self, parent, name, positions, arrow_pos):
-        self.parent = parent
-        self.chars = []
-        self.name = name
-        # enemies within shooting range of this part
-        self.enemies = []
-        self._cells = positions
-
-        # organize a manipulating arrow
-        self._arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
-        self._arrow.setPos(*arrow_pos["pos"])
-        self._arrow.setH(arrow_pos["angle"])
-
-        # set manipulating arrow collisions
-        col_node = CollisionNode(name)
-        col_node.setFromCollideMask(NO_MASK)
-        col_node.setIntoCollideMask(MOUSE_MASK)
-        col_node.addSolid(
-            CollisionPolygon(
-                Point3(-0.06, -0.06, 0),
-                Point3(-0.06, 0.06, 0),
-                Point3(0.06, 0.06, 0),
-                Point3(0.06, -0.06, 0),
-            )
-        )
-        self._arrow.attachNewNode(col_node)
-
-        # shooting zone for this TrainPart
-        col_node = CollisionNode("shoot_zone_" + name)
-        col_node.setFromCollideMask(NO_MASK)
-        col_node.setIntoCollideMask(SHOT_RANGE_MASK)
-        col_node.addSolid(CollisionBox(Point3(-0.4, -0.06, 0), Point3(0.4, 0.8, 0.08)))
-        col_np = self.parent.attachNewNode(col_node)
-        col_np.setPos(arrow_pos["pos"][0], arrow_pos["pos"][1], 0)
-        col_np.setH(arrow_pos["angle"])
-
-        base.accept("into-shoot_zone_" + name, self.enemy_came)  # noqa: F821
-        base.accept("out-shoot_zone_" + name, self.enemy_leave)  # noqa: F821
-
-    @property
-    def free_cells(self):
-        """The number of free cells on this part.
-
-        Returns:
-            int: The number of free cells
-        """
-        return len(self._cells)
-
-    def enemy_came(self, event):
-        """Enemy unit entered this part shooting range."""
-        enemy = base.world.enemy.active_units.get(  # noqa: F821
-            event.getFromNodePath().getName()
-        )
-        if enemy is not None:
-            self.enemies.append(enemy)
-            enemy.enter_the_part(self)
-
-    def enemy_leave(self, event):
-        """Enemy unit leaved this part shooting range."""
-        enemy = base.world.enemy.active_units.get(  # noqa: F821
-            event.getFromNodePath().getName()
-        )
-        if enemy is not None:
-            self.enemies.remove(enemy)
-            enemy.leave_the_part(self)
-
-    def give_cell(self, character):
-        """Choose a non taken cell.
-
-        Args:
-            character (personage.character.Character):
-                Unit to set to this part.
-
-        Returns:
-            dict: Position and rotation to set character.
-        """
-        if not self._cells:
-            return
-
-        self.chars.append(character)
-        return take_random(self._cells)
-
-    def release_cell(self, position, character):
-        """Release a cell taken earlier.
-
-        Args:
-            position (dict):
-                Position and rotation of the taken cell.
-            character (personage.character.Character):
-                Character to remove from this part.
-        """
-        self._cells.append(position)
-        self.chars.remove(character)
-
-    def show_arrow(self):
-        """Show manipulating arrow of this TrainPart."""
-        self._arrow.reparentTo(self.parent)
-
-    def hide_arrow(self):
-        """Hide manipulating arrow of this TrainPart."""
-        self._arrow.detachNode()
-
-
-class RestPart:
-    """Part of Train on which characters can rest.
-
-    Rest helps to regain energy.
-
-    Args:
-        parent (panda3d.core.NodePath):
-                Model, to which characters will be
-                reparented while on this part.
-        name (str): Part name.
-    """
-
-    def __init__(self, parent, name):
-        self.parent = parent
-        self.chars = []
-        self.enemies = []
-        self.name = name
-
-        # rest zone collisions
-        col_node = CollisionNode(name)
-        col_node.setFromCollideMask(NO_MASK)
-        col_node.setIntoCollideMask(MOUSE_MASK)
-        col_node.addSolid(
-            CollisionBox(Point3(-0.09, -0.36, 0.15), Point3(0.09, -0.17, 0.27))
-        )
-        parent.attachNewNode(col_node)
-
-    @property
-    def free_cells(self):
-        """The number of free cells on this part.
-
-        Returns:
-            int: The number of free cells.
-        """
-        return 2 - len(self.chars)
-
-    def give_cell(self, character):
-        """Check if there is a free cell.
-
-        Args:
-            character (personage.character.Character):
-                Character to move to this part.
-
-        Returns:
-            dict: Blank dict with position to move character to.
-        """
-        if len(self.chars) >= 2:
-            return None
-
-        self.chars.append(character)
-        return {"pos": (0, 0, 0), "angle": 0}
-
-    def release_cell(self, position, character):
-        """Release one cell on this part.
-
-        Args:
-            position (dict):
-                Position and rotation of the taken cell.
-            character (personage.character.Character):
-                Character to remove from this part.
-        """
-        self.chars.remove(character)
-
-    def show_arrow(self):
-        """Rest parts doesn't have manipulating arrows."""
-        pass
-
-    def hide_arrow(self):
-        """Rest parts doesn't have manipulating arrows."""
-        pass
