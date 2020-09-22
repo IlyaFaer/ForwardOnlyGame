@@ -11,8 +11,9 @@ from direct.directutil import Mopath
 from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
 from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotlight, Vec3
 
+from const import MOD_DIR
 from personage.enemy import Enemy
-from utils import address, MOD_DIR
+from utils import address
 
 from .block import Block
 from .locations import LOCATIONS

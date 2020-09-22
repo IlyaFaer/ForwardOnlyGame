@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Game GUI interfaces.
+Game graphical interfaces.
 """
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 
@@ -16,15 +16,15 @@ from .train import ICON_PATH, RUST_COL, SILVER_COL, TrainInterface  # noqa: F401
 
 
 class MainMenu:
-    """Main game menu.
+    """The main game menu.
 
     Includes starting a game, loading, saving and exiting.
     """
 
     def __init__(self):
         self._save_but = None
-
         self._is_first_pause = True
+
         self._main_fr = DirectFrame(frameSize=(-2, 2, -1, 1), frameColor=(0, 0, 0, 1))
 
         self._new_game_but = DirectButton(
@@ -37,7 +37,7 @@ class MainMenu:
             command=self._start_new_game,
         )
         is_save_exists = save_exists()
-        self._load_game_but = DirectButton(
+        self._load_but = DirectButton(
             parent=self._main_fr,
             pos=(-0.996, 0, 0.4),
             text_scale=(0.05, 0.05),
@@ -76,7 +76,7 @@ development and some may change in future. Anyway, enjoy your play!""",
         base.doMethodLater(0.25, base.load_game, "load_game")  # noqa: F821
 
     def show_loading(self):
-        self._game_load_msg = DirectLabel(
+        self._load_msg = DirectLabel(
             parent=self._main_fr,
             text="Loading...",
             text_fg=RUST_COL,
@@ -110,12 +110,12 @@ development and some may change in future. Anyway, enjoy your play!""",
             return
 
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
-        self._game_load_msg.hide()
+        self._load_msg.hide()
         self._new_game_but["text"] = "Resume"
         self._new_game_but["command"] = self.hide
         self._new_game_but.setPos(-1.028, 0, 0.4),
 
-        self._load_game_but.destroy()
+        self._load_but.destroy()
 
         self._save_but = DirectButton(
             parent=self._main_fr,

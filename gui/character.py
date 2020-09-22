@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Character related GUI.
+Character state GUI.
 """
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from direct.gui.OnscreenText import OnscreenText
@@ -105,7 +105,7 @@ class CharacterInterface:
 
         Args:
             character (personage.character.Character):
-                Chosen character object.
+                The chosen character object.
         """
         self._char_name["text"] = character.name
         self._char_class["text"] = character.class_.capitalize()
@@ -183,7 +183,7 @@ class CharacterInterface:
                 text=char.name,
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.6),
-                command=base.common_ctrl.choose_resting_char,  # noqa: F821
+                command=base.common_ctrl.choose_char,  # noqa: F821
                 extraArgs=[char.id],
                 scale=(0.04, 0, 0.03),
             )
@@ -211,11 +211,12 @@ class CharacterInterface:
 
 
 class CharacterChooser:
-    """Widget to choose single one character.
+    """Widget to choose a single character.
 
     Args:
-        is_shadowed (bool): Optional. If True, a shadowed
-            font color will be used for this widget
+        is_shadowed (bool):
+            Optional. If True, a shadowed font
+            color will be used for this widget
     """
 
     def __init__(self, is_shadowed=False):

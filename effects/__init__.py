@@ -10,7 +10,7 @@ from panda3d.core import PointLight
 
 
 class EffectsManager:
-    """Manager to control visual effects."""
+    """Manager to control game visual effects."""
 
     def __init__(self):
         self._explosion_lights = self._set_explosion_lights()
@@ -59,7 +59,7 @@ class EffectsManager:
 class Explosion:
     """An explosion effect.
 
-    Includes sound and particle effects.
+    Includes sound, light and particle effects.
 
     Args:
         explode_lights (list): List of explosion lights
@@ -91,7 +91,7 @@ class Explosion:
         if self._lights:
             light = self._lights.pop()
             light.reparentTo(self._parent.model)
-            light.setPos(0, 0, 0)
+            light.setPos(0)
 
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.02,

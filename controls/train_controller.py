@@ -32,7 +32,7 @@ class TrainController:
 
         self._move_anim_int = model.actorInterval("move_forward", playRate=14)
         self._move_anim_int.loop()
-        # parallel with the train model and camera move intervals
+        # parallel with the Train model and camera move intervals
         self._move_par = None
         self._is_stopped = False
         self._outing_available = None
@@ -54,7 +54,7 @@ class TrainController:
         """Configure Train control keys.
 
         Args:
-            train (train.Train): Train object.
+            train (train.Train): The Train object.
         """
         # speed smoothly changes with holding w/s keys pressed
         base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
@@ -72,7 +72,7 @@ class TrainController:
     def move_along_block(self, block, train_np):
         """Start Train move intervals for the given block.
 
-        There are two intervals: Train movement and
+        There are two intervals: the Train movement and
         synchronous camera movement.
 
         Args:
@@ -105,11 +105,7 @@ class TrainController:
         """
         self._move_par.setPlayRate(speed)
         self._move_anim_int.setPlayRate(speed)
-
-        new_snd_rate = min(max(0.25, speed * 1.2), 1)
-        if 0.25 <= new_snd_rate <= 1:
-            self._move_snd.setPlayRate(new_snd_rate)
-
+        self._move_snd.setPlayRate(min(max(0.25, speed * 1.2), 1))
         return task.done
 
     def _change_speed_delayed(self, diff):
@@ -145,24 +141,17 @@ class TrainController:
         self._move_anim_int.pause()
         self._is_stopped = True
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.06, self._drown_move_snd, "drown_move_snd"
+            0.06,
+            self._drown_snd,
+            "drown_move_snd",
+            extraArgs=[self._move_snd],
+            appendTask=True,
         )
         if self._outing_available:
             base.world.start_outing(self._outing_available)  # noqa: F821
 
-    def _drown_move_snd(self, task):
-        """Drown move sound to make stop smoother."""
-        volume = self._move_snd.getVolume()
-        if volume <= 0:
-            self._move_snd.stop()
-            self._move_snd.setVolume(1)
-            return task.done
-
-        self._move_snd.setVolume(volume - 0.1)
-        return task.again
-
     def _play_stop_snd(self, task):
-        """Play Train stop sounds with delay."""
+        """Play Train stop sound."""
         self._stop_snd.play()
         return task.done
 
@@ -179,11 +168,11 @@ class TrainController:
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         if (
             self.on_et  # don't stop on enemy territory
-            and new_rate < MIN_SPEED
             and diff < 0
             # stop on enemy territory only
             # in case of critical damage
             and not self.critical_damage
+            and new_rate < MIN_SPEED
         ):
             return task.again
 
@@ -229,7 +218,7 @@ class TrainController:
         )
 
     def brake_down_to(self, target):
-        """Slow down Train to the given speed.
+        """Slow down the Train to the given speed.
 
         Args:
             target (float): Target speed.
@@ -239,12 +228,16 @@ class TrainController:
         else:
             self._brake_snd.play()
             base.taskMgr.doMethodLater(  # noqa: F821
-                3, self._drown_brake_snd, "drown_brake_snd"
+                3,
+                self._drown_snd,
+                "drown_brake_snd",
+                extraArgs=[self._brake_snd],
+                appendTask=True,
             )
         self.slow_down_to(target)
 
     def slow_down_to(self, target):
-        """Slow down Train to the given speed.
+        """Slow down the Train to the given speed.
 
         Args:
             target (float): Target speed.
@@ -274,15 +267,15 @@ class TrainController:
             extraArgs=["slow_down_train"],
         )
 
-    def _drown_brake_snd(self, task):
-        """Drown braking sound not to anooy players."""
-        volume = self._brake_snd.getVolume()
+    def _drown_snd(self, snd, task):
+        """Drown the given sounds."""
+        volume = snd.getVolume()
         if volume <= 0:
-            self._brake_snd.stop()
-            self._brake_snd.setVolume(1)
+            snd.stop()
+            snd.setVolume(1)
             return task.done
 
-        self._brake_snd.setVolume(volume - 0.1)
+        snd.setVolume(volume - 0.1)
         return task.again
 
     def stop(self):

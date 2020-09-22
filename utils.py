@@ -7,7 +7,7 @@ Small utils for game logic.
 import random
 import os.path
 
-MOD_DIR = "models/bam/"
+from const import MOD_DIR
 
 
 def chance(percent):
@@ -17,7 +17,9 @@ def chance(percent):
         percent (int): Possibility percent.
 
     Returns:
-        bool: Random boolean value with given possibility of True.
+        bool:
+            Random boolean value with the given
+            possibility of True.
     """
     return random.randint(1, 100) <= percent
 

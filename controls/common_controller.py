@@ -46,8 +46,8 @@ class CommonController:
     """
 
     def __init__(self, parts, chars):
-        self._parts = parts
         self.chars = chars
+        self._parts = parts
 
         self._is_keys_shown = False
         self._keys_info = None  # on screen text
@@ -111,8 +111,8 @@ class CommonController:
             0.06, self._traverse, name="main_traverse"
         )
 
-    def choose_resting_char(self, char_id):
-        """Choose a character from a rest zone.
+    def choose_char(self, char_id):
+        """Choose a character with the given id.
 
         Args:
             char_id (str): Id of the Character to choose.

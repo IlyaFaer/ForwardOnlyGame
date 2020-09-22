@@ -35,10 +35,10 @@ class CameraController:
         base.camLens.setNear(0.25)  # noqa: F821
 
     def set_controls(self, train):
-        """Configure camera and its controls.
+        """Configure the main camera and its controls.
 
         Args:
-            train (train.Train): Train object.
+            train (train.Train): The Train object.
         """
         base.disableMouse()  # noqa: F821
 
@@ -57,7 +57,7 @@ class CameraController:
         """Implement moving camera with mouse.
 
         If mouse pointer touches a screen edge, move
-        camera in this direction.
+        the camera in this direction.
         """
         x = round(base.mouseWatcherNode.getMouseX(), 2)  # noqa: F821
         z = round(base.mouseWatcherNode.getMouseY(), 2)  # noqa: F821
@@ -237,9 +237,8 @@ class CameraController:
             self._last_cam_np_hpr = self._cam_np.getHpr()
 
             base.cam.wrtReparentTo(base.train.model)  # noqa: F821
-            base.cam.setPos(0, 0, 1.8)  # noqa: F821
-            base.cam.setHpr(90, -90, 0)  # noqa: F821
-            self._cam_np.setHpr(0, 0, 0)
+            base.cam.setPos(0, 0, 1.8, 90, -90, 0)  # noqa: F821
+            self._cam_np.setHpr(0)
 
             self._disable_ctrl_keys()
             base.taskMgr.remove("move_camera_with_mouse")  # noqa: F821
@@ -247,8 +246,7 @@ class CameraController:
             base.cam.wrtReparentTo(self._cam_np)  # noqa: F821
             self._set_move_keys()
 
-            base.cam.setPos(*self._last_cam_pos)  # noqa: F821
-            base.cam.setHpr(*self._last_cam_hpr)  # noqa: F821
+            base.cam.setPosHpr(*self._last_cam_pos, *self._last_cam_hpr)  # noqa: F821
             self._cam_np.setHpr(*self._last_cam_np_hpr)
 
             base.taskMgr.doMethodLater(  # noqa: F821
@@ -299,8 +297,7 @@ class CameraController:
         base.cam.setHpr(0)  # noqa: F821
 
         self._cam_np.reparentTo(hangar)
-        self._cam_np.setPos(-0.35, 1.36, 0.12)
-        self._cam_np.setHpr(-163, 5, 0)
+        self._cam_np.setPosHpr(-0.35, 1.36, 0.12, -163, 5, 0)
 
     def enable_ctrl_keys(self):
         """Enable all the camera control keys."""

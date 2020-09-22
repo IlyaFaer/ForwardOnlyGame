@@ -326,7 +326,7 @@ class OutingsInterface:
                 text=char.name,
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.3),
-                command=base.common_ctrl.choose_resting_char,  # noqa: F821
+                command=base.common_ctrl.choose_char,  # noqa: F821
                 extraArgs=[char.id],
                 scale=(0.04, 0, 0.03),
             )
