@@ -340,7 +340,7 @@ class Block:
         all the children physical nodes will be positioned
         relative to the game render.
         """
-        if self.enemy_territory and chance(10):
+        if self.enemy_territory and chance(2):
             Barrier(self)
 
     def description(self):

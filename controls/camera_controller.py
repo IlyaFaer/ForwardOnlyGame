@@ -237,7 +237,7 @@ class CameraController:
             self._last_cam_np_hpr = self._cam_np.getHpr()
 
             base.cam.wrtReparentTo(base.train.model)  # noqa: F821
-            base.cam.setPos(0, 0, 1.8, 90, -90, 0)  # noqa: F821
+            base.cam.setPosHpr(0, 0, 1.8, 90, -90, 0)  # noqa: F821
             self._cam_np.setHpr(0)
 
             self._disable_ctrl_keys()

@@ -42,6 +42,7 @@ class TrainPart:
         self._arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
         self._arrow.setPos(*arrow_pos["pos"])
         self._arrow.setH(arrow_pos["angle"])
+        self._arrow.clearLight()
 
         # set manipulating arrow collisions
         col_node = CollisionNode(name)

@@ -31,7 +31,7 @@ FRACTIONS = {
                 "health": 50,
             },
         ),
-        "attack_chances": {"morning": 1, "noon": 3, "evening": 10, "night": 5},
+        "attack_chances": {"morning": 10, "noon": 20, "evening": 35, "night": 20},
     }
 }
 
@@ -88,7 +88,7 @@ class Enemy:
         if chance(self._attack_chances[day_part] + (15 if lights_on else 0)):
             self._is_cooldown = True
             base.taskMgr.doMethodLater(  # noqa: F821
-                600, self._stop_cooldown, "stop_attack_cooldown"
+                480, self._stop_cooldown, "stop_attack_cooldown"
             )
             return True
 

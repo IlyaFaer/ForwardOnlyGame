@@ -162,8 +162,8 @@ prowl. It appears there are several backpacks at the forsaken camp place,
 but {name1} and {name2} doesn't take anything with them. Nothing
 interesting? You're waiting for several more minutes, but nothing
 changes. Finally, {name1} and {name2} are opening the tent, taking a
-quick look, and turning back to Train. Obviously, there was nothing
-useful in there. At all.""",
+quick look inside, and turning back to the Train. Obviously, there
+was nothing useful in there. At all.""",
                         "effects": {},
                     },
                     {
@@ -259,7 +259,7 @@ That doesn't sound good! Two minutes passes, and finally you're seeing
 your people. They are moving fast to Train, keeping their backside on
 sights. But no one follows them. Coming closer {name1} explains to
 you what happened back there: "Big dog, looks like it lives there.
-And we found nothing". Your people are getting on Train in
+And we found nothing". Your people are getting on the Train in
 disappointed mood, and you're commanding to move.""",
                         "effects": {},
                     },
@@ -364,7 +364,7 @@ in there. Dirty, unkempt and completely crazy, they are ripping to shreds
 several animals and eating them raw, all covered in blood. Seems like kind
 of cultists are celebrating the End of the World. {name3} moves down and
 silently explains what {heshe3} saw. Deciding not to disturb this mad
-gathering they your people returning back to the Train.""",
+gathering your people returning back to the Train.""",
                         "effects": {},
                     },
                     {
