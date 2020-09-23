@@ -15,7 +15,7 @@ class OutingsManager:
     """An object to manage outings.
 
     Rules the outings planning, manipulating, results
-    calculating and gui.
+    calculating and GUI.
 
     Args:
         location (str): Location to manage outings for.

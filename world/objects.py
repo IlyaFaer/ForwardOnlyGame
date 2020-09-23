@@ -15,7 +15,7 @@ from utils import address
 class Barrier:
     """Enemy barrier.
 
-    Deals damage to Train on hit.
+    Deals damage to the Train on hit.
 
     Args:
         block (world.block.Block): Block to set this barrier on.

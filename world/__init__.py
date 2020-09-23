@@ -34,9 +34,10 @@ class World:
     def __init__(self, day_part_desc=None):
         self.enemy = None
         self.outings_mgr = None
+
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
-        self._map = []  # all the generated world blocks
+        self._map = []  # all the world blocks
         self._last_angle = 0
         # index of the block, which is
         # processed by World now

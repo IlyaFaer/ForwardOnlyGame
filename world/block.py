@@ -149,10 +149,10 @@ class Block:
                 "transparant1",
             )
         )
-        if model not in ("arch1", "transparant1"):
-            coor = random.choice((0.15, -0.15))
-        else:
+        if model in ("arch1", "transparant1"):
             coor = 0
+        else:
+            coor = random.choice((0.15, -0.15))
 
         if model == "lamp_post1" and coor > 0:
             angle = 180
