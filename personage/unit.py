@@ -9,7 +9,7 @@ from panda3d.core import CollisionNode
 
 
 class Unit(metaclass=abc.ABCMeta):
-    """Base unit class.
+    """Base game unit class.
 
     Args:
         id_ (str): Unit id.
@@ -21,9 +21,9 @@ class Unit(metaclass=abc.ABCMeta):
     def __init__(self, id_, class_, class_data):
         self.id = id_
         self.class_data = class_data
+        self.class_ = class_
         self.is_dead = False
         self.model = None
-        self.class_ = class_
 
         self._health = class_data["health"]
 
@@ -92,6 +92,15 @@ class Unit(metaclass=abc.ABCMeta):
             self.clear_delay, self.clear, self.id + "_clear"
         )
         return True
+
+    def _stop_tasks(self, *names):
+        """Stop this unit related tasks.
+
+        Args:
+            names (tuple): Tasks names to stop.
+        """
+        for name in names:
+            base.taskMgr.remove(self.id + name)  # noqa: F821
 
     @abc.abstractproperty
     def tooltip(self):

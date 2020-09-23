@@ -21,6 +21,8 @@ from .unit import Unit
 class Character(Shooter, Unit):
     """Game character.
 
+    Represents a unit controlled by a player.
+
     Args:
         id_ (int): Character unique id.
         name (str): Character name.
@@ -79,10 +81,12 @@ class Character(Shooter, Unit):
 
     @property
     def clear_delay(self):
-        """Delay between this character's death and clearing.
+        """
+        Delay between this character death
+        and clearing the character object.
 
         Returns:
-            float: Seconds to hold the character before delete.
+            float: Seconds to wait before clearing.
         """
         return 3.5
 
@@ -111,20 +115,21 @@ class Character(Shooter, Unit):
 
         Tweak collision solid as well.
         """
-        self.model = Actor(
-            address(self.sex + "_" + self.class_),
-            {
-                "die": address(self.class_ + "-die"),
-                "gun_up": address(self.class_ + "-gun_up"),
-                "incline1": address(self.class_ + "-incline1"),
-                "release_gun": address(self.class_ + "-release_gun"),
-                "stand_and_aim": address(self.class_ + "-stand_and_aim"),
-                "stand": address(self.class_ + "-stand"),
-                "surrender": address(self.class_ + "-surrender"),
-                "tread1": address(self.class_ + "-tread1"),
-                "turn_head1": address(self.class_ + "-turn_head1"),
-            },
-        )
+        animations = {
+            name: address(self.class_ + "-" + name)
+            for name in (
+                "die",
+                "gun_up",
+                "incline1",
+                "release_gun",
+                "stand_and_aim",
+                "stand",
+                "surrender",
+                "tread1",
+                "turn_head1",
+            )
+        }
+        self.model = Actor(address(self.sex + "_" + self.class_), animations)
         self.model.enableBlend()
         self.model.setControlEffect("stand", 1)
 
@@ -197,7 +202,7 @@ class Character(Shooter, Unit):
 
         Switch animations and run a task to choose a target.
         """
-        base.taskMgr.remove(self.id + "_idle_anim")  # noqa: F821
+        self._stop_tasks("_idle_anim")
         if self._idle_seq is not None:
             self._idle_seq.finish()
 
@@ -211,10 +216,7 @@ class Character(Shooter, Unit):
 
     def surrender(self):
         """Stop fighting, surrender."""
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
-        base.taskMgr.remove(self.id + "_aim")  # noqa: F821
-        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
-
+        self._stop_tasks("_shoot", "_aim", "_choose_target")
         self._col_node.removeNode()
         self._shoot_anim.finish()
 
@@ -227,15 +229,9 @@ class Character(Shooter, Unit):
         Stops all the active tasks and starts
         energy regaining.
         """
-        for task in (
-            "_reduce_energy",
-            "_shoot",
-            "_aim",
-            "_choose_target",
-            "_idle_anim",
-        ):
-            base.taskMgr.remove(self.id + task)  # noqa: F821
-
+        self._stop_tasks(
+            "_reduce_energy", "_shoot", "_aim", "_choose_target", "_idle_anim"
+        )
         self.model.hide()
         self._col_node.stash()
 
@@ -268,8 +264,7 @@ class Character(Shooter, Unit):
         self._col_node.unstash()
         base.char_interface.destroy_char_button(self.id)  # noqa: F821
 
-        base.taskMgr.remove(self.id + "_gain_energy")  # noqa: F821
-        base.taskMgr.remove(self.id + "_heal")  # noqa: F821
+        self._stop_tasks("_gain_energy", "_heal")
         base.taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_spend"],
             self._reduce_energy,
@@ -342,7 +337,7 @@ class Character(Shooter, Unit):
             self.model.headsUp(self._target.model)
             return task.again
 
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        self._stop_tasks("_shoot")
         self._target = None
 
         if base.world.enemy.active_units:  # noqa: F821
@@ -358,7 +353,7 @@ class Character(Shooter, Unit):
 
     def _calm_down(self, task):
         """Return to passive state."""
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+        self._stop_tasks("_shoot")
         self.model.hprInterval(2, (self._current_pos["angle"], 0, 0)).start()
 
         LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
@@ -402,7 +397,7 @@ class Character(Shooter, Unit):
 
         Unit._die(self)
 
-        base.taskMgr.remove(self.id + "_reduce_energy")  # noqa: F821
+        self._stop_tasks("_reduce_energy")
 
         LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
         self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
@@ -420,9 +415,7 @@ class Character(Shooter, Unit):
 
         Used only when sending a character away in a city.
         """
-        base.taskMgr.remove(self.id + "_calm_down")  # noqa: F821
-        base.taskMgr.remove(self.id + "_gain_energy")  # noqa: F821
-        base.taskMgr.remove(self.id + "_heal")  # noqa: F821
+        self._stop_tasks("_calm_down", "_gain_energy", "_heal")
         base.taskMgr.doMethodLater(0.05, self.clear, self.id + "_clear")  # noqa: F821
 
     def clear(self, task):

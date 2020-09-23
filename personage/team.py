@@ -53,7 +53,7 @@ class Team:
         return [char.description for char in self.chars.values()]
 
     def gen_default(self, train_parts):
-        """Generate default team.
+        """Generate a default team.
 
         Args:
             train_pargs (dict):

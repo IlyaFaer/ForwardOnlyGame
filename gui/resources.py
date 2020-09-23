@@ -11,7 +11,10 @@ from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
 class ResourcesInterface:
-    """Interface to show the current amount of player resources."""
+    """GUI to track player's resources.
+
+    Includes money and cohesion.
+    """
 
     def __init__(self):
         self._coh_desc_wids = []
@@ -24,6 +27,7 @@ class ResourcesInterface:
             frameTexture=ICON_PATH + "metal1.png",
         )
         frame.setTransparency(TransparencyAttrib.MAlpha)
+
         DirectFrame(
             parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
@@ -45,6 +49,7 @@ class ResourcesInterface:
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._coh_frame.setTransparency(TransparencyAttrib.MAlpha)
+
         self._cohesion = DirectWaitBar(
             parent=self._coh_frame,
             frameSize=(-0.45, 0.45, -0.002, 0.002),

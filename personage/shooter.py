@@ -87,10 +87,7 @@ class Shooter(metaclass=abc.ABCMeta):
         if self.is_dead:
             return False
 
-        base.taskMgr.remove(self.id + "_aim")  # noqa: F821
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
-        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
-
+        self._stop_tasks("_aim", "_shoot", "_choose_target")
         self._shoot_anim.finish()
         return True
 

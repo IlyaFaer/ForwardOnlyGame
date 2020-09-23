@@ -149,7 +149,7 @@ class EnemyUnit(Unit):
             return False
 
         self.model.setColorScale(1, 1, 1, 1)
-        base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
+        self._stop_tasks("_float_move")
         self._move_int.pause()
 
         self.model.play("die")
@@ -195,8 +195,7 @@ class EnemyUnit(Unit):
 
     def stop(self):
         """Smoothly stop this unit following Train."""
-        base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
-
+        self._stop_tasks("_float_move")
         self._move(random.randint(9, 11), (self._io_dist, -7, 0))
         self._y_positions.append(self._y_pos)
 
@@ -243,7 +242,7 @@ class MotoShooter(Shooter, EnemyUnit):
         self.shot_snd = self._set_shoot_snd("smg_shot1")
 
     def _aim(self, back):
-        """Aim to Train when got close enough.
+        """Aim to the Train when got close enough.
 
         Args:
             back (bool): Unaim.
@@ -270,7 +269,7 @@ class MotoShooter(Shooter, EnemyUnit):
         if self._target not in targets or chance(5):
             self._target = random.choice(targets)
 
-            base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
+            self._stop_tasks("_shoot")
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._shoot, self.id + "_shoot"
             )
@@ -292,8 +291,7 @@ class MotoShooter(Shooter, EnemyUnit):
 
     def leave_the_part(self, _):
         """Stop fighting in the current part."""
-        base.taskMgr.remove(self.id + "_shoot")  # noqa: F821
-        base.taskMgr.remove(self.id + "_choose_target")  # noqa: F821
+        self._stop_tasks("_shoot", "_choose_target")
 
         self.model.setPlayRate(-0.6, "aim_left")
         self.model.setPlayRate(-0.6, "aim_right")
@@ -404,7 +402,7 @@ class BrakeDropper(EnemyUnit):
         self._y_positions.remove(y_target)
 
         self.is_jumping = True
-        base.taskMgr.remove(self.id + "_float_move")  # noqa: F821
+        self._stop_tasks("_float_move")
         self._move_int.pause()
 
         base.taskMgr.doMethodLater(  # noqa: F821
@@ -492,7 +490,7 @@ class BrakeDropper(EnemyUnit):
 
     def stop(self):
         """Smoothly stop this unit following Train."""
-        base.taskMgr.remove(self.id + "_jump_and_brake")  # noqa: F821
+        self._stop_tasks("_jump_and_brake")
         EnemyUnit.stop(self)
 
     def leave_the_part(self, part):
@@ -514,9 +512,7 @@ class BrakeDropper(EnemyUnit):
 
         Stop all the braking tasks and jumping interval.
         """
-        base.taskMgr.remove(self.id + "_jump_and_brake")  # noqa: F821
-        base.taskMgr.remove(self.id + "_fall_sound")  # noqa: F821
-        base.taskMgr.remove(self.id + "_drop_brake")  # noqa: F821
+        self._stop_tasks("_jump_and_brake", "_fall_sound", "_drop_brake")
 
         if self._jump_int is not None:
             self._jump_int.pause()

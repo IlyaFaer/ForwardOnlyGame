@@ -47,11 +47,12 @@ class Enemy:
 
     def __init__(self, fraction):
         self.active_units = {}
+        self.score = 3
+
         self._unit_id = 0
         self._is_cooldown = False
         self._front_y_positions = []
         self._side_y_positions = []
-        self.score = 3
 
         for gain in range(1, 14):
             self._side_y_positions.append(round(0.15 + gain * 0.05, 2))
@@ -94,7 +95,7 @@ class Enemy:
         return False
 
     def prepare(self, train_mod):
-        """Load all the enemies and make them follow Train.
+        """Load enemy units and make them follow the Train.
 
         Method asynchronously loads every enemy unit
         to avoid freezing.
