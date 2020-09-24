@@ -256,8 +256,8 @@ People are easy running to the hut and disappearing in it. You're
 looking for them from Train. Time passing, but nothing happens, so
 you're starting to get nervous. Suddenly, you hear cries and two shots.
 That doesn't sound good! Two minutes passes, and finally you're seeing
-your people. They are moving fast to Train, keeping their backside on
-sights. But no one follows them. Coming closer {name1} explains to
+your people. They are moving fast to the Train, keeping their backside
+on sights. But no one follows them. Coming closer {name1} explains to
 you what happened back there: "Big dog, looks like it lives there.
 And we found nothing". Your people are getting on the Train in
 disappointed mood, and you're commanding to move.""",

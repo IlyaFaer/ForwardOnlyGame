@@ -168,4 +168,4 @@ def calc_condition_score(cond_max, char):
     Returns:
         float: Score from the given character.
     """
-    return (char.health + char.energy) / char.class_data["health"] / 2 * cond_max
+    return (char.health + char.energy) / (char.class_data["health"] + 100) * cond_max

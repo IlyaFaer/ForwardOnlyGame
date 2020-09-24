@@ -82,7 +82,7 @@ class Enemy:
         Returns:
             bool: True if enemy is going to attack, False otherwise.
         """
-        if self._is_cooldown:
+        if self._is_cooldown or base.world.is_in_city:  # noqa: F821
             return False
 
         if chance(self._attack_chances[day_part] + (15 if lights_on else 0)):

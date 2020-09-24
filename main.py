@@ -41,6 +41,8 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
+        self.setBackgroundColor(0.23, 0.3, 0.23)
+
         if not os.path.exists("saves"):
             os.mkdir("saves")
 

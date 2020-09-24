@@ -216,6 +216,8 @@ class Team:
     def prepare_to_fight(self):
         """Prepare every character to fight."""
         for char in self.chars.values():
+            if char.current_part.name.startswith("part_rest_"):
+                continue
             char.prepare_to_fight()
 
     def surrender(self):
