@@ -23,7 +23,7 @@ For now the Game includes:
 - two classes of characters (plus male/female genders), which have different preferences for fighting, outings and cohesion
 - cities, where you can use money to restore your team and train condition
 - real-time strategic fights with rivals of two classes
-- tactical elements: track your people energy level to keep them efficient, consider character's condition and class when sending him for an outings, decide at which train part a unit will be more useful during fight, etc.
+- tactical elements: track your people energy level to keep them efficient, consider character's condition and class when sending him for an outing, decide at which train part a unit will be more useful during fight, etc.
 
 **Tip**: use F1 key while in Game to see the controls list.
 
