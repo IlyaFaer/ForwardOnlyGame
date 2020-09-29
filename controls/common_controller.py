@@ -168,6 +168,10 @@ class CommonController:
                 self._chosen_char.attack(
                     base.world.enemy.active_units[self._pointed_obj]  # noqa: F821
                 )
+                return
+
+            if self._pointed_obj.startswith("character_"):
+                self.chosen_char.exchange_pos(self.chars[self._pointed_obj])
 
     def _point_obj(self, event):
         """Event: mouse pointer hits a collision."""

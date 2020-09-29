@@ -160,19 +160,34 @@ class Character(Shooter, Unit):
             self.id + "_reduce_energy",
         )
 
-    def move_to(self, part):
+    def move_to(self, part, to_pos=None):
         """Move this Character to the given Train part.
+
+        If the movement is done with a positions exchange
+        between two characters, the method doesn't
+        take or release characters cells, just replaces
+        one character with another one.
 
         Args:
             part (train_part.TrainPart):
                 Train part to move this Character to.
+            to_pos (dict):
+                Position to move this Character to.
         """
-        pos = part.give_cell(self)
+        if to_pos:
+            part.chars.append(self)
+            pos = to_pos
+        else:
+            pos = part.give_cell(self)
+
         if not pos:  # no free cells on the chosen part
             return
 
         if self.current_part is not None:
-            self.current_part.release_cell(self._current_pos, self)
+            if to_pos:
+                self.current_part.chars.remove(self)
+            else:
+                self.current_part.release_cell(self._current_pos, self)
 
             if self.current_part.name.startswith("part_rest_"):
                 self.stop_rest()
@@ -433,6 +448,17 @@ class Character(Shooter, Unit):
         self.current_part = None
 
         return task.done
+
+    def exchange_pos(self, char):
+        """Exchange positions of this Character and the given one.
+
+        Args:
+            char (personage.character.Character):
+                Character to exchange the positions with.
+        """
+        o_part, o_pos = self.current_part, self._current_pos
+        self.move_to(char.current_part, char._current_pos)
+        char.move_to(o_part, o_pos)
 
     def _missed_shot(self):
         """Calculate if character missed the current shot.
