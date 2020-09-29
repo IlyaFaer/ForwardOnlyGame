@@ -26,7 +26,7 @@ help you to survive.""",
 each other. It's hard to build
 cohesion between them.""",
     # outings
-    """On "Looting" outings you can gain
+    """On "Looting" outings you can find
 resources to repair Train, heal
 characters, regain energy""",
     """Outing can turn dangerous, it's
@@ -50,21 +50,23 @@ reduce stress at any collective""",
     """Women have less health points,
 but they are much more
 energetic""",
+    # raiders
     """Raider's life is mostly about
 looting. They know how to find
-useful things.
-""",
+useful things.""",
     """Raiders are good shooters at
 short distance""",
     """Raiders are spending energy
 faster, but they also rest
 faster than others""",
+    # soldiers
     """Soldiers are good shooters at
 medium distance""",
     # accuracy
-    """Accuracy is affected by lighting,
-distance, character class
-and his energy level""",
+    """Shooting accuracy is affected
+by lighting, distance,
+character class and his
+energy level""",
     """Send your character into a Train
 rest zone. Rest helps to regain
 energy and heal wounds.""",

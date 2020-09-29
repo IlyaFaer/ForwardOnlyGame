@@ -4,6 +4,8 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Game graphical interfaces.
 """
+import sys
+
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 
 from utils import save_exists
@@ -53,7 +55,7 @@ class MainMenu:
             text_fg=RUST_COL,
             text="Exit",
             relief=None,
-            command=exit,
+            command=sys.exit,
         )
         DirectLabel(
             parent=self._main_fr,

@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Main game file. Starts the game itself
 and maintains the major systems.
 """
+import dbm.dumb  # noqa: F401
 import os
 import shelve
 
@@ -41,7 +42,7 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
-        self.setBackgroundColor(0.23, 0.3, 0.23)
+        self.setBackgroundColor(0.2, 0.27, 0.2)
 
         if not os.path.exists("saves"):
             os.mkdir("saves")

@@ -31,7 +31,7 @@ FRACTIONS = {
                 "health": 50,
             },
         ),
-        "attack_chances": {"morning": 10, "noon": 20, "evening": 35, "night": 20},
+        "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
     }
 }
 
