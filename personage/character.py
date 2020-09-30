@@ -257,7 +257,9 @@ class Character(Shooter, Unit):
             self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
         )
         if self.health < self.class_data["health"]:
-            base.taskMgr.doMethodLater(30, self._heal, self.id + "_heal")  # noqa: F821
+            base.taskMgr.doMethodLater(  # noqa: F821
+                self.class_data["healing"], self._heal, self.id + "_heal"
+            )
 
     def do_effects(self, effects):
         """Do outing effects to this character.
