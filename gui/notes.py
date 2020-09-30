@@ -25,6 +25,10 @@ help you to survive.""",
     """Raiders and soldiers don't like
 each other. It's hard to build
 cohesion between them.""",
+    """To build stronger cohesion
+between particular characters
+keep them closer to
+each other""",
     # outings
     """On "Looting" outings you can find
 resources to repair Train, heal

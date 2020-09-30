@@ -153,6 +153,8 @@ class OutingsManager:
             for char in base.team.chars.values():  # noqa: F821
                 char.do_effects(effects["all"])
 
+        base.team.increase_cohesion_for_chars(chars, score)  # noqa: F821
+
 
 def calc_condition_score(cond_max, char):
     """Calculate score according to characters condition.

@@ -241,15 +241,23 @@ class Team:
                     continue
 
                 rel_id = tuple(sorted([char1.id, char2.id]))
-                if rel_id in self._relations:
-                    self._relations[rel_id] += COHESION_FACTORS[
-                        (char1.class_, char2.class_)
-                    ]
-                else:
-                    self._relations[rel_id] = COHESION_FACTORS[
-                        (char1.class_, char2.class_)
-                    ]
+                factor = 1.25 if char1.current_part == char2.current_part else 1
 
+                if rel_id in self._relations:
+                    self._relations[rel_id] += (
+                        COHESION_FACTORS[(char1.class_, char2.class_)] * factor
+                    )
+                else:
+                    self._relations[rel_id] = (
+                        COHESION_FACTORS[(char1.class_, char2.class_)] * factor
+                    )
+
+        self._calc_total_cohesion()
+        task.delayTime = 360
+        return task.again
+
+    def _calc_total_cohesion(self):
+        """Calculate total cohesion score considering all the relations."""
         rel_max = 100 / len(self._relations)
         cohesion = 0
         for relation in self._relations.values():
@@ -257,9 +265,6 @@ class Team:
 
         self.cohesion = min(100, cohesion)
         base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
-
-        task.delayTime = 360
-        return task.again
 
     def calc_cohesion_for_chars(self, chars):
         """Calculate cohesion for an outing party.
@@ -300,3 +305,31 @@ class Team:
 
         cohesion = round((cohesion / rel_num) * 20, 2)
         return cohesion
+
+    def increase_cohesion_for_chars(self, chars, outing_score):
+        """Increase cohesion for characters who went for an outing.
+
+        Increase factor depends on outing score: the higher
+        it is the higher will be cohesion increase.
+
+        Args:
+            chars (list): Chars who went for an outing.
+            outing_score (float): Total outing score.
+        """
+        for char1 in chars:
+            for char2 in chars:
+                if char1.id == char2.id:
+                    continue
+
+                rel_id = tuple(sorted([char1.id, char2.id]))
+                factor = 1 + outing_score // 25 * 0.25
+
+                if rel_id in self._relations:
+                    self._relations[rel_id] += (
+                        COHESION_FACTORS[(char1.class_, char2.class_)] * factor
+                    )
+                else:
+                    self._relations[rel_id] = (
+                        COHESION_FACTORS[(char1.class_, char2.class_)] * factor
+                    )
+        self._calc_total_cohesion()
