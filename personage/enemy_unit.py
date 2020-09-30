@@ -178,11 +178,11 @@ class EnemyUnit(Unit):
         x = 0
         y = 0
         if angle == 0:
-            y = random.randint(5000, 7000)
+            y = random.randint(6000, 8000)
         elif angle == 90:
-            x = -random.randint(5000, 7000)
+            x = -random.randint(6000, 8000)
         elif angle == -90:
-            x = random.randint(5000, 7000)
+            x = random.randint(6000, 8000)
 
         rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
         rb_node.applyTorque(
