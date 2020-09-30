@@ -25,4 +25,4 @@ For now the Game includes:
 - real-time strategic fights with rivals of two classes
 - tactical elements: track your people energy level to keep them efficient, consider character's condition and class when sending him for an outing, decide at which train part a unit will be more useful during fight, etc.
 
-The Game is not yet built from the source code into the final state, so the only way to play it is to install Python 3.7 and Panda3D game engine (version 1.10.5 is recommended), and run it from the source code.
+The Game builds are not yet publicly accessible (are undergoing closed testing), thus, the only way to play it is to install Python 3.7 and Panda3D game engine (version 1.10.5 is recommended), and run it from the source code.
