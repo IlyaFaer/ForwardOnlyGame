@@ -127,6 +127,8 @@ class CommonController:
     def _deselect(self):
         """Hide manipulating interface."""
         self._char_pointer.detachNode()
+        self._chosen_char = None
+
         for part in self._parts.values():
             part.hide_arrow()
 
