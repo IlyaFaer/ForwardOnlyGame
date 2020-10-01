@@ -160,7 +160,7 @@ class Train:
                 Physical world.
         """
         shape = BulletCharacterControllerNode(
-            BulletBoxShape(Vec3(0.095, 0.48, 0.1)), 10, "train_shape"
+            BulletBoxShape(Vec3(0.095, 0.55, 0.1)), 10, "train_shape"
         )
         self._phys_node = self.model.attachNewNode(shape)
         self._phys_node.setZ(0.1)

@@ -21,6 +21,7 @@ Game controls:
 
 Mouse Left Button - choose a character
 Mouse Right Button On Arrow - move character
+R - show the character's cohesion with others
 
 W - hold to accelerate
 S - hold to slow down
@@ -53,6 +54,7 @@ class CommonController:
         self._keys_info = None  # on screen text
         self._pointed_obj = ""
         self._chosen_char = None
+        self._relations_shown = False
 
         self._font = loader.loadFont("arial.ttf")  # noqa: F821
         self._char_pointer = loader.loadModel(  # noqa: F821
@@ -78,6 +80,7 @@ class CommonController:
         """
         base.accept("f1", self._show_keys)  # noqa: F821
         base.accept("escape", base.main_menu.show)  # noqa: F821
+        base.accept("r", self._show_char_relations)  # noqa: F821
 
         # configure mouse collisions
         col_node = CollisionNode("mouse_ray")
@@ -129,6 +132,10 @@ class CommonController:
 
         base.char_interface.clear_char_info()  # noqa: F821
 
+        if self._relations_shown:
+            base.team.hide_relations()  # noqa: F821
+            self._relations_shown = False
+
     def _choose_obj(self):
         """Event: left mouse button clicked.
 
@@ -147,6 +154,9 @@ class CommonController:
                 part.show_arrow()
 
             base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
+            if self._relations_shown:
+                base.team.show_relations(self._chosen_char)  # noqa: F821
+
             return
 
         if self._pointed_obj.startswith("part_rest_"):
@@ -231,3 +241,15 @@ class CommonController:
             )
 
         self._is_keys_shown = not self._is_keys_shown
+
+    def _show_char_relations(self):
+        """Show the chosen character relations GUI."""
+        if not self.chosen_char:
+            return
+
+        self._relations_shown = not self._relations_shown
+
+        if self._relations_shown:
+            base.team.show_relations(self.chosen_char)  # noqa: F821
+        else:
+            base.team.hide_relations()  # noqa: F821

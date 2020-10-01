@@ -333,3 +333,26 @@ class Team:
                         COHESION_FACTORS[(char1.class_, char2.class_)] * factor
                     )
         self._calc_total_cohesion()
+
+    def show_relations(self, char):
+        """Show the given character relations GUI.
+
+        Highlights cohesion between the given character
+        and other characters with color balls above all
+        characters except the chosen.
+
+        Args:
+            char (personage.character.Character):
+                The character, whose relations must be shown.
+        """
+        char.hide_relations_ball()
+
+        for rel_id, relation in self._relations.items():
+            if char.id in rel_id:
+                to_id = rel_id[1] if char.id == rel_id[0] else rel_id[0]
+                self.chars[to_id].show_relation(relation)
+
+    def hide_relations(self):
+        """Hide all the relations GUI."""
+        for char in self.chars.values():
+            char.hide_relations_ball()

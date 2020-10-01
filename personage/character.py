@@ -17,6 +17,15 @@ from .character_data import NAMES, CLASSES
 from .shooter import Shooter
 from .unit import Unit
 
+RELATION_COLORS = {
+    0: (1, 0.01, 0.24, 1),  # red
+    1: (1, 0.45, 0.09, 1),  # orange
+    2: (1, 1, 0, 1),  # yellow
+    3: (0.67, 0.97, 0.82, 1),  # light green
+    4: (0.18, 0.97, 0.57, 1),  # green
+    5: (0.18, 0.97, 0.57, 1),  # green
+}
+
 
 class Character(Shooter, Unit):
     """Game character.
@@ -43,6 +52,7 @@ class Character(Shooter, Unit):
         self._current_anim = None
         self._idle_seq = None
         self._energy = 100
+        self._cohesion_ball = None
 
         self.name = name
         self.sex = sex
@@ -461,6 +471,33 @@ class Character(Shooter, Unit):
         o_part, o_pos = self.current_part, self._current_pos
         self.move_to(char.current_part, char._current_pos)
         char.move_to(o_part, o_pos)
+
+    def hide_relations_ball(self):
+        """Hide the relations ball of this character."""
+        if self._cohesion_ball is not None:
+            self._cohesion_ball.removeNode()
+            self._cohesion_ball = None
+
+    def show_relation(self, cohesion):
+        """Show a relations ball above this character.
+
+        The color of the ball shows the strength of cohesion
+        between the chosen character and this one.
+
+        Args:
+            cohesion (float):
+                Value of the cohesion between the
+                chosen character and this one.
+        """
+        if self._cohesion_ball is None:
+            self._cohesion_ball = loader.loadModel(  # noqa: F821
+                address("relation_ball")
+            )
+            self._cohesion_ball.reparentTo(self.model)
+            self._cohesion_ball.clearLight()
+            self._cohesion_ball.setZ(0.14)
+
+        self._cohesion_ball.setColorScale(*RELATION_COLORS[cohesion // 20])
 
     def _missed_shot(self):
         """Calculate if character missed the current shot.
