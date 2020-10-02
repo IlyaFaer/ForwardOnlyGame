@@ -530,6 +530,12 @@ class World:
             self._et_blocks -= 1
             if self._et_blocks == 0:
                 self.enemy.stop_attack()
+
+            # as enemy units are prepared async, wait for
+            # five enemy territory blocks passed before
+            # checking for enemy units activiness
+            if self._et_blocks <= 25 and not self.enemy.active_units:
+                self._et_blocks = min(2, self._et_blocks)
         else:
             block = self._map[self._block_num].prepare()
 
