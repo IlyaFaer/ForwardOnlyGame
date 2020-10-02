@@ -11,6 +11,11 @@ from panda3d.core import TransparencyAttrib
 from .character import CharacterChooser
 from .train import RUST_COL, SILVER_COL
 
+OUTINGS_ICONS = {
+    "looting": "gui/tex/icon_looting.png",
+    "enemy camp": "gui/tex/icon_enemy_camp.png",
+}
+
 
 class OutingsInterface:
     """Outing dialogs GUI."""
@@ -269,7 +274,7 @@ class OutingsInterface:
         text = '"{type}" outing available in {miles} miles'.format(
             type=type_.capitalize(), miles=2
         )
-        self.show_upcoming(text, "gui/tex/icon_looting.png")
+        self.show_upcoming(text, OUTINGS_ICONS[type_])
 
     def show_city(self):
         """Show upcoming city notification."""
