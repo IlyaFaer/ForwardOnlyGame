@@ -7,6 +7,111 @@ Outings scenarios and effects.
 
 OUTINGS = {
     "Plains": {
+        "enemy camp": (
+            {
+                "name": "Bus",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 25, "raider": 15},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 3,
+                    "noon": 10,
+                    "evening": 7,
+                },
+                "desc": """The big red two-storied bus standing at the middle of the meadow
+catches your attention from a very long distance. Bringing the binoculars
+to your eyes you're seeing that it's little bit old and shabby, but sand
+bags and logs placed around the car in defensive positions tells it's
+still inhabited. You also see that second floor doesn't have any glass
+in windows - probably a sniper point, but, except this fact, the
+bus seems to be safe. That makes sense to send a couple of people
+to check if there is something valuable in there.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're sending {name1} and {name2} to take a look at the bus.
+Moving to the car they are looking around carefully. The meadow is
+visible for three hundreds meters around, and nothing promises troubles,
+so after a couple of minutes of walk they relax. In that moment a shot
+thunders in the air. Sniper! You're seeing his long gun barrel protruding
+from the empty window on a second floor. Another shot thunders, and
+{name1} falls to the ground with a loud shout. Taking your gun you're aiming
+the bus and starting to shoot at it as fast as you can. Sniper disappears
+in the dark car inners, so {name2} takes down {hisher2} gun, lifting
+{name1} and pulling {himher1} to the Train under your cover fire.
+{name1} getting -35 health
+{name2} getting -20 energy""",
+                        "effects": {
+                            "char_1": {"health": -35},
+                            "char_2": {"energy": -20},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """By your order {name1} and {name2} taking their gears and walking
+to the bus. Looking at the car through binoculars you catch some kind
+of a movement there. You whistles to notice your people about probable
+troubles, and they taking lower poses. In the next second bus starts to
+sway, and gun flames are blinking in the car's windows. {name1} and {name2}
+shooting back at the same moment, but gang in the vehicle seems to be
+more numerous, so they both retreating to the Train. Enemy gun fire
+is terribly inaccurate, still, bullets are flying and flying to you,
+throwing sparkles all around and ringing with the Train metal. You're
+commanding to start moving, and {name1} with {name2} are jumping on the
+Train on the run. Rival bullets following you for two more minutes,
+and then suddenly falls silent. Train getting -40 damnability""",
+                        "effects": {"train": {"damnability": -40}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1} and {name2} taking their guns and moving in the direction
+of the bus. Nearlands of the vehicle seems silent, so your people are
+moving to the spot fast, but in some moment both are suddenly stopping.
+You're passing your gaze around to understand what has gone wrong.
+Jeep! Big black jeep roaring in a distance of kilometer seems to be
+heading to the old bus! Feeling the bad luck you're shouting to your
+people: "{name1}, {name2}, get back!". Gazing at each other for a second
+they are turning around and retreating to the Train. Jeep in the same
+time approaches the bus, several armed people are jumping outside.
+Their mood seems to be aggressive, still, they doesn't start firing.
+It's better to move along before they changed their mind.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """Driven by your command, {name1} and {name2} are taking the
+direction to the old vehicle. As the meadow looks too open, they are
+running fast to cross it as soon as possible. Disappearing within the
+car your people a starting to rummage through it, swinging the old metal
+carcass. While it all happening you're seeing a big jeep on a horizon.
+Whistling loudly to your people you're preparing for a fight. It takes
+two more minutes for {name1} and {name2} to jump outside the bus. The
+gang in the jeep approaching fast are starting to shoot, and you're
+opening fire back. {name1} and {name2}, using your cover shooting, are
+returning back to the Train with several banknotes, and you're
+deciding to move along before the bus beholders came too close.
+You're getting +60$""",
+                        "effects": {"money": 60},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """While you were deciding who to send for a search, several
+skinhead scums are jumped out of the bus. Your whole team seeing
+them starts to shoot, and after six-eight seconds all of the rivals are
+falling down on the ground. Taking a quick look at the vehicle through
+binoculars you're commanding {name1} and {name2} to go to it. They
+both energetically jumping off the Train and moving to the bus. You're
+staying on the watch for case if more skinheads will come. Your
+people entering inside the car, and returning back into a field of
+view in less than thirty seconds. Getting back to the Train, they
+showing you a bunch of crumpled dollars.
+You're getting +100$""",
+                        "effects": {"money": 100},
+                    },
+                ),
+            },
+        ),
         "looting": (
             {
                 "name": "Abandoned Car",
@@ -492,6 +597,6 @@ Every character getting +35 energy""",
                     },
                 ),
             },
-        )
+        ),
     }
 }
