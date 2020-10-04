@@ -220,6 +220,9 @@ class CommonController:
         Args:
             task (panda3d.core.PythonTask): Point by mouse task
         """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return task.again
+
         mpos = base.mouseWatcherNode.getMouse()  # noqa: F821
         self._mouse_ray.setFromLens(base.camNode, mpos.x, mpos.y)  # noqa: F821
         return task.again

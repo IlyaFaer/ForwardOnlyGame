@@ -59,6 +59,9 @@ class CameraController:
         If mouse pointer touches a screen edge, move
         the camera in this direction.
         """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return task.again
+
         x = round(base.mouseWatcherNode.getMouseX(), 2)  # noqa: F821
         z = round(base.mouseWatcherNode.getMouseY(), 2)  # noqa: F821
 

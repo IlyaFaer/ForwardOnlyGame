@@ -117,7 +117,7 @@ class ResourcesInterface:
         DirectButton(
             parent=self._coh_frame,
             text="?",
-            frameSize=(-0.02, 0.02, -0.02, 0.02),
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
             frameColor=(0, 0, 0, 0),
             text_bg=(0, 0, 0, 0),
             text_fg=SILVER_COL,
