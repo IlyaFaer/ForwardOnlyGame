@@ -9,6 +9,104 @@ OUTINGS = {
     "Plains": {
         "enemy camp": (
             {
+                "name": "Big tent",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 50, "raider": 25},
+                "assignees": 1,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 10,
+                    "noon": 6,
+                    "evening": 4,
+                },
+                "desc": """It takes not less than ten seconds for you to understand is something
+there, or it's just a big bush. Yes, something is definitely there - a square
+dark green tent, very similar to a soldier's one. It doesn't look like there
+are people in there, but the tent is still standing, so most likely someone
+cares about it. The maximum number of sleepers in such a tent equals to
+four, and they should have to hear the Train approaching. No signs of
+movement means no human, right? It's little bit dangerous, but makes
+sense to send someone to check if anything useful lies in this tent.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're ordering {name1} to move closer to the tent and take a
+look at it. {name1} jumps off the Train and runs fast to the spot.
+You're tracking {himher1} from the cabin, staying sharp. Approaching
+the tent closer {name1} slows down little by little, but in some
+moment {heshe1} suddenly grabs {hisher1} leg and falls on the ground. You
+jump out of the cabin and bring binoculars to your eyes. No one
+appeared anywhere, so you're catching a breath and taking a more
+careful look at {name1}. It seems like {heshe1} failed into a trap.
+You're moving binoculars away and, jumping down to the ground,
+take direction to {name1} to help {himher1} to get out.
+{name1} getting -25 health""",
+                        "effects": {"char_1": {"health": -25}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} takes {hisher1} gear and heads to the tent by your command.
+You're staying on the Train on the watch, holding your gun with
+one hand. {name1} cautiously moves through the green meadow to the
+tent, and once the tent starts to swing. You're throwing up your gun
+and taking the spot on the sight. An old man jumps out of it and,
+turning a big shotgun onto {name1}, thunders the air with a shot.
+As the distance between {name1} and the shooter is too long for a
+shotgun, it most likely was a warning shot. In the next moment the old
+man sees you and the Train, and he freezes. "{name1}, get back!" -
+you're shouting, and {heshe1} starts to move to the Train back forward.
+The old man continue to hold his gun up, but he don't shoot any more.
+"He got me a little" - {name1} climbs up on the Train and shows
+{hisher1} bloody shoulder. {name1} getting -10 health""",
+                        "effects": {"char_1": {"health": -10}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're sending {name1} to take a closer look at the tent. {name1}
+takes {hisher1} gun and fastly moves to the place. The meadow smells
+with flowers and dust, grasshoppers are jumping all around, and there
+is no any single sign of a human. No garbage, no crumpled grass, no
+defensive traps. Getting closer to the tent, {name1} sees that it's full
+of shot holes. No doubts, someone crept up to it and shoot away all who
+was inside. Not very nobly. {name1} accurately moves to the tent entrance
+and takes a look into it. Several skeletons in soldiers uniform, and no
+guns, supplies or anything useful at all. Someone already looted the
+place clean. In disappointed mood {name1} returns back to the Train.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """By your command, {name1} gears up and takes a direction to
+the square tent. First half of {hisher1} way {heshe1} runs fast, but then
+{name1} slows down hard, carefully looking under {hisher1} feet. You're
+staying sharp as it looks like there are traps there, and where traps
+- there people, who set them. Still, {name1} approaching the tent
+without any sign of a trouble. Taking an accurate look inside, {heshe1}
+disappears in the tent inners. You're feeling little bit nervous, but
+several minutes passes, and {name1} walks out on the meadow. Carefully
+choosing the steps, {heshe1} returns back to the Train and shakes a
+bunch of dollars in {hisher1} left hand, showing it to you.
+You're getting +50$""",
+                        "effects": {"money": 50},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """You're sending {name1} for a small recon. Taking {hisher1} gun,
+{heshe1} moves fast to the tent, while you're tracking {hisher1} movement
+through the binoculars. At a few seconds {heshe1} closes to the spot from the
+side, and suddenly tissue entrance of the tent flyes up with loud gun
+shots. {name1} lighting fast ups {hisher1} gun and makes several shots. Silence
+falls on the meadow... {name1} carefully taking a look inside the tent and
+enters it. In the next second {heshe1} jumps out of it and runs back to the
+Train. "Skinhead scum!" - {heshe1} says, entering the Train cabin. - "Seems
+like he tried to shot me before he actually saw me. Missed." - {heshe1} adds,
+pointedly putting several banknotes onto the table.
+You're getting +90$""",
+                        "effects": {"money": 90},
+                    },
+                ),
+            },
+            {
                 "name": "Bus",
                 "type": "Enemy Camp",
                 "class_weights": {"soldier": 25, "raider": 15},
