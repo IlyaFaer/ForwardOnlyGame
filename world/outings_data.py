@@ -9,7 +9,111 @@ OUTINGS = {
     "Plains": {
         "enemy camp": (
             {
-                "name": "Big tent",
+                "name": "Car Column",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 16.6, "raider": 10},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 10,
+                    "morning": 0,
+                    "noon": 3,
+                    "evening": 8,
+                },
+                "desc": """You're catching your eyes on four big black jeeps, standing in a row.
+They are covered with dust, but even from that big distance you can
+say they are in a good shape. No human around makes it tempting to
+send some folks to recon the place - is your first thought. But when
+the Train engine finally falls silent, you're hearing voices, flying
+from the car column side. Definitely, there are people somewhere
+there, still, it's not possible to see them from your spot. So, the
+initiative becomes little bit risky. It's worth it to send three of
+your fighters together to check the cars.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """{name1}, {name2} and {name3} are jumping off the Train, and
+taking a direction to the jeep column. Holding closer together, they
+are silently moving from one tree to another, smoothly approaching
+to the cars. In some moment you understand that voices, which were
+flying to you from the column, vanished. Something is wrong! You're
+finding your people by your gaze, and in this moment a machine gun
+shots tearing the air. Your whole team starts to shoot back, slowly
+crawling back to the Train, as the enemy seems to be full of ammo.
+You're trying to help others with your fire, and the rival shots are
+starting to fly to the Train. Taking cover, you're waiting for {name1},
+{name2} and {name3} to return and giving the order to start the engine.
+Train getting -80 damnability""",
+                        "effects": {"train": {"damnability": -80}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1}, {name2} and {name3} are taking the direction to the jeeps
+by your command. They are moving across the meadow silently for
+some time, but suddenly a sturdy with a machine gun appears near one of
+the jeeps and starts to shoot at your people, pinning them to the ground.
+You're seeing {name3} showing something to others by {hisher3} hand.
+{name1} and {name2} turn around and move back to the Train, while {name3}
+covering them with aggressive fire. The sturdy, experiencing a bullets
+storm, hides behind the car. {name1} and {name2} closing to the Train and
+taking a turn around to cover {name3} retreat. Hearing a short pause,
+sturdy appears back behind the car and shoots to {name3}, but {heshe3}
+returns back to the Train with just a couple of small wounds.
+{name3} getting -25 health
+{name1} and {name2} getting -15 health""",
+                        "effects": {
+                            "char_1": {"health": -15},
+                            "char_2": {"health": -15},
+                            "char_3": {"health": -25},
+                        },
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1}, {name2} and {name3} jumping off the Train and moving
+to the jeeps column. You're seeing them silently approaching the cars.
+Hopes, there is no one around... Not even throwing a look inside the
+cars, your people are simultaneously turning around and running back
+to the Train with the full speed. You're taking your gun, preparing for
+the fight. But no one follows your messengers, so you only have to wait
+them. {name2} climbing the Train back first. "There are at least fifteen
+people, lower, near the river." - {heshe2} explains, breathing heavily.
+You nod your head and giving the command to warm up the engine.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You're sending {name1}, {name2} and {name3} for a short
+recon of the place. Your teammates are moving to the jeep column,
+while you track them from the Train; seeing how {name2} opens a car,
+and starts to rummage in the glove compartment. Suddenly, you hear
+cries, but not of your messengers. Still, they are reacting fast, and
+turning around back to the Train. Looks like there was someone there!
+Confirming this, several naked people appearing near the jeeps. But
+to the moment they grabbed their guns and started to shoot, {name1},
+{name2} and {name3} are jumping onto the Train. "No empty hands!"
+- {name2} proclaims and shows dollars on {hisher2} palm.
+You're getting +80$""",
+                        "effects": {"money": 80},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """{name1}, {name2} and {name3} are taking the direction to the jeeps
+column. {name2} and {name3} are opening two of the cars at once,
+while {name1} stands on the watch. You're seeing {name2} grabbing a
+canister from the car inners. With this find {heshe2} without stops moves
+back to the Train. {name3} in the next few seconds rummages the jeep,
+but in some moment {name1} jumps on {hisher1} place and starts to
+shoot to somewhere behind the column. {name3} grabs the first thing
+{heshe3} see and turns to the Train. {name1} takes few more seconds
+to shoot at those on the other side, but they fight back tough, so
+{heshe1} has to retreat. Returning fast, your people show the catch.
+You're getting +90$ and fuel for 50 miles
+{name1} getting - 15 health""",
+                        "effects": {"money": 90, "char_1": {"health": -15}},
+                    },
+                ),
+            },
+            {
+                "name": "Big Tent",
                 "type": "Enemy Camp",
                 "class_weights": {"soldier": 50, "raider": 25},
                 "assignees": 1,
