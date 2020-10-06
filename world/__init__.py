@@ -5,6 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Game world systems.
 """
 import glob
+import random
 import shelve
 
 from direct.directutil import Mopath
@@ -13,7 +14,7 @@ from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotligh
 
 from const import MOD_DIR
 from personage.enemy import Enemy
-from utils import address
+from utils import address, chance
 
 from .block import Block
 from .locations import LOCATIONS
@@ -47,8 +48,8 @@ class World:
         self._surf_vertices = self._cache_warmup(base.sound_mgr)  # noqa: F821
         self._paths = self._load_motion_paths()
         self._hangar = None
-
         self._is_in_city = False
+        self._et_rusty_blocks = 0
 
         self.sun = Sun(day_part_desc)
 
@@ -227,7 +228,11 @@ class World:
             cam_path=self._paths["cam_" + "direct"],
             surf_vertices=self._surf_vertices,
             enemy_territory=True,
+            is_rusty=self._et_rusty_blocks > 0,
         ).prepare()
+
+        if self._et_rusty_blocks:
+            self._et_rusty_blocks -= 1
 
         self._map.insert(self._block_num, block)
         return block
@@ -286,7 +291,7 @@ class World:
     def generate_location(self, location, size):
         """Generate game location.
 
-        Location consists of blocks, enemy fraction and
+        Location consists of blocks, enemy and
         a list of available outings.
 
         Args:
@@ -296,9 +301,13 @@ class World:
         rails_gen = RailwayGenerator()
         self.outings_mgr = OutingsManager(location)
         map_to_save = []
+        rusty_blocks = 0
 
         for _ in range(size):
             rails_block = rails_gen.generate_block()
+
+            if not rusty_blocks and chance(2):
+                rusty_blocks = random.randint(4, 8)
 
             is_city = False
             is_station = False
@@ -310,6 +319,12 @@ class World:
                 rails_block = "direct"
                 is_city = True
 
+            if rusty_blocks:
+                is_rusty = True
+                rusty_blocks -= 1
+            else:
+                is_rusty = False
+
             block = Block(
                 name=rails_block,
                 path=self._paths[rails_block],
@@ -317,6 +332,7 @@ class World:
                 surf_vertices=self._surf_vertices,
                 is_station=is_station,
                 is_city=is_city,
+                is_rusty=is_rusty,
                 outing_available=None if is_city else self.outings_mgr.plan_outing(),
             )
             self._map.append(block)
@@ -347,6 +363,7 @@ class World:
                 surf_vertices=self._surf_vertices,
                 is_station=desc["station_side"] is not None,
                 is_city=desc["is_city"],
+                is_rusty=desc["is_rusty"],
                 outing_available=desc["outing_available"],
                 desc=desc,
             )
@@ -525,6 +542,9 @@ class World:
             base.train.speed_to_min()  # noqa: F821
 
         if self._et_blocks:
+            if self._et_blocks > 8 and not self._et_rusty_blocks and chance(5):
+                self._et_rusty_blocks = random.randint(4, 8)
+
             block = self._prepare_et_block()
             self._map[self._block_num - 1].enemy_territory = True
             self._et_blocks -= 1

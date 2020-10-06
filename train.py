@@ -7,6 +7,8 @@ Train - the main game object, API.
 Includes the systems of Train loading, preparations,
 animation, sounds, lights.
 """
+import random
+
 from direct.actor.Actor import Actor
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
@@ -45,6 +47,7 @@ class Train:
             self._clunk_snd,
             self._barrier_hit_snd,
             self._lighter_snd,
+            self._creak_snds,
         ) = self._set_sounds()
 
         self.ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
@@ -97,6 +100,9 @@ class Train:
         self.r_brake = False
 
         self._phys_node = None
+
+        self._is_on_rusty = False
+        self._creak_snd_cooldown = False
 
         self._prepare_particles()
 
@@ -273,6 +279,16 @@ class Train:
         self._miles += 1
         self._interface.update_miles(self._miles)
 
+        if block.is_rusty:
+            if not self._is_on_rusty:
+                self._is_on_rusty = True
+                base.taskMgr.doMethodLater(  # noqa: F821
+                    1, self._get_rusty_damage, "do_rusty_damage"
+                )
+        elif self._is_on_rusty:
+            self._is_on_rusty = False
+            base.taskMgr.remove("do_rusty_damage")  # noqa: F821
+
         self.ctrl.move_along_block(block, self.node)
 
     def switch_to_current_block(self):
@@ -305,6 +321,30 @@ class Train:
 
         self.model.wrtReparentTo(self.root_node)
         self.node.wrtReparentTo(self.root_node)
+
+    def _get_rusty_damage(self, task):
+        """Do damage because of rusty rails.
+
+        The Train is getting damage on rusty rails, if
+        its speed is higher than 0.7. Damage is indicated
+        with a metal creak sound.
+        """
+        if self.ctrl.current_speed > 0.7:
+            self.damnability -= 2
+
+            if not self._creak_snd_cooldown:
+                random.choice(self._creak_snds).play()
+                self._creak_snd_cooldown = True
+
+                base.taskMgr.doMethodLater(  # noqa: F821
+                    7, self._stop_creak_cooldown, "stop_creak_coodown"
+                )
+        return task.again
+
+    def _stop_creak_cooldown(self, task):
+        """Stop metal creak sound cooldown."""
+        self._creak_snd_cooldown = False
+        return task.done
 
     def _set_lights(self):
         """Configure Train lights.
@@ -347,9 +387,9 @@ class Train:
         """Configure Train sounds.
 
         Returns:
-            (panda3d.core.AudioSound, panda3d.core.AudioSound):
-                Train movement, stopping, braking, barrier hit
-                and lighter toggle sounds.
+            (panda3d.core.AudioSound...):
+                Train movement, stopping, braking, barrier hit,
+                lighter toggle and metal creaking sounds.
         """
         move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(move_snd, self.model)  # noqa: F821
@@ -371,7 +411,25 @@ class Train:
 
         lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
-        return move_snd, stop_snd, brake_snd, clunk_snd, hit_snd, lighter_snd
+
+        creak_snd1 = base.loader.loadSfx("sounds/metal_creak1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(creak_snd1, self.model)  # noqa: F821
+
+        creak_snd2 = base.loader.loadSfx("sounds/metal_creak2.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(creak_snd2, self.model)  # noqa: F821
+
+        creak_snd3 = base.loader.loadSfx("sounds/metal_creak3.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(creak_snd3, self.model)  # noqa: F821
+
+        return (
+            move_snd,
+            stop_snd,
+            brake_snd,
+            clunk_snd,
+            hit_snd,
+            lighter_snd,
+            (creak_snd1, creak_snd2, creak_snd3),
+        )
 
     def update_physics(self):
         """Update the Train physical shape."""

@@ -52,6 +52,7 @@ class Block:
         enemy_territory (bool): This block is an enemy territory.
         is_station (bool): Station must be set on this block.
         is_city (bool): This is a city block.
+        is_rusty (bool): Rails on this block are deteriorated.
         outing_available (str): An outing type available on this block.
         desc (dict): Block description.
     """
@@ -65,6 +66,7 @@ class Block:
         enemy_territory=False,
         is_station=False,
         is_city=False,
+        is_rusty=False,
         outing_available=None,
         desc=None,
     ):
@@ -76,6 +78,7 @@ class Block:
         self.enemy_territory = enemy_territory
         self.outing_available = outing_available
         self.is_city = is_city
+        self.is_rusty = is_rusty
 
         if desc:  # loading block
             self._station_side = desc["station_side"]
@@ -306,7 +309,7 @@ class Block:
             self.rails_mod = loader.loadModel(address("city1_rails"))  # noqa: F821
         else:
             self.rails_mod = loader.loadModel(  # noqa: F821
-                address(self.name + "_rails")
+                address(self.name + "_rails" + ("_rusty" if self.is_rusty else ""))
             )
 
         self._load_surface_block(
@@ -355,6 +358,7 @@ class Block:
             "name": self.name,
             "outing_available": self.outing_available,
             "is_city": self.is_city,
+            "is_rusty": self.is_rusty,
             "station_side": self._station_side,
             "l_surface": self._l_surface,
             "r_surface": self._r_surface,

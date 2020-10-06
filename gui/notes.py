@@ -41,13 +41,17 @@ get better chances""",
 while they are on outing. You
 only can choose right people
 to send.""",
-    # controls
+    # Train
     """It's reckless to stop while
 on enemy territory""",
     """Switching on lights helps to save
 characters energy and to increase
 their accuracy, but also attracts
 enemy attention""",
+    """Deteriorated rusty rails
+can damage your Train wheels.
+Slow down when you hear a
+metal creak.""",
     # characters and classes
     """Women are nice and social, they
 reduce stress at any collective""",
