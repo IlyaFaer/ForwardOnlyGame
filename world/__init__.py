@@ -338,7 +338,7 @@ class World:
             self._map.append(block)
             map_to_save.append(block.description())
 
-        world_save = shelve.open("saves/world")
+        world_save = shelve.open("saves/world", "n")
         world_save[location] = map_to_save
         world_save.close()
 
