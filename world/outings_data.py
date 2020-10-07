@@ -8,7 +8,7 @@ Outings scenarios and effects.
 OUTINGS = {
     "Plains": {
         "enemy camp": (
-            {
+            {  # 1
                 "name": "Car Column",
                 "type": "Enemy Camp",
                 "class_weights": {"soldier": 16.6, "raider": 10},
@@ -112,7 +112,7 @@ You're getting +90$ and fuel for 50 miles
                     },
                 ),
             },
-            {
+            {  # 2
                 "name": "Big Tent",
                 "type": "Enemy Camp",
                 "class_weights": {"soldier": 50, "raider": 25},
@@ -210,7 +210,7 @@ You're getting +90$""",
                     },
                 ),
             },
-            {
+            {  # 3
                 "name": "Bus",
                 "type": "Enemy Camp",
                 "class_weights": {"soldier": 25, "raider": 15},
@@ -313,9 +313,116 @@ You're getting +100$""",
                     },
                 ),
             },
+            {  # 4
+                "name": "Gas Station",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 25, "raider": 16},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 4,
+                    "morning": 5,
+                    "noon": 10,
+                    "evening": 2,
+                },
+                "desc": """For at least twenty minutes you've been watching a highway to the left
+of the railway. No cars, no light posts - road was completely empty.
+But, finally, you're seeing a white square advertisement sign of a
+small gas station. There is no vehicle nearby, nor people, otherwise
+the building looks well maintained. Hm-m. Fuel - is always good, but
+suspicious silence of the nearlands makes you little bit wary.
+Place should be checked for resources, and if to send someone, you
+should send two, so that messengers could deal with possible
+troubles together.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """{name1} and {name2} are closing to the gas station, seeing a lot
+of bullet shells scattered all around. They throw gazes at each other
+and proceeding further much more slower. Entering into the looted
+building, full of broken metal, plastic and wood stuff, they decide
+to turn around and move back to the Train, but in that moment gun
+shot thunders in the air, and the gas automates exploding with
+horrorable noize. {name2} gets back to the reality first, and sees
+that {name1} has a lot of cut wounds. Taking a quick look around,
+{heshe2} detects no threats - seems, the one tried to explode them,
+and retreated right after the shot. Lifting {name1} on the shoulders,
+{heshe2} moves back to the Train.
+{name1} getting -45 health
+{name2} getting -10 health""",
+                        "effects": {
+                            "char_1": {"health": -45},
+                            "char_2": {"health": -10},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} and {name2} starting to move to the gas station by your
+command. It takes a couple of minutes for them to come to the
+building, which looks like people were here seconds ago. Entering
+inside, {name1} and {name2} trying to find something really useful,
+but only see bubble gum, chips and crackers. Suddenly, {name1} catches
+{hisher1} attention on a strong smoke smell. Throwing a look through
+the window, {heshe1} pushes {name2} and jerkely runs to the entrance.
+{name2} follows {himher1}, and outside they see that someone surrounded
+them with a ring of fire. "Faster!" - {name2} commands and runs
+through the wall of flame, trying to cross it before it grown too strong.
+Breaking through the fire, they see no one, no ambush or something.
+Strange. With a couple of scorches they return to the Train.
+{name1} and {name2} getting -10 health""",
+                        "effects": {
+                            "char_1": {"health": -10},
+                            "char_2": {"health": -10},
+                        },
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're choosing {name1} and {name2} as messengers for this walk.
+They grab their stuff and take the direction to the gas station. Getting
+closer to the building, they hear music. More than that, entering the
+station they see several people: cashier, security guard guy and waiter.
+Not to scare anyone they move their guns down, and doing a try
+to talk with the gas station inhabitants, but all of them are speaking
+at some weird language, which {name1} and {name2} doesn't know. As
+dwellers doesn't seem to be dangerous, just several people, who still
+lives here despite the End of Days, {name1} and {name2} deciding
+to leave them as they were and move along.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """{name1} and {name2} moving to the gas station by your order.
+Getting closer to the building they hear music, and see three people
+within. In the next moment from the other side of the station four
+skinheads with guns are appearing, with clear intent to attack the
+gas point. {name1} and {name2}, not yet detected by robbers, upper their
+guns and shooting off all of these cruds. The station dwellers moving
+outside the building to see what's happening, and understand that your
+people saved them from skinheads. They applaud {name1} and {name2}
+speaking of weird language unfamiliar to your messengers. {name1} and
+{name2} nod their heads, turning back to the Train, but one of the
+dwellers stops them and gives them several dollar banknotes.
+You're getting +70$""",
+                        "effects": {"money": 70},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """{name1} and {name2} fastly moving to the gas station. Getting
+closer, they slow down, but after several seconds they see that the
+building is abandoned. The glass door is open, music is still playing,
+but dust lies everywhere and silence. {name1} and {name2} together
+walking around the station, enter it and, seeing no threats, splitting
+to take two things simultaneously: cash and fuel. Cash machine,
+fortunately, is open, and {name2} finds a canister very fast. Filling
+it to the brim, {name1} and {name2} in a good mood returning back
+to the Train with their catch.
+You're getting +90$ and fuel for 50 miles""",
+                        "effects": {"money": 90},
+                    },
+                ),
+            },
         ),
         "looting": (
-            {
+            {  # 1
                 "name": "Abandoned Car",
                 "type": "Looting",
                 "class_weights": {"soldier": 25, "raider": 50},
@@ -403,7 +510,7 @@ as there is a diesel fuel for 40 more miles.""",
                     },
                 ),
             },
-            {
+            {  # 2
                 "name": "Meadow Tent",
                 "type": "Looting",
                 "class_weights": {"soldier": 15, "raider": 25},
@@ -503,7 +610,7 @@ You're getting diesel fuel for 35 more miles.""",
                     },
                 ),
             },
-            {
+            {  # 3
                 "name": "Old Hut",
                 "type": "Looting",
                 "class_weights": {"soldier": 11, "raider": 16.5},
@@ -600,7 +707,7 @@ Train damnability +90""",
                     },
                 ),
             },
-            {
+            {  # 4
                 "name": "Monastery",
                 "type": "Looting",
                 "class_weights": {"soldier": 11, "raider": 16.5},
@@ -705,7 +812,7 @@ You're getting +40$""",
                     },
                 ),
             },
-            {
+            {  # 5
                 "name": "Wrecked truck",
                 "type": "Looting",
                 "class_weights": {"soldier": 16, "raider": 25},
