@@ -22,12 +22,15 @@ class OutingsManager:
     """
 
     def __init__(self, location):
-        self._threshold = random.randint(60, 80)
+        self._threshold = random.randint(45, 65)
         self._outings = copy.deepcopy(OUTINGS[location])
         self._types = tuple(self._outings.keys())
-        self._looting_snd = base.loader.loadSfx(  # noqa: F821
-            "sounds/looting_result.ogg"
-        )
+        self._snds = {
+            "Looting": base.loader.loadSfx("sounds/looting_result.ogg"),  # noqa: F821
+            "Enemy Camp": base.loader.loadSfx(  # noqa: F821
+                "sounds/enemy_camp_result.ogg"
+            ),
+        }
         self._interface = OutingsInterface()
 
     def _get_result(self, score, results):
@@ -61,7 +64,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(60, 80)
+            self._threshold = random.randint(45, 65)
             return random.choice(self._types)
 
     def show_upcoming(self, type_):
@@ -143,7 +146,7 @@ class OutingsManager:
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
             selected_effect,
         )
-        self._looting_snd.play()
+        self._snds[outing["type"]].play()
 
         if "train" in effects:
             base.train.do_effects(effects["train"])  # noqa: F821
