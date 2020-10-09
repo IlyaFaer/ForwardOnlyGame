@@ -106,6 +106,10 @@ class TrainController:
         self._move_par.setPlayRate(speed)
         self._move_anim_int.setPlayRate(speed)
         self._move_snd.setPlayRate(min(max(0.25, speed * 1.2), 1))
+        if not speed:
+            self._move_snd.stop()
+            self._is_stopped = True
+
         return task.done
 
     def _change_speed_delayed(self, diff):
