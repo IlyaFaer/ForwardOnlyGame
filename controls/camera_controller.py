@@ -225,6 +225,57 @@ class CameraController:
         base.accept("wheel_up", self._zoom_timed, [0.7, 1.2])  # noqa: F821
         base.accept("wheel_down", self._zoom_timed, [2, 3])  # noqa: F821
 
+        base.accept("mouse2", self._turn_camera_with_mouse)  # noqa: F821
+        base.accept(  # noqa: F821
+            "mouse2-up",
+            base.taskMgr.remove,  # noqa: F821
+            extraArgs=["rotate_camera_with_mouse"],
+        )
+
+    def _turn_camera_with_mouse(self):
+        """Start the main camera movement by mouse."""
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.01,
+            self._rotate_camera_with_mouse,
+            "rotate_camera_with_mouse",
+            extraArgs=[
+                base.mouseWatcherNode.getMouseX(),  # noqa: F821
+                base.mouseWatcherNode.getMouseY(),  # noqa: F821
+            ],
+            appendTask=True,
+        )
+
+    def _rotate_camera_with_mouse(self, x, z, task):
+        """Rotate the main camera according to the mouse movement.
+
+        Args:
+            x (float): The original mouse X position.
+            z (float): The original mouse Y position.
+        """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return
+
+        new_x = base.mouseWatcherNode.getMouseX()  # noqa: F821
+        new_z = base.mouseWatcherNode.getMouseY()  # noqa: F821
+
+        if new_x - x <= -0.15:
+            self._cam_np.setH(self._cam_np.getH() - 1)
+        elif new_x - x >= 0.15:
+            self._cam_np.setH(self._cam_np.getH() + 1)
+        elif new_z - z <= -0.15:
+            r = self._cam_np.getR()
+            if r < 20:
+                self._cam_np.setR(r + 1)
+        elif new_z - z >= 0.15:
+            r = self._cam_np.getR()
+            if r > -60:
+                self._cam_np.setR(r - 1)
+
+        return task.again
+
     def _toggle_centered_view(self):
         """Set camera onto default position.
 

@@ -26,9 +26,10 @@ R - show the character's cohesion with others
 W - hold to accelerate
 S - hold to slow down
 
-\u2190\u2191\u2193\u2192 - move camera
-Alt + \u2190\u2191\u2193\u2192 - rotate camera
-"+", "-" - zoom camera
+Camera:
+\u2190\u2191\u2193\u2192 or push screen edge with mouse - move
+Alt + \u2190\u2191\u2193\u2192 or hold mouse wheel - rotate
+"+", "-" or scroll mouse wheel - zoom
 C - toggle centered view
 
 F - toggle Train lights
