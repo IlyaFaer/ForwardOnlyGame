@@ -420,6 +420,104 @@ You're getting +90$ and fuel for 50 miles""",
                     },
                 ),
             },
+            {  # 5
+                "name": "Trailers",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 16.5, "raider": 11},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 10,
+                    "morning": 0,
+                    "noon": 4,
+                    "evening": 7,
+                },
+                "desc": """From a very long distance you're catching your eyes on several grey
+rectangles. Buses? That can promise troubles as well as a good place
+for looting. While the Train getting closer to the vehicle, it becomes
+clearer that it's not just a bunch of cars, it's a small auto camp.
+Five big trailers with clotheslines stretched between them, soccer
+balls and bonfires looking quiet, but definitely inhabited. You're
+not able to find any human by your eyes, and that fact makes the
+situation even harder: there can be dozens of fighters there. It
+makes sense to prepare well before entering this trailer camp.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're making a decision to send {name1}, {name2} and
+{name3} to investigate the trailer camp. They're taking their gear and
+move towards the grey cars. Nothing promises troubles for several
+minutes, but at some moment car engines tearing the air apart. You
+all uppering your guns to fight back the enemy. Trailers are starting
+to skid, throwing grey dust all around, and your messengers making
+few steps back to the Train side not to get lost in these clouds. Red
+and white trailers lights are floating in the grey shroud, but you're
+hearing no shots. They are just leaving. Taking few more seconds to
+think, you're commanding your people to return back to the crew.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """You're deciding to send {name1}, {name2} and {name3} for a recon
+of the place. While they are gearing up, you're looking at the trailers
+camp trying to understand, if there is an ambush there. Once you hear
+the vehicle engines starting, and in the next second trailers are
+getting under way. Your people standing up just beside you, managing
+to find out what is going on. "Looks like they are leaving." - {name2}
+says. "Well, at least they didn't start to shoot." - {name1} adds. Yes,
+that's definitely a good thing... Trailers are distancing fast, and the
+dust settles to the ground, unveiling some stuff left by those people.
+"Let's take a look at it!" - {name2} pronounces and jumps off the Train.
+You're finding a cure that can heal 15 health of one character""",
+                        "effects": {"select_char": {"health": 15}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1}, {name2} and {name3} jumping off the Train to do a recon
+of the trailer camp. In the same moment grey cars are starting their
+engines and making a spurt to leave the place. Your people are holding
+several seconds pause to see what will happen next... All the trailers
+except one are moving away fast. {name3} throws a gaze to {name1} and
+{name2} and points to the car with {hisher3} head. Closing to the vehicle,
+they open it, and {name1} with {name3} are entering inside. It takes some
+time for them to search through the car. It doesn't give a lot of
+lucky finds, mostly there is just an old useless stuff, like someone very
+old and most likely little bit mad was living in the truck, but at least
+{name3} finds 30$ in there. With this find your messengers return back.
+You're getting 30$""",
+                        "effects": {"money": 30},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """By your command, {name1}, {name2} and {name3} taking their gear
+and jumping to the ground. Right in this second all the trailers, except
+one, spurt away. In the remaining trailer your people hear some fuss.
+While they are getting closer to the vehicle, the window of it opens,
+and a gun barrel leans out, starting to shoot all around without aiming.
+Making a circle movement around the trailer, your people open it and do
+several shots inside. The rival gun silences. {name1} and {name2} enter
+the car for several seconds and walk out together, holding a big canister.
+Lifting it onto the Train, {name2} puts {hisher2} hand in {hisher2} pocket and
+gets out a bunch of dollar papers. "Plus to the fuel" - {heshe2} smiles.
+You're getting fuel for 50 miles and 60$""",
+                        "effects": {"money": 60},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """{name1}, {name2} and {name3} energetically jump off the Train
+and take the direction to the trailers camp. After few seconds of
+silence they hear some movement near the cars. Uppering their guns,
+they see several skinheads with pistols, swingingly moving to them.
+Not giving a chance, your people shoot out them and start to move
+from one trailer to another. In every one of them they see injectors,
+white powder, stinky vomit and one-three stoned to nearly death
+skinheads. "A drug party, ha?" - {name2} says. - "Let's take what
+is useful for us and leave them where they are." {name1} and {name3}
+agreeing on that, and they three start to collect things.
+You're getting 200$""",
+                        "effects": {"money": 200},
+                    },
+                ),
+            },
         ),
         "looting": (
             {  # 1
