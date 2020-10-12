@@ -89,6 +89,15 @@ class EnemyUnit(Unit):
         return self._tooltip
 
     @property
+    def shooting_speed(self):
+        """Delay between shots of this unit.
+
+        Returns:
+            float: Delay between shots in seconds.
+        """
+        return 1.7 + random.uniform(0.1, 0.9)
+
+    @property
     def clear_delay(self):
         """Delay between this character's death and clearing.
 
@@ -155,7 +164,8 @@ class EnemyUnit(Unit):
         self.model.play("die")
         if self.id in base.world.enemy.active_units:  # noqa: F821
             base.world.enemy.active_units.pop(self.id)  # noqa: F821
-            self.current_part.enemies.remove(self)
+            if self.current_part:
+                self.current_part.enemies.remove(self)
 
         self._explode()
         self._y_positions.append(self._y_pos)
@@ -215,7 +225,7 @@ class EnemyUnit(Unit):
             return task.done
 
 
-class MotoShooter(Shooter, EnemyUnit):
+class MotoShooter(EnemyUnit, Shooter):
     """Shooter-motorcyclist unit.
 
     Includes character and his transport.

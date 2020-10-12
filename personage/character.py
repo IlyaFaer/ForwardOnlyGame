@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Characters (player units) API.
 """
+import copy
 import random
 
 from direct.actor.Actor import Actor
@@ -11,9 +12,9 @@ from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
 from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
-from utils import address, chance
+from utils import address, chance, take_random
 
-from .character_data import NAMES, CLASSES
+from .character_data import CLASSES, NAMES, TRAITS
 from .shooter import Shooter
 from .unit import Unit
 
@@ -61,6 +62,25 @@ class Character(Shooter, Unit):
         self.himher = "him" if sex == "male" else "her"
         self.damage = [3, 5]
         self.clear_damage = [3, 5]
+        self.traits = []
+        traits = copy.copy(TRAITS)
+        for _ in range(random.randint(0, 2)):
+            self.traits.append(random.choice(take_random(traits)))
+
+    @property
+    def shooting_speed(self):
+        """Delay between shots of this unit.
+
+        Returns:
+            float: Delay between shots in seconds.
+        """
+        if "Fast hands" in self.traits:
+            return 1.1 + random.uniform(0.1, 0.8)
+
+        if "Snail" in self.traits:
+            return 2 + random.uniform(0.1, 1.1)
+
+        return 1.7 + random.uniform(0.1, 0.9)
 
     @property
     def energy(self):
@@ -305,15 +325,23 @@ class Character(Shooter, Unit):
         Reduce the character energy according to day part
         and status: fighting or not.
         """
-        if self._target:
-            task.delayTime = 20
-        elif base.world.sun.is_dark:  # noqa: F821
+        if base.world.sun.is_dark:  # noqa: F821
             if base.train.lights_on:  # noqa: F821
                 task.delayTime = 20
             else:
                 task.delayTime = 15
+
+            if "Fear of dark" in self.traits:
+                task.delayTime /= 2
+
+        elif self._target:
+            task.delayTime = 20
+
         else:
             task.delayTime = self.class_data["energy_spend"]
+
+        if "Hemophobia" in self.traits and self.health < self.class_data["health"] / 2:
+            task.delayTime *= 0.75
 
         self.energy -= 1
         return task.again
@@ -520,13 +548,27 @@ class Character(Shooter, Unit):
                 miss_chance += 20
 
         if base.world.sun.is_dark:  # noqa: F821
-            miss_chance += 20
+            if "Cat eyes" in self.traits:
+                miss_chance -= 5
+            else:
+                miss_chance += 20
 
         miss_chance += (100 - self.energy) // 5
         if self._team.cover_fire:
-            miss_chance = max(0, miss_chance - 25)
+            miss_chance = min(100, max(0, miss_chance - 25))
 
         return chance(miss_chance)
+
+    def get_damage(self, damage):
+        """Getting damage.
+
+        Args:
+            damage (int): Damage points to get.
+        """
+        if "Masochism" in self.traits:
+            self.energy += 1
+
+        Unit.get_damage(self, damage)
 
 
 def generate_char(id_, class_, sex, team=None):

@@ -117,3 +117,9 @@ NAMES = {
         "Victoria",
     ),
 }
+
+TRAITS = [
+    ("Fast hands", "Snail"),
+    ("Cat eyes", "Fear of dark"),
+    ["Masochism", "Hemophobia"],
+]

@@ -27,13 +27,19 @@ class Shooter(metaclass=abc.ABCMeta):
         self.current_part = None
         self.shot_snd = None
 
+    @abc.abstractproperty
+    def shooting_speed(self):
+        raise NotImplementedError(
+            "Every shooter class must have shooting_speed property."
+        )
+
     def _shoot(self, task):
         """Play shooting animation and sound, make damage."""
         self._shoot_anim.start()
         if not self._missed_shot():
             self._target.get_damage(random.randint(*self.damage))
 
-        task.delayTime = 1.7 + random.uniform(0.1, 0.9)
+        task.delayTime = self.shooting_speed
         return task.again
 
     def _set_shoot_anim(self, pos, angle, shots):
