@@ -21,8 +21,8 @@ class CharacterInterface:
 
         char_int_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.3, 0.3, -0.1, 0.1),
-            pos=(0.3, 0, -1.9),
+            frameSize=(-0.31, 0.31, -0.1, 0.115),
+            pos=(0.31, 0, -1.9),
             frameTexture=ICON_PATH + "metal1.png",
         )
         char_int_fr.setTransparency(TransparencyAttrib.MAlpha)
@@ -33,7 +33,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.23, 0, 0.04),
+            pos=(-0.22, 0, 0.07),
         )
         self._char_name = DirectLabel(
             parent=char_int_fr,
@@ -41,7 +41,15 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
-            pos=(-0.11, 0, 0.038),
+            pos=(-0.1, 0, 0.068),
+        )
+        self._traits_list = DirectLabel(
+            parent=char_int_fr,
+            text="",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=(0.028, 0.028),
+            text_fg=SILVER_COL,
+            pos=(0, 0, 0.025),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -49,7 +57,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(0.03, 0, 0.04),
+            pos=(0.05, 0, 0.07),
         )
         self._char_class = DirectLabel(
             parent=char_int_fr,
@@ -57,7 +65,7 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
-            pos=(0.15, 0, 0.038),
+            pos=(0.17, 0, 0.068),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -65,14 +73,14 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.23, 0, -0.015),
+            pos=(-0.22, 0, -0.015),
         )
         self._char_health = DirectWaitBar(
             parent=char_int_fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.85, 0.2, 0.28, 1),
-            pos=(0.06, 0, -0.008),
+            pos=(0.07, 0, -0.008),
         )
         DirectLabel(
             parent=char_int_fr,
@@ -80,14 +88,14 @@ class CharacterInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=RUST_COL,
-            pos=(-0.226, 0, -0.06),
+            pos=(-0.216, 0, -0.06),
         )
         self._char_energy = DirectWaitBar(
             parent=char_int_fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.46, 0.61, 0.53, 1),
-            pos=(0.06, 0, -0.053),
+            pos=(0.07, 0, -0.053),
         )
         self._tip = OnscreenText(
             parent=base.render2d,  # noqa: F821
@@ -109,6 +117,7 @@ class CharacterInterface:
         """
         self._char_name["text"] = character.name
         self._char_class["text"] = character.class_.capitalize()
+        self._traits_list["text"] = ", ".join(character.traits)
 
         self._char_health["range"] = character.class_data["health"]
         self._char_health["value"] = character.health
@@ -118,6 +127,7 @@ class CharacterInterface:
         self._char_class.show()
         self._char_health.show()
         self._char_energy.show()
+        self._traits_list.show()
 
         self._char = character
         base.taskMgr.doMethodLater(  # noqa: F821
@@ -130,6 +140,7 @@ class CharacterInterface:
         self._char_class.hide()
         self._char_health.hide()
         self._char_energy.hide()
+        self._traits_list.hide()
 
         base.taskMgr.remove("track_char_info")  # noqa: F821
         self._char = None
