@@ -8,6 +8,7 @@ from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectW
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TransparencyAttrib
 
+from personage.character_data import TRAIT_DESC
 from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
@@ -19,16 +20,31 @@ class CharacterInterface:
         self._rest_buttons = {}
         self._rest_list_active = False
 
-        char_int_fr = DirectFrame(
+        self._char_desc_wids = []
+        self._char_desc_shown = False
+
+        self._fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.31, 0.31, -0.1, 0.115),
             pos=(0.31, 0, -1.9),
             frameTexture=ICON_PATH + "metal1.png",
         )
-        char_int_fr.setTransparency(TransparencyAttrib.MAlpha)
+        self._fr.setTransparency(TransparencyAttrib.MAlpha)
 
+        self._char_desc_but = DirectButton(
+            parent=self._fr,
+            text="?",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            frameColor=(0, 0, 0, 0),
+            text_bg=(0, 0, 0, 0),
+            text_fg=SILVER_COL,
+            text_scale=0.03,
+            relief="flat",
+            pos=(0.27, 0, 0.0675),
+            command=self._show_char_desc,
+        )
         DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="Name:",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
@@ -36,15 +52,15 @@ class CharacterInterface:
             pos=(-0.22, 0, 0.07),
         )
         self._char_name = DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
-            pos=(-0.1, 0, 0.068),
+            pos=(-0.09, 0, 0.069),
         )
         self._traits_list = DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.028, 0.028),
@@ -52,7 +68,7 @@ class CharacterInterface:
             pos=(0, 0, 0.025),
         )
         DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="Type:",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
@@ -60,7 +76,7 @@ class CharacterInterface:
             pos=(0.05, 0, 0.07),
         )
         self._char_class = DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
@@ -68,7 +84,7 @@ class CharacterInterface:
             pos=(0.17, 0, 0.068),
         )
         DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="Health",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
@@ -76,14 +92,14 @@ class CharacterInterface:
             pos=(-0.22, 0, -0.015),
         )
         self._char_health = DirectWaitBar(
-            parent=char_int_fr,
+            parent=self._fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.85, 0.2, 0.28, 1),
             pos=(0.07, 0, -0.008),
         )
         DirectLabel(
-            parent=char_int_fr,
+            parent=self._fr,
             text="Energy",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.03, 0.03),
@@ -91,7 +107,7 @@ class CharacterInterface:
             pos=(-0.216, 0, -0.06),
         )
         self._char_energy = DirectWaitBar(
-            parent=char_int_fr,
+            parent=self._fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
             value=0,
             barColor=(0.46, 0.61, 0.53, 1),
@@ -123,13 +139,19 @@ class CharacterInterface:
         self._char_health["value"] = character.health
         self._char_energy["value"] = character.energy
 
+        self._char = character
+
         self._char_name.show()
         self._char_class.show()
         self._char_health.show()
         self._char_energy.show()
         self._traits_list.show()
+        self._char_desc_but.show()
 
-        self._char = character
+        if self._char_desc_shown:
+            self._show_char_desc()
+            self._show_char_desc()
+
         base.taskMgr.doMethodLater(  # noqa: F821
             0.5, self._update_char_info, "track_char_info"
         )
@@ -141,6 +163,10 @@ class CharacterInterface:
         self._char_health.hide()
         self._char_energy.hide()
         self._traits_list.hide()
+        self._char_desc_but.hide()
+
+        if self._char_desc_shown:
+            self._show_char_desc()
 
         base.taskMgr.remove("track_char_info")  # noqa: F821
         self._char = None
@@ -219,6 +245,55 @@ class CharacterInterface:
         self._char_health["value"] = self._char.health
         self._char_energy["value"] = self._char.energy
         return task.again
+
+    def _show_char_desc(self):
+        """Show detailed character description.
+
+        Includes description of every character's trait.
+        """
+        if self._char_desc_shown:
+            self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.115)
+            for wid in self._char_desc_wids:
+                wid.destroy()
+
+            self._char_desc_wids = []
+        else:
+            self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.61)
+            self._char_desc_wids.append(
+                DirectLabel(
+                    parent=self._fr,
+                    text="Traits",
+                    frameSize=(0.1, 0.1, 0.1, 0.1),
+                    text_scale=0.03,
+                    text_fg=RUST_COL,
+                    pos=(-0.225, 0, 0.55),
+                )
+            )
+            shift = 0.52
+            for trait in self._char.traits:
+                self._char_desc_wids.append(
+                    DirectLabel(
+                        parent=self._fr,
+                        text=trait,
+                        frameSize=(0.1, 0.1, 0.1, 0.1),
+                        text_scale=0.03,
+                        text_fg=SILVER_COL,
+                        pos=(0, 0, shift),
+                    )
+                )
+                self._char_desc_wids.append(
+                    DirectLabel(
+                        parent=self._fr,
+                        text=TRAIT_DESC[trait],
+                        frameSize=(0.1, 0.1, 0.1, 0.1),
+                        text_scale=0.029,
+                        text_fg=SILVER_COL,
+                        pos=(0, 0, shift - 0.045),
+                    )
+                )
+                shift -= 0.1
+
+        self._char_desc_shown = not self._char_desc_shown
 
 
 class CharacterChooser:

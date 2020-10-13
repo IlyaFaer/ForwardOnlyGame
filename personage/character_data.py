@@ -123,3 +123,12 @@ TRAITS = [
     ("Cat eyes", "Fear of dark"),
     ["Masochism", "Hemophobia"],
 ]
+
+TRAIT_DESC = {
+    "Fast hands": "+30% shooting speed",
+    "Snail": "-20% shooting speed",
+    "Cat eyes": "+25% accuracy in darkness",
+    "Fear of dark": "+50% energy spend in darkness",
+    "Masochism": "regain energy when getting damage",
+    "Hemophobia": "+25% energy spend, if health < 50%",
+}
