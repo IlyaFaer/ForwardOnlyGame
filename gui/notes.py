@@ -12,6 +12,9 @@ from panda3d.core import TransparencyAttrib
 from .train import ICON_PATH, SILVER_COL
 
 NOTES = (
+    # traits
+    """Single character can have up
+to four different traits""",
     # enemy
     """Skinheads activity is at
 maximum during evening""",
@@ -30,9 +33,9 @@ between particular characters
 keep them closer to
 each other""",
     # outings
-    """On "Looting" outings you can find
-resources to repair Train, heal
-characters, regain energy""",
+    """Different types of outings
+are offering different
+kinds of trophies""",
     """Outing can turn dangerous, it's
 better to send people who are
 familiar with each other to
@@ -41,6 +44,9 @@ get better chances""",
 while they are on outing. You
 only can choose right people
 to send.""",
+    """Some outings can turn very
+dangerous, while other are
+sure case. Take your risks!""",
     # Train
     """It's reckless to stop while
 on enemy territory""",
@@ -70,6 +76,9 @@ faster than others""",
     # soldiers
     """Soldiers are good shooters at
 medium distance""",
+    """If you want to hit an enemy
+fortification, soldiers are
+your choice""",
     # accuracy
     """Shooting accuracy is affected
 by lighting, distance,
