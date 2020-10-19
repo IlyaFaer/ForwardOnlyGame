@@ -54,6 +54,7 @@ class Character(Shooter, Unit):
         self._idle_seq = None
         self._energy = 100
         self._cohesion_ball = None
+        self._is_stunned = False
 
         self.name = name
         self.sex = sex
@@ -157,6 +158,7 @@ class Character(Shooter, Unit):
                 "surrender",
                 "tread1",
                 "turn_head1",
+                "stunned",
             )
         }
         self.model = Actor(address(self.sex + "_" + self.class_), animations)
@@ -558,6 +560,40 @@ class Character(Shooter, Unit):
             miss_chance = min(100, max(0, miss_chance - 25))
 
         return chance(miss_chance)
+
+    def get_stunned(self, duration):
+        """Make this character stunned for some time.
+
+        Stunned unit can't shoot for some time.
+
+        Args:
+            duration (float): Stun duration in seconds.
+        """
+        if self._is_stunned:
+            return
+
+        self._is_stunned = True
+        self._stop_tasks("_aim", "_shoot")
+
+        self._current_anim = "stunned"
+        self.model.play("stunned")
+        LerpAnimInterval(self.model, 0.05, "stand_and_aim", "stunned").start()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            duration, self._stop_stunning, self.id + "_stop_stunning"
+        )
+
+    def _stop_stunning(self, task):
+        """Stop this character stun and continue fighting."""
+        self._is_stunned = False
+
+        LerpAnimInterval(self.model, 0.8, self._current_anim, "stand_and_aim").start()
+        self.model.loop("stand_and_aim")
+
+        base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
+        base.taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
+
+        return task.done
 
     def get_damage(self, damage):
         """Getting damage.

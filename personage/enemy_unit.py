@@ -346,11 +346,15 @@ class MotoShooter(EnemyUnit, Shooter):
 class BrakeDropper(EnemyUnit):
     """Brake shoes dropper unit.
 
+    Brakers are trying to slow down the Train, to make
+    it easier for other enemy units to deal damage.
+
     Args:
         model (actor.Actor): Enemy character model.
         id_ (int): Enemy unit id.
         y_positions (list): Free positions along Y.
         enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
+        class_data (dict): This unit class description.
     """
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
@@ -528,3 +532,63 @@ class BrakeDropper(EnemyUnit):
             self._jump_int.pause()
 
         EnemyUnit._die(self)
+
+
+class StunBombThrower(EnemyUnit):
+    """Stun-bomb thrower enemy unit.
+
+    This unit type is dealing damage to the Train with bombs.
+    Also this unit can deal damage to characters and can
+    deafen them. The efficiency of the unit depends on
+    the Train speed, so this unit type is synergetic with
+    brakers.
+
+    Args:
+        model (actor.Actor): Enemy character model.
+        id_ (int): Enemy unit id.
+        y_positions (list): Free positions along Y.
+        enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
+        class_data (dict): This unit class description.
+    """
+
+    def __init__(self, model, id_, y_positions, enemy_handler, class_data):
+        EnemyUnit.__init__(
+            self, id_, "Bomb Thrower", class_data, model, y_positions, enemy_handler
+        )
+        self._throw_anim = "throw_" + ("right" if self._y_pos < 0 else "left")
+
+    def stop(self):
+        """Smoothly stop this unit following Train."""
+        self._stop_tasks("_throw")
+        EnemyUnit.stop(self)
+
+    def leave_the_part(self, part):
+        """Stop fighting in the current part."""
+        self.current_part = None
+
+    def enter_the_part(self, part):
+        """Start fighting in the given part.
+
+        Args:
+            part (train_part.TrainPart): Train part this enemy entered.
+        """
+        self.current_part = part
+        base.taskMgr.doMethodLater(5, self._throw, self.id + "_throw")  # noqa: F821
+
+    def _throw(self, task):
+        """Throw a bomb towards the Train."""
+        self.model.play(self._throw_anim)
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            2.6,
+            base.train.explode_bomb,  # noqa: F821
+            self.id + "_train_explode_bomb",
+            extraArgs=[0.09 if self._y_pos > 0 else -0.09],
+        )
+        task.delayTime = 10
+        return task.again
+
+    def _die(self):
+        """Make this enemy unit die."""
+        if not EnemyUnit._die(self):
+            self._stop_tasks("_throw", "_train_explode_bomb")

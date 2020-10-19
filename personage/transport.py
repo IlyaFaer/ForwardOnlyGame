@@ -17,8 +17,12 @@ class TransportManager:
     """
 
     def __init__(self):
-        self._models = {"moto1": Actor(address("motocycle1"))}
+        self._models = {
+            "moto1": Actor(address("motocycle1")),
+            "moto2": Actor(address("motocycle2")),
+        }
         self._models["moto1"].setPlayRate(1.5, "ride")
+        self._models["moto2"].setPlayRate(1.5, "ride")
 
     def make_motorcyclist(self, unit):
         """Make the given unit motorcyclist.
@@ -26,11 +30,13 @@ class TransportManager:
         Args:
             unit (enemy_unit.EnemyUnit): Unit to make motorcyclist.
         """
-        unit.transport = unit.model.attachNewNode("moto_" + unit.id)
-        self._models["moto1"].instanceTo(unit.transport)
+        moto_model = unit.class_data["moto_model"]
 
-        if not self._models["moto1"].getCurrentAnim():
-            self._models["moto1"].loop("ride")
+        unit.transport = unit.model.attachNewNode("moto_" + unit.id)
+        self._models[moto_model].instanceTo(unit.transport)
+
+        if not self._models[moto_model].getCurrentAnim():
+            self._models[moto_model].loop("ride")
 
         base.taskMgr.doMethodLater(  # noqa: F821
             4,

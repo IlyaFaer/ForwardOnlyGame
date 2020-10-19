@@ -52,8 +52,23 @@ class EffectsManager:
         Args:
             parent (object):
                 Must include "id" and "model" properties.
+
+        Returns:
+            Explosion: Explosion effect object.
         """
         return Explosion(self._explosion_lights, parent)
+
+    def bomb_explosion(self, parent):
+        """Prepare a bomb explosion effect for the given object.
+
+        Args:
+            parent (object):
+                Must include "model" property.
+
+        Returns:
+            BombExplosion: Hand bomb explosion effect object.
+        """
+        return BombExplosion(parent)
 
 
 class Explosion:
@@ -144,3 +159,54 @@ class Explosion:
         self._fire.cleanup()
         base.sound_mgr.detach_sound(self._snd)  # noqa: F821
         return task.done
+
+
+class BombExplosion:
+    """Hand bomb explosion effect.
+
+    Includes sound and particle effects.
+
+    Args:
+        parent (object): Object to explode.
+    """
+
+    def __init__(self, parent):
+        self._parent = parent
+
+        self._smoke = ParticleEffect()
+        self._smoke.loadConfig("effects/bomb_smoke1.ptf")
+
+        self._sparks = ParticleEffect()
+        self._sparks.loadConfig("effects/white_sparks1.ptf")
+
+        self._snd = base.sound_mgr.loadSfx("sounds/bomb_explosion1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._snd, parent.model)  # noqa: F821
+
+    def play(self):
+        """Make actual explosion and plan its stop."""
+        self._snd.play()
+        self._smoke.start(self._parent.model, render)  # noqa: F821
+        self._sparks.start(self._parent.model, render)  # noqa: F821
+        self._smoke.softStart()
+        self._sparks.softStart()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            2.49, self._stop_explosion, "train_disable_bomb_explosion"
+        )
+
+    def _stop_explosion(self, task):
+        """Disable explosion effect."""
+        self._smoke.softStop()
+        self._sparks.softStop()
+        return task.done
+
+    def setPos(self, x, y, z):
+        """Set explosion position.
+
+        Args:
+            x (float): X coordinate.
+            y (float): Y coordinate.
+            z (float): Z coordinate.
+        """
+        self._smoke.setPos(x, y, z)
+        self._sparks.setPos(x, y, z)

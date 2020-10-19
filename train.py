@@ -17,7 +17,7 @@ from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 from controls import TrainController
 from gui.train import TrainInterface
 from train_part import RestPart, TrainPart
-from utils import address
+from utils import address, take_random
 
 
 class Train:
@@ -157,6 +157,13 @@ class Train:
         self._r_brake_sparks = ParticleEffect()
         self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
         self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
+
+        # bomb explosion effects
+        self._bomb_explosions = [
+            base.effects_mgr.bomb_explosion(self),  # noqa: F821
+            base.effects_mgr.bomb_explosion(self),  # noqa: F821
+            base.effects_mgr.bomb_explosion(self),  # noqa: F821
+        ]
 
     def set_physics(self, phys_mgr):
         """Set the Train physics.
@@ -509,3 +516,43 @@ class Train:
         """Stop sparks effects."""
         self._l_brake_sparks.softStop()
         self._r_brake_sparks.softStop()
+
+    def explode_bomb(self, x_coor):
+        """Explode a bomb on the Train.
+
+        Args:
+            x_coor (float): X coordinate of explosion.
+        """
+        if not self._bomb_explosions:
+            return
+
+        if self.ctrl.current_speed > 0.84:
+            coef = 0
+        elif self.ctrl.current_speed > 0.67:
+            coef = 0.15
+        else:
+            coef = 0.35
+
+        y_coor = random.uniform(-0.5 + coef, 0 + coef)
+
+        explosion = take_random(self._bomb_explosions)
+        explosion.setPos(x_coor, y_coor, 0.155)
+        explosion.play()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            2.55,
+            self._bomb_explosions.append,
+            "return_bomb_explosion_effect",
+            extraArgs=[explosion],
+        )
+        self.damnability -= 4
+
+        if y_coor < -0.1:  # too far from characters
+            return
+
+        for char in self.parts[
+            "part_locomotive_left" if x_coor < 0 else "part_locomotive_right"
+        ].chars:
+            if abs(char.model.getY() - y_coor) < 0.11:
+                char.get_damage(3)
+                char.get_stunned(5)

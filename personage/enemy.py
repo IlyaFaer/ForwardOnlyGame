@@ -10,7 +10,7 @@ from direct.actor.Actor import Actor
 from panda3d.core import CollisionHandlerEvent
 
 from utils import address, chance
-from .enemy_unit import BrakeDropper, MotoShooter
+from .enemy_unit import BrakeDropper, MotoShooter, StunBombThrower
 from .transport import TransportManager
 
 FRACTIONS = {
@@ -22,6 +22,7 @@ FRACTIONS = {
                 "score": 3,
                 "part": "side",
                 "health": 100,
+                "moto_model": "moto1",
             },
             {
                 "class": BrakeDropper,
@@ -29,6 +30,15 @@ FRACTIONS = {
                 "score": 6,
                 "part": "front",
                 "health": 50,
+                "moto_model": "moto1",
+            },
+            {
+                "class": StunBombThrower,
+                "model": "skinhead_thrower1",
+                "score": 9,
+                "part": "side",
+                "health": 80,
+                "moto_model": "moto2",
             },
         ),
         "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
@@ -110,12 +120,18 @@ class Enemy:
         delay = 0
         wave_score = 0
         brakers = 0
+        throwers = 0
         while wave_score < self.score:
             unit_class = random.choice(available)
 
             if unit_class["class"] == BrakeDropper:
                 brakers += 1
                 if brakers == 3:
+                    available.remove(unit_class)
+
+            if unit_class["class"] == StunBombThrower:
+                throwers += 1
+                if throwers == 3:
                     available.remove(unit_class)
 
             self._unit_id += 1
@@ -158,21 +174,21 @@ class Enemy:
         self._is_cooldown = False
         return task.done
 
-    def _load_enemy(self, train_mod, class_, id_):
+    def _load_enemy(self, train_mod, class_data, id_):
         """Load single enemy unit.
 
         Args:
             train_mod (panda3d.core.NodePath): Train model to move.
-            class_ (dict): Enemy class.
+            class_data (dict): Enemy class description.
             id_ (int): Unit id.
         """
         y_poss = (
             self._side_y_positions
-            if class_["part"] == "side"
+            if class_data["part"] == "side"
             else self._front_y_positions
         )
-        enemy = class_["class"](
-            Actor(address(class_["model"])), id_, y_poss, self._handler, class_
+        enemy = class_data["class"](
+            Actor(address(class_data["model"])), id_, y_poss, self._handler, class_data
         )
         self._transport_mgr.make_motorcyclist(enemy)
 
