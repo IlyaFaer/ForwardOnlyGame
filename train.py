@@ -517,23 +517,15 @@ class Train:
         self._l_brake_sparks.softStop()
         self._r_brake_sparks.softStop()
 
-    def explode_bomb(self, x_coor):
+    def explode_bomb(self, x_coor, y_coor):
         """Explode a bomb on the Train.
 
         Args:
             x_coor (float): X coordinate of explosion.
+            y_coor (float): Y coordinate of explosion.
         """
         if not self._bomb_explosions:
             return
-
-        if self.ctrl.current_speed > 0.84:
-            coef = 0
-        elif self.ctrl.current_speed > 0.67:
-            coef = 0.15
-        else:
-            coef = 0.35
-
-        y_coor = random.uniform(-0.5 + coef, 0 + coef)
 
         explosion = take_random(self._bomb_explosions)
         explosion.setPos(x_coor, y_coor, 0.155)

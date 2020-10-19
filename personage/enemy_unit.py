@@ -557,6 +557,17 @@ class StunBombThrower(EnemyUnit):
         )
         self._throw_anim = "throw_" + ("right" if self._y_pos < 0 else "left")
 
+        # preparing a hand bomb model
+        self._bomb = loader.loadModel(address("hand_bomb1"))  # noqa: F821
+        self._bomb.hide()
+        self._bomb.reparentTo(self.model)
+        if self._y_pos < 0:
+            self._bomb_pos = (0.034, 0.021, 0.068)
+        else:
+            self._bomb_pos = (-0.037, 0.028, 0.073)
+
+        self._bomb.setPos(*self._bomb_pos)
+
     def stop(self):
         """Smoothly stop this unit following Train."""
         self._stop_tasks("_throw")
@@ -579,16 +590,58 @@ class StunBombThrower(EnemyUnit):
         """Throw a bomb towards the Train."""
         self.model.play(self._throw_anim)
 
+        if base.train.ctrl.current_speed > 0.84:  # noqa: F821
+            coef = 0
+        elif base.train.ctrl.current_speed > 0.67:  # noqa: F821
+            coef = 0.15
+        else:
+            coef = 0.35
+
+        x_coor = 0.09 if self._y_pos > 0 else -0.09
+        y_coor = random.uniform(-0.5 + coef, 0 + coef)
+
+        base.doMethodLater(  # noqa: F821
+            2.1, self._move_bomb_to, self.id + "_move_bomb", extraArgs=[x_coor, y_coor]
+        )
         base.taskMgr.doMethodLater(  # noqa: F821
             2.6,
             base.train.explode_bomb,  # noqa: F821
             self.id + "_train_explode_bomb",
-            extraArgs=[0.09 if self._y_pos > 0 else -0.09],
+            extraArgs=[x_coor, y_coor],
         )
         task.delayTime = 10
         return task.again
+
+    def _move_bomb_to(self, x_coor, y_coor):
+        """Move this thrower's bomb to the chosen pos.
+
+        Args:
+            x_coor (float): X axis coordinate of explosion.
+            y_coor (float): Y axis coordinate of explosion.
+        """
+        self._bomb.wrtReparentTo(base.train.model)  # noqa: F821
+        self._bomb.show()
+        LerpPosInterval(self._bomb, 0.4, (x_coor, y_coor, self._bomb.getZ())).start()
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.6, self._return_bomb, self.id + "_return_bomb"
+        )
+
+    def _return_bomb(self, task):
+        """Return the bomb model back to this unit."""
+        self._bomb.hide()
+        self._bomb.reparentTo(self.model)
+        self._bomb.setPos(self._bomb_pos)
+        return task.done
 
     def _die(self):
         """Make this enemy unit die."""
         if not EnemyUnit._die(self):
             self._stop_tasks("_throw", "_train_explode_bomb")
+
+    def clear(self, task=None):
+        """Clear all the graphical data of this unit."""
+        EnemyUnit.clear(self, task)
+        self._bomb.removeNode()
+
+        if task is not None:
+            return task.done

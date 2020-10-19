@@ -20,6 +20,13 @@ to four different traits""",
 maximum during evening""",
     """Skinheads activity is at
 minimum during morning""",
+    """The slower the Train is moving
+the easier for enemies to
+hit it with throwing weapon""",
+    """Some enemies are shooting, some
+are slowing you down, some
+are deafening your people.
+Study their tactics!""",
     # cohesion
     """Increasing team cohesion unlocks
 team skills. These are powerful
