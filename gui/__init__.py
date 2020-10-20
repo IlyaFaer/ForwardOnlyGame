@@ -78,6 +78,7 @@ development and some may change in future. Anyway, enjoy your play!""",
         base.doMethodLater(0.25, base.load_game, "load_game")  # noqa: F821
 
     def show_loading(self):
+        """Show "Loading..." note on the screen."""
         self._load_msg = DirectLabel(
             parent=self._main_fr,
             text="Loading...",
@@ -88,12 +89,12 @@ development and some may change in future. Anyway, enjoy your play!""",
         )
 
     def hide(self):
-        """Hide main menu."""
+        """Hide the main menu."""
         self._main_fr.hide()
         base.accept("escape", self.show)  # noqa: F821
 
     def show(self):
-        """Show main menu."""
+        """Show the main menu."""
         self._main_fr.show()
         base.accept("escape", self.hide)  # noqa: F821
 
@@ -101,6 +102,7 @@ development and some may change in future. Anyway, enjoy your play!""",
             base.train.ctrl.critical_damage  # noqa: F821
             or base.world.is_in_city  # noqa: F821
             or base.train.ctrl.on_et  # noqa: F821
+            or base.world.current_block_number < 4  # noqa: F821
         )
         if not self._is_first_pause:
             if can_save:

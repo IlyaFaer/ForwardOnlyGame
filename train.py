@@ -5,7 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Train - the main game object, API.
 
 Includes the systems of Train loading, preparations,
-animation, sounds, lights.
+animation, sounds, lights, physics.
 """
 import random
 
@@ -21,15 +21,15 @@ from utils import address, take_random
 
 
 class Train:
-    """Train object. The main game object.
+    """The Train object. The main game object.
 
     Includes train model, lights, sounds, parts to set
     characters and controller.
 
     Args:
         description (dict):
-            The Train condition description. Used for
-            loading a saved Train condition.
+            Optional. The Train condition description.
+            Used for loading a saved Train condition.
     """
 
     def __init__(self, description=None):
@@ -84,7 +84,7 @@ class Train:
         self._lights = self._set_lights()
         self.lights_on = False
 
-        self._interface = TrainInterface()
+        self._gui = TrainInterface()
 
         self._damnability = None
 
@@ -92,23 +92,26 @@ class Train:
             self.damnability = description["damnability"]
             self._miles = description["miles"] - 1
             self.node.setHpr(description["node_angle"])
-        else:  # init params
+        else:  # new game params
             self.damnability = 1000
             self._miles = -1
 
         self.l_brake = False
         self.r_brake = False
-
-        self._phys_node = None
-
         self._is_on_rusty = False
         self._creak_snd_cooldown = False
+        self._phys_node = None
 
-        self._prepare_particles()
+        (
+            self._smoke,
+            self._l_brake_sparks,
+            self._r_brake_sparks,
+            self._bomb_explosions,
+        ) = self._prepare_particles()
 
     @property
     def damnability(self):
-        """Train damnability.
+        """The Train damnability points.
 
         Returns:
             int: Current Train damnability.
@@ -119,51 +122,57 @@ class Train:
     def damnability(self, value):
         """Set new Train damnability value.
 
+        Updates the damnability GUI.
+
         Args:
             value (int): New value.
         """
         self._damnability = max(0, min(1000, value))
-        self._interface.update_indicators(damnability=self.damnability)
+        self._gui.update_indicators(damnability=self.damnability)
 
     @property
     def description(self):
         """The Train state description for game saving.
 
         Returns:
-            dict: Saveable Train state.
+            dict: Saveable Train state description.
         """
-        cond = {
+        return {
             "damnability": self.damnability,
             "speed": self.ctrl.current_speed,
             "miles": self._miles,
             "node_angle": self.node.getHpr(),
         }
-        return cond
 
     def _prepare_particles(self):
         """
-        Prepare the Train particle effects: smoke and
-        sparks.
+        Prepare the Train particle effects: smoke,
+        sparks and explosions.
+
+        Returns:
+            (direct.particles.ParticleEffect.ParticleEffect...):
+                Particle effects for the Train.
         """
-        self._smoke = ParticleEffect()
-        self._smoke.loadConfig("effects/smoke1.ptf")
-        self._smoke.setPos(0, 0.32, 0.28)
-        self._smoke.start(self.model, render)  # noqa: F821
+        smoke = ParticleEffect()
+        smoke.loadConfig("effects/smoke1.ptf")
+        smoke.setPos(0, 0.32, 0.28)
+        smoke.start(self.model, render)  # noqa: F821
 
-        self._l_brake_sparks = ParticleEffect()
-        self._l_brake_sparks.loadConfig("effects/brake_sparks2.ptf")
-        self._l_brake_sparks.setPos(-0.058, 0.38, 0.025)
+        l_brake_sparks = ParticleEffect()
+        l_brake_sparks.loadConfig("effects/brake_sparks2.ptf")
+        l_brake_sparks.setPos(-0.058, 0.38, 0.025)
 
-        self._r_brake_sparks = ParticleEffect()
-        self._r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
-        self._r_brake_sparks.setPos(0.058, 0.38, 0.025)
+        r_brake_sparks = ParticleEffect()
+        r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
+        r_brake_sparks.setPos(0.058, 0.38, 0.025)
 
         # bomb explosion effects
-        self._bomb_explosions = [
+        bomb_explosions = [
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
         ]
+        return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions
 
     def set_physics(self, phys_mgr):
         """Set the Train physics.
@@ -204,7 +213,7 @@ class Train:
         return False
 
     def place_recruit(self, char):
-        """Place the new recruit somewhere on Train.
+        """Place the new recruit somewhere on the Train.
 
         Args:
             char (personage.character.Character):
@@ -216,7 +225,7 @@ class Train:
                 return
 
     def brake(self, side, brake):
-        """Start braking.
+        """Start braking on the given side.
 
         Args:
             side (str): Side label: 'l' or 'r'.
@@ -253,7 +262,7 @@ class Train:
         self.ctrl.slow_down_to(target)
 
     def move_to_hangar(self):
-        """Move the Train into city hangar."""
+        """Move the Train into a city hangar."""
         self.root_node.setZ(50)
         self._smoke.disable()
 
@@ -284,7 +293,7 @@ class Train:
                 The world block to move along.
         """
         self._miles += 1
-        self._interface.update_miles(self._miles)
+        self._gui.update_miles(self._miles)
 
         if block.is_rusty:
             if not self._is_on_rusty:
@@ -354,7 +363,7 @@ class Train:
         return task.done
 
     def _set_lights(self):
-        """Configure Train lights.
+        """Configure the Train lights.
 
         Sets the main Train lighter and lights above
         the doors.
@@ -391,7 +400,7 @@ class Train:
         return train_lights
 
     def _set_sounds(self):
-        """Configure Train sounds.
+        """Configure the Train sounds.
 
         Returns:
             (panda3d.core.AudioSound...):
@@ -443,7 +452,7 @@ class Train:
         self._phys_node.setPos((0, 0, 0.1))
 
     def _check_contacts(self, phys_mgr, phys_node, task):
-        """Check Train physical contacts.
+        """Check the Train physical contacts.
 
         Used to play sounds on physical objects hitting
         and getting damage from barriers.
@@ -470,7 +479,7 @@ class Train:
         return task.again
 
     def toggle_lights(self):
-        """Toggle Train lights."""
+        """Toggle the Train lights."""
         self._lighter_snd.play()
 
         method = render.clearLight if self.lights_on else render.setLight  # noqa: F821
@@ -478,10 +487,6 @@ class Train:
             method(light)
 
         self.lights_on = not self.lights_on
-
-    def speed_to_min(self):
-        """Accelerate the Train to minimum fight speed."""
-        self.ctrl.speed_to_min()
 
     def get_damage(self, damage):
         """Get damage from an enemy.
@@ -493,13 +498,15 @@ class Train:
         """
         self.damnability -= damage
 
-        if not self.ctrl.critical_damage:
-            if self.damnability <= 0:
-                self.ctrl.critical_damage = True
-                self.ctrl.stop()
+        if self.ctrl.critical_damage:
+            return
 
-                base.world.enemy.capture_train()  # noqa: F821
-                base.team.surrender()  # noqa: F821
+        if self.damnability == 0:
+            self.ctrl.critical_damage = True
+            self.ctrl.stop()
+
+            base.world.enemy.capture_train()  # noqa: F821
+            base.team.surrender()  # noqa: F821
 
     def do_effects(self, effects):
         """Do outing effects to the Train.
@@ -510,7 +517,7 @@ class Train:
         for key, value in effects.items():
             if hasattr(self, key):
                 setattr(self, key, getattr(self, key) + value)
-                self._interface.update_indicators(**{key: getattr(self, key)})
+                self._gui.update_indicators(**{key: getattr(self, key)})
 
     def stop_sparks(self):
         """Stop sparks effects."""

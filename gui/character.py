@@ -13,10 +13,10 @@ from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
 class CharacterInterface:
-    """Widget with character info."""
+    """Widget with the chosen character info."""
 
     def __init__(self):
-        self._char = None  # chosen character
+        self._char = None  # the chosen character
         self._rest_buttons = {}
         self._rest_list_active = False
 
@@ -187,15 +187,15 @@ class CharacterInterface:
         self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
         self._tip.show()
 
-    def hide_unit_tip(self):
-        """Hide unit tooltip."""
+    def hide_tip(self):
+        """Hide the tooltip."""
         self._tip.hide()
 
     def show_resting_chars(self, part):
         """Show a list of the characters resting in this part.
 
         Args:
-            part (Train.RestPart): Rest part of Train.
+            part (Train.RestPart): Rest part of the Train.
         """
         if self._rest_list_active:
             return
@@ -237,7 +237,7 @@ class CharacterInterface:
             self._rest_buttons.pop(char_id)
 
     def _update_char_info(self, task):
-        """Track character parameters on the interface."""
+        """Track the chosen character parameters in the GUI."""
         if self._char.is_dead:
             self.clear_char_info()
             return task.done
@@ -302,7 +302,7 @@ class CharacterChooser:
     Args:
         is_shadowed (bool):
             Optional. If True, a shadowed font
-            color will be used for this widget
+            color will be used for this widget.
     """
 
     def __init__(self, is_shadowed=False):

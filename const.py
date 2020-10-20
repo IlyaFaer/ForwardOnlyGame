@@ -6,6 +6,7 @@ Constants common for the whole Game.
 """
 from panda3d.core import BitMask32
 
+# collision masks
 MOUSE_MASK = BitMask32(0x1)
 SHOT_RANGE_MASK = BitMask32(0x4)
 NO_MASK = BitMask32.allOff()

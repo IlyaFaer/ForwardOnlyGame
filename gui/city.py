@@ -47,7 +47,6 @@ class CityInterface:
             text_fg=RUST_COL,
             pos=(0, 0, 0.62),
         )
-
         # team gui
         DirectLabel(
             parent=self._city_fr,
@@ -130,7 +129,6 @@ class CityInterface:
             text_scale=(0.45, 0.45),
             command=self._send_away,
         )
-
         # recruits gui
         DirectLabel(
             parent=self._city_fr,
@@ -153,8 +151,7 @@ class CityInterface:
             text_scale=(0.45, 0.45),
             command=self._hire,
         )
-
-        # train GUI
+        # Train GUI
         DirectLabel(
             parent=self._city_fr,
             text="Train",
@@ -193,7 +190,6 @@ class CityInterface:
             command=self._repair,
             extraArgs=[200],
         )
-
         DirectButton(
             parent=self._city_fr,
             pos=(-0.2, 0, -0.63),
@@ -263,13 +259,13 @@ class CityInterface:
             char.rest()
 
     def _repair(self, value):
-        """Repair Train.
+        """Repair the Train.
 
         Spends money.
 
         Args:
             value (int):
-                Points of Train damnability to repair.
+                Points of the Train damnability to repair.
         """
         spent = 25 if value == 50 else 100
         if base.dollars - spent < 0:  # noqa: F821

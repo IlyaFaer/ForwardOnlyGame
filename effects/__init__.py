@@ -77,7 +77,7 @@ class Explosion:
     Includes sound, light and particle effects.
 
     Args:
-        explode_lights (list): List of explosion lights
+        explode_lights (list): List of explosion lights.
         parent (object): Object to explode.
     """
 
@@ -127,7 +127,7 @@ class Explosion:
         )
 
     def _light_change(self, light, task):
-        """Change explosion light attenuation.
+        """Change the explosion light attenuation.
 
         Args:
             light (panda3d.core.NodePath): Explosion lights.
@@ -144,12 +144,12 @@ class Explosion:
         return task.again
 
     def _stop_sparks(self, task):
-        """Disable explosion effect."""
+        """Disable sparks particle effect."""
         self._sparks.disable()
         return task.done
 
     def _stop_fire(self, task):
-        """Disable explosion effect."""
+        """Disable fire particle effect."""
         self._fire.disable()
         return task.done
 
@@ -162,7 +162,7 @@ class Explosion:
 
 
 class BombExplosion:
-    """Hand bomb explosion effect.
+    """A hand bomb explosion effect.
 
     Includes sound and particle effects.
 

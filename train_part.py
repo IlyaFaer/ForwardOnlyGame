@@ -10,11 +10,11 @@ from utils import address, take_random
 
 
 class TrainPart:
-    """Train part where characters can be set.
+    """A Train part where characters can be set.
 
     Contains characters set to this part and enemies
     within its shooting range. Has a manipulating arrow,
-    which can be used to set a character to this part.
+    which can be used to move a character to this part.
     Also includes a "shooting range" collider - area,
     on which characters can choose their targets.
 
@@ -23,17 +23,17 @@ class TrainPart:
                 Model, to which arrow sprite of this part
                 must be parented. Characters will be
                 parented to this model as well.
-        name (str): This part name.
+        name (str): This unique part name.
         positions (list):
             Dicts describing possible positions and
             rotations on this part.
-        arrow_pos (dict): Arrow position and rotation.
+        arrow_pos (dict): Arrow position and angle.
     """
 
     def __init__(self, parent, name, positions, arrow_pos):
         self.parent = parent
-        self.chars = []
         self.name = name
+        self.chars = []
         # enemies within shooting range of this part
         self.enemies = []
         self._cells = positions
@@ -141,15 +141,15 @@ class RestPart:
 
     Args:
         parent (panda3d.core.NodePath):
-                Model, to which characters will be
-                reparented while on this part.
+            Model, to which characters will be
+            reparented while on this part.
         name (str): Part name.
     """
 
     def __init__(self, parent, name):
-        self.parent = parent
         self.chars = []
         self.enemies = []
+        self.parent = parent
         self.name = name
 
         # rest zone collisions
@@ -178,7 +178,7 @@ class RestPart:
                 Character to move to this part.
 
         Returns:
-            dict: Blank dict with position to move character to.
+            dict: Dict with position to move character to.
         """
         if len(self.chars) >= 2:
             return None

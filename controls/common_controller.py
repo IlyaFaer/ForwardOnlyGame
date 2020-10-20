@@ -69,7 +69,7 @@ class CommonController:
 
         Returns:
             personage.character.Chatacter:
-                The currently chosen character.
+                The currently chosen character object.
         """
         return self._chosen_char
 
@@ -213,7 +213,7 @@ class CommonController:
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
-        base.char_interface.hide_unit_tip()  # noqa: F821
+        base.char_interface.hide_tip()  # noqa: F821
 
     def _collide_mouse(self, task):
         """Organize active mouse collision object movement.

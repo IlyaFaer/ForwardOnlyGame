@@ -71,6 +71,8 @@ reduce stress at any collective""",
     """Women have less health points,
 but they are much more
 energetic""",
+    """People tired faster while in
+dark and during fight""",
     # raiders
     """Raider's life is mostly about
 looting. They know how to find
@@ -103,32 +105,32 @@ class TeachingNotes:
     def __init__(self):
         self._note_text = "Press F1 key to open game\ncontrols help"
 
-        self._notes_fr = DirectFrame(
+        self._fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.25, 0.25, -0.07, 0.07),
             pos=(0.25, 0, -0.2),
             frameTexture=ICON_PATH + "metal1.png",
         )
-        self._notes_fr.setTransparency(TransparencyAttrib.MAlpha)
+        self._fr.setTransparency(TransparencyAttrib.MAlpha)
 
         self._note = DirectLabel(
-            parent=self._notes_fr,
+            parent=self._fr,
             text="",
             text_fg=SILVER_COL,
             frameSize=(1, 1, 1, 1),
             text_scale=(0.03),
             pos=(0, 0, 0.04),
         )
-        self._notes_fr.hide()
+        self._fr.hide()
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            20, self._show_note, "show_teaching_note"
+            25, self._show_note, "show_teaching_note"
         )
 
     def _show_note(self, task):
         """Shot next teaching note."""
         self._note["text"] = self._note_text
-        self._notes_fr.show()
+        self._fr.show()
 
         base.taskMgr.doMethodLater(  # noqa: F821
             10, self._hide_note, "hide_teaching_note"
@@ -138,13 +140,13 @@ class TeachingNotes:
 
     def _hide_note(self, task):
         """Hire the current note and choose the next one."""
-        self._notes_fr.hide()
+        self._fr.hide()
         self._note_text = random.choice(NOTES)
         return task.done
 
     def stop(self):
         """Stop showing teaching notes."""
-        self._notes_fr.hide()
+        self._fr.hide()
         base.taskMgr.remove("show_teaching_note")  # noqa: F821
         base.taskMgr.remove("hide_teaching_note")  # noqa: F821
 

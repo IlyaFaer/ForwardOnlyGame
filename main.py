@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Main game file. Starts the game itself
+The main game file. Starts the game itself
 and maintains the major systems.
 """
 import dbm.dumb  # noqa: F401
@@ -42,10 +42,10 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
         self._configure_window()
 
-        self.setBackgroundColor(0.2, 0.27, 0.2)
-
         if not os.path.exists("saves"):
             os.mkdir("saves")
+
+        self.setBackgroundColor(0.2, 0.27, 0.2)
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
@@ -75,6 +75,37 @@ class ForwardOnly(ShowBase):
         """
         self._dollars = max(0, value)
         self.res_interface.update_money(self._dollars)
+
+    def _configure_window(self):
+        """Configure the game window.
+
+        Set fullscreen mode, and resolution
+        according to the player's screen size.
+        """
+        props = WindowProperties()
+        props.setFullscreen(True)
+        props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
+        self.openDefaultWindow(props=props)
+
+    def _start_to_move(self, task):
+        """Actually start the game process."""
+        self.enableAllAudio()
+        self._move_along_block()
+        return task.done
+
+    def _move_along_block(self):
+        """Move the Train along the current world block.
+
+        While the Train is moving along the current block,
+        the game prepares the next one and clears penalt.
+        """
+        self.train.switch_to_current_block()
+
+        next_block = self.world.prepare_next_block()
+        self.world.clear_prev_block()
+
+        self.train.move_along_block(self._current_block)
+        self._current_block = next_block
 
     def start_new_game(self, task):
         """Start a new game, replacing the saved one."""
@@ -108,37 +139,6 @@ class ForwardOnly(ShowBase):
 
         self.dollars = 300
         return task.done
-
-    def _configure_window(self):
-        """Configure the game window.
-
-        Set fullscreen mode, and resolution
-        according to the player's screen size.
-        """
-        props = WindowProperties()
-        props.setFullscreen(True)
-        props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
-        self.openDefaultWindow(props=props)
-
-    def _start_to_move(self, task):
-        """Actually start the game process."""
-        self.enableAllAudio()
-        self._move_along_block()
-        return task.done
-
-    def _move_along_block(self):
-        """Move Train along the current world block.
-
-        While Train is moving along the current block,
-        the game prepares the next one and clears penalt.
-        """
-        self.train.switch_to_current_block()
-
-        next_block = self.world.prepare_next_block()
-        self.world.clear_prev_block()
-
-        self.train.move_along_block(self._current_block)
-        self._current_block = next_block
 
     def save_game(self):
         """Save the current game."""

@@ -8,20 +8,23 @@ from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
 from panda3d.core import AudioSound
 
-MIN_SPEED = 0.5
+MIN_SPEED = 0.5  # minimum speed on enemy territory
 
 
 class TrainController:
-    """Object to control Train.
+    """Object to control the Train.
 
-    Implements changing Train speed and animation.
-    Also manages moving Train along motion paths.
+    Implements changing the Train speed and animation.
+    Also manages moving the Train along motion paths.
 
     Args:
-        model (panda3d.core.NodePath): Train model.
-        move_snd (panda3d.core.AudioSound): Train movement sound.
-        stop_snd (panda3d.core.AudioSound): Train stopping sound.
-        brake_snd (panda3d.core.AudioSound): Train braking sound.
+        model (panda3d.core.NodePath): The Train model.
+        move_snd (panda3d.core.AudioSound):
+            The Train movement sound.
+        stop_snd (panda3d.core.AudioSound):
+            The Train stopping sound.
+        brake_snd (panda3d.core.AudioSound):
+            The Train braking sound.
     """
 
     def __init__(self, model, move_snd, stop_snd, brake_snd):
@@ -51,12 +54,12 @@ class TrainController:
         return 0 if self._is_stopped else self._move_anim_int.getPlayRate()
 
     def set_controls(self, train):
-        """Configure Train control keys.
+        """Configure the Train control keys.
 
         Args:
             train (train.Train): The Train object.
         """
-        # speed smoothly changes with holding w/s keys pressed
+        # speed smoothly changes with holding w/s keys
         base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
         base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
         base.accept("w-up", base.taskMgr.remove, ["change_train_speed"])  # noqa: F821
@@ -70,7 +73,7 @@ class TrainController:
             base.ignore(key)  # noqa: F821
 
     def move_along_block(self, block, train_np):
-        """Start Train move intervals for the given block.
+        """Start the Train move intervals for the given block.
 
         There are two intervals: the Train movement and
         synchronous camera movement.
@@ -113,12 +116,12 @@ class TrainController:
         return task.done
 
     def _change_speed_delayed(self, diff):
-        """Start changing Train speed.
+        """Start changing the Train speed.
 
         To make speed changing smoother delayed task is used.
 
         Args:
-            diff (float): Coefficient to change Train speed.
+            diff (float): Coefficient to change speed.
         """
         base.taskMgr.doMethodLater(  # noqa: F821
             0.6,
@@ -129,14 +132,14 @@ class TrainController:
         )
 
     def _start_move(self):
-        """Start Train movement."""
+        """Start the Train movement."""
         self._move_par.resume()
         self._move_anim_int.resume()
         self._move_snd.play()
         self._is_stopped = False
 
     def _stop_move(self):
-        """Stop Train movement."""
+        """Stop the Train movement."""
         base.taskMgr.doMethodLater(  # noqa: F821
             0.6, self._play_stop_snd, "train_stop_snd"
         )
@@ -160,7 +163,7 @@ class TrainController:
         return task.done
 
     def _change_speed(self, diff, task):
-        """Actually change Train speed.
+        """Actually change the Train speed.
 
         Args:
             diff (float): Coefficient to change Train speed.
@@ -283,7 +286,7 @@ class TrainController:
         return task.again
 
     def stop(self):
-        """Completely stop Train."""
+        """Completely stop the Train."""
         base.ignore("w")  # noqa: F821
         base.ignore("s")  # noqa: F821
 
@@ -305,7 +308,7 @@ class TrainController:
         )
 
     def _finish_stopping(self, task):
-        """Finish stopping damaged Train."""
+        """Finish stopping the damaged Train."""
         base.taskMgr.remove("stop_train")  # noqa: F821
         base.train.stop_sparks()  # noqa: F821
         return task.done

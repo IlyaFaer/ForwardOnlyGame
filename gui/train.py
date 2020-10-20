@@ -13,7 +13,7 @@ ICON_PATH = "gui/tex/"
 
 
 class TrainInterface:
-    """The Train state interface."""
+    """The Train state GUI."""
 
     def __init__(self):
         frame = DirectFrame(
@@ -54,7 +54,7 @@ class TrainInterface:
         )
 
     def update_miles(self, new_miles):
-        """Update miles meter widget.
+        """Update the miles meter widget.
 
         Args:
             new_miles (int): New milesmeter value.
@@ -62,7 +62,7 @@ class TrainInterface:
         self._miles_meter["text"] = str(new_miles).rjust(7, "0")
 
     def update_indicators(self, **params):
-        """Update Train interface with the given parameters.
+        """Update the Train GUI with the given parameters.
 
         Args:
             params (dict): New parameters values.

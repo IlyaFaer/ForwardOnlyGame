@@ -23,17 +23,17 @@ class OutingsInterface:
     def __init__(self):
         self._char_chooser = None
         self._outing_widgets = []
-        self._going_for_outing = []
+        self._assignees = []
         self._char_buttons = {}
 
         self._blink_step = 0
-        self._upcome_icon = DirectFrame(
+        self._upcome_ico = DirectFrame(
             frameSize=(-0.1, 0.1, -0.1, 0.1),
             pos=(0, 0, 0.8),
             frameTexture="gui/tex/icon_looting.png",
         )
-        self._upcome_icon.setTransparency(TransparencyAttrib.MAlpha)
-        self._upcome_icon.hide()
+        self._upcome_ico.setTransparency(TransparencyAttrib.MAlpha)
+        self._upcome_ico.hide()
 
         self._upcome_text = DirectLabel(
             text="",
@@ -82,18 +82,14 @@ class OutingsInterface:
             assignees (int): Assignees limit.
         """
         char = base.common_ctrl.chosen_char  # noqa: F821
-        if (
-            char is None
-            or char in self._going_for_outing
-            or len(self._going_for_outing) == assignees
-        ):
+        if char is None or char in self._assignees or len(self._assignees) == assignees:
             return
 
-        self._going_for_outing.append(char)
+        self._assignees.append(char)
         self._char_buttons[char.id].setX(0.35)
 
         to_send_wid["text"] = "People to send ({cur_as}/{max_as}):".format(
-            cur_as=str(len(self._going_for_outing)), max_as=str(assignees)
+            cur_as=str(len(self._assignees)), max_as=str(assignees)
         )
 
     def _unassign_for_outing(self, to_send_wid, assignees):
@@ -105,28 +101,28 @@ class OutingsInterface:
             assignees (int): Assignees limit.
         """
         char = base.common_ctrl.chosen_char  # noqa: F821
-        if char not in self._going_for_outing:
+        if char not in self._assignees:
             return
 
-        self._going_for_outing.remove(char)
+        self._assignees.remove(char)
         self._char_buttons[char.id].setX(-0.35)
 
         to_send_wid["text"] = "People to send ({cur_as}/{max_as}):".format(
-            cur_as=str(len(self._going_for_outing)), max_as=str(assignees)
+            cur_as=str(len(self._assignees)), max_as=str(assignees)
         )
 
     def _blink_upcome_icon(self, task):
         """Blink upcoming outing icon to attract attention."""
         self._blink_step += 1
         if self._blink_step in (2, 4, 6):
-            self._upcome_icon.show()
+            self._upcome_ico.show()
             if self._blink_step == 6:
                 self._blink_step = 0
                 return task.done
 
             return task.again
 
-        self._upcome_icon.hide()
+        self._upcome_ico.hide()
         return task.again
 
     def _animate_bars(self, bars, score, selected_effect, task):
@@ -189,7 +185,7 @@ class OutingsInterface:
         return task.again
 
     def _finish_outing(self, selected_effect):
-        """Show effect selector if needed, and finish the outing.
+        """Show effect selector if needed and finish the outing.
 
         Args:
             selected_effect (dict):
@@ -233,7 +229,9 @@ class OutingsInterface:
         )
 
     def _do_effect_and_finish(self, effect):
-        """Do effects for selected characters and finish the outing.
+        """
+        Do effects for the selected character
+        and finish the outing.
 
         Args:
             effect (dict): Effect to do.
@@ -249,17 +247,17 @@ class OutingsInterface:
         self._outing_widgets.clear()
 
     def show_upcoming(self, text, icon):
-        """Show upcoming event notification.
+        """Show the upcoming event notification.
 
         Args:
             text (str): Event text.
             icon (str): Event icon.
         """
         self._upcome_text["text"] = text
-        self._upcome_icon["frameTexture"] = icon
+        self._upcome_ico["frameTexture"] = icon
 
         self._upcome_text.show()
-        self._upcome_icon.show()
+        self._upcome_ico.show()
 
         base.taskMgr.doMethodLater(  # noqa: F821
             0.3, self._blink_upcome_icon, "blink_outing_icon"
@@ -293,15 +291,15 @@ class OutingsInterface:
     def hide_outing(self):
         """Hide all the outings gui."""
         self._upcome_text.hide()
-        self._upcome_icon.hide()
+        self._upcome_ico.hide()
 
-        self._going_for_outing.clear()
+        self._assignees.clear()
 
         self._list.hide()
         self._clear_temporary_widgets()
 
     def start(self, outing):
-        """Start outing scenario.
+        """Start the outing scenario.
 
         Draw an interface with outing description.
 
@@ -388,7 +386,7 @@ class OutingsInterface:
                 text_fg=RUST_COL,
                 frameColor=(0, 0, 0, 0.3),
                 command=base.world.outings_mgr.go_for_outing,  # noqa: F821
-                extraArgs=[outing, self._going_for_outing],
+                extraArgs=[outing, self._assignees],
                 scale=(0.05, 0, 0.05),
             )
         )
@@ -403,7 +401,7 @@ class OutingsInterface:
         day_part_score,
         selected_effect,
     ):
-        """Show outing results gui.
+        """Show outing results GUI.
 
         Args:
             desc (str): Result description.

@@ -138,6 +138,7 @@ class Character(Shooter, Unit):
             "health": self.health,
             "energy": self.energy,
             "place": self.current_part.name,
+            "traits": self.traits,
         }
         return desc
 
@@ -638,6 +639,7 @@ def load_char(desc, team, parts):
     char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team)
     char.health = desc["health"]
     char.energy = desc["energy"]
+    char.traits = desc["traits"]
 
     char.prepare()
     char.move_to(parts[desc["place"]])
