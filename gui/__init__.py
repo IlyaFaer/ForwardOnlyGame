@@ -63,8 +63,9 @@ class MainMenu:
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
             frameColor=(0, 0, 0, 0),
-            text="""This is an alpha build. Some things are not balanced yet, some are in
-development and some may change in future. Anyway, enjoy your play!""",
+            text="""This is a game alpha build. It's not finally balanced and a lot of
+things are in development yet. Thus, it's mostly a conceptual release,
+to demonstrate you the main game princips. Enjoy your play!""",
         )
 
     def _start_new_game(self):

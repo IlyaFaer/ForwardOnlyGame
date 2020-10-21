@@ -45,7 +45,7 @@ class ForwardOnly(ShowBase):
         if not os.path.exists("saves"):
             os.mkdir("saves")
 
-        self.setBackgroundColor(0.2, 0.27, 0.2)
+        self.setBackgroundColor(0.1, 0.17, 0.1)
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
@@ -124,7 +124,7 @@ class ForwardOnly(ShowBase):
 
         # build game world
         self.world = World()
-        self.world.generate_location("Plains", 500)
+        self.world.generate_location("Plains", 600)
         self._current_block = self.world.prepare_next_block()
 
         self.char_interface = CharacterInterface()

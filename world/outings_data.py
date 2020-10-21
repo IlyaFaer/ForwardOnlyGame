@@ -625,8 +625,8 @@ abandoned tent. There are no any signs of a bonfire, smoke, or any
 human, so the camp is probably long forsaken. Still something useful
 can remain there, who knows. It's worth checking. The place seems to be
 open, quite and calm, but it's little bit distant. If something will
-go wrong it'll be a long way back for your teammates. So a couple of
-people should be sent for a surprise case.""",
+go wrong it'll be a long way back for your teammates. So a couple
+of people should be sent for a surprise case.""",
                 "results": (
                     {
                         "score": range(0, 20),
@@ -686,7 +686,7 @@ warm wind makes the way pleasant. Closing to the tent {name1} and
 {name2} are starting to search for supplies through the things left
 in the camp. Ropes, empty cans, some climber stuff, even an album with
 old photos. Finding nothing {name1} decides to take a look at the tent
-- {heshe1} pulls the zipper and stick his head into the stifling inners.
+- {heshe1} pulls the zipper and stick {hisher1} head into the stifling inners.
 The tent looks empty at the first gaze, but suddenly {name1} caughts
 {hisher1} eyes on a bottle of an energy drink. "Well, it's something!"
  - {heshe1} pronounces and takes the bottle.
@@ -890,9 +890,9 @@ discover a huge wall icon, which seems untouched by time. Colors are
 saturated, lack of any cracks or dirt - it looks surprisingly well
 for this place. {name1}, {name2} and {name3} spending a couple of
 minutes staring at the art object, and its beauty in the midst of
-the old monastery devastation inspires them.
-{name1}, {name2} and {name3} getting +20 energy""",
-                        "effects": {"all": {"energy": 20}},
+the old monastery devastation inspires them to survive anything.
+{name1}, {name2} and {name3} getting +20 health""",
+                        "effects": {"all": {"health": 20}},
                     },
                     {
                         "score": range(80, 101),
@@ -921,8 +921,8 @@ You're getting +40$""",
                     "noon": 10,
                     "evening": 8,
                 },
-                "desc": """You're looking at the horizon line trying to find a sign of
-a civilization. A couple of hours passed, and there were no single building,
+                "desc": """You're looking at the horizon line trying to find a sign of a
+civilization. A couple of hours passed, and there were no single building,
 litter or any other sign of human. What are these wild plains? But once
 a distant grey spot attracts your eyes. You're taking a look at it through
 your binocular. Truck! Even from that big distance you can say it is

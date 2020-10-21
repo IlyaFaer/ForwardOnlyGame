@@ -36,7 +36,7 @@ CLASSES = {
             "model": "skinhead_thrower1",
             "score": 9,
             "part": "side",
-            "health": 80,
+            "health": 90,
             "moto_model": "moto2",
         },
     ),
@@ -121,7 +121,7 @@ class Enemy:
 
             if unit_class["class"] == BrakeDropper:
                 brakers += 1
-                if brakers == 3:
+                if brakers == 2:
                     available.remove(unit_class)
 
             if unit_class["class"] == StunBombThrower:

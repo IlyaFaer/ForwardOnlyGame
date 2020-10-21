@@ -261,15 +261,15 @@ class CameraController:
         new_x = base.mouseWatcherNode.getMouseX()  # noqa: F821
         new_z = base.mouseWatcherNode.getMouseY()  # noqa: F821
 
-        if new_x - x <= -0.15:
+        if new_x - x <= -0.125:
             self._cam_np.setH(self._cam_np.getH() - 1)
-        elif new_x - x >= 0.15:
+        elif new_x - x >= 0.125:
             self._cam_np.setH(self._cam_np.getH() + 1)
-        elif new_z - z <= -0.15:
+        elif new_z - z <= -0.125:
             r = self._cam_np.getR()
             if r < 20:
                 self._cam_np.setR(r + 1)
-        elif new_z - z >= 0.15:
+        elif new_z - z >= 0.125:
             r = self._cam_np.getR()
             if r > -60:
                 self._cam_np.setR(r - 1)

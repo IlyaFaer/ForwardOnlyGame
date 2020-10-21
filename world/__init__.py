@@ -542,7 +542,7 @@ class World:
             base.train.ctrl.speed_to_min()  # noqa: F821
 
         if self._et_blocks:
-            if self._et_blocks > 8 and not self._et_rusty_blocks and chance(5):
+            if self._et_blocks > 8 and not self._et_rusty_blocks and chance(3):
                 self._et_rusty_blocks = random.randint(4, 8)
 
             block = self._prepare_et_block()
