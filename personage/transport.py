@@ -10,7 +10,7 @@ from utils import address
 
 
 class TransportManager:
-    """Transport manager rules a transport loading and preparing.
+    """Transport manager rules transport loading and preparing.
 
     It prepares transport models and then propagates
     its instances to the given units.

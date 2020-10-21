@@ -36,7 +36,7 @@ FLOWER_RANGES = {
 class Block:
     """Single world block.
 
-    Consists of railway block, path for Train to
+    Consists of railway block, path for the Train to
     move along, environment models and two surface blocks.
 
     On creation it chooses surface models and arranges

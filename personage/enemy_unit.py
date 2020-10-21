@@ -171,7 +171,7 @@ class EnemyUnit(Unit):
         self._y_positions.append(self._y_pos)
 
     def _explode(self):
-        """Set physics for this enemy and explode."""
+        """Set physics for this enemy unit and explode."""
         self._explosion.play()
 
         rb_node = BulletRigidBodyNode(self.id + "_physics")
@@ -204,7 +204,7 @@ class EnemyUnit(Unit):
         )
 
     def stop(self):
-        """Smoothly stop this unit following Train."""
+        """Smoothly stop this unit following the Train."""
         self._stop_tasks("_float_move")
         self._move(random.randint(9, 11), (self._io_dist, -7, 0))
         self._y_positions.append(self._y_pos)
@@ -226,7 +226,7 @@ class EnemyUnit(Unit):
 
 
 class MotoShooter(EnemyUnit, Shooter):
-    """Shooter-motorcyclist unit.
+    """A shooter-motorcyclist unit.
 
     Includes character and his transport.
 
@@ -393,7 +393,7 @@ class BrakeDropper(EnemyUnit):
         base.sound_mgr.attachSoundToObject(self._fall_snd, self.model)  # noqa: F821
 
     def _jump_and_brake(self, task):
-        """Jump over the railway and drop brake."""
+        """Jump over the railway and drop a brake shoe."""
         if not self._brakes or self.current_part is None:
             return task.done
 
@@ -503,7 +503,7 @@ class BrakeDropper(EnemyUnit):
         )
 
     def stop(self):
-        """Smoothly stop this unit following Train."""
+        """Smoothly stop this unit following the Train."""
         self._stop_tasks("_jump_and_brake")
         EnemyUnit.stop(self)
 
@@ -538,10 +538,9 @@ class StunBombThrower(EnemyUnit):
     """Stun-bomb thrower enemy unit.
 
     This unit type is dealing damage to the Train with bombs.
-    Also this unit can deal damage to characters and can
-    deafen them. The efficiency of the unit depends on
-    the Train speed, so this unit type is synergetic with
-    brakers.
+    Also this unit can deal damage to characters and deafen
+    them. The efficiency of the unit depends on the Train
+    speed, so this unit type is synergetic with brakers.
 
     Args:
         model (actor.Actor): Enemy character model.
@@ -557,10 +556,11 @@ class StunBombThrower(EnemyUnit):
         )
         self._throw_anim = "throw_" + ("right" if self._y_pos < 0 else "left")
 
-        # preparing a hand bomb model
+        # prepare a hand bomb model
         self._bomb = loader.loadModel(address("hand_bomb1"))  # noqa: F821
         self._bomb.hide()
         self._bomb.reparentTo(self.model)
+
         if self._y_pos < 0:
             self._bomb_pos = (0.034, 0.021, 0.068)
         else:
@@ -569,7 +569,7 @@ class StunBombThrower(EnemyUnit):
         self._bomb.setPos(*self._bomb_pos)
 
     def stop(self):
-        """Smoothly stop this unit following Train."""
+        """Smoothly stop this unit following the Train."""
         self._stop_tasks("_throw")
         EnemyUnit.stop(self)
 

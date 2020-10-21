@@ -72,7 +72,7 @@ class World:
 
     @property
     def current_block_number(self):
-        """Current block index in the world map.
+        """The current block index in the world map.
 
         Returns:
             int: The current block number.
@@ -247,7 +247,7 @@ class World:
                 extraArgs=[self._noon_ambient_snd, self._night_ambient_snd],
                 appendTask=True,
             )
-        if self.sun.day_part == "night":
+        elif self.sun.day_part == "night":
             base.taskMgr.doMethodLater(  # noqa: F821
                 2,
                 self._change_amb_snd,
@@ -343,7 +343,7 @@ class World:
         world_save.close()
 
         self._set_sounds(location)
-        self.enemy = Enemy(LOCATIONS[location]["enemy"])
+        self.enemy = Enemy()
 
     def load_location(self, location, enemy_score):
         """Load the given location from the last world save.
@@ -370,7 +370,7 @@ class World:
             self._map.append(block)
 
         self._set_sounds(location)
-        self.enemy = Enemy(LOCATIONS[location]["enemy"])
+        self.enemy = Enemy()
         self.enemy.score = enemy_score
 
     def load_blocks(self, cur_block, angle):

@@ -18,6 +18,7 @@ from .character_data import CLASSES, NAMES, TRAITS
 from .shooter import Shooter
 from .unit import Unit
 
+# cohesion relation indicator colors
 RELATION_COLORS = {
     0: (1, 0.01, 0.24, 1),  # red
     1: (1, 0.45, 0.09, 1),  # orange
@@ -29,15 +30,15 @@ RELATION_COLORS = {
 
 
 class Character(Shooter, Unit):
-    """Game character.
+    """A game character.
 
     Represents a unit controlled by a player.
 
     Args:
-        id_ (int): Character unique id.
-        name (str): Character name.
+        id_ (int): The character unique id.
+        name (str): The character name.
         class_ (str): Unit class.
-        sex (str): Character gender.
+        sex (str): The character gender.
         team (team.Team): Team object.
     """
 
@@ -52,9 +53,9 @@ class Character(Shooter, Unit):
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None
-        self._energy = 100
         self._cohesion_ball = None
         self._is_stunned = False
+        self._energy = 100
 
         self.name = name
         self.sex = sex
@@ -444,7 +445,7 @@ class Character(Shooter, Unit):
         """Character death code.
 
         Stop all the character's tasks, play death
-        animation and plan character clearing.
+        animation and plan the character clearing.
         """
         if self._team.hold_together:
             self.health = 1
@@ -565,7 +566,7 @@ class Character(Shooter, Unit):
     def get_stunned(self, duration):
         """Make this character stunned for some time.
 
-        Stunned unit can't shoot for some time.
+        Stunned unit can't shoot.
 
         Args:
             duration (float): Stun duration in seconds.
@@ -634,7 +635,7 @@ def load_char(desc, team, parts):
         parts (dict): Train parts index.
 
     Returns:
-        character.Character: Ready-to-go character object.
+        character.Character: A ready-to-go character object.
     """
     char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team)
     char.health = desc["health"]

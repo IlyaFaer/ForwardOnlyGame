@@ -17,10 +17,11 @@ COHESION_FACTORS = {
 
 
 class Team:
-    """All characters (player units) object."""
+    """All the characters together object."""
 
     def __init__(self):
         self._char_id = 0  # variable to count character ids
+        # cohesion relations between characters
         self._relations = {}
 
         self.chars = {}
@@ -52,24 +53,15 @@ class Team:
         """
         return [char.description for char in self.chars.values()]
 
-    def gen_default(self, train_parts):
-        """Generate a default team.
-
-        Args:
-            train_pargs (dict):
-                Train parts to set characters on.
-        """
-        for part, sex in (
-            (train_parts["part_locomotive_right"], "male"),
-            (train_parts["part_locomotive_right"], "male"),
-            (train_parts["part_locomotive_front"], "female"),
-        ):
+    def gen_default(self):
+        """Generate a default team."""
+        for sex in ("male", "male", "female"):
             self._char_id += 1
 
             char = generate_char(self._char_id, "soldier", sex, self)
             char.prepare()
-            char.move_to(part)
 
+            base.train.place_recruit(char)  # noqa: F821
             self.chars[char.id] = char
 
     def load(self, char_desc, parts, cohesion_desc):
@@ -307,7 +299,7 @@ class Team:
         return cohesion
 
     def increase_cohesion_for_chars(self, chars, outing_score):
-        """Increase cohesion for characters who went for an outing.
+        """Increase cohesion for those who went for an outing.
 
         Increase factor depends on outing score: the higher
         it is the higher will be cohesion increase.

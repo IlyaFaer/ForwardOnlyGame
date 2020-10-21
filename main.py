@@ -117,7 +117,7 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Team()
-        self.team.gen_default(self.train.parts)
+        self.team.gen_default()
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
         self.common_ctrl.set_controls()

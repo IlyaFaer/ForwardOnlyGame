@@ -13,36 +13,34 @@ from utils import address, chance
 from .enemy_unit import BrakeDropper, MotoShooter, StunBombThrower
 from .transport import TransportManager
 
-FRACTIONS = {
-    "Skinheads": {
-        "classes": (
-            {
-                "class": MotoShooter,
-                "model": "skinhead_shooter1",
-                "score": 3,
-                "part": "side",
-                "health": 100,
-                "moto_model": "moto1",
-            },
-            {
-                "class": BrakeDropper,
-                "model": "skinhead_shooter1",
-                "score": 6,
-                "part": "front",
-                "health": 50,
-                "moto_model": "moto1",
-            },
-            {
-                "class": StunBombThrower,
-                "model": "skinhead_thrower1",
-                "score": 9,
-                "part": "side",
-                "health": 80,
-                "moto_model": "moto2",
-            },
-        ),
-        "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
-    }
+CLASSES = {
+    "classes": (
+        {
+            "class": MotoShooter,
+            "model": "skinhead_shooter1",
+            "score": 3,
+            "part": "side",
+            "health": 100,
+            "moto_model": "moto1",
+        },
+        {
+            "class": BrakeDropper,
+            "model": "skinhead_shooter1",
+            "score": 6,
+            "part": "front",
+            "health": 50,
+            "moto_model": "moto1",
+        },
+        {
+            "class": StunBombThrower,
+            "model": "skinhead_thrower1",
+            "score": 9,
+            "part": "side",
+            "health": 80,
+            "moto_model": "moto2",
+        },
+    ),
+    "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
 }
 
 
@@ -50,12 +48,9 @@ class Enemy:
     """Class to hold an enemy fraction.
 
     Includes all the currently active enemies.
-
-    Args:
-        fraction (str): Enemy fraction name.
     """
 
-    def __init__(self, fraction):
+    def __init__(self):
         self.active_units = {}
         self.score = 3
 
@@ -72,8 +67,8 @@ class Enemy:
             self._front_y_positions.append(round(0.1 + gain * 0.05, 2))
             self._front_y_positions.append(round(-0.1 - gain * 0.05, 2))
 
-        self._classes = FRACTIONS[fraction]["classes"]
-        self._attack_chances = FRACTIONS[fraction]["attack_chances"]
+        self._classes = CLASSES["classes"]
+        self._attack_chances = CLASSES["attack_chances"]
 
         self._transport_mgr = TransportManager()
 
@@ -145,7 +140,7 @@ class Enemy:
             wave_score += unit_class["score"]
 
     def stop_attack(self):
-        """Make all the unit smoothly stop following Train."""
+        """Make all the unit smoothly stop following the Train."""
         self.score += 1
         for enemy in self.active_units.values():
             enemy.stop()
@@ -155,7 +150,7 @@ class Enemy:
         )
 
     def capture_train(self):
-        """Train got critical damage - stop near it."""
+        """The Train got critical damage - stop near it."""
         for enemy in self.active_units.values():
             base.taskMgr.remove(enemy.id + "_float_move")  # noqa: F821
             base.taskMgr.remove(enemy.id + "_shoot")  # noqa: F821
@@ -170,7 +165,7 @@ class Enemy:
         return task.done
 
     def _stop_cooldown(self, task):
-        """Ends cool down period."""
+        """Ends enemy attack cool down period."""
         self._is_cooldown = False
         return task.done
 

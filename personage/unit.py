@@ -12,10 +12,11 @@ class Unit(metaclass=abc.ABCMeta):
     """Base game unit class.
 
     Args:
-        id_ (str): Unit id.
-        class_ (str): Unit class.
+        id_ (str): This unit id.
+        class_ (str): This unit class.
         class_data (dict):
-            Unit class definition, including max health points.
+            This unit class definition, including
+            max health points.
     """
 
     def __init__(self, id_, class_, class_data):
@@ -29,7 +30,7 @@ class Unit(metaclass=abc.ABCMeta):
 
     @property
     def health(self):
-        """Unit health.
+        """This unit health.
 
         Returns:
             int: This unit health points.
