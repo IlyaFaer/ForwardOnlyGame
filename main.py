@@ -107,8 +107,12 @@ class ForwardOnly(ShowBase):
         self.train.move_along_block(self._current_block)
         self._current_block = next_block
 
-    def start_new_game(self, task):
-        """Start a new game, replacing the saved one."""
+    def start_new_game(self, chosen_team):
+        """Start a new game, replacing the saved one.
+
+        Args:
+            chosen_team (str): The chosen main game tactics.
+        """
         self.disableAllAudio()
 
         self.train = Train()
@@ -117,7 +121,7 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Team()
-        self.team.gen_default()
+        self.team.gen_default(chosen_team)
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
         self.common_ctrl.set_controls()
@@ -138,7 +142,6 @@ class ForwardOnly(ShowBase):
         self.doMethodLater(3, self._start_to_move, "start_to_move")
 
         self.dollars = 300
-        return task.done
 
     def save_game(self):
         """Save the current game."""

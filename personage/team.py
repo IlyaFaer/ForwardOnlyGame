@@ -15,6 +15,11 @@ COHESION_FACTORS = {
     ("raider", "soldier"): 0.36,
 }
 
+DEFAULT_TEAMS = {
+    "soldiers": {"class": "soldier", "sexes": ("male", "male", "male")},
+    "raiders": {"class": "raider", "sexes": ("male", "male", "female")},
+}
+
 
 class Team:
     """All the characters together object."""
@@ -53,12 +58,18 @@ class Team:
         """
         return [char.description for char in self.chars.values()]
 
-    def gen_default(self):
-        """Generate a default team."""
-        for sex in ("male", "male", "female"):
+    def gen_default(self, chosen_team):
+        """Generate a default team.
+
+        Args:
+            chosen_team (str): The tactics to generate team for.
+        """
+        for sex in DEFAULT_TEAMS[chosen_team]["sexes"]:
             self._char_id += 1
 
-            char = generate_char(self._char_id, "soldier", sex, self)
+            char = generate_char(
+                self._char_id, DEFAULT_TEAMS[chosen_team]["class"], sex, self
+            )
             char.prepare()
 
             base.train.place_recruit(char)  # noqa: F821

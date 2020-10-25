@@ -7,6 +7,7 @@ Game graphical interfaces.
 import sys
 
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
+from panda3d.core import TransparencyAttrib
 
 from utils import save_exists
 from .character import CharacterInterface  # noqa: F401
@@ -25,10 +26,13 @@ class MainMenu:
 
     def __init__(self):
         self._save_but = None
+        self._chosen_team = None
         self._is_first_pause = True
+        self._tactics_wids = []
 
-        self._main_fr = DirectFrame(frameSize=(-2, 2, -1, 1), frameColor=(0, 0, 0, 1))
-
+        self._main_fr = DirectFrame(
+            frameSize=(-2, 2, -1, 1), frameColor=(0.15, 0.15, 0.15, 1)
+        )
         self._new_game_but = DirectButton(
             parent=self._main_fr,
             pos=(-1, 0, 0.5),
@@ -36,7 +40,7 @@ class MainMenu:
             text_fg=RUST_COL,
             text="New game",
             relief=None,
-            command=self._start_new_game,
+            command=self._choose_tactics,
         )
         is_save_exists = save_exists()
         self._load_but = DirectButton(
@@ -57,21 +61,141 @@ class MainMenu:
             relief=None,
             command=sys.exit,
         )
-        DirectLabel(
+        self._alpha_disclaimer = DirectLabel(
             parent=self._main_fr,
-            pos=(0, 0, -0.87),
+            pos=(0, 0, -0.9),
             text_scale=(0.03, 0.03),
             text_fg=SILVER_COL,
             frameColor=(0, 0, 0, 0),
-            text="""This is a game alpha build. It's not finally balanced and a lot of
-things are in development yet. Thus, it's mostly a conceptual release,
-to demonstrate you the main game princips. Enjoy your play!""",
+            text=(
+                "This is a game alpha build. It's not finally balanced and a lot of"
+                "things are in development yet."
+                "\nThus, it's mostly a conceptual release, to demonstrate you the main "
+                "game princips. Enjoy your play!"
+            ),
         )
+
+    def _choose_tactics(self):
+        """Choose the main game tactics before new game start."""
+        if self._chosen_team:
+            return
+
+        self._tactics_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                text="Choose your team",
+                text_fg=RUST_COL,
+                text_scale=0.04,
+                frameColor=(0, 0, 0, 0),
+                pos=(0.7, 0, 0.75),
+            )
+        )
+        self._team_preview = DirectFrame(
+            parent=self._main_fr,
+            frameSize=(-0.61, 0.61, -0.35, 0.35),
+            pos=(0.7, 0, 0.3),
+        )
+        self._team_preview.setTransparency(TransparencyAttrib.MAlpha)
+        self._tactics_wids.append(self._team_preview)
+
+        self._team_buts = {
+            "soldiers": DirectButton(
+                parent=self._main_fr,
+                text_scale=0.035,
+                text_fg=RUST_COL,
+                text="Soldiers",
+                relief=None,
+                command=self._show_team,
+                extraArgs=["soldiers"],
+                pos=(0.5, 0, -0.15),
+            ),
+            "raiders": DirectButton(
+                parent=self._main_fr,
+                text_scale=0.035,
+                text_fg=RUST_COL,
+                text="Raiders",
+                relief=None,
+                command=self._show_team,
+                extraArgs=["raiders"],
+                pos=(0.7, 0, -0.15),
+            ),
+        }
+        self._tactics_wids += self._team_buts.values()
+
+        self._team_description = DirectLabel(
+            parent=self._main_fr,
+            text="Team description",
+            text_fg=SILVER_COL,
+            text_scale=(0.03),
+            frameColor=(0, 0, 0, 0),
+            pos=(0.7, 0, -0.26),
+        )
+        self._tactics_wids.append(self._team_description)
+
+        self._tactics_wids.append(
+            DirectButton(
+                parent=self._main_fr,
+                text_scale=0.045,
+                text_fg=RUST_COL,
+                text="Start",
+                relief=None,
+                command=self._start_new_game,
+                pos=(0.7, 0, -0.5),
+            )
+        )
+        self._show_team("soldiers")
+
+    def _show_team(self, chosen_team):
+        """Show the description of the chosen tactics.
+
+        Args:
+            chosen_team (str): The chosen tactics name.
+        """
+        self._chosen_team = chosen_team
+        self._team_preview["frameTexture"] = "gui/tex/preview/{}.png".format(
+            chosen_team
+        )
+        for key, but in self._team_buts.items():
+            but["text_fg"] = SILVER_COL if key == chosen_team else RUST_COL
+
+        descs = {
+            "soldiers": (
+                "Your Train - your fortress! Improve it, build its defense and "
+                "hardness.\nSoldiers are good shooters at medium distance and "
+                "good fortification assaulters.\n\nYou'll start with 3 "
+                "soldier males."
+            ),
+            "raiders": (
+                "You're accustomed to difficulties and can recover from everything."
+                "\nRaiders are good fighters at short distance and they know how to "
+                "find resources.\n\n You'll start with 2 male and 1 "
+                "female raiders."
+            ),
+        }
+        self._team_description["text"] = descs[chosen_team]
+
+    def _clear_temp_wids(self, task):
+        """Destroy widgets from the first game screen."""
+        for wid in self._tactics_wids:
+            wid.destroy()
+
+        self._tactics_wids = []
+        self._alpha_disclaimer.destroy()
+        self._load_msg.destroy()
+        return task.done
 
     def _start_new_game(self):
         """Start a new game."""
+        base.taskMgr.doMethodLater(  # noqa: F821
+            4, self._clear_temp_wids, "clear_main_menu_temp_wids"
+        )
         self.show_loading()
-        base.doMethodLater(0.25, base.start_new_game, "start_new_game")  # noqa: F821
+        base.doMethodLater(  # noqa: F821
+            0.25,
+            base.start_new_game,  # noqa: F821
+            "start_new_game",
+            extraArgs=[self._chosen_team],
+        )
 
     def _load_game(self):
         """Load previously saved game."""
@@ -86,7 +210,7 @@ to demonstrate you the main game princips. Enjoy your play!""",
             text_fg=RUST_COL,
             frameSize=(1, 1, 1, 1),
             text_scale=(0.04),
-            pos=(0, 0, -0.63),
+            pos=(0, 0, -0.75),
         )
 
     def hide(self):
@@ -115,7 +239,6 @@ to demonstrate you the main game princips. Enjoy your play!""",
             return
 
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
-        self._load_msg.hide()
         self._new_game_but["text"] = "Resume"
         self._new_game_but["command"] = self.hide
         self._new_game_but.setPos(-1.028, 0, 0.4),
