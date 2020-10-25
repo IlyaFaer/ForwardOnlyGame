@@ -244,12 +244,21 @@ class MotoShooter(EnemyUnit, Shooter):
         )
         Shooter.__init__(self)
 
-        self.damage = (2, 3)
+        self.damage_range = (2, 3)
 
         self.model.setPlayRate(0.6, "aim_left")
         self.model.setPlayRate(0.6, "aim_right")
 
         self.shot_snd = self._set_shoot_snd("smg_shot1")
+
+    @property
+    def damage(self):
+        """This unit one-time calculated damage.
+
+        Returns:
+            float: One-time damage made by this unit.
+        """
+        return random.uniform(*self.damage_range)
 
     def _aim(self, back):
         """Aim to the Train when got close enough.

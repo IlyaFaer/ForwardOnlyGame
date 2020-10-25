@@ -5,7 +5,6 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 API for shooting units.
 """
 import abc
-import random
 
 from direct.interval.IntervalGlobal import (
     LerpScaleInterval,
@@ -37,7 +36,7 @@ class Shooter(metaclass=abc.ABCMeta):
         """Play shooting animation and sound, make damage."""
         self._shoot_anim.start()
         if not self._missed_shot():
-            self._target.get_damage(random.randint(*self.damage))
+            self._target.get_damage(self.damage)
 
         task.delayTime = self.shooting_speed
         return task.again

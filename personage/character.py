@@ -62,12 +62,27 @@ class Character(Shooter, Unit):
         self.heshe = "he" if sex == "male" else "she"
         self.hisher = "his" if sex == "male" else "her"
         self.himher = "him" if sex == "male" else "her"
-        self.damage = [3, 5]
+
+        self.damage_range = [3, 5]
         self.clear_damage = [3, 5]
+
         self.traits = []
         traits = copy.copy(TRAITS)
         for _ in range(random.randint(0, 2)):
             self.traits.append(random.choice(take_random(traits)))
+
+    @property
+    def damage(self):
+        """This character one-time calculated damage.
+
+        The damage depends on cohesion with another
+        character on the same part of the Train.
+
+        Returns:
+            float: Damage one-time made by this character.
+        """
+        factor = self._team.calc_cohesion_factor(self.current_part.chars)
+        return random.uniform(*self.damage_range) * factor
 
     @property
     def shooting_speed(self):

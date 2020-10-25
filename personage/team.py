@@ -150,9 +150,9 @@ class Team:
             return
 
         for char in self.chars.values():
-            char.clear_damage = copy.copy(char.damage)
-            char.damage[0] = round(char.damage[0] * 1.3)
-            char.damage[1] = round(char.damage[1] * 1.3)
+            char.clear_damage = copy.copy(char.damage_range)
+            char.damage_range[0] *= 1.3
+            char.damage_range[1] *= 1.3
 
         base.taskMgr.doMethodLater(90, self._stop_rage, "stop_rage")  # noqa: F821
         self._plan_cohesion_cooldown(900)
@@ -188,7 +188,7 @@ class Team:
     def _stop_rage(self, task):
         """Stop "Common rage" cohesion ability."""
         for char in self.chars.values():
-            char.damage = copy.copy(char.clear_damage)
+            char.damage_range = copy.copy(char.clear_damage)
 
         return task.done
 
@@ -308,6 +308,27 @@ class Team:
 
         cohesion = round((cohesion / rel_num) * 20, 2)
         return cohesion
+
+    def calc_cohesion_factor(self, chars):
+        """Calculate the damage factor for the given characters.
+
+        The stronger cohesion the given characters
+        have the higher will be the damage factor.
+
+        Args:
+            chars (list):
+                Characters, for whom a damage factor must
+                be calculated.
+
+        Returns:
+            float: The damage factor.
+        """
+        if len(chars) < 2:
+            return 1
+
+        rel_id = tuple(sorted([chars[0].id, chars[1].id]))
+        cohesion = self._relations[rel_id] / 100
+        return 1 + cohesion * 0.5
 
     def increase_cohesion_for_chars(self, chars, outing_score):
         """Increase cohesion for those who went for an outing.
