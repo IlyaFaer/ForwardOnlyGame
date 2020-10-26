@@ -96,6 +96,11 @@ energy level""",
     """Send your character into a Train
 rest zone. Rest helps to regain
 energy and heal wounds.""",
+    # events
+    """Disease lowers character energy
+maximum down to 80 and disables
+all the positive traits until
+getting well""",
 )
 
 

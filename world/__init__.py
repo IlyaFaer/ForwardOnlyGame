@@ -36,6 +36,7 @@ class World:
         self.enemy = None
         self.outings_mgr = None
 
+        self._disease_threshold = 25
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the world blocks
@@ -78,6 +79,15 @@ class World:
             int: The current block number.
         """
         return self._block_num
+
+    @property
+    def disease_threshold(self):
+        """Return the current disease score value.
+
+        Returns:
+            int: Disease activity score.
+        """
+        return self._disease_threshold
 
     @property
     def last_cleared_block_angle(self):
@@ -345,13 +355,15 @@ class World:
         self._set_sounds(location)
         self.enemy = Enemy()
 
-    def load_location(self, location, enemy_score):
+    def load_location(self, location, enemy_score, disease_threshold):
         """Load the given location from the last world save.
 
         Args:
             location (str): Location name.
             enemy_score (int): Enemy score.
+            disease_threshold (int): Disease activity score.
         """
+        self._disease_threshold = disease_threshold
         self.outings_mgr = OutingsManager(location)
 
         world_save = shelve.open("saves/world")
@@ -597,6 +609,22 @@ class World:
             if self._map[num].enemy_territory:
                 self._map.pop(num)
                 self._block_num -= 1
+
+    def disease_activity(self, task):
+        """Run a disease activity iteration.
+
+        Activity includes getting characters
+        diseased with some possibility.
+        """
+        self._disease_threshold -= 1
+
+        if self._disease_threshold == 0:
+            self._disease_threshold = 25
+
+            for char in base.team.chars.values():  # noqa: F821
+                char.get_sick()
+
+        return task.again
 
 
 class Hangar:

@@ -244,6 +244,7 @@ class CharacterInterface:
 
         self._char_health["value"] = self._char.health
         self._char_energy["value"] = self._char.energy
+        self._traits_list["text"] = ", ".join(self._char.traits)
         return task.again
 
     def _show_char_desc(self):

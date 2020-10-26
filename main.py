@@ -90,6 +90,9 @@ class ForwardOnly(ShowBase):
     def _start_to_move(self, task):
         """Actually start the game process."""
         self.enableAllAudio()
+
+        self.taskMgr.doMethodLater(60, self.world.disease_activity, "disease")
+
         self._move_along_block()
         return task.done
 
@@ -150,6 +153,7 @@ class ForwardOnly(ShowBase):
         save["cur_block"] = self.world.current_block_number
         save["last_angle"] = self.world.last_cleared_block_angle
         save["enemy_score"] = self.world.enemy.score
+        save["disease_threshold"] = self.world.disease_threshold
 
         save["train"] = self.train.description
         save["dollars"] = self.dollars
@@ -182,7 +186,9 @@ class ForwardOnly(ShowBase):
 
         # build game world
         self.world = World(save["day_part"])
-        self.world.load_location("Plains", save["enemy_score"])
+        self.world.load_location(
+            "Plains", save["enemy_score"], save["disease_threshold"]
+        )
         self._current_block = self.world.load_blocks(
             save["cur_block"], save["last_angle"]
         )

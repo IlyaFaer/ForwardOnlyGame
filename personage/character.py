@@ -66,6 +66,10 @@ class Character(Shooter, Unit):
         self.damage_range = [3, 5]
         self.clear_damage = [3, 5]
 
+        self.is_diseased = False
+        self.get_well_score = 0
+
+        self.disabled_traits = []
         self.traits = []
         traits = copy.copy(TRAITS)
         for _ in range(random.randint(0, 2)):
@@ -115,7 +119,7 @@ class Character(Shooter, Unit):
         Args:
             value (int): New energy value.
         """
-        self._energy = min(max(value, 0), 100)
+        self._energy = min(max(value, 0), 80 if self.is_diseased else 100)
 
     @property
     def tooltip(self):
@@ -155,6 +159,9 @@ class Character(Shooter, Unit):
             "energy": self.energy,
             "place": self.current_part.name,
             "traits": self.traits,
+            "disabled_traits": self.disabled_traits,
+            "is_diseased": self.is_diseased,
+            "get_well_score": self.get_well_score,
         }
         return desc
 
@@ -600,6 +607,51 @@ class Character(Shooter, Unit):
             duration, self._stop_stunning, self.id + "_stop_stunning"
         )
 
+    def get_sick(self):
+        """Calculations to get this character sick.
+
+        The worse condition the character has the higher
+        is the chance for him to get sick. Sick character
+        has lower energy maximum, and all his positive
+        traits are disabled until getting well.
+        """
+        if self.is_diseased:
+            return
+
+        cond_percent = (self.energy + self.health) / (100 + self.class_data["health"])
+        percent = (1 - cond_percent) * 30
+
+        if chance(percent):
+            self.is_diseased = True
+            self.get_well_score = 0
+
+            for traits_pair in TRAITS:
+                if traits_pair[0] in self.traits:
+
+                    self.traits.remove(traits_pair[0])
+                    self.disabled_traits.append(traits_pair[0])
+
+            base.taskMgr.doMethodLater(  # noqa: F821
+                60, self.get_well, self.id + "_get_well"
+            )
+            self.energy = min(self.energy, 80)
+
+    def get_well(self, task):
+        """Get this character well.
+
+        When the character got well, his energy maximum
+        is restored to the default value, and his
+        positive traits are back operational.
+        """
+        self.get_well_score += 1
+        if self.get_well_score < 20:
+            return task.again
+
+        self.is_diseased = False
+        self.traits += self.disabled_traits
+        self.disabled_traits = []
+        return task.done
+
     def _stop_stunning(self, task):
         """Stop this character stun and continue fighting."""
         self._is_stunned = False
@@ -654,8 +706,16 @@ def load_char(desc, team, parts):
     """
     char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team)
     char.health = desc["health"]
+    char.is_diseased = desc["is_diseased"]
     char.energy = desc["energy"]
     char.traits = desc["traits"]
+
+    char.disabled_traits = desc["disabled_traits"]
+    char.get_well_score = desc["get_well_score"]
+    if char.is_diseased:
+        base.taskMgr.doMethodLater(  # noqa: F821
+            60, char.get_well, char.id + "_get_well"
+        )
 
     char.prepare()
     char.move_to(parts[desc["place"]])
