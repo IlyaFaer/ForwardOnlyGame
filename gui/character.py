@@ -122,6 +122,15 @@ class CharacterInterface:
         )
         self._tip.hide()
 
+        self._disease = DirectFrame(
+            parent=self._fr,
+            frameSize=(-0.02, 0.02, -0.02, 0.02),
+            pos=(0.27, 0, -0.008),
+            frameTexture=ICON_PATH + "disease_icon.png",
+        )
+        self._disease.setTransparency(TransparencyAttrib.MAlpha)
+        self._disease.hide()
+
         self.clear_char_info()
 
     def show_char_info(self, character):
@@ -138,6 +147,9 @@ class CharacterInterface:
         self._char_health["range"] = character.class_data["health"]
         self._char_health["value"] = character.health
         self._char_energy["value"] = character.energy
+
+        if character.is_diseased:
+            self._disease.show()
 
         self._char = character
 
@@ -164,6 +176,7 @@ class CharacterInterface:
         self._char_energy.hide()
         self._traits_list.hide()
         self._char_desc_but.hide()
+        self._disease.hide()
 
         if self._char_desc_shown:
             self._show_char_desc()
@@ -245,6 +258,12 @@ class CharacterInterface:
         self._char_health["value"] = self._char.health
         self._char_energy["value"] = self._char.energy
         self._traits_list["text"] = ", ".join(self._char.traits)
+
+        if self._char.is_diseased:
+            self._disease.show()
+        else:
+            self._disease.hide()
+
         return task.again
 
     def _show_char_desc(self):
@@ -271,14 +290,16 @@ class CharacterInterface:
                 )
             )
             shift = 0.52
-            for trait in self._char.traits:
+            for trait in self._char.traits + self._char.disabled_traits:
                 self._char_desc_wids.append(
                     DirectLabel(
                         parent=self._fr,
                         text=trait,
                         frameSize=(0.1, 0.1, 0.1, 0.1),
                         text_scale=0.03,
-                        text_fg=SILVER_COL,
+                        text_fg=SILVER_COL
+                        if trait in self._char.traits
+                        else (0.3, 0.3, 0.3, 1),
                         pos=(0, 0, shift),
                     )
                 )
@@ -288,7 +309,9 @@ class CharacterInterface:
                         text=TRAIT_DESC[trait],
                         frameSize=(0.1, 0.1, 0.1, 0.1),
                         text_scale=0.029,
-                        text_fg=SILVER_COL,
+                        text_fg=SILVER_COL
+                        if trait in self._char.traits
+                        else (0.3, 0.3, 0.3, 1),
                         pos=(0, 0, shift - 0.045),
                     )
                 )

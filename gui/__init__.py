@@ -69,7 +69,7 @@ class MainMenu:
             frameColor=(0, 0, 0, 0),
             text=(
                 "This is a game alpha build. It's not finally balanced and a lot of"
-                "things are in development yet."
+                " things are in development yet."
                 "\nThus, it's mostly a conceptual release, to demonstrate you the main "
                 "game princips. Enjoy your play!"
             ),

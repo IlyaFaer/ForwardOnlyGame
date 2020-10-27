@@ -183,6 +183,7 @@ class Character(Shooter, Unit):
                 "tread1",
                 "turn_head1",
                 "stunned",
+                "cough",
             )
         }
         self.model = Actor(address(self.sex + "_" + self.class_), animations)
@@ -201,6 +202,10 @@ class Character(Shooter, Unit):
             NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         )
         self.shot_snd = self._set_shoot_snd(self.class_data["shot_snd"])
+        self.cough_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/{sex}_cough.ogg".format(sex=self.sex)
+        )
+        base.sound_mgr.attachSoundToObject(self.cough_snd, self.model)  # noqa: F821
 
         if self.class_ == "soldier":
             z = 0.064 if self.sex == "male" else 0.062
@@ -449,9 +454,13 @@ class Character(Shooter, Unit):
         Args:
             task (panda3d.core.PythonTask): Task object.
         """
-        self._current_anim = random.choice(
-            ("incline1", "gun_up", "release_gun", "tread1", "turn_head1")
-        )
+        if self.is_diseased and chance(80):
+            self._current_anim = "cough"
+            self.cough_snd.play()
+        else:
+            self._current_anim = random.choice(
+                ("incline1", "gun_up", "release_gun", "tread1", "turn_head1")
+            )
         LerpAnimInterval(self.model, 0.3, "stand", self._current_anim).start()
 
         self._idle_seq = Sequence(
@@ -508,6 +517,7 @@ class Character(Shooter, Unit):
         self.model.cleanup()
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self.cough_snd)  # noqa: F821
 
         self._team.chars.pop(self.id)
         self.current_part.release_cell(self._current_pos, self)
