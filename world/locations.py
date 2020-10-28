@@ -26,7 +26,11 @@ LOCATIONS = {
         ),
         "with_chance": (
             {"models": ("grave1", "grave2"), "chance": 6, "square": "wide"},
-            {"models": ("fireplace1", "tent"), "chance": 7, "square": "wide"},
+            {
+                "models": ("fireplace1", "tent", "hay_stack1"),
+                "chance": 7,
+                "square": "wide",
+            },
             {"models": ("stump1",), "chance": 7, "square": "wide"},
             {"models": ("tire1",), "chance": 2, "square": "wide"},
             {"models": ("cart1",), "chance": 4, "square": "wide"},
