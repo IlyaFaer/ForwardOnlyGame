@@ -34,7 +34,7 @@ LOCATIONS = {
             {"models": ("stump1",), "chance": 7, "square": "wide"},
             {"models": ("tire1",), "chance": 2, "square": "wide"},
             {"models": ("cart1",), "chance": 4, "square": "wide"},
-            {"models": ("chapel1",), "chance": 1, "square": "wide"},
+            {"models": ("chapel1", "spring1"), "chance": 1, "square": "wide"},
         ),
         # enemy territory configurations
         "et_with_quantity": (
