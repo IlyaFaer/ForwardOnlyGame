@@ -487,7 +487,7 @@ class Character(Shooter, Unit):
 
         Unit._die(self)
 
-        self._stop_tasks("_reduce_energy")
+        self._stop_tasks("_reduce_energy", "_get_well", "_infect")
 
         LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
         self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
@@ -505,7 +505,7 @@ class Character(Shooter, Unit):
 
         Used only when sending a character away in a city.
         """
-        self._stop_tasks("_calm_down", "_gain_energy", "_heal")
+        self._stop_tasks("_calm_down", "_gain_energy", "_heal", "_infect", "_get_well")
         base.taskMgr.doMethodLater(0.05, self.clear, self.id + "_clear")  # noqa: F821
 
     def clear(self, task):
@@ -617,13 +617,18 @@ class Character(Shooter, Unit):
             duration, self._stop_stunning, self.id + "_stop_stunning"
         )
 
-    def get_sick(self):
+    def get_sick(self, is_infect=False):
         """Calculations to get this character sick.
 
         The worse condition the character has the higher
         is the chance for him to get sick. Sick character
         has lower energy maximum, and all his positive
         traits are disabled until getting well.
+
+        Args:
+            is_infect (bool):
+                True if the disease came from a
+                character on the same Train part.
         """
         if self.is_diseased:
             return
@@ -631,7 +636,7 @@ class Character(Shooter, Unit):
         cond_percent = (self.energy + self.health) / (100 + self.class_data["health"])
         percent = (1 - cond_percent) * 30
 
-        if chance(percent):
+        if chance(percent + (20 if is_infect else 0)):
             self.is_diseased = True
             self.get_well_score = 0
 
@@ -643,6 +648,9 @@ class Character(Shooter, Unit):
 
             base.taskMgr.doMethodLater(  # noqa: F821
                 60, self.get_well, self.id + "_get_well"
+            )
+            base.taskMgr.doMethodLater(  # noqa: F821
+                240, self.infect, self.id + "_infect"
             )
             self.energy = min(self.energy, 80)
 
@@ -660,7 +668,16 @@ class Character(Shooter, Unit):
         self.is_diseased = False
         self.traits += self.disabled_traits
         self.disabled_traits = []
+        self._stop_tasks("_infect")
         return task.done
+
+    def infect(self, task):
+        """Infect other characters on the same Train part."""
+        for char in self.current_part.chars:
+            if char.id != self.id:
+                char.get_sick(is_infect=True)
+
+        return task.again
 
     def _stop_stunning(self, task):
         """Stop this character stun and continue fighting."""

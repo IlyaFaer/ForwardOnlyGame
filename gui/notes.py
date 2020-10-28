@@ -96,11 +96,16 @@ energy level""",
     """Send your character into a Train
 rest zone. Rest helps to regain
 energy and heal wounds.""",
-    # events
+    # diseases
     """Disease lowers character energy
 maximum down to 80 and disables
 all the positive traits until
 getting well""",
+    """Try to reduce diseased character
+contacts to avoid spreading
+the infection""",
+    """Wounded and tired characters are
+more vulnerable for diseases""",
 )
 
 
@@ -140,7 +145,7 @@ class TeachingNotes:
         base.taskMgr.doMethodLater(  # noqa: F821
             10, self._hide_note, "hide_teaching_note"
         )
-        task.delayTime = 180
+        task.delayTime = 150
         return task.again
 
     def _hide_note(self, task):
