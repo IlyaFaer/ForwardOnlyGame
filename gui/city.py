@@ -158,7 +158,7 @@ class CityInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(-0.25, 0, -0.07),
+            pos=(-0.277, 0, -0.07),
         )
         DirectLabel(
             parent=self._city_fr,

@@ -40,7 +40,7 @@ class TrainInterface:
         self._damnability.setR(-90)
 
         frame_miles = DirectFrame(
-            frameSize=(-0.1, 0.1, -0.03, 0.03),
+            frameSize=(-0.115, 0.115, -0.03, 0.03),
             pos=(0.0, 0, -0.97),
             frameTexture=ICON_PATH + "metal1.png",
         )
@@ -48,7 +48,7 @@ class TrainInterface:
             parent=frame_miles,
             text="0000000",
             frameSize=(0.1, 0.1, 0.15, 0.15),
-            text_scale=(0.035, 0.04),
+            text_scale=(0.033, 0.038),
             text_fg=RUST_COL,
             pos=(0, 0, -0.01),
         )
@@ -59,7 +59,7 @@ class TrainInterface:
         Args:
             new_miles (int): New milesmeter value.
         """
-        self._miles_meter["text"] = str(new_miles).rjust(7, "0")
+        self._miles_meter["text"] = str(new_miles).rjust(7, "0") + " mi"
 
     def update_indicators(self, **params):
         """Update the Train GUI with the given parameters.
