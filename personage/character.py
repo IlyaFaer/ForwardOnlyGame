@@ -86,6 +86,9 @@ class Character(Shooter, Unit):
             float: Damage one-time made by this character.
         """
         factor = self._team.calc_cohesion_factor(self.current_part.chars)
+        if "Loner" in self.traits and len(self.current_part.chars) == 1:
+            factor *= 1.3
+
         return random.uniform(*self.damage_range) * factor
 
     @property
@@ -366,7 +369,7 @@ class Character(Shooter, Unit):
                 task.delayTime /= 2
 
         elif self._target:
-            task.delayTime = 20
+            task.delayTime = 15 if "Nervousness" in self.traits else 20
 
         else:
             task.delayTime = self.class_data["energy_spend"]
@@ -419,6 +422,9 @@ class Character(Shooter, Unit):
 
     def _aim(self, task):
         """Rotate the character to aim on enemy."""
+        if self._target.is_dead and "Bloodthirsty" in self.traits:
+            self.health += 6
+
         if self._target in self.current_part.enemies:
             self.model.headsUp(self._target.model)
             return task.again
@@ -636,7 +642,17 @@ class Character(Shooter, Unit):
         cond_percent = (self.energy + self.health) / (100 + self.class_data["health"])
         percent = (1 - cond_percent) * 30
 
-        if chance(percent + (20 if is_infect else 0)):
+        sick_chance = max(
+            0,  # not less than zero
+            (
+                percent
+                + (20 if is_infect else 0)
+                - (40 if "Immunity" in self.traits else 0)
+                + (20 if "Weak immunity" in self.traits else 0)
+            ),
+        )
+
+        if chance(sick_chance):
             self.is_diseased = True
             self.get_well_score = 0
 

@@ -121,7 +121,10 @@ NAMES = {
 TRAITS = [
     ("Fast hands", "Snail"),
     ("Cat eyes", "Fear of dark"),
-    ["Masochism", "Hemophobia"],
+    ("Masochism", "Hemophobia"),
+    ("Immunity", "Weak immunity"),
+    ("Liberal", "Loner"),
+    ("Bloodthirsty", "Nervousness"),
 ]
 
 TRAIT_DESC = {
@@ -131,4 +134,10 @@ TRAIT_DESC = {
     "Fear of dark": "+50% energy spend in darkness",
     "Masochism": "regain energy when getting damage",
     "Hemophobia": "+25% energy spend, if health < 50%",
+    "Immunity": "-40% chance to get sick",
+    "Weak immunity": "+20% chance to get sick",
+    "Liberal": "+30% cohesion increase with other classes",
+    "Loner": "x1.3 damage while alone on the Train part",
+    "Bloodthirsty": "+6 health for a killed enemy unit",
+    "Nervousness": "+25% energy spend while in fight",
 }

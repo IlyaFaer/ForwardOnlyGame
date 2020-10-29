@@ -246,6 +246,12 @@ class Team:
                 rel_id = tuple(sorted([char1.id, char2.id]))
                 factor = 1.25 if char1.current_part == char2.current_part else 1
 
+                if (
+                    "Liberal" in char1.traits + char2.traits
+                    and char1.class_ != char2.class_
+                ):
+                    factor *= 1.15
+
                 if rel_id in self._relations:
                     self._relations[rel_id] += (
                         COHESION_FACTORS[(char1.class_, char2.class_)] * factor
