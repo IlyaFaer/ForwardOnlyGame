@@ -74,7 +74,26 @@ class ForwardOnly(ShowBase):
             value (int): New money amount value.
         """
         self._dollars = max(0, value)
-        self.res_interface.update_money(self._dollars)
+        self.res_interface.update_resource("dollars", self._dollars)
+
+    @property
+    def medicine_boxes(self):
+        """Medicine boxes amount.
+
+        Returns:
+            int: Current player medicine boxes amount.
+        """
+        return self._medicine_boxes
+
+    @medicine_boxes.setter
+    def medicine_boxes(self, value):
+        """Medicine boxes setter.
+
+        Args:
+            value (int): New medicine boxes amount value.
+        """
+        self._medicine_boxes = value
+        self.res_interface.update_resource("medicine_boxes", self._medicine_boxes)
 
     def _configure_window(self):
         """Configure the game window.
@@ -145,6 +164,7 @@ class ForwardOnly(ShowBase):
         self.doMethodLater(3, self._start_to_move, "start_to_move")
 
         self.dollars = 300
+        self.medicine_boxes = 0
 
     def save_game(self):
         """Save the current game."""

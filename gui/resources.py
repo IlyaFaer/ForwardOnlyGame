@@ -20,10 +20,12 @@ class ResourcesInterface:
         self._coh_desc_wids = []
         self._coh_desc_shown = False
 
+        self._resources = {}
+
         frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.075, 0.075, -0.025, 0.025),
-            pos=(0.075, 0, -0.025),
+            frameSize=(-0.14, 0.14, -0.026, 0.026),
+            pos=(0.14, 0, -0.026),
             frameTexture=ICON_PATH + "metal1.png",
         )
         frame.setTransparency(TransparencyAttrib.MAlpha)
@@ -31,16 +33,30 @@ class ResourcesInterface:
         DirectFrame(
             parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            pos=(-0.05, 0, 0),
+            pos=(-0.11, 0, 0),
             frameTexture=ICON_PATH + "icon_dollar.png",
         )
-        self._dollars = DirectLabel(
+        self._resources["dollars"] = DirectLabel(
             parent=frame,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(0.01, 0, -0.008),
+            pos=(-0.04, 0, -0.008),
+        )
+        DirectFrame(
+            parent=frame,  # noqa: F821
+            frameSize=(-0.023, 0.023, -0.023, 0.023),
+            pos=(0.04, 0, 0),
+            frameTexture=ICON_PATH + "medicine_icon.png",
+        )
+        self._resources["medicine_boxes"] = DirectLabel(
+            parent=frame,
+            text="",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=(0.035, 0.035),
+            text_fg=RUST_COL,
+            pos=(0.08, 0, -0.008),
         )
         self._coh_frame = DirectFrame(
             parent=base.a2dBottomRight,  # noqa: F821
@@ -300,13 +316,14 @@ class ResourcesInterface:
             )
         )
 
-    def update_money(self, new_value):
-        """Update money indicator with the given value.
+    def update_resource(self, name, value):
+        """Update the indicator with the given value.
 
         Args:
-            new_value (int): New amount of money.
+            name (str): The indicator name.
+            value (Any): The new indicator value.
         """
-        self._dollars["text"] = str(new_value)
+        self._resources[name]["text"] = str(value)
 
     def update_cohesion(self, new_value):
         """Update cohesion indicator with the given value.

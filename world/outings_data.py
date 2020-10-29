@@ -986,7 +986,7 @@ damaged bad, but the second looks okay, so {name1} grabs it. As {name2}
 didn't find anything, but broken containers, your people returning
 back to the Train with this only find.
 You're getting +1 medicine box""",
-                        "effects": {},
+                        "effects": {"medicine_boxes": 1},
                     },
                     {
                         "score": range(80, 101),
