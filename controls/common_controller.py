@@ -22,6 +22,7 @@ Game controls:
 Mouse Left Button - choose a character
 Mouse Right Button On Arrow - move character
 R - show the character's cohesion with others
+Choose a character and click on resource button to use it
 
 W - hold to accelerate
 S - hold to slow down

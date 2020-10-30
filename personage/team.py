@@ -386,3 +386,17 @@ class Team:
         """Hide all the relations GUI."""
         for char in self.chars.values():
             char.hide_relations_ball()
+
+    def use_medicine(self):
+        """Use medicine box on the chosen character.
+
+        Will help the character to get well.
+        Uses a single medicine box.
+        """
+        if not base.medicine_boxes:  # noqa: F821
+            return
+
+        char = base.common_ctrl.chosen_char  # noqa: F821
+        if char:
+            char.get_well_score = 20
+            base.medicine_boxes -= 1  # noqa: F821

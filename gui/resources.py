@@ -44,11 +44,13 @@ class ResourcesInterface:
             text_fg=RUST_COL,
             pos=(-0.04, 0, -0.008),
         )
-        DirectFrame(
-            parent=frame,  # noqa: F821
+        DirectButton(
+            parent=frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
+            relief="flat",
             pos=(0.04, 0, 0),
             frameTexture=ICON_PATH + "medicine_icon.png",
+            command=base.team.use_medicine,  # noqa: F821
         )
         self._resources["medicine_boxes"] = DirectLabel(
             parent=frame,
