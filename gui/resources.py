@@ -24,8 +24,8 @@ class ResourcesInterface:
 
         frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.14, 0.14, -0.026, 0.026),
-            pos=(0.14, 0, -0.026),
+            frameSize=(-0.19, 0.19, -0.028, 0.028),
+            pos=(0.19, 0, -0.028),
             frameTexture=ICON_PATH + "metal1.png",
         )
         frame.setTransparency(TransparencyAttrib.MAlpha)
@@ -33,7 +33,7 @@ class ResourcesInterface:
         DirectFrame(
             parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            pos=(-0.11, 0, 0),
+            pos=(-0.15, 0, 0),
             frameTexture=ICON_PATH + "icon_dollar.png",
         )
         self._resources["dollars"] = DirectLabel(
@@ -42,13 +42,13 @@ class ResourcesInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(-0.04, 0, -0.008),
+            pos=(-0.08, 0, -0.008),
         )
         DirectButton(
             parent=frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
-            pos=(0.04, 0, 0),
+            pos=(0, 0, 0),
             frameTexture=ICON_PATH + "medicine_icon.png",
             command=base.team.use_medicine,  # noqa: F821
         )
@@ -58,7 +58,23 @@ class ResourcesInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(0.08, 0, -0.008),
+            pos=(0.04, 0, -0.008),
+        )
+        DirectButton(
+            parent=frame,
+            frameSize=(-0.023, 0.023, -0.023, 0.023),
+            relief="flat",
+            pos=(0.1, 0, 0),
+            frameTexture=ICON_PATH + "smoke_filter_icon.png",
+            command=base.train.use_smoke_filter,  # noqa: F821
+        )
+        self._resources["smoke_filters"] = DirectLabel(
+            parent=frame,
+            text="",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=(0.035, 0.035),
+            text_fg=RUST_COL,
+            pos=(0.15, 0, -0.008),
         )
         self._coh_frame = DirectFrame(
             parent=base.a2dBottomRight,  # noqa: F821

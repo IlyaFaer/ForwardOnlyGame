@@ -109,6 +109,12 @@ class Train:
             self._bomb_explosions,
         ) = self._prepare_particles()
 
+        self.smoke_filtered = False
+        self._smoke_filter = Actor(address("smoke_filter"))
+        self._smoke_filter.hide()
+        self._smoke_filter.reparentTo(self.model)
+        self._smoke_filter.pose("open", 1)
+
     @property
     def damnability(self):
         """The Train damnability points.
@@ -555,3 +561,40 @@ class Train:
             if abs(char.model.getY() - y_coor) < 0.11:
                 char.get_damage(3)
                 char.get_stunned(5)
+
+    def use_smoke_filter(self):
+        """Use smoke filter to hide from enemies.
+
+        Uses single smoke filter resource.
+        """
+        if not base.smoke_filters:  # noqa: F821
+            return
+
+        self.smoke_filtered = True
+        base.smoke_filters -= 1  # noqa: F821
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            1, self._smoke.softStop, "filter_smoke", extraArgs=[], appendTask=False
+        )
+        base.taskMgr.doMethodLater(  # noqa: F821
+            6, self._stop_filtering_smoke, "stop_filter_smoke",
+        )
+        self._smoke_filter.setPlayRate(-1, "open")
+        self._smoke_filter.show()
+        self._smoke_filter.play("open")
+
+    def _stop_filtering_smoke(self, task):
+        """Stop filtering the Train smoke and hide filter."""
+        self._smoke.softStart()
+        self._smoke_filter.setPlayRate(1, "open")
+        self._smoke_filter.play("open")
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            2.5,
+            self._smoke_filter.hide,
+            "hide_smoke_filter",
+            extraArgs=[],
+            appendTask=False,
+        )
+        self.smoke_filtered = False
+        return task.done

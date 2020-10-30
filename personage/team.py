@@ -391,7 +391,7 @@ class Team:
         """Use medicine box on the chosen character.
 
         Will help the character to get well.
-        Uses a single medicine box.
+        Uses single medicine box resource.
         """
         if not base.medicine_boxes:  # noqa: F821
             return

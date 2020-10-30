@@ -53,6 +53,10 @@ class ForwardOnly(ShowBase):
         self.enableParticles()
         self.effects_mgr = EffectsManager()
 
+        self._dollars = 0
+        self._medicine_boxes = 0
+        self._smoke_filters = 0
+
         self.main_menu = MainMenu()
 
     @property
@@ -74,7 +78,26 @@ class ForwardOnly(ShowBase):
             value (int): New money amount value.
         """
         self._dollars = max(0, value)
-        self.res_interface.update_resource("dollars", self._dollars)
+        self.res_interface.update_resource("dollars", value)
+
+    @property
+    def smoke_filters(self):
+        """Smoke filters amount.
+
+        Returns:
+            int: Current player smoke filters amount.
+        """
+        return self._smoke_filters
+
+    @smoke_filters.setter
+    def smoke_filters(self, value):
+        """Smoke filter setter.
+
+        Args:
+            value (int): New smoke filters amount.
+        """
+        self._smoke_filters = value
+        self.res_interface.update_resource("smoke_filters", value)
 
     @property
     def medicine_boxes(self):
@@ -93,7 +116,7 @@ class ForwardOnly(ShowBase):
             value (int): New medicine boxes amount value.
         """
         self._medicine_boxes = value
-        self.res_interface.update_resource("medicine_boxes", self._medicine_boxes)
+        self.res_interface.update_resource("medicine_boxes", value)
 
     def _configure_window(self):
         """Configure the game window.
@@ -165,6 +188,7 @@ class ForwardOnly(ShowBase):
 
         self.dollars = 300
         self.medicine_boxes = 0
+        self.smoke_filters = 0
 
     def save_game(self):
         """Save the current game."""
