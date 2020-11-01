@@ -154,6 +154,8 @@ class OutingsManager:
             base.dollars += effects["money"]  # noqa: F821
         if "medicine_boxes" in effects:
             base.medicine_boxes += effects["medicine_boxes"]  # noqa: F821
+        if "smoke_filters" in effects:
+            base.smoke_filters += effects["smoke_filters"]  # noqa: F821
 
         if "all" in effects:
             for char in base.team.chars.values():  # noqa: F821

@@ -495,11 +495,11 @@ While they are getting closer to the vehicle, the window of it opens,
 and a gun barrel leans out, starting to shoot all around without aiming.
 Making a circle movement around the trailer, your people open it and do
 several shots inside. The rival gun silences. {name1} and {name2} enter
-the car for several seconds and walk out together, holding a big canister.
-Lifting it onto the Train, {name2} puts {hisher2} hand in {hisher2} pocket and
-gets out a bunch of dollar papers. "Plus to the fuel" - {heshe2} smiles.
-You're getting fuel for 50 miles and 60$""",
-                        "effects": {"money": 60},
+the car for several seconds and walk out together, holding a big tool
+box. Lifting it onto the Train, {name2} puts {hisher2} hand in {hisher2} pocket and
+gets out a bunch of dollar papers. "Plus to the filter" - {heshe2} smiles.
+You're getting 1 smoke filter and 60$""",
+                        "effects": {"money": 60, "smoke_filters": 1},
                     },
                     {
                         "score": range(80, 100),
@@ -602,9 +602,9 @@ to the car fast and starts to sort through it, throwing away useless stuff,
 like toys, tent, rubber boat... You're looking at all of these from the train
 starting to think this stop is pointless. But then {name1} moves to the
 trunk, opens it and screams victoriously. In the next second you see a big
-red canister in {hisher1} hands, and uppering your hand with a like-finger,
-as there is a diesel fuel for 40 more miles.""",
-                        "effects": {},
+grey tool box in {hisher1} hands, and uppering your hand with a like-finger.
+You're getting a smoke filter in a good shape.""",
+                        "effects": {"smoke_filters": 1},
                     },
                 ),
             },
@@ -701,10 +701,10 @@ minutes and starting a find. You're seeing them rummaging in bags left
 there, but nothing gives a sign of lucky find. Done with backpacks
 {name2} opens the tent zipper and moves inside. It takes a few minutes
 for {himher2} to deal with the inner stuff, but to everyone's joy
-{heshe2} shows up with a big canister. Smiling both {name1} and {name2}
+{heshe2} shows up with a white aid kit. Smiling both {name1} and {name2}
 are returning to Train with this burden.
-You're getting diesel fuel for 35 more miles.""",
-                        "effects": {},
+You're getting 1 medicine box.""",
+                        "effects": {"medicine_boxes": 1},
                     },
                 ),
             },
