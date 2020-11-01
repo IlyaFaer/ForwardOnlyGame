@@ -201,6 +201,8 @@ class ForwardOnly(ShowBase):
 
         save["train"] = self.train.description
         save["dollars"] = self.dollars
+        save["medicine_boxes"] = self.medicine_boxes
+        save["smoke_filters"] = self.smoke_filters
         save["cohesion"] = self.team.current_cohesion
         save["day_part"] = {
             "name": self.world.sun.day_part,
@@ -253,6 +255,8 @@ class ForwardOnly(ShowBase):
             appendTask=True,
         )
         self.dollars = save["dollars"]
+        self.medicine_boxes = save["medicine_boxes"]
+        self.smoke_filters = save["smoke_filters"]
         return task.done
 
 
