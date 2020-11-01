@@ -126,7 +126,7 @@ class CharacterInterface:
             parent=self._fr,
             frameSize=(-0.02, 0.02, -0.02, 0.02),
             pos=(0.27, 0, -0.008),
-            frameTexture=ICON_PATH + "disease_icon.png",
+            frameTexture=ICON_PATH + "disease.png",
         )
         self._disease.setTransparency(TransparencyAttrib.MAlpha)
         self._disease.hide()

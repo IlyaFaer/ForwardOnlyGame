@@ -12,8 +12,8 @@ from .character import CharacterChooser
 from .train import RUST_COL, SILVER_COL
 
 OUTINGS_ICONS = {
-    "looting": "gui/tex/icon_looting.png",
-    "enemy camp": "gui/tex/icon_enemy_camp.png",
+    "looting": "gui/tex/looting.png",
+    "enemy camp": "gui/tex/enemy_camp.png",
 }
 
 
@@ -30,7 +30,7 @@ class OutingsInterface:
         self._upcome_ico = DirectFrame(
             frameSize=(-0.1, 0.1, -0.1, 0.1),
             pos=(0, 0, 0.8),
-            frameTexture="gui/tex/icon_looting.png",
+            frameTexture="gui/tex/looting.png",
         )
         self._upcome_ico.setTransparency(TransparencyAttrib.MAlpha)
         self._upcome_ico.hide()
@@ -276,7 +276,7 @@ class OutingsInterface:
 
     def show_city(self):
         """Show upcoming city notification."""
-        self.show_upcoming("Approaching to a city", "gui/tex/city_icon.png")
+        self.show_upcoming("Approaching to a city", "gui/tex/city.png")
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""

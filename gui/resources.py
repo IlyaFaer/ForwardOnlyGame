@@ -36,7 +36,7 @@ class ResourcesInterface:
             parent=self._res_frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             pos=(-0.18, 0, 0),
-            frameTexture=ICON_PATH + "icon_dollar.png",
+            frameTexture=ICON_PATH + "dollar.png",
         )
         self._resources["dollars"] = DirectLabel(
             parent=self._res_frame,
@@ -51,7 +51,7 @@ class ResourcesInterface:
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
             pos=(-0.02, 0, 0),
-            frameTexture=ICON_PATH + "medicine_icon.png",
+            frameTexture=ICON_PATH + "medicine.png",
             command=base.team.use_medicine,  # noqa: F821
         )
         self._resources["medicine_boxes"] = DirectLabel(
@@ -67,7 +67,7 @@ class ResourcesInterface:
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
             pos=(0.08, 0, 0),
-            frameTexture=ICON_PATH + "smoke_filter_icon.png",
+            frameTexture=ICON_PATH + "smoke_filter.png",
             command=base.train.use_smoke_filter,  # noqa: F821
         )
         self._resources["smoke_filters"] = DirectLabel(
@@ -109,7 +109,7 @@ class ResourcesInterface:
         recall_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            frameTexture=ICON_PATH + "ny_recall_icon.png",
+            frameTexture=ICON_PATH + "ny_recall.png",
             pos=(-0.27, 0, -0.02),
             relief="flat",
             command=base.team.cohesion_recall,  # noqa: F821
@@ -119,7 +119,7 @@ class ResourcesInterface:
         cover_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.035, 0.035, -0.035, 0.035),
-            frameTexture=ICON_PATH + "ny_cover_icon.png",
+            frameTexture=ICON_PATH + "ny_cover.png",
             pos=(-0.09, 0, -0.01),
             relief="flat",
             command=base.team.cohesion_cover_fire,  # noqa: F821
@@ -129,7 +129,7 @@ class ResourcesInterface:
         heal_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            frameTexture=ICON_PATH + "ny_heal_icon.png",
+            frameTexture=ICON_PATH + "ny_heal.png",
             pos=(0.09, 0, -0.015),
             relief="flat",
             command=base.team.cohesion_heal_wounded,  # noqa: F821
@@ -139,7 +139,7 @@ class ResourcesInterface:
         rage_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.035, 0.035, -0.035, 0.035),
-            frameTexture=ICON_PATH + "ny_rage_icon.png",
+            frameTexture=ICON_PATH + "ny_rage.png",
             pos=(0.27, 0, -0.015),
             relief="flat",
             command=base.team.cohesion_rage,  # noqa: F821
@@ -149,7 +149,7 @@ class ResourcesInterface:
         heart_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.035, 0.035, -0.035, 0.035),
-            frameTexture=ICON_PATH + "ny_heart_icon.png",
+            frameTexture=ICON_PATH + "ny_heart.png",
             pos=(0.445, 0, -0.015),
             relief="flat",
             command=base.team.cohesion_hold_together,  # noqa: F821
@@ -157,11 +157,11 @@ class ResourcesInterface:
         heart_ico.setTransparency(TransparencyAttrib.MAlpha)
 
         self._coh_icons = (
-            {"wid": recall_ico, "file": "recall_icon.png", "value": 20},
-            {"wid": cover_ico, "file": "cover_icon.png", "value": 40},
-            {"wid": heal_ico, "file": "heal_icon.png", "value": 60},
-            {"wid": rage_ico, "file": "rage_icon.png", "value": 80},
-            {"wid": heart_ico, "file": "heart_icon.png", "value": 100},
+            {"wid": recall_ico, "file": "recall.png", "value": 20},
+            {"wid": cover_ico, "file": "cover.png", "value": 40},
+            {"wid": heal_ico, "file": "heal.png", "value": 60},
+            {"wid": rage_ico, "file": "rage.png", "value": 80},
+            {"wid": heart_ico, "file": "heart.png", "value": 100},
         )
         DirectButton(
             parent=self._coh_frame,
@@ -204,7 +204,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.035, 0.035, -0.035, 0.035),
-                frameTexture=ICON_PATH + "recall_icon.png",
+                frameTexture=ICON_PATH + "recall.png",
                 pos=(-0.45, 0, -0.13),
                 relief="flat",
             )
@@ -233,7 +233,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.045, 0.045, -0.045, 0.045),
-                frameTexture=ICON_PATH + "cover_icon.png",
+                frameTexture=ICON_PATH + "cover.png",
                 pos=(-0.45, 0, -0.22),
                 relief="flat",
             )
@@ -262,7 +262,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.035, 0.035, -0.035, 0.035),
-                frameTexture=ICON_PATH + "heal_icon.png",
+                frameTexture=ICON_PATH + "heal.png",
                 pos=(-0.45, 0, -0.33),
                 relief="flat",
             )
@@ -294,7 +294,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.045, 0.045, -0.045, 0.045),
-                frameTexture=ICON_PATH + "rage_icon.png",
+                frameTexture=ICON_PATH + "rage.png",
                 pos=(-0.45, 0, -0.43),
                 relief="flat",
             )
@@ -323,7 +323,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.043, 0.043, -0.043, 0.043),
-                frameTexture=ICON_PATH + "heart_icon.png",
+                frameTexture=ICON_PATH + "heart.png",
                 pos=(-0.45, 0, -0.53),
                 relief="flat",
             )
@@ -377,7 +377,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
-                frameTexture=ICON_PATH + "medicine_icon.png",
+                frameTexture=ICON_PATH + "medicine.png",
                 pos=(-0.15, 0, -0.16),
                 relief="flat",
             )
@@ -406,7 +406,7 @@ class ResourcesInterface:
             DirectButton(
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
-                frameTexture=ICON_PATH + "smoke_filter_icon.png",
+                frameTexture=ICON_PATH + "smoke_filter.png",
                 pos=(-0.15, 0, -0.25),
                 relief="flat",
             )

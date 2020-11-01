@@ -27,7 +27,7 @@ class TrainInterface:
             parent=frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             pos=(0, 0, 0.265),
-            frameTexture=ICON_PATH + "icon_train.png",
+            frameTexture=ICON_PATH + "train.png",
         )
         self._damnability = DirectWaitBar(
             parent=frame,
