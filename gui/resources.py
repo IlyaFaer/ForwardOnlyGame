@@ -19,63 +19,78 @@ class ResourcesInterface:
     def __init__(self):
         self._coh_desc_wids = []
         self._coh_desc_shown = False
+        self._res_desc_wids = []
+        self._res_desc_shown = False
 
         self._resources = {}
 
-        frame = DirectFrame(
+        self._res_frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.19, 0.19, -0.028, 0.028),
-            pos=(0.19, 0, -0.028),
+            frameSize=(-0.21, 0.21, -0.028, 0.028),
+            pos=(0.21, 0, -0.028),
             frameTexture=ICON_PATH + "metal1.png",
         )
-        frame.setTransparency(TransparencyAttrib.MAlpha)
+        self._res_frame.setTransparency(TransparencyAttrib.MAlpha)
 
         DirectFrame(
-            parent=frame,  # noqa: F821
+            parent=self._res_frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            pos=(-0.15, 0, 0),
+            pos=(-0.18, 0, 0),
             frameTexture=ICON_PATH + "icon_dollar.png",
         )
         self._resources["dollars"] = DirectLabel(
-            parent=frame,
+            parent=self._res_frame,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(-0.08, 0, -0.008),
+            pos=(-0.11, 0, -0.008),
         )
         DirectButton(
-            parent=frame,
+            parent=self._res_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
-            pos=(0, 0, 0),
+            pos=(-0.02, 0, 0),
             frameTexture=ICON_PATH + "medicine_icon.png",
             command=base.team.use_medicine,  # noqa: F821
         )
         self._resources["medicine_boxes"] = DirectLabel(
-            parent=frame,
+            parent=self._res_frame,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(0.04, 0, -0.008),
+            pos=(0.02, 0, -0.008),
         )
         DirectButton(
-            parent=frame,
+            parent=self._res_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
-            pos=(0.1, 0, 0),
+            pos=(0.08, 0, 0),
             frameTexture=ICON_PATH + "smoke_filter_icon.png",
             command=base.train.use_smoke_filter,  # noqa: F821
         )
         self._resources["smoke_filters"] = DirectLabel(
-            parent=frame,
+            parent=self._res_frame,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
-            pos=(0.15, 0, -0.008),
+            pos=(0.125, 0, -0.008),
         )
+        DirectButton(
+            parent=self._res_frame,
+            text="?",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            frameColor=(0, 0, 0, 0),
+            text_bg=(0, 0, 0, 0),
+            text_fg=SILVER_COL,
+            text_scale=0.03,
+            pos=(0.18, 0, -0.013),
+            relief="flat",
+            command=self._show_expendable_resources,
+        ).setTransparency(TransparencyAttrib.MAlpha)
+
         self._coh_frame = DirectFrame(
             parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.55, 0.55, -0.05, 0.05),
@@ -331,6 +346,89 @@ class ResourcesInterface:
                 text_scale=(0.029, 0.029),
                 text_fg=SILVER_COL,
                 pos=(-0.029, 0, -0.555),
+            )
+        )
+
+    def _show_expendable_resources(self):
+        """Show/hide expendable resources description."""
+        if self._res_desc_shown:
+            self._res_frame["frameSize"] = (-0.21, 0.21, -0.028, 0.18)
+
+            for wid in self._res_desc_wids:
+                wid.destroy()
+
+            self._res_desc_wids.clear()
+            self._res_desc_shown = False
+            return
+
+        self._res_desc_shown = True
+        self._res_frame["frameSize"] = (-0.21, 0.21, -0.32, 0.028)
+        self._res_desc_wids.append(
+            DirectLabel(
+                parent=self._res_frame,
+                text="Expendable resources:",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.033, 0.033),
+                text_fg=SILVER_COL,
+                pos=(0, 0, -0.08),
+            )
+        )
+        self._res_desc_wids.append(
+            DirectButton(
+                parent=self._res_frame,
+                frameSize=(-0.03, 0.03, -0.03, 0.03),
+                frameTexture=ICON_PATH + "medicine_icon.png",
+                pos=(-0.15, 0, -0.16),
+                relief="flat",
+            )
+        )
+        self._res_desc_wids.append(
+            DirectLabel(
+                parent=self._res_frame,
+                text="Medicine box",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.03, 0.03),
+                text_fg=SILVER_COL,
+                pos=(0.035, 0, -0.147),
+            )
+        )
+        self._res_desc_wids.append(
+            DirectLabel(
+                parent=self._res_frame,
+                text="Cure the disease",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.029, 0.029),
+                text_fg=SILVER_COL,
+                pos=(0.035, 0, -0.185),
+            )
+        )
+        self._res_desc_wids.append(
+            DirectButton(
+                parent=self._res_frame,
+                frameSize=(-0.03, 0.03, -0.03, 0.03),
+                frameTexture=ICON_PATH + "smoke_filter_icon.png",
+                pos=(-0.15, 0, -0.25),
+                relief="flat",
+            )
+        )
+        self._res_desc_wids.append(
+            DirectLabel(
+                parent=self._res_frame,
+                text="Smoke filter",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.03, 0.03),
+                text_fg=SILVER_COL,
+                pos=(0.035, 0, -0.243),
+            )
+        )
+        self._res_desc_wids.append(
+            DirectLabel(
+                parent=self._res_frame,
+                text="Reduce attack chance",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.029, 0.029),
+                text_fg=SILVER_COL,
+                pos=(0.035, 0, -0.275),
             )
         )
 

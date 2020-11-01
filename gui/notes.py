@@ -116,9 +116,9 @@ class TeachingNotes:
         self._note_text = "Press F1 key to open game\ncontrols help"
 
         self._fr = DirectFrame(
-            parent=base.a2dTopLeft,  # noqa: F821
+            parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.25, 0.25, -0.07, 0.07),
-            pos=(0.25, 0, -0.2),
+            pos=(-0.25, 0, 0.7),
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)

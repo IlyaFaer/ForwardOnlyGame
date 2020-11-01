@@ -90,7 +90,10 @@ class Enemy:
         if self._is_cooldown or base.world.is_in_city:  # noqa: F821
             return False
 
-        if chance(self._attack_chances[day_part] + (15 if lights_on else 0)):
+        if (
+            chance(self._attack_chances[day_part] + (15 if lights_on else 0))
+            and not base.train.smoke_filtered  # noqa: F821
+        ):
             self._is_cooldown = True
             base.taskMgr.doMethodLater(  # noqa: F821
                 480, self._stop_cooldown, "stop_attack_cooldown"

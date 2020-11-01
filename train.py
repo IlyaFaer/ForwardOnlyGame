@@ -45,6 +45,8 @@ class Train:
             stop_snd,
             brake_snd,
             self._clunk_snd,
+            self._clunk2_snd,
+            self._filter_open_snd,
             self._barrier_hit_snd,
             self._lighter_snd,
             self._creak_snds,
@@ -428,6 +430,12 @@ class Train:
         clunk_snd = base.sound_mgr.loadSfx("sounds/metal_clunk1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(clunk_snd, self.model)  # noqa: F821
 
+        clunk_snd2 = base.sound_mgr.loadSfx("sounds/metal_clunk2.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(clunk_snd2, self.model)  # noqa: F821
+
+        filter_open_snd = base.sound_mgr.loadSfx("sounds/filter_open.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(filter_open_snd, self.model)  # noqa: F821
+
         hit_snd = base.sound_mgr.loadSfx("sounds/concrete_hit1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(hit_snd, self.model)  # noqa: F821
 
@@ -448,6 +456,8 @@ class Train:
             stop_snd,
             brake_snd,
             clunk_snd,
+            clunk_snd2,
+            filter_open_snd,
             hit_snd,
             lighter_snd,
             (creak_snd1, creak_snd2, creak_snd3),
@@ -567,7 +577,7 @@ class Train:
 
         Uses single smoke filter resource.
         """
-        if not base.smoke_filters:  # noqa: F821
+        if not base.smoke_filters or self.smoke_filtered:  # noqa: F821
             return
 
         self.smoke_filtered = True
@@ -577,7 +587,10 @@ class Train:
             1, self._smoke.softStop, "filter_smoke", extraArgs=[], appendTask=False
         )
         base.taskMgr.doMethodLater(  # noqa: F821
-            6, self._stop_filtering_smoke, "stop_filter_smoke",
+            1.6, self._clunk2_snd.play, "close_filter", extraArgs=[], appendTask=False
+        )
+        base.taskMgr.doMethodLater(  # noqa: F821
+            300, self._stop_filtering_smoke, "stop_filter_smoke",
         )
         self._smoke_filter.setPlayRate(-1, "open")
         self._smoke_filter.show()
@@ -588,6 +601,8 @@ class Train:
         self._smoke.softStart()
         self._smoke_filter.setPlayRate(1, "open")
         self._smoke_filter.play("open")
+
+        self._filter_open_snd.play()
 
         base.taskMgr.doMethodLater(  # noqa: F821
             2.5,
