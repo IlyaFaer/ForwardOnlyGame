@@ -455,7 +455,10 @@ class World:
         if self._block_num < 2:
             return
 
-        if self._map[self._block_num + 1].outing_available:
+        if (
+            self._map[self._block_num + 1].outing_available
+            and not self._map[self._block_num + 1].enemy_territory
+        ):
             self.outings_mgr.show_upcoming(
                 self._map[self._block_num + 1].outing_available
             )
