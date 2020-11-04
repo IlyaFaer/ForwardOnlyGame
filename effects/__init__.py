@@ -6,7 +6,13 @@ Visual effects API.
 """
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.Transitions import Transitions
-from panda3d.core import PointLight
+from panda3d.core import (
+    Fog,
+    GraphicsOutput,
+    NodePath,
+    PointLight,
+    Texture,
+)
 
 
 class EffectsManager:
@@ -17,6 +23,8 @@ class EffectsManager:
 
         self._transition = Transitions(loader)  # noqa: F821
         self._transition.setFadeColor(0, 0, 0)
+
+        self.stench_effect = Stench()
 
     def _set_explosion_lights(self):
         """Prepare three explosion lights.
@@ -210,3 +218,68 @@ class BombExplosion:
         """
         self._smoke.setPos(x, y, z)
         self._sparks.setPos(x, y, z)
+
+
+class Stench:
+    """All the Stench visual effects and sounds as an object."""
+
+    def __init__(self):
+        background = NodePath("background")
+        background.setDepthTest(0)
+        background.setDepthWrite(0)
+
+        tex = Texture()
+        tex.setMinfilter(Texture.FTLinear)
+        base.win.addRenderTexture(  # noqa: F821
+            tex, GraphicsOutput.RTMTriggeredCopyTexture
+        )
+        tex.setClearColor((0, 0, 0, 1))
+        tex.clearImage()
+
+        bcard = base.win.getTextureCard()  # noqa: F821
+        bcard.reparentTo(background)  # noqa: F821
+        bcard.setTransparency(1)
+        bcard.show()
+        bcard.setColor(1, 1, 1, 1)
+        bcard.setScale(1.0)
+
+        fcard = base.win.getTextureCard()  # noqa: F821
+        fcard.reparentTo(base.render2d)  # noqa: F821
+        fcard.setTransparency(1)
+        fcard.show()
+        fcard.setColor(1, 1, 1, 0.4)
+        fcard.setScale(1.08)
+
+        self._nextclick = 0
+
+        self._snd1 = loader.loadSfx("sounds/hollow1.ogg")  # noqa: F821
+        self._snd1.setLoop(True)
+        self._snd2 = loader.loadSfx("sounds/creepy1.ogg")  # noqa: F821
+        self._snd2.setLoop(True)
+        self._snd3 = loader.loadSfx("sounds/breathing1.ogg")  # noqa: F821
+        self._snd3.setLoop(True)
+        self._snd4 = loader.loadSfx("sounds/teeth.ogg")  # noqa: F821
+        self._snd4.setLoop(True)
+
+    def play(self):
+        """Start playing the Stench effects and sounds."""
+        fog = Fog("Stench")
+        fog.setColor(1, 0.64, 0)
+        fog.setExpDensity(0.1)
+        render.setFog(fog)  # noqa: F821
+
+        base.taskMgr.add(self._snapshot, "_snapshot")  # noqa: F821
+        self._snd1.play()
+        self._snd2.play()
+        self._snd3.play()
+        self._snd4.play()
+
+    def _snapshot(self, task):
+        """Make snapshot of the screen."""
+        if task.time > self._nextclick:
+            self._nextclick += 1.0 / 1000
+            if self._nextclick < task.time:
+                self._nextclick = task.time
+            base.win.triggerCopy()  # noqa: F821
+
+        return task.cont

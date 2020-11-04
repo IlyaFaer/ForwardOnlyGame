@@ -11,7 +11,7 @@ import shelve
 
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import WindowProperties, loadPrcFileData
+from panda3d.core import loadPrcFileData, WindowProperties
 
 from controls import CameraController, CommonController
 from effects import EffectsManager

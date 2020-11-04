@@ -109,6 +109,7 @@ class Train:
             self._l_brake_sparks,
             self._r_brake_sparks,
             self._bomb_explosions,
+            self._stench,
         ) = self._prepare_particles()
 
         self.smoke_filtered = False
@@ -180,7 +181,12 @@ class Train:
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
         ]
-        return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions
+
+        stench = ParticleEffect()
+        stench.loadConfig("effects/stench.ptf")
+        stench.setPos(0, 3.5, 0.3)
+        stench.start(self.model, render)  # noqa: F821
+        return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions, stench
 
     def set_physics(self, phys_mgr):
         """Set the Train physics.
