@@ -150,6 +150,13 @@ class ForwardOnly(ShowBase):
         self.world.clear_prev_block()
 
         self.train.move_along_block(self._current_block)
+        if self._current_block.is_stenchy:
+            self.effects_mgr.stench_effect.play()
+        else:
+            self.effects_mgr.stench_effect.stop()
+            if next_block.is_stenchy:
+                self.effects_mgr.stench_effect.play_clouds()
+
         self._current_block = next_block
 
     def start_new_game(self, chosen_team):

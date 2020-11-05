@@ -8,6 +8,8 @@ from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
 from panda3d.core import AudioSound
 
+from utils import drown_snd
+
 MIN_SPEED = 0.5  # minimum speed on enemy territory
 
 
@@ -148,8 +150,8 @@ class TrainController:
         self._move_anim_int.pause()
         self._is_stopped = True
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.06,
-            self._drown_snd,
+            0.07,
+            drown_snd,
             "drown_move_snd",
             extraArgs=[self._move_snd],
             appendTask=True,
@@ -236,7 +238,7 @@ class TrainController:
             self._brake_snd.play()
             base.taskMgr.doMethodLater(  # noqa: F821
                 3,
-                self._drown_snd,
+                drown_snd,
                 "drown_brake_snd",
                 extraArgs=[self._brake_snd],
                 appendTask=True,
@@ -273,17 +275,6 @@ class TrainController:
             "stop_slowing_down",
             extraArgs=["slow_down_train"],
         )
-
-    def _drown_snd(self, snd, task):
-        """Drown the given sounds."""
-        volume = snd.getVolume()
-        if volume <= 0:
-            snd.stop()
-            snd.setVolume(1)
-            return task.done
-
-        snd.setVolume(volume - 0.1)
-        return task.again
 
     def stop(self):
         """Completely stop the Train."""

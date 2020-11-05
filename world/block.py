@@ -53,6 +53,7 @@ class Block:
         is_station (bool): Station must be set on this block.
         is_city (bool): This is a city block.
         is_rusty (bool): Rails on this block are deteriorated.
+        is_stenchy (bool): This block is covered with the Stench clouds.
         outing_available (str): An outing type available on this block.
         desc (dict): Block description.
     """
@@ -67,6 +68,7 @@ class Block:
         is_station=False,
         is_city=False,
         is_rusty=False,
+        is_stenchy=False,
         outing_available=None,
         desc=None,
     ):
@@ -79,6 +81,7 @@ class Block:
         self.outing_available = outing_available
         self.is_city = is_city
         self.is_rusty = is_rusty
+        self.is_stenchy = is_stenchy
 
         if desc:  # loading block
             self._station_side = desc["station_side"]

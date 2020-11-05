@@ -68,3 +68,19 @@ def save_exists():
             os.path.exists("saves/world.dir"),
         )
     )
+
+
+def drown_snd(snd, task):
+    """Drown the given sound.
+
+    Args:
+        snd (panda3d.core.AudioSound): Sound to drown.
+    """
+    volume = snd.getVolume()
+    if volume <= 0:
+        snd.stop()
+        snd.setVolume(1)
+        return task.done
+
+    snd.setVolume(volume - 0.1)
+    return task.again
