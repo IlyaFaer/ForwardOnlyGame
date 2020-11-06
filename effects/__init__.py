@@ -321,7 +321,7 @@ class Stench:
     def _snapshot(self, task):
         """Make snapshot of the screen."""
         if task.time > self._nextclick:
-            self._nextclick += 1 / 1000
+            self._nextclick += 0.001
             if self._nextclick < task.time:
                 self._nextclick = task.time
             base.win.triggerCopy()  # noqa: F821

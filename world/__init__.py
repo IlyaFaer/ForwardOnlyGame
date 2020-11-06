@@ -312,12 +312,17 @@ class World:
         self.outings_mgr = OutingsManager(location)
         map_to_save = []
         rusty_blocks = 0
+        stench_blocks = 0
 
-        for _ in range(size):
+        for num in range(size):
             rails_block = rails_gen.generate_block()
 
             if not rusty_blocks and chance(2):
                 rusty_blocks = random.randint(4, 8)
+
+            if num > 100:
+                if not stench_blocks and chance(3):
+                    stench_blocks = random.randint(6, 10)
 
             is_city = False
             is_station = False
@@ -335,6 +340,12 @@ class World:
             else:
                 is_rusty = False
 
+            if stench_blocks:
+                is_stenchy = True
+                stench_blocks -= 1
+            else:
+                is_stenchy = False
+
             block = Block(
                 name=rails_block,
                 path=self._paths[rails_block],
@@ -343,6 +354,7 @@ class World:
                 is_station=is_station,
                 is_city=is_city,
                 is_rusty=is_rusty,
+                is_stenchy=is_stenchy,
                 outing_available=None if is_city else self.outings_mgr.plan_outing(),
             )
             self._map.append(block)
@@ -628,6 +640,24 @@ class World:
                 char.get_sick()
 
         return task.again
+
+    def stop_ambient_snd(self):
+        """Stop all the ambient sounds."""
+        self._noon_ambient_snd.stop()
+        self._night_ambient_snd.stop()
+
+    def resume_ambient_snd(self):
+        """Continue playing the ambient sound."""
+        if (
+            self._noon_ambient_snd.getVolume() > 0
+            and self._noon_ambient_snd.status() != AudioSound.PLAYING
+        ):
+            self._noon_ambient_snd.play()
+        elif (
+            self._night_ambient_snd.getVolume() > 0
+            and self._night_ambient_snd.status() != AudioSound.PLAYING
+        ):
+            self._night_ambient_snd.play()
 
 
 class Hangar:

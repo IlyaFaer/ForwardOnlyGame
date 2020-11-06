@@ -41,6 +41,7 @@ class TrainController:
         self._move_par = None
         self._is_stopped = False
         self._outing_available = None
+        self._move_snd_volume = 1
 
         self.on_et = False
         self.critical_damage = False
@@ -297,6 +298,18 @@ class TrainController:
             base.world.enemy.stop_ride_anim,  # noqa: F821
             "stop_riding",
         )
+
+    def silence_move_snd(self):
+        """Reduce the main move sound volume."""
+        if self._move_snd_volume == 1:
+            self._move_snd.setVolume(0.5)
+            self._move_snd_volume = 0.5
+
+    def unsilence_move_snd(self):
+        """Restore full volume of the main move sound."""
+        if self._move_snd_volume == 0.5:
+            self._move_snd.setVolume(1)
+            self._move_snd_volume = 1
 
     def _finish_stopping(self, task):
         """Finish stopping the damaged Train."""
