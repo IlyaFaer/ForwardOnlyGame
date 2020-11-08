@@ -28,6 +28,7 @@ class Team:
         self._char_id = 0  # variable to count character ids
         # cohesion relations between characters
         self._relations = {}
+        self._is_in_stench = False
 
         self.chars = {}
         self.cover_fire = False
@@ -400,3 +401,24 @@ class Team:
         if char:
             char.get_well_score = 20
             base.medicine_boxes -= 1  # noqa: F821
+
+    def start_stench_activity(self):
+        """Start dealing the Stench damage to characters."""
+        if not self._is_in_stench:
+            base.taskMgr.doMethodLater(  # noqa: F821
+                4, self.stench_activity, "stench_activity"
+            )
+            self._is_in_stench = True
+
+    def stop_stench_activity(self):
+        """Stop dealing the Stench damage to characters."""
+        if self._is_in_stench:
+            base.taskMgr.remove("stench_activity")  # noqa: F821
+            self._is_in_stench = False
+
+    def stench_activity(self, task):
+        """Deal the Stench damage to every character."""
+        for char in self.chars.values():
+            char.health -= 1
+
+        return task.again

@@ -51,6 +51,7 @@ class World:
         self._hangar = None
         self._is_in_city = False
         self._et_rusty_blocks = 0
+        self._et_stench_blocks = 0
 
         self.sun = Sun(day_part_desc)
 
@@ -239,10 +240,14 @@ class World:
             surf_vertices=self._surf_vertices,
             enemy_territory=True,
             is_rusty=self._et_rusty_blocks > 0,
+            is_stenchy=self._et_stench_blocks > 0,
         ).prepare()
 
         if self._et_rusty_blocks:
             self._et_rusty_blocks -= 1
+
+        if self._et_stench_blocks:
+            self._et_stench_blocks -= 1
 
         self._map.insert(self._block_num, block)
         return block
@@ -340,7 +345,7 @@ class World:
             else:
                 is_rusty = False
 
-            if stench_blocks:
+            if stench_blocks and not is_city:
                 is_stenchy = True
                 stench_blocks -= 1
             else:
@@ -388,6 +393,7 @@ class World:
                 is_station=desc["station_side"] is not None,
                 is_city=desc["is_city"],
                 is_rusty=desc["is_rusty"],
+                is_stenchy=desc["is_stenchy"],
                 outing_available=desc["outing_available"],
                 desc=desc,
             )
@@ -569,8 +575,12 @@ class World:
             base.train.ctrl.speed_to_min()  # noqa: F821
 
         if self._et_blocks:
-            if self._et_blocks > 8 and not self._et_rusty_blocks and chance(3):
-                self._et_rusty_blocks = random.randint(4, 8)
+            if self._et_blocks > 8:
+                if not self._et_rusty_blocks and chance(3):
+                    self._et_rusty_blocks = random.randint(4, 8)
+
+                if not self._et_stench_blocks and chance(2):
+                    self._et_stench_blocks = random.randint(4, 8)
 
             block = self._prepare_et_block()
             self._map[self._block_num - 1].enemy_territory = True

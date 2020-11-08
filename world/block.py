@@ -363,6 +363,7 @@ class Block:
             "outing_available": self.outing_available,
             "is_city": self.is_city,
             "is_rusty": self.is_rusty,
+            "is_stenchy": self.is_stenchy,
             "station_side": self._station_side,
             "l_surface": self._l_surface,
             "r_surface": self._r_surface,

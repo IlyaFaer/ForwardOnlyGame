@@ -106,6 +106,9 @@ contacts to avoid spreading
 the infection""",
     """Wounded and tired characters are
 more vulnerable for diseases""",
+    # the Stench
+    """The Stench orange clouds are
+highly poisonous""",
 )
 
 

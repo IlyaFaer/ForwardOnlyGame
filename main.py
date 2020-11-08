@@ -154,12 +154,16 @@ class ForwardOnly(ShowBase):
             self.effects_mgr.stench_effect.play()
             self.world.stop_ambient_snd()
             self.train.ctrl.silence_move_snd()
+
+            self.team.start_stench_activity()
         else:
             self.effects_mgr.stench_effect.stop()
             self.world.resume_ambient_snd()
             self.train.ctrl.unsilence_move_snd()
             if next_block.is_stenchy:
                 self.effects_mgr.stench_effect.play_clouds()
+
+            self.team.stop_stench_activity()
 
         self._current_block = next_block
 
