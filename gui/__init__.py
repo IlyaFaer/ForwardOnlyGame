@@ -160,13 +160,14 @@ class MainMenu:
 
         descs = {
             "soldiers": (
-                "Your Train - your fortress! Improve it, build its defense and "
-                "hardness.\nSoldiers are good shooters at medium distance and "
-                "good fortification assaulters.\n\nYou'll start with 3 "
-                "soldier males."
+                "Your Train - your fortress! Improve it, build its defense, "
+                "hardness, and it'll bring you there.\nSoldiers are good shooters at "
+                "medium distance and good fortification assaulters.\n\n"
+                "You'll start with 3 soldier males."
             ),
             "raiders": (
-                "You're accustomed to difficulties and can recover from everything."
+                "You're accustomed to difficulties and can recover no matter how "
+                "tough was the damage."
                 "\nRaiders are good fighters at short distance and they know how to "
                 "find resources.\n\n You'll start with 2 male and 1 "
                 "female raiders."

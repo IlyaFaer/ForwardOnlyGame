@@ -39,6 +39,7 @@ class Team:
         base.taskMgr.doMethodLater(  # noqa: F821
             5, self._calc_cohesion, "calc_cohesion"
         )
+        self._medicine_snd = loader.loadSfx("sounds/medicine.ogg")  # noqa: F821
 
     @property
     def current_cohesion(self):
@@ -401,6 +402,7 @@ class Team:
         if char:
             char.get_well_score = 20
             base.medicine_boxes -= 1  # noqa: F821
+            self._medicine_snd.play()
 
     def start_stench_activity(self):
         """Start dealing the Stench damage to characters."""

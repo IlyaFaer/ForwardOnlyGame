@@ -233,6 +233,13 @@ class World:
         Returns:
             world.block.Block: Prepared enemy territory block.
         """
+        if self._et_blocks > 8:
+            if not self._et_rusty_blocks and chance(3):
+                self._et_rusty_blocks = random.randint(4, 8)
+
+            if not self._et_stench_blocks and chance(2):
+                self._et_stench_blocks = random.randint(4, 8)
+
         block = Block(
             name="direct",
             path=self._paths["direct"],
@@ -575,14 +582,8 @@ class World:
             base.train.ctrl.speed_to_min()  # noqa: F821
 
         if self._et_blocks:
-            if self._et_blocks > 8:
-                if not self._et_rusty_blocks and chance(3):
-                    self._et_rusty_blocks = random.randint(4, 8)
-
-                if not self._et_stench_blocks and chance(2):
-                    self._et_stench_blocks = random.randint(4, 8)
-
             block = self._prepare_et_block()
+
             self._map[self._block_num - 1].enemy_territory = True
             self._et_blocks -= 1
             if self._et_blocks == 0:

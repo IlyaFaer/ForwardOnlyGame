@@ -150,6 +150,7 @@ class OutingsManager:
 
         if "train" in effects:
             base.train.do_effects(effects["train"])  # noqa: F821
+
         if "money" in effects:
             base.dollars += effects["money"]  # noqa: F821
         if "medicine_boxes" in effects:
@@ -160,6 +161,10 @@ class OutingsManager:
         if "all" in effects:
             for char in base.team.chars.values():  # noqa: F821
                 char.do_effects(effects["all"])
+
+        if "assignees" in effects:
+            for char in base.team.chars.values():  # noqa: F821
+                char.do_effects(effects["assignees"])
 
         base.team.increase_cohesion_for_chars(chars, score)  # noqa: F821
 

@@ -892,7 +892,7 @@ for this place. {name1}, {name2} and {name3} spending a couple of
 minutes staring at the art object, and its beauty in the midst of
 the old monastery devastation inspires them to survive anything.
 {name1}, {name2} and {name3} getting +20 health""",
-                        "effects": {"all": {"health": 20}},
+                        "effects": {"assignees": {"health": 20}},
                     },
                     {
                         "score": range(80, 101),
@@ -1001,6 +1001,101 @@ drinks. "Hey, {name1}, come here!" - {heshe2} shouts They are taking
 the box together to bring it back to the Train.
 Every character getting +35 energy""",
                         "effects": {"all": {"energy": 35}},
+                    },
+                ),
+            },
+            {  # 6
+                "name": "Grey Smoke",
+                "type": "Looting",
+                "class_weights": {"soldier": 11, "raider": 16.6},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 5,
+                    "morning": 7,
+                    "noon": 10,
+                    "evening": 2,
+                },
+                "desc": """From a very long distance you are seeing a big, wide
+straight column of thick grey smoke, rising from the forest in a
+couple of kilometers from the railway. That seems questionably.
+It can be either a big bonfire in a large human camp, or a forest
+conflagration. In both cases the situation can turn very dangerous
+for your messengers, so it makes sense to send several tough
+fighters to see what's going on there.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're sending {name1}, {name2} and {name3} for a recon,
+admonishing them to be careful and cautious. Your people taking
+a direction to the wide smoke column. It takes fifteen minutes for
+them to come to the place, where they see a lot of fire sources. That's
+definitely a forest conflagration! Not thinking too long, your people
+turning around and moving back to the Train. The dense smoke doesn't
+give an opportunity to navigate the way, so your messengers are
+moving astray along the forest, consumed by flames, trying to find
+the right direction for not less than half of hour. Finally, they
+see the Train main lighter you're turned on to help them to get out.
+Covered with soot and small scorches, inhaled smoke they are
+getting back on the machine.
+{name1}, {name2} and {name3} getting -20 health""",
+                        "effects": {"assignees": {"health": -20}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """Your recon party is moving to the pillar of grey smoke.
+You're tracking their progress from the Train through binoculars. Your
+people are running to the forest spot fast and disappear between dark
+green trees. Thick grey smoke rises and rises, getting more wide with
+every minute. No, it's not a bonfire, it's definitely a conflagration.
+Time passes, and you're becoming nervous, as three of your team
+mates are not showing up. Maybe it's worth to walk to the place by
+yourself... Finally, you see them! Slow and tired, they return back
+to the Train, inhaled a lot of smoke and probably intoxicated.
+{name1}, {name2} and {name3} getting -25 energy.""",
+                        "effects": {"assignees": {"energy": -25}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1}, {name2} and {name3} are taking a direction to the smoke
+column, by your command. Running fast, they come to the place in
+twelve minutes and see a small wood hut, engulfed in flames. As there
+are no screams or any movement, they could say there is no people
+inside, at least, alive. The hut itself looks really ancient, it's most
+likely was long forsaken. {name1}, rubbing his forehead, warmed up by
+the fire, makes a step back: "Let's go until it's grown into the forest
+conflagration, and locked us inside a ring of flames!". Without any
+arguments {name2} and {name3} turning around and taking a direction
+back to the Train.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """By your order, {name1}, {name2} and {name3} run to the grey
+smoke column. Getting closer, they see a lot of red spots between the
+trees - it's a forest conflagration, a big one! Throwing a gaze to others,
+{name2} suddenly proposes: "Let's go hunting! Animals will run chaotically
+away from flames and smoke, and food is something we always need."
+Thinking a couple of seconds, {name1} and {name3} agree on that, and they
+three are going to the forest... After twenty minutes of hunting they
+getting a deer. Not very big, but it's even better - not a problem to get
+it to the Train. "With this meat we can save some proviant money!" -
+{name2} declares. - "Good job!"
+You're getting +50$""",
+                        "effects": {"money": 50},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """Leaded by your order, {name1}, {name2} and {name3} moving
+in the smoke column direction. Quickly getting to the place, they see a
+big military truck, exploded with rocket launcher a couple of hours ago.
+Blood, glass, metal and body parts of several soldiers are scattered all
+around. Getting closer to the truck cargo hold, your people see big boxes
+traces on the ground - somebody already looted the place. Still, {name3}
+jumps onto the truck to take a closer look at the inner part of the
+cargo hold. To everyone's joy, {heshe3} moves outside the car with a
+big plastic box of tools. Seems like assaulters have only taken weapons.
+Train damnability +70""",
+                        "effects": {"train": {"damnability": 70}},
                     },
                 ),
             },
