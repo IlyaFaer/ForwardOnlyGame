@@ -129,12 +129,17 @@ class ForwardOnly(ShowBase):
         props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
         self.openDefaultWindow(props=props)
 
-    def _start_to_move(self, task):
+    def _start_game(self, task):
         """Actually start the game process."""
+        self.city_interface = CityInterface()
+        self.notes = TeachingNotes()
+
+        self.main_menu.hide()
         self.enableAllAudio()
 
         self.taskMgr.doMethodLater(60, self.world.disease_activity, "disease")
 
+        self.accept("block_finished", self._move_along_block)
         self._move_along_block()
         return task.done
 
@@ -193,13 +198,8 @@ class ForwardOnly(ShowBase):
 
         self.char_interface = CharacterInterface()
         self.res_interface = ResourcesInterface()
-        self.city_interface = CityInterface()
-        self.notes = TeachingNotes()
 
-        self.accept("block_finished", self._move_along_block)
-
-        self.main_menu.hide()
-        self.doMethodLater(3, self._start_to_move, "start_to_move")
+        self.doMethodLater(3, self._start_game, "start_game")
 
         self.dollars = 300
         self.medicine_boxes = 0
@@ -255,13 +255,8 @@ class ForwardOnly(ShowBase):
         )
 
         self.char_interface = CharacterInterface()
-        self.city_interface = CityInterface()
-        self.notes = TeachingNotes()
 
-        self.accept("block_finished", self._move_along_block)
-
-        self.main_menu.hide()
-        self.doMethodLater(3, self._start_to_move, "start_to_move")
+        self.doMethodLater(3, self._start_game, "start_game")
         self.doMethodLater(
             3.01,
             self.train.ctrl.load_speed,

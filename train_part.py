@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Train parts API.
+The Train parts API.
 """
 from panda3d.core import CollisionBox, CollisionNode, CollisionPolygon, Point3
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK

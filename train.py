@@ -4,7 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Train - the main game object, API.
 
-Includes the systems of Train loading, preparations,
+Includes the systems of the Train loading, preparations,
 animation, sounds, lights, physics.
 """
 import random
@@ -247,11 +247,7 @@ class Train:
         sparks.softStart()
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            30,
-            self._clear_brake,
-            side + "_clear_brake",
-            extraArgs=[side, brake],
-            appendTask=True,
+            30, self._clear_brake, side + "_clear_brake", extraArgs=[side, brake],
         )
         if self.l_brake and self.r_brake:
             self.ctrl.max_speed = 0.5
@@ -274,7 +270,7 @@ class Train:
         self.root_node.setZ(50)
         self._smoke.disable()
 
-    def _clear_brake(self, side, brake, task):
+    def _clear_brake(self, side, brake):
         """Stop braking on the given side.
 
         Args:
@@ -291,7 +287,6 @@ class Train:
 
         self.ctrl.max_speed += 0.25
         brake.removeNode()
-        return task.done
 
     def move_along_block(self, block):
         """Move the Train along the given world block.
