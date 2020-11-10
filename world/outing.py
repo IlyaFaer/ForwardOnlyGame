@@ -163,7 +163,7 @@ class OutingsManager:
                 char.do_effects(effects["all"])
 
         if "assignees" in effects:
-            for char in base.team.chars.values():  # noqa: F821
+            for char in chars:  # noqa: F821
                 char.do_effects(effects["assignees"])
 
         base.team.increase_cohesion_for_chars(chars, score)  # noqa: F821

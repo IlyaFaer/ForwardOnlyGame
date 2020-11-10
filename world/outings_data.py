@@ -1099,6 +1099,110 @@ Train damnability +70""",
                     },
                 ),
             },
+            {  # 7
+                "name": "Silo",
+                "type": "Looting",
+                "class_weights": {"soldier": 17, "raider": 25},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 10,
+                    "morning": 0,
+                    "noon": 3,
+                    "evening": 5,
+                },
+                "desc": """When the Train started to move along sown fields, you've concentrated
+your gaze. Where fields, there are people and resources. And, yes,
+in some moment you see a big brown silo. While the Train is getting
+closer, you discerning a couple of small buildings near the metal
+reservoir as well. From that distance they look quiet and deserted,
+but they are definitely in a very good shape, so they are, probably,
+populated. It's worth to send a couple of your people to check if
+there is something useful for a road in there.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """{name1} and {name2} becomes your messengers this time.
+They cross the silent wheat field without any sign of trouble, but,
+getting closer to the buildings, both rising their weapons. {name1}
+points to the small hut first, and they take the direction to it.
+Suddenly, they hear some kind of a stomp, and in the next moment
+giant bull pushes {name1} with his brown head, knocking {himher1}
+down to the ground. {name2} lighting rapid turns around and shots
+near the bull's legs, but the animal doesn't pay any attention and
+prepares to kick {name1} again. Turning {hisher2} gun into its head,
+{name2} kills the brute. In the next second {heshe2} sees two more
+bulls moving out of the barn, and that is enough for {himher2} to help
+{name1} get up and spurt back to the Train.
+{name1} getting -35 health""",
+                        "effects": {"char_1": {"health": -35}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} and {name2}, chosen by you as a recon party,
+are heading to the brown metal cylinder of the silo. Field and the
+buildings looking quiet, only wooden creak sometime sounds in air.
+Still, getting closer to the place, your people start to suspect something
+wrong, as there are bullet holes on the walls, window glass, and smell of
+death flyes in the air. Silently moving through the buildings, {name1}
+and {name2} doesn't see anything useful, anything at all, like somebody
+cleared the house without remainder. Deciding to take a look at the silo
+itself, your people are getting to it and opening the metal door. All of
+a sudden, black swarm of flies breaks out of the silo, and your
+teammates see tens of dead bodies in there. "Let's go, before the author
+came back!" - {name1} says, and they both fastly turning back.
+{name1} and {name2} getting -15 energy""",
+                        "effects": {"assignees": {"energy": -15}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1} and {name2}, by your order, taking their gear
+and moving to the silo. Nothing promises any troubles, but when your
+people are getting closer to the buildings, four men with guns
+showing up. They all look like hereditary rednecks, but their M16 and
+Beretta's shines like it's a special forces property. "What do you
+want? You doesn't look like skinheads." - an old man steps forward.
+{name1} and {name2} exchange glances, but before they started to talk,
+the man continues: "We don't wanna hurt anyone, but you better go away".
+{name1} makes a step back: "No problem, we'll go". Not touching
+locals, your people making a slow turn around and heading back to you.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You're commanding {name1} and {name2} to go for a recon.
+Your teammates are closing to the place, but four hulk rednecks with
+guns appearing towards them. {name1} and {name2} stopping, trying to show
+they are not going to attack. An old man makes a step forward: "Aren't
+you folks, who came from abroad, and now killing skinheads all around?"
+{name1} and {name2} exchange their gazes. "Sounds like us" - {name2} answers.
+"Benny, give them some paper!" - old man shouts. Tall redneck makes
+several long steps towards your people and holds out a 50$ banknote.
+"Those bastards killed a lot of good folks around here." - the old man
+pronounces loudly. - "Thanks for clearing this filth. Keep up the good
+work!" - he uppers his hand, and all of the rednecks are turning back
+to their place. In good mood your people returning to you.
+You're getting +50$""",
+                        "effects": {"money": 50},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're sending {name1} and {name2} to take a closer look
+at the place. Your messengers closing to the silo; silence meets them,
+so they entering inside the buildings. The lack of any furniture
+or sign of people - seems like the place was forsaken some time ago,
+and hosts have taken everything with them. Walking outside the last
+of three buildings, {name1} points to the metal cylinder of silo
+with {hisher1} head. {name2} agrees on that, and they both getting
+closer to it. Opening the steel door, they see that there is no
+even a gram of grain. But pointing a flashlight inside the structure,
+they catch their eyes on two metal boxes. {name2} jumps inside
+and opens the first one: medicines! "Whoh!" - {heshe2} shouts and
+opens the second one: a smoke filter! Now, that's a find!
+You're getting 1 smoke filter and 1 medicine box""",
+                        "effects": {"medicine_boxes": 1, "smoke_filters": 1},
+                    },
+                ),
+            },
         ),
     }
 }
