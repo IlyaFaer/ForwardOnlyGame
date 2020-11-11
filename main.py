@@ -196,7 +196,7 @@ class ForwardOnly(ShowBase):
         self.world.generate_location("Plains", 600)
         self._current_block = self.world.prepare_next_block()
 
-        self.char_interface = CharacterInterface()
+        self.char_gui = CharacterInterface()
         self.res_interface = ResourcesInterface()
 
         self.doMethodLater(3, self._start_game, "start_game")
@@ -254,7 +254,7 @@ class ForwardOnly(ShowBase):
             save["cur_block"], save["last_angle"]
         )
 
-        self.char_interface = CharacterInterface()
+        self.char_gui = CharacterInterface()
 
         self.doMethodLater(3, self._start_game, "start_game")
         self.doMethodLater(
@@ -262,7 +262,6 @@ class ForwardOnly(ShowBase):
             self.train.ctrl.load_speed,
             "load_speed",
             extraArgs=[save["train"]["speed"]],
-            appendTask=True,
         )
         self.dollars = save["dollars"]
         self.medicine_boxes = save["medicine_boxes"]

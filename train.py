@@ -41,9 +41,6 @@ class Train:
         self.model.reparentTo(self.root_node)
 
         (
-            move_snd,
-            stop_snd,
-            brake_snd,
             self._clunk_snd,
             self._clunk2_snd,
             self._filter_open_snd,
@@ -52,7 +49,7 @@ class Train:
             self._creak_snds,
         ) = self._set_sounds()
 
-        self.ctrl = TrainController(self.model, move_snd, stop_snd, brake_snd)
+        self.ctrl = TrainController(self.model)
         self.ctrl.set_controls(self)
 
         self.parts = {
@@ -407,21 +404,8 @@ class Train:
 
         Returns:
             (panda3d.core.AudioSound...):
-                Train movement, stopping, braking, barrier hit,
-                lighter toggle and metal creaking sounds.
+                The Train sounds.
         """
-        move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
-        base.sound_mgr.attachSoundToObject(move_snd, self.model)  # noqa: F821
-        move_snd.setLoop(True)
-        move_snd.play()
-
-        stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
-        base.sound_mgr.attachSoundToObject(stop_snd, self.model)  # noqa: F821
-
-        brake_snd = base.sound_mgr.loadSfx("sounds/train_brake.ogg")  # noqa: F821
-        brake_snd.setLoop(True)
-        base.sound_mgr.attachSoundToObject(brake_snd, self.model)  # noqa: F821
-
         clunk_snd = base.sound_mgr.loadSfx("sounds/metal_clunk1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(clunk_snd, self.model)  # noqa: F821
 
@@ -447,9 +431,6 @@ class Train:
         base.sound_mgr.attachSoundToObject(creak_snd3, self.model)  # noqa: F821
 
         return (
-            move_snd,
-            stop_snd,
-            brake_snd,
             clunk_snd,
             clunk_snd2,
             filter_open_snd,

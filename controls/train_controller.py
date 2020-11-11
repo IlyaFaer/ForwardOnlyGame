@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-API to control Train and its movement.
+API to control the Train and its movement.
 """
 from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
@@ -21,19 +21,11 @@ class TrainController:
 
     Args:
         model (panda3d.core.NodePath): The Train model.
-        move_snd (panda3d.core.AudioSound):
-            The Train movement sound.
-        stop_snd (panda3d.core.AudioSound):
-            The Train stopping sound.
-        brake_snd (panda3d.core.AudioSound):
-            The Train braking sound.
     """
 
-    def __init__(self, model, move_snd, stop_snd, brake_snd):
+    def __init__(self, model):
         self._model = model
-        self._move_snd = move_snd
-        self._stop_snd = stop_snd
-        self._brake_snd = brake_snd
+        self._move_snd, self._stop_snd, self._brake_snd = self._set_sounds(model)
 
         self._move_anim_int = model.actorInterval("move_forward", playRate=14)
         self._move_anim_int.loop()
@@ -102,7 +94,7 @@ class TrainController:
         self._move_par.start()
         self._move_par.setPlayRate(rate)
 
-    def load_speed(self, speed, task):
+    def load_speed(self, speed):
         """Load previously saved Train speed.
 
         Args:
@@ -115,8 +107,6 @@ class TrainController:
         if not speed:
             self._move_snd.stop()
             self._is_stopped = True
-
-        return task.done
 
     def _change_speed_delayed(self, diff):
         """Start changing the Train speed.
@@ -281,7 +271,6 @@ class TrainController:
         """Completely stop the Train."""
         base.ignore("w")  # noqa: F821
         base.ignore("s")  # noqa: F821
-
         base.taskMgr.remove("change_train_speed")  # noqa: F821
 
         # calculate deceleration length
@@ -316,3 +305,26 @@ class TrainController:
         base.taskMgr.remove("stop_train")  # noqa: F821
         base.train.stop_sparks()  # noqa: F821
         return task.done
+
+    def _set_sounds(self, model):
+        """Set interactive Train sounds.
+
+        Args:
+            model (panda3d.core.NodePath): The Train model.
+
+        Returns:
+            (panda3d.core.AudioSound...):
+                Interactive Train sounds.
+        """
+        move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(move_snd, model)  # noqa: F821
+        move_snd.setLoop(True)
+        move_snd.play()
+
+        stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(stop_snd, model)  # noqa: F821
+
+        brake_snd = base.sound_mgr.loadSfx("sounds/train_brake.ogg")  # noqa: F821
+        brake_snd.setLoop(True)
+        base.sound_mgr.attachSoundToObject(brake_snd, model)  # noqa: F821
+        return move_snd, stop_snd, brake_snd

@@ -48,14 +48,14 @@ class CommonController:
     """
 
     def __init__(self, parts, chars):
-        self.chars = chars
+        self._chars = chars
         self._parts = parts
 
         self._is_keys_shown = False
+        self._is_relations_shown = False
         self._keys_info = None  # on screen text
         self._pointed_obj = ""
         self._chosen_char = None
-        self._relations_shown = False
 
         self._font = loader.loadFont("arial.ttf")  # noqa: F821
         self._char_pointer = loader.loadModel(  # noqa: F821
@@ -133,11 +133,11 @@ class CommonController:
         for part in self._parts.values():
             part.hide_arrow()
 
-        base.char_interface.clear_char_info()  # noqa: F821
+        base.char_gui.clear_char_info()  # noqa: F821
 
-        if self._relations_shown:
+        if self._is_relations_shown:
             base.team.hide_relations()  # noqa: F821
-            self._relations_shown = False
+            self._is_relations_shown = False
 
     def _choose_obj(self):
         """Event: left mouse button clicked.
@@ -150,20 +150,20 @@ class CommonController:
             return
 
         if self._pointed_obj.startswith("character_"):
-            self._chosen_char = self.chars[self._pointed_obj]
+            self._chosen_char = self._chars[self._pointed_obj]
             self._char_pointer.reparentTo(self._chosen_char.model)
 
             for part in self._parts.values():
                 part.show_arrow()
 
-            base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
-            if self._relations_shown:
+            base.char_gui.show_char_info(self._chosen_char)  # noqa: F821
+            if self._is_relations_shown:
                 base.team.show_relations(self._chosen_char)  # noqa: F821
 
             return
 
         if self._pointed_obj.startswith("part_rest_"):
-            base.char_interface.show_resting_chars(  # noqa: F821
+            base.char_gui.show_resting_chars(  # noqa: F821
                 base.train.parts[self._pointed_obj]  # noqa: F821
             )
 
@@ -184,7 +184,7 @@ class CommonController:
                 return
 
             if self._pointed_obj.startswith("character_"):
-                self.chosen_char.exchange_pos(self.chars[self._pointed_obj])
+                self.chosen_char.exchange_pos(self._chars[self._pointed_obj])
 
     def _point_obj(self, event):
         """Event: mouse pointer hits a collision."""
@@ -196,24 +196,24 @@ class CommonController:
 
         # show_tooltip
         if self._pointed_obj.startswith("character_"):
-            base.char_interface.show_tooltip(  # noqa: F821
-                self.chars[self._pointed_obj].tooltip
+            base.char_gui.show_tooltip(  # noqa: F821
+                self._chars[self._pointed_obj].tooltip
             )
             return
 
         if self._pointed_obj.startswith("enemy_"):
-            base.char_interface.show_tooltip(  # noqa: F821
+            base.char_gui.show_tooltip(  # noqa: F821
                 base.world.enemy.active_units[self._pointed_obj].tooltip  # noqa: F821
             )
             return
 
         if self._pointed_obj.startswith("part_rest_"):
-            base.char_interface.show_tooltip("Rest zone")  # noqa: F821
+            base.char_gui.show_tooltip("Rest zone")  # noqa: F821
 
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
-        base.char_interface.hide_tip()  # noqa: F821
+        base.char_gui.hide_tip()  # noqa: F821
 
     def _collide_mouse(self, task):
         """Organize active mouse collision object movement.
@@ -253,9 +253,9 @@ class CommonController:
         if not self.chosen_char:
             return
 
-        self._relations_shown = not self._relations_shown
+        self._is_relations_shown = not self._is_relations_shown
 
-        if self._relations_shown:
+        if self._is_relations_shown:
             base.team.show_relations(self.chosen_char)  # noqa: F821
         else:
             base.team.hide_relations()  # noqa: F821

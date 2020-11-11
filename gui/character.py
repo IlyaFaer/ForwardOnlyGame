@@ -401,7 +401,7 @@ class CharacterChooser:
         self._chosen_char = self._chars[key]
 
         self._name["text"] = self._chosen_char.name
-        base.char_interface.show_char_info(self._chosen_char)  # noqa: F821
+        base.char_gui.show_char_info(self._chosen_char)  # noqa: F821
 
     def prepare(self, parent, pos, chars):
         """Set this widget's parent and position.

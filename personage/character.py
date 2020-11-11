@@ -345,7 +345,7 @@ class Character(Shooter, Unit):
         """Stop this character rest."""
         self.model.show()
         self._col_node.unstash()
-        base.char_interface.destroy_char_button(self.id)  # noqa: F821
+        base.char_gui.destroy_char_button(self.id)  # noqa: F821
 
         self._stop_tasks("_gain_energy", "_heal")
         base.taskMgr.doMethodLater(  # noqa: F821

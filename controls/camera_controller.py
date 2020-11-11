@@ -18,18 +18,18 @@ class CameraController:
     """Object to configure camera and its controls."""
 
     def __init__(self):
-        self._cam_np = None
+        self._np = None  # the main camera node
         self._target = Vec3(2, 0, MAX_Z)  # the current movement final pos
         self._move_int = None  # current move interval
         self._turn_int = None  # current rotation interval
-        self._with_mouse_move = None  # camera is in move by mouse
+        self._with_mouse_move = None  # camera is on move by mouse
         self._with_mouse_move_x = None
 
         # camera position before toggling centered view
-        self._last_cam_pos = None
-        self._last_cam_hpr = None
-        self._last_cam_np_pos = None
-        self._last_cam_np_hpr = None
+        self._last_pos = None
+        self._last_hpr = None
+        self._last_np_pos = None
+        self._last_np_hpr = None
         self._is_centered = False
 
         base.camLens.setNear(0.25)  # noqa: F821
@@ -42,8 +42,8 @@ class CameraController:
         """
         base.disableMouse()  # noqa: F821
 
-        self._cam_np = train.node.attachNewNode("camera_node")
-        base.cam.reparentTo(self._cam_np)  # noqa: F821
+        self._np = train.node.attachNewNode("camera_node")
+        base.cam.reparentTo(self._np)  # noqa: F821
         base.cam.setPos(self._target)  # noqa: F821
         base.cam.lookAt(train.model)  # noqa: F821
 
@@ -63,8 +63,6 @@ class CameraController:
             return task.again
 
         x = round(base.mouseWatcherNode.getMouseX(), 2)  # noqa: F821
-        z = round(base.mouseWatcherNode.getMouseY(), 2)  # noqa: F821
-
         if x == 1:
             self._with_mouse_move = True
             self._move(*MAX_RIGHT_MOVE)
@@ -75,6 +73,8 @@ class CameraController:
             self._move(*MAX_LEFT_MOVE)
             self._with_mouse_move_x = False
             return task.again
+
+        z = round(base.mouseWatcherNode.getMouseY(), 2)  # noqa: F821
         if z == 1:
             self._with_mouse_move = True
             self._move(*MAX_UP_MOVE)
@@ -114,7 +114,7 @@ class CameraController:
             self._target.setY(y)
 
         self._move_int = LerpPosInterval(
-            base.cam, time, self._target, other=self._cam_np  # noqa: F821
+            base.cam, time, self._target, other=self._np  # noqa: F821
         )
         self._move_int.start()
 
@@ -145,7 +145,7 @@ class CameraController:
         self._target.setZ(z)
 
         self._move_int = LerpPosInterval(
-            base.cam, zoom_time, self._target, other=self._cam_np  # noqa: F821
+            base.cam, zoom_time, self._target, other=self._np  # noqa: F821
         )
         self._move_int.start()
 
@@ -159,9 +159,7 @@ class CameraController:
         if self._turn_int is not None and self._turn_int.isPlaying():
             return
 
-        self._turn_int = LerpHprInterval(
-            self._cam_np, 4, (self._cam_np.getH() + h, 0, r)
-        )
+        self._turn_int = LerpHprInterval(self._np, 4, (self._np.getH() + h, 0, r))
         self._turn_int.start()
 
     def _stop(self, stop_x, stop_zoom=False, is_hard=False):
@@ -192,7 +190,7 @@ class CameraController:
 
         if not is_hard:
             self._move_int = LerpPosInterval(
-                base.cam, 0.75, self._target, other=self._cam_np  # noqa: F821
+                base.cam, 0.75, self._target, other=self._np  # noqa: F821
             )
             self._move_int.start()
 
@@ -262,17 +260,17 @@ class CameraController:
         new_z = base.mouseWatcherNode.getMouseY()  # noqa: F821
 
         if new_x - x <= -0.125:
-            self._cam_np.setH(self._cam_np.getH() - 1)
+            self._np.setH(self._np.getH() - 1)
         elif new_x - x >= 0.125:
-            self._cam_np.setH(self._cam_np.getH() + 1)
+            self._np.setH(self._np.getH() + 1)
         elif new_z - z <= -0.125:
-            r = self._cam_np.getR()
+            r = self._np.getR()
             if r < 20:
-                self._cam_np.setR(r + 1)
+                self._np.setR(r + 1)
         elif new_z - z >= 0.125:
-            r = self._cam_np.getR()
+            r = self._np.getR()
             if r > -60:
-                self._cam_np.setR(r - 1)
+                self._np.setR(r - 1)
 
         return task.again
 
@@ -286,22 +284,22 @@ class CameraController:
         if not self._is_centered:
             self._stop(False, is_hard=True)
 
-            self._last_cam_pos = base.cam.getPos()  # noqa: F821
-            self._last_cam_hpr = base.cam.getHpr()  # noqa: F821
-            self._last_cam_np_hpr = self._cam_np.getHpr()
+            self._last_pos = base.cam.getPos()  # noqa: F821
+            self._last_hpr = base.cam.getHpr()  # noqa: F821
+            self._last_np_hpr = self._np.getHpr()
 
             base.cam.wrtReparentTo(base.train.model)  # noqa: F821
             base.cam.setPosHpr(0, 0, 1.8, 90, -90, 0)  # noqa: F821
-            self._cam_np.setHpr(0)
+            self._np.setHpr(0)
 
             self._disable_ctrl_keys()
             base.taskMgr.remove("move_camera_with_mouse")  # noqa: F821
         else:
-            base.cam.wrtReparentTo(self._cam_np)  # noqa: F821
+            base.cam.wrtReparentTo(self._np)  # noqa: F821
             self._set_move_keys()
 
-            base.cam.setPosHpr(*self._last_cam_pos, *self._last_cam_hpr)  # noqa: F821
-            self._cam_np.setHpr(*self._last_cam_np_hpr)
+            base.cam.setPosHpr(*self._last_pos, *self._last_hpr)  # noqa: F821
+            self._np.setHpr(*self._last_np_hpr)
 
             base.taskMgr.doMethodLater(  # noqa: F821
                 0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
@@ -342,16 +340,16 @@ class CameraController:
         self._disable_ctrl_keys()
         base.ignore("c")  # noqa: F821
 
-        self._last_cam_pos = base.cam.getPos()  # noqa: F821
-        self._last_cam_hpr = base.cam.getHpr()  # noqa: F821
-        self._last_cam_np_pos = self._cam_np.getPos()
-        self._last_cam_np_hpr = self._cam_np.getHpr()
+        self._last_pos = base.cam.getPos()  # noqa: F821
+        self._last_hpr = base.cam.getHpr()  # noqa: F821
+        self._last_np_pos = self._np.getPos()
+        self._last_np_hpr = self._np.getHpr()
 
         base.cam.setPos(0)  # noqa: F821
         base.cam.setHpr(0)  # noqa: F821
 
-        self._cam_np.reparentTo(hangar)
-        self._cam_np.setPosHpr(-0.35, 1.36, 0.12, -163, 5, 0)
+        self._np.reparentTo(hangar)
+        self._np.setPosHpr(-0.35, 1.36, 0.12, -163, 5, 0)
 
     def enable_ctrl_keys(self):
         """Enable all the camera control keys."""
@@ -363,9 +361,9 @@ class CameraController:
 
     def unset_hangar_pos(self):
         """Return camera back to normal position."""
-        base.cam.setPos(self._last_cam_pos)  # noqa: F821
-        base.cam.setHpr(self._last_cam_hpr)  # noqa: F821
+        base.cam.setPos(self._last_pos)  # noqa: F821
+        base.cam.setHpr(self._last_hpr)  # noqa: F821
 
-        self._cam_np.reparentTo(base.train.node)  # noqa: F821
-        self._cam_np.setPos(self._last_cam_np_pos)
-        self._cam_np.setHpr(self._last_cam_np_hpr)
+        self._np.reparentTo(base.train.node)  # noqa: F821
+        self._np.setPos(self._last_np_pos)
+        self._np.setHpr(self._last_np_hpr)

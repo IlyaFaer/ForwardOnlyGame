@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Visual effects API.
+The game Visual effects API.
 """
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.Transitions import Transitions
@@ -283,7 +283,7 @@ class Stench:
 
         self._is_playing = True
 
-        base.render.setFog(self._fog)  # noqa: F821
+        render.setFog(self._fog)  # noqa: F821
         self._bcard.show()
         self._fcard.show()
 
