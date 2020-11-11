@@ -518,6 +518,108 @@ You're getting 200$""",
                     },
                 ),
             },
+            {  # 6
+                "name": "Construction",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 16.5, "raider": 11},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 2,
+                    "noon": 6,
+                    "evening": 10,
+                },
+                "desc": """Standing on a warm air, you're observing the horizon line. For the
+few last hours you saw twelve wooden houses, burned to the ground.
+Seems like someone is clearing these lands, probably skinheads. It's
+worth staying sharp... Once you're seeing a two-floored construction.
+Concrete, with metal rods, but definitely unfinished - there are no
+doors, window glasses, roof, only bare walls. "Let's make a short stop
+there!" - you're commanding. That's not very logical, but something
+makes you think there is somewhat useful in this building. Still,
+considering the burned houses nearby, it's better stay vigilant.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're deciding to send {name1}, {name2} and {name3}
+to recon the construction site. Your people are preparing for a walk,
+but in the moment they are going to jump off the Train, you're hearing
+some fuss at the building. Suddenly, a big guy with a machine gun appears
+on the second floor, and flame of his gun starts to rush between two
+concrete walls. Bullets loudly knocking on the Train sheathing, promising
+a lot of damage. In some moment the guns silences, and you're uppering
+your head. A lot of shot holes are gapping on the Train. Are these armor-
+piercing bullets!? Is it worth getting this guy? It's probably better to
+leave before this gun made even more damage to the locomotive.
+The Train damnability -60""",
+                        "effects": {"train": {"damnability": -60}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """You're giving {name1}, {name2} and {name3} an order to check
+the construction site. Taking their guns, your fighters are jumping off
+the Train and getting to the place. The building seems to be completely
+empty and uninhabited. There are no even signs of temporary camp. In
+disappointed mood, {name2} catches {hisher2} eyes on the basement entrance.
+"Oh, you think we should?" - {name1} asks, understanding where {name2}
+gazes. Why not, your people are going down to the dark wet basement.
+Flashlights are floating on an empty walls and floor. Nothing. "Do you
+feel it?" - {name3} asks. - "Smells like canella". {name2} harshly
+stops. "Canella?! We better go!". Starting to understand, your
+messengers running out of the basement on to fresh air. "We should
+lavage ourselves, it can be very poisonous." - {name3} finalizes.
+{name1}, {name2} and {name3} getting -20 health""",
+                        "effects": {"assignees": {"health": -20}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're sending {name1}, {name2} and {name3} to check the place.
+While they are on their way, you're staying on a watch to prevent any
+surprises. The Stench have taken near 10% of the Earth, but people already
+became non compos. Or maybe they always were, the Stench only released
+their atrocity, revealed it? While they were afraid of laws, they were
+quiet, proving their true selves only inside. And now, when no one
+knows what to do and what will happen next, when no one controls the
+situations, when no one will come to help, they decided to do what
+their nature whispers... You're seeing your people walking out of
+the construction. Looking disappointed, {name2} from that far shows
+that there was nothing useful there, nor interesting. Well, it's
+time to start the engine.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """Your team mates - {name1}, {name2} and {name3} are taking a
+direction to the construction site. Nothing promises troubles for some
+time, but when they getting down to the basement, the cry tears air.
+Fast uppering their guns, your messengers see a thin guy, holding
+his hands above his head. "Don't touch me!" - he shouts. As he
+doesn't have a weapon, {name1} takes {hisher1} gun aside. "He is
+skinhead." - {heshe1} pronounces surely. "Yes, yes!" - the guy answers. -
+"But they left me. Now I'm alone. Take my money and don't touch me!"
+- he gets his left hand into the pocket and throws several banknotes
+outside of it. "Don't touch me!". Raising the money, {name2} takes away
+{hisher2} gun as well and points others to the exit.
+You're getting 80$""",
+                        "effects": {"money": 80},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """{name1}, {name2} and {name3} jump off the Train and
+run to the construction site. Getting closer, they smell smoke, so,
+holding teamwise, they starting to move fast from one room to another,
+covering each other and taking every turn on a sight. Skinheads,
+confused and, probably, stoned, are appearing from time to time,
+but your messengers are shooting them one by one without any delays.
+Cleared the whole two-floored building in four minutes, they
+make a short pause, and then start to rummage through rival
+stuff. It doesn't look like a lot of useful things, but these
+guys definitely had some money.
+You're getting 130$""",
+                        "effects": {"money": 130},
+                    },
+                ),
+            },
         ),
         "looting": (
             {  # 1
