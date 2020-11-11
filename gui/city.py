@@ -14,7 +14,7 @@ from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
 class CityInterface:
-    """City GUI interface.
+    """City GUI.
 
     Includes healing and regaining energy for the player
     units. Every service requires some money to be spent.

@@ -33,33 +33,32 @@ class MainMenu:
         self._main_fr = DirectFrame(
             frameSize=(-2, 2, -1, 1), frameColor=(0.15, 0.15, 0.15, 1)
         )
+        but_params = {
+            "text_scale": (0.05, 0.05),
+            "relief": None,
+            "parent": self._main_fr,
+        }
         self._new_game_but = DirectButton(
-            parent=self._main_fr,
             pos=(-1, 0, 0.5),
-            text_scale=(0.05, 0.05),
             text_fg=RUST_COL,
             text="New game",
-            relief=None,
             command=self._choose_tactics,
+            **but_params,
         )
         is_save_exists = save_exists()
         self._load_but = DirectButton(
-            parent=self._main_fr,
             pos=(-0.996, 0, 0.4),
-            text_scale=(0.05, 0.05),
             text_fg=RUST_COL if is_save_exists else (0.5, 0.5, 0.5, 1),
             text="Load game",
-            relief=None,
             command=self._load_game if is_save_exists else None,
+            **but_params,
         )
         DirectButton(
-            parent=self._main_fr,
             pos=(-1.083, 0, 0),
-            text_scale=(0.05, 0.05),
             text_fg=RUST_COL,
             text="Exit",
-            relief=None,
             command=sys.exit,
+            **but_params,
         )
         self._alpha_disclaimer = DirectLabel(
             parent=self._main_fr,
@@ -76,7 +75,7 @@ class MainMenu:
         )
 
     def _choose_tactics(self):
-        """Choose the main game tactics before new game start."""
+        """Choose inital tactics before new game start."""
         if self._chosen_team:
             return
 
@@ -145,18 +144,17 @@ class MainMenu:
         )
         self._show_team("soldiers")
 
-    def _show_team(self, chosen_team):
+    def _show_team(self, team):
         """Show the description of the chosen tactics.
 
         Args:
-            chosen_team (str): The chosen tactics name.
+            team (str): The chosen tactics name.
         """
-        self._chosen_team = chosen_team
-        self._team_preview["frameTexture"] = "gui/tex/preview/{}.png".format(
-            chosen_team
-        )
+        self._chosen_team = team
+        self._team_preview["frameTexture"] = "gui/tex/preview/{}.png".format(team)
+
         for key, but in self._team_buts.items():
-            but["text_fg"] = SILVER_COL if key == chosen_team else RUST_COL
+            but["text_fg"] = SILVER_COL if key == team else RUST_COL
 
         descs = {
             "soldiers": (
@@ -173,7 +171,7 @@ class MainMenu:
                 "female raiders."
             ),
         }
-        self._team_description["text"] = descs[chosen_team]
+        self._team_description["text"] = descs[team]
 
     def _clear_temp_wids(self, task):
         """Destroy widgets from the first game screen."""

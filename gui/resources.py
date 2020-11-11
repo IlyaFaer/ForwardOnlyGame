@@ -7,6 +7,7 @@ Resources GUI.
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
+from .character import ABOUT_BUT_PARAMS
 from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
@@ -80,15 +81,9 @@ class ResourcesInterface:
         )
         DirectButton(
             parent=self._res_frame,
-            text="?",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
-            frameColor=(0, 0, 0, 0),
-            text_bg=(0, 0, 0, 0),
-            text_fg=SILVER_COL,
-            text_scale=0.03,
             pos=(0.18, 0, -0.013),
-            relief="flat",
             command=self._show_expendable_resources,
+            **ABOUT_BUT_PARAMS,
         ).setTransparency(TransparencyAttrib.MAlpha)
 
         self._coh_frame = DirectFrame(
@@ -165,15 +160,9 @@ class ResourcesInterface:
         )
         DirectButton(
             parent=self._coh_frame,
-            text="?",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
-            frameColor=(0, 0, 0, 0),
-            text_bg=(0, 0, 0, 0),
-            text_fg=SILVER_COL,
-            text_scale=0.03,
             pos=(-0.5, 0, -0.028),
-            relief="flat",
             command=self._show_cohesion_abilities,
+            **ABOUT_BUT_PARAMS,
         ).setTransparency(TransparencyAttrib.MAlpha)
 
     def _show_cohesion_abilities(self):

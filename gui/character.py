@@ -11,6 +11,16 @@ from panda3d.core import TransparencyAttrib
 from personage.character_data import TRAIT_DESC
 from .train import ICON_PATH, RUST_COL, SILVER_COL
 
+ABOUT_BUT_PARAMS = {
+    "text": "?",
+    "frameSize": (-0.03, 0.03, -0.03, 0.03),
+    "frameColor": (0, 0, 0, 0),
+    "text_bg": (0, 0, 0, 0),
+    "text_fg": SILVER_COL,
+    "text_scale": 0.03,
+    "relief": "flat",
+}
+
 
 class CharacterInterface:
     """Widget with the chosen character info."""
@@ -33,15 +43,9 @@ class CharacterInterface:
 
         self._char_desc_but = DirectButton(
             parent=self._fr,
-            text="?",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
-            frameColor=(0, 0, 0, 0),
-            text_bg=(0, 0, 0, 0),
-            text_fg=SILVER_COL,
-            text_scale=0.03,
-            relief="flat",
             pos=(0.27, 0, 0.0675),
             command=self._show_char_desc,
+            **ABOUT_BUT_PARAMS,
         )
         DirectLabel(
             parent=self._fr,

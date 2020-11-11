@@ -455,7 +455,6 @@ class OutingsInterface:
                 barColor=col,
                 pos=(0, 0, shift),
             )
-
             bars.append((bar, value))
             self._outing_widgets.append(bar)
 
