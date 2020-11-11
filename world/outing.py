@@ -106,7 +106,7 @@ class OutingsManager:
 
         cond_score = 0
         class_score = 0
-        cond_max = 20 / len(chars)
+        cond_max = 25 / len(chars)
         for char in chars:
             cond_score += calc_condition_score(cond_max, char)
             class_score += outing["class_weights"][char.class_]
