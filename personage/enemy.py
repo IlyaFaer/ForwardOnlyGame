@@ -67,9 +67,6 @@ class Enemy:
             self._front_y_positions.append(round(0.1 + gain * 0.05, 2))
             self._front_y_positions.append(round(-0.1 - gain * 0.05, 2))
 
-        self._classes = CLASSES["classes"]
-        self._attack_chances = CLASSES["attack_chances"]
-
         self._transport_mgr = TransportManager()
 
         # set enemy collisions handler
@@ -91,7 +88,7 @@ class Enemy:
             return False
 
         if (
-            chance(self._attack_chances[day_part] + (15 if lights_on else 0))
+            chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0))
             and not base.train.smoke_filtered  # noqa: F821
         ):
             self._is_cooldown = True
@@ -112,7 +109,9 @@ class Enemy:
             train_mod (panda3d.core.NodePath): Train model.
         """
         available = [
-            en_class for en_class in self._classes if en_class["score"] <= self.score
+            en_class
+            for en_class in CLASSES["classes"]
+            if en_class["score"] <= self.score
         ]
 
         delay = 0

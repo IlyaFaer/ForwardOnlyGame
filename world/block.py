@@ -201,9 +201,7 @@ class Block:
                     )
                 )
             )
-            if side == "r":
-                return surface, 180
-            return surface, 0
+            return surface, (180 if side == "r" else 0)
 
         surface = address(random.choice(SURFACES[self.name]))
         if self.name == "direct":

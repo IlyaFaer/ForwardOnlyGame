@@ -48,17 +48,22 @@ class Unit(metaclass=abc.ABCMeta):
         """
         self._health = min(max(value, 0), self.class_data["health"])
 
-    def get_damage(self, damage):
-        """Getting damage.
+    def _die(self):
+        """Actions on this unit death.
 
-        Start dying if needed.
-
-        Args:
-            damage (int): Damage points to get.
+        Returns:
+            bool: True, if enemy dies in the first time.
         """
-        self.health -= damage
-        if self.health <= 0:
-            self._die()
+        if self.is_dead:
+            return False
+
+        self.is_dead = True
+        self._col_node.removeNode()
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            self.clear_delay, self.clear, self.id + "_clear"
+        )
+        return True
 
     def _init_col_node(self, from_mask, into_mask, solid):
         """Initialize this unit collision node.
@@ -77,23 +82,6 @@ class Unit(metaclass=abc.ABCMeta):
         col_node.addSolid(solid)
         return self.model.attachNewNode(col_node)
 
-    def _die(self):
-        """Actions on this unit death.
-
-        Returns:
-            bool: True, if enemy dies in the first time.
-        """
-        if self.is_dead:
-            return False
-
-        self.is_dead = True
-        self._col_node.removeNode()
-
-        base.taskMgr.doMethodLater(  # noqa: F821
-            self.clear_delay, self.clear, self.id + "_clear"
-        )
-        return True
-
     def _stop_tasks(self, *names):
         """Stop this unit related tasks.
 
@@ -103,14 +91,22 @@ class Unit(metaclass=abc.ABCMeta):
         for name in names:
             base.taskMgr.remove(self.id + name)  # noqa: F821
 
-    @abc.abstractproperty
-    def tooltip(self):
-        """This unit tooltip.
+    def get_damage(self, damage):
+        """Getting damage.
 
-        Returns:
-            str: This unit tooltip.
+        Start dying if needed.
+
+        Args:
+            damage (int): Damage points to get.
         """
-        raise NotImplementedError("Every unit must have a tooltip property.")
+        self.health -= damage
+        if self.health <= 0:
+            self._die()
+
+    @abc.abstractmethod
+    def clear(self):
+        """Deleting this unit from the Game method."""
+        raise NotImplementedError("Every unit class must have clear() method.")
 
     @abc.abstractproperty
     def clear_delay(self):
@@ -121,7 +117,11 @@ class Unit(metaclass=abc.ABCMeta):
         """
         raise NotImplementedError("Every unit must have a clear_delay property.")
 
-    @abc.abstractmethod
-    def clear(self):
-        """Deleting this unit from the Game method."""
-        raise NotImplementedError("Every unit class must have clear() method.")
+    @abc.abstractproperty
+    def tooltip(self):
+        """This unit tooltip.
+
+        Returns:
+            str: This unit tooltip.
+        """
+        raise NotImplementedError("Every unit must have a tooltip property.")

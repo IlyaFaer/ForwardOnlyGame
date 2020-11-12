@@ -46,7 +46,7 @@ class World:
         self._block_num = -1
         self._et_blocks = 0
 
-        self._surf_vertices = self._cache_warmup(base.sound_mgr)  # noqa: F821
+        self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
         self._hangar = None
         self._is_in_city = False
@@ -57,20 +57,6 @@ class World:
 
         self.phys_mgr = self._set_physics()
         base.taskMgr.add(self._update_physics, "update_physics")  # noqa: F821
-
-    @property
-    def is_in_city(self):
-        """Indicates if the Train is near a city.
-
-        Returns:
-            bool: True if the Train is near a city.
-        """
-        return (
-            self._is_in_city
-            or self._map[self._block_num - 1].is_city
-            or self._map[self._block_num - 2].is_city
-            or self._map[self._block_num - 3].is_city
-        )
 
     @property
     def current_block_number(self):
@@ -89,6 +75,20 @@ class World:
             int: Disease activity score.
         """
         return self._disease_threshold
+
+    @property
+    def is_in_city(self):
+        """Indicates if the Train is near a city.
+
+        Returns:
+            bool: True if the Train is near a city.
+        """
+        return (
+            self._is_in_city
+            or self._map[self._block_num - 1].is_city
+            or self._map[self._block_num - 2].is_city
+            or self._map[self._block_num - 3].is_city
+        )
 
     @property
     def last_cleared_block_angle(self):
@@ -128,16 +128,13 @@ class World:
         base.train.update_physics()  # noqa: F821
         return task.cont
 
-    def _cache_warmup(self, sound_mgr):
+    def _cache_warmup(self):
         """Load all the game resources once to cache them.
 
         When a resource is loaded for the first time,
         render can twitch a little. This can be avoid by
         loading models before the game actually started
         and caching them.
-
-        Args:
-            sound_mgr (direct.showbase.Audio3DManager.Audio3DManager): Sound manager.
 
         Returns:
             dict: Index of vertices of every surface model.
@@ -162,7 +159,7 @@ class World:
                 )
 
         for path in glob.glob("sounds/*.ogg"):
-            sound_mgr.loadSfx(path)
+            base.sound_mgr.loadSfx(path)  # noqa: F821
 
         return all_surf_vertices
 

@@ -40,9 +40,10 @@ class Character(Shooter, Unit):
         class_ (str): Unit class.
         sex (str): The character gender.
         team (team.Team): Team object.
+        desc (dict): Optional. The character description.
     """
 
-    def __init__(self, id_, name, class_, sex, team):
+    def __init__(self, id_, name, class_, sex, team, desc=None):
         Unit.__init__(
             self, "character_" + str(id_), class_, CLASSES[sex + "_" + class_]
         )
@@ -55,7 +56,6 @@ class Character(Shooter, Unit):
         self._idle_seq = None
         self._cohesion_ball = None
         self._is_stunned = False
-        self._energy = 100
 
         self.name = name
         self.sex = sex
@@ -66,14 +66,38 @@ class Character(Shooter, Unit):
         self.damage_range = [3, 5]
         self.clear_damage = [3, 5]
 
-        self.is_diseased = False
-        self.get_well_score = 0
+        if desc:
+            self._energy = desc["energy"]
+            self.is_diseased = desc["is_diseased"]
+            self.get_well_score = desc["get_well_score"]
 
-        self.disabled_traits = []
-        self.traits = []
-        traits = copy.copy(TRAITS)
-        for _ in range(random.randint(0, 2)):
-            self.traits.append(random.choice(take_random(traits)))
+            self.traits = desc["traits"]
+            self.disabled_traits = desc["disabled_traits"]
+            if self.is_diseased:
+                base.taskMgr.doMethodLater(  # noqa: F821
+                    60, self.get_well, self.id + "_get_well"
+                )
+        else:
+            self._energy = 100
+            self.is_diseased = False
+            self.get_well_score = 0
+
+            self.disabled_traits = []
+            self.traits = []
+            traits = copy.copy(TRAITS)
+            for _ in range(random.randint(0, 2)):
+                self.traits.append(random.choice(take_random(traits)))
+
+    @property
+    def clear_delay(self):
+        """
+        Delay between this character death
+        and clearing the character object.
+
+        Returns:
+            float: Seconds to wait before clearing.
+        """
+        return 3.5
 
     @property
     def damage(self):
@@ -90,59 +114,6 @@ class Character(Shooter, Unit):
             factor *= 1.3
 
         return random.uniform(*self.damage_range) * factor
-
-    @property
-    def shooting_speed(self):
-        """Delay between shots of this unit.
-
-        Returns:
-            float: Delay between shots in seconds.
-        """
-        if "Fast hands" in self.traits:
-            return 1.1 + random.uniform(0.1, 0.8)
-
-        if "Snail" in self.traits:
-            return 2 + random.uniform(0.1, 1.1)
-
-        return 1.7 + random.uniform(0.1, 0.9)
-
-    @property
-    def energy(self):
-        """This character energy.
-
-        Returns:
-            int: This character energy points.
-        """
-        return self._energy
-
-    @energy.setter
-    def energy(self, value):
-        """This character energy setter.
-
-        Args:
-            value (int): New energy value.
-        """
-        self._energy = min(max(value, 0), 80 if self.is_diseased else 100)
-
-    @property
-    def tooltip(self):
-        """Tooltip to show on mouse pointing to this character.
-
-        Returns:
-            str: This character name.
-        """
-        return self.name
-
-    @property
-    def clear_delay(self):
-        """
-        Delay between this character death
-        and clearing the character object.
-
-        Returns:
-            float: Seconds to wait before clearing.
-        """
-        return 3.5
 
     @property
     def description(self):
@@ -168,10 +139,52 @@ class Character(Shooter, Unit):
         }
         return desc
 
+    @property
+    def energy(self):
+        """This character energy.
+
+        Returns:
+            int: This character energy points.
+        """
+        return self._energy
+
+    @energy.setter
+    def energy(self, value):
+        """This character energy setter.
+
+        Args:
+            value (int): New energy value.
+        """
+        self._energy = min(max(value, 0), 80 if self.is_diseased else 100)
+
+    @property
+    def shooting_speed(self):
+        """Delay between shots of this unit.
+
+        Returns:
+            float: Delay between shots in seconds.
+        """
+        if "Fast hands" in self.traits:
+            return 1.1 + random.uniform(0.1, 0.8)
+
+        if "Snail" in self.traits:
+            return 2 + random.uniform(0.1, 1.1)
+
+        return 1.7 + random.uniform(0.1, 0.9)
+
+    @property
+    def tooltip(self):
+        """Tooltip to show on mouse pointing to this character.
+
+        Returns:
+            str: This character name.
+        """
+        return self.name
+
     def prepare(self):
         """Load the character model and positionate it.
 
-        Tweak collision solid as well.
+        Tweak collision solid and sounds as well.
         """
         animations = {
             name: address(self.class_ + "-" + name)
@@ -205,10 +218,10 @@ class Character(Shooter, Unit):
             NO_MASK, MOUSE_MASK, CollisionCapsule(0, 0, 0, 0, 0, 0.035, 0.035)
         )
         self.shot_snd = self._set_shoot_snd(self.class_data["shot_snd"])
-        self.cough_snd = base.sound_mgr.loadSfx(  # noqa: F821
+        self._cough_snd = base.sound_mgr.loadSfx(  # noqa: F821
             "sounds/{sex}_cough.ogg".format(sex=self.sex)
         )
-        base.sound_mgr.attachSoundToObject(self.cough_snd, self.model)  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._cough_snd, self.model)  # noqa: F821
 
         if self.class_ == "soldier":
             z = 0.064 if self.sex == "male" else 0.062
@@ -372,7 +385,6 @@ class Character(Shooter, Unit):
 
         elif self._target:
             task.delayTime = 15 if "Nervousness" in self.traits else 20
-
         else:
             task.delayTime = self.class_data["energy_spend"]
 
@@ -464,7 +476,7 @@ class Character(Shooter, Unit):
         """
         if self.is_diseased and chance(80):
             self._current_anim = "cough"
-            self.cough_snd.play()
+            self._cough_snd.play()
         else:
             self._current_anim = random.choice(
                 ("incline1", "gun_up", "release_gun", "tread1", "turn_head1")
@@ -525,7 +537,7 @@ class Character(Shooter, Unit):
         self.model.cleanup()
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
-        base.sound_mgr.detach_sound(self.cough_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self._cough_snd)  # noqa: F821
 
         self._team.chars.pop(self.id)
         self.current_part.release_cell(self._current_pos, self)
@@ -749,19 +761,8 @@ def load_char(desc, team, parts):
     Returns:
         character.Character: A ready-to-go character object.
     """
-    char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team)
+    char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team, desc)
     char.health = desc["health"]
-    char.is_diseased = desc["is_diseased"]
-    char.energy = desc["energy"]
-    char.traits = desc["traits"]
-
-    char.disabled_traits = desc["disabled_traits"]
-    char.get_well_score = desc["get_well_score"]
-    if char.is_diseased:
-        base.taskMgr.doMethodLater(  # noqa: F821
-            60, char.get_well, char.id + "_get_well"
-        )
-
     char.prepare()
     char.move_to(parts[desc["place"]])
     return char

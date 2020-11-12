@@ -31,7 +31,7 @@ class OutingsManager:
                 "sounds/enemy_camp_result.ogg"
             ),
         }
-        self._interface = OutingsInterface()
+        self._gui = OutingsInterface()
 
     def _get_result(self, score, results):
         """Get outing results for the given score.
@@ -53,7 +53,7 @@ class OutingsManager:
         Args:
             type_ (str): Outing type.
         """
-        self._interface.start(random.choice(self._outings[type_]))
+        self._gui.start(random.choice(self._outings[type_]))
 
     def plan_outing(self):
         """Generate an outing.
@@ -73,23 +73,23 @@ class OutingsManager:
         Args:
             type(str): Outing type.
         """
-        self._interface.show_upcoming_outing(type_)
+        self._gui.show_upcoming_outing(type_)
 
     def show_city(self):
         """Show upcoming city info."""
-        self._interface.show_city()
+        self._gui.show_city()
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""
-        self._interface.show_upcoming_closer()
+        self._gui.show_upcoming_closer()
 
     def show_can_start(self):
         """Show that outing can be started."""
-        self._interface.show_can_start()
+        self._gui.show_can_start()
 
     def hide_outing(self):
         """Hide outing icon."""
-        self._interface.hide_outing()
+        self._gui.hide_outing()
 
     def go_for_outing(self, outing, chars):
         """Make characters go for the given outing.
@@ -137,7 +137,7 @@ class OutingsManager:
         desc = desc.format(**format_dict)
 
         selected_effect = effects.get("select_char")
-        self._interface.show_result(
+        self._gui.show_result(
             desc,
             score,
             cond_score,

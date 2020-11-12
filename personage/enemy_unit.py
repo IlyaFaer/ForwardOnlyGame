@@ -80,13 +80,13 @@ class EnemyUnit(Unit):
         return self._y_pos - 0.45
 
     @property
-    def tooltip(self):
-        """Tooltip to show on mouse pointing to this enemy.
+    def clear_delay(self):
+        """Delay between this character's death and clearing.
 
         Returns:
-            str: This unit fraction and class.
+            int: Seconds to hold the unit before delete.
         """
-        return self._tooltip
+        return 15
 
     @property
     def shooting_speed(self):
@@ -98,13 +98,13 @@ class EnemyUnit(Unit):
         return 1.7 + random.uniform(0.1, 0.9)
 
     @property
-    def clear_delay(self):
-        """Delay between this character's death and clearing.
+    def tooltip(self):
+        """Tooltip to show on mouse pointing to this enemy.
 
         Returns:
-            int: Seconds to hold the unit before delete.
+            str: This unit fraction and class.
         """
-        return 15
+        return self._tooltip
 
     def _move(self, period, new_pos):
         """Run a new movement interval with the given parameters.
@@ -146,7 +146,7 @@ class EnemyUnit(Unit):
         self.model.setColorScale(self.model.getColorScale()[0] + 0.018, 1, 1, 1)
 
     def _die(self):
-        """Make this enemy die.
+        """Make this enemy unit die.
 
         Play death sequence of movements and sounds,
         stop all the tasks for this enemy, plan clearing.

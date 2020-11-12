@@ -77,23 +77,6 @@ class Team:
             base.train.place_recruit(char)  # noqa: F821
             self.chars[char.id] = char
 
-    def load(self, char_desc, parts, cohesion_desc):
-        """Load the team according to the given description.
-
-        Args:
-            char_desc (list): Characters descriptions.
-            parts (dict): Train parts index.
-            cohesion_desc (tuple): Cohesion.
-        """
-        for char_desc in char_desc:
-            char = load_char(char_desc, self, parts)
-            self.chars[char.id] = char
-
-        self.cohesion = cohesion_desc[0]
-        self._relations = cohesion_desc[1]
-
-        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
-
     def gen_recruits(self):
         """Generate several recruits.
 
@@ -113,6 +96,23 @@ class Team:
                 self,
             )
         return chars
+
+    def load(self, char_desc, parts, cohesion_desc):
+        """Load the team according to the given description.
+
+        Args:
+            char_desc (list): Characters descriptions.
+            parts (dict): Train parts index.
+            cohesion_desc (tuple): Cohesion.
+        """
+        for char_desc in char_desc:
+            char = load_char(char_desc, self, parts)
+            self.chars[char.id] = char
+
+        self.cohesion = cohesion_desc[0]
+        self._relations = cohesion_desc[1]
+
+        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
 
     def cohesion_recall(self):
         """Do cohesion ability "Recall the past"."""
