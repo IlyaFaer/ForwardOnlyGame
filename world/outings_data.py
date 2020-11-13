@@ -620,6 +620,105 @@ You're getting 130$""",
                     },
                 ),
             },
+            {  # 7
+                "name": "Cloth Piece",
+                "type": "Enemy Camp",
+                "class_weights": {"soldier": 22.5, "raider": 15},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 5,
+                    "noon": 10,
+                    "evening": 7,
+                },
+                "desc": """The horizon line is lost behind trees for hours. The lands seems
+to be very wild, still, you've given an order to everyone to keep eyes
+open. And in voluntary minute you're hearing your teammates calling you
+outside the cabin. Exiting the Train deckhouse, you're taking a binocular
+and gazing into the pointed direction. First you don't see anything
+except trees. But after few seconds a big piece of dark green cloth
+reveals, strained between two tree trunks. "Looks like a shelter" - you're
+pronouncing, thinking how many people should be sent there.
+Probably, two fighters will be enough.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """After overthinking the situation you're deciding to send
+{name1} and {name2} for a scouting. They both take their gear and
+jump off the Train. You see them moving to behind of the cloth piece...
+Ten minutes passed, and finally you see your people running back to
+the Train. While they are getting closer, you're starting to suspect
+something wrong - too nervous is their behavior. "There was an ambush."
+- {name2} says, climbing to the Train. - "They've taken {name1} as a
+hostage and demanded ransom." {name1} climbs to the Train next:
+"Sorry!". {name2} continues: "I've gave them 90$ to free {himher1}.
+Let's go before they wanted more."
+You losing 90$""",
+                        "effects": {"money": -90},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """You're sending {name1} and {name2} to see what is this
+piece of cloth is for. Your people run to the place fast, but in last
+thirty meters they slow down and start to move much more careful. The
+strained cloth seems to be a disguise - they find metal dishes, backpacks
+and some other stuff behind it. The camp is long forsaken, still, as
+they are already there, your messengers rummaging the things. In
+some moment a loud rustle sounds in air, and big web with stones
+falls down to {name1}'s head. {name2}, who was standing few meters
+aside, raises the gun and circles on {hisher2} place... But no one
+showing up... {name1} in that time gets out of the web and, covering
+a blooding wound on {hisher1} head, touches {name2} to show that
+{heshe1}'s ready to return back to the Train. And they return fast.
+{name1} getting -20 health""",
+                        "effects": {"char_1": {"health": -20}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """After a couple of minutes of thinking you're deciding to
+send {name1} and {name2} to check the place. They fastly running to the
+strained cloth and hiding behind it; silence and still falls on the near
+lands. While waiting them, the Stench comes on your mind. Are there
+people who can survive in it? Is there a kind of natural immunity to
+this phenomenon? You never heard about such a thing. Though, news in
+our days are not very often at all. Only death statistics and territory
+cover reports... Finally, you see your people returning back. There
+is nothing in their hands, so you doesn't wonder, when {name1} comes
+closer and says: "Negative!". Well, time to continue the path.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You're sending {name1} and {name2} for a short
+recon of the place. In fast pace they run to the cloth piece, and
+when the distance to it becomes less than twenty meters, several
+skinheads jumping out of the strained cloth. Not giving any chances,
+{name1} and {name2} with accurate shots dropping rivals one by one.
+Ensuring there are no more threats, they start to search through the
+wooden boxes, piled up behind the cloth. Most of them are already
+empty, but {name1} and {name2} find a bunch of personal first aid
+kits. Giving high five to each other, they take the catch and,
+satisfied, returning back to the team.
+Your teammates getting +10 health""",
+                        "effects": {"all": {"health": 10}},
+                    },
+                    {
+                        "score": range(80, 100),
+                        "desc": """After little overthinking you're decided to send
+{name1} and {name2} to take a look at the place. Fastly moving to
+the spot, they hide behing the strained cloth, and after few seconds
+show up again with a big metal ammo box. Seeing this, you're jumping
+off the Train and moving towards them to cover, as their hands are
+busy. When you're getting closer, {name1} explains: "No one at home!
+We decided to take that stuff, as there is a couple of gnawed bodies
+in the camp. Doesn't look like a good campers." Uppering the heavy
+ammo box on to the Train together, you're giving an order to start the
+engine. With this catch you'll save some money on the next stop.
+You're getting 170$""",
+                        "effects": {"money": 170},
+                    },
+                ),
+            },
         ),
         "looting": (
             {  # 1
