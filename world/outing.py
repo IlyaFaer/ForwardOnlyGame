@@ -22,7 +22,7 @@ class OutingsManager:
     """
 
     def __init__(self, location):
-        self._threshold = random.randint(40, 60)
+        self._threshold = random.randint(35, 55)
         self._outings = copy.deepcopy(OUTINGS[location])
         self._types = tuple(self._outings.keys())
         self._snds = {
@@ -64,7 +64,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(40, 60)
+            self._threshold = random.randint(35, 55)
             return random.choice(self._types)
 
     def show_upcoming(self, type_):

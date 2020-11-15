@@ -6,6 +6,7 @@ The main game file. Starts the game itself
 and maintains the major systems.
 """
 import dbm.dumb  # noqa: F401
+import logging
 import os
 import shelve
 
@@ -28,6 +29,12 @@ from world import World
 
 loadPrcFileData("", "threading-model Cull/Draw")
 loadPrcFileData("", "audio-library-name p3fmod_audio")
+
+logging.basicConfig(
+    filename="logs.txt",
+    format="[%(levelname)s] %(asctime)s: %(message)s",
+    level=logging.INFO,
+)
 
 
 class ForwardOnly(ShowBase):
@@ -269,4 +276,7 @@ class ForwardOnly(ShowBase):
         return task.done
 
 
-ForwardOnly().run()
+try:
+    ForwardOnly().run()
+except Exception:
+    logging.exception("Exception occured:")

@@ -27,7 +27,7 @@ class ResourcesInterface:
 
         self._res_frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.21, 0.21, -0.028, 0.028),
+            frameSize=(-0.21, 0.21, -0.03, 0.028),
             pos=(0.21, 0, -0.028),
             frameTexture=ICON_PATH + "metal1.png",
         )
@@ -341,7 +341,7 @@ class ResourcesInterface:
     def _show_expendable_resources(self):
         """Show/hide expendable resources description."""
         if self._res_desc_shown:
-            self._res_frame["frameSize"] = (-0.21, 0.21, -0.028, 0.18)
+            self._res_frame["frameSize"] = (-0.21, 0.21, -0.03, 0.028)
 
             for wid in self._res_desc_wids:
                 wid.destroy()

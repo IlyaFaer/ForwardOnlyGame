@@ -330,7 +330,7 @@ class World:
                 rusty_blocks = random.randint(4, 8)
 
             if num > 100:
-                if not stench_blocks and chance(3):
+                if not stench_blocks and chance(2):
                     stench_blocks = random.randint(6, 10)
 
             is_city = False

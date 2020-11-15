@@ -289,7 +289,7 @@ car your people a starting to rummage through it, swinging the old metal
 carcass. While it all happening you're seeing a big jeep on a horizon.
 Whistling loudly to your people you're preparing for a fight. It takes
 two more minutes for {name1} and {name2} to jump outside the bus. The
-gang in the jeep approaching fast are starting to shoot, and you're
+gang in the jeep, approaching fast, are starting to shoot, and you're
 opening fire back. {name1} and {name2}, using your cover shooting, are
 returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.

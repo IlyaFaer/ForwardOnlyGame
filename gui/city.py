@@ -32,8 +32,8 @@ class CityInterface:
 
         self._city_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.35, 0.35, -0.7, 0.7),
-            pos=(0.75, 0, -1),
+            frameSize=(-0.35, 0.35, -0.4, 0.7),
+            pos=(0.77, 0, -0.9),
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._city_fr.setTransparency(TransparencyAttrib.MAlpha)
@@ -192,7 +192,7 @@ class CityInterface:
         )
         DirectButton(
             parent=self._city_fr,
-            pos=(-0.2, 0, -0.63),
+            pos=(-0.2, 0, -0.33),
             text_fg=RUST_COL,
             text="Back on road",
             scale=(0.075, 0, 0.075),
@@ -220,6 +220,7 @@ class CityInterface:
     def _clear(self, task):
         """Remove hangar scene and hide city GUI."""
         self._city_fr.hide()
+        base.char_gui.clear_char_info()  # noqa: F821
         base.world.unload_hangar_scene()  # noqa: F821
         return task.done
 
