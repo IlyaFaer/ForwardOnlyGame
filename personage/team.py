@@ -384,6 +384,20 @@ class Team:
                 to_id = rel_id[1] if char.id == rel_id[0] else rel_id[0]
                 self.chars[to_id].show_relation(relation)
 
+    def delete_relations(self, char_id):
+        """Delete all the relations of the given character.
+
+        Args:
+            char_id (str): Character whose relations should be erased.
+        """
+        to_del = []
+        for rel_id in self._relations.keys():
+            if char_id in rel_id:
+                to_del.append(rel_id)
+
+        for id_ in to_del:
+            self._relations.pop(id_)
+
     def hide_relations(self):
         """Hide all the relations GUI."""
         for char in self.chars.values():

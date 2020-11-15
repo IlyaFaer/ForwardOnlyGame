@@ -509,6 +509,7 @@ class Character(Shooter, Unit):
 
         self._stop_tasks("_reduce_energy", "_get_well", "_infect")
 
+        self._team.delete_relations(self.id)
         LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
         self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
         self.model.play("die")
