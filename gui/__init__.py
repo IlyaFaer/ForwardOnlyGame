@@ -6,7 +6,7 @@ Game graphical interfaces.
 """
 import sys
 
-from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
+from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
 from utils import save_exists
@@ -30,6 +30,11 @@ class MainMenu:
         self._is_first_pause = True
         self._tactics_wids = []
 
+        self._enter_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
+        self._enter_snd.setVolume(0.25)
+        self._click_snd = loader.loadSfx("sounds/menu2.ogg")  # noqa: F821
+        self._click_snd.setVolume(0.25)
+
         self._main_fr = DirectFrame(
             frameSize=(-2, 2, -1, 1), frameColor=(0.15, 0.15, 0.15, 1)
         )
@@ -37,6 +42,7 @@ class MainMenu:
             "text_scale": (0.05, 0.05),
             "relief": None,
             "parent": self._main_fr,
+            "clickSound": self._click_snd,
         }
         self._new_game_but = DirectButton(
             pos=(-1, 0, 0.5),
@@ -45,6 +51,8 @@ class MainMenu:
             command=self._choose_tactics,
             **but_params,
         )
+        self._bind_button(self._new_game_but)
+
         is_save_exists = save_exists()
         self._load_but = DirectButton(
             pos=(-0.996, 0, 0.4),
@@ -53,12 +61,16 @@ class MainMenu:
             command=self._load_game if is_save_exists else None,
             **but_params,
         )
-        DirectButton(
-            pos=(-1.083, 0, 0),
-            text_fg=RUST_COL,
-            text="Exit",
-            command=sys.exit,
-            **but_params,
+        self._bind_button(self._load_but)
+
+        self._bind_button(
+            DirectButton(
+                pos=(-1.083, 0, 0),
+                text_fg=RUST_COL,
+                text="Exit",
+                command=sys.exit,
+                **but_params,
+            )
         )
         self._alpha_disclaimer = DirectLabel(
             parent=self._main_fr,
@@ -73,6 +85,43 @@ class MainMenu:
                 "game princips. Enjoy your play!"
             ),
         )
+
+    def _bind_button(self, button):
+        """Bind the given button to visual effects.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to bind.
+        """
+        button.bind(DGG.ENTER, self._highlight_but, extraArgs=[button])
+        button.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[button])
+
+    def _highlight_but(self, button, _):
+        """Highlight the button pointed by mouse.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to highlight.
+        """
+        if button["command"] is not None:
+            button["text_scale"] = (
+                button["text_scale"][0] + 0.002,
+                button["text_scale"][1] + 0.003,
+            )
+            self._enter_snd.play()
+
+    def _dehighlight_but(self, button, _):
+        """Dehighlight the button, when mouse pointer leaved it.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to dehighlight.
+        """
+        if button["command"] is not None:
+            button["text_scale"] = (
+                button["text_scale"][0] - 0.002,
+                button["text_scale"][1] - 0.003,
+            )
 
     def _choose_tactics(self):
         """Choose inital tactics before new game start."""
@@ -107,6 +156,7 @@ class MainMenu:
                 command=self._show_team,
                 extraArgs=["soldiers"],
                 pos=(0.5, 0, -0.15),
+                clickSound=self._click_snd,
             ),
             "raiders": DirectButton(
                 parent=self._main_fr,
@@ -117,9 +167,13 @@ class MainMenu:
                 command=self._show_team,
                 extraArgs=["raiders"],
                 pos=(0.7, 0, -0.15),
+                clickSound=self._click_snd,
             ),
         }
         self._tactics_wids += self._team_buts.values()
+
+        for but in self._team_buts.values():
+            self._bind_button(but)
 
         self._team_description = DirectLabel(
             parent=self._main_fr,
@@ -131,17 +185,19 @@ class MainMenu:
         )
         self._tactics_wids.append(self._team_description)
 
-        self._tactics_wids.append(
-            DirectButton(
-                parent=self._main_fr,
-                text_scale=0.045,
-                text_fg=RUST_COL,
-                text="Start",
-                relief=None,
-                command=self._start_new_game,
-                pos=(0.7, 0, -0.5),
-            )
+        start_but = DirectButton(
+            parent=self._main_fr,
+            text_scale=0.045,
+            text_fg=RUST_COL,
+            text="Start",
+            relief=None,
+            command=self._start_new_game,
+            pos=(0.7, 0, -0.5),
+            clickSound=self._click_snd,
         )
+        self._bind_button(start_but)
+
+        self._tactics_wids.append(start_but)
         self._show_team("soldiers")
 
     def _show_team(self, team):
@@ -252,5 +308,7 @@ class MainMenu:
             text="Save game",
             relief=None,
             command=base.save_game if can_save else None,  # noqa: F821
+            clickSound=self._click_snd,
         )
+        self._bind_button(self._save_but)
         self._is_first_pause = False
