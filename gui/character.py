@@ -200,6 +200,9 @@ class CharacterInterface:
         Args:
             unit (str): Text to show in the tooltip.
         """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return
+
         self._tip.setText(text)
         self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
         self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821

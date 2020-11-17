@@ -14,7 +14,7 @@ from .train import ICON_PATH, SILVER_COL
 NOTES = (
     # traits
     """Single character can have up
-to four different traits""",
+to three different traits""",
     # enemy
     """Skinheads activity is at
 maximum during evening""",

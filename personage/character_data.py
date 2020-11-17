@@ -130,6 +130,7 @@ TRAITS = [
     ("Immunity", "Weak immunity"),
     ("Liberal", "Loner"),
     ("Bloodthirsty", "Nervousness"),
+    ("Deep breath", "Motion sickness"),
 ]
 
 TRAIT_DESC = {
@@ -145,4 +146,6 @@ TRAIT_DESC = {
     "Loner": "x1.3 damage while alone on the Train part",
     "Bloodthirsty": "+6 health for a killed enemy unit",
     "Nervousness": "+25% energy spend while in fight",
+    "Deep breath": "Avoid the Stench poison for the first 1 min",
+    "Motion sickness": "Doesn't restore on high movement speed",
 }

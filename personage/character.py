@@ -56,6 +56,7 @@ class Character(Shooter, Unit):
         self._idle_seq = None
         self._cohesion_ball = None
         self._is_stunned = False
+        self.inhale = 15
 
         self.name = name
         self.sex = sex
@@ -396,6 +397,12 @@ class Character(Shooter, Unit):
 
     def _gain_energy(self, task):
         """Regain this character energy."""
+        if (
+            "Motion sickness" in self.traits
+            and base.train.ctrl.current_speed > 0.75  # noqa: F821
+        ):
+            return task.again
+
         self.energy += 3
 
         for char in self.current_part.chars:
@@ -407,6 +414,12 @@ class Character(Shooter, Unit):
 
     def _heal(self, task):
         """Regain this character health."""
+        if (
+            "Motion sickness" in self.traits
+            and base.train.ctrl.current_speed > 0.75  # noqa: F821
+        ):
+            return task.again
+
         if self.health < self.class_data["health"]:
             self.health += 1
             return task.again
@@ -732,6 +745,14 @@ class Character(Shooter, Unit):
             self.energy += 1
 
         Unit.get_damage(self, damage)
+
+    def get_stench_damage(self):
+        """Get damage from the Stench."""
+        if "Deep breath" in self.traits and self.inhale > 0:
+            self.inhale -= 1
+            return
+
+        self.health -= 1
 
 
 def generate_char(id_, class_, sex, team=None):

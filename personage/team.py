@@ -432,9 +432,12 @@ class Team:
             base.taskMgr.remove("stench_activity")  # noqa: F821
             self._is_in_stench = False
 
+            for char in self.chars.values():
+                char.inhale = 15
+
     def stench_activity(self, task):
         """Deal the Stench damage to every character."""
         for char in self.chars.values():
-            char.health -= 1
+            char.get_stench_damage()
 
         return task.again
