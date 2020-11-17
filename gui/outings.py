@@ -178,6 +178,7 @@ class OutingsInterface:
                     command=self._finish_outing,  # noqa: F821
                     extraArgs=[selected_effect],
                     scale=(0.05, 0, 0.05),
+                    clickSound=base.main_menu.click_snd,  # noqa: F821
                 )
             )
             return task.done
@@ -377,6 +378,7 @@ class OutingsInterface:
                 frameColor=(0, 0, 0, 0.3),
                 command=self.hide_outing,  # noqa: F821
                 scale=(0.05, 0, 0.05),
+                clickSound=base.main_menu.click_snd,  # noqa: F821
             )
         )
         self._outing_widgets.append(
@@ -387,6 +389,7 @@ class OutingsInterface:
                 frameColor=(0, 0, 0, 0.3),
                 command=base.world.outings_mgr.go_for_outing,  # noqa: F821
                 extraArgs=[outing, self._assignees],
+                clickSound=base.main_menu.click_snd,  # noqa: F821
                 scale=(0.05, 0, 0.05),
             )
         )

@@ -83,6 +83,7 @@ class ResourcesInterface:
             parent=self._res_frame,
             pos=(0.18, 0, -0.013),
             command=self._show_expendable_resources,
+            clickSound=base.main_menu.click_snd,  # noqa: F821
             **ABOUT_BUT_PARAMS,
         ).setTransparency(TransparencyAttrib.MAlpha)
 
@@ -162,6 +163,7 @@ class ResourcesInterface:
             parent=self._coh_frame,
             pos=(-0.5, 0, -0.028),
             command=self._show_cohesion_abilities,
+            clickSound=base.main_menu.click_snd,  # noqa: F821
             **ABOUT_BUT_PARAMS,
         ).setTransparency(TransparencyAttrib.MAlpha)
 

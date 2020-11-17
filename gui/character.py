@@ -45,6 +45,7 @@ class CharacterInterface:
             parent=self._fr,
             pos=(0.27, 0, 0.0675),
             command=self._show_char_desc,
+            clickSound=base.main_menu.click_snd,  # noqa: F821
             **ABOUT_BUT_PARAMS,
         )
         DirectLabel(

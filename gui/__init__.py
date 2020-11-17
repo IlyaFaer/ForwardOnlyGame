@@ -31,9 +31,9 @@ class MainMenu:
         self._tactics_wids = []
 
         self._enter_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
-        self._enter_snd.setVolume(0.25)
-        self._click_snd = loader.loadSfx("sounds/menu2.ogg")  # noqa: F821
-        self._click_snd.setVolume(0.25)
+        self._enter_snd.setVolume(0.1)
+        self.click_snd = loader.loadSfx("sounds/menu2.ogg")  # noqa: F821
+        self.click_snd.setVolume(0.1)
 
         self._main_fr = DirectFrame(
             frameSize=(-2, 2, -1, 1), frameColor=(0.15, 0.15, 0.15, 1)
@@ -42,7 +42,7 @@ class MainMenu:
             "text_scale": (0.05, 0.05),
             "relief": None,
             "parent": self._main_fr,
-            "clickSound": self._click_snd,
+            "clickSound": self.click_snd,
         }
         self._new_game_but = DirectButton(
             pos=(-1, 0, 0.5),
@@ -156,7 +156,7 @@ class MainMenu:
                 command=self._show_team,
                 extraArgs=["soldiers"],
                 pos=(0.5, 0, -0.15),
-                clickSound=self._click_snd,
+                clickSound=self.click_snd,
             ),
             "raiders": DirectButton(
                 parent=self._main_fr,
@@ -167,7 +167,7 @@ class MainMenu:
                 command=self._show_team,
                 extraArgs=["raiders"],
                 pos=(0.7, 0, -0.15),
-                clickSound=self._click_snd,
+                clickSound=self.click_snd,
             ),
         }
         self._tactics_wids += self._team_buts.values()
@@ -193,7 +193,7 @@ class MainMenu:
             relief=None,
             command=self._start_new_game,
             pos=(0.7, 0, -0.5),
-            clickSound=self._click_snd,
+            clickSound=self.click_snd,
         )
         self._bind_button(start_but)
 
@@ -308,7 +308,7 @@ class MainMenu:
             text="Save game",
             relief=None,
             command=base.save_game if can_save else None,  # noqa: F821
-            clickSound=self._click_snd,
+            clickSound=self.click_snd,
         )
         self._bind_button(self._save_but)
         self._is_first_pause = False
