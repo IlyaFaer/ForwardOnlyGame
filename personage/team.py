@@ -335,7 +335,11 @@ class Team:
             return 1
 
         rel_id = tuple(sorted([chars[0].id, chars[1].id]))
-        cohesion = self._relations[rel_id] / 100
+        try:
+            cohesion = self._relations[rel_id] / 100
+        except KeyError:
+            # character was killed during calculations
+            cohesion = 0
         return 1 + cohesion * 0.5
 
     def increase_cohesion_for_chars(self, chars, outing_score):

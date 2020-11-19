@@ -272,12 +272,87 @@ class CharacterInterface:
         else:
             self._disease.hide()
 
+        if self._char_desc_shown:
+            self._update_desc()
+
         return task.again
+
+    def _update_desc(self):
+        """Update the chosen character description."""
+        to_del = []
+        for wid in self._char_desc_wids:
+            if wid["text"] not in ("Traits", "Status"):
+                wid.destroy()
+                to_del.append(wid)
+
+        for del_wid in to_del:
+            self._char_desc_wids.remove(del_wid)
+
+        self._fill_status(self._fill_traits(0.64))
+
+    def _fill_traits(self, shift):
+        """Fill the chosen character traits.
+
+        Args:
+            shift (float): Z-coor for the new widgets.
+
+        Returns:
+            float: Z-coor including the new widgets shift.
+        """
+        shift -= 0.03
+        for trait in self._char.traits + self._char.disabled_traits:
+            self._char_desc_wids.append(
+                DirectLabel(
+                    parent=self._fr,
+                    text=trait,
+                    frameSize=(0.1, 0.1, 0.1, 0.1),
+                    text_scale=0.03,
+                    text_fg=SILVER_COL
+                    if trait in self._char.traits
+                    else (0.3, 0.3, 0.3, 1),
+                    pos=(0, 0, shift),
+                )
+            )
+            self._char_desc_wids.append(
+                DirectLabel(
+                    parent=self._fr,
+                    text=TRAIT_DESC[trait],
+                    frameSize=(0.1, 0.1, 0.1, 0.1),
+                    text_scale=0.029,
+                    text_fg=SILVER_COL
+                    if trait in self._char.traits
+                    else (0.3, 0.3, 0.3, 1),
+                    pos=(0, 0, shift - 0.045),
+                )
+            )
+            shift -= 0.1
+        return shift
+
+    def _fill_status(self, shift):
+        """Fill the chosen character status.
+
+        Args:
+            shift (float): Z-coor for the new widgets.
+        """
+        shift -= 0.03
+        for status in self._char.statuses:
+            self._char_desc_wids.append(
+                DirectLabel(
+                    parent=self._fr,
+                    text=status,
+                    frameSize=(0.1, 0.1, 0.1, 0.1),
+                    text_scale=0.029,
+                    text_fg=SILVER_COL,
+                    pos=(0, 0, shift),
+                )
+            )
+            shift -= 0.045
 
     def _show_char_desc(self):
         """Show detailed character description.
 
-        Includes description of every character's trait.
+        Includes description of every character's
+        trait, and his/her current status.
         """
         if self._char_desc_shown:
             self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.115)
@@ -286,7 +361,9 @@ class CharacterInterface:
 
             self._char_desc_wids = []
         else:
-            self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.61)
+            shift = 0.7
+            self._fr["frameSize"] = (-0.31, 0.31, -0.1, shift)
+            shift -= 0.06
             self._char_desc_wids.append(
                 DirectLabel(
                     parent=self._fr,
@@ -294,36 +371,22 @@ class CharacterInterface:
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.03,
                     text_fg=RUST_COL,
-                    pos=(-0.225, 0, 0.55),
+                    pos=(-0.225, 0, shift),
                 )
             )
-            shift = 0.52
-            for trait in self._char.traits + self._char.disabled_traits:
-                self._char_desc_wids.append(
-                    DirectLabel(
-                        parent=self._fr,
-                        text=trait,
-                        frameSize=(0.1, 0.1, 0.1, 0.1),
-                        text_scale=0.03,
-                        text_fg=SILVER_COL
-                        if trait in self._char.traits
-                        else (0.3, 0.3, 0.3, 1),
-                        pos=(0, 0, shift),
-                    )
+            shift = self._fill_traits(shift)
+
+            self._char_desc_wids.append(
+                DirectLabel(
+                    parent=self._fr,
+                    text="Status",
+                    frameSize=(0.1, 0.1, 0.1, 0.1),
+                    text_scale=0.03,
+                    text_fg=RUST_COL,
+                    pos=(-0.221, 0, shift),
                 )
-                self._char_desc_wids.append(
-                    DirectLabel(
-                        parent=self._fr,
-                        text=TRAIT_DESC[trait],
-                        frameSize=(0.1, 0.1, 0.1, 0.1),
-                        text_scale=0.029,
-                        text_fg=SILVER_COL
-                        if trait in self._char.traits
-                        else (0.3, 0.3, 0.3, 1),
-                        pos=(0, 0, shift - 0.045),
-                    )
-                )
-                shift -= 0.1
+            )
+            self._fill_status(shift)
 
         self._char_desc_shown = not self._char_desc_shown
 

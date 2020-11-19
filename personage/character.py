@@ -104,7 +104,16 @@ class Character(Shooter, Unit):
     def damage(self):
         """This character one-time calculated damage.
 
-        The damage depends on cohesion with another
+        Returns:
+            float: Damage one-time made by this character.
+        """
+        return random.uniform(*self.damage_range) * self.damage_factor
+
+    @property
+    def damage_factor(self):
+        """This character damage factor.
+
+        The damage factor depends on cohesion with another
         character on the same part of the Train.
 
         Returns:
@@ -112,9 +121,9 @@ class Character(Shooter, Unit):
         """
         factor = self._team.calc_cohesion_factor(self.current_part.chars)
         if "Loner" in self.traits and len(self.current_part.chars) == 1:
-            factor *= 1.3
+            return factor * 1.3
 
-        return random.uniform(*self.damage_range) * factor
+        return factor
 
     @property
     def description(self):
@@ -172,6 +181,41 @@ class Character(Shooter, Unit):
             return 2 + random.uniform(0.1, 1.1)
 
         return 1.7 + random.uniform(0.1, 0.9)
+
+    @property
+    def statuses(self):
+        """Return strings describing the current character status.
+
+        Returns:
+            list: Status description lines.
+        """
+        statuses = []
+        if base.world.sun.is_dark and not base.train.lights_on:  # noqa: F821
+            if "Cat eyes" in self.traits:
+                statuses.append("Cat eyes: +5% accuracy")
+            else:
+                statuses.append("Dark: -20% accuracy")
+
+        if self.energy <= 95:
+            statuses.append("Tired: -{}% accuracy".format((100 - self.energy) // 5))
+
+        factor = round(self.damage_factor, 2)
+        if factor != 1:
+            statuses.append("Damage factor: x{}".format(factor))
+
+        if self.health < 50 and "Hemophobia" in self.traits:
+            statuses.append("Hemophobia: +25% energy spend")
+
+        if self.is_diseased:
+            statuses.append("Diseased: -20 max energy")
+
+        if (
+            "Motion sickness" in self.traits
+            and base.train.ctrl.current_speed > 0.75  # noqa: F821
+        ):
+            statuses.append("Motion sickness: doesn't restore")
+
+        return statuses[:4]
 
     @property
     def tooltip(self):
@@ -432,7 +476,7 @@ class Character(Shooter, Unit):
         Only an enemy from the Train part shooting
         range can be chosen as a target.
         """
-        if self.current_part.enemies:
+        if self.current_part and self.current_part.enemies:
             self._target = random.choice(self.current_part.enemies)
             base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
             base.taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
@@ -452,7 +496,7 @@ class Character(Shooter, Unit):
         if self._target.is_dead and "Bloodthirsty" in self.traits:
             self.health += 6
 
-        if self._target in self.current_part.enemies:
+        if self.current_part and self._target in self.current_part.enemies:
             self.model.headsUp(self._target.model)
             return task.again
 
