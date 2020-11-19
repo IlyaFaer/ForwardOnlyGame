@@ -172,7 +172,7 @@ class CommonController:
 
         Make the chosen character act on the pointed object.
         """
-        if self._chosen_char:
+        if self._pointed_obj and self._chosen_char:
             if self._pointed_obj.startswith("part_"):
                 self._chosen_char.move_to(self._parts[self._pointed_obj])
                 return
