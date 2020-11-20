@@ -33,7 +33,7 @@ class CityInterface:
         self._city_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.35, 0.35, -0.4, 0.7),
-            pos=(0.77, 0, -0.9),
+            pos=(0.85, 0, -0.82),
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._city_fr.setTransparency(TransparencyAttrib.MAlpha)

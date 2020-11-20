@@ -86,7 +86,7 @@ class Team:
             dict: Recruits index.
         """
         chars = {}
-        for _ in range(random.randint(2, 6)):
+        for _ in range(random.randint(3, 7)):
             self._char_id += 1
 
             chars["character_" + str(self._char_id)] = generate_char(

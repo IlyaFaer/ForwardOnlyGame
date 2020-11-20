@@ -199,9 +199,10 @@ class Character(Shooter, Unit):
         if self.energy <= 95:
             statuses.append("Tired: -{}% accuracy".format((100 - self.energy) // 5))
 
-        factor = round(self.damage_factor, 2)
-        if factor != 1:
-            statuses.append("Damage factor: x{}".format(factor))
+        if not base.world.is_in_city:  # noqa: F821
+            factor = round(self.damage_factor, 2)
+            if factor != 1:
+                statuses.append("Damage factor: x{}".format(factor))
 
         if self.health < 50 and "Hemophobia" in self.traits:
             statuses.append("Hemophobia: +25% energy spend")
