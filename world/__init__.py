@@ -144,9 +144,7 @@ class World:
 
         all_surf_vertices = {}
         for path in glob.glob(MOD_DIR + "*.bam"):
-            mod_name = path.split("\\")[-1].replace(".bam", "")
-
-            mod = loader.loadModel(address(mod_name))  # noqa: F821
+            mod = loader.loadModel(path)  # noqa: F821
             mod.setZ(-20)
             mod.reparentTo(render)  # noqa: F821
 
