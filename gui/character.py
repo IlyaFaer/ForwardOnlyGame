@@ -334,7 +334,7 @@ class CharacterInterface:
         Args:
             shift (float): Z-coor for the new widgets.
         """
-        shift -= 0.03
+        shift -= 0.04
         for status in self._char.statuses:
             self._char_desc_wids.append(
                 DirectLabel(
@@ -500,7 +500,7 @@ class CharacterChooser:
         self._ind = 0
         self._show_info()
 
-    def clear(self):
+    def destroy(self):
         """Clear this widget."""
         self._fr.destroy()
 

@@ -51,7 +51,7 @@ class MainMenu:
             command=self._choose_tactics,
             **but_params,
         )
-        self._bind_button(self._new_game_but)
+        self.bind_button(self._new_game_but)
 
         is_save_exists = save_exists()
         self._load_but = DirectButton(
@@ -61,9 +61,9 @@ class MainMenu:
             command=self._load_game if is_save_exists else None,
             **but_params,
         )
-        self._bind_button(self._load_but)
+        self.bind_button(self._load_but)
 
-        self._bind_button(
+        self.bind_button(
             DirectButton(
                 pos=(-1.083, 0, 0),
                 text_fg=RUST_COL,
@@ -86,7 +86,7 @@ class MainMenu:
             ),
         )
 
-    def _bind_button(self, button):
+    def bind_button(self, button):
         """Bind the given button to visual effects.
 
         Args:
@@ -173,7 +173,7 @@ class MainMenu:
         self._tactics_wids += self._team_buts.values()
 
         for but in self._team_buts.values():
-            self._bind_button(but)
+            self.bind_button(but)
 
         self._team_description = DirectLabel(
             parent=self._main_fr,
@@ -195,7 +195,7 @@ class MainMenu:
             pos=(0.7, 0, -0.5),
             clickSound=self.click_snd,
         )
-        self._bind_button(start_but)
+        self.bind_button(start_but)
 
         self._tactics_wids.append(start_but)
         self._show_team("soldiers")
@@ -310,5 +310,5 @@ class MainMenu:
             command=base.save_game if can_save else None,  # noqa: F821
             clickSound=self.click_snd,
         )
-        self._bind_button(self._save_but)
+        self.bind_button(self._save_but)
         self._is_first_pause = False

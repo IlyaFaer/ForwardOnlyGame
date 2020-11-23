@@ -269,6 +269,9 @@ class Team:
 
     def _calc_total_cohesion(self):
         """Calculate total cohesion score considering all the relations."""
+        if not self._relations:
+            return
+
         rel_max = 100 / len(self._relations)
         cohesion = 0
         for relation in self._relations.values():

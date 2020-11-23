@@ -238,7 +238,7 @@ class OutingsInterface:
             effect (dict): Effect to do.
         """
         self._char_chooser.chosen_char.do_effects(effect)
-        self._char_chooser.clear()
+        self._char_chooser.destroy()
         self.hide_outing()
 
     def _clear_temporary_widgets(self):

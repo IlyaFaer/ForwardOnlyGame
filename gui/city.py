@@ -21,6 +21,9 @@ class CityInterface:
     """
 
     def __init__(self):
+        self._repl_wids = []
+        self._recruits = []
+
         self._amb_snd = loader.loadSfx("sounds/hangar_ambient.ogg")  # noqa: F821
         self._amb_snd.setVolume(0)
         self._amb_snd.setLoop(True)
@@ -47,159 +50,260 @@ class CityInterface:
             text_fg=RUST_COL,
             pos=(0, 0, 0.62),
         )
-        # team gui
-        DirectLabel(
+        self._party_but = DirectButton(
             parent=self._city_fr,
-            text="Team",
-            frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
+            text_scale=0.035,
+            text_fg=SILVER_COL,
+            text="Party",
+            relief=None,
+            command=self._show_party,
+            extraArgs=[0.56],
+            pos=(-0.2, 0, 0.56),
+            clickSound=base.main_menu.click_snd,  # noqa: F821
+        )
+        base.main_menu.bind_button(self._party_but)  # noqa: F821
+
+        self._train_but = DirectButton(
+            parent=self._city_fr,
+            text_scale=0.035,
             text_fg=RUST_COL,
-            pos=(-0.27, 0, 0.57),
+            text="Train",
+            relief=None,
+            command=self._show_train,
+            extraArgs=[0.56],
+            pos=(0, 0, 0.56),
+            clickSound=base.main_menu.click_snd,  # noqa: F821
+        )
+        base.main_menu.bind_button(self._train_but)  # noqa: F821
+
+        base.main_menu.bind_button(  # noqa: F821
+            DirectButton(
+                parent=self._city_fr,
+                pos=(-0.205, 0, -0.33),
+                text_fg=RUST_COL,
+                text="Back on road",
+                relief=None,
+                text_scale=0.035,
+                command=self._exit_city,
+            )
+        )
+
+    def _show_train(self, shift):
+        """Show the Train management GUI tab.
+
+        Args:
+            shift (float): Z-coordinate.
+        """
+        self._clear_repl_wids()
+
+        self._party_but["text_fg"] = RUST_COL
+        self._train_but["text_fg"] = SILVER_COL
+
+        shift -= 0.07
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                text="Locomotive",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.035, 0.035),
+                text_fg=RUST_COL,
+                pos=(-0.22, 0, shift),
+            )
+        )
+        shift -= 0.08
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                frameColor=(0, 0, 0, 0.3),
+                text_fg=SILVER_COL,
+                text="Repair",
+                text_scale=(0.03, 0.03),
+                pos=(-0.2, 0, shift),
+            )
+        )
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(-0.05, 0, shift),
+                text_fg=SILVER_COL,
+                text="+50\n25$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._repair,
+                extraArgs=[50],
+            )
+        )
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(0.07, 0, shift),
+                text_fg=SILVER_COL,
+                text="+200\n100$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._repair,
+                extraArgs=[200],
+            )
+        )
+
+    def _show_party(self, shift):
+        """Show units management tab.
+
+        Args:
+            shift (float): Z-coordinate.
+        """
+        self._clear_repl_wids()
+
+        self._party_but["text_fg"] = SILVER_COL
+        self._train_but["text_fg"] = RUST_COL
+
+        shift -= 0.07
+        # team gui
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                text="Team",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.035, 0.035),
+                text_fg=RUST_COL,
+                pos=(-0.27, 0, shift),
+            )
         )
 
         self._char_chooser = CharacterChooser()
+        self._char_chooser.prepare(
+            self._city_fr, (0, 0, 0.45), base.team.chars  # noqa: F821
+        )
+        self._repl_wids.append(self._char_chooser)
 
-        DirectLabel(
-            parent=self._city_fr,
-            frameColor=(0, 0, 0, 0.3),
-            text_fg=SILVER_COL,
-            text="Health",
-            text_scale=(0.03, 0.03),
-            pos=(-0.2, 0, 0.43),
+        shift -= 0.14
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                frameColor=(0, 0, 0, 0.3),
+                text_fg=SILVER_COL,
+                text="Health",
+                text_scale=(0.03, 0.03),
+                pos=(-0.2, 0, shift),
+            )
         )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(-0.05, 0, 0.45),
-            text_fg=SILVER_COL,
-            text="+10\n10$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._heal,
-            extraArgs=[10],
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(-0.05, 0, shift + 0.02),
+                text_fg=SILVER_COL,
+                text="+10\n10$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._heal,
+                extraArgs=[10],
+            )
         )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(0.07, 0, 0.45),
-            text_fg=SILVER_COL,
-            text="+50\n50$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._heal,
-            extraArgs=[50],
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(0.07, 0, shift + 0.02),
+                text_fg=SILVER_COL,
+                text="+50\n50$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._heal,
+                extraArgs=[50],
+            )
         )
-        DirectLabel(
-            parent=self._city_fr,
-            frameColor=(0, 0, 0, 0.3),
-            text_fg=SILVER_COL,
-            text="Energy",
-            text_scale=(0.03, 0.03),
-            pos=(-0.2, 0, 0.33),
+        shift -= 0.1
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                frameColor=(0, 0, 0, 0.3),
+                text_fg=SILVER_COL,
+                text="Energy",
+                text_scale=(0.03, 0.03),
+                pos=(-0.2, 0, shift),
+            )
         )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(-0.05, 0, 0.35),
-            text_fg=SILVER_COL,
-            text="+10\n5$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._rest,
-            extraArgs=[10],
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(-0.05, 0, shift + 0.02),
+                text_fg=SILVER_COL,
+                text="+10\n5$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._rest,
+                extraArgs=[10],
+            )
         )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(0.07, 0, 0.35),
-            text_fg=SILVER_COL,
-            text="+50\n25$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._rest,
-            extraArgs=[50],
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(0.07, 0, shift + 0.02),
+                text_fg=SILVER_COL,
+                text="+50\n25$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._rest,
+                extraArgs=[50],
+            )
         )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(0.2, 0, 0.25),
-            text_fg=SILVER_COL,
-            text="Leave unit",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._send_away,
+        shift -= 0.08
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(0.2, 0, shift),
+                text_fg=SILVER_COL,
+                text="Leave unit",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._send_away,
+            )
         )
+        shift -= 0.08
         # recruits gui
-        DirectLabel(
-            parent=self._city_fr,
-            text="Recruits",
-            frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
-            text_fg=RUST_COL,
-            pos=(-0.25, 0, 0.17),
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                text="Recruits",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.035, 0.035),
+                text_fg=RUST_COL,
+                pos=(-0.25, 0, shift),
+            )
         )
 
         self._recruit_chooser = CharacterChooser()
+        self._recruit_chooser.prepare(
+            self._city_fr, (0, 0, 0.05), self._recruits  # noqa: F821
+        )
+        self._repl_wids.append(self._recruit_chooser)
 
-        DirectButton(
-            parent=self._city_fr,
-            pos=(0.2, 0, 0.04),
-            text_fg=SILVER_COL,
-            text="Hire unit\n200$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._hire,
+        shift -= 0.13
+        self._repl_wids.append(
+            DirectButton(
+                parent=self._city_fr,
+                pos=(0.2, 0, shift),
+                text_fg=SILVER_COL,
+                text="Hire unit\n200$",
+                scale=(0.075, 0, 0.075),
+                relief=None,
+                text_scale=(0.45, 0.45),
+                command=self._hire,
+            )
         )
-        # Train GUI
-        DirectLabel(
-            parent=self._city_fr,
-            text="Train",
-            frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
-            text_fg=RUST_COL,
-            pos=(-0.277, 0, -0.07),
-        )
-        DirectLabel(
-            parent=self._city_fr,
-            frameColor=(0, 0, 0, 0.3),
-            text_fg=SILVER_COL,
-            text="Repair",
-            text_scale=(0.03, 0.03),
-            pos=(-0.2, 0, -0.15),
-        )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(-0.05, 0, -0.15),
-            text_fg=SILVER_COL,
-            text="+50\n25$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._repair,
-            extraArgs=[50],
-        )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(0.07, 0, -0.15),
-            text_fg=SILVER_COL,
-            text="+200\n100$",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.45, 0.45),
-            command=self._repair,
-            extraArgs=[200],
-        )
-        DirectButton(
-            parent=self._city_fr,
-            pos=(-0.2, 0, -0.33),
-            text_fg=RUST_COL,
-            text="Back on road",
-            scale=(0.075, 0, 0.075),
-            relief=None,
-            text_scale=(0.5, 0.5),
-            command=self._exit_city,
-        )
+
+    def _clear_repl_wids(self):
+        """Clear widgets in the current tab."""
+        for wid in self._repl_wids:
+            wid.destroy()
+
+        self._repl_wids = []
 
     def _exit_city(self):
         """Exit the current city.
@@ -335,10 +439,6 @@ class CityInterface:
         base.taskMgr.doMethodLater(  # noqa: F821
             0.3, self._inc_amb_snd, "increase_city_snd"
         )
-        self._char_chooser.prepare(
-            self._city_fr, (0, 0, 0.52), base.team.chars  # noqa: F821
-        )
-        self._recruit_chooser.prepare(
-            self._city_fr, (0, 0, 0.12), base.team.gen_recruits()  # noqa: F821
-        )
+        self._recruits = base.team.gen_recruits()  # noqa: F821
         self._city_fr.show()
+        self._show_train(0.56)
