@@ -9,6 +9,7 @@ import dbm.dumb  # noqa: F401
 import logging
 import os
 import shelve
+import sys
 
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
@@ -28,7 +29,11 @@ from train import Train
 from world import World
 
 loadPrcFileData("", "threading-model Cull/Draw")
-loadPrcFileData("", "audio-library-name p3fmod_audio")
+loadPrcFileData(
+    "",
+    "audio-library-name "
+    + ("p3openal_audio" if sys.platform == "linux" else "p3fmod_audio"),
+)
 
 logging.basicConfig(
     filename="logs.txt",
