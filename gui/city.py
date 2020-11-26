@@ -9,7 +9,7 @@ import random
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
-from .character import CharacterChooser
+from .widgets import CharacterChooser, UpgradeChooser
 from .train import ICON_PATH, RUST_COL, SILVER_COL
 
 
@@ -147,6 +147,68 @@ class CityInterface:
                 extraArgs=[200],
             )
         )
+
+        shift -= 0.09
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._city_fr,
+                text="Upgrades",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=(0.035, 0.035),
+                text_fg=RUST_COL,
+                pos=(-0.24, 0, shift),
+            )
+        )
+        up_desc = DirectLabel(
+            parent=self._city_fr,
+            text="",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=0.03,
+            text_fg=SILVER_COL,
+            pos=(-0.1, 0, shift - 0.14),
+        )
+        self._repl_wids.append(up_desc)
+
+        up_cost = DirectLabel(
+            parent=self._city_fr,
+            text="",
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=0.035,
+            text_fg=SILVER_COL,
+            pos=(0.25, 0, shift - 0.18),
+        )
+        self._repl_wids.append(up_cost)
+
+        but = DirectButton(
+            parent=self._city_fr,
+            pos=(0.2, 0, shift - 0.3),
+            text_fg=RUST_COL,
+            text="Purchase",
+            relief=None,
+            text_scale=0.035,
+            clickSound=base.main_menu.click_snd,  # noqa: F821
+            command=self._purchase_upgrade,
+        )
+        self._repl_wids.append(but)
+        base.main_menu.bind_button(but)  # noqa: F821
+
+        shift -= 0.05
+        self._up_chooser = UpgradeChooser(up_desc, up_cost)
+        self._up_chooser.prepare(
+            self._city_fr, (0, 0, shift), base.train.possible_upgrades  # noqa: F821
+        )
+        self._repl_wids.append(self._up_chooser)
+
+    def _purchase_upgrade(self):
+        """Buy the chosen upgrade and install it on to the Train."""
+        upgrade = self._up_chooser.chosen_upgrade
+        if upgrade is None or base.dollars < int(upgrade["cost"][:-1]):  # noqa: F821
+            return
+
+        base.dollars -= int(upgrade["cost"][:-1])  # noqa: F821
+
+        base.train.install_upgrade(upgrade)  # noqa: F821
+        self._up_chooser.pop_upgrade(upgrade["name"])
 
     def _show_party(self, shift):
         """Show units management tab.

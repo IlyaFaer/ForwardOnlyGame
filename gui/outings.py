@@ -8,7 +8,7 @@ Outings GUI.
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
-from .character import CharacterChooser
+from .widgets import CharacterChooser
 from .train import RUST_COL, SILVER_COL
 
 OUTINGS_ICONS = {

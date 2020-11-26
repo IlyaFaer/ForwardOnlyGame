@@ -7,6 +7,7 @@ Train - the main game object, API.
 Includes the systems of the Train loading, preparations,
 animation, sounds, lights, physics.
 """
+import copy
 import random
 
 from direct.actor.Actor import Actor
@@ -18,6 +19,17 @@ from controls import TrainController
 from gui.train import TrainInterface
 from train_part import RestPart, TrainPart
 from utils import address, take_random
+
+UPGRADES = {
+    "Ram": {
+        "name": "Ram",
+        "desc": """With this ram your locomotive
+will be breaking road barriers
+without getting damage""",
+        "cost": "300$",
+        "model": "ram1",
+    }
+}
 
 
 class Train:
@@ -100,6 +112,11 @@ class Train:
         self._is_on_rusty = False
         self._creak_snd_cooldown = False
         self._phys_node = None
+        self._train_phys_shape = None
+        self._upgrades = []
+        self._pre_upgrade = None
+        self._upgrade_highlight = 1
+        self._highlight_step = 0.03
 
         (
             self._smoke,
@@ -149,6 +166,30 @@ class Train:
             "node_angle": self.node.getHpr(),
         }
 
+    @property
+    def possible_upgrades(self):
+        """
+        Return the index of the upgrades, which
+        can be installed on the Train.
+
+        Returns:
+            dict: Possible upgrades index.
+        """
+        ups = copy.deepcopy(UPGRADES)
+        for upgrade in self.upgrades:
+            ups.pop(upgrade)
+
+        return ups
+
+    @property
+    def upgrades(self):
+        """The currently installed upgrades.
+
+        Returns:
+            list: Ids of the installed upgrades.
+        """
+        return self._upgrades
+
     def _prepare_particles(self):
         """
         Prepare the Train particle effects: smoke,
@@ -186,13 +227,13 @@ class Train:
             phys_mgr (panda3d.bullet.BulletWorld):
                 Physical world.
         """
-        shape = BulletCharacterControllerNode(
+        self._train_phys_shape = BulletCharacterControllerNode(
             BulletBoxShape(Vec3(0.095, 0.55, 0.1)), 10, "train_shape"
         )
-        self._phys_node = self.model.attachNewNode(shape)
+        self._phys_node = self.model.attachNewNode(self._train_phys_shape)
         self._phys_node.setZ(0.1)
 
-        phys_mgr.attachCharacter(shape)
+        phys_mgr.attachCharacter(self._train_phys_shape)
 
         base.taskMgr.doMethodLater(  # noqa: F821
             0.1,
@@ -439,9 +480,15 @@ class Train:
             (creak_snd1, creak_snd2, creak_snd3),
         )
 
-    def update_physics(self):
-        """Update the Train physical shape."""
-        self._phys_node.setPos((0, 0, 0.1))
+    def update_physics(self, y_coor):
+        """Update the Train physical shape.
+
+        Args:
+            y_coor (float):
+                Y coordinate for the main
+                Train physical shape
+        """
+        self._phys_node.setPos(0, y_coor, 0.1)
 
     def _check_contacts(self, phys_mgr, phys_node, task):
         """Check the Train physical contacts.
@@ -462,7 +509,8 @@ class Train:
         for contact in contacts:
             if contact.getNode1().getName().startswith("barrier_"):
                 self._barrier_hit_snd.play()
-                self.get_damage(100)
+                if "Ram" not in self._upgrades:
+                    self.get_damage(100)
 
                 task.delayTime = 0.3
                 return task.again
@@ -589,3 +637,86 @@ class Train:
         )
         self.smoke_filtered = False
         return task.done
+
+    def install_upgrade(self, upgrade):
+        """Install the given upgrade on to the Train.
+
+        Args:
+            upgrade (dict): The upgrade description.
+        """
+        self._upgrades.append(upgrade["name"])
+        loader.loadModel(address(upgrade["model"])).reparentTo(self.model)  # noqa: F821
+
+        if upgrade["name"] == "Ram":
+            base.taskMgr.remove("update_physics")  # noqa: F821
+            base.taskMgr.remove("check_train_contacts")  # noqa: F821
+
+            base.world.phys_mgr.removeCharacter(self._train_phys_shape)  # noqa: F821
+            self._phys_node.removeNode()
+
+            self._train_phys_shape = (
+                self._train_phys_shape
+            ) = BulletCharacterControllerNode(
+                BulletBoxShape(Vec3(0.095, 0.58, 0.1)), 10, "train_shape"
+            )
+
+            self._phys_node = self.model.attachNewNode(self._train_phys_shape)
+            self._phys_node.setPos(0, 0.03, 0.1)
+
+            base.world.phys_mgr.attachCharacter(self._train_phys_shape)  # noqa: F821
+
+            base.taskMgr.add(  # noqa: F821
+                base.world.update_physics,  # noqa: F821
+                "update_physics",
+                extraArgs=[0.03],
+                appendTask=True,
+            )
+            base.taskMgr.doMethodLater(  # noqa: F821
+                0.1,
+                self._check_contacts,
+                "check_train_contacts",
+                extraArgs=[base.world.phys_mgr, self._phys_node.node()],  # noqa: F821
+                appendTask=True,
+            )
+
+    def preview_upgrade(self, model):
+        """Preview the given upgrade model on the Train.
+
+        Used when buying upgrades in a city.
+
+        Args:
+            model (panda3d.core.NodePath): The upgrade model.
+        """
+        self.clear_upgrade_preview()
+
+        self._pre_upgrade = loader.loadModel(address(model))  # noqa: F821
+        self._pre_upgrade.reparentTo(self.model)
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.05, self._highlight_upgrade, "highlight_upgrade"
+        )
+
+    def clear_upgrade_preview(self):
+        """Stop previewing the currently previewed upgrade."""
+        if self._pre_upgrade is not None:
+            base.taskMgr.remove("highlight_upgrade")  # noqa: F821
+            self._pre_upgrade.removeNode()
+            self._pre_upgrade = None
+
+    def _highlight_upgrade(self, task):
+        """Highlight the currently preview upgrade.
+
+        Includes color pulsating of the upgrade model.
+        """
+        if self._upgrade_highlight >= 1.3:
+            self._highlight_step = -0.02
+
+        if self._upgrade_highlight <= 1:
+            self._highlight_step = 0.02
+
+        self._upgrade_highlight += self._highlight_step
+
+        self._pre_upgrade.setColorScale(
+            self._upgrade_highlight, self._upgrade_highlight, self._upgrade_highlight, 1
+        )
+        return task.again

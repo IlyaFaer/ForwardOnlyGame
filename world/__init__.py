@@ -56,7 +56,9 @@ class World:
         self.sun = Sun(day_part_desc)
 
         self.phys_mgr = self._set_physics()
-        base.taskMgr.add(self._update_physics, "update_physics")  # noqa: F821
+        base.taskMgr.add(  # noqa: F821
+            self.update_physics, "update_physics", extraArgs=[0], appendTask=True
+        )
 
     @property
     def current_block_number(self):
@@ -121,11 +123,17 @@ class World:
         base.train.set_physics(world)  # noqa: F821
         return world
 
-    def _update_physics(self, task):
-        """Update physics calculations."""
+    def update_physics(self, y_coor, task):
+        """Update physics calculations.
+
+        Args:
+            y_coor (float):
+                Y coordinate for the main
+                Train physical shape.
+        """
         self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
 
-        base.train.update_physics()  # noqa: F821
+        base.train.update_physics(y_coor)  # noqa: F821
         return task.cont
 
     def _cache_warmup(self):
