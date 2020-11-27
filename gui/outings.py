@@ -5,7 +5,13 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Outings GUI.
 """
 
-from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
+from direct.gui.DirectGui import (
+    DGG,
+    DirectButton,
+    DirectFrame,
+    DirectLabel,
+    DirectWaitBar,
+)
 from panda3d.core import TransparencyAttrib
 
 from .widgets import CharacterChooser
@@ -46,7 +52,9 @@ class OutingsInterface:
         self._upcome_text.hide()
 
         self._list = DirectFrame(
-            frameSize=(-0.73, 0.73, -0.9, 0.9), frameTexture="gui/tex/paper1.png"
+            frameSize=(-0.73, 0.73, -0.9, 0.9),
+            frameTexture="gui/tex/paper1.png",
+            state=DGG.NORMAL,
         )
         self._list.setTransparency(TransparencyAttrib.MAlpha)
         self._list.hide()
@@ -464,7 +472,7 @@ class OutingsInterface:
             shift -= 0.08
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.04,
+            0.035,
             self._animate_bars,
             "animate_outing_bars",
             extraArgs=[bars, score, selected_effect],

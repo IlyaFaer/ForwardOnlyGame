@@ -4,7 +4,13 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Resources GUI.
 """
-from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
+from direct.gui.DirectGui import (
+    DGG,
+    DirectButton,
+    DirectFrame,
+    DirectLabel,
+    DirectWaitBar,
+)
 from panda3d.core import TransparencyAttrib
 
 from .character import ABOUT_BUT_PARAMS
@@ -92,6 +98,7 @@ class ResourcesInterface:
             frameSize=(-0.55, 0.55, -0.05, 0.05),
             pos=(-0.6, 0, 1.95),
             frameTexture=ICON_PATH + "metal1.png",
+            state=DGG.NORMAL,
         )
         self._coh_frame.setTransparency(TransparencyAttrib.MAlpha)
 

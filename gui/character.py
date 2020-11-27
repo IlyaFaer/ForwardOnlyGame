@@ -4,7 +4,13 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Character state GUI.
 """
-from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel, DirectWaitBar
+from direct.gui.DirectGui import (
+    DGG,
+    DirectButton,
+    DirectFrame,
+    DirectLabel,
+    DirectWaitBar,
+)
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TransparencyAttrib
 
@@ -38,6 +44,7 @@ class CharacterInterface:
             frameSize=(-0.31, 0.31, -0.1, 0.115),
             pos=(0.31, 0, -1.9),
             frameTexture=ICON_PATH + "metal1.png",
+            state=DGG.NORMAL,
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
 

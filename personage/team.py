@@ -255,9 +255,8 @@ class Team:
                     factor *= 1.15
 
                 if rel_id in self._relations:
-                    self._relations[rel_id] += (
-                        COHESION_FACTORS[(char1.class_, char2.class_)] * factor
-                    )
+                    plus = COHESION_FACTORS[(char1.class_, char2.class_)] * factor
+                    self._relations[rel_id] = min(100, plus + self._relations[rel_id])
                 else:
                     self._relations[rel_id] = (
                         COHESION_FACTORS[(char1.class_, char2.class_)] * factor
