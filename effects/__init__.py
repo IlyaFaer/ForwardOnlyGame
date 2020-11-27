@@ -247,7 +247,7 @@ class Stench:
         self._stench.setPos(0, 3.5, 0.3)
 
         self._fog = Fog("Stench")
-        self._fog.setColor(1, 0.64, 0)
+        self._fog.setColor(1, 0.69, 0)
         self._fog.setExpDensity(0.1)
 
         tex = Texture()

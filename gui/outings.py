@@ -182,7 +182,7 @@ class OutingsInterface:
                     pos=(0, 0, -0.75),
                     text="Done",
                     text_fg=RUST_COL,
-                    frameColor=(0, 0, 0, 0.3),
+                    frameColor=(0, 0, 0, 0.4),
                     command=self._finish_outing,  # noqa: F821
                     extraArgs=[selected_effect],
                     scale=(0.05, 0, 0.05),
@@ -383,7 +383,7 @@ class OutingsInterface:
                 pos=(-0.15, 0, -0.75),
                 text="Don't send",
                 text_fg=RUST_COL,
-                frameColor=(0, 0, 0, 0.3),
+                frameColor=(0, 0, 0, 0.4),
                 command=self.hide_outing,  # noqa: F821
                 scale=(0.05, 0, 0.05),
                 clickSound=base.main_menu.click_snd,  # noqa: F821
@@ -394,7 +394,7 @@ class OutingsInterface:
                 pos=(0.15, 0, -0.75),
                 text="Send",
                 text_fg=RUST_COL,
-                frameColor=(0, 0, 0, 0.3),
+                frameColor=(0, 0, 0, 0.4),
                 command=base.world.outings_mgr.go_for_outing,  # noqa: F821
                 extraArgs=[outing, self._assignees],
                 clickSound=base.main_menu.click_snd,  # noqa: F821
