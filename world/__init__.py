@@ -152,6 +152,9 @@ class World:
 
         all_surf_vertices = {}
         for path in glob.glob(MOD_DIR + "*.bam"):
+            if "locomotive" in path:
+                continue
+
             mod = loader.loadModel(path)  # noqa: F821
             mod.setZ(-20)
             mod.reparentTo(render)  # noqa: F821

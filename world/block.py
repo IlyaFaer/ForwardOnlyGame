@@ -7,7 +7,7 @@ World blocks API.
 import copy
 import random
 
-from panda3d.core import TextureStage, Texture
+from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
 from .locations import LOCATIONS
@@ -270,6 +270,10 @@ class Block:
             env_mod (str): Name of the model to load and its position.
         """
         mod = loader.loadModel(env_mod[0])  # noqa: F821
+        if "grass" in env_mod[0]:
+            mod.setTransparency(TransparencyAttrib.M_binary)
+            mod.setShaderOff()
+
         mod.reparentTo(surf_mod)
         mod.setPos(env_mod[1])
         mod.setH(random.randint(1, 359))
