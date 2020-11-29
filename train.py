@@ -28,7 +28,15 @@ will be breaking road barriers
 without getting damage""",
         "cost": "300$",
         "model": "ram1",
-    }
+    },
+    "Floodlights": {
+        "name": "Floodlights",
+        "desc": """All the negative darkness
+factors are no more actual with
+these floodlights on""",
+        "cost": "500$",
+        "model": "floodlights1",
+    },
 }
 
 
@@ -115,6 +123,7 @@ class Train:
         self._train_phys_shape = None
         self._upgrades = []
         self._pre_upgrade = None
+        self._floodlights_mat = None
         self._upgrade_highlight = 1
         self._highlight_step = 0.03
 
@@ -413,26 +422,26 @@ class Train:
             list: NodePath's of the Train lights.
         """
         lens = PerspectiveLens()
-        lens.setNearFar(0, 100)
+        lens.setNearFar(0, 50)
         lens.setFov(60, 60)
 
-        lighter = Spotlight("train_main_lighter")
-        lighter.setColor((1, 1, 1, 1))
-        lighter.setLens(lens)
-        lighter.setExponent(0.4)
-        lighter_np = self.model.attachNewNode(lighter)
-        lighter_np.setPos(0, 0.34, 0.3)
+        floodlight = Spotlight("train_main_lighter")
+        floodlight.setColor((0.5, 0.5, 0.5, 1))
+        floodlight.setLens(lens)
+        floodlight.setExponent(0.4)
+        floodlight_np = self.model.attachNewNode(floodlight)
+        floodlight_np.setPos(0, 0.34, 0.3)
 
-        train_lights = [lighter_np]
+        train_lights = [floodlight_np]
 
         for name, coors in (
-            ("train_right_door_light", (0.071, -0.176, 0.245)),
-            ("train_left_door_light", (-0.071, -0.176, 0.245)),
-            ("train_back_door_light", (0, -0.5, 0.245)),
+            ("train_right_door_light", (0.073, -0.17, 0.245)),
+            ("train_left_door_light", (-0.073, -0.17, 0.245)),
+            ("train_back_door_light", (0, -0.65, 0.245)),
         ):
             lamp = PointLight(name)
-            lamp.setColor((0.99, 0.91, 0.5, 1))
-            lamp.setAttenuation((3))
+            lamp.setColor((0.89, 0.81, 0.55, 1))
+            lamp.setAttenuation(3)
             lamp_np = self.model.attachNewNode(lamp)
             lamp_np.setPos(*coors)
 
@@ -518,13 +527,33 @@ class Train:
         task.delayTime = 0.1
         return task.again
 
+    def _set_lamps_material(self, mat):
+        """Set the Train lamps emission parameter.
+
+        Used when toggling the lights.
+
+        Args:
+            mat (tuple): New lamps material.
+        """
+        self.model.findMaterial("lamp_glass").setEmission(mat)
+
+        if self._floodlights_mat is not None:
+            self._floodlights_mat.setEmission(mat)
+
     def toggle_lights(self):
         """Toggle the Train lights."""
         self._lighter_snd.play()
 
-        method = render.clearLight if self.lights_on else render.setLight  # noqa: F821
-        for light in self._lights:
-            method(light)
+        if self.lights_on:
+            for light in self._lights:
+                render.clearLight(light)  # noqa: F821
+
+            self._set_lamps_material((0, 0, 0, 1))
+        else:
+            for light in self._lights:
+                render.setLight(light)  # noqa: F821
+
+            self._set_lamps_material((0.7, 0.7, 0.7, 1))
 
         self.lights_on = not self.lights_on
 
@@ -645,7 +674,8 @@ class Train:
             upgrade (dict): The upgrade description.
         """
         self._upgrades.append(upgrade["name"])
-        loader.loadModel(address(upgrade["model"])).reparentTo(self.model)  # noqa: F821
+        up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821
+        up_model.reparentTo(self.model)
 
         if upgrade["name"] == "Ram":
             base.taskMgr.remove("update_physics")  # noqa: F821
@@ -678,6 +708,15 @@ class Train:
                 extraArgs=[base.world.phys_mgr, self._phys_node.node()],  # noqa: F821
                 appendTask=True,
             )
+            return
+
+        if upgrade["name"] == "Floodlights":
+            self._floodlights_mat = up_model.findMaterial("lamp_glass")
+
+            self._lights[0].node().setColor((1, 1, 1, 1))
+
+            for light in self._lights[1:]:
+                light.node().setAttenuation(1.7)
 
     def preview_upgrade(self, model):
         """Preview the given upgrade model on the Train.

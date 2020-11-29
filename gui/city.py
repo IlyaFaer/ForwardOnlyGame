@@ -375,6 +375,7 @@ class CityInterface:
         """
         self._toot_snd.play()
         base.taskMgr.remove("increase_city_snd")  # noqa: F821
+        base.train.clear_upgrade_preview()  # noqa: F821
         base.taskMgr.doMethodLater(  # noqa: F821
             0.3, self._dec_amb_snd, "decrease_city_snd"
         )
