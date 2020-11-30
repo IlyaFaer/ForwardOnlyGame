@@ -34,7 +34,7 @@ without getting damage""",
         "desc": """All the negative darkness
 factors are no more actual with
 these floodlights on""",
-        "cost": "500$",
+        "cost": "400$",
         "model": "floodlights1",
     },
 }
@@ -437,7 +437,7 @@ class Train:
         for name, coors in (
             ("train_right_door_light", (0.073, -0.17, 0.245)),
             ("train_left_door_light", (-0.073, -0.17, 0.245)),
-            ("train_back_door_light", (0, -0.65, 0.245)),
+            ("train_back_door_light", (0, -0.63, 0.245)),
         ):
             lamp = PointLight(name)
             lamp.setColor((0.89, 0.81, 0.55, 1))

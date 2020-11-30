@@ -190,9 +190,12 @@ class Character(Shooter, Unit):
             list: Status description lines.
         """
         statuses = []
-        if base.world.sun.is_dark and not base.train.lights_on:  # noqa: F821
+        if base.world.sun.is_dark:  # noqa: F821
             if "Cat eyes" in self.traits:
                 statuses.append("Cat eyes: +5% accuracy")
+            elif base.train.lights_on:  # noqa: F821
+                if "Floodlights" not in base.train.upgrades:  # noqa: F821
+                    statuses.append("Dark: -10% accuracy")
             else:
                 statuses.append("Dark: -20% accuracy")
 
@@ -421,10 +424,12 @@ class Character(Shooter, Unit):
         and status: fighting or not.
         """
         if base.world.sun.is_dark:  # noqa: F821
-            if base.train.lights_on:  # noqa: F821
-                task.delayTime = 20
-            else:
+            if not base.train.lights_on:  # noqa: F821
                 task.delayTime = 15
+            elif "Floodlights" in base.train.upgrades:  # noqa: F821
+                task.delayTime = self.class_data["energy_spend"]
+            else:
+                task.delayTime = 20
 
             if "Fear of dark" in self.traits:
                 task.delayTime /= 2
@@ -665,6 +670,9 @@ class Character(Shooter, Unit):
         if base.world.sun.is_dark:  # noqa: F821
             if "Cat eyes" in self.traits:
                 miss_chance -= 5
+            elif base.train.lights_on:  # noqa: F821
+                if "Floodlights" not in base.train.upgrades:  # noqa: F821
+                    miss_chance += 10
             else:
                 miss_chance += 20
 
