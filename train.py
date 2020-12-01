@@ -19,6 +19,7 @@ from controls import TrainController
 from gui.train import TrainInterface
 from train_part import RestPart, TrainPart
 from utils import address, take_random
+from world.objects import ArmorPlate
 
 UPGRADES = {
     "Ram": {
@@ -36,6 +37,14 @@ factors are no more actual with
 these floodlights on""",
         "cost": "400$",
         "model": "floodlights1",
+    },
+    "Armor Plate": {
+        "name": "Armor Plate",
+        "desc": """An active shield which can
+cover one of the Train parts.
+Use 5, 6, 7 keys to move it.""",
+        "cost": "70$",
+        "model": "armor_plate",
     },
 }
 
@@ -674,6 +683,11 @@ class Train:
             upgrade (dict): The upgrade description.
         """
         self._upgrades.append(upgrade["name"])
+
+        if upgrade["name"] == "Armor Plate":
+            ArmorPlate(self.model)
+            return
+
         up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821
         up_model.reparentTo(self.model)
 

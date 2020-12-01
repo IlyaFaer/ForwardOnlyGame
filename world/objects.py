@@ -6,8 +6,10 @@ Active world objects API.
 """
 import random
 
+from direct.actor.Actor import Actor
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
 from panda3d.core import Vec3
+from direct.interval.IntervalGlobal import Sequence
 
 from utils import address
 
@@ -62,3 +64,92 @@ class Barrier:
         model.reparentTo(phys_np)
 
         base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+
+
+class ArmorPlate:
+    """An active shield Train upgrade.
+
+    Represents an active defense upgrade - plate, which
+    can cover one of three Train sides: left, right, top.
+
+    Args:
+        train_model (panda3d.core.NodePath):
+            The Train model - parent for the plate.
+    """
+
+    def __init__(self, train_model):
+        self._is_on_move = False
+        self._cur_position = "top"
+
+        self._model = Actor(address("armor_plate"))
+        self._model.reparentTo(train_model)
+
+        self._right_to_left = Sequence(
+            self._model.actorInterval("right", playRate=-1.5),
+            self._model.actorInterval("left", playRate=1.5),
+        )
+        self._left_to_right = Sequence(
+            self._model.actorInterval("left", playRate=-1.5),
+            self._model.actorInterval("right", playRate=1.5),
+        )
+
+        base.accept("5", self._turn_left)  # noqa: F821
+        base.accept("6", self._turn_top)  # noqa: F821
+        base.accept("7", self._turn_right)  # noqa: F821
+
+    def _turn_left(self):
+        """Cover the left side of the Train with the plate."""
+        if self._cur_position == "left" or self._is_on_move:
+            return
+
+        if self._cur_position == "top":
+            self._model.play("left")
+            delay = 1.9
+        else:
+            self._right_to_left.start()
+            delay = 3.3
+
+        self._is_on_move = True
+        base.taskMgr.doMethodLater(  # noqa: F821
+            delay, self._stop_move, "stop_move_plate"
+        )
+        self._cur_position = "left"
+
+    def _turn_right(self):
+        """Cover the right side of the Train with the plate."""
+        if self._cur_position == "right" or self._is_on_move:
+            return
+
+        if self._cur_position == "top":
+            self._model.play("right")
+            delay = 1.9
+        else:
+            self._left_to_right.start()
+            delay = 3.3
+
+        self._is_on_move = True
+        base.taskMgr.doMethodLater(  # noqa: F821
+            delay, self._stop_move, "stop_move_plate"
+        )
+        self._cur_position = "right"
+
+    def _turn_top(self):
+        """Cover the top side of the Train with the plate."""
+        if self._cur_position == "top" or self._is_on_move:
+            return
+
+        if self._cur_position == "left":
+            self._model.actorInterval("left", playRate=-1.5).start()
+        elif self._cur_position == "right":
+            self._model.actorInterval("right", playRate=-1.5).start()
+
+        self._is_on_move = True
+        base.taskMgr.doMethodLater(  # noqa: F821
+            1.9, self._stop_move, "stop_move_plate"
+        )
+        self._cur_position = "top"
+
+    def _stop_move(self, task):
+        """Release the plate moving block."""
+        self._is_on_move = False
+        return task.done
