@@ -732,6 +732,25 @@ class Train:
             for light in self._lights[1:]:
                 light.node().setAttenuation(1.7)
 
+    def cover_part(self, part):
+        """Cover the given Train part with the armor plate.
+
+        Args:
+            part (TrainPart): The Train part to cover.
+        """
+        self.parts[part].is_covered = True
+
+    def uncover_part(self, side):
+        """Uncover the given side of the Train with the armor plate.
+
+        Args:
+            side (str): The Train side to incover.
+        """
+        for part in self.parts.values():
+            if side in part.name:
+                part.is_covered = False
+                break
+
     def preview_upgrade(self, model):
         """Preview the given upgrade model on the Train.
 

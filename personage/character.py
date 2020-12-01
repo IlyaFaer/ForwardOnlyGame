@@ -776,6 +776,13 @@ class Character(Shooter, Unit):
 
         return task.again
 
+    def _shoot(self, task):
+        """Play shooting animation and sound, make damage."""
+        if self.current_part and not self.current_part.is_covered:
+            return Shooter._shoot(self, task)
+
+        return task.again
+
     def _stop_stunning(self, task):
         """Stop this character stun and continue fighting."""
         self._is_stunned = False

@@ -34,6 +34,7 @@ class TrainPart:
         self.parent = parent
         self.name = name
         self.chars = []
+        self.is_covered = False
         # enemies within shooting range of this part
         self.enemies = []
         self._cells = positions
