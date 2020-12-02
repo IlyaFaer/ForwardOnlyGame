@@ -14,8 +14,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
-from .widgets import CharacterChooser
-from .train import RUST_COL, SILVER_COL
+from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 
 OUTINGS_ICONS = {
     "looting": "gui/tex/looting.png",

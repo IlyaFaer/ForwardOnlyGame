@@ -9,8 +9,7 @@ import random
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
-from .widgets import CharacterChooser, UpgradeChooser
-from .train import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import ICON_PATH, RUST_COL, SILVER_COL, CharacterChooser, UpgradeChooser
 
 
 class CityInterface:

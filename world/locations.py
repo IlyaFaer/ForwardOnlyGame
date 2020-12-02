@@ -19,11 +19,11 @@ LOCATIONS = {
     "Plains": {
         "ambient_sounds": ("meadow_noon", "meadow_night"),
         "with_quantity": (
-            {"models": PLAINS_GRASS, "quantity": (20, 35), "square": "wide"},
             {"models": PLAINS_TREES, "quantity": (13, 23), "square": "wide"},
             {"models": ("small_tree1",), "quantity": (1, 3), "square": "wide"},
-            {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
             {"models": ("stump1",), "quantity": (1, 4), "square": "wide"},
+            {"models": PLAINS_GRASS, "quantity": (20, 35), "square": "wide"},
+            {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),
         "with_chance": (
             {"models": ("grave1", "grave2"), "chance": 6, "square": "wide"},
@@ -38,9 +38,9 @@ LOCATIONS = {
         ),
         # enemy territory configurations
         "et_with_quantity": (
-            {"models": PLAINS_GRASS, "quantity": (10, 40), "square": "wide"},
             {"models": PLAINS_TREES, "quantity": (5, 10), "square": "narrow"},
             {"models": ("small_tree1",), "quantity": (1, 3), "square": "narrow"},
+            {"models": PLAINS_GRASS, "quantity": (15, 40), "square": "wide"},
             {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},
         ),
         "et_with_chance": (

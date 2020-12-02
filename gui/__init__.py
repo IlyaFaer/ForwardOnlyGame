@@ -15,7 +15,8 @@ from .city import CityInterface  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
 from .resources import ResourcesInterface  # noqa: F401
-from .train import ICON_PATH, RUST_COL, SILVER_COL, TrainInterface  # noqa: F401
+from .train import TrainInterface  # noqa: F401
+from .widgets import ICON_PATH, RUST_COL, SILVER_COL  # noqa: F401
 
 
 class MainMenu:

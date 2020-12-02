@@ -9,7 +9,7 @@ import random
 from direct.gui.DirectGui import DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
-from .train import ICON_PATH, SILVER_COL
+from .widgets import ICON_PATH, SILVER_COL
 
 NOTES = (
     # traits

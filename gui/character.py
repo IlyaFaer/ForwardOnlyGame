@@ -15,7 +15,7 @@ from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TransparencyAttrib
 
 from personage.character_data import TRAIT_DESC
-from .train import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import ICON_PATH, RUST_COL, SILVER_COL
 
 ABOUT_BUT_PARAMS = {
     "text": "?",

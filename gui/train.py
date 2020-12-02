@@ -7,9 +7,7 @@ The Train indicators GUI.
 from direct.gui.DirectGui import DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
-RUST_COL = (0.71, 0.25, 0.05, 1)
-SILVER_COL = (0.51, 0.54, 0.59, 1)
-ICON_PATH = "gui/tex/"
+from .widgets import ICON_PATH, RUST_COL, SILVER_COL
 
 
 class TrainInterface:

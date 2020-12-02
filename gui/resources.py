@@ -14,7 +14,7 @@ from direct.gui.DirectGui import (
 from panda3d.core import TransparencyAttrib
 
 from .character import ABOUT_BUT_PARAMS
-from .train import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import ICON_PATH, RUST_COL, SILVER_COL
 
 
 class ResourcesInterface:
