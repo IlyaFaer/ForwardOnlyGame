@@ -283,15 +283,27 @@ class MotoShooter(EnemyUnit, Shooter):
         characters set to the TrainPart, in which
         range this enemy is now.
         """
-        targets = self.current_part.chars + [base.train]  # noqa: F821
+        if self.current_part.is_covered:
+            if self._target != base.train:  # noqa: F821
+                self._target = base.train  # noqa: F821
 
-        if self._target not in targets or chance(5):
-            self._target = random.choice(targets)
+                # (re-)start shooting
+                self._stop_tasks("_shoot")
+                base.taskMgr.doMethodLater(  # noqa: F821
+                    0.5, self._shoot, self.id + "_shoot"
+                )
+        else:
+            targets = self.current_part.chars + [base.train]  # noqa: F821
 
-            self._stop_tasks("_shoot")
-            base.taskMgr.doMethodLater(  # noqa: F821
-                0.5, self._shoot, self.id + "_shoot"
-            )
+            if self._target not in targets or chance(5):
+                self._target = random.choice(targets)
+
+                # (re-)start shooting
+                self._stop_tasks("_shoot")
+                base.taskMgr.doMethodLater(  # noqa: F821
+                    0.5, self._shoot, self.id + "_shoot"
+                )
+
         task.delayTime = 0.5
         return task.again
 
@@ -330,6 +342,9 @@ class MotoShooter(EnemyUnit, Shooter):
         Returns:
             bool: True if enemy missed, False otherwise.
         """
+        if self.current_part.is_covered:
+            return chance(50)
+
         return False
 
     def _die(self):
