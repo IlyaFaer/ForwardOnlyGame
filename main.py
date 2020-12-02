@@ -268,6 +268,8 @@ class ForwardOnly(ShowBase):
 
         self.char_gui = CharacterInterface()
 
+        self.train.load_upgrades(save["train"]["upgrades"])
+
         self.doMethodLater(3, self._start_game, "start_game")
         self.doMethodLater(
             3.01,

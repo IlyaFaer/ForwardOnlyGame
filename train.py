@@ -182,6 +182,7 @@ class Train:
             "speed": self.ctrl.current_speed,
             "miles": self._miles,
             "node_angle": self.node.getHpr(),
+            "upgrades": self.upgrades,
         }
 
     @property
@@ -237,6 +238,15 @@ class Train:
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
         ]
         return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions
+
+    def load_upgrades(self, upgrades):
+        """Load the Train upgrades saved earlier.
+
+        Args:
+            upgrades (list): Names of the upgrades to load.
+        """
+        for up in upgrades:
+            self.install_upgrade(UPGRADES[up])
 
     def set_physics(self, phys_mgr):
         """Set the Train physics.
