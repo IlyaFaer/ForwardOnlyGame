@@ -45,7 +45,7 @@ p0.renderer.setFinalZScale(1.3000)
 p0.emitter.setEmissionType(BaseParticleEmitter.ETRADIATE)
 p0.emitter.setAmplitude(1.0000)
 p0.emitter.setAmplitudeSpread(0.0000)
-p0.emitter.setOffsetForce(Vec3(0.0000, 0.0000, 0.25))
+p0.emitter.setOffsetForce(Vec3(0.0000, 0.0000, 0.3))
 p0.emitter.setExplicitLaunchVector(Vec3(1.0000, 0.0000, 0.0000))
 p0.emitter.setRadiateOrigin(Point3(0.0000, 0.0000, 0.0000))
 # Point parameters

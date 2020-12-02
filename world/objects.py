@@ -9,7 +9,7 @@ import random
 from direct.actor.Actor import Actor
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
 from panda3d.core import Vec3
-from direct.interval.IntervalGlobal import Sequence
+from direct.interval.IntervalGlobal import Parallel, Sequence, SoundInterval
 
 from utils import address
 
@@ -81,18 +81,32 @@ class ArmorPlate:
         self._is_on_move = False
         self._cur_position = "top"
 
+        self._snd = base.sound_mgr.loadSfx("sounds/armor_plate_move.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._snd, train_model)  # noqa: F821
+
         self._model = Actor(address("armor_plate"))
         self._model.reparentTo(train_model)
 
         self._right_to_left = Sequence(
-            self._model.actorInterval("right", playRate=-1.5),
-            self._model.actorInterval("left", playRate=1.5),
+            Parallel(
+                self._model.actorInterval("right", playRate=-1.5),
+                SoundInterval(self._snd),
+            ),
+            Parallel(
+                self._model.actorInterval("left", playRate=1.5),
+                SoundInterval(self._snd),
+            ),
         )
         self._left_to_right = Sequence(
-            self._model.actorInterval("left", playRate=-1.5),
-            self._model.actorInterval("right", playRate=1.5),
+            Parallel(
+                self._model.actorInterval("left", playRate=-1.5),
+                SoundInterval(self._snd),
+            ),
+            Parallel(
+                self._model.actorInterval("right", playRate=1.5),
+                SoundInterval(self._snd),
+            ),
         )
-
         base.accept("5", self._turn_left)  # noqa: F821
         base.accept("6", self._turn_top)  # noqa: F821
         base.accept("7", self._turn_right)  # noqa: F821
@@ -103,11 +117,12 @@ class ArmorPlate:
             return
 
         if self._cur_position == "top":
-            self._model.play("right")
-            delay = 1.9
+            self._model.actorInterval("right", playRate=1.5).start()
+            delay = 1.5
+            self._snd.play()
         else:
             self._left_to_right.start()
-            delay = 3.3
+            delay = 3
 
         self._is_on_move = True
         base.taskMgr.doMethodLater(  # noqa: F821
@@ -133,11 +148,12 @@ class ArmorPlate:
             return
 
         if self._cur_position == "top":
-            self._model.play("left")
-            delay = 1.9
+            self._model.actorInterval("left", playRate=1.5).start()
+            delay = 1.5
+            self._snd.play()
         else:
             self._right_to_left.start()
-            delay = 3.3
+            delay = 3
 
         self._is_on_move = True
         base.taskMgr.doMethodLater(  # noqa: F821
@@ -163,13 +179,15 @@ class ArmorPlate:
             return
 
         if self._cur_position == "left":
+            self._snd.play()
             self._model.actorInterval("left", playRate=-1.5).start()
         elif self._cur_position == "right":
+            self._snd.play()
             self._model.actorInterval("right", playRate=-1.5).start()
 
         self._is_on_move = True
         base.taskMgr.doMethodLater(  # noqa: F821
-            1.9, self._stop_move, "stop_move_plate"
+            1.5, self._stop_move, "stop_move_plate"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
             0.5,
