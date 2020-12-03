@@ -221,6 +221,8 @@ class ForwardOnly(ShowBase):
         """Save the current game."""
         save = shelve.open("saves/save1")
 
+        self.world.save_map()
+
         save["cur_block"] = self.world.current_block_number
         save["last_angle"] = self.world.last_cleared_block_angle
         save["enemy_score"] = self.world.enemy.score

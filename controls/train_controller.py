@@ -149,6 +149,7 @@ class TrainController:
         )
         if self._outing_available:
             base.world.start_outing(self._outing_available)  # noqa: F821
+            self._outing_available = None
 
     def _play_stop_snd(self, task):
         """Play Train stop sound."""

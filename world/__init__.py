@@ -316,6 +316,10 @@ class World:
         """
         self.outings_mgr.start_outing(type_)
 
+    def drop_outing_ability(self):
+        """Drop the current block outing ability."""
+        self._map[self._block_num - 1].outing_available = None
+
     def generate_location(self, location, size):
         """Generate game location.
 
@@ -328,7 +332,6 @@ class World:
         """
         rails_gen = RailwayGenerator()
         self.outings_mgr = OutingsManager(location)
-        map_to_save = []
         rusty_blocks = 0
         stench_blocks = 0
 
@@ -364,26 +367,35 @@ class World:
             else:
                 is_stenchy = False
 
-            block = Block(
-                name=rails_block,
-                path=self._paths[rails_block],
-                cam_path=self._paths["cam_" + rails_block],
-                surf_vertices=self._surf_vertices,
-                is_station=is_station,
-                is_city=is_city,
-                is_rusty=is_rusty,
-                is_stenchy=is_stenchy,
-                outing_available=None if is_city else self.outings_mgr.plan_outing(),
+            self._map.append(
+                Block(
+                    name=rails_block,
+                    path=self._paths[rails_block],
+                    cam_path=self._paths["cam_" + rails_block],
+                    surf_vertices=self._surf_vertices,
+                    is_station=is_station,
+                    is_city=is_city,
+                    is_rusty=is_rusty,
+                    is_stenchy=is_stenchy,
+                    outing_available=None
+                    if is_city
+                    else self.outings_mgr.plan_outing(),
+                )
             )
-            self._map.append(block)
-            map_to_save.append(block.description())
-
-        world_save = shelve.open("saves/world", "n")
-        world_save[location] = map_to_save
-        world_save.close()
 
         self._set_sounds(location)
         self.enemy = Enemy()
+
+    def save_map(self):
+        """Save the world map."""
+        map_to_save = []
+
+        for block in self._map:
+            map_to_save.append(block.description())
+
+        world_save = shelve.open("saves/world", "n")
+        world_save["Plains"] = map_to_save
+        world_save.close()
 
     def load_location(self, location, enemy_score, disease_threshold):
         """Load the given location from the last world save.

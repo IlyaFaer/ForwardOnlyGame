@@ -104,6 +104,8 @@ class OutingsManager:
         if len(chars) != outing["assignees"]:
             return
 
+        base.world.drop_outing_ability()  # noqa: F821
+
         cond_score = 0
         class_score = 0
         cond_max = 25 / len(chars)
