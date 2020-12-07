@@ -55,6 +55,7 @@ class OutingsInterface:
             frameTexture="gui/tex/paper1.png",
             state=DGG.NORMAL,
         )
+        self._list.setDepthTest(False)
         self._list.setTransparency(TransparencyAttrib.MAlpha)
         self._list.hide()
 
