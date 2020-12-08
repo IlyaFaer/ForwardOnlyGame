@@ -16,13 +16,12 @@ from direct.interval.IntervalGlobal import (
 )
 from direct.interval.MopathInterval import MopathInterval
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
-from panda3d.core import CollisionSphere, Point3, Vec3
+from panda3d.core import CollisionBox, CollisionSphere, Point3, Vec3
 
 from const import MOUSE_MASK, SHOT_RANGE_MASK
-from utils import chance, address
+from utils import address, chance, take_random
 from .shooter import Shooter
 from .unit import Unit
-from utils import take_random
 
 
 class EnemyUnit(Unit):
@@ -55,14 +54,6 @@ class EnemyUnit(Unit):
         self.model = model
         self.model.pose("ride", 1)
         self.model.reparentTo(self.node)
-
-        self._col_node = self._init_col_node(
-            SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
-        )
-        base.common_ctrl.traverser.addCollider(  # noqa: F821
-            self._col_node, enemy_handler
-        )
-        self._explosion = base.effects_mgr.explosion(self)  # noqa: F821
 
         # organize movement and aiming tasks
         time_to_overtake = random.randint(33, 50)
@@ -225,7 +216,36 @@ class EnemyUnit(Unit):
             return task.done
 
 
-class MotoShooter(EnemyUnit, Shooter):
+class EnemyMotorcyclist(EnemyUnit):
+    """Enemy unit on motorcycle base class.
+
+    Includes a motocycle explosion effect and a
+    collision node appropriate for any motorcyclist.
+
+    Args:
+        id_ (int): Enemy unit id.
+        class_ (str): Enemy class name.
+        class_data (dict): Enemy class description.
+        model (actor.Actor): Enemy character model.
+        y_positions (list): Free positions along Y.
+        enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
+    """
+
+    def __init__(self, id_, class_, class_data, model, y_positions, enemy_handler):
+        EnemyUnit.__init__(
+            self, id_, class_, class_data, model, y_positions, enemy_handler
+        )
+
+        self._col_node = self._init_col_node(
+            SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
+        )
+        base.common_ctrl.traverser.addCollider(  # noqa: F821
+            self._col_node, enemy_handler
+        )
+        self._explosion = base.effects_mgr.explosion(self)  # noqa: F821
+
+
+class MotoShooter(EnemyMotorcyclist, Shooter):
     """A shooter-motorcyclist unit.
 
     Includes character and his transport.
@@ -239,7 +259,7 @@ class MotoShooter(EnemyUnit, Shooter):
     """
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
-        EnemyUnit.__init__(
+        EnemyMotorcyclist.__init__(
             self, id_, "Moto Shooter", class_data, model, y_positions, enemy_handler
         )
         Shooter.__init__(self)
@@ -367,7 +387,7 @@ class MotoShooter(EnemyUnit, Shooter):
             return task.done
 
 
-class BrakeDropper(EnemyUnit):
+class BrakeDropper(EnemyMotorcyclist):
     """Brake shoes dropper unit.
 
     Brakers are trying to slow down the Train, to make
@@ -382,7 +402,7 @@ class BrakeDropper(EnemyUnit):
     """
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
-        EnemyUnit.__init__(
+        EnemyMotorcyclist.__init__(
             self, id_, "Braker", class_data, model, y_positions, enemy_handler
         )
         self.is_jumping = False
@@ -558,7 +578,7 @@ class BrakeDropper(EnemyUnit):
         EnemyUnit._die(self)
 
 
-class StunBombThrower(EnemyUnit):
+class StunBombThrower(EnemyMotorcyclist):
     """Stun-bomb thrower enemy unit.
 
     This unit type is dealing damage to the Train with bombs.
@@ -575,7 +595,7 @@ class StunBombThrower(EnemyUnit):
     """
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
-        EnemyUnit.__init__(
+        EnemyMotorcyclist.__init__(
             self, id_, "Bomb Thrower", class_data, model, y_positions, enemy_handler
         )
         self._throw_anim = "throw_" + ("right" if self._y_pos < 0 else "left")
