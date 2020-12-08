@@ -187,7 +187,7 @@ class Enemy:
         enemy = class_data["class"](
             Actor(address(class_data["model"])), id_, y_poss, self._handler, class_data
         )
-        self._transport_mgr.make_motorcyclist(enemy)
+        self._transport_mgr.load_transport(enemy)
 
         enemy.node.reparentTo(train_mod)
         self.active_units[enemy.id] = enemy

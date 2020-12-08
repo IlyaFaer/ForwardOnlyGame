@@ -20,40 +20,43 @@ class TransportManager:
         self._models = {
             "moto1": Actor(address("motocycle1")),
             "moto2": Actor(address("motocycle2")),
+            "dodge": Actor(address("car1")),
         }
         self._models["moto1"].setPlayRate(1.5, "ride")
         self._models["moto2"].setPlayRate(1.5, "ride")
+        self._models["dodge"].setPlayRate(2.5, "ride")
 
-    def make_motorcyclist(self, unit):
-        """Make the given unit motorcyclist.
+    def load_transport(self, unit):
+        """Load transport for the given unit.
 
         Args:
-            unit (enemy_unit.EnemyUnit): Unit to make motorcyclist.
+            unit (enemy_unit.EnemyUnit): The unit to set onto transport.
         """
-        moto_model = unit.class_data["moto_model"]
+        transport_model = unit.class_data["transport_model"]
 
-        unit.transport = unit.model.attachNewNode("moto_" + unit.id)
-        self._models[moto_model].instanceTo(unit.transport)
+        unit.transport = unit.model.attachNewNode("transport_" + unit.id)
+        self._models[transport_model].instanceTo(unit.transport)
 
-        if not self._models[moto_model].getCurrentAnim():
-            self._models[moto_model].loop("ride")
+        if not self._models[transport_model].getCurrentAnim():
+            self._models[transport_model].loop("ride")
 
         base.taskMgr.doMethodLater(  # noqa: F821
             4,
             self._load_snd,
             "load_transport_sound_" + unit.id,
-            extraArgs=[unit],
+            extraArgs=[unit, "moto" if transport_model.startswith("moto") else "car"],
             appendTask=True,
         )
 
-    def _load_snd(self, unit, task):
+    def _load_snd(self, unit, type_, task):
         """Load transport sound.
 
         Args:
             unit (enemy_unit.EnemyUnit): Unit to make motorcyclist.
+            type_ (str): The transport type: car or motorcycle.
         """
         unit.transport_snd = base.sound_mgr.loadSfx(  # noqa: F821
-            "sounds/moto_moves1.ogg"
+            "sounds/{type}_moves1.ogg".format(type=type_)
         )
         unit.transport_snd.setLoop(True)
         unit.transport_snd.setPlayRate(random.uniform(0.7, 1))
