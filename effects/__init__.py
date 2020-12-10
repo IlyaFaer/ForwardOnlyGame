@@ -66,7 +66,31 @@ class EffectsManager:
         Returns:
             Explosion: Explosion effect object.
         """
-        return Explosion(self._explosion_lights, parent)
+        return Explosion(self._explosion_lights, parent, "explode_fire", 0.9)
+
+    def explosion_big(self, parent):
+        """Prepare a big explosion effect for the given object.
+
+        Args:
+            parent (object):
+                Must include "id" and "model" properties.
+
+        Returns:
+            Explosion: Explosion effect object.
+        """
+        return Explosion(self._explosion_lights, parent, "explode_fire2", 1.9)
+
+    def burn_smoke(self, parent):
+        """Prepare a burning object smoke effect.
+
+        Args:
+            parent (object):
+                Must include "id" and "model" properties.
+
+        Returns:
+            BurnSmoke: Burning object smoke effect.
+        """
+        return BurnSmoke(parent)
 
     def bomb_explosion(self, parent):
         """Prepare a bomb explosion effect for the given object.
@@ -89,9 +113,13 @@ class Explosion:
     Args:
         explode_lights (list): List of explosion lights.
         parent (object): Object to explode.
+        ptf (str): Name of the particles file to use.
+        length (float): The length of the effect.
     """
 
-    def __init__(self, explode_lights, parent):
+    def __init__(self, explode_lights, parent, ptf, length):
+        self._length = length
+
         self._lights = explode_lights
         self._light_coef = 1.5
         self._parent = parent
@@ -101,7 +129,7 @@ class Explosion:
         self._sparks.setY(0.2)
 
         self._fire = ParticleEffect()
-        self._fire.loadConfig("effects/explode_fire.ptf")
+        self._fire.loadConfig("effects/{}.ptf".format(ptf))
         self._fire.setY(0.1)
 
         self._snd = base.sound_mgr.loadSfx("sounds/explosion1.ogg")  # noqa: F821
@@ -127,7 +155,7 @@ class Explosion:
             )
 
         base.taskMgr.doMethodLater(  # noqa: F821
-            0.9, self._stop_fire, self._parent.id + "_disable_exlode_fire"
+            self._length, self._stop_fire, self._parent.id + "_disable_exlode_fire"
         )
         base.taskMgr.doMethodLater(  # noqa: F821
             4.95, self._stop_sparks, self._parent.id + "_disable_exlode_sparks"
@@ -168,6 +196,32 @@ class Explosion:
         self._sparks.cleanup()
         self._fire.cleanup()
         base.sound_mgr.detach_sound(self._snd)  # noqa: F821
+        return task.done
+
+
+class BurnSmoke:
+    """Smoke from a burning object effect.
+
+    Args:
+        parent (object): Object to parent the effect to.
+    """
+
+    def __init__(self, parent):
+        self._parent = parent
+        self._smoke = ParticleEffect()
+        self._smoke.loadConfig("effects/after_explode_smoke1.ptf")
+
+    def play(self):
+        """Start playing the particle effect."""
+        self._smoke.start(self._parent.model, render)  # noqa: F821
+        base.taskMgr.doMethodLater(  # noqa: F821
+            11, self._clear_smoke, self._parent.id + "_stop_smoke"
+        )
+
+    def _clear_smoke(self, task):
+        """Clear the smoke effect."""
+        self._smoke.softStop()
+        self._smoke.cleanup()
         return task.done
 
 

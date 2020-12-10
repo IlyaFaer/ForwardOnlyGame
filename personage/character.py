@@ -656,13 +656,13 @@ class Character(Shooter, Unit):
         miss_chance = 0
         if self.class_ == "soldier":
             if (
-                abs(self._target.node.getX()) < 0.5
+                abs(self._target.node.getX()) < 0.56
                 and abs(self._target.node.getY()) < 0.95
             ):
                 miss_chance += 20
         elif self.class_ == "raider":
             if (
-                abs(self._target.node.getX()) > 0.5
+                abs(self._target.node.getX()) > 0.56
                 and abs(self._target.node.getY()) > 0.95
             ):
                 miss_chance += 20

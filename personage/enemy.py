@@ -10,7 +10,7 @@ from direct.actor.Actor import Actor
 from panda3d.core import CollisionHandlerEvent
 
 from utils import address, chance
-from .enemy_unit import BrakeDropper, MotoShooter, StunBombThrower
+from .enemy_unit import BrakeDropper, DodgeShooter, MotoShooter, StunBombThrower
 from .transport import TransportManager
 
 CLASSES = {
@@ -21,7 +21,7 @@ CLASSES = {
             "score": 3,
             "part": "side",
             "health": 100,
-            "moto_model": "moto1",
+            "transport_model": "moto1",
         },
         {
             "class": BrakeDropper,
@@ -29,7 +29,7 @@ CLASSES = {
             "score": 6,
             "part": "front",
             "health": 50,
-            "moto_model": "moto1",
+            "transport_model": "moto1",
         },
         {
             "class": StunBombThrower,
@@ -37,7 +37,15 @@ CLASSES = {
             "score": 9,
             "part": "side",
             "health": 90,
-            "moto_model": "moto2",
+            "transport_model": "moto2",
+        },
+        {
+            "class": DodgeShooter,
+            "model": "dodge_gun",
+            "score": 12,
+            "part": "side",
+            "health": 100,
+            "transport_model": "dodge",
         },
     ),
     "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
@@ -60,8 +68,8 @@ class Enemy:
         self._side_y_positions = []
 
         for gain in range(1, 14):
-            self._side_y_positions.append(round(0.15 + gain * 0.05, 2))
-            self._side_y_positions.append(round(-0.15 - gain * 0.05, 2))
+            self._side_y_positions.append(round(0.15 + gain * 0.075, 2))
+            self._side_y_positions.append(round(-0.15 - gain * 0.075, 2))
 
         for gain in range(1, 7):
             self._front_y_positions.append(round(0.1 + gain * 0.05, 2))
@@ -118,6 +126,7 @@ class Enemy:
         wave_score = 0
         brakers = 0
         throwers = 0
+        cars = 0
         while wave_score < self.score:
             unit_class = random.choice(available)
 
@@ -129,6 +138,11 @@ class Enemy:
             if unit_class["class"] == StunBombThrower:
                 throwers += 1
                 if throwers == 3:
+                    available.remove(unit_class)
+
+            if unit_class["class"] == DodgeShooter:
+                cars += 1
+                if cars == 2:
                     available.remove(unit_class)
 
             self._unit_id += 1
@@ -154,9 +168,7 @@ class Enemy:
     def capture_train(self):
         """The Train got critical damage - stop near it."""
         for enemy in self.active_units.values():
-            base.taskMgr.remove(enemy.id + "_float_move")  # noqa: F821
-            base.taskMgr.remove(enemy.id + "_shoot")  # noqa: F821
-            base.taskMgr.remove(enemy.id + "_choose_target")  # noqa: F821
+            enemy.capture_train()
 
     def stop_ride_anim(self, task):
         """Stop riding animation and sounds."""

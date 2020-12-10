@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Enemy unit API.
 """
+import abc
 import random
 
 from direct.directutil import Mopath
@@ -11,8 +12,11 @@ from direct.interval.IntervalGlobal import (
     Func,
     LerpHprInterval,
     LerpPosInterval,
+    LerpScaleInterval,
     Parallel,
     Sequence,
+    SoundInterval,
+    Wait,
 )
 from direct.interval.MopathInterval import MopathInterval
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
@@ -61,6 +65,12 @@ class EnemyUnit(Unit):
         self._move(time_to_overtake, (self._y_pos, random.uniform(*self._x_range), 0))
         base.taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
+        )
+
+    @abc.abstractmethod
+    def _explode(self):
+        raise NotImplementedError(
+            "Every enemy unit class must implement _explode() method."
         )
 
     @property
@@ -127,6 +137,10 @@ class EnemyUnit(Unit):
         task.delayTime = random.randint(7, 9)
         return task.again
 
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        self._stop_tasks("_float_move")
+
     def get_damage(self, damage):
         """Take damage points and change model color.
 
@@ -160,39 +174,7 @@ class EnemyUnit(Unit):
 
         self._explode()
         self._y_positions.append(self._y_pos)
-
-    def _explode(self):
-        """Set physics for this enemy unit and explode."""
-        self._explosion.play()
-
-        rb_node = BulletRigidBodyNode(self.id + "_physics")
-        rb_node.setMass(80)
-        rb_node.addShape(BulletBoxShape(Vec3(0.005, 0.04, 0.028)))
-        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
-
-        self.model.reparentTo(phys_node)
-        self.model.setPos(0, -0.01, -0.025)
-        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
-
-        # boom impulse
-        angle = self.model.getH(render)  # noqa: F821
-        x = 0
-        y = 0
-        if angle == 0:
-            y = random.randint(6500, 8500)
-        elif angle == 90:
-            x = -random.randint(6500, 8500)
-        elif angle == -90:
-            x = random.randint(6500, 8500)
-
-        rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
-        rb_node.applyTorque(
-            Vec3(
-                random.randint(-45, 45),
-                random.randint(-45, 45),
-                random.randint(-45, 45),
-            )
-        )
+        return True
 
     def stop(self):
         """Smoothly stop this unit following the Train."""
@@ -243,6 +225,44 @@ class EnemyMotorcyclist(EnemyUnit):
             self._col_node, enemy_handler
         )
         self._explosion = base.effects_mgr.explosion(self)  # noqa: F821
+
+    def _explode(self):
+        """Play explosion sequence of effects and sounds.
+
+        Also includes explosion physics.
+        """
+        self._explosion.play()
+
+        rb_node = BulletRigidBodyNode(self.id + "_physics")
+        rb_node.setMass(80)
+        rb_node.addShape(BulletBoxShape(Vec3(0.005, 0.04, 0.028)))
+        rb_node.deactivation_enabled = False
+
+        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
+
+        self.model.reparentTo(phys_node)
+        self.model.setPos(0, -0.01, -0.025)
+        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+
+        # boom impulse
+        angle = self.model.getH(render)  # noqa: F821
+        x = 0
+        y = 0
+        if angle == 0:
+            y = random.randint(6500, 8500)
+        elif angle == 90:
+            x = -random.randint(6500, 8500)
+        elif angle == -90:
+            x = random.randint(6500, 8500)
+
+        rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
+        rb_node.applyTorque(
+            Vec3(
+                random.randint(-45, 45),
+                random.randint(-45, 45),
+                random.randint(-45, 45),
+            )
+        )
 
 
 class MotoShooter(EnemyMotorcyclist, Shooter):
@@ -327,6 +347,12 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
         task.delayTime = 0.5
         return task.again
 
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        EnemyMotorcyclist.capture_train(self)
+
+        self._stop_tasks("_shoot", "_choose_target")
+
     def enter_the_part(self, part):
         """Start fighting in the given part.
 
@@ -351,10 +377,6 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
 
         self.current_part = None
         self._target = None
-
-    def _detach(self):
-        """Reparent this enemy to the render to left behind."""
-        self.model.wrtReparentTo(render)  # noqa: F821
 
     def _missed_shot(self):
         """Calculate if enemy missed the current shot.
@@ -532,6 +554,12 @@ class BrakeDropper(EnemyMotorcyclist):
             Func(base.train.brake, side, brake),  # noqa: F821
         ).start()
 
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        EnemyMotorcyclist.capture_train(self)
+
+        self._stop_tasks("_jump_and_brake")
+
     def enter_the_part(self, part):
         """Start fighting in the given part.
 
@@ -612,6 +640,12 @@ class StunBombThrower(EnemyMotorcyclist):
 
         self._bomb.setPos(*self._bomb_pos)
 
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        EnemyMotorcyclist.capture_train(self)
+
+        self._stop_tasks("_throw")
+
     def stop(self):
         """Smoothly stop this unit following the Train."""
         self._stop_tasks("_throw")
@@ -689,3 +723,158 @@ class StunBombThrower(EnemyMotorcyclist):
 
         if task is not None:
             return task.done
+
+
+class DodgeShooter(EnemyUnit):
+    """Dodge with a machine gun unit.
+
+    Represents an enemy unit, which attacks with
+    long pauses, but also deals a lot of damage.
+    """
+
+    def __init__(self, model, id_, y_positions, enemy_handler, class_data):
+        EnemyUnit.__init__(
+            self, id_, "Gun Dodge", class_data, model, y_positions, enemy_handler,
+        )
+
+        self._col_node = self._init_col_node(
+            SHOT_RANGE_MASK,
+            MOUSE_MASK,
+            CollisionBox(Point3(-0.04, -0.12, -0.02), Point3(0.04, 0.11, 0.06)),
+        )
+        base.common_ctrl.traverser.addCollider(  # noqa: F821
+            self._col_node, enemy_handler
+        )
+        self._shoot_seq = self._set_shoot_anim()
+        self._explosion = base.effects_mgr.explosion_big(self)  # noqa: F821
+        self._smoke = base.effects_mgr.burn_smoke(self)  # noqa: F821
+
+    def _set_shoot_anim(self):
+        """Prepare machine gun shooting animation for this unit.
+
+        Returns:
+            direct.interval.MetaInterval.Sequence:
+                Shooting animation and sounds sequence.
+        """
+        shot_snd = base.sound_mgr.loadSfx("sounds/machine_gun_shot1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(shot_snd, self.model)  # noqa: F821
+
+        fire = loader.loadModel(address("gun_fire2"))  # noqa: F821
+        fire.reparentTo(self.model)
+        fire.setScale(1, 0.0001, 1)
+        if self._y_pos > 0:
+            fire.setPos(-0.055, -0.008, 0.076)
+            fire.setH(180)
+        else:
+            fire.setPos(0.065, -0.008, 0.076)
+
+        shoot_par = Parallel(
+            Sequence(
+                LerpScaleInterval(fire, 0.07, (1, 1, 1)),
+                LerpScaleInterval(fire, 0.07, (1, 0.0001, 1)),
+                Wait(0.13),
+            ),
+            SoundInterval(shot_snd, duration=0.25),
+        )
+        return Sequence(*(shoot_par,) * 20)
+
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        EnemyUnit.capture_train(self)
+
+        self._stop_tasks("_shoot_at_train", "_do_damage_to_train", "_stop_doing_damage")
+
+    def enter_the_part(self, part):
+        """Start fighting in the given part.
+
+        Args:
+            part (train_part.TrainPart): Train part this enemy entered.
+        """
+        self.current_part = part
+
+        self.model.play("turn_right" if self._y_pos < 0 else "turn_left")
+
+        base.taskMgr.doMethodLater(  # noqa: F821
+            2, self._shoot_at_train, self.id + "_shoot_at_train"
+        )
+
+    def leave_the_part(self, _):
+        """Stop fighting in the current part."""
+        self._stop_tasks("_shoot_at_train", "_do_damage_to_train", "_stop_doing_damage")
+        self.current_part = None
+
+    def _shoot_at_train(self, task):
+        """Start shooting volley, including logic, animations, sounds."""
+        self._shoot_seq.start()
+        base.taskMgr.doMethodLater(  # noqa: F821
+            0.5, self._do_damage_to_train, self.id + "_do_damage_to_train"
+        )
+        base.taskMgr.doMethodLater(  # noqa: F821
+            6,
+            base.taskMgr.remove,  # noqa: F821
+            self.id + "_stop_doing_damage",
+            extraArgs=[self.id + "_do_damage_to_train"],
+        )
+        task.delayTime = random.randint(10, 12)
+        return task.again
+
+    def _do_damage_to_train(self, task):
+        """Deal machine gun damage to the Train."""
+        if self.current_part.is_covered:
+            if chance(40):
+                base.train.get_damage(4)  # noqa: F821
+        else:
+            base.train.get_damage(4)  # noqa: F821
+
+        return task.again
+
+    def _explode(self):
+        """Play explosion sequence of effects and sounds.
+
+        Also includes explosion physics.
+        """
+        self._explosion.play()
+        self._smoke.play()
+
+        rb_node = BulletRigidBodyNode(self.id + "_physics")
+        rb_node.setMass(100)
+        rb_node.addShape(BulletBoxShape(Vec3(0.06, 0.1, 0.028)))
+        rb_node.deactivation_enabled = False
+
+        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
+
+        self.model.reparentTo(phys_node)
+        self.model.setPos(0, 0, -0.03)
+        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+
+        # boom impulse
+        angle = round(self.model.getH(render))  # noqa: F821
+        x = 0
+        y = 0
+        if angle == 0:
+            y = random.randint(6500, 8500)
+        elif angle == 90:
+            x = -random.randint(6500, 8500)
+        elif angle == -90:
+            x = random.randint(6500, 8500)
+
+        rb_node.applyForce(Vec3(x, y, random.randint(1000, 2000)), Point3(0, -0.1, 0))
+        rb_node.applyTorque(
+            Vec3(
+                random.randint(-45, 45),
+                random.randint(-45, 45),
+                random.randint(-45, 45),
+            )
+        )
+
+    def _die(self):
+        """Die actions for this shooter.
+
+        Returns:
+            bool: True, if this shooter dies for the first time.
+        """
+        if EnemyUnit._die(self):
+            self._shoot_seq.finish()
+            self._stop_tasks(
+                "_shoot_at_train", "_stop_doing_damage", "_do_damage_to_train"
+            )
