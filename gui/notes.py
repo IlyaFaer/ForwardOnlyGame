@@ -15,6 +15,9 @@ NOTES = (
     # traits
     """Single character can have up
 to three different traits""",
+    """Characters with strong cohesion
+can randomly adopt traits
+from each other""",
     # enemy
     """Skinheads activity is at
 maximum during evening""",

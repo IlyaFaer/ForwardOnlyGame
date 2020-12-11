@@ -6,6 +6,8 @@ Player characters as a single team API.
 """
 import copy
 import random
+
+from utils import chance, take_random
 from .character import generate_char, load_char
 
 COHESION_FACTORS = {
@@ -257,6 +259,15 @@ class Team:
                 if rel_id in self._relations:
                     plus = COHESION_FACTORS[(char1.class_, char2.class_)] * factor
                     self._relations[rel_id] = min(100, plus + self._relations[rel_id])
+
+                    # propagate traits from one character to another
+                    if self._relations[rel_id] > 80 and chance(50):
+                        pair = [char1, char2]
+                        from_char = take_random(pair)
+                        if from_char.traits:
+                            trait = random.choice(from_char.traits)
+                            if trait not in pair[0].traits and len(pair[0].traits) < 3:
+                                pair[0].traits.append(trait)
                 else:
                     self._relations[rel_id] = (
                         COHESION_FACTORS[(char1.class_, char2.class_)] * factor
