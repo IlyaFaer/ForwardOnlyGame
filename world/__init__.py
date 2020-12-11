@@ -45,6 +45,7 @@ class World:
         # processed by World now
         self._block_num = -1
         self._et_blocks = 0
+        self._stench_step = 0
 
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
@@ -104,6 +105,11 @@ class World:
         """
         return self._last_angle
 
+    @property
+    def stench_step(self):
+        """The block number, where the edge of the Stench is."""
+        return self._stench_step
+
     def _set_physics(self):
         """Set the world physics.
 
@@ -122,6 +128,17 @@ class World:
 
         base.train.set_physics(world)  # noqa: F821
         return world
+
+    def _make_stench_step(self, task):
+        """Move the Stench edge one block further."""
+        self._map[self._stench_step].is_stenchy = True
+        self._stench_step += 1
+
+        if self._stench_step == self._block_num:
+            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
+            base.effects_mgr.stench_effect.play()  # noqa: F821
+
+        return task.again
 
     def update_physics(self, y_coor, task):
         """Update physics calculations.
@@ -385,6 +402,9 @@ class World:
 
         self._set_sounds(location)
         self.enemy = Enemy()
+        base.taskMgr.doMethodLater(  # noqa: F821
+            30, self._make_stench_step, "stench_step"
+        )
 
     def save_map(self):
         """Save the world map."""
@@ -397,15 +417,23 @@ class World:
         world_save["Plains"] = map_to_save
         world_save.close()
 
-    def load_location(self, location, enemy_score, disease_threshold):
+    def load_location(self, location, enemy_score, disease_threshold, stench_step):
         """Load the given location from the last world save.
 
         Args:
             location (str): Location name.
             enemy_score (int): Enemy score.
             disease_threshold (int): Disease activity score.
+            stench_step (int):
+                Number of the block, where the Stench edge is located.
         """
         self._disease_threshold = disease_threshold
+
+        self._stench_step = stench_step
+        base.taskMgr.doMethodLater(  # noqa: F821
+            30, self._make_stench_step, "stench_step"
+        )
+
         self.outings_mgr = OutingsManager(location)
 
         world_save = shelve.open("saves/world")

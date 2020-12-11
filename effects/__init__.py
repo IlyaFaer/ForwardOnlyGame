@@ -327,6 +327,9 @@ class Stench:
 
     def play_clouds(self):
         """Start playing the Stench particle effect."""
+        if self._is_playing:
+            return
+
         self._stench.start(base.train.model, render)  # noqa: F821
         self._stench.softStart()
 

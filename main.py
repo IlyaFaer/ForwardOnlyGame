@@ -227,6 +227,7 @@ class ForwardOnly(ShowBase):
         save["last_angle"] = self.world.last_cleared_block_angle
         save["enemy_score"] = self.world.enemy.score
         save["disease_threshold"] = self.world.disease_threshold
+        save["stench_step"] = self.world.stench_step
 
         save["train"] = self.train.description
         save["dollars"] = self.dollars
@@ -262,7 +263,10 @@ class ForwardOnly(ShowBase):
         # build game world
         self.world = World(save["day_part"])
         self.world.load_location(
-            "Plains", save["enemy_score"], save["disease_threshold"]
+            "Plains",
+            save["enemy_score"],
+            save["disease_threshold"],
+            save["stench_step"],
         )
         self._current_block = self.world.load_blocks(
             save["cur_block"], save["last_angle"]
