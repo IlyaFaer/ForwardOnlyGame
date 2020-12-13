@@ -288,6 +288,11 @@ class ForwardOnly(ShowBase):
         self.smoke_filters = save["smoke_filters"]
         return task.done
 
+    def restart_game(self):
+        """Completely restart the game program."""
+        self.destroy()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
 
 try:
     ForwardOnly().run()

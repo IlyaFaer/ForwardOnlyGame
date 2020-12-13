@@ -305,6 +305,8 @@ class TrainController:
         """Finish stopping the damaged Train."""
         base.taskMgr.remove("stop_train")  # noqa: F821
         base.train.stop_sparks()  # noqa: F821
+
+        base.main_menu.show(is_game_over=True)  # noqa: F821
         return task.done
 
     def _set_sounds(self, model):

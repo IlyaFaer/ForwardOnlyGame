@@ -70,6 +70,7 @@ class MainMenu:
                 text_fg=RUST_COL,
                 text="Exit",
                 command=sys.exit,
+                extraArgs=[1],
                 **but_params,
             )
         )
@@ -274,10 +275,33 @@ class MainMenu:
         self._main_fr.hide()
         base.accept("escape", self.show)  # noqa: F821
 
-    def show(self):
-        """Show the main menu."""
+    def show(self, is_game_over=False):
+        """Show the main menu.
+
+        Args:
+            is_game_over (bool):
+                True, if the main menu is shown on game over.
+        """
         self._main_fr.show()
-        base.accept("escape", self.hide)  # noqa: F821
+
+        if is_game_over:
+            self._new_game_but["command"] = None
+            self._new_game_but["text_fg"] = SILVER_COL
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(0.7, 0, 0.3),
+                frameColor=(0, 0, 0, 0),
+                text_scale=0.055,
+                text_fg=SILVER_COL,
+                text=(
+                    "Your locomotive is critically damaged!\n"
+                    "You're not able to continue the road.\n\n"
+                    "It's all over...",
+                ),
+            )
+            base.ignore("escape")  # noqa: F821
+        else:
+            base.accept("escape", self.hide)  # noqa: F821
 
         can_save = not (
             base.train.ctrl.critical_damage  # noqa: F821
@@ -295,9 +319,11 @@ class MainMenu:
             return
 
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
+
         self._new_game_but["text"] = "Resume"
-        self._new_game_but["command"] = self.hide
-        self._new_game_but.setPos(-1.028, 0, 0.4),
+        self._new_game_but.setPos(-1.028, 0, 0.4)
+        if not is_game_over:
+            self._new_game_but["command"] = self.hide
 
         self._load_but.destroy()
 
@@ -312,4 +338,17 @@ class MainMenu:
             clickSound=self.click_snd,
         )
         self.bind_button(self._save_but)
+
+        self.bind_button(
+            DirectButton(
+                parent=self._main_fr,
+                pos=(-1, 0, 0.1),
+                text_scale=0.05,
+                text_fg=RUST_COL,
+                text="Main menu",
+                relief=None,
+                command=base.restart_game,  # noqa: F821
+                clickSound=self.click_snd,
+            )
+        )
         self._is_first_pause = False
