@@ -15,6 +15,11 @@ COHESION_FACTORS = {
     ("raider", "raider"): 0.5,
     ("soldier", "raider"): 0.36,
     ("raider", "soldier"): 0.36,
+    ("anarchist", "anarchist"): 0.5,
+    ("anarchist", "soldier"): 0.4,
+    ("soldier", "anarchist"): 0.4,
+    ("anarchist", "raider"): 0.44,
+    ("raider", "anarchist"): 0.44,
 }
 
 DEFAULT_TEAMS = {
