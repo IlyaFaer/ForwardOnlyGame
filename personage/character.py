@@ -788,6 +788,7 @@ class Character(Shooter, Unit):
         self._is_stunned = False
 
         LerpAnimInterval(self.model, 0.8, self._current_anim, "stand_and_aim").start()
+        self._current_anim = "stand_and_aim"
         self.model.loop("stand_and_aim")
 
         base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
