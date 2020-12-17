@@ -38,6 +38,14 @@ CLASSES = {
         "shots_num": 1,
         "shot_snd": "shotgun_shot1",
     },
+    "male_anarchist": {
+        "health": 100,
+        "energy_gain": 50,
+        "energy_spend": 30,
+        "healing": 30,
+        "shots_num": 3,
+        "shot_snd": "pistol_shot1",
+    },
 }
 
 NAMES = {

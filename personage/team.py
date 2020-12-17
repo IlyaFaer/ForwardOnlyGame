@@ -11,15 +11,15 @@ from utils import chance, take_random
 from .character import generate_char, load_char
 
 COHESION_FACTORS = {
+    ("anarchist", "anarchist"): 0.6,
     ("soldier", "soldier"): 0.5,
     ("raider", "raider"): 0.5,
     ("soldier", "raider"): 0.36,
-    ("raider", "soldier"): 0.36,
-    ("anarchist", "anarchist"): 0.5,
-    ("anarchist", "soldier"): 0.4,
     ("soldier", "anarchist"): 0.4,
-    ("anarchist", "raider"): 0.44,
+    ("raider", "soldier"): 0.36,
     ("raider", "anarchist"): 0.44,
+    ("anarchist", "soldier"): 0.4,
+    ("anarchist", "raider"): 0.44,
 }
 
 DEFAULT_TEAMS = {

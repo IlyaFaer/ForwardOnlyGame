@@ -276,6 +276,8 @@ class Character(Shooter, Unit):
             z = 0.064 if self.sex == "male" else 0.062
         elif self.class_ == "raider":
             z = 0.047
+        elif self.class_ == "anarchist":
+            z = 0.06
 
         self._shoot_anim = self._set_shoot_anim(
             (0.004, 0.045, z), 97, self.class_data["shots_num"]
