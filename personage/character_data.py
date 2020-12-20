@@ -46,6 +46,14 @@ CLASSES = {
         "shots_num": 3,
         "shot_snd": "pistol_shot1",
     },
+    "female_anarchist": {
+        "health": 80,
+        "energy_gain": 40,
+        "energy_spend": 30,
+        "healing": 30,
+        "shots_num": 2,
+        "shot_snd": "pistol_shot1",
+    },
 }
 
 NAMES = {
