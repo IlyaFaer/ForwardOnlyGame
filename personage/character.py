@@ -119,7 +119,7 @@ class Character(Shooter, Unit):
         Returns:
             float: Damage one-time made by this character.
         """
-        factor = self._team.calc_cohesion_factor(self.current_part.chars)
+        factor = self._team.calc_cohesion_factor(self.current_part.chars, self)
         if "Loner" in self.traits and len(self.current_part.chars) == 1:
             return factor * 1.3
 

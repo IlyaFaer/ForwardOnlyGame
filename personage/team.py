@@ -25,6 +25,7 @@ COHESION_FACTORS = {
 DEFAULT_TEAMS = {
     "soldiers": {"class": "soldier", "sexes": ("male", "male", "male")},
     "raiders": {"class": "raider", "sexes": ("male", "male", "female")},
+    "anarchists": {"class": "anarchist", "sexes": ("male", "male", "female")},
 }
 
 
@@ -93,12 +94,12 @@ class Team:
             dict: Recruits index.
         """
         chars = {}
-        for _ in range(random.randint(3, 7)):
+        for _ in range(random.randint(6, 11)):
             self._char_id += 1
 
             chars["character_" + str(self._char_id)] = generate_char(
                 self._char_id,
-                random.choice(("soldier", "raider")),
+                random.choice(("soldier", "raider", "anarchist")),
                 random.choice(("male", "female")),
                 self,
             )
@@ -335,7 +336,7 @@ class Team:
         cohesion = round((cohesion / rel_num) * 20, 2)
         return cohesion
 
-    def calc_cohesion_factor(self, chars):
+    def calc_cohesion_factor(self, chars, for_char):
         """Calculate the damage factor for the given characters.
 
         The stronger cohesion the given characters
@@ -345,6 +346,8 @@ class Team:
             chars (list):
                 Characters, for whom a damage factor must
                 be calculated.
+            for_char (personage.Character):
+                Unit for whom the factor must be calculated.
 
         Returns:
             float: The damage factor.
@@ -358,7 +361,7 @@ class Team:
         except KeyError:
             # character was killed during calculations
             cohesion = 0
-        return 1 + cohesion * 0.5
+        return 1 + cohesion * 0.5 * (2 if for_char.class_ == "anarchist" else 1)
 
     def increase_cohesion_for_chars(self, chars, outing_score):
         """Increase cohesion for those who went for an outing.

@@ -171,6 +171,17 @@ class MainMenu:
                 pos=(0.7, 0, -0.15),
                 clickSound=self.click_snd,
             ),
+            "anarchists": DirectButton(
+                parent=self._main_fr,
+                text_scale=0.035,
+                text_fg=RUST_COL,
+                text="Anarchists",
+                relief=None,
+                command=self._show_team,
+                extraArgs=["anarchists"],
+                pos=(0.925, 0, -0.15),
+                clickSound=self.click_snd,
+            ),
         }
         self._tactics_wids += self._team_buts.values()
 
@@ -227,6 +238,12 @@ class MainMenu:
                 "\nRaiders are good fighters at short distance and they know how to "
                 "find resources.\n\n You'll start with 2 male and 1 "
                 "female raiders."
+            ),
+            "anarchists": (
+                "Your main value is solid collective! Build relations, and your "
+                "party will survive anything.\nAnarchists build cohesion faster "
+                "than others and getting higher factors from it.\n\n"
+                "You'll start with 2 male and 1 female anarchists."
             ),
         }
         self._team_description["text"] = descs[team]

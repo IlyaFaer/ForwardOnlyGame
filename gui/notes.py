@@ -91,6 +91,12 @@ medium distance""",
     """If you want to hit an enemy
 fortification, soldiers are
 your choice""",
+    # anarchists
+    """Anarchists are companionable,
+they build cohesion much
+faster than others""",
+    """Anarchist gets damage factor
+x2 from cohesion""",
     # accuracy
     """Shooting accuracy is affected
 by lighting, distance,
