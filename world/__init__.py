@@ -587,7 +587,7 @@ class World:
 
         self._hangar = Hangar()
 
-        base.city_interface.show()  # noqa: F821
+        base.city_gui.show()  # noqa: F821
         base.train.move_to_hangar()  # noqa: F821
         base.team.rest_all()  # noqa: F821
 

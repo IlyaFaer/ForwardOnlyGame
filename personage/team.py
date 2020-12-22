@@ -120,7 +120,7 @@ class Team:
         self.cohesion = cohesion_desc[0]
         self._relations = cohesion_desc[1]
 
-        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
+        base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
 
     def cohesion_recall(self):
         """Do cohesion ability "Recall the past"."""
@@ -210,7 +210,7 @@ class Team:
     def _stop_cohesion_cooldown(self, task):
         """End cohesion abilities cooldown."""
         self.cohesion_cooldown = False
-        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
+        base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
         return task.done
 
     def _plan_cohesion_cooldown(self, delay):
@@ -220,7 +220,7 @@ class Team:
             delay (int): Cooldown length in seconds.
         """
         self.cohesion_cooldown = True
-        base.res_interface.disable_cohesion()  # noqa: F821
+        base.res_gui.disable_cohesion()  # noqa: F821
 
         base.taskMgr.doMethodLater(  # noqa: F821
             delay, self._stop_cohesion_cooldown, "stop_cohesion_cooldown"
@@ -294,7 +294,7 @@ class Team:
             cohesion += relation / 100 * rel_max
 
         self.cohesion = min(100, cohesion)
-        base.res_interface.update_cohesion(self.cohesion)  # noqa: F821
+        base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
 
     def calc_cohesion_for_chars(self, chars):
         """Calculate cohesion for an outing party.

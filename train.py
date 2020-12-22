@@ -53,7 +53,7 @@ class Train:
     """The Train object. The main game object.
 
     Includes train model, lights, sounds, parts to set
-    characters and controller.
+    characters, controller and physics.
 
     Args:
         description (dict):

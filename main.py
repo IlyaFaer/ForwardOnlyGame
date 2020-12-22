@@ -45,9 +45,10 @@ logging.basicConfig(
 class ForwardOnly(ShowBase):
     """Object, which represents the game itself.
 
-    Includes the major game systems. The main mechanism
-    represents infinite Train movement along World
-    blocks, which are loaded and unloaded on a fly.
+    Includes the major game systems and GUIs.
+    The main mechanism represents infinite
+    Train movement along World blocks, which
+    are loaded and unloaded on a fly.
     """
 
     def __init__(self):
@@ -90,7 +91,7 @@ class ForwardOnly(ShowBase):
             value (int): New money amount value.
         """
         self._dollars = max(0, value)
-        self.res_interface.update_resource("dollars", value)
+        self.res_gui.update_resource("dollars", value)
 
     @property
     def smoke_filters(self):
@@ -109,7 +110,7 @@ class ForwardOnly(ShowBase):
             value (int): New smoke filters amount.
         """
         self._smoke_filters = value
-        self.res_interface.update_resource("smoke_filters", value)
+        self.res_gui.update_resource("smoke_filters", value)
 
     @property
     def medicine_boxes(self):
@@ -128,22 +129,25 @@ class ForwardOnly(ShowBase):
             value (int): New medicine boxes amount value.
         """
         self._medicine_boxes = value
-        self.res_interface.update_resource("medicine_boxes", value)
+        self.res_gui.update_resource("medicine_boxes", value)
 
     def _configure_window(self):
         """Configure the game window.
 
-        Set fullscreen mode, and resolution
+        Set title, fullscreen mode and resolution
         according to the player's screen size.
         """
         props = WindowProperties()
+
+        props.setTitle("Forward Only Game")
         props.setFullscreen(True)
         props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
+
         self.openDefaultWindow(props=props)
 
     def _start_game(self, task):
         """Actually start the game process."""
-        self.city_interface = CityInterface()
+        self.city_gui = CityInterface()
         self.notes = TeachingNotes()
 
         self.main_menu.hide()
@@ -167,6 +171,8 @@ class ForwardOnly(ShowBase):
         self.world.clear_prev_block()
 
         self.train.move_along_block(self._current_block)
+
+        # track the Stench
         if self._current_block.is_stenchy:
             self.effects_mgr.stench_effect.play()
             self.world.stop_ambient_snd()
@@ -185,10 +191,10 @@ class ForwardOnly(ShowBase):
         self._current_block = next_block
 
     def start_new_game(self, chosen_team):
-        """Start a new game, replacing the saved one.
+        """Start new game.
 
         Args:
-            chosen_team (str): The chosen main game tactics.
+            chosen_team (str): The chosen initial team.
         """
         self.disableAllAudio()
 
@@ -209,7 +215,7 @@ class ForwardOnly(ShowBase):
         self._current_block = self.world.prepare_next_block()
 
         self.char_gui = CharacterInterface()
-        self.res_interface = ResourcesInterface()
+        self.res_gui = ResourcesInterface()
 
         self.doMethodLater(3, self._start_game, "start_game")
 
@@ -219,9 +225,9 @@ class ForwardOnly(ShowBase):
 
     def save_game(self):
         """Save the current game."""
-        save = shelve.open("saves/save1")
-
         self.world.save_map()
+
+        save = shelve.open("saves/save1")
 
         save["cur_block"] = self.world.current_block_number
         save["last_angle"] = self.world.last_cleared_block_angle
@@ -254,7 +260,7 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Team()
-        self.res_interface = ResourcesInterface()
+        self.res_gui = ResourcesInterface()
         self.team.load(save["team"], self.train.parts, save["cohesion"])
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)

@@ -2,12 +2,24 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Small utils for game logic.
+Small common utils for the game logic.
 """
 import random
 import os.path
 
 from const import MOD_DIR
+
+
+def address(name):
+    """Return full address of the given model.
+
+    Args:
+        name (str): Model name.
+
+    Returns:
+        str: Full model file address.
+    """
+    return MOD_DIR + name + ".bam"
 
 
 def chance(percent):
@@ -24,32 +36,20 @@ def chance(percent):
     return random.randint(1, 100) <= percent
 
 
-def address(name):
-    """Return full address of the given model.
+def drown_snd(snd, task):
+    """Drown the given sound.
 
     Args:
-        name (str): Model name.
-
-    Returns:
-        str: Full model file address.
+        snd (panda3d.core.AudioSound): Sound to drown.
     """
-    return MOD_DIR + name + ".bam"
+    volume = snd.getVolume()
+    if volume <= 0:
+        snd.stop()
+        snd.setVolume(1)
+        return task.done
 
-
-def take_random(list_):
-    """Take a random element from the given list.
-
-    The chosen element will be deleted from the list.
-
-    Args:
-        list_ (list): List to take an element from.
-
-    Returns:
-        Any: The chosen element.
-    """
-    element = random.choice(list_)
-    list_.remove(element)
-    return element
+    snd.setVolume(volume - 0.1)
+    return task.again
 
 
 def save_exists():
@@ -70,17 +70,17 @@ def save_exists():
     )
 
 
-def drown_snd(snd, task):
-    """Drown the given sound.
+def take_random(list_):
+    """Take a random element from the given list.
+
+    The chosen element will be deleted from the list.
 
     Args:
-        snd (panda3d.core.AudioSound): Sound to drown.
-    """
-    volume = snd.getVolume()
-    if volume <= 0:
-        snd.stop()
-        snd.setVolume(1)
-        return task.done
+        list_ (list): List to take an element from.
 
-    snd.setVolume(volume - 0.1)
-    return task.again
+    Returns:
+        Any: The chosen element.
+    """
+    element = random.choice(list_)
+    list_.remove(element)
+    return element

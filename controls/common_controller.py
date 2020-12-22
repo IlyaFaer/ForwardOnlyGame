@@ -108,12 +108,8 @@ class CommonController:
         base.accept("mouse_ray-again", self._point_obj)  # noqa: F821
         base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.05, self._collide_mouse, "collide_mouse"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.06, self._traverse, name="main_traverse"
-        )
+        taskMgr.doMethodLater(0.05, self._collide_mouse, "collide_mouse")  # noqa: F821
+        taskMgr.doMethodLater(0.06, self._traverse, name="main_traverse")  # noqa: F821
 
     def choose_char(self, char_id):
         """Choose a character with the given id.
@@ -142,8 +138,8 @@ class CommonController:
     def _choose_obj(self):
         """Event: left mouse button clicked.
 
-        Organizes clicking on active objects: characters,
-        rest zones.
+        Organizes clicking on active objects:
+        characters, rest zones.
         """
         if not self._pointed_obj:
             self._deselect()
@@ -187,7 +183,7 @@ class CommonController:
                 self.chosen_char.exchange_pos(self._chars[self._pointed_obj])
 
     def _point_obj(self, event):
-        """Event: mouse pointer hits a collision."""
+        """Event: mouse pointer hits a collision solid."""
         pointed_obj = event.getIntoNodePath().getName()
         if pointed_obj == self._pointed_obj and pointed_obj is not None:
             return
@@ -216,7 +212,7 @@ class CommonController:
         base.char_gui.hide_tip()  # noqa: F821
 
     def _collide_mouse(self, task):
-        """Organize active mouse collision object movement.
+        """Organize mouse collision ray movement.
 
         Args:
             task (panda3d.core.PythonTask): Point by mouse task

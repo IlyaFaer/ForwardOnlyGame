@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Game main camera configuring and controls.
+The main camera configuring and controls.
 """
 from direct.interval.LerpInterval import LerpHprInterval, LerpPosInterval
 from panda3d.core import Vec3
@@ -34,24 +34,55 @@ class CameraController:
 
         base.camLens.setNear(0.25)  # noqa: F821
 
-    def set_controls(self, train):
-        """Configure the main camera and its controls.
+    def _disable_ctrl_keys(self):
+        """Ignore all the camera control keys."""
+        for key in (
+            "arrow_up",
+            "arrow_down",
+            "arrow_left",
+            "arrow_right",
+            "arrow_up-up",
+            "arrow_down-up",
+            "arrow_left-up",
+            "arrow_right-up",
+            "alt-arrow_left",
+            "alt-arrow_right",
+            "alt-arrow_up",
+            "alt-arrow_down",
+            "+",
+            "-",
+            "+-up",
+            "--up",
+            "wheel_up",
+            "wheel_down",
+        ):
+            base.ignore(key)  # noqa: F821
+
+    def _move(self, x, y, time):
+        """Start camera movement with an interval (on key press).
 
         Args:
-            train (train.Train): The Train object.
+            x (float): Translation along x axis.
+            y (float): Translation along y axis.
+            time (float): Interval length.
         """
-        base.disableMouse()  # noqa: F821
+        if self._move_int is not None:
+            self._move_int.pause()
 
-        self._np = train.node.attachNewNode("camera_node")
-        base.cam.reparentTo(self._np)  # noqa: F821
-        base.cam.setPos(self._target)  # noqa: F821
-        base.cam.lookAt(train.model)  # noqa: F821
+        if x:
+            # if camera moves forward, consider Z coordinate
+            # to calibrate move limits when zoomed
+            if x == 1:
+                x -= MAX_Z - base.cam.getZ()  # noqa: F821
 
-        self._set_move_keys()
-        base.accept("c", self._toggle_centered_view)  # noqa: F821
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+            self._target.setX(x)
+        else:
+            self._target.setY(y)
+
+        self._move_int = LerpPosInterval(
+            base.cam, time, self._target, other=self._np  # noqa: F821
         )
+        self._move_int.start()
 
     def _move_with_mouse(self, task):
         """Implement moving camera with mouse.
@@ -92,108 +123,6 @@ class CameraController:
 
         return task.again
 
-    def _move(self, x, y, time):
-        """Start camera movement with an interval (on key press).
-
-        Args:
-            x (float): Translation along x axis.
-            y (float): Translation along y axis.
-            time (float): Interval length.
-        """
-        if self._move_int is not None:
-            self._move_int.pause()
-
-        if x:
-            # if camera moves forward, consider Z coordinate
-            # to calibrate move limits when zoomed
-            if x == 1:
-                x -= MAX_Z - base.cam.getZ()  # noqa: F821
-
-            self._target.setX(x)
-        else:
-            self._target.setY(y)
-
-        self._move_int = LerpPosInterval(
-            base.cam, time, self._target, other=self._np  # noqa: F821
-        )
-        self._move_int.start()
-
-    def _zoom_timed(self, x, z):
-        """Zoom camera for some time.
-
-        Args:
-            x (float): Translation along x axis.
-            z (float): Translation along z axis.
-        """
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.12, self._stop, "zoom_stop", extraArgs=[False, True, True]
-        )
-        self._zoom(x, z, 0.2)
-
-    def _zoom(self, x, z, zoom_time):
-        """Zoom camera.
-
-        Args:
-            x (float): Translation along x axis.
-            z (float): Translation along z axis.
-            zoom_time (float): Time to zoom.
-        """
-        if self._move_int is not None:
-            self._move_int.pause()
-
-        self._target.setX(x)
-        self._target.setZ(z)
-
-        self._move_int = LerpPosInterval(
-            base.cam, zoom_time, self._target, other=self._np  # noqa: F821
-        )
-        self._move_int.start()
-
-    def _turn(self, h, r):
-        """Turn camera with a single interval (on key press).
-
-        Args:
-            h (int): Translation for camera heading, angle.
-            r (int): Translation for camera rolling, angle.
-        """
-        if self._turn_int is not None and self._turn_int.isPlaying():
-            return
-
-        self._turn_int = LerpHprInterval(self._np, 4, (self._np.getH() + h, 0, r))
-        self._turn_int.start()
-
-    def _stop(self, stop_x, stop_zoom=False, is_hard=False):
-        """Stop moving and rotating camera (on key release).
-
-        Args:
-            stop_x (bool):
-                True - movement along x axis should be stopped.
-                False - movement along y axis should be stopped.
-            stop_zoom (bool):
-                True if camera stopped zoom movement.
-            is_hard (bool):
-                If False, camera will be stopped with an deceleration
-                interval. If True, stopping will be immediate.
-        """
-        if self._move_int is not None:
-            self._move_int.pause()
-
-        if self._turn_int is not None:
-            self._turn_int.pause()
-
-        if stop_zoom:
-            self._target = base.cam.getPos()  # noqa: F821
-        elif stop_x:
-            self._target.setX(base.cam.getX())  # noqa: F821
-        else:
-            self._target.setY(base.cam.getY())  # noqa: F821
-
-        if not is_hard:
-            self._move_int = LerpPosInterval(
-                base.cam, 0.75, self._target, other=self._np  # noqa: F821
-            )
-            self._move_int.start()
-
     def _set_move_keys(self):
         """Set camera move and rotate keys."""
         # key pressed - start movement
@@ -230,21 +159,37 @@ class CameraController:
             extraArgs=["rotate_camera_with_mouse"],
         )
 
-    def _turn_camera_with_mouse(self):
-        """Start the main camera movement by mouse."""
-        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
-            return
+    def _stop(self, stop_x, stop_zoom=False, is_hard=False):
+        """Stop moving and rotating camera (on key release).
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.01,
-            self._rotate_camera_with_mouse,
-            "rotate_camera_with_mouse",
-            extraArgs=[
-                base.mouseWatcherNode.getMouseX(),  # noqa: F821
-                base.mouseWatcherNode.getMouseY(),  # noqa: F821
-            ],
-            appendTask=True,
-        )
+        Args:
+            stop_x (bool):
+                True - movement along x axis should be stopped.
+                False - movement along y axis should be stopped.
+            stop_zoom (bool):
+                True if camera stopped zoom movement.
+            is_hard (bool):
+                If False, camera will be stopped with an deceleration
+                interval. If True, stopping will be immediate.
+        """
+        if self._move_int is not None:
+            self._move_int.pause()
+
+        if self._turn_int is not None:
+            self._turn_int.pause()
+
+        if stop_zoom:
+            self._target = base.cam.getPos()  # noqa: F821
+        elif stop_x:
+            self._target.setX(base.cam.getX())  # noqa: F821
+        else:
+            self._target.setY(base.cam.getY())  # noqa: F821
+
+        if not is_hard:
+            self._move_int = LerpPosInterval(
+                base.cam, 0.75, self._target, other=self._np  # noqa: F821
+            )
+            self._move_int.start()
 
     def _rotate_camera_with_mouse(self, x, z, task):
         """Rotate the main camera according to the mouse movement.
@@ -293,7 +238,7 @@ class CameraController:
             self._np.setHpr(0)
 
             self._disable_ctrl_keys()
-            base.taskMgr.remove("move_camera_with_mouse")  # noqa: F821
+            taskMgr.remove("move_camera_with_mouse")  # noqa: F821
         else:
             base.cam.wrtReparentTo(self._np)  # noqa: F821
             self._set_move_keys()
@@ -301,35 +246,90 @@ class CameraController:
             base.cam.setPosHpr(*self._last_pos, *self._last_hpr)  # noqa: F821
             self._np.setHpr(*self._last_np_hpr)
 
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
             )
 
         self._is_centered = not self._is_centered
 
-    def _disable_ctrl_keys(self):
-        """Ignore all the camera control keys."""
-        for key in (
-            "arrow_up",
-            "arrow_down",
-            "arrow_left",
-            "arrow_right",
-            "arrow_up-up",
-            "arrow_down-up",
-            "arrow_left-up",
-            "arrow_right-up",
-            "alt-arrow_left",
-            "alt-arrow_right",
-            "alt-arrow_up",
-            "alt-arrow_down",
-            "+",
-            "-",
-            "+-up",
-            "--up",
-            "wheel_up",
-            "wheel_down",
-        ):
-            base.ignore(key)  # noqa: F821
+    def _turn(self, h, r):
+        """Turn camera with a single interval (on key press).
+
+        Args:
+            h (int): Translation for camera heading, angle.
+            r (int): Translation for camera rolling, angle.
+        """
+        if self._turn_int is not None and self._turn_int.isPlaying():
+            return
+
+        self._turn_int = LerpHprInterval(self._np, 4, (self._np.getH() + h, 0, r))
+        self._turn_int.start()
+
+    def _turn_camera_with_mouse(self):
+        """Start the main camera movement by mouse."""
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.01,
+            self._rotate_camera_with_mouse,
+            "rotate_camera_with_mouse",
+            extraArgs=[
+                base.mouseWatcherNode.getMouseX(),  # noqa: F821
+                base.mouseWatcherNode.getMouseY(),  # noqa: F821
+            ],
+            appendTask=True,
+        )
+
+    def _zoom(self, x, z, zoom_time):
+        """Zoom camera.
+
+        Args:
+            x (float): Translation along x axis.
+            z (float): Translation along z axis.
+            zoom_time (float): Time to zoom.
+        """
+        if self._move_int is not None:
+            self._move_int.pause()
+
+        self._target.setX(x)
+        self._target.setZ(z)
+
+        self._move_int = LerpPosInterval(
+            base.cam, zoom_time, self._target, other=self._np  # noqa: F821
+        )
+        self._move_int.start()
+
+    def _zoom_timed(self, x, z):
+        """Zoom camera for some time.
+
+        Args:
+            x (float): Translation along x axis.
+            z (float): Translation along z axis.
+        """
+        taskMgr.doMethodLater(  # noqa: F821
+            0.12, self._stop, "zoom_stop", extraArgs=[False, True, True]
+        )
+        self._zoom(x, z, 0.2)
+
+    def set_controls(self, train):
+        """Configure the main camera and its controls.
+
+        Args:
+            train (train.Train): The Train object.
+        """
+        base.disableMouse()  # noqa: F821
+
+        self._np = train.node.attachNewNode("camera_node")
+        base.cam.reparentTo(self._np)  # noqa: F821
+        base.cam.setPos(self._target)  # noqa: F821
+        base.cam.lookAt(train.model)  # noqa: F821
+
+        self._set_move_keys()
+        base.accept("c", self._toggle_centered_view)  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+        )
 
     def set_hangar_pos(self, hangar):
         """Set camera to hangar position.
@@ -355,7 +355,7 @@ class CameraController:
         """Enable all the camera control keys."""
         self._set_move_keys()
         base.accept("c", self._toggle_centered_view)  # noqa: F821
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
         )
 

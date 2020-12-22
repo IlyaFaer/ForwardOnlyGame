@@ -54,11 +54,11 @@ class TrainController:
         Args:
             train (train.Train): The Train object.
         """
-        # speed smoothly changes with holding w/s keys
+        # speed smoothly changes while holding w/s keys
         base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
         base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
-        base.accept("w-up", base.taskMgr.remove, ["change_train_speed"])  # noqa: F821
-        base.accept("s-up", base.taskMgr.remove, ["change_train_speed"])  # noqa: F821
+        base.accept("w-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
+        base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
 
         base.accept("f", train.toggle_lights)  # noqa: F821
 
@@ -70,11 +70,12 @@ class TrainController:
     def move_along_block(self, block, train_np):
         """Start the Train move intervals for the given block.
 
-        There are two intervals: the Train movement and
-        synchronous camera movement.
+        There are two intervals: the Train movement
+        and synchronous camera movement.
 
         Args:
-            block (world.block.Block): World block to move along.
+            block (world.block.Block):
+                The World block to move along.
             train_np (panda3d.core.NodePath): Train node.
         """
         self.on_et = block.enemy_territory
@@ -99,7 +100,7 @@ class TrainController:
 
         Args:
             speed (float):
-                Rate to set for animation, move and sound intervals.
+                Rate to set for animation, move and sounds.
         """
         self._move_par.setPlayRate(speed)
         self._move_anim_int.setPlayRate(speed)
@@ -116,7 +117,7 @@ class TrainController:
         Args:
             diff (float): Coefficient to change speed.
         """
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6,
             self._change_speed,
             "change_train_speed",
@@ -133,14 +134,13 @@ class TrainController:
 
     def _stop_move(self):
         """Stop the Train movement."""
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.6, self._play_stop_snd, "train_stop_snd"
-        )
+        taskMgr.doMethodLater(0.6, self._play_stop_snd, "train_stop_snd")  # noqa: F821
         base.train.stop_sparks()  # noqa: F821
         self._move_par.pause()
         self._move_anim_int.pause()
+
         self._is_stopped = True
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.07,
             drown_snd,
             "drown_move_snd",
@@ -160,8 +160,7 @@ class TrainController:
         """Actually change the Train speed.
 
         Args:
-            diff (float): Coefficient to change Train speed.
-            task (panda3d.core.PythonTask): Task object.
+            diff (float): Coefficient to change the Train speed.
         """
         if self._is_stopped and diff > 0:
             self._start_move()
@@ -197,8 +196,8 @@ class TrainController:
         return task.done
 
     def speed_to_min(self):
-        """Accelerate to minimum combat speed."""
-        base.taskMgr.remove("change_train_speed")  # noqa: F821
+        """Accelerate to minimum speed."""
+        taskMgr.remove("change_train_speed")  # noqa: F821
         speed = self._move_anim_int.getPlayRate()
         if speed >= MIN_SPEED:
             return
@@ -207,13 +206,13 @@ class TrainController:
         acc_steps = (MIN_SPEED - speed) / 0.05
 
         # start accelerating
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6, self._change_speed, "speed_up_train", extraArgs=[0.05], appendTask=True
         )
         # stop accelerating
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6 * acc_steps + 0.2,
-            base.taskMgr.remove,  # noqa: F821
+            taskMgr.remove,  # noqa: F821
             "stop_speedind_up",
             extraArgs=["speed_up_train"],
         )
@@ -228,7 +227,7 @@ class TrainController:
             self._brake_snd.setVolume(1)
         else:
             self._brake_snd.play()
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 3,
                 drown_snd,
                 "drown_brake_snd",
@@ -243,7 +242,7 @@ class TrainController:
         Args:
             target (float): Target speed.
         """
-        base.taskMgr.remove("change_train_speed")  # noqa: F821
+        taskMgr.remove("change_train_speed")  # noqa: F821
 
         speed = self._move_anim_int.getPlayRate()
         if speed <= target:
@@ -253,7 +252,7 @@ class TrainController:
         acc_steps = (speed - target) / 0.05
 
         # start decelerating
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6,
             self._change_speed,
             "slow_down_train",
@@ -261,9 +260,9 @@ class TrainController:
             appendTask=True,
         )
         # stop decelerating
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6 * acc_steps + 0.2,
-            base.taskMgr.remove,  # noqa: F821
+            taskMgr.remove,  # noqa: F821
             "stop_slowing_down",
             extraArgs=["slow_down_train"],
         )
@@ -272,18 +271,18 @@ class TrainController:
         """Completely stop the Train."""
         base.ignore("w")  # noqa: F821
         base.ignore("s")  # noqa: F821
-        base.taskMgr.remove("change_train_speed")  # noqa: F821
+        taskMgr.remove("change_train_speed")  # noqa: F821
 
         # calculate deceleration length
         speed = self._move_anim_int.getPlayRate()
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6, self._change_speed, "stop_train", extraArgs=[-0.05], appendTask=True
         )
         # stop decelerating
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6 * (speed / 0.05) + 0.8, self._finish_stopping, "finish_stopping"
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.6 * (speed / 0.05) + 0.2,
             base.world.enemy.stop_ride_anim,  # noqa: F821
             "stop_riding",
@@ -303,7 +302,7 @@ class TrainController:
 
     def _finish_stopping(self, task):
         """Finish stopping the damaged Train."""
-        base.taskMgr.remove("stop_train")  # noqa: F821
+        taskMgr.remove("stop_train")  # noqa: F821
         base.train.stop_sparks()  # noqa: F821
 
         base.main_menu.show(is_game_over=True)  # noqa: F821

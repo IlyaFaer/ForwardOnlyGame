@@ -39,25 +39,7 @@ class TrainPart:
         self.enemies = []
         self._cells = positions
 
-        # organize a manipulating arrow
-        self._arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
-        self._arrow.setPos(*arrow_pos["pos"])
-        self._arrow.setH(arrow_pos["angle"])
-        self._arrow.clearLight()
-
-        # set manipulating arrow collisions
-        col_node = CollisionNode(name)
-        col_node.setFromCollideMask(NO_MASK)
-        col_node.setIntoCollideMask(MOUSE_MASK)
-        col_node.addSolid(
-            CollisionPolygon(
-                Point3(-0.06, -0.06, 0),
-                Point3(-0.06, 0.06, 0),
-                Point3(0.06, 0.06, 0),
-                Point3(0.06, -0.06, 0),
-            )
-        )
-        self._arrow.attachNewNode(col_node)
+        self._arrow = self._prepare_arrow(name, arrow_pos)
 
         # shooting zone for this TrainPart
         col_node = CollisionNode("shoot_zone_" + name)
@@ -76,9 +58,39 @@ class TrainPart:
         """The number of free cells on this part.
 
         Returns:
-            int: The number of free cells
+            int: The number of free cells.
         """
         return len(self._cells)
+
+    def _prepare_arrow(self, name, arrow_pos):
+        """Prepare a manipulating arrow for this part.
+
+        Args:
+            name (str): Name of the part.
+            arrow_pos (dict): Arrows position.
+
+        Returns:
+            panda3d.core.NodePath: Arrow node.
+        """
+        arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
+        arrow.setPos(*arrow_pos["pos"])
+        arrow.setH(arrow_pos["angle"])
+        arrow.clearLight()
+
+        # set manipulating arrow collisions
+        col_node = CollisionNode(name)
+        col_node.setFromCollideMask(NO_MASK)
+        col_node.setIntoCollideMask(MOUSE_MASK)
+        col_node.addSolid(
+            CollisionPolygon(
+                Point3(-0.06, -0.06, 0),
+                Point3(-0.06, 0.06, 0),
+                Point3(0.06, 0.06, 0),
+                Point3(0.06, -0.06, 0),
+            )
+        )
+        arrow.attachNewNode(col_node)
+        return arrow
 
     def enemy_came(self, event):
         """Enemy unit entered this part shooting range."""
@@ -126,13 +138,13 @@ class TrainPart:
         self._cells.append(position)
         self.chars.remove(character)
 
-    def show_arrow(self):
-        """Show manipulating arrow of this TrainPart."""
-        self._arrow.reparentTo(self.parent)
-
     def hide_arrow(self):
         """Hide manipulating arrow of this TrainPart."""
         self._arrow.detachNode()
+
+    def show_arrow(self):
+        """Show manipulating arrow of this TrainPart."""
+        self._arrow.reparentTo(self.parent)
 
 
 class RestPart:
@@ -198,10 +210,10 @@ class RestPart:
         """
         self.chars.remove(character)
 
-    def show_arrow(self):
+    def hide_arrow(self):
         """Rest parts doesn't have manipulating arrows."""
         pass
 
-    def hide_arrow(self):
+    def show_arrow(self):
         """Rest parts doesn't have manipulating arrows."""
         pass
