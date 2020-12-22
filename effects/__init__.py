@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The game Visual effects API.
+The game visual effects API.
 """
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.Transitions import Transitions
@@ -18,7 +18,7 @@ from utils import drown_snd
 
 
 class EffectsManager:
-    """Manager to control game visual effects."""
+    """Manager to control the game visual effects."""
 
     def __init__(self):
         self._explosion_lights = self._set_explosion_lights()
@@ -46,15 +46,29 @@ class EffectsManager:
 
         return lights
 
-    def fade_out_screen(self, task):
-        """Smoothly fill the screen with black color."""
-        self._transition.fadeOut(3)
-        return task.done
+    def bomb_explosion(self, parent):
+        """Prepare a bomb explosion effect for the given object.
 
-    def fade_in_screen(self, task):
-        """Smoothly fill the screen with natural colors."""
-        self._transition.fadeIn(3)
-        return task.done
+        Args:
+            parent (object):
+                Must include "model" property.
+
+        Returns:
+            BombExplosion: Hand bomb explosion effect object.
+        """
+        return BombExplosion(parent)
+
+    def burn_smoke(self, parent):
+        """Prepare a burning object smoke effect.
+
+        Args:
+            parent (object):
+                Must include "id" and "model" properties.
+
+        Returns:
+            BurnSmoke: Burning object smoke effect.
+        """
+        return BurnSmoke(parent)
 
     def explosion(self, parent):
         """Prepare an explosion effect for the given object.
@@ -80,29 +94,15 @@ class EffectsManager:
         """
         return Explosion(self._explosion_lights, parent, "explode_fire2", 1.9)
 
-    def burn_smoke(self, parent):
-        """Prepare a burning object smoke effect.
+    def fade_out_screen(self, task):
+        """Smoothly fill the screen with black color."""
+        self._transition.fadeOut(3)
+        return task.done
 
-        Args:
-            parent (object):
-                Must include "id" and "model" properties.
-
-        Returns:
-            BurnSmoke: Burning object smoke effect.
-        """
-        return BurnSmoke(parent)
-
-    def bomb_explosion(self, parent):
-        """Prepare a bomb explosion effect for the given object.
-
-        Args:
-            parent (object):
-                Must include "model" property.
-
-        Returns:
-            BombExplosion: Hand bomb explosion effect object.
-        """
-        return BombExplosion(parent)
+    def fade_in_screen(self, task):
+        """Smoothly fill the screen with natural colors."""
+        self._transition.fadeIn(3)
+        return task.done
 
 
 class Explosion:
@@ -119,10 +119,10 @@ class Explosion:
 
     def __init__(self, explode_lights, parent, ptf, length):
         self._length = length
+        self._parent = parent
 
         self._lights = explode_lights
         self._light_coef = 1.5
-        self._parent = parent
 
         self._sparks = ParticleEffect()
         self._sparks.loadConfig("effects/explode_sparks.ptf")
@@ -135,34 +135,12 @@ class Explosion:
         self._snd = base.sound_mgr.loadSfx("sounds/explosion1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._snd, parent.model)  # noqa: F821
 
-    def play(self):
-        """Make actual explosion and plan its clearing."""
-        self._snd.play()
-        self._sparks.start(self._parent.model, render)  # noqa: F821
-        self._fire.start(self._parent.model, render)  # noqa: F821
-
-        if self._lights:
-            light = self._lights.pop()
-            light.reparentTo(self._parent.model)
-            light.setPos(0)
-
-            base.taskMgr.doMethodLater(  # noqa: F821
-                0.02,
-                self._light_change,
-                self._parent.id + "_explosion_light",
-                extraArgs=[light],
-                appendTask=True,
-            )
-
-        base.taskMgr.doMethodLater(  # noqa: F821
-            self._length, self._stop_fire, self._parent.id + "_disable_exlode_fire"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
-            4.95, self._stop_sparks, self._parent.id + "_disable_exlode_sparks"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
-            5.05, self._clear, self._parent.id + "_clear_explode"
-        )
+    def _clear(self, task):
+        """Clear this explosion effect."""
+        self._sparks.cleanup()
+        self._fire.cleanup()
+        base.sound_mgr.detach_sound(self._snd)  # noqa: F821
+        return task.done
 
     def _light_change(self, light, task):
         """Change the explosion light attenuation.
@@ -181,22 +159,44 @@ class Explosion:
         light.node().setAttenuation((self._light_coef - 1, 0, self._light_coef))
         return task.again
 
-    def _stop_sparks(self, task):
-        """Disable sparks particle effect."""
-        self._sparks.disable()
-        return task.done
-
     def _stop_fire(self, task):
         """Disable fire particle effect."""
         self._fire.disable()
         return task.done
 
-    def _clear(self, task):
-        """Clear this explosion effect."""
-        self._sparks.cleanup()
-        self._fire.cleanup()
-        base.sound_mgr.detach_sound(self._snd)  # noqa: F821
+    def _stop_sparks(self, task):
+        """Disable sparks particle effect."""
+        self._sparks.disable()
         return task.done
+
+    def play(self):
+        """Make actual explosion and plan its clearing."""
+        self._snd.play()
+        self._sparks.start(self._parent.model, render)  # noqa: F821
+        self._fire.start(self._parent.model, render)  # noqa: F821
+
+        if self._lights:
+            light = self._lights.pop()
+            light.reparentTo(self._parent.model)
+            light.setPos(0)
+
+            taskMgr.doMethodLater(  # noqa: F821
+                0.02,
+                self._light_change,
+                self._parent.id + "_explosion_light",
+                extraArgs=[light],
+                appendTask=True,
+            )
+
+        taskMgr.doMethodLater(  # noqa: F821
+            self._length, self._stop_fire, self._parent.id + "_disable_exlode_fire"
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            4.95, self._stop_sparks, self._parent.id + "_disable_exlode_sparks"
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            5.05, self._clear, self._parent.id + "_clear_explode"
+        )
 
 
 class BurnSmoke:
@@ -211,18 +211,18 @@ class BurnSmoke:
         self._smoke = ParticleEffect()
         self._smoke.loadConfig("effects/after_explode_smoke1.ptf")
 
-    def play(self):
-        """Start playing the particle effect."""
-        self._smoke.start(self._parent.model, render)  # noqa: F821
-        base.taskMgr.doMethodLater(  # noqa: F821
-            11, self._clear_smoke, self._parent.id + "_stop_smoke"
-        )
-
     def _clear_smoke(self, task):
         """Clear the smoke effect."""
         self._smoke.softStop()
         self._smoke.cleanup()
         return task.done
+
+    def play(self):
+        """Start playing the particle effect."""
+        self._smoke.start(self._parent.model, render)  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            11, self._clear_smoke, self._parent.id + "_stop_smoke"
+        )
 
 
 class BombExplosion:
@@ -231,7 +231,9 @@ class BombExplosion:
     Includes sound and particle effects.
 
     Args:
-        parent (object): Object to explode.
+        parent (object):
+            Object to explode. Must include
+            "model" property.
     """
 
     def __init__(self, parent):
@@ -246,6 +248,12 @@ class BombExplosion:
         self._snd = base.sound_mgr.loadSfx("sounds/bomb_explosion1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._snd, parent.model)  # noqa: F821
 
+    def _stop_explosion(self, task):
+        """Disable explosion effect."""
+        self._smoke.softStop()
+        self._sparks.softStop()
+        return task.done
+
     def play(self):
         """Make actual explosion and plan its stop."""
         self._snd.play()
@@ -254,15 +262,9 @@ class BombExplosion:
         self._smoke.softStart()
         self._sparks.softStart()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             2.49, self._stop_explosion, "train_disable_bomb_explosion"
         )
-
-    def _stop_explosion(self, task):
-        """Disable explosion effect."""
-        self._smoke.softStop()
-        self._sparks.softStop()
-        return task.done
 
     def setPos(self, x, y, z):
         """Set explosion position.
@@ -277,7 +279,10 @@ class BombExplosion:
 
 
 class Stench:
-    """All the Stench visual effects and sounds as an object."""
+    """
+    All the Stench visual effects and
+    sounds as a single object.
+    """
 
     def __init__(self):
         self._is_playing = False
@@ -309,7 +314,7 @@ class Stench:
         base.win.addRenderTexture(  # noqa: F821
             tex, GraphicsOutput.RTMTriggeredCopyTexture
         )
-        base.taskMgr.add(self._snapshot, "tex_snapshot")  # noqa: F821
+        taskMgr.add(self._snapshot, "tex_snapshot")  # noqa: F821
 
         self._bcard = base.win.getTextureCard()  # noqa: F821
         self._bcard.reparentTo(background)  # noqa: F821
@@ -325,13 +330,15 @@ class Stench:
         self._fcard.setScale(1.08)
         self._fcard.hide()
 
-    def play_clouds(self):
-        """Start playing the Stench particle effect."""
-        if self._is_playing:
-            return
+    def _snapshot(self, task):
+        """Make snapshot of the screen."""
+        if task.time > self._nextclick:
+            self._nextclick += 0.001
+            if self._nextclick < task.time:
+                self._nextclick = task.time
+            base.win.triggerCopy()  # noqa: F821
 
-        self._stench.start(base.train.model, render)  # noqa: F821
-        self._stench.softStart()
+        return task.cont
 
     def play(self):
         """Start playing the Stench visual effects and sounds."""
@@ -349,6 +356,14 @@ class Stench:
         self._snd3.play()
         self._snd4.play()
 
+    def play_clouds(self):
+        """Start playing the Stench particle effect."""
+        if self._is_playing:
+            return
+
+        self._stench.start(base.train.model, render)  # noqa: F821
+        self._stench.softStart()
+
     def stop(self):
         """Stop playing the Stench effects and sounds."""
         if not self._is_playing:
@@ -356,16 +371,16 @@ class Stench:
 
         self._is_playing = False
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.2, drown_snd, "drown_stench_snd1", extraArgs=[self._snd1], appendTask=True
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.2, drown_snd, "drown_stench_snd2", extraArgs=[self._snd2], appendTask=True
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.2, drown_snd, "drown_stench_snd3", extraArgs=[self._snd3], appendTask=True
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.2, drown_snd, "drown_stench_snd4", extraArgs=[self._snd4], appendTask=True
         )
         self._stench.softStop()
@@ -374,13 +389,3 @@ class Stench:
         self._bcard.hide()
 
         render.clearFog()  # noqa: F821
-
-    def _snapshot(self, task):
-        """Make snapshot of the screen."""
-        if task.time > self._nextclick:
-            self._nextclick += 0.001
-            if self._nextclick < task.time:
-                self._nextclick = task.time
-            base.win.triggerCopy()  # noqa: F821
-
-        return task.cont

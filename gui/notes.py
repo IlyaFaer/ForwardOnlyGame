@@ -145,18 +145,14 @@ class TeachingNotes:
         )
         self._fr.hide()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            25, self._show_note, "show_teaching_note"
-        )
+        taskMgr.doMethodLater(30, self._show_note, "show_teaching_note")  # noqa: F821
 
     def _show_note(self, task):
-        """Shot next teaching note."""
+        """Show the next teaching note."""
         self._note["text"] = self._note_text
         self._fr.show()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            10, self._hide_note, "hide_teaching_note"
-        )
+        taskMgr.doMethodLater(10, self._hide_note, "hide_teaching_note")  # noqa: F821
         task.delayTime = 150
         return task.again
 
@@ -169,12 +165,10 @@ class TeachingNotes:
     def stop(self):
         """Stop showing teaching notes."""
         self._fr.hide()
-        base.taskMgr.remove("show_teaching_note")  # noqa: F821
-        base.taskMgr.remove("hide_teaching_note")  # noqa: F821
+        taskMgr.remove("show_teaching_note")  # noqa: F821
+        taskMgr.remove("hide_teaching_note")  # noqa: F821
 
     def resume(self):
         """Resume showing teaching notes."""
         self._note_text = random.choice(NOTES)
-        base.taskMgr.doMethodLater(  # noqa: F821
-            180, self._show_note, "show_teaching_note"
-        )
+        taskMgr.doMethodLater(180, self._show_note, "show_teaching_note")  # noqa: F821

@@ -206,6 +206,7 @@ class OutingsInterface:
             self.hide_outing()
             return
 
+        # there are effects to select a target for
         effect_str = ""
         for key, value in selected_effect.items():
             effect_str += key + " " + ("+" if value > 0 else "-") + str(value) + "\n"
@@ -245,7 +246,7 @@ class OutingsInterface:
         Args:
             effect (dict): Effect to do.
         """
-        self._char_chooser.chosen_char.do_effects(effect)
+        self._char_chooser.chosen_item.do_effects(effect)
         self._char_chooser.destroy()
         self.hide_outing()
 
@@ -268,7 +269,7 @@ class OutingsInterface:
         self._upcome_text.show()
         self._upcome_ico.show()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.3, self._blink_upcome_icon, "blink_outing_icon"
         )
 

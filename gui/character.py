@@ -176,7 +176,7 @@ class CharacterInterface:
             self._show_char_desc()
             self._show_char_desc()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.5, self._update_char_info, "track_char_info"
         )
 
@@ -193,7 +193,7 @@ class CharacterInterface:
         if self._char_desc_shown:
             self._show_char_desc()
 
-        base.taskMgr.remove("track_char_info")  # noqa: F821
+        taskMgr.remove("track_char_info")  # noqa: F821
         self._char = None
 
         for but in self._rest_buttons.values():
@@ -205,7 +205,7 @@ class CharacterInterface:
         """Show tooltip with the given text.
 
         Args:
-            unit (str): Text to show in the tooltip.
+            text (str): Text to show in the tooltip.
         """
         if not base.mouseWatcherNode.hasMouse():  # noqa: F821
             return
@@ -359,7 +359,7 @@ class CharacterInterface:
         """Show detailed character description.
 
         Includes description of every character's
-        trait, and his/her current status.
+        trait and his/her current status.
         """
         if self._char_desc_shown:
             self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.115)

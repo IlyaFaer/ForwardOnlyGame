@@ -22,7 +22,8 @@ from .widgets import ICON_PATH, RUST_COL, SILVER_COL  # noqa: F401
 class MainMenu:
     """The main game menu.
 
-    Includes starting a game, loading, saving and exiting.
+    Includes starting a game, loading,
+    saving and exiting functions.
     """
 
     def __init__(self):
@@ -126,7 +127,7 @@ class MainMenu:
             )
 
     def _choose_tactics(self):
-        """Choose inital tactics before new game start."""
+        """Choose initial tactics before new game start."""
         if self._chosen_team:
             return
 
@@ -148,39 +149,33 @@ class MainMenu:
         self._team_preview.setTransparency(TransparencyAttrib.MAlpha)
         self._tactics_wids.append(self._team_preview)
 
+        but_params = {
+            "parent": self._main_fr,
+            "text_scale": 0.035,
+            "text_fg": RUST_COL,
+            "relief": None,
+            "clickSound": self.click_snd,
+            "command": self._show_team,
+        }
+
         self._team_buts = {
             "soldiers": DirectButton(
-                parent=self._main_fr,
-                text_scale=0.035,
-                text_fg=RUST_COL,
                 text="Soldiers",
-                relief=None,
-                command=self._show_team,
                 extraArgs=["soldiers"],
                 pos=(0.5, 0, -0.15),
-                clickSound=self.click_snd,
+                **but_params,
             ),
             "raiders": DirectButton(
-                parent=self._main_fr,
-                text_scale=0.035,
-                text_fg=RUST_COL,
                 text="Raiders",
-                relief=None,
-                command=self._show_team,
                 extraArgs=["raiders"],
                 pos=(0.7, 0, -0.15),
-                clickSound=self.click_snd,
+                **but_params,
             ),
             "anarchists": DirectButton(
-                parent=self._main_fr,
-                text_scale=0.035,
-                text_fg=RUST_COL,
                 text="Anarchists",
-                relief=None,
-                command=self._show_team,
                 extraArgs=["anarchists"],
                 pos=(0.925, 0, -0.15),
-                clickSound=self.click_snd,
+                **but_params,
             ),
         }
         self._tactics_wids += self._team_buts.values()
@@ -260,11 +255,11 @@ class MainMenu:
 
     def _start_new_game(self):
         """Start a new game."""
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             4, self._clear_temp_wids, "clear_main_menu_temp_wids"
         )
         self.show_loading()
-        base.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.25,
             base.start_new_game,  # noqa: F821
             "start_new_game",

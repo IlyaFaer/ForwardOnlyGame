@@ -200,7 +200,7 @@ class CityInterface:
 
     def _purchase_upgrade(self):
         """Buy the chosen upgrade and install it on to the Train."""
-        upgrade = self._up_chooser.chosen_upgrade
+        upgrade = self._up_chooser.chosen_item
         if upgrade is None or base.dollars < int(upgrade["cost"][:-1]):  # noqa: F821
             return
 
@@ -370,18 +370,17 @@ class CityInterface:
         """Exit the current city.
 
         Hide city GUI, remove the hangar scene,
-        return Train back to railway.
+        return the Train back on railway.
         """
         self._toot_snd.play()
-        base.taskMgr.remove("increase_city_snd")  # noqa: F821
+        taskMgr.remove("increase_city_snd")  # noqa: F821
         base.train.clear_upgrade_preview()  # noqa: F821
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.3, self._dec_amb_snd, "decrease_city_snd"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
+
+        taskMgr.doMethodLater(0.3, self._dec_amb_snd, "decrease_city_snd")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.1, base.effects_mgr.fade_out_screen, "fade_out_screen"  # noqa: F821
         )
-        base.taskMgr.doMethodLater(3.1, self._clear, "clear_city_gui")  # noqa: F821
+        taskMgr.doMethodLater(3.1, self._clear, "clear_city_gui")  # noqa: F821
 
     def _clear(self, task):
         """Remove hangar scene and hide city GUI."""
@@ -396,9 +395,9 @@ class CityInterface:
             return
 
         self._write_snd.play()
-        char = self._char_chooser.chosen_char
+        char = self._char_chooser.chosen_item
         char.leave()
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.1, self._char_chooser.leave_unit, char.id + "_leave", extraArgs=[char.id]
         )
 
@@ -407,7 +406,7 @@ class CityInterface:
         if base.dollars - 200 < 0:  # noqa: F821
             return
 
-        char = self._recruit_chooser.chosen_char
+        char = self._recruit_chooser.chosen_item
         if char is None:
             return
 
@@ -456,7 +455,7 @@ class CityInterface:
 
         random.choice((self._coins_s_snd, self._coins_l_snd)).play()
 
-        self._char_chooser.chosen_char.health += value
+        self._char_chooser.chosen_item.health += value
         base.dollars -= value  # noqa: F821
 
     def _rest(self, value):
@@ -473,7 +472,7 @@ class CityInterface:
 
         random.choice((self._coins_s_snd, self._coins_l_snd)).play()
 
-        self._char_chooser.chosen_char.energy += value
+        self._char_chooser.chosen_item.energy += value
         base.dollars -= spent  # noqa: F821
 
     def _inc_amb_snd(self, task):
@@ -498,9 +497,7 @@ class CityInterface:
     def show(self):
         """Show city GUI."""
         self._amb_snd.play()
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.3, self._inc_amb_snd, "increase_city_snd"
-        )
+        taskMgr.doMethodLater(0.3, self._inc_amb_snd, "increase_city_snd")  # noqa: F821
         self._recruits = base.team.gen_recruits()  # noqa: F821
         self._city_fr.show()
         self._show_train(0.56)

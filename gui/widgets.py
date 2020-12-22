@@ -57,6 +57,20 @@ class ItemChooser(metaclass=abc.ABCMeta):
         )
         self._fr.hide()
 
+    @abc.abstractmethod
+    def _show_info(self):
+        """Show info about the chosen item."""
+        raise NotImplementedError("Chooser class must have _show_info() method.")
+
+    @property
+    def chosen_item(self):
+        """The item chosen with this widget.
+
+        Returns:
+            object: The chosen object.
+        """
+        return self._chosen_item
+
     def _next(self):
         """Choose the next item from the list."""
         self._ind += 1
@@ -90,11 +104,6 @@ class ItemChooser(metaclass=abc.ABCMeta):
         self._fr.show()
         self._show_info()
 
-    @abc.abstractmethod
-    def _show_info(self):
-        """Show info about the chosen item."""
-        raise NotImplementedError("Chooser class must have _show_info() method.")
-
 
 class CharacterChooser(ItemChooser):
     """Widget to choose a single character.
@@ -104,16 +113,6 @@ class CharacterChooser(ItemChooser):
             Optional. If True, a shadowed font
             color will be used for this widget.
     """
-
-    @property
-    def chosen_char(self):
-        """Return the chosen character object.
-
-        Returns:
-            personage.character.Character:
-                The character chosen by this widget.
-        """
-        return self._chosen_item
 
     def _show_info(self):
         """Show the current character's info in the GUI."""
@@ -163,15 +162,6 @@ class UpgradeChooser(ItemChooser):
 
         self._desc = desc_label
         self._cost = cost_label
-
-    @property
-    def chosen_upgrade(self):
-        """Returns the chosen upgrade.
-
-        Returns:
-            dict: The chosen upgrade description.
-        """
-        return self._chosen_item
 
     def _show_info(self):
         """Show the chosen upgrade info in the related widgets."""
