@@ -153,7 +153,7 @@ class Sun:
             train_mod (panda3d.core.NodePath): Train model.
             day_time (dict): Day time description.
         """
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             self._step_duration,
             self._change_sun_state,
             "change_sun_color",
@@ -171,7 +171,7 @@ class Sun:
 
         self._arch_int.start(startT=day_time["time"]["current"] if day_time else 0)
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.1, sun_np.lookAt, extraArgs=[train_mod], name="turn_sun"
         )
 

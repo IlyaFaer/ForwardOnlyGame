@@ -57,7 +57,7 @@ class World:
         self.sun = Sun(day_part_desc)
 
         self.phys_mgr = self._set_physics()
-        base.taskMgr.add(  # noqa: F821
+        taskMgr.add(  # noqa: F821
             self.update_physics, "update_physics", extraArgs=[0], appendTask=True
         )
 
@@ -110,49 +110,6 @@ class World:
         """The block number, where the edge of the Stench is."""
         return self._stench_step
 
-    def _set_physics(self):
-        """Set the world physics.
-
-        Returns:
-            panda3d.bullet.BulletWorld: Physical world.
-        """
-        world = BulletWorld()
-        world.setGravity(Vec3(0, 0, -0.5))
-
-        shape = BulletPlaneShape(Vec3(0, 0, 1), 0.02)
-        node = BulletRigidBodyNode("Ground")
-        node.addShape(shape)
-
-        render.attachNewNode(node)  # noqa: F821
-        world.attachRigidBody(node)
-
-        base.train.set_physics(world)  # noqa: F821
-        return world
-
-    def _make_stench_step(self, task):
-        """Move the Stench edge one block further."""
-        self._map[self._stench_step].is_stenchy = True
-        self._stench_step += 1
-
-        if self._stench_step == self._block_num:
-            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
-            base.effects_mgr.stench_effect.play()  # noqa: F821
-
-        return task.again
-
-    def update_physics(self, y_coor, task):
-        """Update physics calculations.
-
-        Args:
-            y_coor (float):
-                Y coordinate for the main
-                Train physical shape.
-        """
-        self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
-
-        base.train.update_physics(y_coor)  # noqa: F821
-        return task.cont
-
     def _cache_warmup(self):
         """Load all the game resources once to cache them.
 
@@ -188,6 +145,49 @@ class World:
             base.sound_mgr.loadSfx(path)  # noqa: F821
 
         return all_surf_vertices
+
+    def _make_stench_step(self, task):
+        """Move the Stench edge one block further."""
+        self._map[self._stench_step].is_stenchy = True
+        self._stench_step += 1
+
+        if self._stench_step == self._block_num:
+            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
+            base.effects_mgr.stench_effect.play()  # noqa: F821
+
+        return task.again
+
+    def _set_physics(self):
+        """Set the world physics.
+
+        Returns:
+            panda3d.bullet.BulletWorld: Physical world.
+        """
+        world = BulletWorld()
+        world.setGravity(Vec3(0, 0, -0.5))
+
+        shape = BulletPlaneShape(Vec3(0, 0, 1), 0.02)
+        node = BulletRigidBodyNode("Ground")
+        node.addShape(shape)
+
+        render.attachNewNode(node)  # noqa: F821
+        world.attachRigidBody(node)
+
+        base.train.set_physics(world)  # noqa: F821
+        return world
+
+    def update_physics(self, y_coor, task):
+        """Update physics calculations.
+
+        Args:
+            y_coor (float):
+                Y coordinate for the main
+                Train physical shape.
+        """
+        self.phys_mgr.doPhysics(globalClock.getDt())  # noqa: F821
+
+        base.train.update_physics(y_coor)  # noqa: F821
+        return task.cont
 
     def _read_vertices(self, mod, path):
         """Read the model vertices and return their positions.
@@ -285,7 +285,7 @@ class World:
     def _track_amb_snd(self, task):
         """Check if current ambient sound should be changed."""
         if self.sun.day_part == "evening":
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 2,
                 self._change_amb_snd,
                 "change_ambient_sound",
@@ -293,7 +293,7 @@ class World:
                 appendTask=True,
             )
         elif self.sun.day_part == "night":
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 2,
                 self._change_amb_snd,
                 "change_ambient_sound",
@@ -402,9 +402,7 @@ class World:
 
         self._set_sounds(location)
         self.enemy = Enemy()
-        base.taskMgr.doMethodLater(  # noqa: F821
-            30, self._make_stench_step, "stench_step"
-        )
+        taskMgr.doMethodLater(30, self._make_stench_step, "stench_step")  # noqa: F821
 
     def save_map(self):
         """Save the world map."""
@@ -418,7 +416,7 @@ class World:
         world_save.close()
 
     def load_location(self, location, enemy_score, disease_threshold, stench_step):
-        """Load the given location from the last world save.
+        """Load the given location from the last save.
 
         Args:
             location (str): Location name.
@@ -430,9 +428,7 @@ class World:
         self._disease_threshold = disease_threshold
 
         self._stench_step = stench_step
-        base.taskMgr.doMethodLater(  # noqa: F821
-            30, self._make_stench_step, "stench_step"
-        )
+        taskMgr.doMethodLater(30, self._make_stench_step, "stench_step")  # noqa: F821
 
         self.outings_mgr = OutingsManager(location)
 
@@ -457,7 +453,7 @@ class World:
         self.enemy.score = enemy_score
 
     def load_blocks(self, cur_block, angle):
-        """Load four blocks to continue saved game.
+        """Load blocks around player to continue saved game.
 
         There will be prepared four blocks:
         current - 2: block to clear
@@ -498,26 +494,26 @@ class World:
         return self.prepare_next_block()
 
     def _set_sounds(self, location):
-        """Configure World sounds.
+        """Configure the location sounds.
 
         Args:
             location (str):
                 Location for which sounds must be loaded.
         """
-        self._noon_ambient_snd = base.loader.loadSfx(  # noqa: F821
+        self._noon_ambient_snd = loader.loadSfx(  # noqa: F821
             "sounds/{name}.ogg".format(name=LOCATIONS[location]["ambient_sounds"][0])
         )
         self._noon_ambient_snd.setLoop(True)
         self._noon_ambient_snd.setVolume(1)
         self._noon_ambient_snd.play()
 
-        self._night_ambient_snd = base.loader.loadSfx(  # noqa: F821
+        self._night_ambient_snd = loader.loadSfx(  # noqa: F821
             "sounds/{name}.ogg".format(name=LOCATIONS[location]["ambient_sounds"][1])
         )
         self._night_ambient_snd.setVolume(0)
         self._night_ambient_snd.setLoop(True)
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             300, self._track_amb_snd, "track_ambient_sounds"
         )
 
@@ -545,7 +541,8 @@ class World:
     def _track_cities(self):
         """Track upcoming cities.
 
-        Slow down and stop Train when approaching to a city.
+        Slow down and stop the Train when
+        approaching to a city.
         """
         if self._block_num < 1:
             return
@@ -562,25 +559,25 @@ class World:
         elif self._map[self._block_num - 1].is_city:
             base.train.slow_down_to(0)  # noqa: F821
             base.notes.stop()  # noqa: F821
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 10, base.effects_mgr.fade_out_screen, "fade_screen"  # noqa: F821
             )
             # disable camera movement to avoid flying
             # camera away while loading a hangar scene
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 10,
-                base.taskMgr.remove,  # noqa: F821
+                taskMgr.remove,  # noqa: F821
                 "stop_moving_camera_with_mouse",
                 extraArgs=["move_camera_with_mouse"],
             )
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 13, self._load_hangar_scene, "load_hangar_scene"
             )
 
     def _load_hangar_scene(self, task):
         """Load the city hangar scene.
 
-        Load the scene, move Train into the hangar,
+        Load the scene, move the Train into the hangar,
         build interface and hide the team.
         """
         self.outings_mgr.hide_outing()  # noqa: F821
@@ -591,13 +588,13 @@ class World:
         base.train.move_to_hangar()  # noqa: F821
         base.team.rest_all()  # noqa: F821
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             2, base.effects_mgr.fade_in_screen, "fade_in_screen"  # noqa: F821
         )
         return task.done
 
     def unload_hangar_scene(self):
-        """Remove the current hangar scene."""
+        """Clear the current hangar scene."""
         self._hangar.clear()
         self._hangar = None
 
@@ -760,6 +757,6 @@ class Hangar:
         self._mod.removeNode()
 
         base.train.root_node.setPos(self._train_pos)  # noqa: F821
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.2, base.effects_mgr.fade_in_screen, "fade_in_screen"  # noqa: F821
         )

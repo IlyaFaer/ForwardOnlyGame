@@ -26,10 +26,8 @@ class OutingsManager:
         self._outings = copy.deepcopy(OUTINGS[location])
         self._types = tuple(self._outings.keys())
         self._snds = {
-            "Looting": base.loader.loadSfx("sounds/looting_result.ogg"),  # noqa: F821
-            "Enemy Camp": base.loader.loadSfx(  # noqa: F821
-                "sounds/enemy_camp_result.ogg"
-            ),
+            "Looting": loader.loadSfx("sounds/looting_result.ogg"),  # noqa: F821
+            "Enemy Camp": loader.loadSfx("sounds/enemy_camp_result.ogg"),  # noqa: F821
         }
         self._gui = OutingsInterface()
 
@@ -95,7 +93,7 @@ class OutingsManager:
         """Make characters go for the given outing.
 
         Calculate the result according to the outing
-        specifics and do the effects.
+        specifics, and do the effects.
 
         Args:
             outing (dict): Outing description.

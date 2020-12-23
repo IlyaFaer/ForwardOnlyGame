@@ -209,7 +209,7 @@ class Block:
 
         return surface, 0
 
-    def _load_surface_block(self, taskMgr, name, x_pos, y_pos, angle, side=None):
+    def _load_surface_block(self, name, x_pos, y_pos, angle, side=None):
         """Load surface model and set it to the given coords.
 
         Surface model will be reparented to the rails model
@@ -217,7 +217,6 @@ class Block:
         avoid freezing.
 
         Args:
-            taskMgr (direct.task.Task.TaskManager): Task manager.
             name (str): Surface model name.
             x_pos (int): Position on X axis.
             y_pos (int): Position on Y axis.
@@ -236,7 +235,7 @@ class Block:
         # load environment models asynchronous
         delay = 0
         for env_mod in self._env_mods[side]:
-            taskMgr.doMethodLater(
+            taskMgr.doMethodLater(  # noqa: F821
                 delay,
                 self._load_env_model,
                 "load_env_model",
@@ -255,7 +254,7 @@ class Block:
 
         if not base.world.sun.is_dark:  # noqa: F821
             # generate texture flowers
-            taskMgr.doMethodLater(
+            taskMgr.doMethodLater(  # noqa: F821
                 2.5,
                 self._gen_flowers,
                 "generate_flowers",
@@ -318,27 +317,15 @@ class Block:
                 address(self.name + "_rails" + ("_rusty" if self.is_rusty else ""))
             )
 
-        self._load_surface_block(
-            base.taskMgr, self._l_surface, -4, 4, self._l_angle, "l"  # noqa: F821
-        )
-        self._load_surface_block(
-            base.taskMgr, self._r_surface, 4, 4, self._r_angle, "r"  # noqa: F821
-        )
+        self._load_surface_block(self._l_surface, -4, 4, self._l_angle, "l")
+        self._load_surface_block(self._r_surface, 4, 4, self._r_angle, "r")
 
         if self.name == "l90_turn":
-            self._load_surface_block(
-                base.taskMgr, self._r_surface, -4, 12, self._l_angle  # noqa: F821
-            )
-            self._load_surface_block(
-                base.taskMgr, self._r_surface, 4, 12, self._l_angle  # noqa: F821
-            )
+            self._load_surface_block(self._r_surface, -4, 12, self._l_angle)
+            self._load_surface_block(self._r_surface, 4, 12, self._l_angle)
         elif self.name == "r90_turn":
-            self._load_surface_block(
-                base.taskMgr, self._l_surface, 4, 12, self._r_angle  # noqa: F821
-            )
-            self._load_surface_block(
-                base.taskMgr, self._l_surface, -4, 12, self._r_angle  # noqa: F821
-            )
+            self._load_surface_block(self._l_surface, 4, 12, self._r_angle)
+            self._load_surface_block(self._l_surface, -4, 12, self._r_angle)
         return self
 
     def prepare_physical_objects(self):

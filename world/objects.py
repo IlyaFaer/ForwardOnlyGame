@@ -70,7 +70,7 @@ class ArmorPlate:
     """An active shield Train upgrade.
 
     Represents an active defense upgrade - plate, which
-    can cover one of three Train sides: left, right, top.
+    can cover one of Train sides: left, right, top.
 
     Args:
         train_model (panda3d.core.NodePath):
@@ -111,6 +111,11 @@ class ArmorPlate:
         base.accept("6", self._turn_top)  # noqa: F821
         base.accept("7", self._turn_right)  # noqa: F821
 
+    def _stop_move(self, task):
+        """Release the plate moving block."""
+        self._is_on_move = False
+        return task.done
+
     def _turn_right(self):
         """Cover the right side of the Train with the plate."""
         if self._cur_position == "right" or self._is_on_move:
@@ -125,16 +130,14 @@ class ArmorPlate:
             delay = 3
 
         self._is_on_move = True
-        base.taskMgr.doMethodLater(  # noqa: F821
-            delay, self._stop_move, "stop_move_plate"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(delay, self._stop_move, "stop_move_plate")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             delay - 0.9,
             base.train.cover_part,  # noqa: F821
             "cover_part",
             extraArgs=["part_locomotive_right"],
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.5,
             base.train.uncover_part,  # noqa: F821
             "uncover_part",
@@ -156,16 +159,14 @@ class ArmorPlate:
             delay = 3
 
         self._is_on_move = True
-        base.taskMgr.doMethodLater(  # noqa: F821
-            delay, self._stop_move, "stop_move_plate"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(delay, self._stop_move, "stop_move_plate")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             delay - 0.9,
             base.train.cover_part,  # noqa: F821
             "cover_part",
             extraArgs=["part_locomotive_left"],
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.5,
             base.train.uncover_part,  # noqa: F821
             "uncover_part",
@@ -186,18 +187,11 @@ class ArmorPlate:
             self._model.actorInterval("right", playRate=-1.5).start()
 
         self._is_on_move = True
-        base.taskMgr.doMethodLater(  # noqa: F821
-            1.5, self._stop_move, "stop_move_plate"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(1.5, self._stop_move, "stop_move_plate")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.5,
             base.train.uncover_part,  # noqa: F821
             "uncover_part",
             extraArgs=[self._cur_position],
         )
         self._cur_position = "top"
-
-    def _stop_move(self, task):
-        """Release the plate moving block."""
-        self._is_on_move = False
-        return task.done
