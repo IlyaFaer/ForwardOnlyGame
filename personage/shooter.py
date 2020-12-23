@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-API for shooting units.
+Base API for shooting units.
 """
 import abc
 
@@ -26,11 +26,35 @@ class Shooter(metaclass=abc.ABCMeta):
         self.current_part = None
         self.shot_snd = None
 
+    @abc.abstractmethod
+    def _missed_shot(self):
+        """Method to calculate if shooter missed the shot.
+
+        Returns:
+            bool: True, if this shooter missed the shot.
+        """
+        raise NotImplementedError(
+            "Every shooter class must have _missed_shot() method."
+        )
+
     @abc.abstractproperty
     def shooting_speed(self):
         raise NotImplementedError(
             "Every shooter class must have shooting_speed property."
         )
+
+    def _die(self):
+        """Die actions for this shooter.
+
+        Returns:
+            bool: True, if this shooter dies for the first time.
+        """
+        if self.is_dead:
+            return False
+
+        self._stop_tasks("_aim", "_shoot", "_choose_target")
+        self._shoot_anim.finish()
+        return True
 
     def _shoot(self, task):
         """Play shooting animation and sound, make damage."""
@@ -82,27 +106,3 @@ class Shooter(metaclass=abc.ABCMeta):
         )
         base.sound_mgr.attachSoundToObject(shot_snd, self.model)  # noqa: F821
         return shot_snd
-
-    def _die(self):
-        """Die actions for this shooter.
-
-        Returns:
-            bool: True, if this shooter dies for the first time.
-        """
-        if self.is_dead:
-            return False
-
-        self._stop_tasks("_aim", "_shoot", "_choose_target")
-        self._shoot_anim.finish()
-        return True
-
-    @abc.abstractmethod
-    def _missed_shot(self):
-        """Method to calculate if shooter missed the shot.
-
-        Returns:
-            bool: True, if this shooter missed the shot.
-        """
-        raise NotImplementedError(
-            "Every shooter class must have _missed_shot() method."
-        )

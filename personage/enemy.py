@@ -53,7 +53,7 @@ CLASSES = {
 
 
 class Enemy:
-    """Class to hold an enemy fraction.
+    """Class to hold an enemy fraction overall.
 
     Includes all the currently active enemies.
     """
@@ -100,7 +100,7 @@ class Enemy:
             and not base.train.smoke_filtered  # noqa: F821
         ):
             self._is_cooldown = True
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 480, self._stop_cooldown, "stop_attack_cooldown"
             )
             return True
@@ -110,8 +110,8 @@ class Enemy:
     def prepare(self, train_mod):
         """Load enemy units and make them follow the Train.
 
-        Method asynchronously loads every enemy unit
-        to avoid freezing.
+        Method asynchronously loads every
+        enemy unit to avoid freezing.
 
         Args:
             train_mod (panda3d.core.NodePath): Train model.
@@ -146,7 +146,7 @@ class Enemy:
                     available.remove(unit_class)
 
             self._unit_id += 1
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 delay,
                 self._load_enemy,
                 "load_enemy_" + str(self._unit_id),
@@ -161,9 +161,7 @@ class Enemy:
         for enemy in self.active_units.values():
             enemy.stop()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            12, self._clear_enemies, "clear_enemies"
-        )
+        taskMgr.doMethodLater(12, self._clear_enemies, "clear_enemies")  # noqa: F821
 
     def capture_train(self):
         """The Train got critical damage - stop near it."""

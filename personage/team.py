@@ -44,9 +44,7 @@ class Team:
         self.cohesion = 0
         self.hold_together = False
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            5, self._calc_cohesion, "calc_cohesion"
-        )
+        taskMgr.doMethodLater(5, self._calc_cohesion, "calc_cohesion")  # noqa: F821
         self._medicine_snd = loader.loadSfx("sounds/medicine.ogg")  # noqa: F821
 
     @property
@@ -138,7 +136,7 @@ class Team:
             return
 
         self.cover_fire = True
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             90, self._stop_cover_fire, "stop_cover_fire"
         )
         self._plan_cohesion_cooldown(600)
@@ -164,7 +162,7 @@ class Team:
             char.damage_range[0] *= 1.3
             char.damage_range[1] *= 1.3
 
-        base.taskMgr.doMethodLater(90, self._stop_rage, "stop_rage")  # noqa: F821
+        taskMgr.doMethodLater(90, self._stop_rage, "stop_rage")  # noqa: F821
         self._plan_cohesion_cooldown(900)
 
     def cohesion_hold_together(self):
@@ -173,7 +171,7 @@ class Team:
             return
 
         self.hold_together = True
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             90, self._stop_hold_together, "stop_hold_together"
         )
         self._plan_cohesion_cooldown(1200)
@@ -222,7 +220,7 @@ class Team:
         self.cohesion_cooldown = True
         base.res_gui.disable_cohesion()  # noqa: F821
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             delay, self._stop_cohesion_cooldown, "stop_cohesion_cooldown"
         )
 
@@ -446,7 +444,7 @@ class Team:
     def start_stench_activity(self):
         """Start dealing the Stench damage to characters."""
         if not self._is_in_stench:
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 4, self.stench_activity, "stench_activity"
             )
             self._is_in_stench = True
@@ -454,7 +452,7 @@ class Team:
     def stop_stench_activity(self):
         """Stop dealing the Stench damage to characters."""
         if self._is_in_stench:
-            base.taskMgr.remove("stench_activity")  # noqa: F821
+            taskMgr.remove("stench_activity")  # noqa: F821
             self._is_in_stench = False
 
             for char in self.chars.values():

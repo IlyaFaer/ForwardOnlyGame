@@ -26,28 +26,6 @@ class TransportManager:
         self._models["moto2"].setPlayRate(1.5, "ride")
         self._models["dodge"].setPlayRate(2.5, "ride")
 
-    def load_transport(self, unit):
-        """Load transport for the given unit.
-
-        Args:
-            unit (enemy_unit.EnemyUnit): The unit to set onto transport.
-        """
-        transport_model = unit.class_data["transport_model"]
-
-        unit.transport = unit.model.attachNewNode("transport_" + unit.id)
-        self._models[transport_model].instanceTo(unit.transport)
-
-        if not self._models[transport_model].getCurrentAnim():
-            self._models[transport_model].loop("ride")
-
-        base.taskMgr.doMethodLater(  # noqa: F821
-            4,
-            self._load_snd,
-            "load_transport_sound_" + unit.id,
-            extraArgs=[unit, "moto" if transport_model.startswith("moto") else "car"],
-            appendTask=True,
-        )
-
     def _load_snd(self, unit, type_, task):
         """Load transport sound.
 
@@ -66,6 +44,28 @@ class TransportManager:
             unit.transport_snd, unit.transport
         )
         return task.done
+
+    def load_transport(self, unit):
+        """Load transport for the given unit.
+
+        Args:
+            unit (enemy_unit.EnemyUnit): The unit to set onto transport.
+        """
+        transport_model = unit.class_data["transport_model"]
+
+        unit.transport = unit.model.attachNewNode("transport_" + unit.id)
+        self._models[transport_model].instanceTo(unit.transport)
+
+        if not self._models[transport_model].getCurrentAnim():
+            self._models[transport_model].loop("ride")
+
+        taskMgr.doMethodLater(  # noqa: F821
+            4,
+            self._load_snd,
+            "load_transport_sound_" + unit.id,
+            extraArgs=[unit, "moto" if transport_model.startswith("moto") else "car"],
+            appendTask=True,
+        )
 
     def stop(self):
         """Stop all the transport animations."""

@@ -75,7 +75,7 @@ class Character(Shooter, Unit):
             self.traits = desc["traits"]
             self.disabled_traits = desc["disabled_traits"]
             if self.is_diseased:
-                base.taskMgr.doMethodLater(  # noqa: F821
+                taskMgr.doMethodLater(  # noqa: F821
                     60, self.get_well, self.id + "_get_well"
                 )
         else:
@@ -134,7 +134,7 @@ class Character(Shooter, Unit):
         Returns:
             dict: This character description.
         """
-        desc = {
+        return {
             "id": int(self.id.split("_")[1]),
             "name": self.name,
             "sex": self.sex,
@@ -147,7 +147,6 @@ class Character(Shooter, Unit):
             "is_diseased": self.is_diseased,
             "get_well_score": self.get_well_score,
         }
-        return desc
 
     @property
     def energy(self):
@@ -233,7 +232,7 @@ class Character(Shooter, Unit):
     def prepare(self):
         """Load the character model and positionate it.
 
-        Tweak collision solid and sounds as well.
+        Tweak collision solid and sounds.
         """
         animations = {
             name: address(self.class_ + "-" + name)
@@ -260,7 +259,7 @@ class Character(Shooter, Unit):
 
         self.model.loop("stand")
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
         self._col_node = self._init_col_node(
@@ -282,7 +281,7 @@ class Character(Shooter, Unit):
         self._shoot_anim = self._set_shoot_anim(
             (0.004, 0.045, z), 97, self.class_data["shots_num"]
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_spend"],
             self._reduce_energy,
             self.id + "_reduce_energy",
@@ -353,9 +352,32 @@ class Character(Shooter, Unit):
         LerpAnimInterval(self.model, 0.8, self._current_anim, "stand_and_aim").start()
         LerpAnimInterval(self.model, 0.8, "stand", "stand_and_aim").start()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.5, self._choose_target, self.id + "_choose_target"
         )
+
+    def rest(self):
+        """Make this character rest.
+
+        Stops all the active tasks and
+        starts energy regaining/healing.
+        """
+        self._stop_tasks(
+            "_reduce_energy", "_shoot", "_aim", "_choose_target", "_idle_anim"
+        )
+        self.model.hide()
+        self._col_node.stash()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.05, self._calm_down, self.id + "_calm_down"
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
+        )
+        if self.health < self.class_data["health"]:
+            taskMgr.doMethodLater(  # noqa: F821
+                self.class_data["healing"], self._heal, self.id + "_heal"
+            )
 
     def surrender(self):
         """Stop fighting, surrender."""
@@ -365,29 +387,6 @@ class Character(Shooter, Unit):
 
         LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
         self.model.play("surrender")
-
-    def rest(self):
-        """Make this character rest.
-
-        Stops all the active tasks and starts
-        energy regaining.
-        """
-        self._stop_tasks(
-            "_reduce_energy", "_shoot", "_aim", "_choose_target", "_idle_anim"
-        )
-        self.model.hide()
-        self._col_node.stash()
-
-        base.taskMgr.doMethodLater(  # noqa: F821
-            0.05, self._calm_down, self.id + "_calm_down"
-        )
-        base.taskMgr.doMethodLater(  # noqa: F821
-            self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
-        )
-        if self.health < self.class_data["health"]:
-            base.taskMgr.doMethodLater(  # noqa: F821
-                self.class_data["healing"], self._heal, self.id + "_heal"
-            )
 
     def do_effects(self, effects):
         """Do outing effects to this character.
@@ -412,7 +411,7 @@ class Character(Shooter, Unit):
         base.char_gui.destroy_char_button(self.id)  # noqa: F821
 
         self._stop_tasks("_gain_energy", "_heal")
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_spend"],
             self._reduce_energy,
             self.id + "_reduce_energy",
@@ -422,8 +421,8 @@ class Character(Shooter, Unit):
 
     def _reduce_energy(self, task):
         """
-        Reduce the character energy according to day part
-        and status: fighting or not.
+        Reduce the character energy according to
+        day part and status: fighting or not.
         """
         if base.world.sun.is_dark:  # noqa: F821
             if not base.train.lights_on:  # noqa: F821
@@ -486,13 +485,13 @@ class Character(Shooter, Unit):
         """
         if self.current_part and self.current_part.enemies:
             self._target = random.choice(self.current_part.enemies)
-            base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
-            base.taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
+            taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
+            taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
             return task.done
 
         # enemies retreated - return to passive state
         if not base.world.enemy.active_units:  # noqa: F821
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 3, self._calm_down, self.id + "_calm_down"
             )
             return task.done
@@ -512,14 +511,12 @@ class Character(Shooter, Unit):
         self._target = None
 
         if base.world.enemy.active_units:  # noqa: F821
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._choose_target, self.id + "_choose_target"
             )
             return task.done
 
-        base.taskMgr.doMethodLater(  # noqa: F821
-            3, self._calm_down, self.id + "_calm_down"
-        )
+        taskMgr.doMethodLater(3, self._calm_down, self.id + "_calm_down")  # noqa: F821
         return task.done
 
     def _calm_down(self, task):
@@ -528,7 +525,7 @@ class Character(Shooter, Unit):
         self.model.hprInterval(2, (self._current_pos["angle"], 0, 0)).start()
 
         LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
         return task.done
@@ -579,7 +576,7 @@ class Character(Shooter, Unit):
         self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
         self.model.play("die")
 
-        base.taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
+        taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
 
     def _hide(self, task):
         """Hide the main model."""
@@ -592,7 +589,7 @@ class Character(Shooter, Unit):
         Used only when sending a character away in a city.
         """
         self._stop_tasks("_calm_down", "_gain_energy", "_heal", "_infect", "_get_well")
-        base.taskMgr.doMethodLater(0.05, self.clear, self.id + "_clear")  # noqa: F821
+        taskMgr.doMethodLater(0.05, self.clear, self.id + "_clear")  # noqa: F821
 
     def clear(self, task):
         """Clear this character.
@@ -702,7 +699,7 @@ class Character(Shooter, Unit):
         self.model.play("stunned")
         LerpAnimInterval(self.model, 0.05, "stand_and_aim", "stunned").start()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             duration, self._stop_stunning, self.id + "_stop_stunning"
         )
 
@@ -745,10 +742,10 @@ class Character(Shooter, Unit):
                     self.traits.remove(traits_pair[0])
                     self.disabled_traits.append(traits_pair[0])
 
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 60, self.get_well, self.id + "_get_well"
             )
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 240, self.infect, self.id + "_infect"
             )
             self.energy = min(self.energy, 80)

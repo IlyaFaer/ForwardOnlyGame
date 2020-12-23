@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Base API for all the Game units, both characters and enemies.
+Base API for all the Game units, both player's and enemies.
 """
 import abc
 from panda3d.core import CollisionNode
@@ -20,13 +20,36 @@ class Unit(metaclass=abc.ABCMeta):
     """
 
     def __init__(self, id_, class_, class_data):
+        self._health = class_data["health"]
+
         self.id = id_
         self.class_data = class_data
         self.class_ = class_
         self.is_dead = False
         self.model = None
 
-        self._health = class_data["health"]
+    @abc.abstractmethod
+    def clear(self):
+        """Deleting this unit from the Game method."""
+        raise NotImplementedError("Every unit class must have clear() method.")
+
+    @abc.abstractproperty
+    def clear_delay(self):
+        """Time to keep this character in the Game after his death.
+
+        Returns:
+            float: Seconds of the delay before deleting this character.
+        """
+        raise NotImplementedError("Every unit must have a clear_delay property.")
+
+    @abc.abstractproperty
+    def tooltip(self):
+        """This unit tooltip.
+
+        Returns:
+            str: This unit tooltip.
+        """
+        raise NotImplementedError("Every unit must have a tooltip property.")
 
     @property
     def health(self):
@@ -60,7 +83,7 @@ class Unit(metaclass=abc.ABCMeta):
         self.is_dead = True
         self._col_node.removeNode()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             self.clear_delay, self.clear, self.id + "_clear"
         )
         return True
@@ -89,7 +112,7 @@ class Unit(metaclass=abc.ABCMeta):
             names (tuple): Tasks names to stop.
         """
         for name in names:
-            base.taskMgr.remove(self.id + name)  # noqa: F821
+            taskMgr.remove(self.id + name)  # noqa: F821
 
     def get_damage(self, damage):
         """Getting damage.
@@ -102,26 +125,3 @@ class Unit(metaclass=abc.ABCMeta):
         self.health -= damage
         if self.health <= 0:
             self._die()
-
-    @abc.abstractmethod
-    def clear(self):
-        """Deleting this unit from the Game method."""
-        raise NotImplementedError("Every unit class must have clear() method.")
-
-    @abc.abstractproperty
-    def clear_delay(self):
-        """Time to keep this character in the Game after his death.
-
-        Returns:
-            float: Seconds of the delay before deleting this character.
-        """
-        raise NotImplementedError("Every unit must have a clear_delay property.")
-
-    @abc.abstractproperty
-    def tooltip(self):
-        """This unit tooltip.
-
-        Returns:
-            str: This unit tooltip.
-        """
-        raise NotImplementedError("Every unit must have a tooltip property.")
