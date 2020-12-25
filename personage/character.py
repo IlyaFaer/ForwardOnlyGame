@@ -745,9 +745,7 @@ class Character(Shooter, Unit):
             taskMgr.doMethodLater(  # noqa: F821
                 60, self.get_well, self.id + "_get_well"
             )
-            taskMgr.doMethodLater(  # noqa: F821
-                240, self.infect, self.id + "_infect"
-            )
+            taskMgr.doMethodLater(240, self.infect, self.id + "_infect")  # noqa: F821
             self.energy = min(self.energy, 80)
 
     def get_well(self, task):

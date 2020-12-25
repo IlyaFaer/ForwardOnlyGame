@@ -210,6 +210,9 @@ class CharacterInterface:
         if not base.mouseWatcherNode.hasMouse():  # noqa: F821
             return
 
+        if self._rest_list_active and text == "Rest zone":
+            return
+
         self._tip.setText(text)
         self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
         self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821

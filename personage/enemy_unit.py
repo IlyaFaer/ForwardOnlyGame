@@ -643,7 +643,7 @@ class DodgeShooter(EnemyUnit):
             self.id + "_stop_doing_damage",
             extraArgs=[self.id + "_do_damage_to_train"],
         )
-        task.delayTime = random.randint(10, 12)
+        task.delayTime = random.randint(15, 18)
         return task.again
 
     def _do_damage_to_train(self, task):
