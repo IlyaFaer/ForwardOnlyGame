@@ -13,6 +13,7 @@ from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
 from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotlight, Vec3
 
 from const import MOD_DIR
+from gui import CityInterface
 from personage.enemy import Enemy
 from utils import address, chance
 
@@ -55,6 +56,7 @@ class World:
         self._et_stench_blocks = 0
 
         self.sun = Sun(day_part_desc)
+        self._city_gui = CityInterface()
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
@@ -524,7 +526,7 @@ class World:
 
         if (
             self._map[self._block_num + 1].outing_available
-            and not self._map[self._block_num + 1].enemy_territory
+            and not self._map[self._block_num].enemy_territory
         ):
             self.outings_mgr.show_upcoming(
                 self._map[self._block_num + 1].outing_available
@@ -584,7 +586,7 @@ class World:
 
         self._hangar = Hangar()
 
-        base.city_gui.show()  # noqa: F821
+        self._city_gui.show()
         base.train.move_to_hangar()  # noqa: F821
         base.team.rest_all()  # noqa: F821
 

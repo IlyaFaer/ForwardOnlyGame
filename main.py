@@ -19,7 +19,6 @@ from controls import CameraController, CommonController
 from effects import EffectsManager
 from gui import (
     CharacterInterface,
-    CityInterface,
     MainMenu,
     ResourcesInterface,
     TeachingNotes,
@@ -147,7 +146,6 @@ class ForwardOnly(ShowBase):
 
     def _start_game(self, task):
         """Actually start the game process."""
-        self.city_gui = CityInterface()
         self.notes = TeachingNotes()
 
         self.main_menu.hide()
