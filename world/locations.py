@@ -4,7 +4,7 @@ Describes what models should be used on each
 location and their arrangement formulas.
 """
 
-PLAINS_TREES = ("tree1", "tree2", "tree3")
+PLAINS_TREES = ("tree1", "tree2", "tree3", "red_tree", "yellow_tree")
 PLAINS_GRASS = (
     "sp_grass1",
     "sp_grass2",
