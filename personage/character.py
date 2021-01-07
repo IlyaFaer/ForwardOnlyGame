@@ -300,6 +300,9 @@ class Character(Shooter, Unit):
                 Train part to move this Character to.
             to_pos (dict):
                 Position to move this Character to.
+
+        Returns:
+            bool: True, if the character was moved.
         """
         if to_pos:
             part.chars.append(self)
@@ -328,6 +331,7 @@ class Character(Shooter, Unit):
 
         self.current_part = part
         self._current_pos = pos
+        return True
 
     def attack(self, enemy_unit):
         """Make the given enemy unit this character's target.

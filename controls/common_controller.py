@@ -57,6 +57,8 @@ class CommonController:
         self._pointed_obj = ""
         self._chosen_char = None
 
+        self._move_char_snd = loader.loadSfx("sounds/move_char1.ogg")  # noqa: F821
+
         self._font = loader.loadFont("arial.ttf")  # noqa: F821
         self._char_pointer = loader.loadModel(  # noqa: F821
             address("character_pointer")
@@ -170,7 +172,8 @@ class CommonController:
         """
         if self._pointed_obj and self._chosen_char:
             if self._pointed_obj.startswith("part_"):
-                self._chosen_char.move_to(self._parts[self._pointed_obj])
+                if self._chosen_char.move_to(self._parts[self._pointed_obj]):
+                    self._move_char_snd.play()
                 return
 
             if self._pointed_obj.startswith("enemy_"):
@@ -181,6 +184,7 @@ class CommonController:
 
             if self._pointed_obj.startswith("character_"):
                 self.chosen_char.exchange_pos(self._chars[self._pointed_obj])
+                self._move_char_snd.play()
 
     def _point_obj(self, event):
         """Event: mouse pointer hits a collision solid."""
