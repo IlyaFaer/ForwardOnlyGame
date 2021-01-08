@@ -152,29 +152,27 @@ class OutingsInterface:
             all_filled = False
 
         if all_filled:
-            self._outing_widgets.append(
-                DirectLabel(
-                    parent=self._list,
-                    text=" + ".join(
-                        (
-                            str(bars[0][1]),
-                            str(bars[1][1]),
-                            str(bars[2][1]),
-                            str(bars[3][1]),
-                        )
-                    ),
-                    frameSize=(0.6, 0.6, 0.6, 0.6),
-                    text_scale=(0.04),
-                    pos=(0, 0, -0.54),
+            shift = -0.07
+
+            for num in range(4):
+                self._outing_widgets.append(
+                    DirectLabel(
+                        parent=self._list,
+                        text=str(bars[num][1]) + "/" + str(bars[num][2]),
+                        frameSize=(0.6, 0.6, 0.6, 0.6),
+                        text_scale=(0.035),
+                        pos=(0.168, 0, shift),
+                    )
                 )
-            )
+                shift -= 0.12
+
             self._outing_widgets.append(
                 DirectLabel(
                     parent=self._list,
-                    text=str(score) + "/100",
+                    text="Total outing score:\n" + str(score) + "/100",
                     frameSize=(0.6, 0.6, 0.6, 0.6),
-                    text_scale=(0.05),
-                    pos=(0, 0, -0.62),
+                    text_scale=(0.045),
+                    pos=(0, 0, -0.58),
                 )
             )
             self._outing_widgets.append(
@@ -455,7 +453,7 @@ class OutingsInterface:
                     text=name,
                     frameSize=(0.6, 0.6, 0.6, 0.6),
                     text_scale=(0.035),
-                    pos=(0, 0, shift),
+                    pos=(-0.08, 0, shift),
                 )
             )
             shift -= 0.04
@@ -467,12 +465,12 @@ class OutingsInterface:
                 barColor=col,
                 pos=(0, 0, shift),
             )
-            bars.append((bar, value))
+            bars.append((bar, value, maximum))
             self._outing_widgets.append(bar)
 
             shift -= 0.08
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.035,
             self._animate_bars,
             "animate_outing_bars",
