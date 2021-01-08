@@ -19,6 +19,7 @@ CLASSES = {
             "class": MotoShooter,
             "model": "skinhead_shooter1",
             "score": 3,
+            "threshold": 0,
             "part": "side",
             "health": 100,
             "transport_model": "moto1",
@@ -26,7 +27,8 @@ CLASSES = {
         {
             "class": BrakeDropper,
             "model": "skinhead_shooter1",
-            "score": 6,
+            "score": 4,
+            "threshold": 6,
             "part": "front",
             "health": 50,
             "transport_model": "moto1",
@@ -34,7 +36,8 @@ CLASSES = {
         {
             "class": StunBombThrower,
             "model": "skinhead_thrower1",
-            "score": 9,
+            "score": 5,
+            "threshold": 9,
             "part": "side",
             "health": 90,
             "transport_model": "moto2",
@@ -42,13 +45,14 @@ CLASSES = {
         {
             "class": DodgeShooter,
             "model": "dodge_gun",
-            "score": 12,
+            "score": 8,
+            "threshold": 12,
             "part": "side",
             "health": 100,
             "transport_model": "dodge",
         },
     ),
-    "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
+    "attack_chances": {"morning": 6, "noon": 20, "evening": 35, "night": 20},
 }
 
 
@@ -119,7 +123,7 @@ class Enemy:
         available = [
             en_class
             for en_class in CLASSES["classes"]
-            if en_class["score"] <= self.score
+            if en_class["threshold"] <= self.score
         ]
 
         delay = 0
