@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 The game visual effects API.
 """
+from direct.filter.CommonFilters import CommonFilters
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.Transitions import Transitions
 from panda3d.core import (
@@ -21,12 +22,17 @@ class EffectsManager:
     """Manager to control the game visual effects."""
 
     def __init__(self):
+        render.setShaderAuto()  # noqa: F821
+
         self._explosion_lights = self._set_explosion_lights()
 
         self._transition = Transitions(loader)  # noqa: F821
         self._transition.setFadeColor(0, 0, 0)
 
         self.stench_effect = Stench()
+
+        filters = CommonFilters(base.win, base.cam)  # noqa: F821
+        filters.setBloom(size="large", mintrigger=0.8, intensity=2)
 
     def _set_explosion_lights(self):
         """Prepare three explosion lights.

@@ -449,20 +449,22 @@ class Train:
         floodlight.setLens(lens)
         floodlight.setExponent(0.4)
         floodlight_np = self.model.attachNewNode(floodlight)
-        floodlight_np.setPos(0, 0.34, 0.3)
+        floodlight_np.setPos(0, 0.34, 50)
+        render.setLight(floodlight_np)  # noqa: F821
 
         train_lights = [floodlight_np]
 
         for name, coors in (
-            ("train_right_door_light", (0.073, -0.17, 0.245)),
-            ("train_left_door_light", (-0.073, -0.17, 0.245)),
-            ("train_back_door_light", (0, -0.63, 0.245)),
+            ("train_right_door_light", (0.073, -0.17, 50)),
+            ("train_left_door_light", (-0.073, -0.17, 50)),
+            ("train_back_door_light", (0, -0.63, 50)),
         ):
             lamp = PointLight(name)
             lamp.setColor((0.89, 0.81, 0.55, 1))
             lamp.setAttenuation(3)
             lamp_np = self.model.attachNewNode(lamp)
             lamp_np.setPos(*coors)
+            render.setLight(lamp_np)  # noqa: F821
 
             train_lights.append(lamp_np)
 
@@ -565,14 +567,15 @@ class Train:
 
         if self.lights_on:
             for light in self._lights:
-                render.clearLight(light)  # noqa: F821
+                light.setZ(50)
 
             self._set_lamps_material((0, 0, 0, 1))
         else:
-            for light in self._lights:
-                render.setLight(light)  # noqa: F821
+            self._lights[0].setZ(0.3)
+            for light in self._lights[1:]:
+                light.setZ(0.245)
 
-            self._set_lamps_material((0.7, 0.7, 0.7, 1))
+            self._set_lamps_material((0.85, 0.85, 0.85, 1))
 
         self.lights_on = not self.lights_on
 

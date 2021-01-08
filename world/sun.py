@@ -135,12 +135,11 @@ class Sun:
 
         sun_light = Spotlight("sun_dir")
         sun_light.setColor(self._color["dir"])
-        sun_light.setShadowCaster(True, 8192, 8192)
+        sun_light.setShadowCaster(True, 8192, 8192, sort=-2000)
         sun_light.setLens(lens)
         sun_light.setExponent(0.5)
         sun_np = train_np.attachNewNode(sun_light)
 
-        render.setShaderAuto()  # noqa: F821
         render.setLight(sun_np)  # noqa: F821
 
         return amb_light, sun_light, sun_np
@@ -172,8 +171,16 @@ class Sun:
         self._arch_int.start(startT=day_time["time"]["current"] if day_time else 0)
 
         taskMgr.doMethodLater(  # noqa: F821
-            0.1, sun_np.lookAt, extraArgs=[train_mod], name="turn_sun"
+            0.01,
+            self._sun_look_at_train,
+            "sun_look_at_train",
+            extraArgs=[sun_np],
+            appendTask=True,
         )
+
+    def _sun_look_at_train(self, sun_np, task):
+        sun_np.lookAt(base.train.model)  # noqa: F821
+        return task.again
 
     def _change_sun_state(self, sun_np, train_mod, task):
         """Change Sun color and angle with a small step.
@@ -210,7 +217,6 @@ class Sun:
         self._amb_light.setColor(self._color["amb"])
         self._color_step += 1
 
-        sun_np.lookAt(train_mod)
         return task.again
 
     def _calc_color_vec(self, color, next_color, steps):
