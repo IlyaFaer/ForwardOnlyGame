@@ -118,6 +118,11 @@ more vulnerable for diseases""",
     # the Stench
     """The Stench orange clouds are
 highly poisonous""",
+    # resources
+    """Stimulator temporarily disables
+the character's negative
+traits. It also gives
+immunity from deafening.""",
 )
 
 

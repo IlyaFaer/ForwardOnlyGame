@@ -68,6 +68,7 @@ class ForwardOnly(ShowBase):
         self._dollars = 0
         self._medicine_boxes = 0
         self._smoke_filters = 0
+        self._stimulators = 0
 
         self.main_menu = MainMenu()
 
@@ -110,6 +111,25 @@ class ForwardOnly(ShowBase):
         """
         self._smoke_filters = value
         self.res_gui.update_resource("smoke_filters", value)
+
+    @property
+    def stimulators(self):
+        """Stimulators amount.
+
+        Returns:
+            int: Current player stimulators amount.
+        """
+        return self._stimulators
+
+    @stimulators.setter
+    def stimulators(self, value):
+        """Stimulators amount setter.
+
+        Args:
+            value (int): New stimulators amount.
+        """
+        self._stimulators = value
+        self.res_gui.update_resource("stimulators", value)
 
     @property
     def medicine_boxes(self):
@@ -220,6 +240,7 @@ class ForwardOnly(ShowBase):
         self.dollars = 300
         self.medicine_boxes = 0
         self.smoke_filters = 0
+        self.stimulators = 0
 
     def save_game(self):
         """Save the current game."""
@@ -237,6 +258,7 @@ class ForwardOnly(ShowBase):
         save["dollars"] = self.dollars
         save["medicine_boxes"] = self.medicine_boxes
         save["smoke_filters"] = self.smoke_filters
+        save["stimulators"] = self.stimulators
         save["cohesion"] = self.team.current_cohesion
         save["day_part"] = {
             "name": self.world.sun.day_part,
@@ -290,6 +312,7 @@ class ForwardOnly(ShowBase):
         self.dollars = save["dollars"]
         self.medicine_boxes = save["medicine_boxes"]
         self.smoke_filters = save["smoke_filters"]
+        self.stimulators = save["stimulators"]
         return task.done
 
     def restart_game(self):

@@ -56,6 +56,7 @@ class Character(Shooter, Unit):
         self._idle_seq = None
         self._cohesion_ball = None
         self._is_stunned = False
+        self._is_stimulated = False
         self.inhale = 15
 
         self.name = name
@@ -573,7 +574,7 @@ class Character(Shooter, Unit):
 
         Unit._die(self)
 
-        self._stop_tasks("_reduce_energy", "_get_well", "_infect")
+        self._stop_tasks("_reduce_energy", "_get_well", "_infect", "_stop_stimul")
 
         self._team.delete_relations(self.id)
         LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
@@ -693,7 +694,7 @@ class Character(Shooter, Unit):
         Args:
             duration (float): Stun duration in seconds.
         """
-        if self._is_stunned:
+        if self._is_stunned or self._is_stimulated:
             return
 
         self._is_stunned = True
@@ -752,6 +753,34 @@ class Character(Shooter, Unit):
             taskMgr.doMethodLater(240, self.infect, self.id + "_infect")  # noqa: F821
             self.energy = min(self.energy, 80)
 
+    def get_stimulated(self):
+        """Use a stimulator on this character.
+
+        Disables all the negative traits for some time.
+        """
+        for traits_pair in TRAITS:
+            if traits_pair[1] in self.traits:
+                self.traits.remove(traits_pair[1])
+                self.disabled_traits.append(traits_pair[1])
+
+        self._is_stimulated = True
+        taskMgr.doMethodLater(  # noqa: F821
+            300, self._stop_stimul, self.id + "_stop_stimul"
+        )
+
+    def _stop_stimul(self, task):
+        """Stop stimulation of this character.
+
+        Returns back all the disabled negative traits.
+        """
+        for trait_pair in TRAITS:
+            if trait_pair[1] in self.disabled_traits:
+                self.traits.append(trait_pair[1])
+                self.disabled_traits.remove(trait_pair[1])
+
+        self._is_stimulated = False
+        return task.done
+
     def get_well(self, task):
         """Get this character well.
 
@@ -764,8 +793,11 @@ class Character(Shooter, Unit):
             return task.again
 
         self.is_diseased = False
-        self.traits += self.disabled_traits
-        self.disabled_traits = []
+        for trait_pair in TRAITS:
+            if trait_pair[0] in self.disabled_traits:
+                self.traits.append(trait_pair[0])
+                self.disabled_traits.remove(trait_pair[0])
+
         self._stop_tasks("_infect")
         return task.done
 

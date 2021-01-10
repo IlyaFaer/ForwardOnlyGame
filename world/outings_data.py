@@ -106,9 +106,13 @@ shoot to somewhere behind the column. {name3} grabs the first thing
 {heshe3} see and turns to the Train. {name1} takes few more seconds
 to shoot at those on the other side, but they fight back tough, so
 {heshe1} has to retreat. Returning fast, your people show the catch.
-You're getting +90$ and fuel for 50 miles
-{name1} getting - 15 health""",
-                        "effects": {"money": 90, "char_1": {"health": -15}},
+You're getting +90$ and 1 stimulator
+{name1} getting -15 health""",
+                        "effects": {
+                            "money": 90,
+                            "stimulators": 1,
+                            "char_1": {"health": -15},
+                        },
                     },
                 ),
             },

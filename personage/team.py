@@ -46,6 +46,7 @@ class Team:
 
         taskMgr.doMethodLater(5, self._calc_cohesion, "calc_cohesion")  # noqa: F821
         self._medicine_snd = loader.loadSfx("sounds/medicine.ogg")  # noqa: F821
+        self._stimulator_snd = loader.loadSfx("sounds/stimulator.ogg")  # noqa: F821
 
     @property
     def current_cohesion(self):
@@ -440,6 +441,21 @@ class Team:
             char.get_well_score = 20
             base.medicine_boxes -= 1  # noqa: F821
             self._medicine_snd.play()
+
+    def use_stimulator(self):
+        """Use stimulator on the chosen character.
+
+        Disables all the negative traits of the
+        chosen character for the next 5 minutes.
+        """
+        if not base.stimulators:  # noqa: F821
+            return
+
+        char = base.common_ctrl.chosen_char  # noqa: F821
+        if char:
+            char.get_stimulated()
+            base.stimulators -= 1  # noqa: F821
+            self._stimulator_snd.play()
 
     def start_stench_activity(self):
         """Start dealing the Stench damage to characters."""

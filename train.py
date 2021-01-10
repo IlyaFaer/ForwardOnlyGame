@@ -263,7 +263,7 @@ class Train:
 
         phys_mgr.attachCharacter(self._train_phys_shape)
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.1,
             self._check_contacts,
             "check_train_contacts",
@@ -312,7 +312,7 @@ class Train:
         sparks.start(self.model, self.model)
         sparks.softStart()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             30, self._clear_brake, side + "_clear_brake", extraArgs=[side, brake],
         )
         if self.l_brake and self.r_brake:
@@ -367,12 +367,12 @@ class Train:
         if block.is_rusty:
             if not self._is_on_rusty:
                 self._is_on_rusty = True
-                base.taskMgr.doMethodLater(  # noqa: F821
+                taskMgr.doMethodLater(  # noqa: F821
                     1, self._get_rusty_damage, "do_rusty_damage"
                 )
         elif self._is_on_rusty:
             self._is_on_rusty = False
-            base.taskMgr.remove("do_rusty_damage")  # noqa: F821
+            taskMgr.remove("do_rusty_damage")  # noqa: F821
 
         self.ctrl.move_along_block(block, self.node)
 
@@ -629,7 +629,7 @@ class Train:
         explosion.setPos(x_coor, y_coor, 0.155)
         explosion.play()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             2.55,
             self._bomb_explosions.append,
             "return_bomb_explosion_effect",
@@ -658,13 +658,13 @@ class Train:
         self.smoke_filtered = True
         base.smoke_filters -= 1  # noqa: F821
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             1, self._smoke.softStop, "filter_smoke", extraArgs=[], appendTask=False
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             1.6, self._clunk2_snd.play, "close_filter", extraArgs=[], appendTask=False
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             300, self._stop_filtering_smoke, "stop_filter_smoke",
         )
         self._smoke_filter.setPlayRate(-1, "open")
@@ -679,7 +679,7 @@ class Train:
 
         self._filter_open_snd.play()
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             2.5,
             self._smoke_filter.hide,
             "hide_smoke_filter",
@@ -705,8 +705,8 @@ class Train:
         up_model.reparentTo(self.model)
 
         if upgrade["name"] == "Ram":
-            base.taskMgr.remove("update_physics")  # noqa: F821
-            base.taskMgr.remove("check_train_contacts")  # noqa: F821
+            taskMgr.remove("update_physics")  # noqa: F821
+            taskMgr.remove("check_train_contacts")  # noqa: F821
 
             base.world.phys_mgr.removeCharacter(self._train_phys_shape)  # noqa: F821
             self._phys_node.removeNode()
@@ -722,13 +722,13 @@ class Train:
 
             base.world.phys_mgr.attachCharacter(self._train_phys_shape)  # noqa: F821
 
-            base.taskMgr.add(  # noqa: F821
+            taskMgr.add(  # noqa: F821
                 base.world.update_physics,  # noqa: F821
                 "update_physics",
                 extraArgs=[0.03],
                 appendTask=True,
             )
-            base.taskMgr.doMethodLater(  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
                 0.1,
                 self._check_contacts,
                 "check_train_contacts",
@@ -777,14 +777,14 @@ class Train:
         self._pre_upgrade = loader.loadModel(address(model))  # noqa: F821
         self._pre_upgrade.reparentTo(self.model)
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.05, self._highlight_upgrade, "highlight_upgrade"
         )
 
     def clear_upgrade_preview(self):
         """Stop previewing the currently previewed upgrade."""
         if self._pre_upgrade is not None:
-            base.taskMgr.remove("highlight_upgrade")  # noqa: F821
+            taskMgr.remove("highlight_upgrade")  # noqa: F821
             self._pre_upgrade.removeNode()
             self._pre_upgrade = None
 
