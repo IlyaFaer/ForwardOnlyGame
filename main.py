@@ -22,6 +22,7 @@ from gui import (
     MainMenu,
     ResourcesInterface,
     TeachingNotes,
+    TraitsGui,
 )
 from personage.team import Team
 from train import Train
@@ -167,6 +168,7 @@ class ForwardOnly(ShowBase):
     def _start_game(self, task):
         """Actually start the game process."""
         self.notes = TeachingNotes()
+        self.traits_gui = TraitsGui()
 
         self.main_menu.hide()
         self.enableAllAudio()

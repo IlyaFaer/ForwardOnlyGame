@@ -362,6 +362,20 @@ class Team:
             cohesion = 0
         return 1 + cohesion * 0.5 * (2 if for_char.class_ == "anarchist" else 1)
 
+    def delete_relations(self, char_id):
+        """Delete all the relations of the given character.
+
+        Args:
+            char_id (str): Character whose relations should be erased.
+        """
+        to_del = []
+        for rel_id in self._relations.keys():
+            if char_id in rel_id:
+                to_del.append(rel_id)
+
+        for id_ in to_del:
+            self._relations.pop(id_)
+
     def increase_cohesion_for_chars(self, chars, outing_score):
         """Increase cohesion for those who went for an outing.
 
@@ -408,20 +422,6 @@ class Team:
                 to_id = rel_id[1] if char.id == rel_id[0] else rel_id[0]
                 self.chars[to_id].show_relation(relation)
 
-    def delete_relations(self, char_id):
-        """Delete all the relations of the given character.
-
-        Args:
-            char_id (str): Character whose relations should be erased.
-        """
-        to_del = []
-        for rel_id in self._relations.keys():
-            if char_id in rel_id:
-                to_del.append(rel_id)
-
-        for id_ in to_del:
-            self._relations.pop(id_)
-
     def hide_relations(self):
         """Hide all the relations GUI."""
         for char in self.chars.values():
@@ -456,6 +456,27 @@ class Team:
             char.get_stimulated()
             base.stimulators -= 1  # noqa: F821
             self._stimulator_snd.play()
+
+    def spend_cohesion(self, value):
+        """Spend the given number of cohesion points.
+
+        Args:
+            value (int): Cohesion points to spend.
+        """
+        if not self._relations:
+            return
+
+        factor = (self.cohesion - value) / self.cohesion
+
+        rel_max = 100 / len(self._relations)
+        cohesion = 0
+
+        for rel_id in self._relations.keys():
+            self._relations[rel_id] *= factor
+            cohesion += self._relations[rel_id] / 100 * rel_max
+
+        self.cohesion = min(100, cohesion)
+        base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
 
     def start_stench_activity(self):
         """Start dealing the Stench damage to characters."""

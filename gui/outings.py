@@ -181,7 +181,7 @@ class OutingsInterface:
                     text="Done",
                     text_fg=RUST_COL,
                     frameColor=(0, 0, 0, 0.4),
-                    command=self._finish_outing,  # noqa: F821
+                    command=self._finish_outing,
                     extraArgs=[selected_effect],
                     scale=(0.05, 0, 0.05),
                     clickSound=base.main_menu.click_snd,  # noqa: F821

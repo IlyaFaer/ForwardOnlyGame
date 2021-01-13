@@ -33,6 +33,7 @@ class CharacterInterface:
 
     def __init__(self):
         self._char = None  # the chosen character
+        self._status_lab = None
         self._rest_buttons = {}
         self._rest_list_active = False
 
@@ -291,7 +292,7 @@ class CharacterInterface:
         """Update the chosen character description."""
         to_del = []
         for wid in self._char_desc_wids:
-            if wid["text"] not in ("Traits", "Status"):
+            if wid["text"] not in ("Traits", "Status", ""):
                 wid.destroy()
                 to_del.append(wid)
 
@@ -370,6 +371,7 @@ class CharacterInterface:
                 wid.destroy()
 
             self._char_desc_wids = []
+            self._status_lab = None
         else:
             shift = 0.7
             self._fr["frameSize"] = (-0.31, 0.31, -0.1, shift)
@@ -384,18 +386,37 @@ class CharacterInterface:
                     pos=(-0.225, 0, shift),
                 )
             )
-            shift = self._fill_traits(shift)
-
             self._char_desc_wids.append(
-                DirectLabel(
+                DirectButton(
                     parent=self._fr,
-                    text="Status",
-                    frameSize=(0.1, 0.1, 0.1, 0.1),
-                    text_scale=0.03,
-                    text_fg=RUST_COL,
-                    pos=(-0.221, 0, shift),
+                    text="",
+                    frameSize=(-0.025, 0.025, -0.025, 0.025),
+                    frameTexture=ICON_PATH + "like.png",
+                    relief="flat",
+                    pos=(0.265, 0, shift + 0.013),
+                    command=base.traits_gui.show,  # noqa: F821
                 )
             )
+            shift = self._fill_traits(shift)
+
+            self._status_lab = DirectLabel(
+                parent=self._fr,
+                text="Status",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=0.03,
+                text_fg=RUST_COL,
+                pos=(-0.221, 0, shift),
+            )
+            self._char_desc_wids.append(self._status_lab)
             self._fill_status(shift)
 
         self._char_desc_shown = not self._char_desc_shown
+
+    def move_status_label(self, place):
+        """Move status label widget.
+
+        Args:
+            place (int): Place to shift the widget.
+        """
+        if self._status_lab is not None:
+            self._status_lab.setZ(self._status_lab.getZ() + place / 10)

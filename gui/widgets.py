@@ -89,19 +89,24 @@ class ItemChooser(metaclass=abc.ABCMeta):
         self._chosen_item = None
         self._items = None
 
-    def prepare(self, parent, pos, items):
+    def prepare(self, parent, pos, items, init_ind=None):
         """Set this widget's parent and position.
 
         Args:
             parent (panda3d.core.NodePath): Parent widget.
             pos (tuple): New widget position.
             items (dict): Items to iterate through.
+            init_ind (int): Index of the initial value.
         """
         self._items = items
 
         self._fr.reparentTo(parent)
         self._fr.setPos(pos)
         self._fr.show()
+
+        if init_ind is not None:
+            self._ind = init_ind
+
         self._show_info()
 
 

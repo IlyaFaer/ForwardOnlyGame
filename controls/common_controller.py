@@ -123,7 +123,7 @@ class CommonController:
         self._choose_obj()
         self._pointed_obj = None
 
-    def _deselect(self):
+    def deselect(self):
         """Hide manipulating interface."""
         self._char_pointer.detachNode()
         self._chosen_char = None
@@ -144,7 +144,7 @@ class CommonController:
         characters, rest zones.
         """
         if not self._pointed_obj:
-            self._deselect()
+            self.deselect()
             return
 
         if self._pointed_obj.startswith("character_"):

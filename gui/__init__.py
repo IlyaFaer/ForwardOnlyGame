@@ -16,6 +16,7 @@ from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
 from .resources import ResourcesInterface  # noqa: F401
 from .train import TrainInterface  # noqa: F401
+from .traits import TraitsGui  # noqa: F401
 from .widgets import ICON_PATH, RUST_COL, SILVER_COL  # noqa: F401
 
 
