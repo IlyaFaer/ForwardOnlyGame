@@ -19,6 +19,7 @@ from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 OUTINGS_ICONS = {
     "looting": "gui/tex/looting.png",
     "enemy camp": "gui/tex/enemy_camp.png",
+    "meet": "gui/tex/meet.png",
 }
 
 
