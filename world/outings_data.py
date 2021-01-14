@@ -1409,5 +1409,111 @@ You're getting 1 smoke filter and 1 medicine box""",
                 ),
             },
         ),
-    }
+        "meet": (
+            {  # 1
+                "name": "Tents",
+                "type": "Meet",
+                "class_weights": {"soldier": 16, "anarchist": 22.5, "raider": 19},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 10,
+                    "noon": 7,
+                    "evening": 4,
+                },
+                "desc": """Gazing around, you're catching your eyes on a thick column of smoke
+rising right from the ground. A look through binoculars unveils
+that there is a tent camp at the bottom of the smoke pillar, and
+you're giving your people an order to prepare for a fight. At the
+next few seconds you understand that there are mostly women and
+children in the camp. Looks strange - during our days it's not very
+sensibly to travel without several protectors. Still, they may had
+not be planning so, and it's worth checking these people out. Maybe
+they need assistance or something. Two messengers should be enough.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're ordering {name1} and {name2} to gently approach the
+tent camp not to scare inhabitants, and see what's going on in
+there. Your fighters walking to the place, and you see them talking
+with dwellers. Suddenly, several men rise from the tents, and in the
+next moment jump to {name1} and {name2}! You can't say from that
+distance, but seems like those people don't have guns, only knives.
+Doing several shots, {name1} and {name2} running back to the Train.
+No one follows them - probably, all the attackers were killed. Jumping
+on the Train, {name1} shows a big cut on {hisher1} shoulder. "Those
+bastards want to join skinheads! Tried to kill us to impress them."
+You nod to the machinist, ordering to start engine.
+{name1} getting -10 health
+{name2} getting Nervousness""",
+                        "effects": {
+                            "char_1": {"health": -10},
+                            "char_2": {"add_trait": "Nervousness"},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} and {name2} following your order to gently approach
+the camp and see if everything is okay there. They move fast
+for some time, but at some point they both stop. Straining your eyes,
+you're trying to understand what's happening. Suddenly, several thugs
+with knives and metal pipes rising from the tents, and run to your
+people. Doing a bunch of shots, {name1} and {name2} turning back to
+the Train. You hear a loud shout: "Killing will make you skinhead!" It's
+clear! Uppering your gun, you're starting to cover your messengers with
+fire. They successfully getting to the Train, and you all dropping rivals
+with coordinated shooting. "Thanks!" - {name2} breaths. {name1} nods to
+you. "Okay, let's move!" - you command, and the Train engine starts.
+{name1} and {name2} getting -15 energy""",
+                        "effects": {"assignees": {"energy": -15}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're sending {name1} and {name2} for a short recon. They
+take their gear and move to the place. You're tracking them from
+the Train, seeing how they carefully approach the camp; a couple of
+women go to meet them. Their conversation lasts for several minutes,
+and then {name1} and {name2} turning back to you. {name1} climb to
+the locomotive first: "They are travelling to the nearest city. Not
+fighters. We proposed them assistance, but they don't want to cooperate
+with us at any sense." {name2} appears to the left of {name1} and
+shrugs {hisher2} shoulders, showing {heshe2} don't understand what
+made those people to think that way. "Okay, let's continue!" - you're
+commanding... Understandable, trust is not often that days.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """{name1} and {name2} taking a direction to the tent camp
+by your command. You're seeing them approaching the place and
+speaking with inhabitants. After a couple of minutes of conversation
+{name2} runs back to you, but {name1} continue to stand with two women.
+{name2} jumps on the Train and explains: "No fighters, just several
+females with children. They afraid of us, refusing to join, but me and
+{name1} think we could give them a sack of coal. They are low on
+resources." You silently nod, and {name2} takes a present for those
+people. You're waiting for about 10 minutes, and both {name1} and
+{name2} return back to you. "Good people" - {name2} finalizes.
+"But very distrustful." "No wonder." - you're answering.
+Single character can get Immunity""",
+                        "effects": {"select_char": {"add_trait": "Immunity"}},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're giving an order to {name1} and {name2} to move
+to the tent camp and see if everything is alright there. Your people
+getting to the place in minute, and you see them starting to speak
+with the inhabitants. The campers looks calm and positive, so you're
+relaxing a bit... After several minutes of talk, your people turn
+back to the Train, but you also see one more person with them. They
+getting closer to you, and {name1} explains: "Looks like we've found
+a recruit. Do we have a free place?" Taking a quick gaze at the
+newbie, you're starting to think if the team needs one more head.
+One person can be recruited""",
+                        "effects": {"recruit": 80},
+                    },
+                ),
+            },
+        ),
+    },
 }

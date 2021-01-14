@@ -56,7 +56,7 @@ class World:
         self._et_stench_blocks = 0
 
         self.sun = Sun(day_part_desc)
-        self._city_gui = CityInterface()
+        self.city_gui = CityInterface()
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
@@ -586,7 +586,7 @@ class World:
 
         self._hangar = Hangar()
 
-        self._city_gui.show()
+        self.city_gui.show()
         base.train.move_to_hangar()  # noqa: F821
         base.team.rest_all()  # noqa: F821
 

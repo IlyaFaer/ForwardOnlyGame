@@ -84,6 +84,21 @@ class Team:
             base.train.place_recruit(char)  # noqa: F821
             self.chars[char.id] = char
 
+    def generate_recruit(self):
+        """Generate one random recruit.
+
+        Returns:
+            personage.character.Character: The generated character.
+        """
+        self._char_id += 1
+
+        return generate_char(
+            self._char_id,
+            random.choice(("soldier", "raider", "anarchist")),
+            random.choice(("male", "female")),
+            self,
+        )
+
     def gen_recruits(self):
         """Generate several recruits.
 
@@ -94,14 +109,8 @@ class Team:
         """
         chars = {}
         for _ in range(random.randint(6, 11)):
-            self._char_id += 1
+            chars["character_" + str(self._char_id)] = self.generate_recruit()
 
-            chars["character_" + str(self._char_id)] = generate_char(
-                self._char_id,
-                random.choice(("soldier", "raider", "anarchist")),
-                random.choice(("male", "female")),
-                self,
-            )
         return chars
 
     def load(self, char_desc, parts, cohesion_desc):

@@ -28,6 +28,7 @@ class OutingsManager:
         self._snds = {
             "Looting": loader.loadSfx("sounds/looting_result.ogg"),  # noqa: F821
             "Enemy Camp": loader.loadSfx("sounds/enemy_camp_result.ogg"),  # noqa: F821
+            "Meet": loader.loadSfx("sounds/meet_result.ogg"),  # noqa: F821
         }
         self._gui = OutingsInterface()
 
@@ -137,6 +138,8 @@ class OutingsManager:
         desc = desc.format(**format_dict)
 
         selected_effect = effects.get("select_char")
+        recruit_effect = effects.get("recruit")
+
         self._gui.show_result(
             desc,
             score,
@@ -145,6 +148,7 @@ class OutingsManager:
             cohesion_score,
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
             selected_effect,
+            recruit_effect,
         )
         self._snds[outing["type"]].play()
 

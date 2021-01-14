@@ -202,7 +202,7 @@ class Character(Shooter, Unit):
         if self.energy <= 95:
             statuses.append("Tired: -{}% accuracy".format((100 - self.energy) // 5))
 
-        if not base.world.is_in_city:  # noqa: F821
+        if not base.world.is_in_city and self.current_part is not None:  # noqa: F821
             factor = round(self.damage_factor, 2)
             if factor != 1:
                 statuses.append("Damage factor: x{}".format(factor))
@@ -404,6 +404,11 @@ class Character(Shooter, Unit):
 
         effects = copy.deepcopy(effects)
         self.get_damage(-effects.pop("health", 0))
+
+        trait = effects.get("add_trait")
+        if trait and trait not in self.traits + self.disabled_traits:
+            self.traits.append(trait)
+            effects.pop("add_trait")
 
         for key, value in effects.items():
             if hasattr(self, key):

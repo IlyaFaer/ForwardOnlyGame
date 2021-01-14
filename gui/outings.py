@@ -14,6 +14,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
+from personage.character_data import TRAIT_DESC
 from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 
 OUTINGS_ICONS = {
@@ -134,7 +135,7 @@ class OutingsInterface:
         self._upcome_ico.hide()
         return task.again
 
-    def _animate_bars(self, bars, score, selected_effect, task):
+    def _animate_bars(self, bars, score, selected_effect, recruit_effect, task):
         """Animate filling the bars.
 
         Args:
@@ -142,6 +143,7 @@ class OutingsInterface:
             score (int): Total outing score.
             selected_effect (dict):
                 Effect which requires to choose a target.
+            recruit_effect (int): Cost of a possible recruit
         """
         all_filled = True
         for bar in bars:
@@ -183,7 +185,7 @@ class OutingsInterface:
                     text_fg=RUST_COL,
                     frameColor=(0, 0, 0, 0.4),
                     command=self._finish_outing,
-                    extraArgs=[selected_effect],
+                    extraArgs=[selected_effect, recruit_effect],
                     scale=(0.05, 0, 0.05),
                     clickSound=base.main_menu.click_snd,  # noqa: F821
                 )
@@ -192,23 +194,100 @@ class OutingsInterface:
 
         return task.again
 
-    def _finish_outing(self, selected_effect):
+    def _dont_hire_unit(self):
+        """Finish an outing without recruiting."""
+        self.hide_outing()
+        base.common_ctrl.deselect()  # noqa: F821
+
+    def _hire_unit(self, char, cost):
+        """Hire unit from the outing.
+
+        Args:
+            char (personage.character.Character):
+                Character to recruit.
+            cost (int): Cost of the recruitement.
+        """
+        if base.dollars < cost:  # noqa: F821
+            return
+
+        if not base.train.has_cell():  # noqa: F821
+            return
+
+        base.dollars -= cost  # noqa: F821
+
+        base.world.city_gui.write_snd.play()  # noqa: F821
+        base.team.chars[char.id] = char  # noqa: F821
+
+        char.prepare()
+        base.train.place_recruit(char)  # noqa: F821
+
+        self.hide_outing()
+        base.common_ctrl.deselect()  # noqa: F821
+
+    def _finish_outing(self, selected_effect, recruit_effect):
         """Show effect selector if needed and finish the outing.
 
         Args:
             selected_effect (dict):
                 Effect which requires to choose a target.
+            recruit_effect (int):
+                Cost of a possible recruit.
         """
         self._clear_temporary_widgets()
 
-        if not selected_effect:
+        if not (selected_effect or recruit_effect):
             self.hide_outing()
+            return
+
+        if recruit_effect:
+            char = base.team.generate_recruit()  # noqa: F821
+            base.char_gui.show_char_info(char)  # noqa: F821
+
+            self._outing_widgets.append(
+                DirectLabel(
+                    parent=self._list,
+                    pos=(0, 0, 0),
+                    text="You can recruit {name} for {cost}$".format(
+                        name=char.name, cost=recruit_effect
+                    ),
+                    frameSize=(0.6, 0.6, 0.6, 0.6),
+                    text_scale=0.045,
+                )
+            )
+            self._outing_widgets.append(
+                DirectButton(
+                    pos=(-0.2, 0, -0.75),
+                    text="Recruit",
+                    text_fg=RUST_COL,
+                    frameColor=(0, 0, 0, 0.3),
+                    command=self._hire_unit,
+                    extraArgs=[char, recruit_effect],
+                    scale=(0.05, 0, 0.05),
+                )
+            )
+            self._outing_widgets.append(
+                DirectButton(
+                    pos=(0.2, 0, -0.75),
+                    text="Don't recruit",
+                    text_fg=RUST_COL,
+                    frameColor=(0, 0, 0, 0.3),
+                    command=self._dont_hire_unit,
+                    scale=(0.05, 0, 0.05),
+                )
+            )
             return
 
         # there are effects to select a target for
         effect_str = ""
         for key, value in selected_effect.items():
-            effect_str += key + " " + ("+" if value > 0 else "-") + str(value) + "\n"
+            if key == "add_trait":
+                effect_str = "Get {trait} trait\n ({desc})".format(
+                    trait=value, desc=TRAIT_DESC[value]
+                )
+            else:
+                effect_str += (
+                    key + " " + ("+" if value > 0 else "-") + str(value) + "\n"
+                )
 
         self._outing_widgets.append(
             DirectLabel(
@@ -218,7 +297,7 @@ class OutingsInterface:
                     effect=effect_str
                 ),
                 frameSize=(0.6, 0.6, 0.6, 0.6),
-                text_scale=(0.045),
+                text_scale=0.045,
             )
         )
         self._char_chooser = CharacterChooser(is_shadowed=True)
@@ -411,6 +490,7 @@ class OutingsInterface:
         cohesion_score,
         day_part_score,
         selected_effect,
+        recruit_effect,
     ):
         """Show outing results GUI.
 
@@ -427,6 +507,8 @@ class OutingsInterface:
                 Day part bonus and special skills score.
             selected_effect (dict):
                 Effect which requires to choose a target.
+            recruit_effect (int):
+                Cost of a possible recruit.
         """
         self._clear_temporary_widgets()
 
@@ -475,6 +557,6 @@ class OutingsInterface:
             0.035,
             self._animate_bars,
             "animate_outing_bars",
-            extraArgs=[bars, score, selected_effect],
+            extraArgs=[bars, score, selected_effect, recruit_effect],
             appendTask=True,
         )

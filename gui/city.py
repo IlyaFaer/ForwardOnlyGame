@@ -29,7 +29,7 @@ class CityInterface:
 
         self._coins_s_snd = loader.loadSfx("sounds/coins_short.ogg")  # noqa: F821
         self._coins_l_snd = loader.loadSfx("sounds/coins_long.ogg")  # noqa: F821
-        self._write_snd = loader.loadSfx("sounds/write.ogg")  # noqa: F821
+        self.write_snd = loader.loadSfx("sounds/write.ogg")  # noqa: F821
         self._toot_snd = loader.loadSfx("sounds/toot1.ogg")  # noqa: F821
 
         self._city_fr = DirectFrame(
@@ -394,7 +394,7 @@ class CityInterface:
         if len(base.team.chars) == 1:  # noqa: F821
             return
 
-        self._write_snd.play()
+        self.write_snd.play()
         char = self._char_chooser.chosen_item
         char.leave()
         taskMgr.doMethodLater(  # noqa: F821
@@ -413,7 +413,7 @@ class CityInterface:
         if not base.train.has_cell():  # noqa: F821
             return
 
-        self._write_snd.play()
+        self.write_snd.play()
         base.dollars -= 200  # noqa: F821
 
         base.team.chars[char.id] = char  # noqa: F821
