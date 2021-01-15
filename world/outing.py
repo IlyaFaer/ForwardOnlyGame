@@ -164,6 +164,9 @@ class OutingsManager:
         if "stimulators" in effects:
             base.stimulators += effects["stimulators"]  # noqa: F821
 
+        if "cohesion_gain" in effects:
+            base.team.spend_cohesion(-effects["cohesion_gain"])  # noqa: F821
+
         if "all" in effects:
             for char in base.team.chars.values():  # noqa: F821
                 char.do_effects(effects["all"])

@@ -1514,6 +1514,107 @@ One person can be recruited""",
                     },
                 ),
             },
+            {  # 2
+                "name": "Lying man",
+                "type": "Meet",
+                "class_weights": {"soldier": 25, "anarchist": 45, "raider": 32},
+                "assignees": 1,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 4,
+                    "noon": 8,
+                    "evening": 10,
+                },
+                "desc": """Thinking about the Stench nature, you're absently looking around the
+Train, when suddenly you find yourself gazing at a human body.
+It almost blended with withered grass and is covered with snow -
+seems, the man is dead. There is nothing around: no buildings,
+signs of human, even trails... Probably, he died by himself...
+It makes sense to take a look at him, who knows what can be found.
+Deciding to make a walk, you're thinking who should you take as a
+companion. Nothing promises troubles, so anyone should fit.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're deciding to take {name1} as a companion for this small
+walk. You both jump off the Train and take a direction to the body.
+At some point you're noticing some kind of a movement. Is this
+guy still alive? Or it's just a wind plays with the cape? {name1}
+moves forward, and takes a seat near the body. Carefully, {heshe1}
+turn over the man, and from under his corpse a mustard color
+cloud rises suddenly. Not having time to react, {name1} inhales
+it and jumps aside the body. "Oh, shit!" - {heshe1} inclines and
+spits. "Faster, go for the doc!" - you're pushing {himher1} to
+the Train and stopping your breath as well.
+{name1} getting Weak Immunity""",
+                        "effects": {"char_1": {"add_trait": "Weak immunity"}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """You take your gun and turn your head to the locomotive deckhouse:
+"{name1}, you're with me!". Like {heshe1} waited for these words,
+{name1} walks out on air, and you both jump out of the Train. It
+takes just a half of minute to approach the body, wrapped in a grey
+cape. "Wait!" - {name1} uppers {hisher1} hand and points to some kind
+of a small hills around the corpse. Interesting! {name1} lifts a stone
+from the ground and throws it to the lying man. In the next moment
+everything turns black, and you hear a terrible din. After several
+seconds of emptiness, you're returning back to the reality. {name1}
+gets up from the ground and shakes off. "That looks like a homemade
+mine." - {heshe1} pronounces loudly. Fortunately, no one injured.
+{name1} getting -10 health""",
+                        "effects": {"char_1": {"health": -10}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're asking {name1} to follow you on this walk. Without
+counter-arguments, {heshe1} takes {hisher1} gun and moves to the
+right of you. The silent pause holds for some time. You know what is
+the cause. "You're okay?" For a couple of seconds you think {name1}
+won't answer, but {heshe1} does: "Yeah... yeah. My brother in the
+better world now. I'm okay." At that point you're approaching the
+lying body, taking a knee down near it and turn it over. The old
+frozen corpse creaks. He's dead. A lack of wounds sais he indeed
+died naturally, without someone's "help". No one looted the body,
+but it anyway doesn't look like a rich source, so you're deciding
+not to disturb the dead man. "Let's get back!" - you pronounce,
+and you both taking a direction to the Train.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You're commanding {name1} to gear up. In a couple of minutes
+{heshe1} jumps off the Train and follows you in the lying body
+direction. Fast approaching the spot, {name1} moves in front of
+you and takes a knee sit near the man. "Dead, definitely." - {heshe1}
+pronounces. - "It looks like he was travelling somewhere distant.
+No supplies, no money, he doesn't even have warm clothes. Died here
+alone." You're making a step towards {name1}: "These times no
+one should by alone." {name1} stands up: "Good we have our own team"
+- {heshe1} smiles to you. - "Thanks, you've brought us together."
+Silently nodding, you point to the Train with your head.
+Team cohesion +5""",
+                        "effects": {"cohesion_gain": 5},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're taking {name1} as a companion for this walk and
+jumping off the Train. It takes a half of minute to get to the body.
+Silently approaching to the man, {name1} inclines, then turns him over.
+Surprisingly, you both see an old open-eyed face, covered with blood
+and dirt. The man is alive! Making a step back, {name1} gazes at you.
+The old man in the mean time starts to speak: "If it's in you, cut it
+out! You better cut it out!" He uppers his hands and starts to shake
+them - the sleeves goes down, unveiling his arms, covered with fresh
+cuts. "When they'll got you, cut them out!" - he repeats. {name1} makes
+a step towards you and silently pronounces: "We better leave him."
+Taking a moment to overthink, you're deciding that it's a good idea,
+this man is mad and most likely diseased. No way to help him.
+Single character can get Masochism""",
+                        "effects": {"select_char": {"add_trait": "Masochism"}},
+                    },
+                ),
+            },
         ),
     },
 }
