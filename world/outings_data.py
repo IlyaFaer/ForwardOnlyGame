@@ -1615,6 +1615,110 @@ Single character can get Masochism""",
                     },
                 ),
             },
+            {  # 3
+                "name": "Assassin",
+                "type": "Meet",
+                "class_weights": {"soldier": 10, "anarchist": 15, "raider": 7},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 8,
+                    "morning": 10,
+                    "noon": 4,
+                    "evening": 0,
+                },
+                "desc": """In the moment the Train stopped, you're finding your eyes on a dark
+silhouette of an armed man. He doesn't seem to be aggressive, so
+you're giving him some time to come closer. "Hey, guys!" - he says,
+smiling. - "Nice to meet you, I may need some help." "We're listening" -
+you answer. "Locals paid me to convince to deal with skinheads,
+who camped in the nearby mine. There are a lot of those imbitsils,
+so I'm gonna ask you to join me. I'll give you half of my lucre."
+You're taking an attentive look at the man. He seems to be a pro,
+well-armed, trained and cold blooded. Hitman probably. Doesn't look
+like he's going to lure you into a trap - he could kill you much
+easier, if he'd want. Than why not to give him a hand!?""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """Several hours passed since you've sent {name1}, {name2} and
+{name3} to help the assassin, and you finally see your people walking
+back to the Train. All three, they are covered with dirt and soot,
+their clothes torn. Helping each other, they climb up to the locomotive,
+and {name2} reporting: "We've entered the mine and started to shoot
+skinheads one by one. But something went wrong, and we've been
+littered with stones. It took us an eternity to dig out." "An
+eternity!" - {name3} repeats, inclining {hisher3} head. {name2}
+continues: "The hitman is dead we suppose." Ordering your people
+to get clean and rest, you're commanding the machinist to take off.
+{name2} and {name3} getting Fear of dark""",
+                        "effects": {
+                            "char_2": {"add_trait": "Fear of dark"},
+                            "char_3": {"add_trait": "Fear of dark"},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1}, {name2} and {name3} following the hitman and go dark
+for several hours. The lack of any signs of your people makes you
+little bit nervous, but in some moment you see them returning back
+to the Train. They all look tired and dirty, but no one seem to be
+seriously injured. "No good news." - {name1} explains to you,
+climbing up to the locomotive. - "There was tens of skinheads,
+and we barely made it out there alive. Our new friend wasn't so
+lucky." - {heshe1} sighs. - "We have a couple of scratches,
+nothing serous." Well, at least everyone is in one piece; the
+locomotive engine starts to warm up.
+{name1}, {name2} and {name3} getting -10 health""",
+                        "effects": {"assignees": {"health": -10}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're sending {name1}, {name2} and {name3} with the smiling
+assassin. After all, skinheads are the disease to be cured, no matter
+if it is an end the world. A couple of hours passes, when you finally
+see your people. They look neutral, and there are no the hitman
+with them. Getting closer to the Train, {name3} explains what's
+happened: "Those bastards were waiting for us. Our friend didn't
+make it, and we barely made it out there ourselves." They all climb
+up to the Train. "We better hurry up" - {name2} adds. - "Who knows,
+they could have decide to follows us." Well, on that you all agree.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You're sending {name1}, {name2} and {name3} with the hitman
+as a support. They fastly disappear behind the hill, and two hours
+passed, before they get on sight again. Throwing a gaze through
+binoculars, you see that everyone is okay. The hitman is not with
+your people. "We've finished them all." - {name1} says, getting closer
+to the Train. - "The man gave us some money and vanished, like he
+never been there." Climbing up to the Train, your messengers moving
+each to his/her place. Well, the job is done, bad people were stopped,
+and some money earned. Sounds like a lucky outing!
+You're getting 100$""",
+                        "effects": {"money": 100},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """{name1}, {name2} and {name3} following the hitman as a
+support. A couple of hours passes before you see your people again.
+From 200 meters you can see that their campaign was successful -
+they smile and actively discuss something. Getting closer to you,
+{name1} start to describe you the details of the operation, others
+joining him. "This guy was like a shadow!" "{name2} shooted three
+bastards in a second!" "We've been moving like a single one person."
+The hotly told history sounds to you like a battle to remember!
+Everyone done something, the vespiary burned to the ground, and
+every messenger is very impressed by the hitman skills.
+You're getting 100$
+Single character can get Fast hands""",
+                        "effects": {
+                            "select_char": {"add_trait": "Fast hands"},
+                            "money": 100,
+                        },
+                    },
+                ),
+            },
         ),
     },
 }

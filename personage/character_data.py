@@ -117,6 +117,7 @@ NAMES = {
         "Jennifer",
         "Jessica",
         "Julia",
+        "Karen",
         "Kate",
         "Laura",
         "Maeve",
