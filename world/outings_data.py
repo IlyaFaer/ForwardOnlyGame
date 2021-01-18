@@ -11,7 +11,7 @@ OUTINGS = {
             {  # 1
                 "name": "Car Column",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 15, "raider": 9, "anarchist": 7},
+                "class_weights": {"soldier": 15, "raider": 4, "anarchist": 7},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 10,
@@ -119,7 +119,7 @@ You're getting +90$ and 1 stimulator
             {  # 2
                 "name": "Big Tent",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 45, "raider": 20, "anarchist": 16},
+                "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
                 "assignees": 1,
                 "day_part_weights": {
                     "night": 0,
@@ -217,7 +217,7 @@ You're getting +90$""",
             {  # 3
                 "name": "Bus",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 22.5, "raider": 12, "anarchist": 14},
+                "class_weights": {"soldier": 22.5, "raider": 6, "anarchist": 14},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 0,
@@ -320,7 +320,7 @@ You're getting +100$""",
             {  # 4
                 "name": "Gas Station",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 22.5, "raider": 14, "anarchist": 18},
+                "class_weights": {"soldier": 22.5, "raider": 7, "anarchist": 17},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 4,
@@ -427,7 +427,7 @@ You're getting +90$ and fuel for 50 miles""",
             {  # 5
                 "name": "Trailers",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 15, "raider": 10, "anarchist": 12},
+                "class_weights": {"soldier": 15, "raider": 4, "anarchist": 11},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 10,
@@ -525,7 +525,7 @@ You're getting 200$""",
             {  # 6
                 "name": "Construction",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 15, "raider": 10, "anarchist": 8},
+                "class_weights": {"soldier": 15, "raider": 10, "anarchist": 5},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 0,
@@ -627,7 +627,7 @@ You're getting 130$""",
             {  # 7
                 "name": "Cloth Piece",
                 "type": "Enemy Camp",
-                "class_weights": {"soldier": 22.5, "raider": 15, "anarchist": 12},
+                "class_weights": {"soldier": 22.5, "raider": 14, "anarchist": 5},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 0,
@@ -728,7 +728,7 @@ You're getting 170$""",
             {  # 1
                 "name": "Abandoned Car",
                 "type": "Looting",
-                "class_weights": {"soldier": 22.5, "raider": 45, "anarchist": 15},
+                "class_weights": {"soldier": 22.5, "raider": 45, "anarchist": 9},
                 "assignees": 1,
                 "day_part_weights": {
                     "night": 0,
@@ -816,7 +816,7 @@ You're getting a smoke filter in a good shape.""",
             {  # 2
                 "name": "Meadow Tent",
                 "type": "Looting",
-                "class_weights": {"soldier": 13, "raider": 22.5, "anarchist": 16},
+                "class_weights": {"soldier": 6, "raider": 22.5, "anarchist": 16},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 0,
@@ -916,7 +916,7 @@ You're getting 1 medicine box.""",
             {  # 3
                 "name": "Old Hut",
                 "type": "Looting",
-                "class_weights": {"soldier": 10, "raider": 15, "anarchist": 8},
+                "class_weights": {"soldier": 10, "raider": 15, "anarchist": 3},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 8,
@@ -1118,7 +1118,7 @@ You're getting +40$""",
             {  # 5
                 "name": "Wrecked truck",
                 "type": "Looting",
-                "class_weights": {"soldier": 15, "raider": 22.5, "anarchist": 17},
+                "class_weights": {"soldier": 7, "raider": 22.5, "anarchist": 16},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 2,
@@ -1212,7 +1212,7 @@ Every character getting +35 energy""",
             {  # 6
                 "name": "Grey Smoke",
                 "type": "Looting",
-                "class_weights": {"soldier": 10, "raider": 15, "anarchist": 13},
+                "class_weights": {"soldier": 4, "raider": 15, "anarchist": 12},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 5,
@@ -1307,7 +1307,7 @@ Train damnability +70""",
             {  # 7
                 "name": "Silo",
                 "type": "Looting",
-                "class_weights": {"soldier": 15, "raider": 22.5, "anarchist": 16},
+                "class_weights": {"soldier": 6, "raider": 22.5, "anarchist": 16},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 10,
@@ -1413,7 +1413,7 @@ You're getting 1 smoke filter and 1 medicine box""",
             {  # 1
                 "name": "Tents",
                 "type": "Meet",
-                "class_weights": {"soldier": 16, "anarchist": 22.5, "raider": 19},
+                "class_weights": {"soldier": 5, "anarchist": 22.5, "raider": 17},
                 "assignees": 2,
                 "day_part_weights": {
                     "night": 0,
@@ -1517,7 +1517,7 @@ One person can be recruited""",
             {  # 2
                 "name": "Lying man",
                 "type": "Meet",
-                "class_weights": {"soldier": 25, "anarchist": 45, "raider": 32},
+                "class_weights": {"soldier": 10, "anarchist": 45, "raider": 28},
                 "assignees": 1,
                 "day_part_weights": {
                     "night": 0,
@@ -1618,7 +1618,7 @@ Single character can get Masochism""",
             {  # 3
                 "name": "Assassin",
                 "type": "Meet",
-                "class_weights": {"soldier": 10, "anarchist": 15, "raider": 7},
+                "class_weights": {"soldier": 10, "anarchist": 15, "raider": 4},
                 "assignees": 3,
                 "day_part_weights": {
                     "night": 8,

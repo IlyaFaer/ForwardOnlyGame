@@ -97,6 +97,10 @@ they build cohesion much
 faster than others""",
     """Anarchist gets damage factor
 x2 from cohesion""",
+    """Anarchists are people from
+crowd. They value mutual
+assistance with those
+life has brought them.""",
     # accuracy
     """Shooting accuracy is affected
 by lighting, distance,
