@@ -20,7 +20,7 @@ from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 class TraitsGui:
     """GUI to praise/scold characters.
 
-    This GUI gives playes an opportunity to
+    This GUI gives players an opportunity to
     control their characters traits.
     """
 

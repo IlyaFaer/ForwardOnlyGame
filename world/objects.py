@@ -116,35 +116,6 @@ class ArmorPlate:
         self._is_on_move = False
         return task.done
 
-    def _turn_right(self):
-        """Cover the right side of the Train with the plate."""
-        if self._cur_position == "right" or self._is_on_move:
-            return
-
-        if self._cur_position == "top":
-            self._model.actorInterval("right", playRate=1.5).start()
-            delay = 1.5
-            self._snd.play()
-        else:
-            self._left_to_right.start()
-            delay = 3
-
-        self._is_on_move = True
-        taskMgr.doMethodLater(delay, self._stop_move, "stop_move_plate")  # noqa: F821
-        taskMgr.doMethodLater(  # noqa: F821
-            delay - 0.9,
-            base.train.cover_part,  # noqa: F821
-            "cover_part",
-            extraArgs=["part_locomotive_right"],
-        )
-        taskMgr.doMethodLater(  # noqa: F821
-            0.5,
-            base.train.uncover_part,  # noqa: F821
-            "uncover_part",
-            extraArgs=[self._cur_position],
-        )
-        self._cur_position = "right"
-
     def _turn_left(self):
         """Cover the left side of the Train with the plate."""
         if self._cur_position == "left" or self._is_on_move:
@@ -173,6 +144,35 @@ class ArmorPlate:
             extraArgs=[self._cur_position],
         )
         self._cur_position = "left"
+
+    def _turn_right(self):
+        """Cover the right side of the Train with the plate."""
+        if self._cur_position == "right" or self._is_on_move:
+            return
+
+        if self._cur_position == "top":
+            self._model.actorInterval("right", playRate=1.5).start()
+            delay = 1.5
+            self._snd.play()
+        else:
+            self._left_to_right.start()
+            delay = 3
+
+        self._is_on_move = True
+        taskMgr.doMethodLater(delay, self._stop_move, "stop_move_plate")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            delay - 0.9,
+            base.train.cover_part,  # noqa: F821
+            "cover_part",
+            extraArgs=["part_locomotive_right"],
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            0.5,
+            base.train.uncover_part,  # noqa: F821
+            "uncover_part",
+            extraArgs=[self._cur_position],
+        )
+        self._cur_position = "right"
 
     def _turn_top(self):
         """Cover the top side of the Train with the plate."""

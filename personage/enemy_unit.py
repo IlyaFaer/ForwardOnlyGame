@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Enemy unit API.
+Enemy units API.
 """
 import random
 
@@ -187,6 +187,17 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
 
         EnemyUnit._die(self)
 
+    def _missed_shot(self):
+        """Calculate if enemy missed the current shot.
+
+        Returns:
+            bool: True if enemy missed, False otherwise.
+        """
+        if self.current_part.is_covered:
+            return chance(50)
+
+        return False
+
     def capture_train(self):
         """The Train got critical damage - stop near it."""
         EnemyMotorcyclist.capture_train(self)
@@ -217,17 +228,6 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
 
         self.current_part = None
         self._target = None
-
-    def _missed_shot(self):
-        """Calculate if enemy missed the current shot.
-
-        Returns:
-            bool: True if enemy missed, False otherwise.
-        """
-        if self.current_part.is_covered:
-            return chance(50)
-
-        return False
 
     def clear(self, task=None):
         """Clear all the graphical data of this unit."""

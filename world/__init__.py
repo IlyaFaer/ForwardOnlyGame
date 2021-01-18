@@ -327,6 +327,10 @@ class World:
         from_snd.stop()
         return task.done
 
+    def drop_outing_ability(self):
+        """Drop the current block outing ability."""
+        self._map[self._block_num - 1].outing_available = None
+
     def start_outing(self, type_):
         """Start an outing with the given type.
 
@@ -334,10 +338,6 @@ class World:
             type_ (str): Outing type.
         """
         self.outings_mgr.start_outing(type_)
-
-    def drop_outing_ability(self):
-        """Drop the current block outing ability."""
-        self._map[self._block_num - 1].outing_available = None
 
     def generate_location(self, location, size):
         """Generate game location.

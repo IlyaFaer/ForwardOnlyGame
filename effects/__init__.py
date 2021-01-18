@@ -285,10 +285,7 @@ class BombExplosion:
 
 
 class Stench:
-    """
-    All the Stench visual effects and
-    sounds as a single object.
-    """
+    """All the Stench visual effects and sounds as a single object."""
 
     def __init__(self):
         self._is_playing = False

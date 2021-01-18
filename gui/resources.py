@@ -17,10 +17,10 @@ from .character import ABOUT_BUT_PARAMS
 from .widgets import ICON_PATH, RUST_COL, SILVER_COL
 
 
-class ResourcesInterface:
+class ResourcesGUI:
     """GUI to track player's resources.
 
-    Includes money and cohesion.
+    Includes money, expendable resources and cohesion.
     """
 
     def __init__(self):
@@ -382,7 +382,7 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Expendable resources:",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.033, 0.033),
+                text_scale=0.033,
                 text_fg=SILVER_COL,
                 pos=(0, 0, -0.08),
             )
@@ -401,7 +401,7 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Medicine box",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(0.035, 0, -0.147),
             )
@@ -411,7 +411,7 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Cure chosen sick character",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(0.035, 0, -0.185),
             )
@@ -430,7 +430,7 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Smoke filter",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(0.035, 0, -0.243),
             )
@@ -440,7 +440,7 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Reduce attack chance (5 min)",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(0.035, 0, -0.275),
             )
@@ -459,7 +459,7 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Stimulator",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(0.035, 0, -0.337),
             )
@@ -469,11 +469,16 @@ class ResourcesInterface:
                 parent=self._res_frame,
                 text="Disable negative traits (5 min)",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(0.035, 0, -0.375),
             )
         )
+
+    def disable_cohesion(self):
+        """Disable all the cohesion abilities."""
+        for icon in self._coh_icons:
+            icon["wid"]["frameTexture"] = ICON_PATH + "ny_" + icon["file"]
 
     def update_resource(self, name, value):
         """Update the indicator with the given value.
@@ -500,8 +505,3 @@ class ResourcesInterface:
                 icon["wid"]["frameTexture"] = ICON_PATH + icon["file"]
             else:
                 icon["wid"]["frameTexture"] = ICON_PATH + "ny_" + icon["file"]
-
-    def disable_cohesion(self):
-        """Disable all the cohesion abilities."""
-        for icon in self._coh_icons:
-            icon["wid"]["frameTexture"] = ICON_PATH + "ny_" + icon["file"]

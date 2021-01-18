@@ -30,7 +30,7 @@ DEFAULT_TEAMS = {
 
 
 class Team:
-    """All the characters together object."""
+    """All the player's characters together object."""
 
     def __init__(self):
         self._char_id = 0  # variable to count character ids

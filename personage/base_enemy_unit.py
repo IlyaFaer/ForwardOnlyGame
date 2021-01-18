@@ -92,6 +92,32 @@ class EnemyUnit(Unit):
         """
         return self._tooltip
 
+    def _die(self):
+        """Make this enemy unit die.
+
+        Play death sequence of movements and sounds,
+        stop all the tasks for this enemy, plan clearing.
+
+        Returns:
+            bool: True, if enemy dies in the first time.
+        """
+        if not Unit._die(self):
+            return False
+
+        self.model.setColorScale(1, 1, 1, 1)
+        self._stop_tasks("_float_move")
+        self._move_int.pause()
+
+        self.model.play("die")
+        if self.id in base.world.enemy.active_units:  # noqa: F821
+            base.world.enemy.active_units.pop(self.id)  # noqa: F821
+            if self.current_part:
+                self.current_part.enemies.remove(self)
+
+        self._explode()
+        self._y_positions.append(self._y_pos)
+        return True
+
     def _float_move(self, task):
         """Make enemy floatly move along Train."""
         if chance(80):
@@ -126,51 +152,6 @@ class EnemyUnit(Unit):
         """The Train got critical damage - stop near it."""
         self._stop_tasks("_float_move")
 
-    def get_damage(self, damage):
-        """Take damage points and change model color.
-
-        Args:
-            damage (int): Damage points to get.
-        """
-        Unit.get_damage(self, damage)
-        self.model.setColorScale(self.model.getColorScale()[0] + 0.018, 1, 1, 1)
-
-    def _die(self):
-        """Make this enemy unit die.
-
-        Play death sequence of movements and sounds,
-        stop all the tasks for this enemy, plan clearing.
-
-        Returns:
-            bool: True, if enemy dies in the first time.
-        """
-        if not Unit._die(self):
-            return False
-
-        self.model.setColorScale(1, 1, 1, 1)
-        self._stop_tasks("_float_move")
-        self._move_int.pause()
-
-        self.model.play("die")
-        if self.id in base.world.enemy.active_units:  # noqa: F821
-            base.world.enemy.active_units.pop(self.id)  # noqa: F821
-            if self.current_part:
-                self.current_part.enemies.remove(self)
-
-        self._explode()
-        self._y_positions.append(self._y_pos)
-        return True
-
-    def stop(self):
-        """Smoothly stop this unit following the Train."""
-        self._stop_tasks("_float_move")
-        self._move(random.randint(9, 11), (self._io_dist, -7, 0))
-        self._y_positions.append(self._y_pos)
-
-    def stop_ride(self):
-        """Stop riding actions."""
-        self.transport_snd.stop()
-
     def clear(self, task=None):
         """Clear all the graphical data of this unit."""
         base.sound_mgr.detach_sound(self.transport_snd)  # noqa: F821
@@ -181,3 +162,22 @@ class EnemyUnit(Unit):
 
         if task is not None:
             return task.done
+
+    def get_damage(self, damage):
+        """Take damage points and change model color.
+
+        Args:
+            damage (int): Damage points to get.
+        """
+        Unit.get_damage(self, damage)
+        self.model.setColorScale(self.model.getColorScale()[0] + 0.018, 1, 1, 1)
+
+    def stop(self):
+        """Smoothly stop this unit following the Train."""
+        self._stop_tasks("_float_move")
+        self._move(random.randint(9, 11), (self._io_dist, -7, 0))
+        self._y_positions.append(self._y_pos)
+
+    def stop_ride(self):
+        """Stop riding actions."""
+        self.transport_snd.stop()

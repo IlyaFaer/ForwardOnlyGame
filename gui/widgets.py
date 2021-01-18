@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The game GUI primitives.
+Common game GUI primitives.
 """
 import abc
 
@@ -59,7 +59,7 @@ class ItemChooser(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def _show_info(self):
-        """Show info about the chosen item."""
+        """Show the chosen item info."""
         raise NotImplementedError("Chooser class must have _show_info() method.")
 
     @property

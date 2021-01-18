@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Character state GUI.
+Character status GUI.
 """
 from direct.gui.DirectGui import (
     DGG,
@@ -28,7 +28,7 @@ ABOUT_BUT_PARAMS = {
 }
 
 
-class CharacterInterface:
+class CharacterGUI:
     """Widget with the chosen character info."""
 
     def __init__(self):
@@ -72,7 +72,7 @@ class CharacterInterface:
             text_fg=SILVER_COL,
             pos=(-0.09, 0, 0.069),
         )
-        self._traits_list = DirectLabel(
+        self._traits = DirectLabel(
             parent=self._fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
@@ -142,12 +142,11 @@ class CharacterInterface:
             frameTexture=ICON_PATH + "disease.png",
         )
         self._disease.setTransparency(TransparencyAttrib.MAlpha)
-        self._disease.hide()
 
         self.clear_char_info()
 
     def show_char_info(self, character):
-        """Show the given character parameters.
+        """Show the given character status.
 
         Args:
             character (personage.character.Character):
@@ -155,7 +154,7 @@ class CharacterInterface:
         """
         self._char_name["text"] = character.name
         self._char_class["text"] = character.class_.capitalize()
-        self._traits_list["text"] = ", ".join(character.traits)
+        self._traits["text"] = ", ".join(character.traits)
 
         self._char_health["range"] = character.class_data["health"]
         self._char_health["value"] = character.health
@@ -170,7 +169,7 @@ class CharacterInterface:
         self._char_class.show()
         self._char_health.show()
         self._char_energy.show()
-        self._traits_list.show()
+        self._traits.show()
         self._char_desc_but.show()
 
         if self._char_desc_shown:
@@ -187,7 +186,7 @@ class CharacterInterface:
         self._char_class.hide()
         self._char_health.hide()
         self._char_energy.hide()
-        self._traits_list.hide()
+        self._traits.hide()
         self._char_desc_but.hide()
         self._disease.hide()
 
@@ -276,7 +275,7 @@ class CharacterInterface:
 
         self._char_health["value"] = self._char.health
         self._char_energy["value"] = self._char.energy
-        self._traits_list["text"] = ", ".join(self._char.traits)
+        self._traits["text"] = ", ".join(self._char.traits)
 
         if self._char.is_diseased:
             self._disease.show()
@@ -413,7 +412,7 @@ class CharacterInterface:
         self._char_desc_shown = not self._char_desc_shown
 
     def move_status_label(self, place):
-        """Move status label widget.
+        """Move the status label widget.
 
         Args:
             place (int): Place to shift the widget.

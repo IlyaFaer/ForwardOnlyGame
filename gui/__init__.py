@@ -10,12 +10,12 @@ from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
 from utils import save_exists
-from .character import CharacterInterface  # noqa: F401
+from .character import CharacterGUI  # noqa: F401
 from .city import CityInterface  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
-from .resources import ResourcesInterface  # noqa: F401
-from .train import TrainInterface  # noqa: F401
+from .resources import ResourcesGUI  # noqa: F401
+from .train import TrainGUI  # noqa: F401
 from .traits import TraitsGui  # noqa: F401
 from .widgets import ICON_PATH, RUST_COL, SILVER_COL  # noqa: F401
 
@@ -23,8 +23,7 @@ from .widgets import ICON_PATH, RUST_COL, SILVER_COL  # noqa: F401
 class MainMenu:
     """The main game menu.
 
-    Includes starting a game, loading,
-    saving and exiting functions.
+    Includes starting a game, loading, saving and exiting functions.
     """
 
     def __init__(self):
@@ -33,8 +32,8 @@ class MainMenu:
         self._is_first_pause = True
         self._tactics_wids = []
 
-        self._enter_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
-        self._enter_snd.setVolume(0.1)
+        self._hover_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
+        self._hover_snd.setVolume(0.1)
         self.click_snd = loader.loadSfx("sounds/menu2.ogg")  # noqa: F821
         self.click_snd.setVolume(0.1)
 
@@ -83,8 +82,8 @@ class MainMenu:
             text_fg=SILVER_COL,
             frameColor=(0, 0, 0, 0),
             text=(
-                "This is a game alpha build. It's not finally balanced and a lot of"
-                " things are in development yet."
+                "This is a game alpha build. It's not finally balanced and some"
+                " features are in development yet."
                 "\nThus, it's mostly a conceptual release, to demonstrate you the main "
                 "game princips. Enjoy your play!"
             ),
@@ -112,7 +111,7 @@ class MainMenu:
                 button["text_scale"][0] + 0.002,
                 button["text_scale"][1] + 0.003,
             )
-            self._enter_snd.play()
+            self._hover_snd.play()
 
     def _dehighlight_but(self, button, _):
         """Dehighlight the button, when mouse pointer leaved it.
@@ -188,7 +187,7 @@ class MainMenu:
             parent=self._main_fr,
             text="Team description",
             text_fg=SILVER_COL,
-            text_scale=(0.03),
+            text_scale=0.03,
             frameColor=(0, 0, 0, 0),
             pos=(0.7, 0, -0.26),
         )
@@ -279,7 +278,7 @@ class MainMenu:
             text="Loading...",
             text_fg=RUST_COL,
             frameSize=(1, 1, 1, 1),
-            text_scale=(0.04),
+            text_scale=0.04,
             pos=(0, 0, -0.75),
         )
 
@@ -331,6 +330,7 @@ class MainMenu:
                 self._save_but["command"] = None
             return
 
+        # it is the first pause
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
 
         self._new_game_but["text"] = "Resume"

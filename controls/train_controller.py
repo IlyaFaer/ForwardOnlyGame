@@ -288,13 +288,13 @@ class TrainController:
             "stop_riding",
         )
 
-    def silence_move_snd(self):
+    def drown_move_snd(self):
         """Reduce the main move sound volume."""
         if self._move_snd_volume == 1:
             self._move_snd.setVolume(0.5)
             self._move_snd_volume = 0.5
 
-    def unsilence_move_snd(self):
+    def raise_move_snd(self):
         """Restore full volume of the main move sound."""
         if self._move_snd_volume == 0.5:
             self._move_snd.setVolume(1)

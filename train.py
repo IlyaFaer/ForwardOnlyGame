@@ -5,7 +5,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 Train - the main game object, API.
 
 Includes the systems of the Train loading, preparations,
-animation, sounds, lights, physics.
+animation, sounds, lights, physics, upgrades.
 """
 import copy
 import random
@@ -16,7 +16,7 @@ from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
 from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 
 from controls import TrainController
-from gui.train import TrainInterface
+from gui.train import TrainGUI
 from train_part import RestPart, TrainPart
 from utils import address, take_random
 from world.objects import ArmorPlate
@@ -50,10 +50,10 @@ Use 5, 6, 7 keys to move it.""",
 
 
 class Train:
-    """The Train object. The main game object.
+    """The Train object - the main game object.
 
     Includes train model, lights, sounds, parts to set
-    characters, controller and physics.
+    characters, controller, upgrades and physics.
 
     Args:
         description (dict):
@@ -112,7 +112,7 @@ class Train:
         self._lights = self._set_lights()
         self.lights_on = False
 
-        self._gui = TrainInterface()
+        self._gui = TrainGUI()
 
         self._damnability = None
 
@@ -189,7 +189,7 @@ class Train:
     def possible_upgrades(self):
         """
         Return the index of the upgrades, which
-        can be installed on the Train.
+        can be currently installed on the Train.
 
         Returns:
             dict: Possible upgrades index.
@@ -208,6 +208,24 @@ class Train:
             list: Ids of the installed upgrades.
         """
         return self._upgrades
+
+    def _clear_brake(self, side, brake):
+        """Stop braking on the given side.
+
+        Args:
+            side (str): Side label: 'l' or 'r'.
+            brake (panda3d.core.NodePath):
+                Brake model to drop.
+        """
+        if side == "l":
+            self._l_brake_sparks.softStop()
+            self.l_brake = False
+        else:
+            self._r_brake_sparks.softStop()
+            self.r_brake = False
+
+        self.ctrl.max_speed += 0.25
+        brake.removeNode()
 
     def _prepare_particles(self):
         """
@@ -238,6 +256,21 @@ class Train:
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
         ]
         return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions
+
+    def has_cell(self):
+        """Check if there is a free cell for a new unit.
+
+        Returns:
+            bool: True, if there is a free cell.
+        """
+        cells_num = 0
+        for part in self.parts.values():
+            cells_num += part.free_cells
+
+            if cells_num >= 2:
+                return True
+
+        return False
 
     def load_upgrades(self, upgrades):
         """Load the Train upgrades saved earlier.
@@ -270,21 +303,6 @@ class Train:
             extraArgs=[phys_mgr, self._phys_node.node()],
             appendTask=True,
         )
-
-    def has_cell(self):
-        """Check if there is a free cell for a new unit.
-
-        Returns:
-            bool: True, if there is a free cell.
-        """
-        cells_num = 0
-        for part in self.parts.values():
-            cells_num += part.free_cells
-
-            if cells_num >= 2:
-                return True
-
-        return False
 
     def place_recruit(self, char):
         """Place the new recruit somewhere on the Train.
@@ -335,24 +353,6 @@ class Train:
         """Move the Train into a city hangar."""
         self.root_node.setZ(50)
         self._smoke.disable()
-
-    def _clear_brake(self, side, brake):
-        """Stop braking on the given side.
-
-        Args:
-            side (str): Side label: 'l' or 'r'.
-            brake (panda3d.core.NodePath):
-                Brake model to drop.
-        """
-        if side == "l":
-            self._l_brake_sparks.softStop()
-            self.l_brake = False
-        else:
-            self._r_brake_sparks.softStop()
-            self.r_brake = False
-
-        self.ctrl.max_speed += 0.25
-        brake.removeNode()
 
     def move_along_block(self, block):
         """Move the Train along the given world block.
@@ -421,7 +421,7 @@ class Train:
                 random.choice(self._creak_snds).play()
                 self._creak_snd_cooldown = True
 
-                base.taskMgr.doMethodLater(  # noqa: F821
+                taskMgr.doMethodLater(  # noqa: F821
                     7, self._stop_creak_cooldown, "stop_creak_coodown"
                 )
         return task.again

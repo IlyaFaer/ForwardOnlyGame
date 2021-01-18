@@ -1,7 +1,9 @@
-"""Locations configurations.
+"""
+Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Describes what models should be used on each
-location and their arrangement formulas.
+Locations configurations. Describes what models should be
+used on each location and their arrangement formulas.
 """
 
 PLAINS_TREES = ("tree1", "tree2", "tree3", "red_tree", "yellow_tree")

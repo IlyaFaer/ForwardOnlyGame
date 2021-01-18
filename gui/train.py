@@ -7,10 +7,10 @@ The Train indicators GUI.
 from direct.gui.DirectGui import DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
-from .widgets import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import ICON_PATH, RUST_COL
 
 
-class TrainInterface:
+class TrainGUI:
     """The Train state GUI."""
 
     def __init__(self):
@@ -51,14 +51,6 @@ class TrainInterface:
             pos=(0, 0, -0.01),
         )
 
-    def update_miles(self, new_miles):
-        """Update the miles meter widget.
-
-        Args:
-            new_miles (int): New milesmeter value.
-        """
-        self._miles_meter["text"] = str(new_miles).rjust(7, "0") + " mi"
-
     def update_indicators(self, **params):
         """Update the Train GUI with the given parameters.
 
@@ -67,3 +59,11 @@ class TrainInterface:
         """
         if "damnability" in params.keys():
             self._damnability["value"] = params["damnability"]
+
+    def update_miles(self, new_miles):
+        """Update the miles meter widget.
+
+        Args:
+            new_miles (int): New milesmeter value.
+        """
+        self._miles_meter["text"] = str(new_miles).rjust(7, "0") + " mi"

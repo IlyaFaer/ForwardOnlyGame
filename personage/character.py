@@ -344,6 +344,27 @@ class Character(Shooter, Unit):
         if enemy_unit in self.current_part.enemies:
             self._target = enemy_unit
 
+    def do_effects(self, effects):
+        """Do outing effects to this character.
+
+        Args:
+            effects (dict): Effects and their values.
+        """
+        if effects is None:
+            return
+
+        effects = copy.deepcopy(effects)
+        self.get_damage(-effects.pop("health", 0))
+
+        trait = effects.get("add_trait")
+        if trait and trait not in self.traits + self.disabled_traits:
+            self.traits.append(trait)
+            effects.pop("add_trait")
+
+        for key, value in effects.items():
+            if hasattr(self, key):
+                setattr(self, key, getattr(self, key) + value)
+
     def prepare_to_fight(self):
         """Prepare the character to fight.
 
@@ -392,27 +413,6 @@ class Character(Shooter, Unit):
 
         LerpAnimInterval(self.model, 0.5, "stand_and_aim", "surrender").start()
         self.model.play("surrender")
-
-    def do_effects(self, effects):
-        """Do outing effects to this character.
-
-        Args:
-            effects (dict): Effects and their values.
-        """
-        if effects is None:
-            return
-
-        effects = copy.deepcopy(effects)
-        self.get_damage(-effects.pop("health", 0))
-
-        trait = effects.get("add_trait")
-        if trait and trait not in self.traits + self.disabled_traits:
-            self.traits.append(trait)
-            effects.pop("add_trait")
-
-        for key, value in effects.items():
-            if hasattr(self, key):
-                setattr(self, key, getattr(self, key) + value)
 
     def stop_rest(self):
         """Stop this character rest."""
@@ -716,10 +716,9 @@ class Character(Shooter, Unit):
     def get_sick(self, is_infect=False):
         """Calculations to get this character sick.
 
-        The worse condition the character has the higher
-        is the chance for him to get sick. Sick character
-        has lower energy maximum, and all his positive
-        traits are disabled until getting well.
+        The worse condition the character has the higher is the chance
+        for him to get sick. Sick character has lower energy maximum,
+        and all his positive traits are disabled until getting well.
 
         Args:
             is_infect (bool):
@@ -789,9 +788,8 @@ class Character(Shooter, Unit):
     def get_well(self, task):
         """Get this character well.
 
-        When the character got well, his energy maximum
-        is restored to the default value, and his
-        positive traits are back operational.
+        When the character got well, his energy maximum is restored to
+        the default value, and his positive traits are back operational.
         """
         self.get_well_score += 1
         if self.get_well_score < 20:

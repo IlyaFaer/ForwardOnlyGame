@@ -45,7 +45,7 @@ class OutingsInterface:
         self._upcome_text = DirectLabel(
             text="",
             frameSize=(0.4, 0.4, 0.4, 0.4),
-            text_scale=(0.04, 0.04),
+            text_scale=0.04,
             text_fg=SILVER_COL,
             text_bg=(0, 0, 0, 0.5),
             pos=(0, 0, 0.65),
@@ -357,10 +357,10 @@ class OutingsInterface:
         Args:
             type_ (str): Outing type.
         """
-        text = '"{type}" outing available in {miles} miles'.format(
-            type=type_.capitalize(), miles=2
+        self.show_upcoming(
+            '"{}" outing available in 2 miles'.format(type_.capitalize()),
+            OUTINGS_ICONS[type_],
         )
-        self.show_upcoming(text, OUTINGS_ICONS[type_])
 
     def show_city(self):
         """Show upcoming city notification."""
@@ -428,7 +428,7 @@ class OutingsInterface:
 
         to_send = DirectLabel(
             parent=self._list,
-            text="People to send (0/{max_as}):".format(max_as=outing["assignees"]),
+            text="People to send (0/{}):".format(outing["assignees"]),
             frameSize=(0.6, 0.6, 0.6, 0.6),
             text_scale=(0.035),
             pos=(0.35, 0, 0),

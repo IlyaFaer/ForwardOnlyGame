@@ -2,7 +2,7 @@
 Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Common game controls.
+Common game controls: keys and mouse clicks.
 """
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import (
@@ -53,7 +53,7 @@ class CommonController:
 
         self._is_keys_shown = False
         self._is_relations_shown = False
-        self._keys_info = None  # on screen text
+        self._keys_info = None  # on screen text object
         self._pointed_obj = ""
         self._chosen_char = None
 
@@ -124,7 +124,7 @@ class CommonController:
         self._pointed_obj = None
 
     def deselect(self):
-        """Hide manipulating interface."""
+        """Hide manipulating GUI and deselect character."""
         self._char_pointer.detachNode()
         self._chosen_char = None
 

@@ -14,15 +14,14 @@ from .outings_data import OUTINGS
 class OutingsManager:
     """An object to manage outings.
 
-    Rules the outings planning, manipulating, results
-    calculating and GUI.
+    Rules the outings planning, manipulating, results calculating and GUI.
 
     Args:
         location (str): Location to manage outings for.
     """
 
     def __init__(self, location):
-        self._threshold = random.randint(35, 55)
+        self._threshold = random.randint(25, 45)
         self._outings = copy.deepcopy(OUTINGS[location])
         self._types = tuple(self._outings.keys())
         self._snds = {
@@ -63,7 +62,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(35, 55)
+            self._threshold = random.randint(25, 45)
             return random.choice(self._types)
 
     def show_upcoming(self, type_):

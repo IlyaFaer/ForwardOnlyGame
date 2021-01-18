@@ -18,9 +18,9 @@ from panda3d.core import loadPrcFileData, WindowProperties
 from controls import CameraController, CommonController
 from effects import EffectsManager
 from gui import (
-    CharacterInterface,
+    CharacterGUI,
     MainMenu,
-    ResourcesInterface,
+    ResourcesGUI,
     TeachingNotes,
     TraitsGui,
 )
@@ -165,20 +165,6 @@ class ForwardOnly(ShowBase):
 
         self.openDefaultWindow(props=props)
 
-    def _start_game(self, task):
-        """Actually start the game process."""
-        self.notes = TeachingNotes()
-        self.traits_gui = TraitsGui()
-
-        self.main_menu.hide()
-        self.enableAllAudio()
-
-        self.taskMgr.doMethodLater(60, self.world.disease_activity, "disease")
-
-        self.accept("block_finished", self._move_along_block)
-        self._move_along_block()
-        return task.done
-
     def _move_along_block(self):
         """Move the Train along the current world block.
 
@@ -196,13 +182,13 @@ class ForwardOnly(ShowBase):
         if self._current_block.is_stenchy:
             self.effects_mgr.stench_effect.play()
             self.world.stop_ambient_snd()
-            self.train.ctrl.silence_move_snd()
+            self.train.ctrl.drown_move_snd()
 
             self.team.start_stench_activity()
         else:
             self.effects_mgr.stench_effect.stop()
             self.world.resume_ambient_snd()
-            self.train.ctrl.unsilence_move_snd()
+            self.train.ctrl.raise_move_snd()
             if next_block.is_stenchy:
                 self.effects_mgr.stench_effect.play_clouds()
 
@@ -210,39 +196,71 @@ class ForwardOnly(ShowBase):
 
         self._current_block = next_block
 
-    def start_new_game(self, chosen_team):
-        """Start new game.
+    def _start_game(self, task):
+        """Actually start the game process."""
+        self.notes = TeachingNotes()
+        self.traits_gui = TraitsGui()
 
-        Args:
-            chosen_team (str): The chosen initial team.
-        """
+        self.main_menu.hide()
+        self.enableAllAudio()
+
+        self.taskMgr.doMethodLater(60, self.world.disease_activity, "disease")
+
+        self.accept("block_finished", self._move_along_block)
+        self._move_along_block()
+        return task.done
+
+    def load_game(self, task):
+        """Load the previously saved game."""
+        save = shelve.open("saves/save1")
+
         self.disableAllAudio()
 
-        self.train = Train()
+        self.train = Train(save["train"])
 
         self.camera_ctrl = CameraController()
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Team()
-        self.team.gen_default(chosen_team)
+        self.res_gui = ResourcesGUI()
+        self.team.load(save["team"], self.train.parts, save["cohesion"])
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
         self.common_ctrl.set_controls()
 
         # build game world
-        self.world = World()
-        self.world.generate_location("Plains", 900)
-        self._current_block = self.world.prepare_next_block()
+        self.world = World(save["day_part"])
+        self.world.load_location(
+            "Plains",
+            save["enemy_score"],
+            save["disease_threshold"],
+            save["stench_step"],
+        )
+        self._current_block = self.world.load_blocks(
+            save["cur_block"], save["last_angle"]
+        )
 
-        self.char_gui = CharacterInterface()
-        self.res_gui = ResourcesInterface()
+        self.char_gui = CharacterGUI()
+
+        self.train.load_upgrades(save["train"]["upgrades"])
 
         self.doMethodLater(3, self._start_game, "start_game")
+        self.doMethodLater(
+            3.01,
+            self.train.ctrl.load_speed,
+            "load_speed",
+            extraArgs=[save["train"]["speed"]],
+        )
+        self.dollars = save["dollars"]
+        self.medicine_boxes = save["medicine_boxes"]
+        self.smoke_filters = save["smoke_filters"]
+        self.stimulators = save["stimulators"]
+        return task.done
 
-        self.dollars = 300
-        self.medicine_boxes = 0
-        self.smoke_filters = 0
-        self.stimulators = 0
+    def restart_game(self):
+        """Completely restart the game program."""
+        self.destroy()
+        os.execl(sys.executable, sys.executable, *sys.argv)
 
     def save_game(self):
         """Save the current game."""
@@ -270,57 +288,39 @@ class ForwardOnly(ShowBase):
 
         save.close()
 
-    def load_game(self, task):
-        """Load the previously saved game."""
-        save = shelve.open("saves/save1")
+    def start_new_game(self, chosen_team):
+        """Start new game.
 
+        Args:
+            chosen_team (str): The chosen initial team.
+        """
         self.disableAllAudio()
 
-        self.train = Train(save["train"])
+        self.train = Train()
 
         self.camera_ctrl = CameraController()
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Team()
-        self.res_gui = ResourcesInterface()
-        self.team.load(save["team"], self.train.parts, save["cohesion"])
+        self.team.gen_default(chosen_team)
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
         self.common_ctrl.set_controls()
 
         # build game world
-        self.world = World(save["day_part"])
-        self.world.load_location(
-            "Plains",
-            save["enemy_score"],
-            save["disease_threshold"],
-            save["stench_step"],
-        )
-        self._current_block = self.world.load_blocks(
-            save["cur_block"], save["last_angle"]
-        )
+        self.world = World()
+        self.world.generate_location("Plains", 900)
+        self._current_block = self.world.prepare_next_block()
 
-        self.char_gui = CharacterInterface()
-
-        self.train.load_upgrades(save["train"]["upgrades"])
+        self.char_gui = CharacterGUI()
+        self.res_gui = ResourcesGUI()
 
         self.doMethodLater(3, self._start_game, "start_game")
-        self.doMethodLater(
-            3.01,
-            self.train.ctrl.load_speed,
-            "load_speed",
-            extraArgs=[save["train"]["speed"]],
-        )
-        self.dollars = save["dollars"]
-        self.medicine_boxes = save["medicine_boxes"]
-        self.smoke_filters = save["smoke_filters"]
-        self.stimulators = save["stimulators"]
-        return task.done
 
-    def restart_game(self):
-        """Completely restart the game program."""
-        self.destroy()
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        self.dollars = 300
+        self.medicine_boxes = 0
+        self.smoke_filters = 0
+        self.stimulators = 0
 
 
 try:

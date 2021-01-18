@@ -21,7 +21,7 @@ class Shooter(metaclass=abc.ABCMeta):
 
     def __init__(self):
         self._shoot_anim = None
-        self._target = None  # target enemy object
+        self._target = None
 
         self.current_part = None
         self.shot_snd = None
