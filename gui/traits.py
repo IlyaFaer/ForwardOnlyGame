@@ -59,10 +59,10 @@ class TraitsGui:
                 "praise/scold will reduce common team cohesion a bit.\n\n"
                 "Choose one of the current character's traits (positive "
                 "or negative) and\nscold the character to erase the trait. "
-                "It'll cost you 7 cohesion points.\n\n"
+                "It'll cost you 4 cohesion points.\n\n"
                 "If the character has less than 3 traits, you can praise "
                 "him/her to\ngenerate 3 new traits and add one of them "
-                "to the character's\ntraits list. It'll cost you 4 "
+                "to the character's\ntraits list. It'll cost you 5 "
                 "cohesion points."
             ),
             frameSize=(0.3, 0.3, 0.3, 0.3),
@@ -271,7 +271,7 @@ class TraitsGui:
         One of these traits player can choose
         to add to the character's traits list.
         """
-        if base.team.cohesion < 7:  # noqa: F821
+        if base.team.cohesion < 5:  # noqa: F821
             return
 
         char = self._char_chooser.chosen_item
@@ -287,7 +287,7 @@ class TraitsGui:
             self._new_traits[index][1]["text"] = TRAIT_DESC[new_trait]
             self._new_traits[index][1]["text_fg"] = SILVER_COL
 
-        base.team.spend_cohesion(7)  # noqa: F821
+        base.team.spend_cohesion(5)  # noqa: F821
 
     def _scold(self):
         """Erase the chosen character's trait."""

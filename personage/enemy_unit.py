@@ -257,6 +257,7 @@ class BrakeDropper(EnemyMotorcyclist):
             self, id_, "Braker", class_data, model, y_positions, enemy_handler
         )
         self.is_jumping = False
+        self._train_captured = False
 
         brake1 = base.loader.loadModel(address("brake1"))  # noqa: F821
         brake1.reparentTo(self.model)
@@ -352,9 +353,10 @@ class BrakeDropper(EnemyMotorcyclist):
         self.model.wrtReparentTo(self.node)
         self.node.wrtReparentTo(base.train.model)  # noqa: F821
 
-        taskMgr.doMethodLater(  # noqa: F821
-            2, self._float_move, self.id + "_float_move"
-        )
+        if not self._train_captured:
+            taskMgr.doMethodLater(  # noqa: F821
+                2, self._float_move, self.id + "_float_move"
+            )
 
     def _drop_brake(self, brake):
         """Drop braking shoes to slow down Train.
@@ -385,9 +387,10 @@ class BrakeDropper(EnemyMotorcyclist):
 
     def capture_train(self):
         """The Train got critical damage - stop near it."""
-        EnemyMotorcyclist.capture_train(self)
-
+        self._train_captured = True
         self._stop_tasks("_jump_and_brake")
+
+        EnemyMotorcyclist.capture_train(self)
 
     def enter_the_part(self, part):
         """Start fighting in the given part.
@@ -395,7 +398,7 @@ class BrakeDropper(EnemyMotorcyclist):
         Args:
             part (train_part.TrainPart): Train part this enemy entered.
         """
-        if not part.name.endswith("_front"):
+        if not part.name.endswith("_front") or self._train_captured:
             return
 
         self.current_part = part

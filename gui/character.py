@@ -162,6 +162,8 @@ class CharacterGUI:
 
         if character.is_diseased:
             self._disease.show()
+        else:
+            self._disease.hide()
 
         self._char = character
 

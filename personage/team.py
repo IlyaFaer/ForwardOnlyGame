@@ -11,15 +11,15 @@ from utils import chance, take_random
 from .character import generate_char, load_char
 
 COHESION_FACTORS = {
-    ("anarchist", "anarchist"): 0.6,
-    ("soldier", "soldier"): 0.5,
-    ("raider", "raider"): 0.5,
-    ("soldier", "raider"): 0.36,
-    ("soldier", "anarchist"): 0.4,
-    ("raider", "soldier"): 0.36,
-    ("raider", "anarchist"): 0.44,
-    ("anarchist", "soldier"): 0.4,
-    ("anarchist", "raider"): 0.44,
+    ("anarchist", "anarchist"): 0.68,
+    ("soldier", "soldier"): 0.57,
+    ("raider", "raider"): 0.57,
+    ("soldier", "raider"): 0.41,
+    ("raider", "soldier"): 0.41,
+    ("raider", "anarchist"): 0.5,
+    ("anarchist", "raider"): 0.5,
+    ("anarchist", "soldier"): 0.46,
+    ("soldier", "anarchist"): 0.46,
 }
 
 DEFAULT_TEAMS = {
@@ -288,7 +288,7 @@ class Team:
                     )
 
         self._calc_total_cohesion()
-        task.delayTime = 335
+        task.delayTime = 280
         return task.again
 
     def _calc_total_cohesion(self):

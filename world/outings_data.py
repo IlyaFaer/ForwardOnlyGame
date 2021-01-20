@@ -533,7 +533,7 @@ You're getting 200$""",
                     "noon": 6,
                     "evening": 10,
                 },
-                "desc": """Standing on a warm air, you're observing the horizon line. For the
+                "desc": """Standing on a cool air, you're observing the horizon line. For the
 few last hours you saw twelve wooden houses, burned to the ground.
 Seems like someone is clearing these lands, probably skinheads. It's
 worth staying sharp... Once you're seeing a two-floored construction.
@@ -1072,16 +1072,16 @@ didn't get any injury, only a couple of big scratches.
                         "score": range(40, 60),
                         "desc": """You're letting {name1}, {name2} and {name3} to go for a find.
 They are closing to the monastery fast, but in some moment hear
-strange sounds and shouts. Moving closer to the building they decide
+strange sounds and shouts. Moving closer to the building, they decide
 to take a look through the window. {name2} sets a knee to give a lift
 to {name3}, while {name1} stands near on a watch for troubles, as in
-this noise they hear human voices, and they are many. Lifting up {name3}
+this noise they hear human voices, and they are many. Lifting up {name3},
 takes a look inside the monastery, and sees at least forty people
 in there. Dirty, unkempt and completely crazy, they are ripping to shreds
 several animals and eating them raw, all covered in blood. Seems like kind
 of cultists are celebrating the End of the World. {name3} moves down and
 silently explains what {heshe3} saw. Deciding not to disturb this mad
-gathering your people returning back to the Train.""",
+gathering, your people returning back to the Train.""",
                         "effects": {},
                     },
                     {
@@ -1590,11 +1590,11 @@ you and takes a knee sit near the man. "Dead, definitely." - {heshe1}
 pronounces. - "It looks like he was travelling somewhere distant.
 No supplies, no money, he doesn't even have warm clothes. Died here
 alone." You're making a step towards {name1}: "These times no
-one should by alone." {name1} stands up: "Good we have our own team"
+one should be alone." {name1} stands up: "Good we have our own team"
 - {heshe1} smiles to you. - "Thanks, you've brought us together."
 Silently nodding, you point to the Train with your head.
-Team cohesion +5""",
-                        "effects": {"cohesion_gain": 5},
+Team cohesion +6""",
+                        "effects": {"cohesion_gain": 6},
                     },
                     {
                         "score": range(80, 101),
