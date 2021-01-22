@@ -362,7 +362,7 @@ class TraitsGui:
 
         self._is_shown = True
 
-        char_id = base.common_ctrl.chosen_char.id  # noqa: F821
+        char_id = base.char_gui.char.id  # noqa: F821
         base.common_ctrl.deselect()  # noqa: F821
 
         self._char_chooser.prepare(

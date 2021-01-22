@@ -359,6 +359,7 @@ class Character(Shooter, Unit):
         trait = effects.get("add_trait")
         if trait and trait not in self.traits + self.disabled_traits:
             self.traits.append(trait)
+            base.char_gui.move_status_label(-1)  # noqa: F821
             effects.pop("add_trait")
 
         for key, value in effects.items():

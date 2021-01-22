@@ -32,7 +32,7 @@ class CharacterGUI:
     """Widget with the chosen character info."""
 
     def __init__(self):
-        self._char = None  # the chosen character
+        self.char = None  # the chosen character
         self._status_lab = None
         self._rest_buttons = {}
         self._rest_list_active = False
@@ -165,7 +165,7 @@ class CharacterGUI:
         else:
             self._disease.hide()
 
-        self._char = character
+        self.char = character
 
         self._char_name.show()
         self._char_class.show()
@@ -196,7 +196,7 @@ class CharacterGUI:
             self._show_char_desc()
 
         taskMgr.remove("track_char_info")  # noqa: F821
-        self._char = None
+        self.char = None
 
         for but in self._rest_buttons.values():
             but.destroy()
@@ -271,15 +271,15 @@ class CharacterGUI:
 
     def _update_char_info(self, task):
         """Track the chosen character parameters in the GUI."""
-        if self._char.is_dead:
+        if self.char.is_dead:
             self.clear_char_info()
             return task.done
 
-        self._char_health["value"] = self._char.health
-        self._char_energy["value"] = self._char.energy
-        self._traits["text"] = ", ".join(self._char.traits)
+        self._char_health["value"] = self.char.health
+        self._char_energy["value"] = self.char.energy
+        self._traits["text"] = ", ".join(self.char.traits)
 
-        if self._char.is_diseased:
+        if self.char.is_diseased:
             self._disease.show()
         else:
             self._disease.hide()
@@ -312,7 +312,7 @@ class CharacterGUI:
             float: Z-coor including the new widgets shift.
         """
         shift -= 0.03
-        for trait in self._char.traits + self._char.disabled_traits:
+        for trait in self.char.traits + self.char.disabled_traits:
             self._char_desc_wids.append(
                 DirectLabel(
                     parent=self._fr,
@@ -320,7 +320,7 @@ class CharacterGUI:
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.03,
                     text_fg=SILVER_COL
-                    if trait in self._char.traits
+                    if trait in self.char.traits
                     else (0.3, 0.3, 0.3, 1),
                     pos=(0, 0, shift),
                 )
@@ -332,7 +332,7 @@ class CharacterGUI:
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.029,
                     text_fg=SILVER_COL
-                    if trait in self._char.traits
+                    if trait in self.char.traits
                     else (0.3, 0.3, 0.3, 1),
                     pos=(0, 0, shift - 0.045),
                 )
@@ -347,7 +347,7 @@ class CharacterGUI:
             shift (float): Z-coor for the new widgets.
         """
         shift -= 0.04
-        for status in self._char.statuses:
+        for status in self.char.statuses:
             self._char_desc_wids.append(
                 DirectLabel(
                     parent=self._fr,
@@ -387,17 +387,18 @@ class CharacterGUI:
                     pos=(-0.225, 0, shift),
                 )
             )
-            self._char_desc_wids.append(
-                DirectButton(
-                    parent=self._fr,
-                    text="",
-                    frameSize=(-0.025, 0.025, -0.025, 0.025),
-                    frameTexture=ICON_PATH + "like.png",
-                    relief="flat",
-                    pos=(0.265, 0, shift + 0.013),
-                    command=base.traits_gui.show,  # noqa: F821
+            if self.char.id in base.team.chars.keys():  # noqa: F821
+                self._char_desc_wids.append(
+                    DirectButton(
+                        parent=self._fr,
+                        text="",
+                        frameSize=(-0.025, 0.025, -0.025, 0.025),
+                        frameTexture=ICON_PATH + "like.png",
+                        relief="flat",
+                        pos=(0.265, 0, shift + 0.013),
+                        command=base.traits_gui.show,  # noqa: F821
+                    )
                 )
-            )
             shift = self._fill_traits(shift)
 
             self._status_lab = DirectLabel(
