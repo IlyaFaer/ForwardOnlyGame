@@ -364,7 +364,7 @@ class OutingsInterface:
 
     def show_city(self):
         """Show upcoming city notification."""
-        self.show_upcoming("Approaching to a city", "gui/tex/city.png")
+        self.show_upcoming("Approaching a city", "gui/tex/city.png")
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""

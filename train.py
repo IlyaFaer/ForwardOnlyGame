@@ -238,7 +238,7 @@ class Train:
         """
         smoke = ParticleEffect()
         smoke.loadConfig("effects/smoke1.ptf")
-        smoke.setPos(0, 0.32, 0.28)
+        smoke.setPos(0, 0.32, 0.29)
         smoke.start(self.model, render)  # noqa: F821
 
         l_brake_sparks = ParticleEffect()
