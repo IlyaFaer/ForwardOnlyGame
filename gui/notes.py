@@ -139,7 +139,7 @@ class TeachingNotes:
         self._fr = DirectFrame(
             parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.25, 0.25, -0.07, 0.07),
-            pos=(-0.25, 0, 0.7),
+            pos=(-0.25, 0, 0.65),
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)

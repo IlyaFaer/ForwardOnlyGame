@@ -107,6 +107,7 @@ class CharacterGUI:
         self._char_health = DirectWaitBar(
             parent=self._fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
+            frameColor=(0.35, 0.35, 0.35, 1),
             value=0,
             barColor=(0.85, 0.2, 0.28, 1),
             pos=(0.07, 0, -0.008),
@@ -122,6 +123,7 @@ class CharacterGUI:
         self._char_energy = DirectWaitBar(
             parent=self._fr,
             frameSize=(-0.17, 0.17, -0.002, 0.002),
+            frameColor=(0.35, 0.35, 0.35, 1),
             value=0,
             barColor=(0.46, 0.61, 0.53, 1),
             pos=(0.07, 0, -0.053),

@@ -121,6 +121,7 @@ class ResourcesGUI:
         self._cohesion = DirectWaitBar(
             parent=self._coh_frame,
             frameSize=(-0.45, 0.45, -0.002, 0.002),
+            frameColor=(0.35, 0.35, 0.35, 1),
             value=0,
             barColor=SILVER_COL,
             pos=(0, 0, 0.02),
