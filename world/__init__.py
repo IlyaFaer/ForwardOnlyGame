@@ -41,6 +41,9 @@ class World:
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the world blocks
+        self._block_coor = 0
+        self._block_coor_step = 0
+        self._loaded_blocks = []  # currently loaded world blocks
         self._last_angle = 0
         # index of the block, which is
         # processed by World now
@@ -50,6 +53,7 @@ class World:
 
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
+        self._inversions = self._prepare_inversions()
         self._hangar = None
         self._is_in_city = False
         self._et_rusty_blocks = 0
@@ -159,6 +163,24 @@ class World:
 
         return task.again
 
+    def _prepare_inversions(self):
+        """Prepare inversion variants."""
+        inversions = {
+            "r90_turn": (
+                "l90_turn",
+                self._paths["l90_turn"],
+                self._paths["cam_l90_turn"],
+            ),
+            "l90_turn": (
+                "r90_turn",
+                self._paths["r90_turn"],
+                self._paths["cam_r90_turn"],
+            ),
+            "l_fork": ("r_fork", self._paths["r_fork"], self._paths["cam_r_fork"]),
+            "r_fork": ("l_fork", self._paths["l_fork"], self._paths["cam_l_fork"]),
+        }
+        return inversions
+
     def _set_physics(self):
         """Set the world physics.
 
@@ -222,6 +244,7 @@ class World:
                 abs(pos.getX()) < 3.99
                 and abs(pos.getY()) < 3.99
                 and not ("turn" in path and abs(pos.getZ()) < 0.0001)
+                and not ("fork" in path and abs(pos.getZ()) < 0.02)
                 # don't remember vertices of station and city models
                 and not ("station" in path and abs(pos.getY()) < 2.1)
                 and not ("city" in path and abs(pos.getY()) < 2.1)
@@ -250,6 +273,16 @@ class World:
             # motion path for camera
             paths["cam_" + name] = Mopath.Mopath(objectToLoad=path_mod)
 
+        # every fork has two paths
+        paths["r_fork"] = (paths["direct"], paths["r90_turn"])
+        paths["cam_r_fork"] = (paths["cam_direct"], paths["cam_r90_turn"])
+
+        paths["l_fork"] = (paths["direct"], paths["l90_turn"])
+        paths["cam_l_fork"] = (paths["cam_direct"], paths["cam_l90_turn"])
+
+        paths["exit_from_fork"] = (paths["l90_turn"], paths["r90_turn"])
+        paths["cam_exit_from_fork"] = (paths["cam_l90_turn"], paths["cam_r90_turn"])
+
         return paths
 
     def _prepare_et_block(self):
@@ -267,6 +300,10 @@ class World:
 
         block = Block(
             name="direct",
+            z_coor=0,
+            z_dir=0,
+            id_=-1,
+            directions={},
             path=self._paths["direct"],
             cam_path=self._paths["cam_" + "direct"],
             surf_vertices=self._surf_vertices,
@@ -274,6 +311,8 @@ class World:
             is_rusty=self._et_rusty_blocks > 0,
             is_stenchy=self._et_stench_blocks > 0,
         ).prepare()
+
+        self._loaded_blocks.append(block)
 
         if self._et_rusty_blocks:
             self._et_rusty_blocks -= 1
@@ -354,8 +393,8 @@ class World:
         rusty_blocks = 0
         stench_blocks = 0
 
-        for num in range(size):
-            rails_block = rails_gen.generate_block()
+        # generating the main railway line
+        for num, rails_block in enumerate(rails_gen.generate_main_line(size)):
 
             if not rusty_blocks and chance(2):
                 rusty_blocks = random.randint(4, 8)
@@ -386,9 +425,24 @@ class World:
             else:
                 is_stenchy = False
 
+            self._block_coor += self._block_coor_step
+
+            directions = {}
+            if num > 0:
+                directions = {num - 1: num + 1, num + 1: num - 1}
+
+            if rails_block == "r90_turn":
+                self._block_coor_step -= 1
+            elif rails_block == "l90_turn":
+                self._block_coor_step += 1
+
             self._map.append(
                 Block(
                     name=rails_block,
+                    id_=num,
+                    z_coor=self._block_coor,
+                    z_dir=self._block_coor_step,
+                    directions=directions,
                     path=self._paths[rails_block],
                     cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
@@ -402,9 +456,135 @@ class World:
                 )
             )
 
+        # generating branches
+        for branch in rails_gen.generate_branches(self._map):
+            br_start_block = Block(
+                name=branch["blocks"][0],
+                id_=branch["start"],
+                branch=branch["side"],
+                z_coor=self._block_coor,
+                z_dir=self._block_coor_step,
+                directions={
+                    branch["start"] - 1: (branch["start"] + 1, len(self._map)),
+                    len(self._map): (branch["start"] + 1, branch["start"] - 1),
+                    branch["start"] + 1: (branch["start"] - 1, len(self._map)),
+                },
+                path=self._paths[branch["blocks"][0]],
+                cam_path=self._paths["cam_" + branch["blocks"][0]],
+                surf_vertices=self._surf_vertices,
+                is_station=is_station,
+                is_city=False,
+                is_rusty=is_rusty,
+                is_stenchy=is_stenchy,
+                outing_available=self.outings_mgr.plan_outing(),
+            )
+
+            self._map[branch["start"]] = br_start_block
+
+            is_first = True
+            for rails_block in branch["blocks"][1:-1]:
+                if not rusty_blocks and chance(2):
+                    rusty_blocks = random.randint(4, 8)
+
+                if num > 100:
+                    if not stench_blocks and chance(2):
+                        stench_blocks = random.randint(6, 10)
+
+                is_station = False
+
+                if rails_block == "station":
+                    rails_block = "direct"
+                    is_station = True
+
+                if rusty_blocks:
+                    is_rusty = True
+                    rusty_blocks -= 1
+                else:
+                    is_rusty = False
+
+                if stench_blocks:
+                    is_stenchy = True
+                    stench_blocks -= 1
+                else:
+                    is_stenchy = False
+
+                if rails_block == "r90_turn":
+                    self._block_coor_step -= 1
+                elif rails_block == "l90_turn":
+                    self._block_coor_step += 1
+
+                self._block_coor += self._block_coor_step
+
+                num += 1
+                self._map.append(
+                    Block(
+                        name=rails_block,
+                        id_=num,
+                        branch=branch["side"],
+                        z_coor=self._block_coor,
+                        z_dir=self._block_coor_step,
+                        directions={
+                            branch["start"]: len(self._map) + 1,
+                            len(self._map) + 1: branch["start"],
+                        }
+                        if is_first
+                        else {
+                            len(self._map) - 1: len(self._map) + 1,
+                            len(self._map) + 1: len(self._map) - 1,
+                        },
+                        path=self._paths[rails_block],
+                        cam_path=self._paths["cam_" + rails_block],
+                        surf_vertices=self._surf_vertices,
+                        is_station=is_station,
+                        is_city=False,
+                        is_rusty=is_rusty,
+                        is_stenchy=is_stenchy,
+                        outing_available=self.outings_mgr.plan_outing(),
+                    )
+                )
+                is_first = False
+
+            self._map[-1].directions = {
+                branch["end"]: len(self._map) - 2,
+                len(self._map) - 2: branch["end"],
+            }
+
+            br_end_block = Block(
+                name=branch["blocks"][-1],
+                branch=branch["side"],
+                id_=branch["end"],
+                z_coor=self._block_coor,
+                z_dir=self._block_coor_step,
+                directions={
+                    branch["end"] - 1: (branch["end"] + 1, len(self._map) - 1),
+                    len(self._map) - 1: (branch["end"] + 1, branch["end"] - 1),
+                    branch["end"] + 1: (branch["end"] - 1, len(self._map) - 1),
+                },
+                path=self._paths[branch["blocks"][-1]],
+                cam_path=self._paths["cam_" + branch["blocks"][-1]],
+                surf_vertices=self._surf_vertices,
+                is_station=is_station,
+                is_city=False,
+                is_rusty=is_rusty,
+                is_stenchy=is_stenchy,
+                outing_available=self.outings_mgr.plan_outing(),
+            )
+
+            self._map[branch["end"]] = br_end_block
+
         self._set_sounds(location)
         self.enemy = Enemy()
         taskMgr.doMethodLater(30, self._make_stench_step, "stench_step")  # noqa: F821
+
+    def invert(self, block):
+        """Invert the given block.
+
+        While the Train is moving along the main railway line, every
+        turn is correct, but when the Train is moving in opposite
+        direction, every turn must be mirrored.
+        """
+        if block.name in self._inversions:
+            block.name, block.path, block.cam_path = self._inversions[block.name]
 
     def save_map(self):
         """Save the world map."""
@@ -576,6 +756,30 @@ class World:
                 13, self._load_hangar_scene, "load_hangar_scene"
             )
 
+    def _track_forks(self):
+        """Track approaching forks and notify the player."""
+        if len(self._loaded_blocks) < 2:
+            return
+
+        current_block = self._loaded_blocks[-2]
+        if current_block.enemy_territory:
+            return
+
+        new_block = self._loaded_blocks[-1].directions[current_block.id]
+
+        if isinstance(new_block, tuple):
+            return
+
+        if self._map[new_block].name in ("l_fork", "r_fork", "exit_from_fork"):
+            base.train.show_turning_ability(  # noqa: F821
+                self._map[new_block],
+                current_block.branch,
+                new_block < current_block.id,
+            )
+
+        if current_block.name in ("l_fork", "r_fork", "exit_from_fork"):
+            base.train.hide_turning_ability()  # noqa: F821
+
     def _load_hangar_scene(self, task):
         """Load the city hangar scene.
 
@@ -626,6 +830,9 @@ class World:
             base.team.prepare_to_fight()  # noqa: F821
             base.train.ctrl.speed_to_min()  # noqa: F821
 
+        if self._block_num:
+            current_block = self._loaded_blocks[-1]
+
         if self._et_blocks:
             block = self._prepare_et_block()
 
@@ -640,45 +847,98 @@ class World:
             if self._et_blocks <= 25 and not self.enemy.active_units:
                 self._et_blocks = min(2, self._et_blocks)
         else:
-            block = self._map[self._block_num].prepare()
+            if len(self._loaded_blocks) > 1:
+                prev_block_num = self._loaded_blocks[-2].id
+                next_block = current_block.directions[prev_block_num]
+
+                if isinstance(next_block, tuple):
+                    next_block = next_block[base.train.do_turn]  # noqa: F821
+
+                block = self._map[next_block].prepare(
+                    invert=prev_block_num > current_block.id,
+                    from_branch=current_block.branch,
+                )
+                self._block_num = block.id
+            else:
+                block = self._map[self._block_num].prepare()
+
+            self._loaded_blocks.append(block)
 
         if self._block_num:  # reparent the next block to the current one
-            current_block = self._map[self._block_num - 1]
             block.rails_mod.reparentTo(current_block.rails_mod)
             block.prepare_physical_objects()
 
-            final_pos = current_block.path.getFinalState()[0]
+            path = (
+                current_block.path[base.train.do_turn]  # noqa: F821
+                if isinstance(current_block.path, tuple)
+                else current_block.path
+            )
+            final_pos = path.getFinalState()[0]
             block.rails_mod.setPos(
                 round(final_pos.getX()),
                 round(final_pos.getY()),
                 round(final_pos.getZ()),
             )
-            if current_block.name == "r90_turn":
+            if (
+                current_block.name == "r90_turn"
+                or (
+                    current_block.name == "r_fork"
+                    and base.train.do_turn == 1  # noqa: F821
+                )
+                or (
+                    current_block.name == "exit_from_fork"
+                    and current_block.branch == "r"
+                    and base.train.do_turn == 0  # noqa: F821
+                )
+                or (
+                    current_block.name == "exit_from_fork"
+                    and current_block.branch == "l"
+                    and base.train.do_turn == 1  # noqa: F821
+                )
+            ):
                 block.rails_mod.setH(-90)
-            elif current_block.name == "l90_turn":
+
+            if (
+                current_block.name == "l90_turn"
+                or (
+                    current_block.name == "l_fork"
+                    and base.train.do_turn == 1  # noqa: F821
+                )
+                or (
+                    current_block.name == "exit_from_fork"
+                    and current_block.branch == "l"
+                    and base.train.do_turn == 0  # noqa: F821
+                )
+                or (
+                    current_block.name == "exit_from_fork"
+                    and current_block.branch == "r"
+                    and base.train.do_turn == 1  # noqa: F821
+                )
+            ):
                 block.rails_mod.setH(90)
         else:  # reparent the first block to the render
             block.rails_mod.reparentTo(render)  # noqa: F821
 
         self._track_outings()
         self._track_cities()
+        self._track_forks()
         return block
 
     def clear_prev_block(self):
         """Clear the block to release memory."""
-        num = self._block_num - 3
-        if num >= 0:
+        if len(self._loaded_blocks) > 3:
+            block_to_clear = self._loaded_blocks.pop(0)
             # blocks are reparented to each other, so
             # we need to reparent the block to the render
             # before clearing, to avoid chain reaction
-            self._last_angle = self._map[num].rails_mod.getH()
+            self._last_angle = block_to_clear.rails_mod.getH()
 
-            self._map[num + 1].rails_mod.wrtReparentTo(render)  # noqa: F821
-            self._map[num].rails_mod.removeNode()
+            self._loaded_blocks[0].rails_mod.wrtReparentTo(render)  # noqa: F821
+            block_to_clear.clear()
 
             # don't keep enemy territory in the world
-            if self._map[num].enemy_territory:
-                self._map.pop(num)
+            if block_to_clear.enemy_territory:
+                self._map.remove(block_to_clear)
                 self._block_num -= 1
 
     def disease_activity(self, task):

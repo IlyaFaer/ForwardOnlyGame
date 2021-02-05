@@ -67,7 +67,7 @@ class TrainController:
         for key in ("w", "s", "w-up", "s-up", "f"):
             base.ignore(key)  # noqa: F821
 
-    def move_along_block(self, block, train_np):
+    def move_along_block(self, block, train_np, do_turn):
         """Start the Train move intervals for the given block.
 
         There are two intervals: the Train movement
@@ -77,18 +77,29 @@ class TrainController:
             block (world.block.Block):
                 The World block to move along.
             train_np (panda3d.core.NodePath): Train node.
+            do_turn (int):
+                0 if default direction was chosen,
+                1 if a turn is needed.
         """
         self.on_et = block.enemy_territory
         self._outing_available = block.outing_available
         # use speed value from the last block
         rate = self._move_par.getPlayRate() if self._move_par else 1
 
+        is_fork = block.name in ("r_fork", "l_fork", "exit_from_fork")
+
         self._move_par = Parallel(
             MopathInterval(  # Train movement
-                block.path, self._model, duration=4, name="current_path"
+                block.path[do_turn] if is_fork else block.path,
+                self._model,
+                duration=4,
+                name="current_path",
             ),
             MopathInterval(  # camera movement
-                block.cam_path, train_np, duration=4, name="current_camera_path"
+                block.cam_path[do_turn] if is_fork else block.cam_path,
+                train_np,
+                duration=4,
+                name="current_camera_path",
             ),
         )
         self._move_par.setDoneEvent("block_finished")

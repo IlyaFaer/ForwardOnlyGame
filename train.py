@@ -149,6 +149,8 @@ class Train:
         self._smoke_filter.reparentTo(self.model)
         self._smoke_filter.pose("open", 1)
 
+        self.do_turn = 0
+
     @property
     def damnability(self):
         """The Train damnability points.
@@ -272,6 +274,10 @@ class Train:
 
         return False
 
+    def hide_turning_ability(self):
+        """Hide turning GUI."""
+        self._gui.hide_turning_ability()
+
     def load_upgrades(self, upgrades):
         """Load the Train upgrades saved earlier.
 
@@ -374,7 +380,7 @@ class Train:
             self._is_on_rusty = False
             taskMgr.remove("do_rusty_damage")  # noqa: F821
 
-        self.ctrl.move_along_block(block, self.node)
+        self.ctrl.move_along_block(block, self.node, self.do_turn)
 
     def switch_to_current_block(self):
         """Switch to the current world block.
@@ -614,6 +620,18 @@ class Train:
         """Stop sparks effects."""
         self._l_brake_sparks.softStop()
         self._r_brake_sparks.softStop()
+
+    def show_turning_ability(self, fork, branch, invert):
+        """Show turning GUI.
+
+        Args:
+            fork (world.block.Block): Fork block to turn on.
+            branch (str): Branch direction indicator: "l" or "r".
+            invert (bool):
+                True if the Train is moving in the opposite
+                direction of the main line.
+        """
+        self._gui.show_turning_ability(fork, branch, invert)
 
     def explode_bomb(self, x_coor, y_coor):
         """Explode a bomb on the Train.

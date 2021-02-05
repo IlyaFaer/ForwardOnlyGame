@@ -68,7 +68,7 @@ class TrainGUI:
 
         frame_miles = DirectFrame(
             frameSize=(-0.115, 0.115, -0.03, 0.03),
-            pos=(0.0, 0, -0.97),
+            pos=(0, 0, -0.97),
             frameTexture=ICON_PATH + "metal1.png",
         )
         self._miles_meter = DirectLabel(
@@ -82,11 +82,69 @@ class TrainGUI:
         taskMgr.doMethodLater(  # noqa: F821
             0.3, self._update_speed, "update_speed_indicator"
         )
+        self._fork_lab = None
+
+    def _turn_on_fork(self, fork):
+        """Turn the Train on the next fork.
+
+        Args:
+            fork (world.block.Block): Fork block to turn on.
+        """
+        base.train.do_turn = 1  # noqa: F821
+        base.ignore("t")  # noqa: F821
+        fork.load_additional_surface()
+        self.hide_turning_ability()
 
     def _update_speed(self, task):
         """Update the Train speed GUI indicator."""
         self._speed["value"] = base.train.ctrl.current_speed  # noqa: F821
         return task.again
+
+    def hide_turning_ability(self):
+        """Hide turning GUI."""
+        if self._fork_lab is None:
+            return
+
+        self._fork_lab.destroy()
+        self._fork_lab = None
+
+    def show_turning_ability(self, fork, branch, invert):
+        """Show a notification about turning ability.
+
+        If there is a fork in the next 2 miles, the player can
+        use an ability to turn, or ignore the fork and move in
+        the default direction.
+
+        Args:
+            fork (world.block.Block):
+                Fork block to which the player is approaching.
+            branch (str): Branch side indicator: "l" or "r".
+            invert (bool):
+                True, if the player is approaching the fork
+                from opposite direction of the world.
+        """
+        base.train.do_turn = 0  # noqa: F821
+
+        if fork.name == "l_fork":
+            if invert or branch == "l":
+                text = "Approaching a fork:\npress T to turn right\nignore to proceed"
+            else:
+                text = "Approaching a fork:\npress T to turn left\nignore to proceed"
+        elif fork.name == "r_fork":
+            if invert or branch == "r":
+                text = "Approaching a fork:\npress T to turn left\nignore to proceed"
+            else:
+                text = "Approaching a fork:\npress T to turn right\nignore to proceed"
+
+        base.accept("t", self._turn_on_fork, [fork])  # noqa: F821
+
+        self._fork_lab = DirectLabel(
+            pos=(0, 0, -0.8),
+            text_scale=0.04,
+            text_fg=SILVER_COL,
+            frameColor=(0, 0, 0, 0.4),
+            text=text,
+        )
 
     def update_indicators(self, **params):
         """Update the Train GUI with the given parameters.

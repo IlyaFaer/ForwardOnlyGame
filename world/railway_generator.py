@@ -112,7 +112,7 @@ class RailwayGenerator:
         self._current = value
 
     def _choose_block(self):
-        """Choose next block for the path.
+        """Choose the next block for the path.
 
         If any bound has been crosed, make a turn. Return
         straight block otherwise.
@@ -140,14 +140,170 @@ class RailwayGenerator:
 
         return "direct"
 
-    def generate_block(self):
-        """Generate rails block according to sin-like function.
+    def _choose_branch_block(self):
+        """Generate a world block for a branch.
+
+        There are no turns, nor cities on branch railways.
+        """
+        if self._station_threshold <= 0 and chance(30):
+            self._station_threshold = 90
+            return "station"
+
+        if chance(10):
+            return random.choice(("rs", "ls"))
+
+        return "direct"
+
+    def generate_main_line(self, size):
+        """Generate the main railway line according to sin-like function.
+
+        Args:
+            size (int): The main line length
 
         Returns:
-            block (str): Block name.
+            list: List of block names.
         """
-        block = self._choose_block()
-        self.current += self._step
-        self._station_threshold -= 1
-        self._city_threshold -= 1
-        return block
+        main_line = []
+        for _ in range(size):
+            main_line.append(self._choose_block())
+
+            self.current += self._step
+            self._station_threshold -= 1
+            self._city_threshold -= 1
+
+        return main_line
+
+    def intersects_branch(self, br_ends, start):
+        """Check if the block can't be used as a branch start.
+
+        Branches should not be mixed chaotically, so they can
+        start only at some distance from each others' beginnings.
+
+        Args:
+            br_ends (list):
+                List of the branches' starts indexes.
+            start (int):
+                The index of the block, which is
+                considered as a branch start.
+
+        Returns:
+            bool:
+                True, if the given block can't be used as a
+                branch start; False otherwise.
+        """
+        for br_end in br_ends:
+            if start in range(br_end - 3, br_end + 4):
+                return True
+
+        return False
+
+    def find_straight(self, world_map, branches, ind):
+        """Searh for a straight part of the main railway.
+
+        To ensure all the branches are merged back to the main
+        railway line, every branch should start and end at the
+        horizontal parts of the main railway.
+
+        Args:
+            world_map (list): All the world blocks list.
+            branches (list): Branches' descriptions.
+            ind (int): An assumed index of the branch start/end.
+
+        Returns
+            int:
+                The given index shifted along the main railway line
+                enough to be on the horizontal part of the main railway.
+        """
+        br_ends = []
+        for branch in branches:
+            br_ends.append(branch["start"])
+            br_ends.append(branch["end"])
+
+        while (
+            world_map[ind].z_dir != 0
+            or self.intersects_branch(br_ends, ind)
+            or world_map[ind].name in ("r90_turn", "l90_turn", "l_fork", "r_fork")
+        ):
+            ind += 1
+
+        return ind
+
+    def generate_branches(self, world_map):
+        """Generate railway branches.
+
+        Every branch must be merged back to the main railway line
+        to ensure players won't ride into a dead end/get into circle.
+
+        Args:
+            world_map (list): The main railway line blocks.
+
+        Returns:
+            list:
+                Branches' short descriptions: start,
+                end, side and structure.
+        """
+        branches = []
+        # generate branches' descriptions
+        for side in ("l", "r"):
+            cursor = 0
+            while cursor < len(world_map):
+                try:
+                    start = self.find_straight(
+                        world_map, branches, cursor + random.randint(200, 300),
+                    )
+                except IndexError:
+                    break
+
+                try:
+                    end = self.find_straight(
+                        world_map, branches, start + random.randint(90, 130)
+                    )
+                except IndexError:
+                    break
+
+                branches.append({"side": side, "start": start, "end": end})
+                cursor = end
+
+        # generate branches' structures
+        for branch in branches:
+            branch_blocks = []
+
+            branch_blocks.append(branch["side"] + "_fork")
+
+            z_shift = random.randint(35, 50)
+
+            # generate the part of the branch from
+            # the fork start to the first turn
+            for _ in range(z_shift):
+                branch_blocks.append(self._choose_branch_block())
+
+            if branch["side"] == "l":
+                branch_blocks.append("r90_turn")
+            else:
+                branch_blocks.append("l90_turn")
+
+            # generate the straight part of the branch
+            # parallel to the main railway line
+            for num in range(branch["end"] - branch["start"] - 2):
+                branch_blocks.append(self._choose_branch_block())
+
+            if branch["side"] == "l":
+                branch_blocks.append("r90_turn")
+            else:
+                branch_blocks.append("l90_turn")
+
+            end_z = world_map[branch["start"] - 1].z_coor + z_shift * (
+                -1 if branch["side"] == "r" else 1
+            )
+
+            # generate the straight part of the branch
+            # from the last turn to the end fork
+            for num in range(
+                abs(abs(end_z) - abs(world_map[branch["end"] - 1].z_coor))
+            ):
+                branch_blocks.append(self._choose_branch_block())
+
+            branch_blocks.append(branch["side"] + "_fork")
+            branch["blocks"] = branch_blocks
+
+        return branches

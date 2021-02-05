@@ -20,6 +20,9 @@ SURFACES = {
     "r90_turn": ("r90_turn_surface1", "r90_turn_surface2"),
     "ls": ("surface1", "surface2", "surface3"),
     "rs": ("surface1", "surface2", "surface3"),
+    "l_fork": ("surface_exit_from_fork",),
+    "r_fork": ("surface_exit_from_fork",),
+    "exit_from_fork": ("surface_exit_from_fork",),
 }
 FLOWER_RANGES = {
     (0, "l"): {"u": (25, 45), "v": (-60, 40)},
@@ -48,7 +51,12 @@ class Block:
         path (Mopath.Mopath): Motion path.
         cam_path (Mopath.Mopath): Motion path for camera.
         name (str): Block path name.
+        z_coor (int): Coordinate of the block.
+        z_dir (int): Direction of the block along Z-axis.
+        id_ (int): The block id.
+        direction (dict): Possible movement directions on this block.
         surf_vertices (dict): Vertices index of every surface model.
+        branch (str): Branch direction indicator: "l" or "r".
         enemy_territory (bool): This block is an enemy territory.
         is_station (bool): Station must be set on this block.
         is_city (bool): This is a city block.
@@ -63,7 +71,12 @@ class Block:
         path,
         cam_path,
         name,
+        z_coor,
+        z_dir,
+        id_,
+        directions,
         surf_vertices,
+        branch=None,
         enemy_territory=False,
         is_station=False,
         is_city=False,
@@ -73,6 +86,8 @@ class Block:
         desc=None,
     ):
         self.rails_mod = None
+        self._req_add_surface = False
+        self._old_values = None
 
         self.name = name
         self.path = path
@@ -82,6 +97,11 @@ class Block:
         self.is_city = is_city
         self.is_rusty = is_rusty
         self.is_stenchy = is_stenchy
+        self.id = id_
+        self.z_coor = z_coor
+        self.z_dir = z_dir
+        self.directions = directions
+        self.branch = branch
 
         if desc:  # loading block
             self._station_side = desc["station_side"]
@@ -209,7 +229,7 @@ class Block:
 
         return surface, 0
 
-    def _load_surface_block(self, name, x_pos, y_pos, angle, side=None):
+    def _load_surface_block(self, name, x_pos, y_pos, angle, side=None, invert=False):
         """Load surface model and set it to the given coords.
 
         Surface model will be reparented to the rails model
@@ -222,6 +242,9 @@ class Block:
             y_pos (int): Position on Y axis.
             angle (int): Angle to rotate the model.
             side (str): Left or right side.
+            invert (bool):
+                True if the Train is moving in the direction
+                opposite to the main railway line.
         """
         # load surface
         surf_mod = loader.loadModel(name)  # noqa: F821
@@ -260,6 +283,12 @@ class Block:
                 "generate_flowers",
                 extraArgs=[surf_mod, angle, side],
             )
+
+        if invert:
+            if self.name in ("r_fork", "r90_turn"):
+                surf_mod.setH(surf_mod, 90)
+            elif self.name in ("l_fork", "l90_turn"):
+                surf_mod.setH(surf_mod, -90)
 
     def _load_env_model(self, surf_mod, env_mod):
         """Helper to load a model asynchronous.
@@ -304,8 +333,14 @@ class Block:
             )
             surf_mod.setTexScale(ts, 20, 20)
 
-    def prepare(self):
+    def prepare(self, invert=False, from_branch=False):
         """Load models, which represents this block content.
+
+        Args:
+            invert (bool):
+                True if the Train is moving in the direction
+                opposite to the main railway line.
+            from_branch (str): Branch direction indicator: "l" or "r".
 
         Returns:
             Block: Returns self object.
@@ -313,20 +348,86 @@ class Block:
         if self.is_city:
             self.rails_mod = loader.loadModel(address("city1_rails"))  # noqa: F821
         else:
+            if self.name in ("l_fork", "r_fork") and from_branch:
+                self._old_values = (self.name, self.path, self.cam_path)
+                self.name, self.path, self.cam_path = (
+                    "exit_from_fork",
+                    (
+                        base.world._paths["r90_turn"],  # noqa: F821
+                        base.world._paths["l90_turn"],  # noqa: F821
+                    )
+                    if self.branch == "r"
+                    else (
+                        base.world._paths["l90_turn"],  # noqa: F821
+                        base.world._paths["r90_turn"],  # noqa: F821
+                    ),
+                    (
+                        base.world._paths["cam_r90_turn"],  # noqa: F821
+                        base.world._paths["cam_l90_turn"],  # noqa: F821
+                    )
+                    if self.branch == "r"
+                    else (
+                        base.world._paths["cam_l90_turn"],  # noqa: F821
+                        base.world._paths["cam_r90_turn"],  # noqa: F821
+                    ),
+                )
+
+            if invert:
+                self._old_values = (self.name, self.path, self.cam_path)
+                base.world.invert(self)  # noqa: F821
+
             self.rails_mod = loader.loadModel(  # noqa: F821
                 address(self.name + "_rails" + ("_rusty" if self.is_rusty else ""))
             )
 
-        self._load_surface_block(self._l_surface, -4, 4, self._l_angle, "l")
-        self._load_surface_block(self._r_surface, 4, 4, self._r_angle, "r")
+        self._load_surface_block(
+            self._l_surface, -4, 4, self._l_angle, "l", invert=invert
+        )
+        self._load_surface_block(
+            self._r_surface, 4, 4, self._r_angle, "r", invert=invert
+        )
 
-        if self.name == "l90_turn":
+        if self.name == "l90_turn" or (
+            self.name == "exit_from_fork"
+            and self.branch == "l"
+            and base.train.do_turn == 0  # noqa: F821
+        ):
             self._load_surface_block(self._r_surface, -4, 12, self._l_angle)
             self._load_surface_block(self._r_surface, 4, 12, self._l_angle)
-        elif self.name == "r90_turn":
+
+        elif self.name == "r90_turn" or (
+            self.name == "exit_from_fork"
+            and self.branch == "r"
+            and base.train.do_turn == 0  # noqa: F821
+        ):
             self._load_surface_block(self._l_surface, 4, 12, self._r_angle)
             self._load_surface_block(self._l_surface, -4, 12, self._r_angle)
+
+        if self._req_add_surface:
+            self.load_additional_surface()
+            self._req_add_surface = False
+
         return self
+
+    def load_additional_surface(self):
+        """Load the additional surface models for this block."""
+        # the rails model isn't prepared yet - delay the additional
+        # surfaces loading until the rails model loading
+        if self.rails_mod is None:
+            self._req_add_surface = True
+            return
+
+        if self.name == "l_fork" or (
+            self.name == "exit_from_fork" and self.branch == "r"
+        ):
+            self._load_surface_block(self._r_surface, -4, 12, self._l_angle)
+            self._load_surface_block(self._r_surface, 4, 12, self._l_angle)
+
+        elif self.name == "r_fork" or (
+            self.name == "exit_from_fork" and self.branch == "l"
+        ):
+            self._load_surface_block(self._l_surface, 4, 12, self._r_angle)
+            self._load_surface_block(self._l_surface, -4, 12, self._r_angle)
 
     def prepare_physical_objects(self):
         """Prepare physical objects on this block.
@@ -362,3 +463,12 @@ class Block:
             "railways_model": self._railways_model,
         }
         return desc
+
+    def clear(self):
+        """Clear this block and revert its inversion."""
+        if self._old_values:
+            self.name, self.path, self.cam_path = self._old_values
+            self._old_values = None
+
+        self.rails_mod.removeNode()
+        self.rails_mod = None
