@@ -319,7 +319,8 @@ class MainMenu:
             base.train.ctrl.critical_damage  # noqa: F821
             or base.world.is_in_city  # noqa: F821
             or base.train.ctrl.on_et  # noqa: F821
-            or base.world.current_block_number < 4  # noqa: F821
+            or base.world.current_blocks[1] < 4  # noqa: F821
+            or base.world.is_near_fork  # noqa: F821
         )
         if not self._is_first_pause:
             if can_save:

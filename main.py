@@ -237,7 +237,7 @@ class ForwardOnly(ShowBase):
             save["stench_step"],
         )
         self._current_block = self.world.load_blocks(
-            save["cur_block"], save["last_angle"]
+            save["cur_blocks"], save["last_angle"]
         )
 
         self.char_gui = CharacterGUI()
@@ -268,7 +268,7 @@ class ForwardOnly(ShowBase):
 
         save = shelve.open("saves/save1")
 
-        save["cur_block"] = self.world.current_block_number
+        save["cur_blocks"] = self.world.current_blocks
         save["last_angle"] = self.world.last_cleared_block_angle
         save["enemy_score"] = self.world.enemy.score
         save["disease_threshold"] = self.world.disease_threshold

@@ -68,13 +68,17 @@ class World:
         )
 
     @property
-    def current_block_number(self):
-        """The current block index in the world map.
+    def current_blocks(self):
+        """The currently loaded blocks' ids.
 
         Returns:
-            int: The current block number.
+            tuple: The currently loaded blocks' ids.
         """
-        return self._block_num
+        return (
+            self._loaded_blocks[0].id,
+            self._loaded_blocks[1].id,
+            self._loaded_blocks[2].id,
+        )
 
     @property
     def disease_threshold(self):
@@ -98,6 +102,20 @@ class World:
             or self._map[self._block_num - 2].is_city
             or self._map[self._block_num - 3].is_city
         )
+
+    @property
+    def is_near_fork(self):
+        """Indicates if the Train is near a railway fork.
+
+        Returns:
+            bool: True if the Train is near a fork.
+        """
+        if len(self._loaded_blocks) > 2:
+            return self._loaded_blocks[1].name in (
+                "r_fork",
+                "l_fork",
+                "exit_from_fork",
+            ) or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
 
     @property
     def last_cleared_block_angle(self):
@@ -618,6 +636,11 @@ class World:
         for desc in world_save[location]:
             block = Block(
                 name=desc["name"],
+                id_=desc["id"],
+                directions=desc["directions"],
+                branch=desc["branch"],
+                z_coor=None,
+                z_dir=None,
                 path=self._paths[desc["name"]],
                 cam_path=self._paths["cam_" + desc["name"]],
                 surf_vertices=self._surf_vertices,
@@ -634,24 +657,17 @@ class World:
         self.enemy = Enemy()
         self.enemy.score = enemy_score
 
-    def load_blocks(self, cur_block, angle):
-        """Load blocks around player to continue saved game.
-
-        There will be prepared four blocks:
-        current - 2: block to clear
-        current - 1: previous block
-        current: the current block
-        current + 1: the next block
+    def load_blocks(self, cur_blocks, angle):
+        """Load blocks around player to continue the saved game.
 
         Args:
             cur_block (int): The current block number.
             angle (int): The current - 2 block angle.
         """
-        self._block_num = cur_block - 3
-
-        block = self._map[self._block_num].prepare()
+        block = self._map[cur_blocks[0]].prepare()
         block.rails_mod.reparentTo(render)  # noqa: F821
         block.rails_mod.setH(angle)
+        self._loaded_blocks.append(block)
 
         base.train.root_node.setH(angle)  # noqa: F821
 
@@ -663,17 +679,14 @@ class World:
         elif block.name == "l90_turn":
             base.train.root_node.setH(base.train.root_node, 90)  # noqa: F821
 
-        prev_block = self.prepare_next_block()
+        cur_block = self.prepare_next_block(cur_blocks[1])
 
-        final_pos = prev_block.path.getFinalState()[0]
-        base.train.root_node.setPos(base.train.root_node, final_pos)  # noqa: F821
-
-        if prev_block.name == "r90_turn":
+        if cur_block.name == "r90_turn":
             base.train.root_node.setH(base.train.root_node, -90)  # noqa: F821
-        elif prev_block.name == "l90_turn":
+        elif cur_block.name == "l90_turn":
             base.train.root_node.setH(base.train.root_node, 90)  # noqa: F821
 
-        return self.prepare_next_block()
+        return cur_block
 
     def _set_sounds(self, location):
         """Configure the location sounds.
@@ -810,8 +823,11 @@ class World:
         base.notes.resume()  # noqa: F821
         self._is_in_city = False
 
-    def prepare_next_block(self):
+    def prepare_next_block(self, block_num=None):
         """Prepare the next world block.
+
+        Args:
+            block_num (int): Id of the block to prepare.
 
         Block configurations will be taken from the generated
         world map. All of its environment models and
@@ -820,7 +836,10 @@ class World:
         Returns:
             block.Block: Prepared world block.
         """
-        self._block_num += 1
+        if block_num is not None:
+            self._block_num = block_num
+        else:
+            self._block_num += 1
 
         if not self._et_blocks and self.enemy.going_to_attack(
             self.sun.day_part, base.train.lights_on  # noqa: F821
@@ -830,7 +849,7 @@ class World:
             base.team.prepare_to_fight()  # noqa: F821
             base.train.ctrl.speed_to_min()  # noqa: F821
 
-        if self._block_num:
+        if self._loaded_blocks:
             current_block = self._loaded_blocks[-1]
 
         if self._et_blocks:

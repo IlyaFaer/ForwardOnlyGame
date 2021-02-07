@@ -111,6 +111,9 @@ class Block:
             self._r_angle = desc["r_angle"]
             self._env_mods = desc["env_mods"]
             self._railways_model = desc["railways_model"]
+            self.id = desc["id"]
+            self.branch = desc["branch"]
+            self.directions = desc["directions"]
             return
 
         # generating block
@@ -450,6 +453,9 @@ class Block:
         """
         desc = {
             "name": self.name,
+            "id": self.id,
+            "branch": self.branch,
+            "directions": self.directions,
             "outing_available": self.outing_available,
             "is_city": self.is_city,
             "is_rusty": self.is_rusty,
