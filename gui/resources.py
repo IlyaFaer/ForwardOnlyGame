@@ -410,7 +410,7 @@ class ResourcesGUI:
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Cure chosen sick character",
+                text="Cure sick/wounded character",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,

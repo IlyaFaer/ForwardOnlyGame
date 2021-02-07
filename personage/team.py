@@ -448,6 +448,7 @@ class Team:
         char = base.common_ctrl.chosen_char  # noqa: F821
         if char:
             char.get_well_score = 20
+            char.health += 35
             base.medicine_boxes -= 1  # noqa: F821
             self._medicine_snd.play()
 
