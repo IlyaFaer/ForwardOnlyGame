@@ -257,6 +257,13 @@ class Train:
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
             base.effects_mgr.bomb_explosion(self),  # noqa: F821
         ]
+
+        snow = ParticleEffect()
+        snow.loadConfig("effects/snow.ptf")
+        snow.setZ(0.05)
+        snow.setH(180)
+        snow.start(base.cam, render)  # noqa: F821
+
         return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions
 
     def has_cell(self):
