@@ -115,6 +115,7 @@ class EnemyUnit(Unit):
                 self.current_part.enemies.remove(self)
 
         self._explode()
+        self.transport_snd.stop()
         self._y_positions.append(self._y_pos)
         return True
 

@@ -150,7 +150,24 @@ class World:
 
         all_surf_vertices = {}
         for path in glob.glob(MOD_DIR + "*.bam"):
-            if "locomotive" in path:
+            dont_load = False
+            for name in (
+                "locomotive",
+                "train_part_arrow",
+                "soldier",
+                "raider",
+                "anarchist",
+                "character_pointer",
+                "city_hangar",
+                "sun_path",
+                "relation_ball",
+                "tree",
+            ):
+                if name in path:
+                    dont_load = True
+                    break
+
+            if dont_load:
                 continue
 
             mod = loader.loadModel(path)  # noqa: F821
