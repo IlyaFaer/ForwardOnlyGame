@@ -31,6 +31,15 @@ class OutingsManager:
         }
         self._gui = OutingsInterface()
 
+    @property
+    def gui_is_shown(self):
+        """Indicator if the outing GUI is shown.
+
+        Returns:
+            bool: True if the outings GUI is currently shown.
+        """
+        return self._gui.is_shown
+
     def _get_result(self, score, results):
         """Get outing results for the given score.
 

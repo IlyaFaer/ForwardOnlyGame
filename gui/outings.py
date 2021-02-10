@@ -28,6 +28,7 @@ class OutingsInterface:
     """Outing dialogs GUI."""
 
     def __init__(self):
+        self.is_shown = False
         self._char_chooser = None
         self._outing_widgets = []
         self._assignees = []
@@ -384,6 +385,7 @@ class OutingsInterface:
         self._assignees.clear()
 
         self._list.hide()
+        self.is_shown = False
         self._clear_temporary_widgets()
 
     def start(self, outing):
@@ -395,6 +397,8 @@ class OutingsInterface:
             outing (dict): Outing description.
         """
         self.hide_outing()
+        base.traits_gui.hide()  # noqa: F821
+        self.is_shown = True
         self._list.show()
 
         self._name["text"] = outing["name"]
@@ -441,7 +445,7 @@ class OutingsInterface:
                 text=">",
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.3),
-                command=self._assign_for_outing,  # noqa: F821
+                command=self._assign_for_outing,
                 extraArgs=[to_send, outing["assignees"]],
                 scale=(0.075, 0, 0.075),
             )
@@ -452,7 +456,7 @@ class OutingsInterface:
                 text="<",
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0.3),
-                command=self._unassign_for_outing,  # noqa: F821
+                command=self._unassign_for_outing,
                 extraArgs=[to_send, outing["assignees"]],
                 scale=(0.075, 0, 0.075),
             )
@@ -463,7 +467,7 @@ class OutingsInterface:
                 text="Don't send",
                 text_fg=RUST_COL,
                 frameColor=(0, 0, 0, 0.4),
-                command=self.hide_outing,  # noqa: F821
+                command=self.hide_outing,
                 scale=(0.05, 0, 0.05),
                 clickSound=base.main_menu.click_snd,  # noqa: F821
             )

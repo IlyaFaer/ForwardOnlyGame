@@ -138,6 +138,7 @@ class Sun:
         sun_light.setShadowCaster(True, 8192, 8192, sort=-2000)
         sun_light.setLens(lens)
         sun_light.setExponent(0.5)
+        sun_light.setCameraMask(0b0001)
         sun_np = train_np.attachNewNode(sun_light)
 
         render.setLight(sun_np)  # noqa: F821
@@ -239,3 +240,12 @@ class Sun:
                 1,
             )
         return vects
+
+    def ignore_shadows(self, model):
+        """Don't cast shadow of the given model.
+
+        Args:
+            model (panda3d.core.NodePath):
+                Model, which shadow must be hidden.
+        """
+        model.hide(self._dir_light.getCameraMask())

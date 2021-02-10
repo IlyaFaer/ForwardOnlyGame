@@ -269,6 +269,9 @@ class MainMenu:
     def _load_game(self):
         """Load previously saved game."""
         self.show_loading()
+        taskMgr.doMethodLater(  # noqa: F821
+            4, self._clear_temp_wids, "clear_main_menu_temp_wids"
+        )
         base.doMethodLater(0.25, base.load_game, "load_game")  # noqa: F821
 
     def show_loading(self):

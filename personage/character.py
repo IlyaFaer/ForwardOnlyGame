@@ -651,8 +651,10 @@ class Character(Shooter, Unit):
             self._cohesion_ball = loader.loadModel(  # noqa: F821
                 address("relation_ball")
             )
-            self._cohesion_ball.reparentTo(self.model)
             self._cohesion_ball.clearLight()
+            base.world.sun.ignore_shadows(self._cohesion_ball)  # noqa: F821
+
+            self._cohesion_ball.reparentTo(self.model)
             self._cohesion_ball.setZ(0.14)
 
         self._cohesion_ball.setColorScale(*RELATION_COLORS[cohesion // 20])

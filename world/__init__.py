@@ -199,6 +199,8 @@ class World:
             base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
             base.effects_mgr.stench_effect.play()  # noqa: F821
 
+            base.team.start_stench_activity()  # noqa: F821
+
         return task.again
 
     def _prepare_inversions(self):
@@ -861,8 +863,12 @@ class World:
         else:
             self._block_num += 1
 
-        if not self._et_blocks and self.enemy.going_to_attack(
-            self.sun.day_part, base.train.lights_on  # noqa: F821
+        if (
+            len(self._loaded_blocks) > 2
+            and not self._et_blocks
+            and self.enemy.going_to_attack(
+                self.sun.day_part, base.train.lights_on  # noqa: F821
+            )
         ):
             self._prev_block = self._loaded_blocks[-2].id
             self._cur_block = self._loaded_blocks[-1].id

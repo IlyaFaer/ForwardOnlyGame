@@ -28,6 +28,8 @@ p0.renderer.setAlphaMode(BaseParticleRenderer.PRALPHAOUT)
 p0.renderer.setUserAlpha(1.00)
 # Geom parameters
 geomRef = loader.loadModel("effects/fire1.bam")
+geomRef.clearLight()
+base.world.sun.ignore_shadows(geomRef)
 p0.renderer.setGeomNode(geomRef.node())
 p0.geomReference = "effects/fire1.bam"
 p0.renderer.setXScaleFlag(1)

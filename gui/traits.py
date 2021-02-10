@@ -357,7 +357,7 @@ class TraitsGui:
 
     def show(self):
         """Show the GUI."""
-        if self._is_shown:
+        if self._is_shown or base.world.outings_mgr.gui_is_shown:  # noqa: F821
             return
 
         self._is_shown = True
