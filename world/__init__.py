@@ -51,6 +51,9 @@ class World:
         self._et_blocks = 0
         self._stench_step = 0
 
+        self._prev_block = None
+        self._cur_block = None
+
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
         self._inversions = self._prepare_inversions()
@@ -861,6 +864,9 @@ class World:
         if not self._et_blocks and self.enemy.going_to_attack(
             self.sun.day_part, base.train.lights_on  # noqa: F821
         ):
+            self._prev_block = self._loaded_blocks[-2].id
+            self._cur_block = self._loaded_blocks[-1].id
+
             self._et_blocks = 30
             self.enemy.prepare(base.train.model)  # noqa: F821
             base.team.prepare_to_fight()  # noqa: F821
@@ -885,13 +891,32 @@ class World:
         else:
             if len(self._loaded_blocks) > 1:
                 prev_block_num = self._loaded_blocks[-2].id
-                next_block = current_block.directions[prev_block_num]
+
+                # Enemy territory blocks are not considered in the world
+                # map (they has id = -1). That creates a special case for
+                # blocks loading system, when previous blocks are non-
+                # -considered enemy blocks, which can't be routed to the
+                # real blocks. Instead of enemy blocks - real blocks (which
+                # were loaded before the enemy territory) must be used.
+                if prev_block_num == -1:
+                    prev_block_num = self._prev_block
+                    current_block.directions = self._map[self._cur_block].directions
+
+                    next_block = current_block.directions[prev_block_num] + 3
+                else:
+                    if self._prev_block is not None:
+                        next_block = current_block.directions[prev_block_num] + 1
+                        self._prev_block = None
+                    else:
+                        next_block = current_block.directions[prev_block_num]
 
                 if isinstance(next_block, tuple):
                     next_block = next_block[base.train.do_turn]  # noqa: F821
 
+                cur_id = current_block.id if current_block.id != -1 else self._cur_block
+
                 block = self._map[next_block].prepare(
-                    invert=prev_block_num > current_block.id,
+                    invert=cur_id > self._map[next_block].id,
                     from_branch=current_block.branch,
                 )
                 self._block_num = block.id
@@ -973,7 +998,7 @@ class World:
             block_to_clear.clear()
 
             # don't keep enemy territory in the world
-            if block_to_clear.enemy_territory:
+            if block_to_clear.id == -1:
                 self._map.remove(block_to_clear)
                 self._block_num -= 1
 
