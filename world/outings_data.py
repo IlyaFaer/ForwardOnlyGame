@@ -1719,6 +1719,112 @@ Single character can get Fast hands""",
                     },
                 ),
             },
+            {  # 4
+                "name": "New outpost",
+                "type": "Meet",
+                "class_weights": {"soldier": 10, "anarchist": 45, "raider": 25},
+                "assignees": 1,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 3,
+                    "noon": 7,
+                    "evening": 10,
+                },
+                "desc": """From a big distance you're catching your eyes on a small building,
+near which a lot of people silhouettes are looming. Getting closer, you
+see a lot of construction equipment, and the building itself looks like
+a small outpost, still in construction progress. Concrete walls, a couple
+of bases for towers, big metal gates... Workers, hearing the Train
+engine, directing their gazes at you, without any sign of aggression.
+Definitely, they are not skinheads, but their uniform and equipment
+seems to be in a very good shape - aren't they came here by government
+request? It's worth sending a messenger to have a word with them at
+least. Maybe they have some valuable info about the situation in the
+country, or just nearby lands!?""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're listing the team within mind, and decide to send {name1}.
+Without delays, {heshe1} grabs {hisher1} gun and walks to the construction
+sight. You take your binoculars and point it to your fighter. Nothing
+wrong seems to be happening, {name1} simply speaks with two workers,
+but suddenly you hear a loud crash. Gazing the place to which workers
+run, you see a man pinned down by a big metal object: dark red blood
+spreads all around him, his shouts tear the air. Moving the binoculars
+away, you see {name1} running back to the Train. "They build new
+outpost to hold skinheads spreading." - {heshe1} says, climbing up to
+the locomotive. You see that {hisher1} eyes are open wide, and the skin
+became pale. "You're okay?" Turning head to you, {name1} keeps silent
+for a second... "Yes. I guess. Just..."  - {heshe1} looks at the outpost.
+{name1} getting Hemophobia""",
+                        "effects": {"char_1": {"add_trait": "Hemophobia"}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} seems to be a good candidate for the task, so you're
+giving {himher1} an order to speak with those people. Jumping off to
+the ground, {heshe1} goes to the construction sight and speaks with
+workers for some time... Does one more weaponized camp protect
+from the Stench? Probably, not, still, they are building it... You
+see {name1} giving something to the workers, and next turns back.
+Jumping back to the Train, {heshe1} explains: "These people are trying
+to build their own stronghold, for those, whom nearby cities doesn't
+want to invite. I've gave them some money, 'cause it looks like a good
+idea for me." - {name1} throws a gaze to the construction sight. Well,
+who knows, who knows, this idea can also be completely useless.
+You losing 40$""",
+                        "effects": {"money": -40},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1} seems to be an appropriate person to speak with
+workers, so you're sending {himher1} to the construction sight. It takes
+ten minutes for {himher1} to get there and to speak with a couple of
+workers with dirty faces and orange uniform. Nothing wrong happening,
+so you're sitting down to your chair, waiting for {name1} to return.
+Entering the deckhouse, {heshe1} gets closer to you: "Well, they are
+building a new outpost to hold skinheads in this region. The nearby
+city supports this project, so I suppose they are in better condition
+than we are." Nodding your head, you're giving an order to start engine.
+At least that means the next city is a good place for a stop.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """Running through the team list, you're deciding to send {name1}
+for negotiations. Energetically {heshe1} takes {hisher1} gun and directs
+to the construction sight, but in the next minute a couple of
+workers are moving out of the outpost, towards {name1}. Getting
+closer to each other, {name1} and workers exchange handshakes, and
+all three going to the locomotive. You see that builders' faces become
+more interested with every step. "Wow, what a beautiful machine you
+have!" - one of them pronounces. - "That's actually a stronghold on
+wheels!" Both workers get closer and view the locomotive. "That's
+incredible!" - the same man proclaims. - "You're very lucky to get
+your hands on it!"... After several minutes of talk the workers turn
+back to their outpost, but the jealous words still make you proud.
+Team cohesion +6""",
+                        "effects": {"cohesion_gain": 6},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're deciding to send {name1} to negotiate with workers.
+Jumping to the ground, {heshe1} moves to the spot, and sees that one
+of the builders went out of the outpost towards {himher1}. After a
+minute of talking {name1} figures out that these people are building
+a new outpost to hold skinheads in this region. The worker asks {name1}
+to follow him, and they both go to the opposite side of the camp. There
+your messenger sees a lot of dead bodies laid out in rows - about
+forty men. "These are skinheads bastards we already stopped here."
+- the worker brags. "Looks significant!" - {name1} answers and means
+it. It's really significant to clear so much filth. "Right, I have to
+return to my people" - {heshe1} takes leave of the constructor and,
+throwing the last gaze at bodies, takes a direction to the Train.
+Single character can get Bloodthirsty""",
+                        "effects": {"select_char": {"add_trait": "Bloodthirsty"}},
+                    },
+                ),
+            },
         ),
     },
 }
