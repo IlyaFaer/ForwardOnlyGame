@@ -1116,7 +1116,7 @@ You're getting +40$""",
                 ),
             },
             {  # 5
-                "name": "Wrecked truck",
+                "name": "Wrecked Truck",
                 "type": "Looting",
                 "class_weights": {"soldier": 7, "raider": 22.5, "anarchist": 16},
                 "assignees": 2,
@@ -1515,7 +1515,7 @@ One person can be recruited""",
                 ),
             },
             {  # 2
-                "name": "Lying man",
+                "name": "Lying Man",
                 "type": "Meet",
                 "class_weights": {"soldier": 10, "anarchist": 45, "raider": 28},
                 "assignees": 1,
@@ -1720,7 +1720,7 @@ Single character can get Fast hands""",
                 ),
             },
             {  # 4
-                "name": "New outpost",
+                "name": "New Outpost",
                 "type": "Meet",
                 "class_weights": {"soldier": 10, "anarchist": 45, "raider": 25},
                 "assignees": 1,
@@ -1822,6 +1822,116 @@ return to my people" - {heshe1} takes leave of the constructor and,
 throwing the last gaze at bodies, takes a direction to the Train.
 Single character can get Bloodthirsty""",
                         "effects": {"select_char": {"add_trait": "Bloodthirsty"}},
+                    },
+                ),
+            },
+            {  # 5
+                "name": "Cargo Column",
+                "type": "Meet",
+                "class_weights": {"soldier": 5, "anarchist": 22.5, "raider": 12.5},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 10,
+                    "noon": 7,
+                    "evening": 3,
+                },
+                "desc": """For the last ten minutes you've been observing a road, which turned
+to the railway and has been following it in a straight parallel. A lot of
+pits and cracks showing that the road isn't very well maintained, most
+likely it's really old. Still, in the next minute you see a big column,
+staying on the grey concrete: bus, several big trucks, filled with
+different stuff, such as furniture, metal and garden inventar, and a
+couple of smaller cars. Several heavy machine guns and at least ten
+weaponized men are complementing the picture. The beholders doesn't
+look like a thugs, so it's probably makes sense to speak with them.
+Maybe they have something to trade or exchange.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You decide that {name1} and {name2} will be a party - those
+people are armed after all. You fighters climb down from the Train
+and direct to the cars. Getting closer, they start to speak with
+column defenders, and in some moment they both move up their guns
+and start to shoot. Car column spurts away in the same second, which
+is strange, as they had more people than you. Still, your messengers
+returning back to you, both with light wounds. Climbing to the
+locomotive, {name1} explains: "Marauders, taking the stuff out of
+the regions covered with the Stench. Stealers in the other words."
+- {heshe1} takes a look at {hisher1} wound on the left shoulder. - "I'll go
+find the doctor." Gazing at smoke clouds, you think how organized
+and weaponized the marauders are. Seems a big business.
+{name1} and {name2} getting -20 health""",
+                        "effects": {
+                            "char_1": {"health": -20},
+                            "char_2": {"health": -20},
+                        },
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """You choose {name1} and {name2} to negotiate with the column men.
+They both carefully getting closer to the cars and start to speak with
+a big guy in a cap. You're analyzing the column itself: well-armed
+people, cargo cars, good organization - all the signs of professionals,
+still, they doesn't show any aggressive intentions. Several more
+minutes passes, and your people turning back to the locomotive. The
+car column starts the engines. {name1} and {name2} getting closer to
+you: "So, they are government people, transporting cargoes and people
+between several cities. Trying to do whatever they can to help folks
+in the country." Okay then, it's not a bad piece of news. Good to see
+that rulers are still in a strive, together with people.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1} and {name2} taking a direction to the cars column by your
+order. While they are getting closer to the big man walking to meet
+them, you're analyzing the cortege: a lot of cargo, a lot of guns,
+and... a lot of refugees!? You didn't see them at the first minute,
+they probably were hiding, but now started to peek out. Dirty, ragged,
+different aged... You patiently wait for your people to figure out
+the details. You see them taking something from the big man, and
+turning back to the locomotive. "This is a help from a local city -
+they transporting people away from the Stench clouds." - {name2}
+tells, entering the deck house. - "They kindly gave us some of their
+medicine." - {heshe2} puts a small white box on the table. Well,
+that's actually very kind of them!
+Single character can get +30 health,""",
+                        "effects": {"select_char": {"health": 30}},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You make a decision to send {name1} and {name2} for a speak. They
+take their guns and carefully go to the machines, while a couple of men
+move towards them from their side. After several seconds of talk
+{name1} and {name2} taking their guns away and follow the men. Trying
+to get what's happening, you see your messengers helping column
+guys to pull up a big metal object, probably fallen out of the truck.
+Is it why they stopped? Looking at smiling fighters, telling goodbye
+to your people, you see that yes, it is. While their cars start to
+move, {name1} and {name2} come closer to you, telling: "Positive guys!
+Transporting people away from the Stench. Asked to help them a
+little and gave us this" - {name2} puts some dollars to the table.
+You're getting +90$
+One character can get Liberal""",
+                        "effects": {
+                            "money": 90,
+                            "select_char": {"add_trait": "Liberal"},
+                        },
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're sending {name1} and {name2} to negotiate with the column
+guys. They carefully approaching the men, and starting to talk.
+Several minutes passed, and then you see a silhouette jumping out of
+the bus and following your people. What does it mean? "Hey, captain!"
+- {name1} says loudly. - "These are refugees transportation party, came
+from the nearby city to help people to get out of the Stench. No any
+problem with them, but there is a recruit, who wants to join us. What
+will you say?" You're viewing the candidate from high to down. Well,
+that is something to carefully think about.
+One person can be recruited""",
+                        "effects": {"recruit": 60},
                     },
                 ),
             },
