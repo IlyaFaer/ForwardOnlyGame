@@ -1,5 +1,5 @@
 """
-Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Outings GUI.
@@ -73,7 +73,7 @@ class OutingsInterface:
             parent=self._list,
             text="",
             frameSize=(0.4, 0.4, 0.4, 0.4),
-            text_scale=(0.035),
+            text_scale=0.035,
             pos=(-0.13, 0, 0.699),
         )
         self._desc = DirectLabel(

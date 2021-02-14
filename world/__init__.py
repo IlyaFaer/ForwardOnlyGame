@@ -1,5 +1,5 @@
 """
-Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Game world systems.
@@ -13,7 +13,7 @@ from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
 from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotlight, Vec3
 
 from const import MOD_DIR
-from gui import CityInterface
+from gui import CityInterface, RailsScheme
 from personage.enemy import Enemy
 from utils import address, chance
 
@@ -64,6 +64,7 @@ class World:
 
         self.sun = Sun(day_part_desc)
         self.city_gui = CityInterface()
+        self._rails_scheme = RailsScheme()
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
@@ -77,6 +78,9 @@ class World:
         Returns:
             tuple: The currently loaded blocks' ids.
         """
+        if len(self._loaded_blocks) < 3:
+            return ()
+
         return (
             self._loaded_blocks[0].id,
             self._loaded_blocks[1].id,
@@ -636,6 +640,10 @@ class World:
         world_save = shelve.open("saves/world", "n")
         world_save["Plains"] = map_to_save
         world_save.close()
+
+    def show_scheme(self):
+        """Show railways scheme GUI."""
+        self._rails_scheme.show()
 
     def load_location(self, location, enemy_score, disease_threshold, stench_step):
         """Load the given location from the last save.

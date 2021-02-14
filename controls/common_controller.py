@@ -1,5 +1,5 @@
 """
-Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Common game controls: keys and mouse clicks.
@@ -27,6 +27,7 @@ Choose a character and click on resource button to use it
 W - hold to accelerate
 S - hold to slow down
 F - toggle Train lights
+M - see railways scheme
 
 Camera:
 \u2190\u2191\u2193\u2192 or push screen edge with mouse - move
@@ -84,6 +85,7 @@ class CommonController:
         base.accept("f1", self._show_keys)  # noqa: F821
         base.accept("escape", base.main_menu.show)  # noqa: F821
         base.accept("r", self._show_char_relations)  # noqa: F821
+        base.accept("m", self._show_railways_scheme)  # noqa: F821
 
         # configure mouse collisions
         col_node = CollisionNode("mouse_ray")
@@ -210,6 +212,10 @@ class CommonController:
         if self._pointed_obj.startswith("part_rest_"):
             base.char_gui.show_tooltip("Rest zone")  # noqa: F821
 
+    def _show_railways_scheme(self):
+        """Show railways scheme GUI."""
+        base.world.show_scheme()  # noqa: F821
+
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
@@ -242,6 +248,7 @@ class CommonController:
                 text=KEYS_INFO,
                 align=TextNode.ACenter,
                 font=self._font,
+                scale=0.07,
                 pos=(0, 0.7),
                 fg=(0.7, 0.7, 0.7, 1),
             )

@@ -1,5 +1,5 @@
 """
-Copyright (C) 2020 Ilya "Faer" Gurov (ilya.faer@mail.ru)
+Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Game graphical interfaces.
@@ -14,6 +14,7 @@ from .character import CharacterGUI  # noqa: F401
 from .city import CityInterface  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
+from .rails_scheme import RailsScheme  # noqa: F401
 from .resources import ResourcesGUI  # noqa: F401
 from .train import TrainGUI  # noqa: F401
 from .traits import TraitsGui  # noqa: F401
