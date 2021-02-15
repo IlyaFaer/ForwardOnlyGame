@@ -223,6 +223,7 @@ class RailwayGenerator:
             world_map[ind].z_dir != 0
             or self.intersects_branch(br_ends, ind)
             or world_map[ind].name in ("r90_turn", "l90_turn", "l_fork", "r_fork")
+            or world_map[ind].is_city
         ):
             ind += 1
 
@@ -249,7 +250,10 @@ class RailwayGenerator:
             while cursor < len(world_map):
                 try:
                     start = self.find_straight(
-                        world_map, branches, cursor + random.randint(200, 300),
+                        world_map,
+                        branches,
+                        cursor
+                        + random.randint(*random.choice(((150, 250), (300, 400)))),
                     )
                 except IndexError:
                     break

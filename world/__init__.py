@@ -41,6 +41,7 @@ class World:
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the world blocks
+        self._branches = []
         self._block_coor = 0
         self._block_coor_step = 0
         self._loaded_blocks = []  # currently loaded world blocks
@@ -64,12 +65,21 @@ class World:
 
         self.sun = Sun(day_part_desc)
         self.city_gui = CityInterface()
-        self._rails_scheme = RailsScheme()
+        self._rails_scheme = RailsScheme(self._map)
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
             self.update_physics, "update_physics", extraArgs=[0], appendTask=True
         )
+
+    @property
+    def branches(self):
+        """Railway branches list.
+
+        Returns:
+            list: Branches list.
+        """
+        return self._branches
 
     @property
     def current_blocks(self):
@@ -501,7 +511,8 @@ class World:
             )
 
         # generating branches
-        for branch in rails_gen.generate_branches(self._map):
+        self._branches = rails_gen.generate_branches(self._map)
+        for branch in self._branches:
             br_start_block = Block(
                 name=branch["blocks"][0],
                 id_=branch["start"],
@@ -526,6 +537,7 @@ class World:
             self._map[branch["start"]] = br_start_block
 
             is_first = True
+            index = 1
             for rails_block in branch["blocks"][1:-1]:
                 if not rusty_blocks and chance(2):
                     rusty_blocks = random.randint(4, 8)
@@ -586,6 +598,9 @@ class World:
                         outing_available=self.outings_mgr.plan_outing(),
                     )
                 )
+                # replace the block name with the block object
+                branch["blocks"][index] = self._map[-1]
+                index += 1
                 is_first = False
 
             self._map[-1].directions = {
@@ -639,6 +654,7 @@ class World:
 
         world_save = shelve.open("saves/world", "n")
         world_save["Plains"] = map_to_save
+        world_save["Plains_branches"] = self.branches
         world_save.close()
 
     def show_scheme(self):
@@ -686,6 +702,8 @@ class World:
         self._set_sounds(location)
         self.enemy = Enemy()
         self.enemy.score = enemy_score
+
+        self._branches = world_save[location + "_branches"]
 
     def load_blocks(self, cur_blocks, angle):
         """Load blocks around player to continue the saved game.
