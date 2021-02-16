@@ -390,17 +390,24 @@ class CharacterGUI:
                 )
             )
             if self.char.id in base.team.chars.keys():  # noqa: F821
-                self._char_desc_wids.append(
-                    DirectButton(
-                        parent=self._fr,
-                        text="",
-                        frameSize=(-0.025, 0.025, -0.025, 0.025),
-                        frameTexture=ICON_PATH + "like.png",
-                        relief="flat",
-                        pos=(0.265, 0, shift + 0.013),
-                        command=base.traits_gui.show,  # noqa: F821
-                    )
+                traits_but = DirectButton(
+                    parent=self._fr,
+                    text="",
+                    frameSize=(-0.025, 0.025, -0.025, 0.025),
+                    frameTexture=ICON_PATH + "like.png",
+                    relief="flat",
+                    pos=(0.265, 0, shift + 0.013),
+                    command=base.traits_gui.show,  # noqa: F821
                 )
+                traits_but.bind(
+                    DGG.ENTER, self._highlight_traits_but, extraArgs=[traits_but]
+                )
+                traits_but.bind(
+                    DGG.EXIT, self._dehighlight_traits_but, extraArgs=[traits_but]
+                )
+
+                self._char_desc_wids.append(traits_but)
+
             shift = self._fill_traits(shift)
 
             self._status_lab = DirectLabel(
@@ -415,6 +422,24 @@ class CharacterGUI:
             self._fill_status(shift)
 
         self._char_desc_shown = not self._char_desc_shown
+
+    def _highlight_traits_but(self, button, _):
+        """Hightlight traits tweaking button.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to highlight.
+        """
+        button["frameTexture"] = ICON_PATH + "hover_like.png"
+
+    def _dehighlight_traits_but(self, button, _):
+        """Dehighlight traits tweaking button.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to dehighlight.
+        """
+        button["frameTexture"] = ICON_PATH + "like.png"
 
     def move_status_label(self, place):
         """Move the status label widget.
