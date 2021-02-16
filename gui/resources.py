@@ -53,7 +53,7 @@ class ResourcesGUI:
             text_fg=RUST_COL,
             pos=(-0.16, 0, -0.008),
         )
-        DirectButton(
+        but = DirectButton(
             parent=self._res_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
@@ -61,6 +61,9 @@ class ResourcesGUI:
             frameTexture=ICON_PATH + "medicine.png",
             command=base.team.use_medicine,  # noqa: F821
         )
+        but.bind(DGG.ENTER, self._highlight_res_but, extraArgs=[but, "medicine_boxes"])
+        but.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[but])
+
         self._resources["medicine_boxes"] = DirectLabel(
             parent=self._res_frame,
             text="",
@@ -69,7 +72,7 @@ class ResourcesGUI:
             text_fg=RUST_COL,
             pos=(-0.03, 0, -0.008),
         )
-        DirectButton(
+        but = DirectButton(
             parent=self._res_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
@@ -77,6 +80,9 @@ class ResourcesGUI:
             frameTexture=ICON_PATH + "smoke_filter.png",
             command=base.train.use_smoke_filter,  # noqa: F821
         )
+        but.bind(DGG.ENTER, self._highlight_res_but, extraArgs=[but, "smoke_filters"])
+        but.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[but])
+
         self._resources["smoke_filters"] = DirectLabel(
             parent=self._res_frame,
             text="",
@@ -85,7 +91,7 @@ class ResourcesGUI:
             text_fg=RUST_COL,
             pos=(0.075, 0, -0.008),
         )
-        DirectButton(
+        but = DirectButton(
             parent=self._res_frame,
             frameSize=(-0.014, 0.014, -0.021, 0.021),
             relief="flat",
@@ -93,6 +99,9 @@ class ResourcesGUI:
             frameTexture=ICON_PATH + "stimulator.png",
             command=base.team.use_stimulator,  # noqa: F821
         )
+        but.bind(DGG.ENTER, self._highlight_res_but, extraArgs=[but, "stimulators"])
+        but.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[but])
+
         self._resources["stimulators"] = DirectLabel(
             parent=self._res_frame,
             text="0",
@@ -135,6 +144,8 @@ class ResourcesGUI:
             command=base.team.cohesion_recall,  # noqa: F821
         )
         recall_ico.setTransparency(TransparencyAttrib.MAlpha)
+        recall_ico.bind(DGG.ENTER, self._highlight_coh_but, extraArgs=[recall_ico])
+        recall_ico.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[recall_ico])
 
         cover_ico = DirectButton(
             parent=self._coh_frame,
@@ -145,6 +156,8 @@ class ResourcesGUI:
             command=base.team.cohesion_cover_fire,  # noqa: F821
         )
         cover_ico.setTransparency(TransparencyAttrib.MAlpha)
+        cover_ico.bind(DGG.ENTER, self._highlight_coh_but, extraArgs=[cover_ico])
+        cover_ico.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[cover_ico])
 
         heal_ico = DirectButton(
             parent=self._coh_frame,
@@ -155,6 +168,8 @@ class ResourcesGUI:
             command=base.team.cohesion_heal_wounded,  # noqa: F821
         )
         heal_ico.setTransparency(TransparencyAttrib.MAlpha)
+        heal_ico.bind(DGG.ENTER, self._highlight_coh_but, extraArgs=[heal_ico])
+        heal_ico.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[heal_ico])
 
         rage_ico = DirectButton(
             parent=self._coh_frame,
@@ -165,6 +180,8 @@ class ResourcesGUI:
             command=base.team.cohesion_rage,  # noqa: F821
         )
         rage_ico.setTransparency(TransparencyAttrib.MAlpha)
+        rage_ico.bind(DGG.ENTER, self._highlight_coh_but, extraArgs=[rage_ico])
+        rage_ico.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[rage_ico])
 
         heart_ico = DirectButton(
             parent=self._coh_frame,
@@ -175,6 +192,8 @@ class ResourcesGUI:
             command=base.team.cohesion_hold_together,  # noqa: F821
         )
         heart_ico.setTransparency(TransparencyAttrib.MAlpha)
+        heart_ico.bind(DGG.ENTER, self._highlight_coh_but, extraArgs=[heart_ico])
+        heart_ico.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[heart_ico])
 
         self._coh_icons = (
             {"wid": recall_ico, "file": "recall.png", "value": 20},
@@ -190,6 +209,41 @@ class ResourcesGUI:
             clickSound=base.main_menu.click_snd,  # noqa: F821
             **ABOUT_BUT_PARAMS,
         ).setTransparency(TransparencyAttrib.MAlpha)
+
+    def _highlight_coh_but(self, button, _):
+        """Highlight cohesion skill button, if it can be used.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to highlight.
+        """
+        if "ny_" not in button["frameTexture"]:
+            button["frameTexture"] = (
+                ICON_PATH + "hover_" + button["frameTexture"].split("/")[-1]
+            )
+
+    def _dehighlight_but(self, button, _):
+        """Dehighlight button.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to dehighlight.
+        """
+        if "hover_" in button["frameTexture"]:
+            button["frameTexture"] = button["frameTexture"].replace("hover_", "")
+
+    def _highlight_res_but(self, button, resource, _):
+        """Highlight resource button, if it can be used.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to highlight.
+            resource (str): Name of the resource.
+        """
+        if getattr(base, resource):  # noqa: F821
+            button["frameTexture"] = (
+                ICON_PATH + "hover_" + button["frameTexture"].split("/")[-1]
+            )
 
     def _show_cohesion_abilities(self):
         """Show/hide cohesion abilities description."""
@@ -502,6 +556,9 @@ class ResourcesGUI:
             return
 
         for icon in self._coh_icons:
+            if "hover_" in icon["wid"]["frameTexture"]:
+                continue
+
             if new_value >= icon["value"]:
                 icon["wid"]["frameTexture"] = ICON_PATH + icon["file"]
             else:
