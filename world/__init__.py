@@ -787,19 +787,27 @@ class World:
         Slow down and stop the Train when
         approaching to a city.
         """
-        if self._block_num < 1:
+        if len(self._loaded_blocks) < 2:
             return
 
-        if self._map[self._block_num + 1].is_city:
+        current_block = self._loaded_blocks[-2]
+        if current_block.enemy_territory:
+            return
+
+        new_block = self._loaded_blocks[-1].directions[current_block.id]
+        if isinstance(new_block, tuple):
+            return
+
+        if self._map[new_block].is_city:
             self._is_in_city = True
             base.train.ctrl.unset_controls()  # noqa: F821
             base.train.slow_down_to(0.7)  # noqa: F821
             self.outings_mgr.show_city()
 
-        elif self._map[self._block_num].is_city:
+        elif self._map[self._loaded_blocks[-1].id].is_city:
             base.train.slow_down_to(0.5)  # noqa: F821
 
-        elif self._map[self._block_num - 1].is_city:
+        elif self._map[current_block.id].is_city:
             base.train.slow_down_to(0)  # noqa: F821
             base.notes.stop()  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
