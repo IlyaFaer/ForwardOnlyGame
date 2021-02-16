@@ -762,23 +762,27 @@ class World:
 
     def _track_outings(self):
         """Track outing abilities."""
-        if self._block_num < 2:
+        if len(self._loaded_blocks) < 3:
             return
 
-        if (
-            self._map[self._block_num + 1].outing_available
-            and not self._map[self._block_num].enemy_territory
-        ):
-            self.outings_mgr.show_upcoming(
-                self._map[self._block_num + 1].outing_available
-            )
-        elif self._map[self._block_num].outing_available:
+        current_block = self._loaded_blocks[-2]
+        if current_block.enemy_territory:
+            return
+
+        new_block = self._loaded_blocks[-1].directions[current_block.id]
+        if isinstance(new_block, tuple):
+            return
+
+        if self._map[new_block].outing_available:
+            self.outings_mgr.show_upcoming(self._map[new_block].outing_available)
+
+        elif self._map[self._loaded_blocks[-1].id].outing_available:
             self.outings_mgr.show_upcoming_closer()
 
-        elif self._map[self._block_num - 1].outing_available:
+        elif self._map[current_block.id].outing_available:
             self.outings_mgr.show_can_start()
 
-        elif self._map[self._block_num - 2].outing_available:
+        elif self._map[self._loaded_blocks[0].id].outing_available:
             self.outings_mgr.hide_outing()
 
     def _track_cities(self):
