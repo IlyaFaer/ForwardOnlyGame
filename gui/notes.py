@@ -57,6 +57,9 @@ to send.""",
     """Some outings can turn very
 dangerous, while other are
 sure case. Take your risks!""",
+    """Press M to see the railways
+scheme and choose an
+optimal path""",
     # Train
     """It's reckless to stop while
 on enemy territory""",

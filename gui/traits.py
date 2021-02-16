@@ -29,7 +29,7 @@ class TraitsGui:
         self._ind_chosen = None
         self._new_chosen = False
         self._need_update = False
-        self._is_shown = False
+        self.is_shown = False
 
         self._cur_traits = []
         self._new_traits = []
@@ -353,14 +353,18 @@ class TraitsGui:
         taskMgr.remove("update_traits_ctrl")  # noqa: F821
         base.char_gui.clear_char_info()  # noqa: F821
         self._list.hide()
-        self._is_shown = False
+        self.is_shown = False
 
     def show(self):
         """Show the GUI."""
-        if self._is_shown or base.world.outings_mgr.gui_is_shown:  # noqa: F821
+        if (
+            self.is_shown
+            or base.world.outings_mgr.gui_is_shown  # noqa: F821
+            or base.world.rails_scheme.is_shown  # noqa: F821
+        ):
             return
 
-        self._is_shown = True
+        self.is_shown = True
 
         char_id = base.char_gui.char.id  # noqa: F821
         base.common_ctrl.deselect()  # noqa: F821

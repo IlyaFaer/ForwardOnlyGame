@@ -58,6 +58,11 @@ class RailsScheme:
             frameTexture="gui/tex/scheme_arrow.png",
             pos=(-0.967, 0, 0.1),
         )
+
+        self._build_legend()
+
+    def _build_legend(self):
+        """Build the scheme legend GUI."""
         DirectLabel(
             parent=self._list,
             text=("Legend:\nm - Meet\n" "e - Enemy Camp\n" "l - Looting"),
@@ -86,13 +91,28 @@ class RailsScheme:
             frameTexture="gui/tex/dash.png",
             frameSize=(-0.004, 0.004, -0.06, 0.06),
             frameColor=(0, 0, 0, 0.2),
-            pos=(0.09, 0, -0.42),
+            pos=(0.09, 0, -0.37),
         ).setR(90)
 
         DirectLabel(
             parent=self._list,
             text="- railway branch",
-            pos=(0.29, 0, -0.43),
+            pos=(0.29, 0, -0.38),
+            text_scale=0.035,
+            frameSize=(-0.1, 0.1, -0.1, 0.1),
+            frameColor=(0, 0, 0, 0),
+        )
+
+        DirectFrame(
+            parent=self._scheme,
+            frameColor=(0.71, 0.25, 0.05, 0.2),
+            frameSize=(-0.06, 0.06, -0.02, 0.02),
+            pos=(0.09, 0, -0.45),
+        )
+        DirectLabel(
+            parent=self._list,
+            text="- the Stench",
+            pos=(0.26, 0, -0.46),
             text_scale=0.035,
             frameSize=(-0.1, 0.1, -0.1, 0.1),
             frameColor=(0, 0, 0, 0),
@@ -188,6 +208,20 @@ class RailsScheme:
                     )
                 )
 
+        self._temp_wids.append(
+            DirectFrame(
+                parent=self._scheme,
+                frameColor=(0.71, 0.25, 0.05, 0.2),
+                frameSize=(
+                    0,
+                    base.world.stench_step * 0.00216,  # noqa: F821
+                    -0.22,
+                    0.22,
+                ),
+                pos=(-0.967, 0, 0),
+            )
+        )
+
     def _update_arrow(self, task):
         """Update the Train position on the scheme."""
         blocks = base.world.current_blocks  # noqa: F821
@@ -199,7 +233,11 @@ class RailsScheme:
 
     def show(self):
         """Show/hide railways scheme GUI."""
-        if self.is_shown:
+        if (
+            self.is_shown
+            or base.world.outings_mgr.gui_is_shown  # noqa: F821
+            or base.traits_gui.is_shown  # noqa: F821
+        ):
             self._list.hide()
             taskMgr.remove("update_scheme_arrow")  # noqa: F821
 

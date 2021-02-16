@@ -65,7 +65,7 @@ class World:
 
         self.sun = Sun(day_part_desc)
         self.city_gui = CityInterface()
-        self._rails_scheme = RailsScheme(self._map)
+        self.rails_scheme = RailsScheme(self._map)
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
@@ -659,7 +659,7 @@ class World:
 
     def show_scheme(self):
         """Show railways scheme GUI."""
-        self._rails_scheme.show()
+        self.rails_scheme.show()
 
     def load_location(self, location, enemy_score, disease_threshold, stench_step):
         """Load the given location from the last save.
