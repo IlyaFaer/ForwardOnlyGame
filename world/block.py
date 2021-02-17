@@ -147,7 +147,7 @@ class Block:
             for _ in range(random.randint(*models_conf["quantity"])):
                 models.append(
                     (
-                        address(random.choice(models_conf["models"])),
+                        random.choice(models_conf["models"]),
                         take_random(vertices[models_conf["square"]]),
                     )
                 )
@@ -155,7 +155,7 @@ class Block:
             if chance(models_conf["chance"]):
                 models.append(
                     (
-                        address(random.choice(models_conf["models"])),
+                        random.choice(models_conf["models"]),
                         take_random(vertices[models_conf["square"]]),
                     )
                 )
@@ -300,7 +300,7 @@ class Block:
             surf_mod (panda3d.core.NodePath): Surface model.
             env_mod (str): Name of the model to load and its position.
         """
-        mod = loader.loadModel(env_mod[0])  # noqa: F821
+        mod = loader.loadModel(address(env_mod[0]))  # noqa: F821
         if "grass" in env_mod[0]:
             mod.setTransparency(TransparencyAttrib.M_binary)
             mod.setShaderOff()

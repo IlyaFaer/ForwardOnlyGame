@@ -60,6 +60,10 @@ sure case. Take your risks!""",
     """Press M to see the railways
 scheme and choose an
 optimal path""",
+    """Railway branches always merge
+back to the main railway.""",
+    """You can find more outings and
+events on side railway branches""",
     # Train
     """It's reckless to stop while
 on enemy territory""",

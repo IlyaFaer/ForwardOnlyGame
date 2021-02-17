@@ -481,10 +481,6 @@ class World:
 
             self._block_coor += self._block_coor_step
 
-            directions = {}
-            if num > 0:
-                directions = {num - 1: num + 1, num + 1: num - 1}
-
             if rails_block == "r90_turn":
                 self._block_coor_step -= 1
             elif rails_block == "l90_turn":
@@ -496,7 +492,7 @@ class World:
                     id_=num,
                     z_coor=self._block_coor,
                     z_dir=self._block_coor_step,
-                    directions=directions,
+                    directions={num - 1: num + 1, num + 1: num - 1} if num > 0 else {},
                     path=self._paths[rails_block],
                     cam_path=self._paths["cam_" + rails_block],
                     surf_vertices=self._surf_vertices,
