@@ -66,7 +66,7 @@ class ResourcesGUI:
 
         self._resources["medicine_boxes"] = DirectLabel(
             parent=self._res_frame,
-            text="",
+            text="0",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
@@ -85,7 +85,7 @@ class ResourcesGUI:
 
         self._resources["smoke_filters"] = DirectLabel(
             parent=self._res_frame,
-            text="",
+            text="0",
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.035, 0.035),
             text_fg=RUST_COL,
@@ -240,7 +240,7 @@ class ResourcesGUI:
                 Button to highlight.
             resource (str): Name of the resource.
         """
-        if getattr(base, resource):  # noqa: F821
+        if base.resource(resource):  # noqa: F821
             button["frameTexture"] = (
                 ICON_PATH + "hover_" + button["frameTexture"].split("/")[-1]
             )

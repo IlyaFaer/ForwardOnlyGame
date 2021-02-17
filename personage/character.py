@@ -327,8 +327,8 @@ class Character(Shooter, Unit):
             self.rest()
 
         self.model.wrtReparentTo(part.parent)
-        self.model.setPos(pos["pos"])
-        self.model.setH(pos["angle"])
+        self.model.setPos(pos)
+        self.model.setH(part.angle)
 
         self.current_part = part
         self._current_pos = pos
@@ -533,7 +533,7 @@ class Character(Shooter, Unit):
     def _calm_down(self, task):
         """Return to passive state."""
         self._stop_tasks("_shoot")
-        self.model.hprInterval(2, (self._current_pos["angle"], 0, 0)).start()
+        self.model.hprInterval(2, (self.current_part.angle, 0, 0)).start()
 
         LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
         taskMgr.doMethodLater(  # noqa: F821
@@ -584,7 +584,7 @@ class Character(Shooter, Unit):
 
         self._team.delete_relations(self.id)
         LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
-        self.model.hprInterval(1, (self._current_pos["angle"], 0, 0)).start()
+        self.model.hprInterval(1, (self.current_part.angle, 0, 0)).start()
         self.model.play("die")
 
         taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821

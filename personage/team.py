@@ -442,14 +442,14 @@ class Team:
         Will help the character to get well.
         Uses single medicine box resource.
         """
-        if not base.medicine_boxes:  # noqa: F821
+        if not base.resource("medicine_boxes"):  # noqa: F821
             return
 
         char = base.common_ctrl.chosen_char  # noqa: F821
         if char:
             char.get_well_score = 20
             char.health += 35
-            base.medicine_boxes -= 1  # noqa: F821
+            base.plus_resource("medicine_boxes", -1)  # noqa: F821
             self._medicine_snd.play()
 
     def use_stimulator(self):
@@ -458,13 +458,13 @@ class Team:
         Disables all the negative traits of the
         chosen character for the next 5 minutes.
         """
-        if not base.stimulators:  # noqa: F821
+        if not base.resource("stimulators"):  # noqa: F821
             return
 
         char = base.common_ctrl.chosen_char  # noqa: F821
         if char:
             char.get_stimulated()
-            base.stimulators -= 1  # noqa: F821
+            base.plus_resource("stimulators", -1)  # noqa: F821
             self._stimulator_snd.play()
 
     def spend_cohesion(self, value):

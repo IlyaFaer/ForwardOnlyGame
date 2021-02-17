@@ -166,11 +166,14 @@ class OutingsManager:
         if "money" in effects:
             base.dollars += effects["money"]  # noqa: F821
         if "medicine_boxes" in effects:
-            base.medicine_boxes += effects["medicine_boxes"]  # noqa: F821
+            base.plus_resource(  # noqa: F821
+                "medicine_boxes", effects["medicine_boxes"]
+            )
         if "smoke_filters" in effects:
-            base.smoke_filters += effects["smoke_filters"]  # noqa: F821
+            base.plus_resource("smoke_filters", effects["smoke_filters"])  # noqa: F821
+
         if "stimulators" in effects:
-            base.stimulators += effects["stimulators"]  # noqa: F821
+            base.plus_resource("stimulators", effects["stimulators"])  # noqa: F821
 
         if "cohesion_gain" in effects:
             base.team.spend_cohesion(-effects["cohesion_gain"])  # noqa: F821

@@ -45,10 +45,9 @@ logging.basicConfig(
 class ForwardOnly(ShowBase):
     """Object, which represents the game itself.
 
-    Includes the major game systems and GUIs.
-    The main mechanism represents infinite
-    Train movement along World blocks, which
-    are loaded and unloaded on a fly.
+    Includes the major game systems. The main mechanism represents
+    infinite Train movement along World blocks, which are loaded
+    and unloaded on a fly.
     """
 
     def __init__(self):
@@ -67,10 +66,12 @@ class ForwardOnly(ShowBase):
         self.effects_mgr = EffectsManager()
 
         self._dollars = 0
-        self._medicine_boxes = 0
-        self._smoke_filters = 0
-        self._stimulators = 0
 
+        self._resources = {
+            "medicine_boxes": 0,
+            "smoke_filters": 0,
+            "stimulators": 0,
+        }
         self.main_menu = MainMenu()
 
     @property
@@ -93,63 +94,6 @@ class ForwardOnly(ShowBase):
         """
         self._dollars = max(0, value)
         self.res_gui.update_resource("dollars", value)
-
-    @property
-    def smoke_filters(self):
-        """Smoke filters amount.
-
-        Returns:
-            int: Current player smoke filters amount.
-        """
-        return self._smoke_filters
-
-    @smoke_filters.setter
-    def smoke_filters(self, value):
-        """Smoke filter setter.
-
-        Args:
-            value (int): New smoke filters amount.
-        """
-        self._smoke_filters = value
-        self.res_gui.update_resource("smoke_filters", value)
-
-    @property
-    def stimulators(self):
-        """Stimulators amount.
-
-        Returns:
-            int: Current player stimulators amount.
-        """
-        return self._stimulators
-
-    @stimulators.setter
-    def stimulators(self, value):
-        """Stimulators amount setter.
-
-        Args:
-            value (int): New stimulators amount.
-        """
-        self._stimulators = value
-        self.res_gui.update_resource("stimulators", value)
-
-    @property
-    def medicine_boxes(self):
-        """Medicine boxes amount.
-
-        Returns:
-            int: Current player medicine boxes amount.
-        """
-        return self._medicine_boxes
-
-    @medicine_boxes.setter
-    def medicine_boxes(self, value):
-        """Medicine boxes setter.
-
-        Args:
-            value (int): New medicine boxes amount value.
-        """
-        self._medicine_boxes = value
-        self.res_gui.update_resource("medicine_boxes", value)
 
     def _configure_window(self):
         """Configure the game window.
@@ -252,10 +196,23 @@ class ForwardOnly(ShowBase):
             extraArgs=[save["train"]["speed"]],
         )
         self.dollars = save["dollars"]
-        self.medicine_boxes = save["medicine_boxes"]
-        self.smoke_filters = save["smoke_filters"]
-        self.stimulators = save["stimulators"]
+        self.plus_resource("medicine_boxes", save["medicine_boxes"])
+        self.plus_resource("smoke_filters", save["smoke_filters"])
+        self.plus_resource("stimulators", save["stimulators"])
+
+        save.close()
         return task.done
+
+    def resource(self, name):
+        """Return the amount of the given resource.
+
+        Args:
+            name (str): Resource name.
+
+        Returns:
+            int: The amount of the resource.
+        """
+        return self._resources[name]
 
     def restart_game(self):
         """Completely restart the game program."""
@@ -276,9 +233,9 @@ class ForwardOnly(ShowBase):
 
         save["train"] = self.train.description
         save["dollars"] = self.dollars
-        save["medicine_boxes"] = self.medicine_boxes
-        save["smoke_filters"] = self.smoke_filters
-        save["stimulators"] = self.stimulators
+        save["medicine_boxes"] = self.resource("medicine_boxes")
+        save["smoke_filters"] = self.resource("smoke_filters")
+        save["stimulators"] = self.resource("stimulators")
         save["cohesion"] = self.team.current_cohesion
         save["day_part"] = {
             "name": self.world.sun.day_part,
@@ -287,6 +244,18 @@ class ForwardOnly(ShowBase):
         save["team"] = self.team.description
 
         save.close()
+
+    def plus_resource(self, name, value):
+        """Increase the amount of the given resource.
+
+        Updates the corresponding GUI indicator.
+
+        Args:
+            name (str): Name of the resource.
+            value (int): Amount to please.
+        """
+        self._resources[name] += value
+        self.res_gui.update_resource(name, self._resources[name])
 
     def start_new_game(self, chosen_team):
         """Start new game.
@@ -318,9 +287,6 @@ class ForwardOnly(ShowBase):
         self.doMethodLater(3, self._start_game, "start_game")
 
         self.dollars = 300
-        self.medicine_boxes = 0
-        self.smoke_filters = 0
-        self.stimulators = 0
 
 
 try:

@@ -25,18 +25,19 @@ class TrainPart:
                 parented to this model as well.
         name (str): This unique part name.
         positions (list):
-            Dicts describing possible positions and
-            rotations on this part.
+            Dicts describing possible positions on this part.
+        angle (int): Character's angle on this part.
         arrow_pos (dict): Arrow position and angle.
     """
 
-    def __init__(self, parent, name, positions, arrow_pos):
+    def __init__(self, parent, name, positions, angle, arrow_pos):
         self.parent = parent
         self.name = name
         self.chars = []
         self.is_covered = False
         # enemies within shooting range of this part
         self.enemies = []
+        self.angle = angle
         self._cells = positions
 
         self._arrow = self._prepare_arrow(name, arrow_pos)
@@ -47,8 +48,8 @@ class TrainPart:
         col_node.setIntoCollideMask(SHOT_RANGE_MASK)
         col_node.addSolid(CollisionBox(Point3(-0.4, -0.06, 0), Point3(0.4, 1, 0.08)))
         col_np = self.parent.attachNewNode(col_node)
-        col_np.setPos(arrow_pos["pos"][0], arrow_pos["pos"][1], 0)
-        col_np.setH(arrow_pos["angle"])
+        col_np.setPos(arrow_pos[0], arrow_pos[1], 0)
+        col_np.setH(angle)
 
         base.accept("into-shoot_zone_" + name, self.enemy_came)  # noqa: F821
         base.accept("out-shoot_zone_" + name, self.enemy_leave)  # noqa: F821
@@ -73,8 +74,8 @@ class TrainPart:
             panda3d.core.NodePath: Arrow node.
         """
         arrow = loader.loadModel(address("train_part_arrow"))  # noqa: F821
-        arrow.setPos(*arrow_pos["pos"])
-        arrow.setH(arrow_pos["angle"])
+        arrow.setPos(*arrow_pos)
+        arrow.setH(self.angle)
         arrow.clearLight()
 
         # set manipulating arrow collisions
@@ -164,6 +165,7 @@ class RestPart:
         self.enemies = []
         self.parent = parent
         self.name = name
+        self.angle = 0
 
         # rest zone collisions
         col_node = CollisionNode(name)
@@ -197,7 +199,7 @@ class RestPart:
             return None
 
         self.chars.append(character)
-        return {"pos": (0, 0, 0), "angle": 0}
+        return (0, 0, 0)
 
     def release_cell(self, position, character):
         """Release one cell on this part.

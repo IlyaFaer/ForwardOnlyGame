@@ -50,10 +50,10 @@ Use 5, 6, 7 keys to move it.""",
 
 
 class Train:
-    """The Train object - the main game object.
+    """The Train - the main game object.
 
     Includes train model, lights, sounds, parts to set
-    characters, controller, upgrades and physics.
+    characters on, controller, upgrades and physics.
 
     Args:
         description (dict):
@@ -85,26 +85,23 @@ class Train:
             "part_locomotive_left": TrainPart(
                 self.model,
                 "part_locomotive_left",
-                positions=[
-                    {"pos": (-0.063, -0.02, 0.147), "angle": 90},
-                    {"pos": (-0.063, 0.15, 0.147), "angle": 90},
-                ],
-                arrow_pos={"pos": (-0.2, 0.09, 0.147), "angle": 90},
+                positions=[(-0.063, -0.02, 0.147), (-0.063, 0.15, 0.147)],
+                angle=90,
+                arrow_pos=(-0.2, 0.09, 0.147),
             ),
             "part_locomotive_right": TrainPart(
                 self.model,
                 "part_locomotive_right",
-                positions=[
-                    {"pos": (0.063, -0.02, 0.147), "angle": -90},
-                    {"pos": (0.063, 0.15, 0.147), "angle": -90},
-                ],
-                arrow_pos={"pos": (0.2, 0.09, 0.147), "angle": -90},
+                positions=[(0.063, -0.02, 0.147), (0.063, 0.15, 0.147)],
+                angle=-90,
+                arrow_pos=(0.2, 0.09, 0.147),
             ),
             "part_locomotive_front": TrainPart(
                 self.model,
                 "part_locomotive_front",
-                positions=[{"pos": (0, 0.41, 0.147), "angle": 0}],
-                arrow_pos={"pos": (0, 0.55, 0.147), "angle": 0},
+                positions=[(0, 0.41, 0.147)],
+                angle=0,
+                arrow_pos=(0, 0.55, 0.147),
             ),
             "part_rest_locomotive": RestPart(self.model, "part_rest_locomotive"),
         }
@@ -191,7 +188,7 @@ class Train:
     def possible_upgrades(self):
         """
         Return the index of the upgrades, which
-        can be currently installed on the Train.
+        can be installed on the Train.
 
         Returns:
             dict: Possible upgrades index.
@@ -677,11 +674,11 @@ class Train:
 
         Uses single smoke filter resource.
         """
-        if not base.smoke_filters or self.smoke_filtered:  # noqa: F821
+        if not base.resource("smoke_filters") or self.smoke_filtered:  # noqa: F821
             return
 
         self.smoke_filtered = True
-        base.smoke_filters -= 1  # noqa: F821
+        base.plus_resource("smoke_filters", -1)  # noqa: F821
 
         taskMgr.doMethodLater(  # noqa: F821
             1, self._smoke.softStop, "filter_smoke", extraArgs=[], appendTask=False
