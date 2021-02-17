@@ -48,6 +48,29 @@ class TrainController:
         """
         return 0 if self._is_stopped else self._move_anim_int.getPlayRate()
 
+    def _set_sounds(self, model):
+        """Set interactive Train sounds.
+
+        Args:
+            model (panda3d.core.NodePath): The Train model.
+
+        Returns:
+            (panda3d.core.AudioSound...):
+                Interactive Train sounds.
+        """
+        move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(move_snd, model)  # noqa: F821
+        move_snd.setLoop(True)
+        move_snd.play()
+
+        stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(stop_snd, model)  # noqa: F821
+
+        brake_snd = base.sound_mgr.loadSfx("sounds/train_brake.ogg")  # noqa: F821
+        brake_snd.setLoop(True)
+        base.sound_mgr.attachSoundToObject(brake_snd, model)  # noqa: F821
+        return move_snd, stop_snd, brake_snd
+
     def set_controls(self, train):
         """Configure the Train control keys.
 
@@ -318,26 +341,3 @@ class TrainController:
 
         base.main_menu.show(is_game_over=True)  # noqa: F821
         return task.done
-
-    def _set_sounds(self, model):
-        """Set interactive Train sounds.
-
-        Args:
-            model (panda3d.core.NodePath): The Train model.
-
-        Returns:
-            (panda3d.core.AudioSound...):
-                Interactive Train sounds.
-        """
-        move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
-        base.sound_mgr.attachSoundToObject(move_snd, model)  # noqa: F821
-        move_snd.setLoop(True)
-        move_snd.play()
-
-        stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
-        base.sound_mgr.attachSoundToObject(stop_snd, model)  # noqa: F821
-
-        brake_snd = base.sound_mgr.loadSfx("sounds/train_brake.ogg")  # noqa: F821
-        brake_snd.setLoop(True)
-        base.sound_mgr.attachSoundToObject(brake_snd, model)  # noqa: F821
-        return move_snd, stop_snd, brake_snd

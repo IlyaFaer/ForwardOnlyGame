@@ -14,7 +14,7 @@ from direct.gui.DirectGui import (
 from panda3d.core import TransparencyAttrib
 
 from .character import ABOUT_BUT_PARAMS
-from .widgets import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
 
 class ResourcesGUI:
@@ -35,7 +35,7 @@ class ResourcesGUI:
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.26, 0.26, -0.03, 0.028),
             pos=(0.26, 0, -0.028),
-            frameTexture=ICON_PATH + "metal1.png",
+            frameTexture=GUI_PIC + "metal1.png",
         )
         self._res_frame.setTransparency(TransparencyAttrib.MAlpha)
 
@@ -43,13 +43,13 @@ class ResourcesGUI:
             parent=self._res_frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             pos=(-0.23, 0, 0),
-            frameTexture=ICON_PATH + "dollar.png",
+            frameTexture=GUI_PIC + "dollar.png",
         )
         self._resources["dollars"] = DirectLabel(
             parent=self._res_frame,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
+            text_scale=0.035,
             text_fg=RUST_COL,
             pos=(-0.16, 0, -0.008),
         )
@@ -58,7 +58,7 @@ class ResourcesGUI:
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
             pos=(-0.07, 0, 0),
-            frameTexture=ICON_PATH + "medicine.png",
+            frameTexture=GUI_PIC + "medicine.png",
             command=base.team.use_medicine,  # noqa: F821
         )
         but.bind(DGG.ENTER, self._highlight_res_but, extraArgs=[but, "medicine_boxes"])
@@ -68,7 +68,7 @@ class ResourcesGUI:
             parent=self._res_frame,
             text="0",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
+            text_scale=0.035,
             text_fg=RUST_COL,
             pos=(-0.03, 0, -0.008),
         )
@@ -77,7 +77,7 @@ class ResourcesGUI:
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
             pos=(0.03, 0, 0),
-            frameTexture=ICON_PATH + "smoke_filter.png",
+            frameTexture=GUI_PIC + "smoke_filter.png",
             command=base.train.use_smoke_filter,  # noqa: F821
         )
         but.bind(DGG.ENTER, self._highlight_res_but, extraArgs=[but, "smoke_filters"])
@@ -87,7 +87,7 @@ class ResourcesGUI:
             parent=self._res_frame,
             text="0",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
+            text_scale=0.035,
             text_fg=RUST_COL,
             pos=(0.075, 0, -0.008),
         )
@@ -96,7 +96,7 @@ class ResourcesGUI:
             frameSize=(-0.014, 0.014, -0.021, 0.021),
             relief="flat",
             pos=(0.13, 0, 0),
-            frameTexture=ICON_PATH + "stimulator.png",
+            frameTexture=GUI_PIC + "stimulator.png",
             command=base.team.use_stimulator,  # noqa: F821
         )
         but.bind(DGG.ENTER, self._highlight_res_but, extraArgs=[but, "stimulators"])
@@ -106,7 +106,7 @@ class ResourcesGUI:
             parent=self._res_frame,
             text="0",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.035, 0.035),
+            text_scale=0.035,
             text_fg=RUST_COL,
             pos=(0.17, 0, -0.008),
         )
@@ -122,7 +122,7 @@ class ResourcesGUI:
             parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.55, 0.55, -0.05, 0.05),
             pos=(-0.6, 0, 1.95),
-            frameTexture=ICON_PATH + "metal1.png",
+            frameTexture=GUI_PIC + "metal1.png",
             state=DGG.NORMAL,
         )
         self._coh_frame.setTransparency(TransparencyAttrib.MAlpha)
@@ -138,7 +138,7 @@ class ResourcesGUI:
         recall_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            frameTexture=ICON_PATH + "ny_recall.png",
+            frameTexture=GUI_PIC + "ny_recall.png",
             pos=(-0.27, 0, -0.02),
             relief="flat",
             command=base.team.cohesion_recall,  # noqa: F821
@@ -150,7 +150,7 @@ class ResourcesGUI:
         cover_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.035, 0.035, -0.035, 0.035),
-            frameTexture=ICON_PATH + "ny_cover.png",
+            frameTexture=GUI_PIC + "ny_cover.png",
             pos=(-0.09, 0, -0.01),
             relief="flat",
             command=base.team.cohesion_cover_fire,  # noqa: F821
@@ -162,7 +162,7 @@ class ResourcesGUI:
         heal_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            frameTexture=ICON_PATH + "ny_heal.png",
+            frameTexture=GUI_PIC + "ny_heal.png",
             pos=(0.09, 0, -0.015),
             relief="flat",
             command=base.team.cohesion_heal_wounded,  # noqa: F821
@@ -174,7 +174,7 @@ class ResourcesGUI:
         rage_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.035, 0.035, -0.035, 0.035),
-            frameTexture=ICON_PATH + "ny_rage.png",
+            frameTexture=GUI_PIC + "ny_rage.png",
             pos=(0.27, 0, -0.015),
             relief="flat",
             command=base.team.cohesion_rage,  # noqa: F821
@@ -186,7 +186,7 @@ class ResourcesGUI:
         heart_ico = DirectButton(
             parent=self._coh_frame,
             frameSize=(-0.035, 0.035, -0.035, 0.035),
-            frameTexture=ICON_PATH + "ny_heart.png",
+            frameTexture=GUI_PIC + "ny_heart.png",
             pos=(0.445, 0, -0.015),
             relief="flat",
             command=base.team.cohesion_hold_together,  # noqa: F821
@@ -219,7 +219,7 @@ class ResourcesGUI:
         """
         if "ny_" not in button["frameTexture"]:
             button["frameTexture"] = (
-                ICON_PATH + "hover_" + button["frameTexture"].split("/")[-1]
+                GUI_PIC + "hover_" + button["frameTexture"].split("/")[-1]
             )
 
     def _dehighlight_but(self, button, _):
@@ -242,7 +242,7 @@ class ResourcesGUI:
         """
         if base.resource(resource):  # noqa: F821
             button["frameTexture"] = (
-                ICON_PATH + "hover_" + button["frameTexture"].split("/")[-1]
+                GUI_PIC + "hover_" + button["frameTexture"].split("/")[-1]
             )
 
     def _show_cohesion_abilities(self):
@@ -264,7 +264,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Cohesion skills",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.033, 0.033),
+                text_scale=0.033,
                 text_fg=SILVER_COL,
                 pos=(0, 0, -0.08),
             )
@@ -273,7 +273,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.035, 0.035, -0.035, 0.035),
-                frameTexture=ICON_PATH + "recall.png",
+                frameTexture=GUI_PIC + "recall.png",
                 pos=(-0.45, 0, -0.13),
                 relief="flat",
             )
@@ -283,7 +283,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Recall the past",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(-0.29, 0, -0.117),
             )
@@ -293,7 +293,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Every character gets +15 energy. Cooldown: 15 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(-0.055, 0, -0.155),
             )
@@ -302,7 +302,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.045, 0.045, -0.045, 0.045),
-                frameTexture=ICON_PATH + "cover.png",
+                frameTexture=GUI_PIC + "cover.png",
                 pos=(-0.45, 0, -0.22),
                 relief="flat",
             )
@@ -312,7 +312,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Cover fire",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(-0.325, 0, -0.217),
             )
@@ -322,7 +322,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Every character gets +20% accuracy. Cooldown: 10 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(-0.032, 0, -0.255),
             )
@@ -331,7 +331,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.035, 0.035, -0.035, 0.035),
-                frameTexture=ICON_PATH + "heal.png",
+                frameTexture=GUI_PIC + "heal.png",
                 pos=(-0.45, 0, -0.33),
                 relief="flat",
             )
@@ -341,7 +341,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Not leaving ours",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(-0.283, 0, -0.317),
             )
@@ -354,7 +354,7 @@ class ResourcesGUI:
                     "getting +20 health. Cooldown: 15 min."
                 ),
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(0.03, 0, -0.355),
             )
@@ -363,7 +363,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.045, 0.045, -0.045, 0.045),
-                frameTexture=ICON_PATH + "rage.png",
+                frameTexture=GUI_PIC + "rage.png",
                 pos=(-0.45, 0, -0.43),
                 relief="flat",
             )
@@ -373,7 +373,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Common rage",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(-0.298, 0, -0.417),
             )
@@ -383,7 +383,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Every character gets +30% to damage. Cooldown: 15 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(-0.023, 0, -0.455),
             )
@@ -392,7 +392,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._coh_frame,
                 frameSize=(-0.043, 0.043, -0.043, 0.043),
-                frameTexture=ICON_PATH + "heart.png",
+                frameTexture=GUI_PIC + "heart.png",
                 pos=(-0.45, 0, -0.53),
                 relief="flat",
             )
@@ -402,7 +402,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="Hold together",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 text_fg=SILVER_COL,
                 pos=(-0.298, 0, -0.517),
             )
@@ -412,7 +412,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text="No characters will die in next 1.5 min. Cooldown: 20 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.029, 0.029),
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(-0.029, 0, -0.555),
             )
@@ -446,7 +446,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
-                frameTexture=ICON_PATH + "medicine.png",
+                frameTexture=GUI_PIC + "medicine.png",
                 pos=(-0.21, 0, -0.16),
                 relief="flat",
             )
@@ -475,7 +475,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
-                frameTexture=ICON_PATH + "smoke_filter.png",
+                frameTexture=GUI_PIC + "smoke_filter.png",
                 pos=(-0.21, 0, -0.25),
                 relief="flat",
             )
@@ -504,7 +504,7 @@ class ResourcesGUI:
             DirectButton(
                 parent=self._res_frame,
                 frameSize=(-0.018, 0.018, -0.028, 0.028),
-                frameTexture=ICON_PATH + "stimulator.png",
+                frameTexture=GUI_PIC + "stimulator.png",
                 pos=(-0.21, 0, -0.349),
                 relief="flat",
             )
@@ -533,7 +533,7 @@ class ResourcesGUI:
     def disable_cohesion(self):
         """Disable all the cohesion abilities."""
         for icon in self._coh_icons:
-            icon["wid"]["frameTexture"] = ICON_PATH + "ny_" + icon["file"]
+            icon["wid"]["frameTexture"] = GUI_PIC + "ny_" + icon["file"]
 
     def update_resource(self, name, value):
         """Update the indicator with the given value.
@@ -560,6 +560,6 @@ class ResourcesGUI:
                 continue
 
             if new_value >= icon["value"]:
-                icon["wid"]["frameTexture"] = ICON_PATH + icon["file"]
+                icon["wid"]["frameTexture"] = GUI_PIC + icon["file"]
             else:
-                icon["wid"]["frameTexture"] = ICON_PATH + "ny_" + icon["file"]
+                icon["wid"]["frameTexture"] = GUI_PIC + "ny_" + icon["file"]

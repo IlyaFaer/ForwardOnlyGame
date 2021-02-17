@@ -14,10 +14,10 @@ from panda3d.core import TransparencyAttrib
 
 from personage.character_data import TRAIT_DESC
 from utils import take_random
-from .widgets import RUST_COL, SILVER_COL, CharacterChooser
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL, CharacterChooser
 
 
-class TraitsGui:
+class TraitsGUI:
     """GUI to praise/scold characters.
 
     This GUI gives players an opportunity to
@@ -36,7 +36,7 @@ class TraitsGui:
 
         self._list = DirectFrame(
             frameSize=(-0.75, 0.75, -0.77, 0.77),
-            frameTexture="gui/tex/paper1.png",
+            frameTexture=GUI_PIC + "paper1.png",
             state=DGG.NORMAL,
         )
         self._list.setDepthTest(False)
@@ -47,7 +47,7 @@ class TraitsGui:
             parent=self._list,
             text="List of distinguished",
             frameSize=(0.4, 0.4, 0.4, 0.4),
-            text_scale=(0.045),
+            text_scale=0.045,
             pos=(-0.35, 0, 0.66),
         )
         DirectLabel(
@@ -66,7 +66,7 @@ class TraitsGui:
                 "cohesion points."
             ),
             frameSize=(0.3, 0.3, 0.3, 0.3),
-            text_scale=(0.035),
+            text_scale=0.035,
             text_bg=(0, 0, 0, 0),
             pos=(0, 0, 0.54),
         )

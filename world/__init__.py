@@ -13,7 +13,7 @@ from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
 from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotlight, Vec3
 
 from const import MOD_DIR
-from gui import CityInterface, RailsScheme
+from gui import CityGUI, RailsScheme
 from personage.enemy import Enemy
 from utils import address, chance
 
@@ -64,7 +64,7 @@ class World:
         self._et_stench_blocks = 0
 
         self.sun = Sun(day_part_desc)
-        self.city_gui = CityInterface()
+        self.city_gui = CityGUI()
         self.rails_scheme = RailsScheme(self._map)
 
         self.phys_mgr = self._set_physics()

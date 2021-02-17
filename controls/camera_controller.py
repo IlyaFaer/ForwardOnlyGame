@@ -94,26 +94,16 @@ class CameraController:
             return task.again
 
         x = round(base.mouseWatcherNode.getMouseX(), 2)  # noqa: F821
-        if x == 1:
+        if x in (1, -1):
             self._with_mouse_move = True
-            self._move(*MAX_RIGHT_MOVE)
-            self._with_mouse_move_x = False
-            return task.again
-        if x == -1:
-            self._with_mouse_move = True
-            self._move(*MAX_LEFT_MOVE)
+            self._move(*(MAX_RIGHT_MOVE if x == 1 else MAX_LEFT_MOVE))
             self._with_mouse_move_x = False
             return task.again
 
         z = round(base.mouseWatcherNode.getMouseY(), 2)  # noqa: F821
-        if z == 1:
+        if z in (1, -1):
             self._with_mouse_move = True
-            self._move(*MAX_UP_MOVE)
-            self._with_mouse_move_x = True
-            return task.again
-        if z == -1:
-            self._with_mouse_move = True
-            self._move(*MAX_DOWN_MOVE)
+            self._move(*MAX_UP_MOVE if z == 1 else MAX_DOWN_MOVE)
             self._with_mouse_move_x = True
             return task.again
 

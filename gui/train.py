@@ -7,7 +7,7 @@ The Train indicators GUI.
 from direct.gui.DirectGui import DirectFrame, DirectLabel, DirectWaitBar
 from panda3d.core import TransparencyAttrib
 
-from .widgets import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
 
 class TrainGUI:
@@ -18,21 +18,21 @@ class TrainGUI:
             parent=base.a2dBottomRight,  # noqa: F821
             frameSize=(-0.09, 0.09, -0.28, 0.28),
             pos=(-0.09, 0, 0.28),
-            frameTexture=ICON_PATH + "metal1.png",
+            frameTexture=GUI_PIC + "metal1.png",
         )
         frame.setTransparency(TransparencyAttrib.MAlpha)
         DirectFrame(
-            parent=frame,  # noqa: F821
+            parent=frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             pos=(0.05, 0, 0.24),
-            frameTexture=ICON_PATH + "train.png",
+            frameTexture=GUI_PIC + "train.png",
         ).setTransparency(TransparencyAttrib.MAlpha)
 
         DirectFrame(
-            parent=frame,  # noqa: F821
+            parent=frame,
             frameSize=(-0.028, 0.028, -0.023, 0.023),
             pos=(-0.012, 0, 0.24),
-            frameTexture=ICON_PATH + "speed.png",
+            frameTexture=GUI_PIC + "speed.png",
         ).setTransparency(TransparencyAttrib.MAlpha)
 
         self._damnability = DirectWaitBar(
@@ -69,7 +69,7 @@ class TrainGUI:
         frame_miles = DirectFrame(
             frameSize=(-0.115, 0.115, -0.03, 0.03),
             pos=(0, 0, -0.97),
-            frameTexture=ICON_PATH + "metal1.png",
+            frameTexture=GUI_PIC + "metal1.png",
         )
         self._miles_meter = DirectLabel(
             parent=frame_miles,

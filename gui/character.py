@@ -15,7 +15,7 @@ from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TransparencyAttrib
 
 from personage.character_data import TRAIT_DESC
-from .widgets import ICON_PATH, RUST_COL, SILVER_COL
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
 ABOUT_BUT_PARAMS = {
     "text": "?",
@@ -29,7 +29,7 @@ ABOUT_BUT_PARAMS = {
 
 
 class CharacterGUI:
-    """Widget with the chosen character info."""
+    """Widget with the selected character info."""
 
     def __init__(self):
         self.char = None  # the chosen character
@@ -44,7 +44,7 @@ class CharacterGUI:
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.31, 0.31, -0.1, 0.115),
             pos=(0.31, 0, -1.9),
-            frameTexture=ICON_PATH + "metal1.png",
+            frameTexture=GUI_PIC + "metal1.png",
             state=DGG.NORMAL,
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
@@ -60,7 +60,7 @@ class CharacterGUI:
             parent=self._fr,
             text="Name:",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=RUST_COL,
             pos=(-0.22, 0, 0.07),
         )
@@ -68,7 +68,7 @@ class CharacterGUI:
             parent=self._fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=SILVER_COL,
             pos=(-0.09, 0, 0.069),
         )
@@ -84,7 +84,7 @@ class CharacterGUI:
             parent=self._fr,
             text="Type:",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=RUST_COL,
             pos=(0.05, 0, 0.07),
         )
@@ -92,7 +92,7 @@ class CharacterGUI:
             parent=self._fr,
             text="",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=SILVER_COL,
             pos=(0.17, 0, 0.068),
         )
@@ -100,7 +100,7 @@ class CharacterGUI:
             parent=self._fr,
             text="Health",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=RUST_COL,
             pos=(-0.22, 0, -0.015),
         )
@@ -116,7 +116,7 @@ class CharacterGUI:
             parent=self._fr,
             text="Energy",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=RUST_COL,
             pos=(-0.216, 0, -0.06),
         )
@@ -141,33 +141,57 @@ class CharacterGUI:
             parent=self._fr,
             frameSize=(-0.02, 0.02, -0.02, 0.02),
             pos=(0.27, 0, -0.008),
-            frameTexture=ICON_PATH + "disease.png",
+            frameTexture=GUI_PIC + "disease.png",
         )
         self._disease.setTransparency(TransparencyAttrib.MAlpha)
 
         self.clear_char_info()
 
-    def show_char_info(self, character):
+    def clear_char_info(self):
+        """Clear the character GUI."""
+        for wid in (
+            self._char_name,
+            self._char_class,
+            self._char_health,
+            self._char_energy,
+            self._traits,
+            self._char_desc_but,
+            self._disease,
+        ):
+            wid.hide()
+
+        if self._char_desc_shown:
+            self._show_char_desc()
+
+        taskMgr.remove("track_char_info")  # noqa: F821
+        self.char = None
+
+        for but in self._rest_buttons.values():
+            but.destroy()
+
+        self._rest_list_active = False
+
+    def show_char_info(self, char):
         """Show the given character status.
 
         Args:
-            character (personage.character.Character):
+            char (personage.character.Character):
                 The chosen character object.
         """
-        self._char_name["text"] = character.name
-        self._char_class["text"] = character.class_.capitalize()
-        self._traits["text"] = ", ".join(character.traits)
+        self._char_name["text"] = char.name
+        self._char_class["text"] = char.class_.capitalize()
+        self._traits["text"] = ", ".join(char.traits)
 
-        self._char_health["range"] = character.class_data["health"]
-        self._char_health["value"] = character.health
-        self._char_energy["value"] = character.energy
+        self._char_health["range"] = char.class_data["health"]
+        self._char_health["value"] = char.health
+        self._char_energy["value"] = char.energy
 
-        if character.is_diseased:
+        if char.is_diseased:
             self._disease.show()
         else:
             self._disease.hide()
 
-        self.char = character
+        self.char = char
 
         self._char_name.show()
         self._char_class.show()
@@ -183,27 +207,6 @@ class CharacterGUI:
         taskMgr.doMethodLater(  # noqa: F821
             0.5, self._update_char_info, "track_char_info"
         )
-
-    def clear_char_info(self):
-        """Clear the character interface."""
-        self._char_name.hide()
-        self._char_class.hide()
-        self._char_health.hide()
-        self._char_energy.hide()
-        self._traits.hide()
-        self._char_desc_but.hide()
-        self._disease.hide()
-
-        if self._char_desc_shown:
-            self._show_char_desc()
-
-        taskMgr.remove("track_char_info")  # noqa: F821
-        self.char = None
-
-        for but in self._rest_buttons.values():
-            but.destroy()
-
-        self._rest_list_active = False
 
     def show_tooltip(self, text):
         """Show tooltip with the given text.
@@ -394,7 +397,7 @@ class CharacterGUI:
                     parent=self._fr,
                     text="",
                     frameSize=(-0.025, 0.025, -0.025, 0.025),
-                    frameTexture=ICON_PATH + "like.png",
+                    frameTexture=GUI_PIC + "like.png",
                     relief="flat",
                     pos=(0.265, 0, shift + 0.013),
                     command=base.traits_gui.show,  # noqa: F821
@@ -430,7 +433,7 @@ class CharacterGUI:
             button (panda3d.gui.DirectGui.DirectButton):
                 Button to highlight.
         """
-        button["frameTexture"] = ICON_PATH + "hover_like.png"
+        button["frameTexture"] = GUI_PIC + "hover_like.png"
 
     def _dehighlight_traits_but(self, button, _):
         """Dehighlight traits tweaking button.
@@ -439,7 +442,7 @@ class CharacterGUI:
             button (panda3d.gui.DirectGui.DirectButton):
                 Button to dehighlight.
         """
-        button["frameTexture"] = ICON_PATH + "like.png"
+        button["frameTexture"] = GUI_PIC + "like.png"
 
     def move_status_label(self, place):
         """Move the status label widget.

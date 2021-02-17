@@ -9,10 +9,10 @@ import random
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
-from .widgets import ICON_PATH, RUST_COL, SILVER_COL, CharacterChooser, UpgradeChooser
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL, CharacterChooser, UpgradeChooser
 
 
-class CityInterface:
+class CityGUI:
     """City GUI.
 
     Includes several services: healing and regaining energy of the
@@ -37,7 +37,7 @@ class CityInterface:
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.35, 0.35, -0.4, 0.7),
             pos=(0.85, 0, -0.82),
-            frameTexture=ICON_PATH + "metal1.png",
+            frameTexture=GUI_PIC + "metal1.png",
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
         self._fr.hide()
@@ -46,7 +46,7 @@ class CityInterface:
             parent=self._fr,
             text="Services",
             frameSize=(0.1, 0.1, 0.1, 0.1),
-            text_scale=(0.045, 0.045),
+            text_scale=0.045,
             text_fg=RUST_COL,
             pos=(0, 0, 0.62),
         )
@@ -88,48 +88,48 @@ class CityInterface:
             )
         )
 
-    def _show_train(self, shift):
+    def _show_train(self, z_coor):
         """Show the Train management GUI tab.
 
         Args:
-            shift (float): Z-coordinate.
+            z_coor (float): Z-coordinate for widgets.
         """
         self._clear_repl_wids()
 
         self._party_but["text_fg"] = RUST_COL
         self._train_but["text_fg"] = SILVER_COL
 
-        shift -= 0.07
+        z_coor -= 0.07
         self._repl_wids.append(
             DirectLabel(
                 parent=self._fr,
                 text="Locomotive",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.035, 0.035),
+                text_scale=0.035,
                 text_fg=RUST_COL,
-                pos=(-0.22, 0, shift),
+                pos=(-0.22, 0, z_coor),
             )
         )
-        shift -= 0.08
+        z_coor -= 0.08
         self._repl_wids.append(
             DirectLabel(
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
                 text="Repair",
-                text_scale=(0.03, 0.03),
-                pos=(-0.2, 0, shift),
+                text_scale=0.03,
+                pos=(-0.2, 0, z_coor),
             )
         )
         self._repl_wids.append(
             DirectButton(
                 parent=self._fr,
-                pos=(-0.05, 0, shift),
+                pos=(-0.05, 0, z_coor),
                 text_fg=SILVER_COL,
                 text="+50\n25$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._repair,
                 extraArgs=[50],
             )
@@ -137,26 +137,26 @@ class CityInterface:
         self._repl_wids.append(
             DirectButton(
                 parent=self._fr,
-                pos=(0.07, 0, shift),
+                pos=(0.07, 0, z_coor),
                 text_fg=SILVER_COL,
                 text="+200\n100$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._repair,
                 extraArgs=[200],
             )
         )
 
-        shift -= 0.09
+        z_coor -= 0.09
         self._repl_wids.append(
             DirectLabel(
                 parent=self._fr,
                 text="Upgrades",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.035, 0.035),
+                text_scale=0.035,
                 text_fg=RUST_COL,
-                pos=(-0.24, 0, shift),
+                pos=(-0.24, 0, z_coor),
             )
         )
         up_desc = DirectLabel(
@@ -165,7 +165,7 @@ class CityInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=SILVER_COL,
-            pos=(-0.1, 0, shift - 0.14),
+            pos=(-0.1, 0, z_coor - 0.14),
         )
         self._repl_wids.append(up_desc)
 
@@ -175,13 +175,13 @@ class CityInterface:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_fg=SILVER_COL,
-            pos=(0.25, 0, shift - 0.18),
+            pos=(0.25, 0, z_coor - 0.18),
         )
         self._repl_wids.append(up_cost)
 
         but = DirectButton(
             parent=self._fr,
-            pos=(0.2, 0, shift - 0.3),
+            pos=(0.2, 0, z_coor - 0.3),
             text_fg=RUST_COL,
             text="Purchase",
             relief=None,
@@ -192,10 +192,10 @@ class CityInterface:
         self._repl_wids.append(but)
         base.main_menu.bind_button(but)  # noqa: F821
 
-        shift -= 0.05
+        z_coor -= 0.05
         self._up_chooser = UpgradeChooser(up_desc, up_cost)
         self._up_chooser.prepare(
-            self._fr, (0, 0, shift), base.train.possible_upgrades  # noqa: F821
+            self._fr, (0, 0, z_coor), base.train.possible_upgrades  # noqa: F821
         )
         self._repl_wids.append(self._up_chooser)
 
@@ -228,7 +228,7 @@ class CityInterface:
                 parent=self._fr,
                 text="Team",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.035, 0.035),
+                text_scale=0.035,
                 text_fg=RUST_COL,
                 pos=(-0.27, 0, shift),
             )
@@ -247,7 +247,7 @@ class CityInterface:
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
                 text="Health",
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 pos=(-0.2, 0, shift),
             )
         )
@@ -259,7 +259,7 @@ class CityInterface:
                 text="+10\n10$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._heal,
                 extraArgs=[10],
             )
@@ -272,7 +272,7 @@ class CityInterface:
                 text="+50\n50$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._heal,
                 extraArgs=[50],
             )
@@ -284,7 +284,7 @@ class CityInterface:
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
                 text="Energy",
-                text_scale=(0.03, 0.03),
+                text_scale=0.03,
                 pos=(-0.2, 0, shift),
             )
         )
@@ -296,7 +296,7 @@ class CityInterface:
                 text="+10\n5$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._rest,
                 extraArgs=[10],
             )
@@ -309,7 +309,7 @@ class CityInterface:
                 text="+50\n25$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._rest,
                 extraArgs=[50],
             )
@@ -323,7 +323,7 @@ class CityInterface:
                 text="Leave unit",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._send_away,
             )
         )
@@ -334,7 +334,7 @@ class CityInterface:
                 parent=self._fr,
                 text="Recruits",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=(0.035, 0.035),
+                text_scale=0.035,
                 text_fg=RUST_COL,
                 pos=(-0.25, 0, shift),
             )
@@ -355,7 +355,7 @@ class CityInterface:
                 text="Hire unit\n200$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
-                text_scale=(0.45, 0.45),
+                text_scale=0.45,
                 command=self._hire,
             )
         )

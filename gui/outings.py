@@ -66,7 +66,7 @@ class OutingsInterface:
             parent=self._list,
             text="",
             frameSize=(0.4, 0.4, 0.4, 0.4),
-            text_scale=(0.05),
+            text_scale=0.05,
             pos=(-0.4, 0, 0.7),
         )
         self._type = DirectLabel(
@@ -80,7 +80,7 @@ class OutingsInterface:
             parent=self._list,
             text="",
             frameSize=(0.6, 0.6, 0.6, 0.6),
-            text_scale=(0.04),
+            text_scale=0.04,
             pos=(0, 0, 0.55),
         )
 
@@ -164,7 +164,7 @@ class OutingsInterface:
                         parent=self._list,
                         text=str(bars[num][1]) + "/" + str(bars[num][2]),
                         frameSize=(0.6, 0.6, 0.6, 0.6),
-                        text_scale=(0.035),
+                        text_scale=0.035,
                         pos=(0.168, 0, shift),
                     )
                 )
@@ -175,7 +175,7 @@ class OutingsInterface:
                     parent=self._list,
                     text="Total outing score:\n" + str(score) + "/100",
                     frameSize=(0.6, 0.6, 0.6, 0.6),
-                    text_scale=(0.045),
+                    text_scale=0.045,
                     pos=(0, 0, -0.58),
                 )
             )
@@ -410,7 +410,7 @@ class OutingsInterface:
                 parent=self._list,
                 text="Team:",
                 frameSize=(0.6, 0.6, 0.6, 0.6),
-                text_scale=(0.035),
+                text_scale=0.035,
                 pos=(-0.35, 0, 0),
             )
         )
@@ -434,7 +434,7 @@ class OutingsInterface:
             parent=self._list,
             text="People to send (0/{}):".format(outing["assignees"]),
             frameSize=(0.6, 0.6, 0.6, 0.6),
-            text_scale=(0.035),
+            text_scale=0.035,
             pos=(0.35, 0, 0),
         )
         self._outing_widgets.append(to_send)
@@ -523,7 +523,7 @@ class OutingsInterface:
                 parent=self._list,
                 text="Outing score:",
                 frameSize=(0.6, 0.6, 0.6, 0.6),
-                text_scale=(0.045),
+                text_scale=0.045,
             )
         )
         bars = []
@@ -539,7 +539,7 @@ class OutingsInterface:
                     parent=self._list,
                     text=name,
                     frameSize=(0.6, 0.6, 0.6, 0.6),
-                    text_scale=(0.035),
+                    text_scale=0.035,
                     pos=(-0.08, 0, shift),
                 )
             )

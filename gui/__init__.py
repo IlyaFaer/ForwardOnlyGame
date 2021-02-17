@@ -11,14 +11,14 @@ from panda3d.core import TransparencyAttrib
 
 from utils import save_exists
 from .character import CharacterGUI  # noqa: F401
-from .city import CityInterface  # noqa: F401
+from .city import CityGUI  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsInterface  # noqa: F401
 from .rails_scheme import RailsScheme  # noqa: F401
 from .resources import ResourcesGUI  # noqa: F401
 from .train import TrainGUI  # noqa: F401
-from .traits import TraitsGui  # noqa: F401
-from .widgets import ICON_PATH, RUST_COL, SILVER_COL  # noqa: F401
+from .traits import TraitsGUI  # noqa: F401
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL  # noqa: F401
 
 
 class MainMenu:
@@ -42,7 +42,7 @@ class MainMenu:
             frameSize=(-2, 2, -1, 1), frameColor=(0.15, 0.15, 0.15, 1)
         )
         but_params = {
-            "text_scale": (0.05, 0.05),
+            "text_scale": 0.05,
             "relief": None,
             "parent": self._main_fr,
             "clickSound": self.click_snd,
@@ -79,7 +79,7 @@ class MainMenu:
         self._alpha_disclaimer = DirectLabel(
             parent=self._main_fr,
             pos=(0, 0, -0.9),
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             text_fg=SILVER_COL,
             frameColor=(0, 0, 0, 0),
             text=(
@@ -89,16 +89,6 @@ class MainMenu:
                 "game princips. Enjoy your play!"
             ),
         )
-
-    def bind_button(self, button):
-        """Bind the given button to visual effects.
-
-        Args:
-            button (panda3d.gui.DirectGui.DirectButton):
-                Button to bind.
-        """
-        button.bind(DGG.ENTER, self._highlight_but, extraArgs=[button])
-        button.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[button])
 
     def _highlight_but(self, button, _):
         """Highlight the button pointed by mouse.
@@ -274,6 +264,15 @@ class MainMenu:
             4, self._clear_temp_wids, "clear_main_menu_temp_wids"
         )
         base.doMethodLater(0.25, base.load_game, "load_game")  # noqa: F821
+
+    def bind_button(self, button):
+        """Bind the given button to visual effects.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton): Button to bind.
+        """
+        button.bind(DGG.ENTER, self._highlight_but, extraArgs=[button])
+        button.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[button])
 
     def show_loading(self):
         """Show "Loading..." note on the screen."""

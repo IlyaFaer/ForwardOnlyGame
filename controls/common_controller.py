@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Common game controls: keys and mouse clicks.
+Common game controls: keyboard and mouse clicks.
 """
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import (

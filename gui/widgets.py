@@ -10,7 +10,7 @@ from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 
 RUST_COL = (0.71, 0.25, 0.05, 1)
 SILVER_COL = (0.51, 0.54, 0.59, 1)
-ICON_PATH = "gui/tex/"
+GUI_PIC = "gui/tex/"
 
 
 class ItemChooser(metaclass=abc.ABCMeta):
