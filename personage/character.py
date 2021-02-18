@@ -50,7 +50,6 @@ class Character(Shooter, Unit):
         Shooter.__init__(self)
 
         self._team = team
-
         self._current_pos = None
         self._current_anim = None
         self._idle_seq = None

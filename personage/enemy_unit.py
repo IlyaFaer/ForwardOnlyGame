@@ -288,6 +288,33 @@ class BrakeDropper(EnemyMotorcyclist):
         self._fall_snd = base.sound_mgr.loadSfx("sounds/moto_fall1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._fall_snd, self.model)  # noqa: F821
 
+    def _drop_brake(self, brake):
+        """Drop braking shoes to slow down Train.
+
+        Args:
+            brake (panda3d.core.NodePath):
+                Brake model to drop.
+        """
+        brake.wrtReparentTo(base.train.model)  # noqa: F821
+
+        if not base.train.r_brake:  # noqa: F821
+            pos = 0.058
+            base.train.r_brake = True  # noqa: F821
+            side = "r"
+        else:
+            base.train.l_brake = True  # noqa: F821
+            pos = -0.058
+            side = "l"
+
+        Sequence(
+            Parallel(
+                LerpPosInterval(brake, 0.5, (pos, 0.7, 0.025)),
+                LerpHprInterval(brake, 0.5, (0, 0, 0)),
+            ),
+            LerpPosInterval(brake, 0.35, (pos, 0.38, 0.025)),
+            Func(base.train.brake, side, brake),  # noqa: F821
+        ).start()
+
     def _jump_and_brake(self, task):
         """Jump over the railway and drop a brake shoe."""
         if not self._brakes or self.current_part is None:
@@ -357,33 +384,6 @@ class BrakeDropper(EnemyMotorcyclist):
             taskMgr.doMethodLater(  # noqa: F821
                 2, self._float_move, self.id + "_float_move"
             )
-
-    def _drop_brake(self, brake):
-        """Drop braking shoes to slow down Train.
-
-        Args:
-            brake (panda3d.core.NodePath):
-                Brake model to drop.
-        """
-        brake.wrtReparentTo(base.train.model)  # noqa: F821
-
-        if not base.train.r_brake:  # noqa: F821
-            pos = 0.058
-            base.train.r_brake = True  # noqa: F821
-            side = "r"
-        else:
-            base.train.l_brake = True  # noqa: F821
-            pos = -0.058
-            side = "l"
-
-        Sequence(
-            Parallel(
-                LerpPosInterval(brake, 0.5, (pos, 0.7, 0.025)),
-                LerpHprInterval(brake, 0.5, (0, 0, 0)),
-            ),
-            LerpPosInterval(brake, 0.35, (pos, 0.38, 0.025)),
-            Func(base.train.brake, side, brake),  # noqa: F821
-        ).start()
 
     def capture_train(self):
         """The Train got critical damage - stop near it."""

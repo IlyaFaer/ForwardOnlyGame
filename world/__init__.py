@@ -379,20 +379,14 @@ class World:
 
     def _track_amb_snd(self, task):
         """Check if current ambient sound should be changed."""
-        if self.sun.day_part == "evening":
+        if self.sun.day_part in ("evening", "night"):
             taskMgr.doMethodLater(  # noqa: F821
                 2,
                 self._change_amb_snd,
                 "change_ambient_sound",
-                extraArgs=[self._noon_ambient_snd, self._night_ambient_snd],
-                appendTask=True,
-            )
-        elif self.sun.day_part == "night":
-            taskMgr.doMethodLater(  # noqa: F821
-                2,
-                self._change_amb_snd,
-                "change_ambient_sound",
-                extraArgs=[self._night_ambient_snd, self._noon_ambient_snd],
+                extraArgs=[self._noon_ambient_snd, self._night_ambient_snd]
+                if self.sun.day_part == "evening"
+                else [self._night_ambient_snd, self._noon_ambient_snd],
                 appendTask=True,
             )
         return task.again
@@ -403,7 +397,7 @@ class World:
         Args:
             from_snd (panda3d.core.AudioSound):
                 Sound to fade.
-            from_snd (panda3d.core.AudioSound):
+            to_snd (panda3d.core.AudioSound):
                 Sound to make main.
         """
         from_volume = from_snd.getVolume()

@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Locations configurations. Describes what models should be
+Locations configurations. Describes which models should be
 used on each location and their arrangement formulas.
 """
 

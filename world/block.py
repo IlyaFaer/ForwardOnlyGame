@@ -204,14 +204,10 @@ class Block:
             str, int: Surface model name, angle.
         """
         if self.enemy_territory:
-            surface = address("surface_en1")
-            return surface, random.choice(ANGLES)
+            return address("surface_en1"), random.choice(ANGLES)
 
         if self.is_city:
-            surface = address("surface_with_" + side + "_city")
-            if side == "r":
-                return surface, 180
-            return surface, 0
+            return address("surface_with_" + side + "_city"), 180 if side == "r" else 0
 
         if side == self._station_side:
             surface = address(
