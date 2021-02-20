@@ -184,7 +184,7 @@ class TeachingNotes:
     def resume(self):
         """Resume showing teaching notes."""
         self._note_text = random.choice(NOTES)
-        taskMgr.doMethodLater(180, self._show_note, "show_teaching_note")  # noqa: F821
+        taskMgr.doMethodLater(200, self._show_note, "show_teaching_note")  # noqa: F821
 
     def stop(self):
         """Stop showing teaching notes."""

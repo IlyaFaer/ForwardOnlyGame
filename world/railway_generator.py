@@ -86,7 +86,7 @@ class RailwayGenerator:
         self._step = random.uniform(0.025, 0.05) * random.choice((1, -1))
         self._current = self._step
         self._station_threshold = 90
-        self._city_threshold = 450
+        self._city_threshold = 400
 
         self._bounds = (
             Bound(-1, (0.08, 0.12), "r90_turn"),
@@ -132,7 +132,7 @@ class RailwayGenerator:
             return "station"
 
         if self._city_threshold <= 0 and chance(30):
-            self._city_threshold = 450
+            self._city_threshold = 400
             return "city"
 
         if chance(10):

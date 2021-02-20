@@ -890,7 +890,7 @@ camp place. The meadow looks still, smells with grass and flowers,
 warm wind makes the way pleasant. Closing to the tent {name1} and
 {name2} are starting to search for supplies through the things left
 in the camp. Ropes, empty cans, some climber stuff, even an album with
-old photos. Finding nothing {name1} decides to take a look at the tent
+old photos. Finding nothing, {name1} decides to take a look at the tent
 - {heshe1} pulls the zipper and stick {hisher1} head into the stifling inners.
 The tent looks empty at the first gaze, but suddenly {name1} caughts
 {hisher1} eyes on a bottle of an energy drink. "Well, it's something!"
@@ -926,7 +926,7 @@ You're getting 1 medicine box.""",
                 },
                 "desc": """Called by one of your teammates, you're walking out of
 the cabin and in the same moment seeing an old hut not far from the
-railway. Putting binoculars to your eyes you're looking at it with good
+railway. Putting binoculars to your eyes, you're looking at it with good
 feeling. The house seems to be very old, built with dark ancient
 logs. No smoke rises from the chimney. Taking a few second to assess
 the prospects, you're thinking about sending three people to search
@@ -982,8 +982,8 @@ disappointed mood, and you're commanding to move.""",
                     },
                     {
                         "score": range(60, 80),
-                        "desc": """{name1}, {name2} and {name3} are gearing up and taking
-direction to the hut. Approaching to it they see that wood building is long
+                        "desc": """{name1}, {name2} and {name3} are gearing up and taking direction
+to the hut. Approaching to it they see that wood building is long
 abandoned: weeds are crossing the door, windows are broken, and
 stillness fills the air. {name2} and {name3} are moving into the house, while
 {name1} is standing outside on a watch. It takes a lot of time for {name3}
