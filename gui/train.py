@@ -80,7 +80,7 @@ class TrainGUI:
             pos=(0, 0, -0.01),
         )
         taskMgr.doMethodLater(  # noqa: F821
-            0.3, self._update_speed, "update_speed_indicator"
+            0.25, self._update_speed, "update_speed_indicator"
         )
         self._fork_lab = None
 

@@ -30,6 +30,9 @@ hit it with throwing weapon""",
 are slowing you down, some
 are deafening your people.
 Study their tactics!""",
+    """Enemy territory is not
+considered on the railways
+scheme""",
     # cohesion
     """Increasing team cohesion unlocks
 team skills. These are powerful
@@ -61,7 +64,7 @@ sure case. Take your risks!""",
 scheme and choose an
 optimal path""",
     """Railway branches always merge
-back to the main railway.""",
+back to the main railway""",
     """You can find more outings and
 events on side railway branches""",
     # Train

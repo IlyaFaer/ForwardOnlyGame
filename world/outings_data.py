@@ -227,7 +227,7 @@ You're getting +90$""",
                 },
                 "desc": """The big red two-storied bus standing at the middle of the meadow
 catches your attention from a very long distance. Bringing the binoculars
-to your eyes you're seeing that it's little bit old and shabby, but sand
+to your eyes, you're seeing that it's little bit old and shabby, but sand
 bags and logs placed around the car in defensive positions tells it's
 still inhabited. You also see that second floor doesn't have any glass
 in windows - probably a sniper point, but, except this fact, the
@@ -289,7 +289,7 @@ It's better to move along before they changed their mind.""",
                         "desc": """Driven by your command, {name1} and {name2} are taking the
 direction to the old vehicle. As the meadow looks too open, they are
 running fast to cross it as soon as possible. Disappearing within the
-car your people a starting to rummage through it, swinging the old metal
+car, your people start to rummage through it, swinging the old metal
 carcass. While it all happening you're seeing a big jeep on a horizon.
 Whistling loudly to your people you're preparing for a fight. It takes
 two more minutes for {name1} and {name2} to jump outside the bus. The
@@ -1075,7 +1075,7 @@ They are closing to the monastery fast, but in some moment hear
 strange sounds and shouts. Moving closer to the building, they decide
 to take a look through the window. {name2} sets a knee to give a lift
 to {name3}, while {name1} stands near on a watch for troubles, as in
-this noise they hear human voices, and they are many. Lifting up {name3},
+this noise they hear human voices, and they are many. Lifting up, {name3}
 takes a look inside the monastery, and sees at least forty people
 in there. Dirty, unkempt and completely crazy, they are ripping to shreds
 several animals and eating them raw, all covered in blood. Seems like kind
@@ -1266,7 +1266,7 @@ column, by your command. Running fast, they come to the place in
 twelve minutes and see a small wood hut, engulfed in flames. As there
 are no screams or any movement, they could say there is no people
 inside, at least, alive. The hut itself looks really ancient, it's most
-likely was long forsaken. {name1}, rubbing his forehead, warmed up by
+likely was long forsaken. {name1}, rubbing {hisher1} forehead, warmed up by
 the fire, makes a step back: "Let's go until it's grown into the forest
 conflagration, and locked us inside a ring of flames!". Without any
 arguments {name2} and {name3} turning around and taking a direction

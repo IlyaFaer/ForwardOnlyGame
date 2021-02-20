@@ -135,6 +135,18 @@ class World:
             ) or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
 
     @property
+    def is_on_et(self):
+        """Indicates if the Train is near enemy territory.
+
+        Returns:
+            bool: True if the Train is near enemy territory.
+        """
+        for block in self._loaded_blocks:
+            if block.enemy_territory:
+                return True
+        return False
+
+    @property
     def last_cleared_block_angle(self):
         """The last cleared block angle.
 
@@ -757,6 +769,7 @@ class World:
 
         current_block = self._loaded_blocks[-2]
         if current_block.enemy_territory:
+            self.outings_mgr.hide_outing()
             return
 
         new_block = self._loaded_blocks[-1].directions[current_block.id]
@@ -939,7 +952,12 @@ class World:
                     next_block = current_block.directions[prev_block_num] + 3
                 else:
                     if self._prev_block is not None:
-                        next_block = current_block.directions[prev_block_num] + 1
+                        next_block = current_block.directions[prev_block_num]
+                        if isinstance(next_block, tuple):
+                            next_block = next_block[base.train.do_turn]  # noqa: F821
+
+                        next_block += 1
+
                         self._prev_block = None
                     else:
                         next_block = current_block.directions[prev_block_num]

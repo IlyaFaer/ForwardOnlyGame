@@ -124,6 +124,7 @@ class Team:
         for char_desc in char_desc:
             char = load_char(char_desc, self, parts)
             self.chars[char.id] = char
+            self._char_id = max(self._char_id, int(char.id.split("_")[1]))
 
         self.cohesion = cohesion_desc[0]
         self._relations = cohesion_desc[1]

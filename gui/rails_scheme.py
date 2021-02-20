@@ -228,7 +228,7 @@ class RailsScheme:
         if blocks and blocks[0] != -1 and blocks[0] < 900:
             self._arrow.setPos(-0.967 + blocks[0] * 0.00216, 0, 0.1)
 
-        task.delayTime = 7
+        task.delayTime = 6
         return task.again
 
     def show(self):
