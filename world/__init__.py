@@ -946,17 +946,24 @@ class World:
                 # real blocks. Instead of enemy blocks - real blocks (which
                 # were loaded before the enemy territory) must be used.
                 if prev_block_num == -1:
+                    inverse = self._prev_block > self._cur_block
                     prev_block_num = self._prev_block
                     current_block.directions = self._map[self._cur_block].directions
 
-                    next_block = current_block.directions[prev_block_num] + 3
+                    if inverse:
+                        next_block = current_block.directions[prev_block_num]
+                        if next_block == self._block_num:
+                            next_block -= 1
+                    else:
+                        next_block = current_block.directions[prev_block_num] + 3
                 else:
                     if self._prev_block is not None:
                         next_block = current_block.directions[prev_block_num]
                         if isinstance(next_block, tuple):
                             next_block = next_block[base.train.do_turn]  # noqa: F821
 
-                        next_block += 1
+                        if self._prev_block < self._cur_block:
+                            next_block += 1
 
                         self._prev_block = None
                     else:
