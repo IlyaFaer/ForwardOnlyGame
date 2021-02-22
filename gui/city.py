@@ -126,7 +126,7 @@ class CityGUI:
                 parent=self._fr,
                 pos=(-0.05, 0, z_coor),
                 text_fg=SILVER_COL,
-                text="+50\n25$",
+                text="+50\n20$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -139,7 +139,7 @@ class CityGUI:
                 parent=self._fr,
                 pos=(0.07, 0, z_coor),
                 text_fg=SILVER_COL,
-                text="+200\n100$",
+                text="+200\n80$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -382,6 +382,9 @@ class CityGUI:
             0.1, base.effects_mgr.fade_out_screen, "fade_out_screen"  # noqa: F821
         )
         taskMgr.doMethodLater(3.1, self._clear, "clear_city_gui")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            2, base.train.resume_smoke, "resume_train_smoke"  # noqa: F821
+        )
 
     def _clear(self, task):
         """Remove hangar scene and hide city GUI."""
@@ -434,7 +437,7 @@ class CityGUI:
             value (int):
                 Points of the Train damnability to repair.
         """
-        spent = 25 if value == 50 else 100
+        spent = 20 if value == 50 else 80
         if base.dollars - spent < 0:  # noqa: F821
             return
 

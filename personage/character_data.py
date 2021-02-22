@@ -162,7 +162,7 @@ TRAIT_DESC = {
     "Weak immunity": "+20% chance to get sick",
     "Liberal": "+30% cohesion increase with other classes",
     "Loner": "x1.3 damage while alone on the Train part",
-    "Bloodthirsty": "+6 health for a killed enemy unit",
+    "Bloodthirsty": "+7 health for a killed enemy unit",
     "Nervousness": "+25% energy spend while in fight",
     "Deep breath": "Avoid the Stench poison for the first 1 min",
     "Motion sickness": "Doesn't restore on high movement speed",

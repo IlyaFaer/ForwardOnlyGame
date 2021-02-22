@@ -139,7 +139,7 @@ class Team:
         for char in self.chars.values():
             char.energy += 15
 
-        self._plan_cohesion_cooldown(900)
+        self._plan_cohesion_cooldown(600)
 
     def cohesion_cover_fire(self):
         """Do cohesion ability "Cover fire"."""
@@ -150,7 +150,7 @@ class Team:
         taskMgr.doMethodLater(  # noqa: F821
             90, self._stop_cover_fire, "stop_cover_fire"
         )
-        self._plan_cohesion_cooldown(600)
+        self._plan_cohesion_cooldown(300)
 
     def cohesion_heal_wounded(self):
         """Do cohesion ability "Not leaving ours"."""
@@ -161,7 +161,7 @@ class Team:
             if char.health <= 30:
                 char.health += 20
 
-        self._plan_cohesion_cooldown(900)
+        self._plan_cohesion_cooldown(600)
 
     def cohesion_rage(self):
         """Do cohesion ability "Common rage"."""
@@ -174,7 +174,7 @@ class Team:
             char.damage_range[1] *= 1.3
 
         taskMgr.doMethodLater(90, self._stop_rage, "stop_rage")  # noqa: F821
-        self._plan_cohesion_cooldown(900)
+        self._plan_cohesion_cooldown(600)
 
     def cohesion_hold_together(self):
         """Do cohesion ability "Hold together"."""
@@ -185,7 +185,7 @@ class Team:
         taskMgr.doMethodLater(  # noqa: F821
             90, self._stop_hold_together, "stop_hold_together"
         )
-        self._plan_cohesion_cooldown(1200)
+        self._plan_cohesion_cooldown(900)
 
     def rest_all(self):
         """Make all the characters rest."""
@@ -289,7 +289,7 @@ class Team:
                     )
 
         self._calc_total_cohesion()
-        task.delayTime = 250
+        task.delayTime = 220
         return task.again
 
     def _calc_total_cohesion(self):

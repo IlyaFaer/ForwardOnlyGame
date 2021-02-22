@@ -62,7 +62,7 @@ class TraitsGUI:
                 "It'll cost you 4 cohesion points.\n\n"
                 "If the character has less than 3 traits, you can praise "
                 "him/her to\ngenerate 3 new traits and add one of them "
-                "to the character's\ntraits list. It'll cost you 5 "
+                "to the character's\ntraits list. It'll cost you 4 "
                 "cohesion points."
             ),
             frameSize=(0.3, 0.3, 0.3, 0.3),
@@ -287,7 +287,7 @@ class TraitsGUI:
             self._new_traits[index][1]["text"] = TRAIT_DESC[new_trait]
             self._new_traits[index][1]["text_fg"] = SILVER_COL
 
-        base.team.spend_cohesion(5)  # noqa: F821
+        base.team.spend_cohesion(4)  # noqa: F821
 
     def _scold(self):
         """Erase the chosen character's trait."""

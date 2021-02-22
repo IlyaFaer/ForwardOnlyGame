@@ -989,10 +989,10 @@ stillness fills the air. {name2} and {name3} are moving into the house, while
 {name1} is standing outside on a watch. It takes a lot of time for {name3}
 to check all the broken furniture in the first room, but {heshe3} finds
 nothing. {name2} appears to become more lucky: {heshe2} managed to
-find 30$ within a lady's old bag. With such a results {name2} and
+find 50$ within a lady's old bag. With such a results {name2} and
 {name3} are leaving the silent and dusty house, and joining {name1}
 to get back to Train and others.""",
-                        "effects": {"money": 30},
+                        "effects": {"money": 50},
                     },
                     {
                         "score": range(80, 101),

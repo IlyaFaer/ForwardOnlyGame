@@ -27,7 +27,7 @@ UPGRADES = {
         "desc": """With this ram your locomotive
 will be breaking road barriers
 without getting damage""",
-        "cost": "300$",
+        "cost": "200$",
         "model": "ram1",
     },
     "Floodlights": {
@@ -35,7 +35,7 @@ without getting damage""",
         "desc": """All the negative darkness
 factors are no more actual with
 these floodlights on""",
-        "cost": "400$",
+        "cost": "250$",
         "model": "floodlights1",
     },
     "Armor Plate": {
@@ -362,7 +362,12 @@ class Train:
     def move_to_hangar(self):
         """Move the Train into a city hangar."""
         self.root_node.setZ(50)
-        self._smoke.disable()
+        self._smoke.softStop()
+
+    def resume_smoke(self, task):
+        """Resume the stopped smoke particle effect."""
+        self._smoke.softStart()
+        return task.done
 
     def move_along_block(self, block):
         """Move the Train along the given world block.

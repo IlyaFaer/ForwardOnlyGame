@@ -314,6 +314,7 @@ class OutingsInterface:
                 command=self._do_effect_and_finish,  # noqa: F821
                 extraArgs=[selected_effect],
                 scale=(0.05, 0, 0.05),
+                clickSound=base.main_menu.click_snd,  # noqa: F821
             )
         )
 

@@ -291,7 +291,7 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +15 energy. Cooldown: 15 min.",
+                text="Every character gets +15 energy. Cooldown: 10 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -320,7 +320,7 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +20% accuracy. Cooldown: 10 min.",
+                text="Every character gets +20% accuracy. Cooldown: 5 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -351,7 +351,7 @@ class ResourcesGUI:
                 parent=self._coh_frame,
                 text=(
                     "Characters with health < 30 "
-                    "getting +20 health. Cooldown: 15 min."
+                    "getting +20 health. Cooldown: 10 min."
                 ),
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
@@ -381,7 +381,7 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +30% to damage. Cooldown: 15 min.",
+                text="Every character gets +30% to damage. Cooldown: 10 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -410,7 +410,7 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="No characters will die in next 1.5 min. Cooldown: 20 min.",
+                text="No characters will die in next 1.5 min. Cooldown: 15 min.",
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
