@@ -383,11 +383,12 @@ class OutingsInterface:
         self._upcome_text.hide()
         self._upcome_ico.hide()
 
-        self._assignees.clear()
+        if self.is_shown:
+            self._assignees.clear()
 
-        self._list.hide()
-        self.is_shown = False
-        self._clear_temporary_widgets()
+            self._list.hide()
+            self.is_shown = False
+            self._clear_temporary_widgets()
 
     def start(self, outing):
         """Start the outing scenario.

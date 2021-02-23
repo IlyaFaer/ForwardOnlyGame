@@ -428,7 +428,7 @@ class World:
 
     def drop_outing_ability(self):
         """Drop the current block outing ability."""
-        self._map[self._block_num - 1].outing_available = None
+        self._loaded_blocks[-2].outing_available = None
 
     def start_outing(self, type_):
         """Start an outing with the given type.
@@ -764,7 +764,7 @@ class World:
 
     def _track_outings(self):
         """Track outing abilities."""
-        if len(self._loaded_blocks) < 3:
+        if len(self._loaded_blocks) < 2:
             return
 
         current_block = self._loaded_blocks[-2]
@@ -785,7 +785,7 @@ class World:
         elif self._map[current_block.id].outing_available:
             self.outings_mgr.show_can_start()
 
-        elif self._map[self._loaded_blocks[0].id].outing_available:
+        else:
             self.outings_mgr.hide_outing()
 
     def _track_cities(self):
