@@ -9,7 +9,68 @@ import random
 from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
+from personage.character_data import TRAITS
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL, CharacterChooser, UpgradeChooser
+
+
+class RecruitChooser(CharacterChooser):
+    """Recruits chooser widget.
+
+    Mostly it's working like a simple CharacterChooser,
+    but it also calculates a cost of the chosen recruit
+    and inserts it into the "Hire unit" button.
+
+    Args:
+        hire_but (panda3d.gui.DirectGui.DirectButton):
+            "Hire unit" button object.
+    """
+
+    def __init__(self, hire_but):
+        CharacterChooser.__init__(self, is_shadowed=False)
+        self._costs = {}
+        self._hire_but = hire_but
+
+    @property
+    def chosen_recruit_cost(self):
+        """The chosen unit cost.
+
+        Returns:
+            int: The chosen unit cost in dollars.
+        """
+        return self._costs[self._chosen_item.id]
+
+    def prepare(self, parent, pos, items, init_ind=None):
+        """Prepare the chooser widget.
+
+        Calculates costs of all the given recruits.
+
+        Args:
+            parent (panda3d.core.NodePath): Parent widget.
+            pos (tuple): New widget position.
+            items (dict): Items to iterate through.
+            init_ind (int): Index of the initial value.
+        """
+        for id_, rec in items.items():
+            cost = 150
+            for trait in rec.traits:
+                for trait_pair in TRAITS:
+                    if trait == trait_pair[0]:
+                        cost += 25
+                        break
+                    if trait == trait_pair[1]:
+                        cost -= 25
+                        break
+
+            self._costs[id_] = cost
+
+        CharacterChooser.prepare(self, parent, pos, items, init_ind=None)
+
+    def _show_info(self):
+        """Show the chosen recruit info and his/her cost."""
+        CharacterChooser._show_info(self)
+        self._hire_but["text"] = "Hire unit\n{}$".format(
+            str(self._costs[self._chosen_item.id])
+        )
 
 
 class CityGUI:
@@ -340,25 +401,22 @@ class CityGUI:
             )
         )
 
-        self._recruit_chooser = CharacterChooser()
-        self._recruit_chooser.prepare(
-            self._fr, (0, 0, 0.05), self._recruits  # noqa: F821
-        )
-        self._repl_wids.append(self._recruit_chooser)
-
         shift -= 0.13
-        self._repl_wids.append(
-            DirectButton(
-                parent=self._fr,
-                pos=(0.2, 0, shift),
-                text_fg=SILVER_COL,
-                text="Hire unit\n200$",
-                scale=(0.075, 0, 0.075),
-                relief=None,
-                text_scale=0.45,
-                command=self._hire,
-            )
+        hire_but = DirectButton(
+            parent=self._fr,
+            pos=(0.2, 0, shift),
+            text_fg=SILVER_COL,
+            text="Hire unit",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=0.45,
+            command=self._hire,
         )
+        self._repl_wids.append(hire_but)
+
+        self._recruit_chooser = RecruitChooser(hire_but)
+        self._recruit_chooser.prepare(self._fr, (0, 0, 0.05), self._recruits)
+        self._repl_wids.append(self._recruit_chooser)
 
     def _clear_repl_wids(self):
         """Clear replacable widgets in the current tab."""
@@ -407,7 +465,8 @@ class CityGUI:
 
     def _hire(self):
         """Hire the chosen unit."""
-        if base.dollars - 200 < 0:  # noqa: F821
+        cost = self._recruit_chooser.chosen_recruit_cost
+        if base.dollars < cost:  # noqa: F821
             return
 
         char = self._recruit_chooser.chosen_item
@@ -418,7 +477,7 @@ class CityGUI:
             return
 
         self.write_snd.play()
-        base.dollars -= 200  # noqa: F821
+        base.dollars -= cost  # noqa: F821
 
         base.team.chars[char.id] = char  # noqa: F821
         self._recruit_chooser.leave_unit(char.id)

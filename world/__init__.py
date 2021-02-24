@@ -785,7 +785,7 @@ class World:
         elif self._map[current_block.id].outing_available:
             self.outings_mgr.show_can_start()
 
-        else:
+        elif not self._is_in_city:
             self.outings_mgr.hide_outing()
 
     def _track_cities(self):
