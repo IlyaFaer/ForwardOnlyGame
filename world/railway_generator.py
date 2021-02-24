@@ -253,7 +253,7 @@ class RailwayGenerator:
                         world_map,
                         branches,
                         cursor
-                        + random.randint(*random.choice(((150, 250), (300, 400)))),
+                        + random.randint(*random.choice(((150, 250), (300, 350)))),
                     )
                 except IndexError:
                     break

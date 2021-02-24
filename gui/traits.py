@@ -34,6 +34,8 @@ class TraitsGUI:
         self._cur_traits = []
         self._new_traits = []
 
+        self._open_snd = loader.loadSfx("sounds/paper1.ogg")  # noqa: F821
+        self._close_snd = loader.loadSfx("sounds/paper2.ogg")  # noqa: F821
         self._list = DirectFrame(
             frameSize=(-0.75, 0.75, -0.77, 0.77),
             frameTexture=GUI_PIC + "paper1.png",
@@ -350,10 +352,14 @@ class TraitsGUI:
 
     def hide(self):
         """Hide the GUI."""
-        taskMgr.remove("update_traits_ctrl")  # noqa: F821
-        base.char_gui.clear_char_info()  # noqa: F821
-        self._list.hide()
-        self.is_shown = False
+        if self.is_shown:
+            taskMgr.remove("update_traits_ctrl")  # noqa: F821
+            base.char_gui.clear_char_info()  # noqa: F821
+            self._list.hide()
+            self.is_shown = False
+            taskMgr.doMethodLater(  # noqa: F821
+                0.07, self._close_snd.play, "play_close_snd", extraArgs=[]
+            )
 
     def show(self):
         """Show the GUI."""
@@ -364,6 +370,7 @@ class TraitsGUI:
         ):
             return
 
+        self._open_snd.play()
         self.is_shown = True
 
         char_id = base.char_gui.char.id  # noqa: F821

@@ -26,6 +26,8 @@ class RailsScheme:
         self.is_shown = False
         self._temp_wids = []
 
+        self._open_snd = loader.loadSfx("sounds/paper1.ogg")  # noqa: F821
+        self._close_snd = loader.loadSfx("sounds/paper2.ogg")  # noqa: F821
         self._world_map = world_map
 
         self._list = DirectFrame(
@@ -238,6 +240,7 @@ class RailsScheme:
             or base.world.outings_mgr.gui_is_shown  # noqa: F821
             or base.traits_gui.is_shown  # noqa: F821
         ):
+            self._close_snd.play()
             self._list.hide()
             taskMgr.remove("update_scheme_arrow")  # noqa: F821
 
@@ -245,6 +248,7 @@ class RailsScheme:
                 wid.destroy()
             self._temps_wids = []
         else:
+            self._open_snd.play()
             taskMgr.doMethodLater(  # noqa: F821
                 0.2, self._update_arrow, "update_scheme_arrow"
             )
