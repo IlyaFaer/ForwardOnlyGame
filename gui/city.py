@@ -10,7 +10,63 @@ from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
 from personage.character_data import TRAITS
-from .widgets import GUI_PIC, RUST_COL, SILVER_COL, CharacterChooser, UpgradeChooser
+from .widgets import (
+    GUI_PIC,
+    RUST_COL,
+    SILVER_COL,
+    CharacterChooser,
+    ItemChooser,
+    UpgradeChooser,
+)
+
+
+class ResourceChooser(ItemChooser):
+    """Widget to choose a resource to buy/sell it.
+
+    Args:
+        buy_but (panda3d.gui.DirectGui.DirectButton):
+            Button "Buy" a resource.
+        sell_but (panda3d.gui.DirectGui.DirectButton):
+            Button "Sell" a resource.
+    """
+
+    def __init__(self, buy_but, sell_but):
+        ItemChooser.__init__(self, is_shadowed=False)
+        self._costs = {
+            "medicine_boxes": 30,
+            "smoke_filters": 35,
+            "stimulators": 25,
+        }
+        self._buy_but = buy_but
+        self._sell_but = sell_but
+
+    @property
+    def chosen_resource_cost(self):
+        """The chosen resource cost.
+
+        Returns:
+            int: The chosen resource cost.
+        """
+        return self._costs[self._chosen_item]
+
+    def _show_info(self):
+        """Show the chosen resource info and its cost."""
+        if len(self._items) == 0:
+            self._name["text"] = ""
+            self._chosen_item = None
+            return
+
+        if self._ind == len(self._items):
+            self._ind = 0
+        elif self._ind == -1:
+            self._ind = len(self._items) - 1
+
+        key = list(self._items.keys())[self._ind]
+        self._chosen_item = self._items[key]
+
+        self._name["text"] = key
+        self._buy_but["text"] = "Buy\n{}$".format(str(self._costs[self._chosen_item]))
+        self._sell_but["text"] = "Sell\n{}$".format(str(self._costs[self._chosen_item]))
 
 
 class RecruitChooser(CharacterChooser):
@@ -119,7 +175,7 @@ class CityGUI:
             relief=None,
             command=self._show_party,
             extraArgs=[0.56],
-            pos=(-0.2, 0, 0.56),
+            pos=(-0.1, 0, 0.56),
             clickSound=base.main_menu.click_snd,  # noqa: F821
         )
         base.main_menu.bind_button(self._party_but)  # noqa: F821
@@ -132,7 +188,7 @@ class CityGUI:
             relief=None,
             command=self._show_train,
             extraArgs=[0.56],
-            pos=(0, 0, 0.56),
+            pos=(0.1, 0, 0.56),
             clickSound=base.main_menu.click_snd,  # noqa: F821
         )
         base.main_menu.bind_button(self._train_but)  # noqa: F821
@@ -417,6 +473,75 @@ class CityGUI:
         self._recruit_chooser = RecruitChooser(hire_but)
         self._recruit_chooser.prepare(self._fr, (0, 0, 0.05), self._recruits)
         self._repl_wids.append(self._recruit_chooser)
+
+        shift -= 0.08
+        # resources
+        self._repl_wids.append(
+            DirectLabel(
+                parent=self._fr,
+                text="Resources",
+                frameSize=(0.1, 0.1, 0.1, 0.1),
+                text_scale=0.035,
+                text_fg=RUST_COL,
+                pos=(-0.23, 0, shift),
+            )
+        )
+        shift -= 0.12
+        buy_res_but = DirectButton(
+            parent=self._fr,
+            pos=(0.21, 0, shift),
+            text_fg=SILVER_COL,
+            text="Buy",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=0.45,
+            command=self._buy_supply,
+        )
+        self._repl_wids.append(buy_res_but)
+
+        sell_res_but = DirectButton(
+            parent=self._fr,
+            pos=(0.11, 0, shift),
+            text_fg=SILVER_COL,
+            text="Sell",
+            scale=(0.075, 0, 0.075),
+            relief=None,
+            text_scale=0.45,
+            command=self._sell_supply,
+        )
+        self._repl_wids.append(sell_res_but)
+
+        self._res_chooser = ResourceChooser(buy_res_but, sell_res_but)
+        self._res_chooser.prepare(
+            self._fr,
+            (0, 0, -0.165),
+            {
+                "Medicine box": "medicine_boxes",
+                "Stimulator": "stimulators",
+                "Smoke filter": "smoke_filters",
+            },
+        )
+        self._repl_wids.append(self._res_chooser)
+
+    def _buy_supply(self):
+        """Buy the chosen resource."""
+        if base.dollars < self._res_chooser.chosen_resource_cost:  # noqa: F821
+            return
+
+        random.choice((self._coins_s_snd, self._coins_l_snd)).play()
+
+        base.dollars -= self._res_chooser.chosen_resource_cost  # noqa: F821
+        base.plus_resource(self._res_chooser.chosen_item, 1)  # noqa: F821
+
+    def _sell_supply(self):
+        """Sell the chosen resource."""
+        if not base.resource(self._res_chooser.chosen_item):  # noqa: F821
+            return
+
+        random.choice((self._coins_s_snd, self._coins_l_snd)).play()
+
+        base.dollars += self._res_chooser.chosen_resource_cost  # noqa: F821
+        base.plus_resource(self._res_chooser.chosen_item, -1)  # noqa: F821
 
     def _clear_repl_wids(self):
         """Clear replacable widgets in the current tab."""
