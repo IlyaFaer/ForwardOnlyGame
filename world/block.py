@@ -85,6 +85,8 @@ class Block:
         outing_available=None,
         desc=None,
     ):
+
+        self._surfs = []
         self.rails_mod = None
         self._req_add_surface = False
         self._old_values = None
@@ -251,6 +253,8 @@ class Block:
         surf_mod.setPos(x_pos, y_pos, 0)
         surf_mod.setH(angle)
 
+        self._surfs.append(surf_mod)
+
         if not side:
             return
 
@@ -288,6 +292,18 @@ class Block:
                 surf_mod.setH(surf_mod, 90)
             elif self.name in ("l_fork", "l90_turn"):
                 surf_mod.setH(surf_mod, -90)
+
+    def turn_around(self):
+        """Turn the surfaces of the block around."""
+        l_surf, r_surf = self._surfs
+
+        l_pos = l_surf.getPos()
+
+        l_surf.setPos(r_surf.getPos())
+        l_surf.setH(l_surf, 180)
+
+        r_surf.setPos(l_pos)
+        r_surf.setH(r_surf, 180)
 
     def _load_env_model(self, surf_mod, env_mod):
         """Helper to load a model asynchronous.

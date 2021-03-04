@@ -120,10 +120,10 @@ class ForwardOnly(ShowBase):
         next_block = self.world.prepare_next_block()
         self.world.clear_prev_block()
 
-        self.train.move_along_block(self._current_block)
+        self.train.move_along_block(self.current_block)
 
         # track the Stench
-        if self._current_block.is_stenchy:
+        if self.current_block.is_stenchy:
             self.effects_mgr.stench_effect.play()
             self.world.stop_ambient_snd()
             self.train.ctrl.drown_move_snd()
@@ -138,7 +138,7 @@ class ForwardOnly(ShowBase):
 
             self.team.stop_stench_activity()
 
-        self._current_block = next_block
+        self.current_block = next_block
 
     def _start_game(self, task):
         """Actually start the game process."""
@@ -180,7 +180,7 @@ class ForwardOnly(ShowBase):
             save["disease_threshold"],
             save["stench_step"],
         )
-        self._current_block = self.world.load_blocks(
+        self.current_block = self.world.load_blocks(
             save["cur_blocks"], save["last_angle"]
         )
 

@@ -875,9 +875,13 @@ class World:
         )
         return task.done
 
-    def unload_hangar_scene(self):
-        """Clear the current hangar scene."""
-        self._hangar.clear()
+    def unload_hangar_scene(self, turn_around):
+        """Clear the current hangar scene.
+
+        Args:
+            turn_around (bool): True, if the Train should be turned around.
+        """
+        self._hangar.clear(turn_around)
         self._hangar = None
 
         base.train.ctrl.set_controls(base.train)  # noqa: F821
@@ -886,11 +890,14 @@ class World:
         base.notes.resume()  # noqa: F821
         self._is_in_city = False
 
-    def prepare_next_block(self, block_num=None):
+    def prepare_next_block(self, block_num=None, from_city=False):
         """Prepare the next world block.
 
         Args:
-            block_num (int): Id of the block to prepare.
+            block_num (int): Optional. Id of the block to prepare.
+            from_city (bool):
+                Optional. True if the next block is
+                loaded to continue the way from a city.
 
         Block configurations will be taken from the generated
         world map. All of its environment models and
@@ -1040,7 +1047,9 @@ class World:
             block.rails_mod.reparentTo(render)  # noqa: F821
 
         self._track_outings()
-        self._track_cities()
+        if not from_city:
+            self._track_cities()
+
         self._track_forks()
         return block
 
@@ -1095,6 +1104,32 @@ class World:
         ):
             self._night_ambient_snd.play()
 
+    def turn_around(self):
+        """Turn the Train around.
+
+        The next block will be the same as was previous.
+        """
+        prev_block = self._loaded_blocks[0]
+        cur_block = self._loaded_blocks[1]
+        next_block = self._loaded_blocks[2]
+
+        next_block.rails_mod.wrtReparentTo(render)  # noqa: F821
+        cur_block.rails_mod.wrtReparentTo(render)  # noqa: F821
+
+        cur_block.turn_around()
+        self._loaded_blocks.reverse()
+
+        next_block.rails_mod.setPos(cur_block.rails_mod.getPos())
+        next_block.rails_mod.setH(next_block.rails_mod, 180)
+
+        cur_block.rails_mod.wrtReparentTo(next_block.rails_mod)
+
+        prev_block.clear()
+        self._loaded_blocks.pop(-1)
+        self.prepare_next_block(from_city=True)
+
+        base.current_block = self._loaded_blocks[-1]  # noqa: F821
+
 
 class Hangar:
     """City hangar scene.
@@ -1127,11 +1162,14 @@ class Hangar:
 
         render.setLight(self._lighter_np)  # noqa: F821
 
-    def clear(self):
+    def clear(self, turn_around):
         """Clear this hangar.
 
         Remove this hangar models and lights, return
         Train and camera back to their original positions.
+
+        Args:
+            turn_around (bool): True, if the Train should be turned around.
         """
         base.camera_ctrl.unset_hangar_pos()  # noqa: F821
         render.clearLight(self._lighter_np)  # noqa: F821
@@ -1139,6 +1177,9 @@ class Hangar:
         self._mod.removeNode()
 
         base.train.root_node.setPos(self._train_pos)  # noqa: F821
+        if turn_around:
+            base.world.turn_around()  # noqa: F821
+
         taskMgr.doMethodLater(  # noqa: F821
             0.2, base.effects_mgr.fade_in_screen, "fade_in_screen"  # noqa: F821
         )

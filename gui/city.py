@@ -198,10 +198,22 @@ class CityGUI:
                 parent=self._fr,
                 pos=(-0.205, 0, -0.33),
                 text_fg=RUST_COL,
-                text="Back on road",
+                text="Exit city",
                 relief=None,
                 text_scale=0.035,
                 command=self._exit_city,
+            )
+        )
+        base.main_menu.bind_button(  # noqa: F821
+            DirectButton(
+                parent=self._fr,
+                pos=(0.1, 0, -0.33),
+                text_fg=RUST_COL,
+                text="Turn around and exit",
+                relief=None,
+                text_scale=0.035,
+                command=self._exit_city,
+                extraArgs=[True],
             )
         )
 
@@ -550,11 +562,14 @@ class CityGUI:
 
         self._repl_wids = []
 
-    def _exit_city(self):
+    def _exit_city(self, turn_around=False):
         """Exit the current city.
 
         Hide city GUI, remove the hangar scene,
         return the Train back on railway.
+
+        Args:
+            turn_around (bool): True, if the Train should be turned around.
         """
         self._toot_snd.play()
         taskMgr.remove("increase_city_snd")  # noqa: F821
@@ -564,17 +579,22 @@ class CityGUI:
         taskMgr.doMethodLater(  # noqa: F821
             0.1, base.effects_mgr.fade_out_screen, "fade_out_screen"  # noqa: F821
         )
-        taskMgr.doMethodLater(3.1, self._clear, "clear_city_gui")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            3.1, self._clear, "clear_city_gui", extraArgs=[turn_around]
+        )
         taskMgr.doMethodLater(  # noqa: F821
             2, base.train.resume_smoke, "resume_train_smoke"  # noqa: F821
         )
 
-    def _clear(self, task):
-        """Remove hangar scene and hide city GUI."""
+    def _clear(self, turn_around):
+        """Remove hangar scene and hide city GUI.
+
+        Args:
+            turn_around (bool): True, if the Train should be turned around.
+        """
         self._fr.hide()
         base.char_gui.clear_char_info()  # noqa: F821
-        base.world.unload_hangar_scene()  # noqa: F821
-        return task.done
+        base.world.unload_hangar_scene(turn_around)  # noqa: F821
 
     def _send_away(self):
         """Send the chosen unit away."""

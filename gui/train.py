@@ -124,6 +124,7 @@ class TrainGUI:
                 from opposite direction of the world.
         """
         base.train.do_turn = 0  # noqa: F821
+        text = ""
 
         if fork.name == "l_fork":
             if invert or branch == "l":
