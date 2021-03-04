@@ -12,6 +12,7 @@ from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
 from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
+from gui.character import HealthBar
 from utils import address, chance, take_random
 
 from .character_data import CLASSES, NAMES, TRAITS
@@ -56,6 +57,7 @@ class Character(Shooter, Unit):
         self._cohesion_ball = None
         self._is_stunned = False
         self._is_stimulated = False
+        self._health_bar = None
         self.inhale = 15
 
         self.name = name
@@ -258,6 +260,7 @@ class Character(Shooter, Unit):
         self.model.setPlayRate(0.6, "stand")
 
         self.model.loop("stand")
+        self._health_bar = HealthBar(self)
 
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
@@ -381,6 +384,7 @@ class Character(Shooter, Unit):
         taskMgr.doMethodLater(  # noqa: F821
             0.5, self._choose_target, self.id + "_choose_target"
         )
+        self._health_bar.show_health()
 
     def rest(self):
         """Make this character rest.
@@ -538,6 +542,7 @@ class Character(Shooter, Unit):
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
+        self._health_bar.hide_health()
         return task.done
 
     def _idle_animation(self, task):
@@ -579,6 +584,7 @@ class Character(Shooter, Unit):
 
         Unit._die(self)
 
+        self._health_bar.hide_health()
         self._stop_tasks("_reduce_energy", "_get_well", "_infect", "_stop_stimul")
 
         self._team.delete_relations(self.id)
@@ -608,6 +614,7 @@ class Character(Shooter, Unit):
         cell and delete the character from the team list.
         """
         self.model.cleanup()
+        self._health_bar.removeNode()
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
         base.sound_mgr.detach_sound(self._cough_snd)  # noqa: F821

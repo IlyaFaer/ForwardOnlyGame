@@ -12,7 +12,7 @@ from direct.gui.DirectGui import (
     DirectWaitBar,
 )
 from direct.gui.OnscreenText import OnscreenText
-from panda3d.core import TransparencyAttrib
+from panda3d.core import CardMaker, NodePath, TransparencyAttrib
 
 from personage.character_data import TRAIT_DESC
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL
@@ -452,3 +452,55 @@ class CharacterGUI:
         """
         if self._status_lab is not None:
             self._status_lab.setZ(self._status_lab.getZ() + place / 10)
+
+
+class HealthBar(NodePath):
+    """Widget to show character's health.
+
+    Args:
+        char (personage.character.Character):
+            Character, whos health must be shown.
+    """
+
+    def __init__(self, char):
+        NodePath.__init__(self, "health_bar_" + char.id)
+
+        self._char = char
+
+        self.hide()
+        self.reparentTo(char.model)
+        self.setZ(0.1)
+        self.setBillboardPointEye()
+
+        cmfg = CardMaker("fg")
+        cmfg.setFrame(0, 0.05, -0.002, 0.002)
+        self._fg = self.attachNewNode(cmfg.generate())
+        self._fg.setX(-0.026)
+
+        cmbg = CardMaker("bg")
+        cmbg.setFrame(-0.05, 0, -0.002, 0.002)
+        self._bg = self.attachNewNode(cmbg.generate())
+        self._bg.setPos(0.024, 0.001, 0)
+
+        self._fg.setColor(1, 0, 0, 1)
+        self._bg.setColor(0.7, 0.7, 0.7, 1)
+
+    def _set_health(self, task):
+        """Show the character's health level on the widget."""
+        value = self._char.health / self._char.class_data["health"]
+        self._fg.setScale(value or 0.001, 1, 1)
+        self._bg.setScale((1 - value) or 0.001, 1, 1)
+        return task.again
+
+    def hide_health(self):
+        """Hide the widget."""
+        taskMgr.remove(self._char.id + "_show_health")  # noqa: F821
+        self.hide()
+
+    def show_health(self):
+        """Show the widget and start tracking the character's health."""
+        self.show()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.3, self._set_health, self._char.id + "_show_health"
+        )
