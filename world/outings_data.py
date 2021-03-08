@@ -1935,6 +1935,117 @@ One person can be recruited""",
                     },
                 ),
             },
+            {  # 6
+                "name": "Ill Deer",
+                "type": "Meet",
+                "class_weights": {"soldier": 3, "anarchist": 15, "raider": 7},
+                "assignees": 3,
+                "day_part_weights": {
+                    "night": 0,
+                    "morning": 3,
+                    "noon": 10,
+                    "evening": 6,
+                },
+                "desc": """For a long time you've been observing only light snowflakes, calmly
+moving in the air, bringing thoughtfulness. But in some moment a
+strange low distant sound attracts your attention. First you think
+of an old airplane engine, still, after several seconds you understand
+that it's an animal. In the same moment you see something dark on
+the rails ahead, something blocking your path. Fastly taking the
+binoculars to your eyes, you point it to the dark thing... And it
+appears to be a deer! Huge, old and weak, most likely very ill,
+lying right on the rails, crying to around. The animal better
+be moved somewhere else! It'll be not very easy to deal with the
+problem by your own, anyway three people should remain at the
+Train to keep it safe. Who should you choose?""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """{name1}, {name2} and {name3} stay at the Train. {name1}
+and {name3} jumping off the locomotive, start to look around, while
+{name2} enters the deckhouse. The lights are off! {name2} uppers {hisher2}
+gun and silently moves to the lower level. The strong smell of diesel
+flows around, the lights are also off here. {name2} takes a couple
+more stepts in the switchers direction, when something jumps out
+of the shadows and pushes {himher2} strong. Barely standing at {hisher2}
+feet, {heshe2} sees a shadow of a human, slipping out of the door.
+Hearing something, {name3} turns around and see a thin pale guy
+running out of the door, jumping down to the ground. He has nothing
+in his hands, so {name3} decides not to shoot. "He didn't get time
+to grab anything." - {name2} says, appearing at the door. - "Let go."
+{name2} getting Fear Of Dark""",
+                        "effects": {"char_2": {"add_trait": "Fear of dark"}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1}, {name2} and {name3} stays near the Train by your
+order. They promptly take positions around the locomotive, waiting for
+your return. It didn't take long from you to move the ill deer away
+from the rails, so you're returning fast. Jumping on the Train, you
+enter the deckhouse and take a sit at your table... Something's
+wrong. All of your stuff lie as it always does, but... something
+changed. Opening the bottom drawer, you clearly see that some of
+your money disappeared! You fastly exit the deckhouse and start to
+gaze around. No one. Nothing. All of your fighter seem to be quiet
+and calm. Someone entered the locomotive, took some of your money
+and vanished! Converting the money, you see that not actually
+much of money was stolen, 40$ probably. Anyway, it's no good!
+You're losing 40$""",
+                        "effects": {"money": -40},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """You're leaving {name1}, {name2} and {name3} to keep the
+locomotive safe, and take a direction to the deer. Just several seconds
+passed, and your sentinels hear some kind of a fuss in the deckhouse.
+Opening the door inside, they see a girl about 18 years old, who
+rummage through the things left on the table. She doesn't look thin,
+or dirty, or anything like this. Good clothes, well face, clean hairs.
+"Go away!" - {name3} uppers {hisher3} gun. Seeing that it's better not
+to try tricking, the girl silently moves her hands up and takes a
+direction to the exit. {name3} follows her outside to ensure she won't
+do anything stupid, while {name1} and {name2} gazing at each other.
+What was that? {name2} opens the aid kit: "I have an idea." Empty
+syringe of painkillers lies inside with a blood drop on it. Addict!
+You're losing -1 medicine box""",
+                        "effects": {"medicine_boxes": -1},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """You're ordering {name1}, {name2} and {name3} to stay, while
+you'll deal with the deer. For some time nothing promises issues, but
+suddnely all three sentinels hear someone rummaging in the deckhouse.
+Not poking around, they jump to the locomotive and fastly open the
+door. A big armed thug is already waiting them, directing his pistol
+to the entrance, but not shooting. Still, your fighters doesn't consider
+this as an appropriate performance, so they lighting fast do
+several shots at the man. With a wondering face he falls down on
+the floor. {name1} silently moves closer to him and raises a bunch of
+dollar banknotes. "Stealer!" - {heshe1} finalizes. Slapping the man's
+pockets, {heshe1} raises even more money. "Well, who came with a
+sword to us..." - {name2} says, getting closer to get rid of the body.
+You're getting 70$""",
+                        "effects": {"money": 70},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """You're taking your guns, but suddenly a kind of a grenade flies
+into the open window. Grey tear gas starts to spread around fast with
+a loud hiss. Pushing {name1} to the exit, you're grabing {name2}'s
+shoulder with another hand and pull {himher2} with you. Exiting on
+the air, you all upper your guns, trying to look through the tears.
+For several seconds you don't see anything specific, but then you
+catch your eyes on a couple of distant people. Without delays you
+aim your gun and start to shoot at them, making them run away really
+fast. Silence falls on the meadow, and you all take several minutes
+to deal with tears. When your gaze clears completely, you take one
+more careful look around, but no one seems to be in nearlands. Good!
+The ambush was not successful. Time to ventilate the deckhouse.
+Single character can get Deep Breath""",
+                        "effects": {"select_char": {"add_trait": "Deep breath"}},
+                    },
+                ),
+            },
         ),
     },
 }
