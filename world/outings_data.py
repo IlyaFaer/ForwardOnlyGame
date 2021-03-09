@@ -2046,6 +2046,109 @@ Single character can get Deep Breath""",
                     },
                 ),
             },
+            {  # 7
+                "name": "Injured",
+                "type": "Meet",
+                "class_weights": {"soldier": 11, "anarchist": 22.5, "raider": 5},
+                "assignees": 2,
+                "day_part_weights": {
+                    "night": 3,
+                    "morning": 10,
+                    "noon": 7,
+                    "evening": 0,
+                },
+                "desc": """You've noticed a big grey truck long ago. It has been riding in
+parallel with you for about twenty miles, and now it started to
+approach - the highway probably turned to the railways. The truck
+seems to be in a good shape, and when it got closer you see that
+it has several massive machine guns. Still, the people on the car
+doesn't show any aggressive intentions, and the car stops on railway
+to road crossroads in two hundred meters in front of you. Looks like
+a dialog invitation, ha!? That makes sense to send a couple of people
+to speak with those guys to get info about nearlands.""",
+                "results": (
+                    {
+                        "score": range(0, 20),
+                        "desc": """You're sending {name1} and {name2} for a talk with the truck
+party. Approaching quetly, your fighters smell something heavy.
+A guy from the truck jumps to the ground: "Yo, folks!" - he smiles.
+- "Have wounds?" - he examines both your messengers. - "We're taking
+injured folks from all around, trying to get them to safety." He leads
+{name1} and {name2} to behind of the truck and shows its inners.
+There are at least fourty people covered with blood and dirty medical
+bandages. So, that heavy cold metallic smell is their blood. {name2}
+feels small needles started to run on {hisher2} back. "Skinheads
+become more aggressive." - the man from the truck pronounces sadly.
+- "We do our best..." Convincing him they are okay, your people
+return back to you, trying to deal with the impact of the seen.
+{name2} getting Nervousness""",
+                        "effects": {"char_2": {"add_trait": "Nervousness"}},
+                    },
+                    {
+                        "score": range(20, 40),
+                        "desc": """{name1} and {name2} taking a direction to the truck by
+your order. Getting little bit closer, they see a dark inscription
+on the car: "Injured". So, these guys are helping wounded people
+around the place? Sounds good! {name1} and {name2} speed up their
+steps, but in some moment people on the truck see something wrong
+and start to shoot! Not giving them any chances, you all start
+to fight back, and, feeling that gun power is on your side, the
+truck spurts away really fast. What's happened? No one seems to
+be wounded, and that's good, but, taking a look at the locomotive,
+you see several big holes, made by the truck's machine guns.
+Train damnability -50""",
+                        "effects": {"train": {"damnability": -50}},
+                    },
+                    {
+                        "score": range(40, 60),
+                        "desc": """{name1} and {name2} start to move to the truck by your
+command. While they are getting closer, a man from the truck jumps
+down to the ground and meets them. "Hi, folks!" - he says loudly. -
+"We're trying to get these injured people to the nearest city". Oh,
+here is what the truck for! Your messengers follow the man, and he
+shows them that there are at least thirty people in the car, all
+covered in blood and white medical bandages. "Do you have seriously
+wounded guys?" - he asks politely. "No, no, nothing we can't handle,
+thanks." - {name1} answers fastly. - "That's nice to see someone
+cares" - {heshe1} adds. "We all should do what we can!" - the man
+pronounces loudly. - "Okay then, we better hurry!" - he smiles once
+again to your messengers and moves back to the truck.""",
+                        "effects": {},
+                    },
+                    {
+                        "score": range(60, 80),
+                        "desc": """Your messengers, {name1} and {name2}, take direction to
+the truck. A man jumps from the car down to the ground and starts
+to move towards them. "Hey, folks!" - he says loudly. - "We're
+helping wounded people all around the place. Don't any of you
+need help?" {name1} and {name2} exchange glances, wondering the
+man's kindness. "We're okay, thanks!" - {name1} answers. "Alright!"
+- the man says something to his people, and one of them throws
+a grey box to him. - "Take this at least!" - he holds out a box
+to {name2}. Throwing one more glance to {name1}, {heshe2} takes
+the gift, still wondering why the guy is so helpful. "Okay, let's
+go!" - the man smiles to your messengers and climbs to the car.
+You're getting 1 stimulator""",
+                        "effects": {"stimulators": 1},
+                    },
+                    {
+                        "score": range(80, 101),
+                        "desc": """{name1} and {name2} start to move to the truck. A man
+jumps down from it to meet them. "Hey, folks!" - he greets them
+loudly. - "If you have badly wounded guys, we can take them to
+the nearest city." {name1} and {name2} think for a couple of
+seconds. "Well, we're okay, I guess." - {name1} answers to the
+man. "That's great news!" - he almost shouts. - "Maybe you need
+one more gun? We have a potential recruit for you." - he whistles
+to the truck, and someone in baggy clothes jumps down to the ground
+and takes a direction to your people. "The wounds are healed, and
+the element is eager to go to war! We're little bit tired already!"
+"Well, that's something for our captain to decide" - {name1} answers.
+One person can be recruited""",
+                        "effects": {"recruit": 60},
+                    },
+                ),
+            },
         ),
     },
 }
