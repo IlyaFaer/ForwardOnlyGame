@@ -647,14 +647,18 @@ class World:
         if block.name in self._inversions:
             block.name, block.path, block.cam_path = self._inversions[block.name]
 
-    def save_map(self):
-        """Save the world map."""
+    def save_map(self, num):
+        """Save the world map.
+
+        Args:
+            num (int): The number of save slot.
+        """
         map_to_save = []
 
         for block in self._map:
             map_to_save.append(block.description())
 
-        world_save = shelve.open("saves/world", "n")
+        world_save = shelve.open("saves/world{}".format(str(num)), "n")
         world_save["Plains"] = map_to_save
         world_save["Plains_branches"] = self.branches
         world_save.close()
@@ -663,11 +667,12 @@ class World:
         """Show railways scheme GUI."""
         self.rails_scheme.show()
 
-    def load_location(self, location, enemy_score, disease_threshold, stench_step):
+    def load_location(self, location, num, enemy_score, disease_threshold, stench_step):
         """Load the given location from the last save.
 
         Args:
             location (str): Location name.
+            num (int): The save slot number.
             enemy_score (int): Enemy score.
             disease_threshold (int): Disease activity score.
             stench_step (int):
@@ -680,7 +685,7 @@ class World:
 
         self.outings_mgr = OutingsManager(location)
 
-        world_save = shelve.open("saves/world")
+        world_save = shelve.open("saves/world{}".format(str(num)))
         for desc in world_save[location]:
             block = Block(
                 name=desc["name"],

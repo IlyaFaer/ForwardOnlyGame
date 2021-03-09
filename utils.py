@@ -52,20 +52,23 @@ def drown_snd(snd, task):
     return task.again
 
 
-def save_exists():
-    """Indicates if a saved game exists.
+def save_exists(num):
+    """Indicates if a saved game exists in the given slot.
+
+    Args:
+        num (int): The save slot number.
 
     Returns:
         bool: True if a valid game save exists, False otherwise.
     """
     return all(
         (
-            os.path.exists("saves/save1.dat"),
-            os.path.exists("saves/save1.bak"),
-            os.path.exists("saves/save1.dir"),
-            os.path.exists("saves/world.dat"),
-            os.path.exists("saves/world.bak"),
-            os.path.exists("saves/world.dir"),
+            os.path.exists("saves/save{}.dat".format(str(num))),
+            os.path.exists("saves/save{}.bak".format(str(num))),
+            os.path.exists("saves/save{}.dir".format(str(num))),
+            os.path.exists("saves/world{}.dat".format(str(num))),
+            os.path.exists("saves/world{}.bak".format(str(num))),
+            os.path.exists("saves/world{}.dir".format(str(num))),
         )
     )
 

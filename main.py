@@ -10,6 +10,7 @@ import logging
 import os
 import shelve
 import sys
+import time
 
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
@@ -154,9 +155,14 @@ class ForwardOnly(ShowBase):
         self._move_along_block()
         return task.done
 
-    def load_game(self, task):
-        """Load the previously saved game."""
-        save = shelve.open("saves/save1")
+    def load_game(self, num):
+        """Load the previously saved game.
+
+        Args:
+            num (int): The save slot number.
+        """
+        self.main_menu.hide_slots()
+        save = shelve.open("saves/save{}".format(str(num)))
 
         self.disableAllAudio()
 
@@ -176,6 +182,7 @@ class ForwardOnly(ShowBase):
         self.world = World(save["day_part"])
         self.world.load_location(
             "Plains",
+            num,
             save["enemy_score"],
             save["disease_threshold"],
             save["stench_step"],
@@ -201,7 +208,6 @@ class ForwardOnly(ShowBase):
         self.plus_resource("stimulators", save["stimulators"])
 
         save.close()
-        return task.done
 
     def resource(self, name):
         """Return the amount of the given resource.
@@ -219,12 +225,18 @@ class ForwardOnly(ShowBase):
         self.destroy()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
-    def save_game(self):
-        """Save the current game."""
-        self.world.save_map()
+    def save_game(self, num):
+        """Save the current game.
 
-        save = shelve.open("saves/save1")
+        Args:
+            num (int): The save slot number.
+        """
+        self.main_menu.hide_slots()
+        self.world.save_map(num)
 
+        save = shelve.open("saves/save{}".format(str(num)))
+
+        save["save_time"] = time.strftime("%a, %d %b %Y %H:%M", time.localtime())
         save["cur_blocks"] = self.world.current_blocks
         save["last_angle"] = self.world.last_cleared_block_angle
         save["enemy_score"] = self.world.enemy.score

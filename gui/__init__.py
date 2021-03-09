@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Game graphical interfaces.
 """
+import shelve
 import sys
 
 from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
@@ -32,6 +33,7 @@ class MainMenu:
         self._chosen_team = None
         self._is_first_pause = True
         self._tactics_wids = []
+        self._save_wids = []
 
         self._hover_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
         self._hover_snd.setVolume(0.1)
@@ -56,12 +58,13 @@ class MainMenu:
         )
         self.bind_button(self._new_game_but)
 
-        is_save_exists = save_exists()
+        is_save_exists = save_exists(1) or save_exists(2) or save_exists(3)
         self._load_but = DirectButton(
             pos=(-0.996, 0, 0.4),
             text_fg=RUST_COL if is_save_exists else (0.5, 0.5, 0.5, 1),
             text="Load game",
-            command=self._load_game if is_save_exists else None,
+            command=self._show_slots if is_save_exists else None,
+            extraArgs=[True],
             **but_params,
         )
         self.bind_button(self._load_but)
@@ -119,8 +122,10 @@ class MainMenu:
 
     def _choose_tactics(self):
         """Choose initial tactics before new game start."""
-        if self._chosen_team:
+        if self._tactics_wids:
             return
+
+        self.hide_slots()
 
         self._tactics_wids.append(
             DirectLabel(
@@ -239,10 +244,119 @@ class MainMenu:
         for wid in self._tactics_wids:
             wid.destroy()
 
-        self._tactics_wids = []
+        self._tactics_wids.clear()
         self._alpha_disclaimer.destroy()
         self._load_msg.destroy()
         return task.done
+
+    def _read_saves(self):
+        """Read all the game save slots.
+
+        Returns:
+            list: Dicts, each of which describes a save.
+        """
+        saves = []
+        for num in range(1, 4):
+            if save_exists(num):
+                save = shelve.open("saves/save{}".format(str(num)))
+                classes = [char["class"] for char in save["team"]]
+
+                saves.append(
+                    {
+                        "save_time": save["save_time"],
+                        "miles": save["train"]["miles"],
+                        "chars": (
+                            classes.count("soldier"),
+                            classes.count("raider"),
+                            classes.count("anarchist"),
+                        ),
+                    }
+                )
+                save.close()
+            else:
+                saves.append({})
+
+        return saves
+
+    def _show_slots(self, for_loading=False):
+        """Show save slots GUI.
+
+        Args:
+            for_loading (bool):
+                Optional. True if slots must be shown for loading.
+        """
+        if self._save_wids:
+            return
+
+        for wid in self._tactics_wids:
+            wid.destroy()
+
+        self._tactics_wids.clear()
+
+        if for_loading:
+            is_active = True
+            command = self._load_game
+        else:
+            is_active = not (
+                base.train.ctrl.critical_damage  # noqa: F821
+                or base.world.is_in_city  # noqa: F821
+                or base.world.is_on_et  # noqa: F821
+                or base.current_block.id < 4  # noqa: F821
+                or base.world.is_near_fork  # noqa: F821
+            )
+            command = base.save_game  # noqa: F821
+
+        saves = self._read_saves()
+
+        shift = 0.4
+        for num in range(1, 4):
+            but = DirectButton(
+                parent=self._main_fr,
+                text="Slot {}".format(str(num)),
+                pos=(-0.553, 0, shift),
+                text_scale=0.04,
+                text_fg=RUST_COL,
+                relief=None,
+                command=command if is_active else None,
+                extraArgs=[num],
+                clickSound=self.click_snd,
+            )
+            self.bind_button(but)
+            self._save_wids.append(but)
+
+            self._save_wids.append(
+                DirectLabel(
+                    parent=self._main_fr,
+                    pos=(-0.45, 0, shift - 0.05),
+                    text_scale=0.03,
+                    text_fg=SILVER_COL,
+                    frameColor=(0, 0, 0, 0),
+                    text=saves[num - 1].get("save_time", "-"),
+                )
+            )
+            self._save_wids.append(
+                DirectLabel(
+                    parent=self._main_fr,
+                    pos=(-0.55, 0, shift - 0.1),
+                    text_scale=0.03,
+                    text_fg=SILVER_COL,
+                    frameColor=(0, 0, 0, 0),
+                    text=(str(saves[num - 1].get("miles") or "- ")) + " mi",
+                )
+            )
+            self._save_wids.append(
+                DirectLabel(
+                    parent=self._main_fr,
+                    pos=(-0.1, 0, shift - 0.1),
+                    text_scale=0.03,
+                    text_fg=SILVER_COL,
+                    frameColor=(0, 0, 0, 0),
+                    text="{0} soldiers, {1} raiders, {2} anarchists".format(
+                        *saves[num - 1].get("chars", ("-", "-", "-"))
+                    ),
+                )
+            )
+            shift -= 0.2
 
     def _start_new_game(self):
         """Start a new game."""
@@ -257,13 +371,19 @@ class MainMenu:
             extraArgs=[self._chosen_team],
         )
 
-    def _load_game(self):
-        """Load previously saved game."""
+    def _load_game(self, num):
+        """Load previously saved game.
+
+        Args:
+            num (int): The slot number.
+        """
         self.show_loading()
         taskMgr.doMethodLater(  # noqa: F821
             4, self._clear_temp_wids, "clear_main_menu_temp_wids"
         )
-        base.doMethodLater(0.25, base.load_game, "load_game")  # noqa: F821
+        base.doMethodLater(  # noqa: F821
+            0.25, base.load_game, "load_game", extraArgs=[num]  # noqa: F821
+        )
 
     def bind_button(self, button):
         """Bind the given button to visual effects.
@@ -273,6 +393,13 @@ class MainMenu:
         """
         button.bind(DGG.ENTER, self._highlight_but, extraArgs=[button])
         button.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[button])
+
+    def hide_slots(self):
+        """Hide save slots GUI."""
+        for wid in self._save_wids:
+            wid.destroy()
+
+        self._save_wids.clear()
 
     def show_loading(self):
         """Show "Loading..." note on the screen."""
@@ -288,6 +415,8 @@ class MainMenu:
     def hide(self):
         """Hide the main menu."""
         self._main_fr.hide()
+        self.hide_slots()
+
         base.accept("escape", self.show)  # noqa: F821
 
     def show(self, is_game_over=False):
@@ -322,13 +451,13 @@ class MainMenu:
             base.train.ctrl.critical_damage  # noqa: F821
             or base.world.is_in_city  # noqa: F821
             or base.world.is_on_et  # noqa: F821
-            or base.world.current_blocks[1] < 4  # noqa: F821
+            or base.current_block.id < 4  # noqa: F821
             or base.world.is_near_fork  # noqa: F821
         )
         if not self._is_first_pause:
             if can_save:
                 self._save_but["text_fg"] = RUST_COL
-                self._save_but["command"] = base.save_game  # noqa: F821
+                self._save_but["command"] = self._show_slots
             else:
                 self._save_but["text_fg"] = SILVER_COL
                 self._save_but["command"] = None
@@ -351,7 +480,7 @@ class MainMenu:
             text_fg=RUST_COL if can_save else SILVER_COL,
             text="Save game",
             relief=None,
-            command=base.save_game if can_save else None,  # noqa: F821
+            command=self._show_slots if can_save else None,  # noqa: F821
             clickSound=self.click_snd,
         )
         self.bind_button(self._save_but)
