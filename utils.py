@@ -63,12 +63,12 @@ def save_exists(num):
     """
     return all(
         (
-            os.path.exists("saves/save{}.dat".format(str(num))),
-            os.path.exists("saves/save{}.bak".format(str(num))),
-            os.path.exists("saves/save{}.dir".format(str(num))),
-            os.path.exists("saves/world{}.dat".format(str(num))),
-            os.path.exists("saves/world{}.bak".format(str(num))),
-            os.path.exists("saves/world{}.dir".format(str(num))),
+            os.path.exists("saves/save{}.dat".format(num)),
+            os.path.exists("saves/save{}.bak".format(num)),
+            os.path.exists("saves/save{}.dir".format(num)),
+            os.path.exists("saves/world{}.dat".format(num)),
+            os.path.exists("saves/world{}.bak".format(num)),
+            os.path.exists("saves/world{}.dir".format(num)),
         )
     )
 

@@ -360,40 +360,37 @@ class Block:
         Returns:
             Block: Returns self object.
         """
-        if self.is_city:
-            self.rails_mod = loader.loadModel(address("city1_rails"))  # noqa: F821
-        else:
-            if self.name in ("l_fork", "r_fork") and from_branch:
-                self._old_values = (self.name, self.path, self.cam_path)
-                self.name, self.path, self.cam_path = (
-                    "exit_from_fork",
-                    (
-                        base.world._paths["r90_turn"],  # noqa: F821
-                        base.world._paths["l90_turn"],  # noqa: F821
-                    )
-                    if self.branch == "r"
-                    else (
-                        base.world._paths["l90_turn"],  # noqa: F821
-                        base.world._paths["r90_turn"],  # noqa: F821
-                    ),
-                    (
-                        base.world._paths["cam_r90_turn"],  # noqa: F821
-                        base.world._paths["cam_l90_turn"],  # noqa: F821
-                    )
-                    if self.branch == "r"
-                    else (
-                        base.world._paths["cam_l90_turn"],  # noqa: F821
-                        base.world._paths["cam_r90_turn"],  # noqa: F821
-                    ),
+        if self.name in ("l_fork", "r_fork") and from_branch:
+            self._old_values = (self.name, self.path, self.cam_path)
+            self.name, self.path, self.cam_path = (
+                "exit_from_fork",
+                (
+                    base.world._paths["r90_turn"],  # noqa: F821
+                    base.world._paths["l90_turn"],  # noqa: F821
                 )
-
-            if invert:
-                self._old_values = (self.name, self.path, self.cam_path)
-                base.world.invert(self)  # noqa: F821
-
-            self.rails_mod = loader.loadModel(  # noqa: F821
-                address(self.name + "_rails" + ("_rusty" if self.is_rusty else ""))
+                if self.branch == "r"
+                else (
+                    base.world._paths["l90_turn"],  # noqa: F821
+                    base.world._paths["r90_turn"],  # noqa: F821
+                ),
+                (
+                    base.world._paths["cam_r90_turn"],  # noqa: F821
+                    base.world._paths["cam_l90_turn"],  # noqa: F821
+                )
+                if self.branch == "r"
+                else (
+                    base.world._paths["cam_l90_turn"],  # noqa: F821
+                    base.world._paths["cam_r90_turn"],  # noqa: F821
+                ),
             )
+
+        if invert:
+            self._old_values = (self.name, self.path, self.cam_path)
+            base.world.invert(self)  # noqa: F821
+
+        self.rails_mod = loader.loadModel(  # noqa: F821
+            address(self.name + "_rails" + ("_rusty" if self.is_rusty else ""))
+        )
 
         self._load_surface_block(
             self._l_surface, -4, 4, self._l_angle, "l", invert=invert

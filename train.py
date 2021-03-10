@@ -126,7 +126,7 @@ class Train:
         self._is_on_rusty = False
         self._creak_snd_cooldown = False
         self._phys_node = None
-        self._train_phys_shape = None
+        self._phys_shape = None
         self._upgrades = []
         self._pre_upgrade = None
         self._floodlights_mat = None
@@ -269,11 +269,8 @@ class Train:
         Returns:
             bool: True, if there is a free cell.
         """
-        cells_num = 0
         for part in self.parts.values():
-            cells_num += part.free_cells
-
-            if cells_num >= 2:
+            if part.free_cells:
                 return True
 
         return False
@@ -291,29 +288,6 @@ class Train:
         for up in upgrades:
             self.install_upgrade(UPGRADES[up])
 
-    def set_physics(self, phys_mgr):
-        """Set the Train physics.
-
-        Args:
-            phys_mgr (panda3d.bullet.BulletWorld):
-                Physical world.
-        """
-        self._train_phys_shape = BulletCharacterControllerNode(
-            BulletBoxShape(Vec3(0.095, 0.55, 0.1)), 10, "train_shape"
-        )
-        self._phys_node = self.model.attachNewNode(self._train_phys_shape)
-        self._phys_node.setZ(0.1)
-
-        phys_mgr.attachCharacter(self._train_phys_shape)
-
-        taskMgr.doMethodLater(  # noqa: F821
-            0.1,
-            self._check_contacts,
-            "check_train_contacts",
-            extraArgs=[phys_mgr, self._phys_node.node()],
-            appendTask=True,
-        )
-
     def place_recruit(self, char):
         """Place the new recruit somewhere on the Train.
 
@@ -325,6 +299,28 @@ class Train:
             if part.free_cells > 0:
                 char.move_to(part)
                 return
+
+    def set_physics(self, phys_mgr):
+        """Set the Train physics.
+
+        Args:
+            phys_mgr (panda3d.bullet.BulletWorld): Physical world.
+        """
+        self._phys_shape = BulletCharacterControllerNode(
+            BulletBoxShape(Vec3(0.095, 0.55, 0.1)), 10, "train_shape"
+        )
+        self._phys_node = self.model.attachNewNode(self._phys_shape)
+        self._phys_node.setZ(0.1)
+
+        phys_mgr.attachCharacter(self._phys_shape)
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.1,
+            self._check_contacts,
+            "check_train_contacts",
+            extraArgs=[phys_mgr, self._phys_node.node()],
+            appendTask=True,
+        )
 
     def brake(self, side, brake):
         """Start braking on the given side.
@@ -449,8 +445,7 @@ class Train:
     def _set_lights(self):
         """Configure the Train lights.
 
-        Sets the main Train lighter and lights above
-        the doors.
+        Sets the main Train lighter and lights above the doors.
 
         Returns:
             list: NodePath's of the Train lights.
@@ -489,8 +484,7 @@ class Train:
         """Configure the Train sounds.
 
         Returns:
-            (panda3d.core.AudioSound...):
-                The Train sounds.
+            (panda3d.core.AudioSound...): The Train sounds.
         """
         clunk_snd = base.sound_mgr.loadSfx("sounds/metal_clunk1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(clunk_snd, self.model)  # noqa: F821
@@ -530,8 +524,7 @@ class Train:
 
         Args:
             y_coor (float):
-                Y coordinate for the main
-                Train physical shape
+                Y coordinate for the main Train physical shape.
         """
         self._phys_node.setPos(0, y_coor, 0.1)
 
@@ -735,19 +728,17 @@ class Train:
             taskMgr.remove("update_physics")  # noqa: F821
             taskMgr.remove("check_train_contacts")  # noqa: F821
 
-            base.world.phys_mgr.removeCharacter(self._train_phys_shape)  # noqa: F821
+            base.world.phys_mgr.removeCharacter(self._phys_shape)  # noqa: F821
             self._phys_node.removeNode()
 
-            self._train_phys_shape = (
-                self._train_phys_shape
-            ) = BulletCharacterControllerNode(
+            self._phys_shape = self._phys_shape = BulletCharacterControllerNode(
                 BulletBoxShape(Vec3(0.095, 0.58, 0.1)), 10, "train_shape"
             )
 
-            self._phys_node = self.model.attachNewNode(self._train_phys_shape)
+            self._phys_node = self.model.attachNewNode(self._phys_shape)
             self._phys_node.setPos(0, 0.03, 0.1)
 
-            base.world.phys_mgr.attachCharacter(self._train_phys_shape)  # noqa: F821
+            base.world.phys_mgr.attachCharacter(self._phys_shape)  # noqa: F821
 
             taskMgr.add(  # noqa: F821
                 base.world.update_physics,  # noqa: F821

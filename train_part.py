@@ -127,6 +127,10 @@ class TrainPart:
         self.chars.append(character)
         return take_random(self._cells)
 
+    def hide_arrow(self):
+        """Hide manipulating arrow of this TrainPart."""
+        self._arrow.detachNode()
+
     def release_cell(self, position, character):
         """Release a cell taken earlier.
 
@@ -138,10 +142,6 @@ class TrainPart:
         """
         self._cells.append(position)
         self.chars.remove(character)
-
-    def hide_arrow(self):
-        """Hide manipulating arrow of this TrainPart."""
-        self._arrow.detachNode()
 
     def show_arrow(self):
         """Show manipulating arrow of this TrainPart."""
@@ -201,6 +201,10 @@ class RestPart:
         self.chars.append(character)
         return (0, 0, 0)
 
+    def hide_arrow(self):
+        """Rest parts doesn't have manipulating arrows."""
+        pass
+
     def release_cell(self, position, character):
         """Release one cell on this part.
 
@@ -211,10 +215,6 @@ class RestPart:
                 Character to remove from this part.
         """
         self.chars.remove(character)
-
-    def hide_arrow(self):
-        """Rest parts doesn't have manipulating arrows."""
-        pass
 
     def show_arrow(self):
         """Rest parts doesn't have manipulating arrows."""

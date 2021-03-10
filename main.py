@@ -47,8 +47,8 @@ class ForwardOnly(ShowBase):
     """Object, which represents the game itself.
 
     Includes the major game systems. The main mechanism represents
-    infinite Train movement along World blocks, which are loaded
-    and unloaded on a fly.
+    infinite Train movement along the World blocks, which are
+    loaded and unloaded on a fly.
     """
 
     def __init__(self):
@@ -122,22 +122,7 @@ class ForwardOnly(ShowBase):
         self.world.clear_prev_block()
 
         self.train.move_along_block(self.current_block)
-
-        # track the Stench
-        if self.current_block.is_stenchy:
-            self.effects_mgr.stench_effect.play()
-            self.world.stop_ambient_snd()
-            self.train.ctrl.drown_move_snd()
-
-            self.team.start_stench_activity()
-        else:
-            self.effects_mgr.stench_effect.stop()
-            self.world.resume_ambient_snd()
-            self.train.ctrl.raise_move_snd()
-            if next_block.is_stenchy:
-                self.effects_mgr.stench_effect.play_clouds()
-
-            self.team.stop_stench_activity()
+        self._track_stench(next_block)
 
         self.current_block = next_block
 
@@ -155,6 +140,29 @@ class ForwardOnly(ShowBase):
         self._move_along_block()
         return task.done
 
+    def _track_stench(self, next_block):
+        """Track the Stench.
+
+        Start the Stench effect and activity, if needed.
+
+        Args:
+            next_block (world.block.Block): The next World block.
+        """
+        if self.current_block.is_stenchy:
+            self.effects_mgr.stench_effect.play()
+            self.world.stop_ambient_snd()
+            self.train.ctrl.drown_move_snd()
+
+            self.team.start_stench_activity()
+        else:
+            self.effects_mgr.stench_effect.stop()
+            self.world.resume_ambient_snd()
+            self.train.ctrl.raise_move_snd()
+            if next_block.is_stenchy:
+                self.effects_mgr.stench_effect.play_clouds()
+
+            self.team.stop_stench_activity()
+
     def load_game(self, num):
         """Load the previously saved game.
 
@@ -162,7 +170,7 @@ class ForwardOnly(ShowBase):
             num (int): The save slot number.
         """
         self.main_menu.hide_slots()
-        save = shelve.open("saves/save{}".format(str(num)))
+        save = shelve.open("saves/save{}".format(num))
 
         self.disableAllAudio()
 
@@ -234,7 +242,7 @@ class ForwardOnly(ShowBase):
         self.main_menu.hide_slots()
         self.world.save_map(num)
 
-        save = shelve.open("saves/save{}".format(str(num)))
+        save = shelve.open("saves/save{}".format(num))
 
         save["save_time"] = time.strftime("%a, %d %b %Y %H:%M", time.localtime())
         save["cur_blocks"] = self.world.current_blocks

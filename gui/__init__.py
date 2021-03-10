@@ -439,7 +439,8 @@ class MainMenu:
                 text_fg=SILVER_COL,
                 text=(
                     "Your locomotive is critically damaged!\n"
-                    "You're not able to continue the road.\n\n"
+                    "You're not able to continue the road, and\n"
+                    "the Stench will not keep you waiting long.\n\n"
                     "It's all over...",
                 ),
             )
