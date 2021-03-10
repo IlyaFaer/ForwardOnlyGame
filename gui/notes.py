@@ -105,7 +105,7 @@ your choice""",
     """Anarchists are companionable,
 they build cohesion much
 faster than others""",
-    """Anarchist gets damage factor
+    """Anarchists get damage factor
 x2 from cohesion""",
     """Anarchists are people from
 crowd. They value mutual

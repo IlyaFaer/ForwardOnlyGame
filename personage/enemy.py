@@ -86,6 +86,41 @@ class Enemy:
         self._handler.addInPattern("into-%in")
         self._handler.addOutPattern("out-%in")
 
+    def _clear_enemies(self, task):
+        """Delete all enemy units to release memory."""
+        for enemy in self.active_units.values():
+            enemy.clear()
+
+        self.active_units.clear()
+        self._transport_mgr.stop()
+        return task.done
+
+    def _load_enemy(self, train_mod, class_data, id_):
+        """Load single enemy unit.
+
+        Args:
+            train_mod (panda3d.core.NodePath): Train model to move.
+            class_data (dict): Enemy class description.
+            id_ (int): Unit id.
+        """
+        y_poss = (
+            self._side_y_positions
+            if class_data["part"] == "side"
+            else self._front_y_positions
+        )
+        enemy = class_data["class"](
+            Actor(address(class_data["model"])), id_, y_poss, self._handler, class_data
+        )
+        self._transport_mgr.load_transport(enemy)
+
+        enemy.node.reparentTo(train_mod)
+        self.active_units[enemy.id] = enemy
+
+    def _stop_cooldown(self, task):
+        """Ends enemy attack cool down period."""
+        self._is_cooldown = False
+        return task.done
+
     def going_to_attack(self, day_part, lights_on):
         """Checks if enemy is going to attack.
 
@@ -177,40 +212,5 @@ class Enemy:
         for enemy in self.active_units.values():
             enemy.stop_ride()
 
-        self._transport_mgr.stop()
-        return task.done
-
-    def _stop_cooldown(self, task):
-        """Ends enemy attack cool down period."""
-        self._is_cooldown = False
-        return task.done
-
-    def _load_enemy(self, train_mod, class_data, id_):
-        """Load single enemy unit.
-
-        Args:
-            train_mod (panda3d.core.NodePath): Train model to move.
-            class_data (dict): Enemy class description.
-            id_ (int): Unit id.
-        """
-        y_poss = (
-            self._side_y_positions
-            if class_data["part"] == "side"
-            else self._front_y_positions
-        )
-        enemy = class_data["class"](
-            Actor(address(class_data["model"])), id_, y_poss, self._handler, class_data
-        )
-        self._transport_mgr.load_transport(enemy)
-
-        enemy.node.reparentTo(train_mod)
-        self.active_units[enemy.id] = enemy
-
-    def _clear_enemies(self, task):
-        """Delete all enemy units to release memory."""
-        for enemy in self.active_units.values():
-            enemy.clear()
-
-        self.active_units.clear()
         self._transport_mgr.stop()
         return task.done

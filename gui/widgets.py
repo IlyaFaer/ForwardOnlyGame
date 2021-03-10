@@ -34,7 +34,7 @@ class ItemChooser(metaclass=abc.ABCMeta):
             frameColor=(0, 0, 0, 0.3),
             text_fg=SILVER_COL,
             text="",
-            text_scale=(0.03, 0.03),
+            text_scale=0.03,
             pos=(0, 0, -0.01),
         )
         DirectButton(

@@ -18,7 +18,7 @@ from personage.enemy import Enemy
 from utils import address, chance
 
 from .block import Block
-from .locations import LOCATIONS
+from .locations import LOCATION_CONF
 from .outing import OutingsManager
 from .railway_generator import RailwayGenerator
 from .sun import Sun
@@ -449,7 +449,7 @@ class World:
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
-        self.outings_mgr = OutingsManager(location)
+        self.outings_mgr = OutingsManager()
         rusty_blocks = 0
         stench_blocks = 0
 
@@ -633,7 +633,7 @@ class World:
 
             self._map[branch["end"]] = br_end_block
 
-        self._set_sounds(location)
+        self._set_sounds()
         self.enemy = Enemy()
         taskMgr.doMethodLater(25, self._make_stench_step, "stench_step")  # noqa: F821
 
@@ -683,7 +683,7 @@ class World:
         self._stench_step = stench_step
         taskMgr.doMethodLater(30, self._make_stench_step, "stench_step")  # noqa: F821
 
-        self.outings_mgr = OutingsManager(location)
+        self.outings_mgr = OutingsManager()
 
         world_save = shelve.open("saves/world{}".format(str(num)))
         for desc in world_save[location]:
@@ -706,7 +706,7 @@ class World:
             )
             self._map.append(block)
 
-        self._set_sounds(location)
+        self._set_sounds()
         self.enemy = Enemy()
         self.enemy.score = enemy_score
 
@@ -743,22 +743,17 @@ class World:
 
         return cur_block
 
-    def _set_sounds(self, location):
-        """Configure the location sounds.
-
-        Args:
-            location (str):
-                Location for which sounds must be loaded.
-        """
+    def _set_sounds(self):
+        """Configure the location sounds."""
         self._noon_ambient_snd = loader.loadSfx(  # noqa: F821
-            "sounds/{name}.ogg".format(name=LOCATIONS[location]["ambient_sounds"][0])
+            "sounds/{name}.ogg".format(name=LOCATION_CONF["ambient_sounds"][0])
         )
         self._noon_ambient_snd.setLoop(True)
         self._noon_ambient_snd.setVolume(1)
         self._noon_ambient_snd.play()
 
         self._night_ambient_snd = loader.loadSfx(  # noqa: F821
-            "sounds/{name}.ogg".format(name=LOCATIONS[location]["ambient_sounds"][1])
+            "sounds/{name}.ogg".format(name=LOCATION_CONF["ambient_sounds"][1])
         )
         self._night_ambient_snd.setVolume(0)
         self._night_ambient_snd.setLoop(True)

@@ -7,7 +7,7 @@ API to manage outings.
 import copy
 import random
 
-from gui import OutingsInterface
+from gui import OutingsGUI
 from .outings_data import OUTINGS
 
 
@@ -15,21 +15,18 @@ class OutingsManager:
     """An object to manage outings.
 
     Rules the outings planning, manipulating, results calculating and GUI.
-
-    Args:
-        location (str): Location to manage outings for.
     """
 
-    def __init__(self, location):
+    def __init__(self):
         self._threshold = random.randint(25, 45)
-        self._outings = copy.deepcopy(OUTINGS[location])
+        self._outings = copy.deepcopy(OUTINGS)
         self._types = tuple(self._outings.keys())
         self._snds = {
             "Looting": loader.loadSfx("sounds/looting_result.ogg"),  # noqa: F821
             "Enemy Camp": loader.loadSfx("sounds/enemy_camp_result.ogg"),  # noqa: F821
             "Meet": loader.loadSfx("sounds/meet_result.ogg"),  # noqa: F821
         }
-        self._gui = OutingsInterface()
+        self._gui = OutingsGUI()
 
     @property
     def gui_is_shown(self):

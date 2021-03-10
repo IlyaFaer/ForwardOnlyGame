@@ -65,14 +65,17 @@ class RailsScheme:
 
     def _build_legend(self):
         """Build the scheme legend GUI."""
+        lab_opts = {
+            "parent": self._list,
+            "text_scale": 0.035,
+            "frameColor": (0, 0, 0, 0),
+            "frameSize": (-0.1, 0.1, -0.1, 0.1),
+        }
         DirectLabel(
-            parent=self._list,
             text=("Legend:\nm - Meet\n" "e - Enemy Camp\n" "l - Looting"),
             text_align=TextNode.ALeft,
             pos=(-1, 0, -0.35),
-            text_scale=0.035,
-            frameSize=(-0.1, 0.1, -0.1, 0.1),
-            frameColor=(0, 0, 0, 0),
+            **lab_opts,
         )
         DirectFrame(
             parent=self._scheme,
@@ -81,12 +84,7 @@ class RailsScheme:
             pos=(-0.39, 0, -0.41),
         )
         DirectLabel(
-            parent=self._list,
-            text="- city",
-            pos=(-0.3, 0, -0.42),
-            text_scale=0.035,
-            frameSize=(-0.1, 0.1, -0.1, 0.1),
-            frameColor=(0, 0, 0, 0),
+            text="- city", pos=(-0.3, 0, -0.42), **lab_opts,
         )
         DirectFrame(
             parent=self._scheme,
@@ -97,12 +95,7 @@ class RailsScheme:
         ).setR(90)
 
         DirectLabel(
-            parent=self._list,
-            text="- railway branch",
-            pos=(0.29, 0, -0.38),
-            text_scale=0.035,
-            frameSize=(-0.1, 0.1, -0.1, 0.1),
-            frameColor=(0, 0, 0, 0),
+            text="- railway branch", pos=(0.29, 0, -0.38), **lab_opts,
         )
 
         DirectFrame(
@@ -112,12 +105,7 @@ class RailsScheme:
             pos=(0.09, 0, -0.45),
         )
         DirectLabel(
-            parent=self._list,
-            text="- the Stench",
-            pos=(0.26, 0, -0.46),
-            text_scale=0.035,
-            frameSize=(-0.1, 0.1, -0.1, 0.1),
-            frameColor=(0, 0, 0, 0),
+            text="- the Stench", pos=(0.26, 0, -0.46), **lab_opts,
         )
 
     def _fill_branches(self):

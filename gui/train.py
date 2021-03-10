@@ -65,7 +65,6 @@ class TrainGUI:
             text_scale=0.028,
             text_fg=SILVER_COL,
         )
-
         frame_miles = DirectFrame(
             frameSize=(-0.115, 0.115, -0.03, 0.03),
             pos=(0, 0, -0.97),

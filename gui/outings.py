@@ -24,7 +24,7 @@ OUTINGS_ICONS = {
 }
 
 
-class OutingsInterface:
+class OutingsGUI:
     """Outing dialogs GUI."""
 
     def __init__(self):

@@ -10,7 +10,7 @@ import random
 from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
-from .locations import LOCATIONS
+from .locations import LOCATION_CONF
 from .objects import Barrier
 
 ANGLES = (0, 90, 180, 270)
@@ -145,7 +145,7 @@ class Block:
         models = []
         et_suf = "et_" if self.enemy_territory else ""
 
-        for models_conf in LOCATIONS["Plains"][et_suf + "with_quantity"]:
+        for models_conf in LOCATION_CONF[et_suf + "with_quantity"]:
             for _ in range(random.randint(*models_conf["quantity"])):
                 models.append(
                     (
@@ -153,7 +153,7 @@ class Block:
                         take_random(vertices[models_conf["square"]]),
                     )
                 )
-        for models_conf in LOCATIONS["Plains"][et_suf + "with_chance"]:
+        for models_conf in LOCATION_CONF[et_suf + "with_chance"]:
             if chance(models_conf["chance"]):
                 models.append(
                     (

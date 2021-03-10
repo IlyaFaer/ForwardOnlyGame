@@ -14,7 +14,7 @@ from utils import save_exists
 from .character import CharacterGUI  # noqa: F401
 from .city import CityGUI  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
-from .outings import OutingsInterface  # noqa: F401
+from .outings import OutingsGUI  # noqa: F401
 from .rails_scheme import RailsScheme  # noqa: F401
 from .resources import ResourcesGUI  # noqa: F401
 from .train import TrainGUI  # noqa: F401
