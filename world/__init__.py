@@ -736,12 +736,6 @@ class World:
             base.train.root_node.setH(base.train.root_node, 90)  # noqa: F821
 
         cur_block = self.prepare_next_block(cur_blocks[1])
-
-        if cur_block.name == "r90_turn":
-            base.train.root_node.setH(base.train.root_node, -90)  # noqa: F821
-        elif cur_block.name == "l90_turn":
-            base.train.root_node.setH(base.train.root_node, 90)  # noqa: F821
-
         return cur_block
 
     def _set_sounds(self):
