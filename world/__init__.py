@@ -54,6 +54,7 @@ class World:
 
         self._prev_block = None
         self._cur_block = None
+        self._exiting_et = False
 
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
@@ -930,6 +931,7 @@ class World:
             current_block = self._loaded_blocks[-1]
 
         if self._et_blocks:
+            self._exiting_et = False
             block = self._prepare_et_block()
 
             self._map[self._block_num - 1].enemy_territory = True
@@ -956,17 +958,23 @@ class World:
                     inverse = self._prev_block > self._cur_block
                     prev_block_num = self._prev_block
 
-                    current_block.directions = self._map[self._cur_block].directions
+                    if not current_block.directions:
+                        current_block.directions = self._map[self._cur_block].directions
 
                     if inverse:
                         next_block = current_block.directions[prev_block_num]
                         if next_block == self._block_num:
                             next_block -= 1
                     else:
-                        next_block = current_block.directions[prev_block_num] + 3
+                        if self._exiting_et:
+                            next_block = current_block.directions[prev_block_num] + 2
+                        else:
+                            next_block = current_block.directions[prev_block_num] + 3
 
                     self._prev_block = self._cur_block
-                    self._cur_block = next_block
+                    self._cur_block = self._map[next_block].id
+
+                    self._exiting_et = True
                 else:
                     if self._prev_block is not None:
                         next_block = current_block.directions[prev_block_num]
