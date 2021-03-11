@@ -955,6 +955,7 @@ class World:
                 if prev_block_num == -1:
                     inverse = self._prev_block > self._cur_block
                     prev_block_num = self._prev_block
+
                     current_block.directions = self._map[self._cur_block].directions
 
                     if inverse:
@@ -963,6 +964,9 @@ class World:
                             next_block -= 1
                     else:
                         next_block = current_block.directions[prev_block_num] + 3
+
+                    self._prev_block = self._cur_block
+                    self._cur_block = next_block
                 else:
                     if self._prev_block is not None:
                         next_block = current_block.directions[prev_block_num]
@@ -1046,11 +1050,11 @@ class World:
         else:  # reparent the first block to the render
             block.rails_mod.reparentTo(render)  # noqa: F821
 
-        self._track_outings()
         if not from_city:
             self._track_cities()
+            self._track_outings()
+            self._track_forks()
 
-        self._track_forks()
         return block
 
     def clear_prev_block(self):

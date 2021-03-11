@@ -12,7 +12,7 @@ OUTINGS = {
             "type": "Enemy Camp",
             "class_weights": {"soldier": 15, "raider": 4, "anarchist": 7},
             "assignees": 3,
-            "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 8,},
+            "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 8},
             "desc": """You're catching your eyes on four big black jeeps, standing in a row.
 They are covered with dust, but even from that big distance you can
 say they are in a good shape. No human around makes it tempting to
@@ -115,7 +115,7 @@ You're getting +90$ and 1 stimulator
             "type": "Enemy Camp",
             "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
             "assignees": 1,
-            "day_part_weights": {"night": 0, "morning": 10, "noon": 6, "evening": 4,},
+            "day_part_weights": {"night": 0, "morning": 10, "noon": 6, "evening": 4},
             "desc": """It takes not less than ten seconds for you to understand is something
 there, or it's just a big bush. Yes, something is definitely there - a square
 dark green tent, very similar to a soldier's one. It doesn't look like there
@@ -208,7 +208,7 @@ You're getting +90$""",
             "type": "Enemy Camp",
             "class_weights": {"soldier": 22.5, "raider": 6, "anarchist": 14},
             "assignees": 2,
-            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7,},
+            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
             "desc": """The big red two-storied bus standing at the middle of the meadow
 catches your attention from a very long distance. Bringing the binoculars
 to your eyes, you're seeing that it's little bit old and shabby, but sand
@@ -232,7 +232,7 @@ in the dark car inners, so {name2} takes down {hisher2} gun, lifting
 {name1} and pulling {himher1} to the Train under your cover fire.
 {name1} getting -35 health
 {name2} getting -20 energy""",
-                    "effects": {"char_1": {"health": -35}, "char_2": {"energy": -20},},
+                    "effects": {"char_1": {"health": -35}, "char_2": {"energy": -20}},
                 },
                 {
                     "score": range(20, 40),
@@ -303,7 +303,7 @@ You're getting +100$""",
             "type": "Enemy Camp",
             "class_weights": {"soldier": 22.5, "raider": 7, "anarchist": 17},
             "assignees": 2,
-            "day_part_weights": {"night": 4, "morning": 5, "noon": 10, "evening": 2,},
+            "day_part_weights": {"night": 4, "morning": 5, "noon": 10, "evening": 2},
             "desc": """For at least twenty minutes you've been watching a highway to the left
 of the railway. No cars, no light posts - road was completely empty.
 But, finally, you're seeing a white square advertisement sign of a
@@ -329,7 +329,7 @@ and retreated right after the shot. Lifting {name1} on the shoulders,
 {heshe2} moves back to the Train.
 {name1} getting -45 health
 {name2} getting -10 health""",
-                    "effects": {"char_1": {"health": -45}, "char_2": {"health": -10},},
+                    "effects": {"char_1": {"health": -45}, "char_2": {"health": -10}},
                 },
                 {
                     "score": range(20, 40),
@@ -346,7 +346,7 @@ through the wall of flame, trying to cross it before it grown too strong.
 Breaking through the fire, they see no one, no ambush or something.
 Strange. With a couple of scorches they return to the Train.
 {name1} and {name2} getting -10 health""",
-                    "effects": {"char_1": {"health": -10}, "char_2": {"health": -10},},
+                    "effects": {"char_1": {"health": -10}, "char_2": {"health": -10}},
                 },
                 {
                     "score": range(40, 60),
@@ -399,7 +399,7 @@ You're getting +90$ and fuel for 50 miles""",
             "type": "Enemy Camp",
             "class_weights": {"soldier": 15, "raider": 4, "anarchist": 11},
             "assignees": 3,
-            "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7,},
+            "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
             "desc": """From a very long distance you're catching your eyes on several grey
 rectangles. Buses? That can promise troubles as well as a good place
 for looting. While the Train getting closer to the vehicle, it becomes
@@ -492,7 +492,7 @@ You're getting 200$""",
             "type": "Enemy Camp",
             "class_weights": {"soldier": 15, "raider": 10, "anarchist": 5},
             "assignees": 3,
-            "day_part_weights": {"night": 0, "morning": 2, "noon": 6, "evening": 10,},
+            "day_part_weights": {"night": 0, "morning": 2, "noon": 6, "evening": 10},
             "desc": """Standing on a cool air, you're observing the horizon line. For the
 few last hours you saw twelve wooden houses, burned to the ground.
 Seems like someone is clearing these lands, probably skinheads. It's
@@ -589,7 +589,7 @@ You're getting 130$""",
             "type": "Enemy Camp",
             "class_weights": {"soldier": 22.5, "raider": 14, "anarchist": 5},
             "assignees": 2,
-            "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 7,},
+            "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 7},
             "desc": """The horizon line is lost behind trees for hours. The lands seems
 to be very wild, still, you've given an order to everyone to keep eyes
 open. And in voluntary minute you're hearing your teammates calling you
@@ -685,7 +685,7 @@ You're getting 170$""",
             "type": "Looting",
             "class_weights": {"soldier": 22.5, "raider": 45, "anarchist": 9},
             "assignees": 1,
-            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 5,},
+            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 5},
             "desc": """At the first look you didn't pay attention to
 a dark green spot in the middle of the meadow. But in the next
 second it becomes clear that it is not a part of the landscape,
@@ -768,7 +768,7 @@ You're getting a smoke filter in a good shape.""",
             "type": "Looting",
             "class_weights": {"soldier": 6, "raider": 22.5, "anarchist": 16},
             "assignees": 2,
-            "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 3,},
+            "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 3},
             "desc": """The big dark green spot on the meadow attracted your
 attention in the same moment. What do we have here? Seems to be an
 abandoned tent. There are no any signs of a bonfire, smoke, or any
@@ -809,7 +809,7 @@ what is the source of that stink. {name2} moves forward. "Let me do
 this!" - {heshe2} pulls the zipper, and directs a lantern into the tent. Bodies!
 Two rotten bodies, with bones sticking out, maggots, and nothing more.
 Both characters are getting -30 energy.""",
-                    "effects": {"char_1": {"energy": -30}, "char_2": {"energy": -30},},
+                    "effects": {"char_1": {"energy": -30}, "char_2": {"energy": -30}},
                 },
                 {
                     "score": range(40, 60),
@@ -860,7 +860,7 @@ You're getting 1 medicine box.""",
             "type": "Looting",
             "class_weights": {"soldier": 10, "raider": 15, "anarchist": 3},
             "assignees": 3,
-            "day_part_weights": {"night": 8, "morning": 2, "noon": 5, "evening": 10,},
+            "day_part_weights": {"night": 8, "morning": 2, "noon": 5, "evening": 10},
             "desc": """Called by one of your teammates, you're walking out of
 the cabin and in the same moment seeing an old hut not far from the
 railway. Putting binoculars to your eyes, you're looking at it with good
@@ -952,7 +952,7 @@ Train damnability +90""",
             "type": "Looting",
             "class_weights": {"soldier": 9, "raider": 15, "anarchist": 4},
             "assignees": 3,
-            "day_part_weights": {"night": 10, "morning": 2, "noon": 5, "evening": 8,},
+            "day_part_weights": {"night": 10, "morning": 2, "noon": 5, "evening": 8},
             "desc": """You've caught your eyes on some kind of big dark spike
 from a very long distance. It was difficult to understand what it
 actually is, but when the Train went around a hill, and the building
@@ -1052,7 +1052,7 @@ You're getting +40$""",
             "type": "Looting",
             "class_weights": {"soldier": 7, "raider": 22.5, "anarchist": 16},
             "assignees": 2,
-            "day_part_weights": {"night": 2, "morning": 4, "noon": 10, "evening": 8,},
+            "day_part_weights": {"night": 2, "morning": 4, "noon": 10, "evening": 8},
             "desc": """You're looking at the horizon line trying to find a sign of a
 civilization. A couple of hours passed, and there were no single building,
 litter or any other sign of human. What are these wild plains? But once
@@ -1141,7 +1141,7 @@ Every character getting +35 energy""",
             "type": "Looting",
             "class_weights": {"soldier": 4, "raider": 15, "anarchist": 12},
             "assignees": 3,
-            "day_part_weights": {"night": 5, "morning": 7, "noon": 10, "evening": 2,},
+            "day_part_weights": {"night": 5, "morning": 7, "noon": 10, "evening": 2},
             "desc": """From a very long distance you are seeing a big, wide
 straight column of thick grey smoke, rising from the forest in a
 couple of kilometers from the railway. That seems questionably.
@@ -1231,7 +1231,7 @@ Train damnability +70""",
             "type": "Looting",
             "class_weights": {"soldier": 6, "raider": 22.5, "anarchist": 16},
             "assignees": 2,
-            "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 5,},
+            "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 5},
             "desc": """When the Train started to move along sown fields, you've concentrated
 your gaze. Where fields, there are people and resources. And, yes,
 in some moment you see a big brown silo. While the Train is getting
@@ -1332,7 +1332,7 @@ You're getting 1 smoke filter and 1 medicine box""",
             "type": "Meet",
             "class_weights": {"soldier": 5, "anarchist": 22.5, "raider": 17},
             "assignees": 2,
-            "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 4,},
+            "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 4},
             "desc": """Gazing around, you're catching your eyes on a thick column of smoke
 rising right from the ground. A look through binoculars unveils
 that there is a tent camp at the bottom of the smoke pillar, and
@@ -1431,7 +1431,7 @@ One person can be recruited""",
             "type": "Meet",
             "class_weights": {"soldier": 10, "anarchist": 45, "raider": 28},
             "assignees": 1,
-            "day_part_weights": {"night": 0, "morning": 4, "noon": 8, "evening": 10,},
+            "day_part_weights": {"night": 0, "morning": 4, "noon": 8, "evening": 10},
             "desc": """Thinking about the Stench nature, you're absently looking around the
 Train, when suddenly you find yourself gazing at a human body.
 It almost blended with withered grass and is covered with snow -
@@ -1527,7 +1527,7 @@ Single character can get Masochism""",
             "type": "Meet",
             "class_weights": {"soldier": 10, "anarchist": 15, "raider": 4},
             "assignees": 3,
-            "day_part_weights": {"night": 8, "morning": 10, "noon": 4, "evening": 0,},
+            "day_part_weights": {"night": 8, "morning": 10, "noon": 4, "evening": 0},
             "desc": """In the moment the Train stopped, you're finding your eyes on a dark
 silhouette of an armed man. He doesn't seem to be aggressive, so
 you're giving him some time to come closer. "Hey, guys!" - he says,
@@ -1626,7 +1626,7 @@ Single character can get Fast hands""",
             "type": "Meet",
             "class_weights": {"soldier": 10, "anarchist": 45, "raider": 25},
             "assignees": 1,
-            "day_part_weights": {"night": 0, "morning": 3, "noon": 7, "evening": 10,},
+            "day_part_weights": {"night": 0, "morning": 3, "noon": 7, "evening": 10},
             "desc": """From a big distance you're catching your eyes on a small building,
 near which a lot of people silhouettes are looming. Getting closer, you
 see a lot of construction equipment, and the building itself looks like
@@ -1727,7 +1727,7 @@ Single character can get Bloodthirsty""",
             "type": "Meet",
             "class_weights": {"soldier": 5, "anarchist": 22.5, "raider": 12.5},
             "assignees": 2,
-            "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 3,},
+            "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 3},
             "desc": """For the last ten minutes you've been observing a road, which turned
 to the railway and has been following it in a straight parallel. A lot of
 pits and cracks showing that the road isn't very well maintained, most
@@ -1754,7 +1754,7 @@ the regions covered with the Stench. Stealers in the other words."
 find the doctor." Gazing at smoke clouds, you think how organized
 and weaponized the marauders are. Seems a big business.
 {name1} and {name2} getting -20 health""",
-                    "effects": {"char_1": {"health": -20}, "char_2": {"health": -20},},
+                    "effects": {"char_1": {"health": -20}, "char_2": {"health": -20}},
                 },
                 {
                     "score": range(20, 40),
@@ -1803,7 +1803,7 @@ Transporting people away from the Stench. Asked to help them a
 little and gave us this" - {name2} puts some dollars to the table.
 You're getting +90$
 One character can get Liberal""",
-                    "effects": {"money": 90, "select_char": {"add_trait": "Liberal"},},
+                    "effects": {"money": 90, "select_char": {"add_trait": "Liberal"}},
                 },
                 {
                     "score": range(80, 101),
@@ -1826,7 +1826,7 @@ One person can be recruited""",
             "type": "Meet",
             "class_weights": {"soldier": 3, "anarchist": 15, "raider": 7},
             "assignees": 3,
-            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 6,},
+            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 6},
             "desc": """For a long time you've been observing only light snowflakes, calmly
 moving in the air, bringing thoughtfulness. But in some moment a
 strange low distant sound attracts your attention. First you think
@@ -1932,7 +1932,7 @@ Single character can get Deep Breath""",
             "type": "Meet",
             "class_weights": {"soldier": 11, "anarchist": 22.5, "raider": 5},
             "assignees": 2,
-            "day_part_weights": {"night": 3, "morning": 10, "noon": 7, "evening": 0,},
+            "day_part_weights": {"night": 3, "morning": 10, "noon": 7, "evening": 0},
             "desc": """You've noticed a big grey truck long ago. It has been riding in
 parallel with you for about twenty miles, and now it started to
 approach - the highway probably turned to the railways. The truck
