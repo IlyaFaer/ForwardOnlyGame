@@ -11,7 +11,7 @@ from direct.gui.DirectGui import (
     DirectLabel,
     DirectWaitBar,
 )
-from panda3d.core import TransparencyAttrib
+from panda3d.core import TextNode, TransparencyAttrib
 
 from .character import ABOUT_BUT_PARAMS
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL
@@ -278,24 +278,28 @@ class ResourcesGUI:
                 relief="flat",
             )
         )
+
+        x_coor = -0.39
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
                 text="Recall the past",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
-                pos=(-0.29, 0, -0.117),
+                pos=(x_coor, 0, -0.117),
             )
         )
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +15 energy. Cooldown: 10 min.",
+                text="Every character gets +20 energy. Cooldown: 10 min.",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
-                pos=(-0.055, 0, -0.155),
+                pos=(x_coor, 0, -0.155),
             )
         )
         self._coh_desc_wids.append(
@@ -311,20 +315,22 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._coh_frame,
                 text="Cover fire",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
-                pos=(-0.325, 0, -0.217),
+                pos=(x_coor, 0, -0.217),
             )
         )
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
                 text="Every character gets +20% accuracy. Cooldown: 5 min.",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
-                pos=(-0.032, 0, -0.255),
+                pos=(x_coor, 0, -0.255),
             )
         )
         self._coh_desc_wids.append(
@@ -340,10 +346,11 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._coh_frame,
                 text="Not leaving ours",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
-                pos=(-0.283, 0, -0.317),
+                pos=(x_coor, 0, -0.317),
             )
         )
         self._coh_desc_wids.append(
@@ -353,10 +360,11 @@ class ResourcesGUI:
                     "Characters with health < 30 "
                     "getting +20 health. Cooldown: 10 min."
                 ),
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
-                pos=(0.03, 0, -0.355),
+                pos=(x_coor, 0, -0.355),
             )
         )
         self._coh_desc_wids.append(
@@ -372,20 +380,22 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._coh_frame,
                 text="Common rage",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
-                pos=(-0.298, 0, -0.417),
+                pos=(x_coor, 0, -0.417),
             )
         )
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
                 text="Every character gets +30% to damage. Cooldown: 10 min.",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
-                pos=(-0.023, 0, -0.455),
+                pos=(x_coor, 0, -0.455),
             )
         )
         self._coh_desc_wids.append(
@@ -401,20 +411,22 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._coh_frame,
                 text="Hold together",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
-                pos=(-0.298, 0, -0.517),
+                pos=(x_coor, 0, -0.517),
             )
         )
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
                 text="No characters will die in next 1.5 min. Cooldown: 15 min.",
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
-                pos=(-0.029, 0, -0.555),
+                pos=(x_coor, 0, -0.555),
             )
         )
 

@@ -66,8 +66,8 @@ class Character(Shooter, Unit):
         self.hisher = "his" if sex == "male" else "her"
         self.himher = "him" if sex == "male" else "her"
 
-        self.damage_range = [3, 6]
-        self.clear_damage = [3, 6]
+        self.damage_range = [4, 6]
+        self.clear_damage = [4, 6]
 
         if desc:
             self._energy = desc["energy"]

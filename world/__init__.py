@@ -636,7 +636,7 @@ class World:
 
         self._set_sounds()
         self.enemy = Enemy()
-        taskMgr.doMethodLater(25, self._make_stench_step, "stench_step")  # noqa: F821
+        taskMgr.doMethodLater(23, self._make_stench_step, "stench_step")  # noqa: F821
 
     def invert(self, block):
         """Invert the given block.

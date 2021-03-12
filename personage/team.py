@@ -137,7 +137,7 @@ class Team:
             return
 
         for char in self.chars.values():
-            char.energy += 15
+            char.energy += 20
 
         self._plan_cohesion_cooldown(600)
 
@@ -289,7 +289,7 @@ class Team:
                     )
 
         self._calc_total_cohesion()
-        task.delayTime = 220
+        task.delayTime = 210
         return task.again
 
     def _calc_total_cohesion(self):

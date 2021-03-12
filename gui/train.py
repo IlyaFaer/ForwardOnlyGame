@@ -35,7 +35,7 @@ class TrainGUI:
             frameTexture=GUI_PIC + "speed.png",
         ).setTransparency(TransparencyAttrib.MAlpha)
 
-        self._damnability = DirectWaitBar(
+        self._durability = DirectWaitBar(
             parent=frame,
             frameSize=(-0.225, 0.225, -0.002, 0.002),
             frameColor=(0.35, 0.35, 0.35, 1),
@@ -44,7 +44,7 @@ class TrainGUI:
             barColor=(0.42, 0.42, 0.8, 1),
             pos=(0.05, 0, -0.025),
         )
-        self._damnability.setR(-90)
+        self._durability.setR(-90)
         self._speed = DirectWaitBar(
             parent=frame,
             frameSize=(-0.225, 0.225, -0.002, 0.002),
@@ -152,8 +152,8 @@ class TrainGUI:
         Args:
             params (dict): New parameters values.
         """
-        if "damnability" in params.keys():
-            self._damnability["value"] = params["damnability"]
+        if "durability" in params.keys():
+            self._durability["value"] = params["durability"]
 
     def update_miles(self, new_miles):
         """Update the miles meter widget.

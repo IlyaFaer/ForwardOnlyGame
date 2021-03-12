@@ -36,8 +36,8 @@ crawling back to the Train, as the enemy seems to be full of ammo.
 You're trying to help others with your fire, and the rival shots are
 starting to fly to the Train. Taking cover, you're waiting for {name1},
 {name2} and {name3} to return and giving the order to start the engine.
-Train getting -80 damnability""",
-                    "effects": {"train": {"damnability": -80}},
+Train getting -80 durability""",
+                    "effects": {"train": {"durability": -80}},
                 },
                 {
                     "score": range(20, 40),
@@ -247,8 +247,8 @@ is terribly inaccurate, still, bullets are flying and flying to you,
 throwing sparkles all around and ringing with the Train metal. You're
 commanding to start moving, and {name1} with {name2} are jumping on the
 Train on the run. Rival bullets following you for two more minutes,
-and then suddenly falls silent. Train getting -40 damnability""",
-                    "effects": {"train": {"damnability": -40}},
+and then suddenly falls silent. Train getting -40 durability""",
+                    "effects": {"train": {"durability": -40}},
                 },
                 {
                     "score": range(40, 60),
@@ -271,7 +271,7 @@ It's better to move along before they changed their mind.""",
 direction to the old vehicle. As the meadow looks too open, they are
 running fast to cross it as soon as possible. Disappearing within the
 car, your people start to rummage through it, swinging the old metal
-carcass. While it all happening you're seeing a big jeep on a horizon.
+carcass. While it all happening, you're seeing a big jeep on a horizon.
 Whistling loudly to your people you're preparing for a fight. It takes
 two more minutes for {name1} and {name2} to jump outside the bus. The
 gang in the jeep, approaching fast, are starting to shoot, and you're
@@ -515,8 +515,8 @@ a lot of damage. In some moment the guns silences, and you're uppering
 your head. A lot of shot holes are gapping on the Train. Are these armor-
 piercing bullets!? Is it worth getting this guy? It's probably better to
 leave before this gun made even more damage to the locomotive.
-The Train damnability -60""",
-                    "effects": {"train": {"damnability": -60}},
+The Train durability -60""",
+                    "effects": {"train": {"durability": -60}},
                 },
                 {
                     "score": range(20, 40),
@@ -732,7 +732,7 @@ sent {name1} alone to look for supplies in the vehicle. {name1}
 moves to the car, opens it and gets inside. It's hot and dusty within
 the car, every movement raises the dense fug, but {hisher1} search
 doesn't end with nothing. It appeared that a first aid kit is still there,
-and opening it {name1} sees that it contains several not overdue meds!
+and, opening it, {name1} sees that it contains several not overdue meds!
 That can help to regain 10 points of health of a single character.""",
                     "effects": {"select_char": {"health": 10}},
                 },
@@ -746,8 +746,8 @@ the results. {name1} jumps out of the car and moves to you with a small
 box in {hisher1} hands. "That guy wasn't very thrifty, I've found only
 these tools." - {heshe1} says. Well, it's still better than nothing:
 we can repair the train a little.
-Train damnability +100.""",
-                    "effects": {"train": {"damnability": 100}},
+Train durability +100.""",
+                    "effects": {"train": {"durability": 100}},
                 },
                 {
                     "score": range(80, 101),
@@ -942,8 +942,8 @@ messengers for some time. "Oh, I got something!" - {name2} shouts loudly.
 {name1} and {name3} moving to the room {heshe2} was checking, and seeing a
 big tool kit. {name1} and {name2} are taking it together and moving
 back to Train, while {name3} is watching around for possible threats.
-Train damnability +90""",
-                    "effects": {"train": {"damnability": 90}},
+Train durability +90""",
+                    "effects": {"train": {"durability": 90}},
                 },
             ),
         },
@@ -1086,8 +1086,8 @@ less than twenty containers they finally see one untouched. Opening it
 they are staring at a bunch of metal details. And tools! "With this stuff
 we can repair our Train a little!" - {name2} whopping. They are taking
 the box together and returning back to you with it.
-Train damnability +40""",
-                    "effects": {"train": {"damnability": 90}},
+Train durability +40""",
+                    "effects": {"train": {"durability": 90}},
                 },
                 {
                     "score": range(40, 60),
@@ -1221,8 +1221,8 @@ traces on the ground - somebody already looted the place. Still, {name3}
 jumps onto the truck to take a closer look at the inner part of the
 cargo hold. To everyone's joy, {heshe3} moves outside the car with a
 big plastic box of tools. Seems like assaulters have only taken weapons.
-Train damnability +70""",
-                    "effects": {"train": {"damnability": 70}},
+Train durability +70""",
+                    "effects": {"train": {"durability": 70}},
                 },
             ),
         },
@@ -1972,8 +1972,8 @@ to fight back, and, feeling that gun power is on your side, the
 truck spurts away really fast. What's happened? No one seems to
 be wounded, and that's good, but, taking a look at the locomotive,
 you see several big holes, made by the truck's machine guns.
-Train damnability -50""",
-                    "effects": {"train": {"damnability": -50}},
+Train durability -50""",
+                    "effects": {"train": {"durability": -50}},
                 },
                 {
                     "score": range(40, 60),

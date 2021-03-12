@@ -141,7 +141,7 @@ class Enemy:
         if chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0)):
             self._is_cooldown = True
             taskMgr.doMethodLater(  # noqa: F821
-                480, self._stop_cooldown, "stop_attack_cooldown"
+                450, self._stop_cooldown, "stop_attack_cooldown"
             )
             return True
 
@@ -176,7 +176,7 @@ class Enemy:
 
             if unit_class["class"] == StunBombThrower:
                 throwers += 1
-                if throwers == 3:
+                if throwers == 2:
                     available.remove(unit_class)
 
             if unit_class["class"] == DodgeShooter:

@@ -469,6 +469,7 @@ class HealthBar(NodePath):
 
         self.hide()
         self.reparentTo(char.model)
+        self.setLightOff()
         self.setZ(0.1)
         self.setBillboardPointEye()
 
@@ -482,8 +483,8 @@ class HealthBar(NodePath):
         self._bg = self.attachNewNode(cmbg.generate())
         self._bg.setPos(0.024, 0.001, 0)
 
-        self._fg.setColor(1, 0, 0, 1)
-        self._bg.setColor(0.7, 0.7, 0.7, 1)
+        self._fg.setColor(0.55, 0, 0, 1)
+        self._bg.setColor(0.5, 0.5, 0.5, 1)
 
     def _set_health(self, task):
         """Show the character's health level on the widget."""

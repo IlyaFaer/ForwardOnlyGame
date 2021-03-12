@@ -111,14 +111,14 @@ class Train:
 
         self._gui = TrainGUI()
 
-        self._damnability = None
+        self._durability = None
 
         if description:  # loading params from the last save
-            self.damnability = description["damnability"]
+            self.durability = description["durability"]
             self._miles = description["miles"] - 1
             self.node.setHpr(description["node_angle"])
         else:  # new game params
-            self.damnability = 1000
+            self.durability = 1000
             self._miles = -1
 
         self.l_brake = False
@@ -149,25 +149,25 @@ class Train:
         self.do_turn = 0
 
     @property
-    def damnability(self):
-        """The Train damnability points.
+    def durability(self):
+        """The Train durability points.
 
         Returns:
-            int: Current Train damnability.
+            int: Current Train durability.
         """
-        return self._damnability
+        return self._durability
 
-    @damnability.setter
-    def damnability(self, value):
-        """Set new Train damnability value.
+    @durability.setter
+    def durability(self, value):
+        """Set new Train durability value.
 
-        Updates the damnability GUI.
+        Updates the durability GUI.
 
         Args:
             value (int): New value.
         """
-        self._damnability = max(0, min(1000, value))
-        self._gui.update_indicators(damnability=self.damnability)
+        self._durability = max(0, min(1000, value))
+        self._gui.update_indicators(durability=self.durability)
 
     @property
     def description(self):
@@ -177,7 +177,7 @@ class Train:
             dict: Saveable Train state description.
         """
         return {
-            "damnability": self.damnability,
+            "durability": self.durability,
             "speed": self.ctrl.current_speed,
             "miles": self._miles,
             "node_angle": self.node.getHpr(),
@@ -426,7 +426,7 @@ class Train:
         with a metal creak sound.
         """
         if self.ctrl.current_speed > 0.7:
-            self.damnability -= 2
+            self.durability -= 2
 
             if not self._creak_snd_cooldown:
                 random.choice(self._creak_snds).play()
@@ -595,12 +595,12 @@ class Train:
         Args:
             damage (int): Damage points to get.
         """
-        self.damnability -= damage
+        self.durability -= damage
 
         if self.ctrl.critical_damage:
             return
 
-        if self.damnability == 0:
+        if self.durability == 0:
             self.ctrl.critical_damage = True
             self.ctrl.stop()
 
@@ -655,7 +655,7 @@ class Train:
             "return_bomb_explosion_effect",
             extraArgs=[explosion],
         )
-        self.damnability -= 4
+        self.durability -= 4
 
         if y_coor < -0.1:  # too far from characters
             return

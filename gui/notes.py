@@ -64,10 +64,14 @@ sure case. Take your risks!""",
 scheme and choose an
 optimal path""",
     """Railway branches always merge
-back to the main railway""",
+back to the main
+railway line""",
     """You can find more outings and
 events on side railway branches""",
     # Train
+    """You can turn around in a city.
+Consider it, while choosing
+an optimal path.""",
     """It's reckless to stop while
 on enemy territory""",
     """Switching on lights helps to save

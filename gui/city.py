@@ -639,7 +639,7 @@ class CityGUI:
 
         Args:
             value (int):
-                Points of the Train damnability to repair.
+                Points of the Train durability to repair.
         """
         spent = 20 if value == 50 else 80
         if base.dollars - spent < 0:  # noqa: F821
