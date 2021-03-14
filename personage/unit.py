@@ -81,6 +81,8 @@ class Unit(metaclass=abc.ABCMeta):
             return False
 
         self.is_dead = True
+
+        base.common_ctrl.traverser.removeCollider(self._col_node)  # noqa: F821
         self._col_node.removeNode()
 
         taskMgr.doMethodLater(  # noqa: F821
