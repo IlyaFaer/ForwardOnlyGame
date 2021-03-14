@@ -62,16 +62,16 @@ class EnemyMotorcyclist(EnemyUnit):
         """
         self._explosion.play()
 
-        rb_node = BulletRigidBodyNode(self.id + "_physics")
-        rb_node.setMass(80)
-        rb_node.addShape(BulletBoxShape(Vec3(0.005, 0.04, 0.028)))
-        rb_node.deactivation_enabled = False
+        self._rb_node = BulletRigidBodyNode(self.id + "_physics")
+        self._rb_node.setMass(80)
+        self._rb_node.addShape(BulletBoxShape(Vec3(0.005, 0.04, 0.028)))
+        self._rb_node.deactivation_enabled = False
 
-        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
+        phys_node = self.node.attachNewNode(self._rb_node)  # noqa: F821
 
         self.model.reparentTo(phys_node)
         self.model.setPos(0, -0.01, -0.025)
-        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+        base.world.phys_mgr.attachRigidBody(self._rb_node)  # noqa: F821
 
         # boom impulse
         angle = self.model.getH(render)  # noqa: F821
@@ -84,8 +84,8 @@ class EnemyMotorcyclist(EnemyUnit):
         elif angle == -90:
             x = random.randint(6500, 8500)
 
-        rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
-        rb_node.applyTorque(
+        self._rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
+        self._rb_node.applyTorque(
             Vec3(
                 random.randint(-45, 45),
                 random.randint(-45, 45),
@@ -667,16 +667,16 @@ class DodgeShooter(EnemyUnit):
         self._explosion.play()
         self._smoke.play()
 
-        rb_node = BulletRigidBodyNode(self.id + "_physics")
-        rb_node.setMass(100)
-        rb_node.addShape(BulletBoxShape(Vec3(0.06, 0.1, 0.028)))
-        rb_node.deactivation_enabled = False
+        self._rb_node = BulletRigidBodyNode(self.id + "_physics")
+        self._rb_node.setMass(100)
+        self._rb_node.addShape(BulletBoxShape(Vec3(0.06, 0.1, 0.028)))
+        self._rb_node.deactivation_enabled = False
 
-        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
+        phys_node = self.node.attachNewNode(self._rb_node)  # noqa: F821
 
         self.model.reparentTo(phys_node)
         self.model.setPos(0, 0, -0.03)
-        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+        base.world.phys_mgr.attachRigidBody(self._rb_node)  # noqa: F821
 
         # boom impulse
         angle = round(self.model.getH(render))  # noqa: F821
@@ -689,8 +689,10 @@ class DodgeShooter(EnemyUnit):
         elif angle == -90:
             x = random.randint(6500, 8500)
 
-        rb_node.applyForce(Vec3(x, y, random.randint(1000, 2000)), Point3(0, -0.1, 0))
-        rb_node.applyTorque(
+        self._rb_node.applyForce(
+            Vec3(x, y, random.randint(1000, 2000)), Point3(0, -0.1, 0)
+        )
+        self._rb_node.applyTorque(
             Vec3(
                 random.randint(-45, 45),
                 random.randint(-45, 45),

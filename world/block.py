@@ -87,6 +87,7 @@ class Block:
     ):
 
         self._surfs = []
+        self._phys_objs = []
         self.rails_mod = None
         self._req_add_surface = False
         self._old_values = None
@@ -450,7 +451,7 @@ class Block:
         relative to the game render.
         """
         if self.enemy_territory and chance(2):
-            Barrier(self)
+            self._phys_objs.append(Barrier(self))
 
     def description(self):
         """Build block description.
@@ -484,6 +485,9 @@ class Block:
         if self._old_values:
             self.name, self.path, self.cam_path = self._old_values
             self._old_values = None
+
+        for obj in self._phys_objs:
+            obj.clear()
 
         self.rails_mod.removeNode()
         self.rails_mod = None

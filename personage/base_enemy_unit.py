@@ -44,6 +44,8 @@ class EnemyUnit(Unit):
         self.model.pose("ride", 1)
         self.model.reparentTo(self.node)
 
+        self._rb_node = None
+
         # organize movement and aiming tasks
         time_to_overtake = random.randint(33, 50)
 
@@ -160,6 +162,9 @@ class EnemyUnit(Unit):
         self._move_int.finish()
         self.model.cleanup()
         self.node.removeNode()
+
+        if self._rb_node is not None:
+            base.world.phys_mgr.removeRigidBody(self._rb_node)  # noqa: F821
 
         if task is not None:
             return task.done

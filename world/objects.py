@@ -26,6 +26,7 @@ class Barrier:
     def __init__(self, block):
         id_ = "barrier_" + str(random.randint(1, 10000))
         y_coor = random.randint(8, 16)
+        self._rb_nodes = []
 
         self._prepare_physics(
             id_,
@@ -64,6 +65,14 @@ class Barrier:
         model.reparentTo(phys_np)
 
         base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+        self._rb_nodes.append(rb_node)
+
+    def clear(self):
+        """Clear physical shapes."""
+        for rb_node in self._rb_nodes:
+            base.world.phys_mgr.removeRigidBody(rb_node)  # noqa: F821
+
+        self._rb_nodes.clear()
 
 
 class ArmorPlate:
