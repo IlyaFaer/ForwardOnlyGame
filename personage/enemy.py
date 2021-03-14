@@ -45,7 +45,7 @@ CLASSES = {
         {
             "class": DodgeShooter,
             "model": "dodge_gun",
-            "score": 8,
+            "score": 7,
             "threshold": 12,
             "part": "side",
             "health": 100,
@@ -141,7 +141,7 @@ class Enemy:
         if chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0)):
             self._is_cooldown = True
             taskMgr.doMethodLater(  # noqa: F821
-                450, self._stop_cooldown, "stop_attack_cooldown"
+                415, self._stop_cooldown, "stop_attack_cooldown"
             )
             return True
 

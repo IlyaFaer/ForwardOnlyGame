@@ -289,7 +289,7 @@ class Team:
                     )
 
         self._calc_total_cohesion()
-        task.delayTime = 210
+        task.delayTime = 200
         return task.again
 
     def _calc_total_cohesion(self):

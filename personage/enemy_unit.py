@@ -87,9 +87,9 @@ class EnemyMotorcyclist(EnemyUnit):
         self._rb_node.applyForce(Vec3(x, y, random.randint(1500, 2500)), Point3(0))
         self._rb_node.applyTorque(
             Vec3(
-                random.randint(-45, 45),
-                random.randint(-45, 45),
-                random.randint(-45, 45),
+                random.randint(-35, 35),
+                random.randint(-35, 35),
+                random.randint(-35, 35),
             )
         )
 

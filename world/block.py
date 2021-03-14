@@ -489,5 +489,6 @@ class Block:
         for obj in self._phys_objs:
             obj.clear()
 
+        self._surfs.clear()
         self.rails_mod.removeNode()
         self.rails_mod = None
