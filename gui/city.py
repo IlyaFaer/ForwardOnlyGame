@@ -6,7 +6,7 @@ Cities GUI.
 """
 import random
 
-from direct.gui.DirectGui import DirectButton, DirectFrame, DirectLabel
+from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
 from personage.character_data import TRAITS
@@ -155,6 +155,7 @@ class CityGUI:
             frameSize=(-0.35, 0.35, -0.4, 0.7),
             pos=(0.85, 0, -0.82),
             frameTexture=GUI_PIC + "metal1.png",
+            state=DGG.NORMAL,
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
         self._fr.hide()

@@ -27,7 +27,7 @@ UPGRADES = {
         "desc": """With this ram your locomotive
 will be breaking road barriers
 without getting damage""",
-        "cost": "200$",
+        "cost": "180$",
         "model": "ram1",
     },
     "Floodlights": {
@@ -35,7 +35,7 @@ without getting damage""",
         "desc": """All the negative darkness
 factors are no more actual with
 these floodlights on""",
-        "cost": "250$",
+        "cost": "220$",
         "model": "floodlights1",
     },
     "Armor Plate": {
@@ -664,7 +664,7 @@ class Train:
             "part_locomotive_left" if x_coor < 0 else "part_locomotive_right"
         ].chars:
             if abs(char.model.getY() - y_coor) < 0.11:
-                char.get_damage(3)
+                char.get_damage(4)
                 char.get_stunned(5)
 
     def use_smoke_filter(self):

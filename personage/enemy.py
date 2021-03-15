@@ -36,7 +36,7 @@ CLASSES = {
         {
             "class": StunBombThrower,
             "model": "skinhead_thrower1",
-            "score": 5,
+            "score": 4,
             "threshold": 9,
             "part": "side",
             "health": 90,
