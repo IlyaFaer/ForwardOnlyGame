@@ -536,7 +536,8 @@ class Character(Shooter, Unit):
     def _calm_down(self, task):
         """Return to passive state."""
         self._stop_tasks("_shoot")
-        self.model.hprInterval(2, (self.current_part.angle, 0, 0)).start()
+        if self.current_part:
+            self.model.hprInterval(2, (self.current_part.angle, 0, 0)).start()
 
         LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
         taskMgr.doMethodLater(  # noqa: F821
