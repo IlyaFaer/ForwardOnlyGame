@@ -41,7 +41,9 @@ class MainMenu:
         self.click_snd.setVolume(0.1)
 
         self._main_fr = DirectFrame(
-            frameSize=(-2, 2, -1, 1), frameColor=(0.15, 0.15, 0.15, 1)
+            frameSize=(-2, 2, -1, 1),
+            frameColor=(0.15, 0.15, 0.15, 1),
+            state=DGG.NORMAL,
         )
         but_params = {
             "text_scale": 0.05,

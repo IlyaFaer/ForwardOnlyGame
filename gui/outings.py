@@ -221,6 +221,7 @@ class OutingsGUI:
 
         char.prepare()
         base.train.place_recruit(char)  # noqa: F821
+        base.res_gui.update_chars()  # noqa: F821
 
         self.hide_outing()
         base.common_ctrl.deselect()  # noqa: F821

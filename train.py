@@ -147,6 +147,7 @@ class Train:
         self._smoke_filter.pose("open", 1)
 
         self.do_turn = 0
+        self.cells = 7
 
     @property
     def durability(self):

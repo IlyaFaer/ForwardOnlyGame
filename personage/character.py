@@ -621,6 +621,7 @@ class Character(Shooter, Unit):
         base.sound_mgr.detach_sound(self._cough_snd)  # noqa: F821
 
         self._team.chars.pop(self.id)
+        base.res_gui.update_chars()  # noqa: F821
         self.current_part.release_cell(self._current_pos, self)
         self.current_part = None
 

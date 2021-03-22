@@ -130,6 +130,7 @@ class Team:
         self._relations = cohesion_desc[1]
 
         base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
+        base.res_gui.update_chars()  # noqa: F821
 
     def cohesion_recall(self):
         """Do cohesion ability "Recall the past"."""

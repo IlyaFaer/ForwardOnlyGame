@@ -36,8 +36,8 @@ class ResourcesGUI:
 
         self._res_frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
-            frameSize=(-0.26, 0.26, -0.03, 0.028),
-            pos=(0.26, 0, -0.028),
+            frameSize=(-0.3, 0.3, -0.03, 0.028),
+            pos=(0.3, 0, -0.028),
             frameTexture=GUI_PIC + "metal1.png",
         )
         self._res_frame.setTransparency(TransparencyAttrib.MAlpha)
@@ -45,7 +45,7 @@ class ResourcesGUI:
         DirectFrame(
             parent=self._res_frame,  # noqa: F821
             frameSize=(-0.023, 0.023, -0.023, 0.023),
-            pos=(-0.23, 0, 0),
+            pos=(-0.27, 0, 0),
             frameTexture=GUI_PIC + "dollar.png",
         )
         self._resources["dollars"] = DirectLabel(
@@ -54,13 +54,27 @@ class ResourcesGUI:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_fg=RUST_COL,
-            pos=(-0.16, 0, -0.008),
+            pos=(-0.2, 0, -0.008),
+        )
+        DirectFrame(
+            parent=self._res_frame,  # noqa: F821
+            frameSize=(-0.018, 0.018, -0.018, 0.018),
+            pos=(-0.11, 0, 0),
+            frameTexture=GUI_PIC + "chars.png",
+        )
+        self._resources["chars"] = DirectLabel(
+            parent=self._res_frame,
+            text="{}/{}".format(len(base.team.chars), base.train.cells),  # noqa: F821
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            text_scale=0.035,
+            text_fg=RUST_COL,
+            pos=(-0.05, 0, -0.008),
         )
         but = DirectButton(
             parent=self._res_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
-            pos=(-0.07, 0, 0),
+            pos=(0.01, 0, 0),
             frameTexture=GUI_PIC + "medicine.png",
             command=base.team.use_medicine,  # noqa: F821
         )
@@ -73,13 +87,13 @@ class ResourcesGUI:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_fg=RUST_COL,
-            pos=(-0.03, 0, -0.008),
+            pos=(0.05, 0, -0.008),
         )
         but = DirectButton(
             parent=self._res_frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             relief="flat",
-            pos=(0.03, 0, 0),
+            pos=(0.105, 0, 0),
             frameTexture=GUI_PIC + "smoke_filter.png",
             command=base.train.use_smoke_filter,  # noqa: F821
         )
@@ -92,13 +106,13 @@ class ResourcesGUI:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_fg=RUST_COL,
-            pos=(0.075, 0, -0.008),
+            pos=(0.145, 0, -0.008),
         )
         but = DirectButton(
             parent=self._res_frame,
             frameSize=(-0.014, 0.014, -0.021, 0.021),
             relief="flat",
-            pos=(0.13, 0, 0),
+            pos=(0.19, 0, 0),
             frameTexture=GUI_PIC + "stimulator.png",
             command=base.team.use_stimulator,  # noqa: F821
         )
@@ -111,11 +125,11 @@ class ResourcesGUI:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_fg=RUST_COL,
-            pos=(0.17, 0, -0.008),
+            pos=(0.23, 0, -0.008),
         )
         DirectButton(
             parent=self._res_frame,
-            pos=(0.23, 0, -0.013),
+            pos=(0.27, 0, -0.013),
             command=self._show_expendable_resources,
             clickSound=base.main_menu.click_snd,  # noqa: F821
             **ABOUT_BUT_PARAMS,
@@ -436,7 +450,7 @@ class ResourcesGUI:
     def _show_expendable_resources(self):
         """Show/hide expendable resources description."""
         if self._res_desc_shown:
-            self._res_frame["frameSize"] = (-0.26, 0.26, -0.03, 0.028)
+            self._res_frame["frameSize"] = (-0.3, 0.3, -0.03, 0.028)
 
             for wid in self._res_desc_wids:
                 wid.destroy()
@@ -446,7 +460,7 @@ class ResourcesGUI:
             return
 
         self._res_desc_shown = True
-        self._res_frame["frameSize"] = (-0.26, 0.26, -0.41, 0.028)
+        self._res_frame["frameSize"] = (-0.3, 0.3, -0.41, 0.028)
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
@@ -595,6 +609,12 @@ class ResourcesGUI:
             value (Any): The new indicator value.
         """
         self._resources[name]["text"] = str(value)
+
+    def update_chars(self):
+        """Update characters number widget."""
+        self._resources["chars"]["text"] = "{current}/{maximum}".format(
+            current=len(base.team.chars), maximum=base.train.cells  # noqa: F821
+        )
 
     def update_cohesion(self, new_value):
         """Update cohesion indicator with the given value.
