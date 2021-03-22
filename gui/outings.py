@@ -211,7 +211,7 @@ class OutingsGUI:
         if not base.res_gui.check_enough_money(cost):  # noqa: F821
             return
 
-        if not base.train.has_cell():  # noqa: F821
+        if not base.res_gui.check_has_cell():  # noqa: F821
             return
 
         base.dollars -= cost  # noqa: F821

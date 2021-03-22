@@ -626,7 +626,7 @@ class CityGUI:
         if char is None:
             return
 
-        if not base.train.has_cell():  # noqa: F821
+        if not base.res_gui.check_has_cell():  # noqa: F821
             return
 
         self.write_snd.play()

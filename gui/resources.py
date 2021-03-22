@@ -559,16 +559,20 @@ class ResourcesGUI:
             )
         )
 
-    def _blink_money(self, task):
-        """Make money widget blinking."""
+    def _blink_widget(self, widget, task):
+        """Make the given widget blinking.
+
+        Args:
+            widget (str): Name of the widget to blink.
+        """
         self._blink_step += 1
 
         if self._blink_step in (2, 4):
-            self._resources["dollars"]["text_bg"] = (0, 0, 0, 0)
-            self._resources["dollars"]["text_fg"] = RUST_COL
+            self._resources[widget]["text_bg"] = (0, 0, 0, 0)
+            self._resources[widget]["text_fg"] = RUST_COL
         else:
-            self._resources["dollars"]["text_bg"] = (0.6, 0, 0, 1)
-            self._resources["dollars"]["text_fg"] = (0, 0, 0, 1)
+            self._resources[widget]["text_bg"] = (0.6, 0, 0, 1)
+            self._resources[widget]["text_fg"] = (0, 0, 0, 1)
 
         if self._blink_step == 4:
             self._blink_step = 0
@@ -589,7 +593,30 @@ class ResourcesGUI:
         """
         if ch_sum > base.dollars:  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
-                0.4, self._blink_money, "blink_money_widget"
+                0.4,
+                self._blink_widget,
+                "blink_money_widget",
+                extraArgs=["dollars"],
+                appendTask=True,
+            )
+            self._err_snd.play()
+            return False
+
+        return True
+
+    def check_has_cell(self):
+        """Check that the Train has at least one cell.
+
+        Make the characters number widget
+        blink, if there are not free cells.
+        """
+        if not base.train.has_cell():  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
+                0.4,
+                self._blink_widget,
+                "blink_money_widget",
+                extraArgs=["chars"],
+                appendTask=True,
             )
             self._err_snd.play()
             return False
