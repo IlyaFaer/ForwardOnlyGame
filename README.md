@@ -1,5 +1,5 @@
 # Forward Only
-[на русском](https://github.com/IlyaFaer/ForwardOnly/blob/master/README%20(RUS).md)
+[на русском](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/README%20(RUS).md)
 
 The World dies because of the terrible cataclysm called "the Stench". The only way to survive is to move forward and do it quickly, as death spreads across the Earth. Fortunately, you have a locomotive that is still running, so prepare for a big journey with a small company of cohesive heroes, who are trying to pull together through severe adversities new World brings upon.
 
