@@ -197,7 +197,7 @@ class CityGUI:
         base.main_menu.bind_button(  # noqa: F821
             DirectButton(
                 parent=self._fr,
-                pos=(-0.205, 0, -0.33),
+                pos=(-0.205, 0, -0.35),
                 text_fg=RUST_COL,
                 text="Exit city",
                 relief=None,
@@ -208,7 +208,7 @@ class CityGUI:
         base.main_menu.bind_button(  # noqa: F821
             DirectButton(
                 parent=self._fr,
-                pos=(0.1, 0, -0.33),
+                pos=(0.1, 0, -0.35),
                 text_fg=RUST_COL,
                 text="Turn around and exit",
                 relief=None,
@@ -316,7 +316,6 @@ class CityGUI:
             text="Purchase",
             relief=None,
             text_scale=0.035,
-            clickSound=base.main_menu.click_snd,  # noqa: F821
             command=self._purchase_upgrade,
         )
         self._repl_wids.append(but)
@@ -332,9 +331,15 @@ class CityGUI:
     def _purchase_upgrade(self):
         """Buy the chosen upgrade and install it on to the Train."""
         upgrade = self._up_chooser.chosen_item
-        if upgrade is None or base.dollars < int(upgrade["cost"][:-1]):  # noqa: F821
+        if (
+            upgrade is None
+            or not base.res_gui.check_enough_money(  # noqa: F821:  # noqa: F821
+                int(upgrade["cost"][:-1])
+            )
+        ):
             return
 
+        base.main_menu.click_snd.play()  # noqa: F821
         base.dollars -= int(upgrade["cost"][:-1])  # noqa: F821
 
         base.train.install_upgrade(upgrade)  # noqa: F821
@@ -538,7 +543,9 @@ class CityGUI:
 
     def _buy_supply(self):
         """Buy the chosen resource."""
-        if base.dollars < self._res_chooser.chosen_resource_cost:  # noqa: F821
+        if not base.res_gui.check_enough_money(  # noqa: F821
+            self._res_chooser.chosen_resource_cost
+        ):
             return
 
         random.choice((self._coins_s_snd, self._coins_l_snd)).play()
@@ -612,7 +619,7 @@ class CityGUI:
     def _hire(self):
         """Hire the chosen unit."""
         cost = self._recruit_chooser.chosen_recruit_cost
-        if base.dollars < cost:  # noqa: F821
+        if not base.res_gui.check_enough_money(cost):  # noqa: F821
             return
 
         char = self._recruit_chooser.chosen_item
@@ -643,7 +650,7 @@ class CityGUI:
                 Points of the Train durability to repair.
         """
         spent = 20 if value == 50 else 80
-        if base.dollars - spent < 0:  # noqa: F821
+        if not base.res_gui.check_enough_money(spent):  # noqa: F821
             return
 
         random.choice((self._coins_s_snd, self._coins_l_snd)).play()
@@ -659,7 +666,7 @@ class CityGUI:
         Args:
             value (int): Points to heal.
         """
-        if base.dollars - value < 0:  # noqa: F821
+        if not base.res_gui.check_enough_money(value):  # noqa: F821
             return
 
         random.choice((self._coins_s_snd, self._coins_l_snd)).play()
@@ -676,7 +683,7 @@ class CityGUI:
             value (int): Points to regain.
         """
         spent = 5 if value == 10 else 25
-        if base.dollars - spent < 0:  # noqa: F821
+        if not base.res_gui.check_enough_money(spent):  # noqa: F821
             return
 
         random.choice((self._coins_s_snd, self._coins_l_snd)).play()

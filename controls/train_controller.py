@@ -115,13 +115,13 @@ class TrainController:
             MopathInterval(  # Train movement
                 block.path[do_turn] if is_fork else block.path,
                 self._model,
-                duration=4,
+                duration=4.2,
                 name="current_path",
             ),
             MopathInterval(  # camera movement
                 block.cam_path[do_turn] if is_fork else block.cam_path,
                 train_np,
-                duration=4,
+                duration=4.2,
                 name="current_camera_path",
             ),
         )

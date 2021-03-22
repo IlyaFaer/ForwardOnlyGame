@@ -30,6 +30,9 @@ class ResourcesGUI:
         self._res_desc_shown = False
 
         self._resources = {}
+        self._blink_step = 0
+
+        self._err_snd = loader.loadSfx("sounds/error.ogg")  # noqa: F821
 
         self._res_frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
@@ -541,6 +544,43 @@ class ResourcesGUI:
                 pos=(0.035, 0, -0.375),
             )
         )
+
+    def _blink_money(self, task):
+        """Make money widget blinking."""
+        self._blink_step += 1
+
+        if self._blink_step in (2, 4):
+            self._resources["dollars"]["text_bg"] = (0, 0, 0, 0)
+            self._resources["dollars"]["text_fg"] = RUST_COL
+        else:
+            self._resources["dollars"]["text_bg"] = (0.6, 0, 0, 1)
+            self._resources["dollars"]["text_fg"] = (0, 0, 0, 1)
+
+        if self._blink_step == 4:
+            self._blink_step = 0
+            return task.done
+
+        return task.again
+
+    def check_enough_money(self, ch_sum):
+        """Ensure that player have enough money for a buy.
+
+        Make the money widget blink if player doesn't have enough money.
+
+        Args:
+            ch_sum (int): Buy cost.
+
+        Returns:
+            bool: True, if player has enough money.
+        """
+        if ch_sum > base.dollars:  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
+                0.4, self._blink_money, "blink_money_widget"
+            )
+            self._err_snd.play()
+            return False
+
+        return True
 
     def disable_cohesion(self):
         """Disable all the cohesion abilities."""
