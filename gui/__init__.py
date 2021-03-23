@@ -17,7 +17,7 @@ from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsGUI  # noqa: F401
 from .rails_scheme import RailsScheme  # noqa: F401
 from .resources import ResourcesGUI  # noqa: F401
-from .teaching import EnemyClassDesc  # noqa: F401
+from .teaching import EnemyDesc  # noqa: F401
 from .train import TrainGUI  # noqa: F401
 from .traits import TraitsGUI  # noqa: F401
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL  # noqa: F401

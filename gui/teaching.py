@@ -13,6 +13,7 @@ from personage.enemy_unit import (
     MotoShooter,
     StunBombThrower,
 )
+from world.objects import Barrier
 from .widgets import RUST_COL, SILVER_COL
 
 CLASS_DESCS = {
@@ -64,15 +65,27 @@ CLASS_DESCS = {
         "but_text": "They won't stop us!",
         "title": "Skinheads gather vehicles to deal with you!",
     },
+    Barrier: {
+        "desc": (
+            "Now skinheads are using heavy barriers to get\n"
+            "to you. A barrier can do a lot of damage to your\n"
+            "locomotive on a clash. It's highly recommended to\n"
+            "set the Ram train upgrade in the nearest city\n"
+            "to get better protection from barriers."
+        ),
+        "preview": "barrier",
+        "but_text": "Understood!",
+        "title": "Skinheads start to use barriers!",
+    },
 }
 
 
-class EnemyClassDesc:
-    """Enemy class description.
+class EnemyDesc:
+    """Enemy class/object description.
 
-    A teaching note about enemy type. Is shown on player's
-    screen, when a new enemy type is added into the
-    list of attacking enemy units.
+    A teaching note about enemy class/object. Is shown on
+    player's screen, when a new enemy class/object is added
+    into the list of attacking enemy units.
     """
 
     def __init__(self, class_):
