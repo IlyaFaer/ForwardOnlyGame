@@ -10,7 +10,7 @@ from direct.actor.Actor import Actor
 from panda3d.core import CollisionHandlerEvent
 
 from utils import address, chance
-from .enemy_unit import BrakeDropper, DodgeShooter, MotoShooter, StunBombThrower
+from .enemy_unit import BrakeThrower, DodgeShooter, MotoShooter, StunBombThrower
 from .transport import TransportManager
 
 CLASSES = {
@@ -25,7 +25,7 @@ CLASSES = {
             "transport_model": "moto1",
         },
         {
-            "class": BrakeDropper,
+            "class": BrakeThrower,
             "model": "skinhead_shooter1",
             "score": 4,
             "threshold": 6,
@@ -169,7 +169,7 @@ class Enemy:
         while wave_score < self.score:
             unit_class = random.choice(available)
 
-            if unit_class["class"] == BrakeDropper:
+            if unit_class["class"] == BrakeThrower:
                 brakers += 1
                 if brakers == 2:
                     available.remove(unit_class)

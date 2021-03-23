@@ -238,8 +238,8 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
             return task.done
 
 
-class BrakeDropper(EnemyMotorcyclist):
-    """Brake shoes dropper unit.
+class BrakeThrower(EnemyMotorcyclist):
+    """Brake shoes thrower unit.
 
     Brakers are trying to slow down the Train, to make
     it easier for other enemy units to deal damage.
@@ -323,7 +323,7 @@ class BrakeDropper(EnemyMotorcyclist):
         for char in base.world.enemy.active_units.values():  # noqa: F821
             # if someone is jumping now, don't jump
             if (
-                type(char) == BrakeDropper and char.id != self.id and char.is_jumping
+                type(char) == BrakeThrower and char.id != self.id and char.is_jumping
             ) or (
                 base.train.l_brake and base.train.r_brake  # noqa: F821
             ):
