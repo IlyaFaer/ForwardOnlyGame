@@ -8,7 +8,7 @@ import shelve
 import sys
 
 from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
-from panda3d.core import TransparencyAttrib
+from panda3d.core import TextNode, TransparencyAttrib
 
 from utils import save_exists
 from .character import CharacterGUI  # noqa: F401
@@ -34,6 +34,7 @@ class MainMenu:
         self._is_first_pause = True
         self._tactics_wids = []
         self._save_wids = []
+        self._save_blocked_lab = None
 
         self._hover_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
         self._hover_snd.setVolume(0.1)
@@ -94,6 +95,49 @@ class MainMenu:
                 "game princips. Enjoy your play!"
             ),
         )
+
+    def _check_can_save(self, task):
+        """Check if the game can be saved.
+
+        If the game can't be saved, the cause will
+        be shown under the "Save game" button.
+        """
+        if base.world.is_on_et:  # noqa: F821
+            cause = "(blocked during fight)"
+        elif base.world.is_in_city:  # noqa: F821
+            cause = "(blocked near a city)"
+        elif base.world.is_near_fork:  # noqa: F821
+            cause = "(blocked near a fork)"
+        elif base.train.ctrl.critical_damage:  # noqa: F821
+            cause = "(blocked on game over)"
+        elif base.current_block.id < 4:  # noqa: F821
+            cause = "(blocked on game start)"
+        else:
+            cause = None
+
+        if cause:
+            if self._save_blocked_lab is None:
+                self._save_blocked_lab = DirectLabel(
+                    parent=self._main_fr,
+                    pos=(-1.12, 0, 0.26),
+                    text_scale=0.026,
+                    text_fg=SILVER_COL,
+                    frameColor=(0, 0, 0, 0),
+                    text=cause,
+                    text_align=TextNode.ALeft,
+                )
+            self._save_blocked_lab["text"] = cause
+            self._save_but["text_fg"] = SILVER_COL
+            self._save_but["command"] = None
+            self.hide_slots()
+        else:
+            self._save_but["text_fg"] = RUST_COL
+            self._save_but["command"] = self._show_slots
+            if self._save_blocked_lab is not None:
+                self._save_blocked_lab.destroy()
+                self._save_blocked_lab = None
+
+        return task.again
 
     def _highlight_but(self, button, _):
         """Highlight the button pointed by mouse.
@@ -420,6 +464,7 @@ class MainMenu:
         self.hide_slots()
 
         base.accept("escape", self.show)  # noqa: F821
+        taskMgr.remove("check_can_save")  # noqa: F821
 
     def show(self, is_game_over=False):
         """Show the main menu.
@@ -450,20 +495,10 @@ class MainMenu:
         else:
             base.accept("escape", self.hide)  # noqa: F821
 
-        can_save = not (
-            base.train.ctrl.critical_damage  # noqa: F821
-            or base.world.is_in_city  # noqa: F821
-            or base.world.is_on_et  # noqa: F821
-            or base.current_block.id < 4  # noqa: F821
-            or base.world.is_near_fork  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            0.25, self._check_can_save, "check_can_save"
         )
         if not self._is_first_pause:
-            if can_save:
-                self._save_but["text_fg"] = RUST_COL
-                self._save_but["command"] = self._show_slots
-            else:
-                self._save_but["text_fg"] = SILVER_COL
-                self._save_but["command"] = None
             return
 
         # it is the first pause
@@ -476,10 +511,17 @@ class MainMenu:
 
         self._load_but.destroy()
 
+        can_save = not (
+            base.train.ctrl.critical_damage  # noqa: F821
+            or base.world.is_in_city  # noqa: F821
+            or base.world.is_on_et  # noqa: F821
+            or base.current_block.id < 4  # noqa: F821
+            or base.world.is_near_fork  # noqa: F821
+        )
         self._save_but = DirectButton(
             parent=self._main_fr,
             pos=(-0.998, 0, 0.3),
-            text_scale=(0.05, 0.05),
+            text_scale=0.05,
             text_fg=RUST_COL if can_save else SILVER_COL,
             text="Save game",
             relief=None,
