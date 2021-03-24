@@ -908,6 +908,7 @@ class World:
 
         if (
             len(self._loaded_blocks) > 2
+            and self._loaded_blocks[-2].id >= 15
             and not self._et_blocks
             and self.enemy.going_to_attack(
                 self.sun.day_part, base.train.lights_on  # noqa: F821

@@ -13,6 +13,8 @@ from direct.interval.IntervalGlobal import Parallel, Sequence, SoundInterval
 
 from utils import address
 
+BARRIER_THRESHOLD = 8
+
 
 class Barrier:
     """Enemy barrier.

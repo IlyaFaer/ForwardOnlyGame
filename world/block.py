@@ -11,7 +11,7 @@ from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
 from .locations import LOCATION_CONF
-from .objects import Barrier
+from .objects import BARRIER_THRESHOLD, Barrier
 
 ANGLES = (0, 90, 180, 270)
 SURFACES = {
@@ -450,7 +450,11 @@ class Block:
         all the children physical nodes will be positioned
         relative to the game render.
         """
-        if self.enemy_territory and chance(2):
+        if (
+            self.enemy_territory
+            and base.world.enemy.score >= BARRIER_THRESHOLD  # noqa: F821
+            and chance(2)
+        ):
             self._phys_objs.append(Barrier(self))
 
     def description(self):

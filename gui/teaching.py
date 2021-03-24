@@ -7,17 +7,10 @@ GUI used for teaching players.
 from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TransparencyAttrib
 
-from personage.enemy_unit import (
-    BrakeThrower,
-    DodgeShooter,
-    MotoShooter,
-    StunBombThrower,
-)
-from world.objects import Barrier
 from .widgets import RUST_COL, SILVER_COL
 
 CLASS_DESCS = {
-    MotoShooter: {
+    "MotoShooter": {
         "desc": (
             "Moto shooter will try to shoot at you and\n"
             "your locomotive as much as he can. Most of\n"
@@ -29,7 +22,7 @@ CLASS_DESCS = {
         "but_text": "We're ready!",
         "title": "Some skinheads searching for you!",
     },
-    BrakeThrower: {
+    "BrakeThrower": {
         "desc": (
             "Brake thrower will try to overtake you and\n"
             "throw a brake shoe under your wheels to slow\n"
@@ -41,7 +34,7 @@ CLASS_DESCS = {
         "but_text": "Bring'em on!",
         "title": "Skinheads rumoring about dare newbies!",
     },
-    StunBombThrower: {
+    "StunBombThrower": {
         "desc": (
             "Such a guy uses stun bombs to make your fighters\n"
             "non-operational for several seconds. It's hard for\n"
@@ -53,7 +46,7 @@ CLASS_DESCS = {
         "but_text": "We'll deal with them!",
         "title": "Skinheads start to take you seriously!",
     },
-    DodgeShooter: {
+    "DodgeShooter": {
         "desc": (
             "Dodge with a machine gun is a strong enemy! It can\n"
             "do a lot of damage to your locomotive, but the\n"
@@ -65,7 +58,7 @@ CLASS_DESCS = {
         "but_text": "They won't stop us!",
         "title": "Skinheads gather vehicles to deal with you!",
     },
-    Barrier: {
+    "Barrier": {
         "desc": (
             "Now skinheads are using heavy barriers to get\n"
             "to you. A barrier can do a lot of damage to your\n"

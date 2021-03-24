@@ -9,7 +9,9 @@ import random
 from direct.actor.Actor import Actor
 from panda3d.core import CollisionHandlerEvent
 
+from gui.teaching import EnemyDesc
 from utils import address, chance
+from world.objects import BARRIER_THRESHOLD, Barrier
 from .enemy_unit import BrakeThrower, DodgeShooter, MotoShooter, StunBombThrower
 from .transport import TransportManager
 
@@ -37,7 +39,7 @@ CLASSES = {
             "class": StunBombThrower,
             "model": "skinhead_thrower1",
             "score": 4,
-            "threshold": 9,
+            "threshold": 10,
             "part": "side",
             "health": 90,
             "transport_model": "moto2",
@@ -46,7 +48,7 @@ CLASSES = {
             "class": DodgeShooter,
             "model": "dodge_gun",
             "score": 7,
-            "threshold": 12,
+            "threshold": 13,
             "part": "side",
             "health": 100,
             "transport_model": "dodge",
@@ -54,6 +56,8 @@ CLASSES = {
     ),
     "attack_chances": {"morning": 6, "noon": 20, "evening": 35, "night": 20},
 }
+
+NOT_TRANSPORT_CLASSES = ({"class": Barrier, "threshold": BARRIER_THRESHOLD},)
 
 
 class Enemy:
@@ -68,6 +72,7 @@ class Enemy:
 
         self._unit_id = 0
         self._is_cooldown = False
+        self._is_first_attack = True
         self._front_y_positions = []
         self._side_y_positions = []
 
@@ -131,6 +136,10 @@ class Enemy:
         Returns:
             bool: True if enemy is going to attack, False otherwise.
         """
+        if self._is_first_attack:
+            self._is_first_attack = False
+            EnemyDesc("MotoShooter")
+
         if (
             self._is_cooldown
             or base.world.is_in_city  # noqa: F821
@@ -201,6 +210,10 @@ class Enemy:
             enemy.stop()
 
         taskMgr.doMethodLater(12, self._clear_enemies, "clear_enemies")  # noqa: F821
+
+        for class_ in CLASSES["classes"] + NOT_TRANSPORT_CLASSES:
+            if class_["threshold"] == self.score:
+                EnemyDesc(class_["class"].__name__)
 
     def capture_train(self):
         """The Train got critical damage - stop near it."""
