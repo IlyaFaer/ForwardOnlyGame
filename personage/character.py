@@ -838,8 +838,8 @@ class Character(Shooter, Unit):
         self._current_anim = "stand_and_aim"
         self.model.loop("stand_and_aim")
 
-        base.taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
-        base.taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
+        taskMgr.doMethodLater(0.1, self._aim, self.id + "_aim")  # noqa: F821
+        taskMgr.doMethodLater(1, self._shoot, self.id + "_shoot")  # noqa: F821
 
         return task.done
 

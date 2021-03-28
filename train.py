@@ -138,6 +138,7 @@ class Train:
             self._l_brake_sparks,
             self._r_brake_sparks,
             self._bomb_explosions,
+            self._rocket_explosion,
         ) = self._prepare_particles()
 
         self.smoke_filtered = False
@@ -262,7 +263,10 @@ class Train:
         snow.setH(180)
         snow.start(base.cam, render)  # noqa: F821
 
-        return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions
+        explosion = ParticleEffect()
+        explosion.loadConfig("effects/rocket_explode.ptf")
+
+        return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions, explosion
 
     def has_cell(self):
         """Check if there is a free cell for a new unit.
@@ -588,6 +592,46 @@ class Train:
 
         self.lights_on = not self.lights_on
 
+    def explode_rocket(self, side):
+        """Explode a rocket on the given side of the locomotive.
+
+        Args:
+            side (str): Side on which a rocket is exploded.
+        """
+        if side == "right":
+            x_coor = -0.11
+        elif side == "top":
+            x_coor = 0
+        else:
+            x_coor = 0.11
+
+        self._rocket_explosion.setPos(x_coor, 0.11, 0.33 if side == "top" else 0.22)
+        self._rocket_explosion.start(self.model, render)  # noqa: F821
+        self._rocket_explosion.softStart()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.8,
+            self._rocket_explosion.softStop,
+            "disable_rocket_smoke",
+            extraArgs=[],
+            appendTask=False,
+        )
+
+        if self._armor_plate is None:
+            self.get_damage(100)
+            return
+
+        if side == "right" and not self._armor_plate.cur_position == "right":
+            self.get_damage(100)
+            return
+
+        if side == "left" and not self._armor_plate.cur_position == "left":
+            self.get_damage(100)
+            return
+
+        if side == "top" and not self._armor_plate.cur_position == "top":
+            self.get_damage(100)
+
     def get_damage(self, damage):
         """Get damage from an enemy.
 
@@ -719,7 +763,7 @@ class Train:
         self._upgrades.append(upgrade["name"])
 
         if upgrade["name"] == "Armor Plate":
-            ArmorPlate(self.model)
+            self._armor_plate = ArmorPlate(self.model)
             return
 
         up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821

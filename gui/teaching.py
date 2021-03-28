@@ -19,7 +19,7 @@ CLASS_DESCS = {
             "sharp - there will be a lot of them."
         ),
         "preview": "shooter",
-        "but_text": "We're ready!",
+        "but_text": "Got it!",
         "title": "Some skinheads searching for you!",
     },
     "BrakeThrower": {
@@ -31,8 +31,20 @@ CLASS_DESCS = {
             "successful. Try to deal with them fast!"
         ),
         "preview": "brake_thrower",
-        "but_text": "Bring'em on!",
+        "but_text": "Understood!",
         "title": "Skinheads rumoring about dare newbies!",
+    },
+    "Barrier": {
+        "desc": (
+            "Now skinheads are using heavy barriers to get\n"
+            "to you. A barrier can do a lot of damage to your\n"
+            "locomotive on a clash. It's highly recommended to\n"
+            "set the Ram train upgrade in the nearest city\n"
+            "to get better protection from barriers."
+        ),
+        "preview": "barrier",
+        "but_text": "We'll deal with it!",
+        "title": "Skinheads start to use barriers!",
     },
     "StunBombThrower": {
         "desc": (
@@ -43,7 +55,7 @@ CLASS_DESCS = {
             "efficiency will significantly increase."
         ),
         "preview": "bomb_thrower",
-        "but_text": "We'll deal with them!",
+        "but_text": "We're ready!",
         "title": "Skinheads start to take you seriously!",
     },
     "DodgeShooter": {
@@ -55,20 +67,20 @@ CLASS_DESCS = {
             "to be used for protection against this enemy."
         ),
         "preview": "dodge",
-        "but_text": "They won't stop us!",
+        "but_text": "Bring'em on!",
         "title": "Skinheads gather vehicles to deal with you!",
     },
-    "Barrier": {
+    "Rocket": {
         "desc": (
-            "Now skinheads are using heavy barriers to get\n"
-            "to you. A barrier can do a lot of damage to your\n"
-            "locomotive on a clash. It's highly recommended to\n"
-            "set the Ram train upgrade in the nearest city\n"
-            "to get better protection from barriers."
+            "Your progress is really pissing skinheads off.\n"
+            "To stop you they bring more and more forces.\n"
+            "Their new thought - telecontrolled rockets can\n"
+            "do a lot of damage to your locomotive. Stay sharp\n"
+            "and use Armor Plate train upgrade for protection."
         ),
-        "preview": "barrier",
-        "but_text": "Understood!",
-        "title": "Skinheads start to use barriers!",
+        "preview": "rocket",
+        "but_text": "They won't stop us!",
+        "title": "Skinheads start to use rockets!",
     },
 }
 
