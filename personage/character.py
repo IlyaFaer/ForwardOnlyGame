@@ -458,6 +458,9 @@ class Character(Shooter, Unit):
             task.delayTime *= 0.75
 
         self.energy -= 1
+        if "Mechanic" in self.traits:
+            base.train.get_damage(-3)  # noqa: F821
+
         return task.again
 
     def _gain_energy(self, task):
@@ -483,6 +486,9 @@ class Character(Shooter, Unit):
             "Motion sickness" in self.traits
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
         ):
+            return task.again
+
+        if "Pharmacophobia" in self.traits and chance(40):
             return task.again
 
         if self.health < self.class_data["health"]:

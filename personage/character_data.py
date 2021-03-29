@@ -149,6 +149,7 @@ TRAITS = [
     ("Liberal", "Loner"),
     ("Bloodthirsty", "Nervousness"),
     ("Deep breath", "Motion sickness"),
+    ("Mechanic", "Pharmacophobia"),
 ]
 
 TRAIT_DESC = {
@@ -166,4 +167,6 @@ TRAIT_DESC = {
     "Nervousness": "+25% energy spend while in fight",
     "Deep breath": "Avoid the Stench poison for the first 1 min",
     "Motion sickness": "Doesn't restore on high movement speed",
+    "Mechanic": "Repairs the Train, while not resting",
+    "Pharmacophobia": "Self-healing 40% slower",
 }
