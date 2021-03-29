@@ -11,7 +11,7 @@ from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
 from .locations import LOCATION_CONF
-from .objects import BARRIER_THRESHOLD, Barrier
+from .objects import BARRIER_THRESHOLD, ROCKET_THRESHOLD, Barrier, Rocket
 
 ANGLES = (0, 90, 180, 270)
 SURFACES = {
@@ -456,6 +456,13 @@ class Block:
             and chance(2)
         ):
             self._phys_objs.append(Barrier(self))
+
+        if (
+            self.enemy_territory
+            and base.world.enemy.score >= ROCKET_THRESHOLD  # noqa: F821
+            and chance(2)
+        ):
+            Rocket()
 
     def description(self):
         """Build block description.

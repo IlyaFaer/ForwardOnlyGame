@@ -11,7 +11,7 @@ from panda3d.core import CollisionHandlerEvent
 
 from gui.teaching import EnemyDesc
 from utils import address, chance
-from world.objects import BARRIER_THRESHOLD, Barrier
+from world.objects import BARRIER_THRESHOLD, ROCKET_THRESHOLD, Barrier, Rocket
 from .enemy_unit import BrakeThrower, DodgeShooter, MotoShooter, StunBombThrower
 from .transport import TransportManager
 
@@ -57,7 +57,10 @@ CLASSES = {
     "attack_chances": {"morning": 6, "noon": 20, "evening": 35, "night": 20},
 }
 
-NOT_TRANSPORT_CLASSES = ({"class": Barrier, "threshold": BARRIER_THRESHOLD},)
+NOT_TRANSPORT_CLASSES = (
+    {"class": Barrier, "threshold": BARRIER_THRESHOLD},
+    {"class": Rocket, "threshold": ROCKET_THRESHOLD},
+)
 
 
 class Enemy:

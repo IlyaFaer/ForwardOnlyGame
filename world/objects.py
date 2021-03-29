@@ -7,13 +7,25 @@ Active world objects API.
 import random
 
 from direct.actor.Actor import Actor
+from direct.directutil import Mopath
+from direct.interval.IntervalGlobal import (
+    Func,
+    LerpPosInterval,
+    Parallel,
+    Sequence,
+    SoundInterval,
+    Wait,
+)
+from direct.interval.MopathInterval import MopathInterval
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
 from panda3d.core import Vec3
-from direct.interval.IntervalGlobal import Parallel, Sequence, SoundInterval
+
 
 from utils import address
 
 BARRIER_THRESHOLD = 8
+ROCKET_THRESHOLD = 16
 
 
 class Barrier:
@@ -90,7 +102,7 @@ class ArmorPlate:
 
     def __init__(self, train_model):
         self._is_on_move = False
-        self._cur_position = "top"
+        self.cur_position = "top"
 
         self._snd = base.sound_mgr.loadSfx("sounds/armor_plate_move.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._snd, train_model)  # noqa: F821
@@ -100,27 +112,37 @@ class ArmorPlate:
 
         self._right_to_left = Sequence(
             Parallel(
-                self._model.actorInterval("right", playRate=-1.5),
+                self._model.actorInterval("right", playRate=-2.5),
                 SoundInterval(self._snd),
             ),
             Parallel(
-                self._model.actorInterval("left", playRate=1.5),
+                self._model.actorInterval("left", playRate=2.5),
                 SoundInterval(self._snd),
             ),
         )
         self._left_to_right = Sequence(
             Parallel(
-                self._model.actorInterval("left", playRate=-1.5),
+                self._model.actorInterval("left", playRate=-2.5),
                 SoundInterval(self._snd),
             ),
             Parallel(
-                self._model.actorInterval("right", playRate=1.5),
+                self._model.actorInterval("right", playRate=2.5),
                 SoundInterval(self._snd),
             ),
         )
         base.accept("5", self._turn_left)  # noqa: F821
         base.accept("6", self._turn_top)  # noqa: F821
         base.accept("7", self._turn_right)  # noqa: F821
+
+    def _cover_side(self, side):
+        """Actually change the plate position.
+
+        Args:
+            side (str):
+                Side of the train, which is
+                now covered by the plate.
+        """
+        self.cur_position = side
 
     def _stop_move(self, task):
         """Release the plate moving block."""
@@ -129,21 +151,26 @@ class ArmorPlate:
 
     def _turn_left(self):
         """Cover the left side of the Train with the plate."""
-        if self._cur_position == "left" or self._is_on_move:
+        if self.cur_position == "left" or self._is_on_move:
             return
 
-        if self._cur_position == "top":
-            self._model.actorInterval("left", playRate=1.5).start()
-            delay = 1.5
+        if self.cur_position == "top":
+            self._model.actorInterval("left", playRate=2.5).start()
+            delay = 0.9
+            cover_delay = 0.45
             self._snd.play()
         else:
             self._right_to_left.start()
-            delay = 3
+            delay = 1.8
+            cover_delay = 1.35
 
         self._is_on_move = True
         taskMgr.doMethodLater(delay, self._stop_move, "stop_move_plate")  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            delay - 0.9,
+            cover_delay, self._cover_side, "cover_side", extraArgs=["left"]
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            cover_delay,
             base.train.cover_part,  # noqa: F821
             "cover_part",
             extraArgs=["part_locomotive_left"],
@@ -152,27 +179,31 @@ class ArmorPlate:
             0.5,
             base.train.uncover_part,  # noqa: F821
             "uncover_part",
-            extraArgs=[self._cur_position],
+            extraArgs=[self.cur_position],
         )
-        self._cur_position = "left"
 
     def _turn_right(self):
         """Cover the right side of the Train with the plate."""
-        if self._cur_position == "right" or self._is_on_move:
+        if self.cur_position == "right" or self._is_on_move:
             return
 
-        if self._cur_position == "top":
-            self._model.actorInterval("right", playRate=1.5).start()
-            delay = 1.5
+        if self.cur_position == "top":
+            self._model.actorInterval("right", playRate=2.5).start()
+            delay = 0.9
+            cover_delay = 0.45
             self._snd.play()
         else:
             self._left_to_right.start()
-            delay = 3
+            delay = 1.8
+            cover_delay = 1.35
 
         self._is_on_move = True
         taskMgr.doMethodLater(delay, self._stop_move, "stop_move_plate")  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            delay - 0.9,
+            cover_delay, self._cover_side, "cover_side", extraArgs=["right"]
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            cover_delay,
             base.train.cover_part,  # noqa: F821
             "cover_part",
             extraArgs=["part_locomotive_right"],
@@ -181,28 +212,101 @@ class ArmorPlate:
             0.5,
             base.train.uncover_part,  # noqa: F821
             "uncover_part",
-            extraArgs=[self._cur_position],
+            extraArgs=[self.cur_position],
         )
-        self._cur_position = "right"
 
     def _turn_top(self):
         """Cover the top side of the Train with the plate."""
-        if self._cur_position == "top" or self._is_on_move:
+        if self.cur_position == "top" or self._is_on_move:
             return
 
-        if self._cur_position == "left":
+        if self.cur_position == "left":
             self._snd.play()
-            self._model.actorInterval("left", playRate=-1.5).start()
-        elif self._cur_position == "right":
+            self._model.actorInterval("left", playRate=-2.5).start()
+        elif self.cur_position == "right":
             self._snd.play()
-            self._model.actorInterval("right", playRate=-1.5).start()
+            self._model.actorInterval("right", playRate=-2.5).start()
 
         self._is_on_move = True
-        taskMgr.doMethodLater(1.5, self._stop_move, "stop_move_plate")  # noqa: F821
+        taskMgr.doMethodLater(0.9, self._stop_move, "stop_move_plate")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            0.45, self._cover_side, "cover_side", extraArgs=["top"]
+        )
         taskMgr.doMethodLater(  # noqa: F821
             0.5,
             base.train.uncover_part,  # noqa: F821
             "uncover_part",
-            extraArgs=[self._cur_position],
+            extraArgs=[self.cur_position],
         )
-        self._cur_position = "top"
+
+
+class Rocket:
+    """An enemy rocket object.
+
+    A rocket is overtaking the locomotive
+    from behind and making a hit at it.
+    """
+
+    def __init__(self):
+        x_coor, side = random.choice(((0.553, "left"), (-0.553, "right"), (0, "top")))
+
+        self._model = Actor(address("rocket1"))
+        self._model.reparentTo(base.train.model)  # noqa: F821
+        self._model.setPos(x_coor, -7, 0.5)
+
+        self._smoke = ParticleEffect()
+        self._smoke.loadConfig("effects/smoke_tail.ptf")
+        self._smoke.start(self._model, render)  # noqa: F821
+
+        path = Mopath.Mopath(
+            objectToLoad=loader.loadModel(  # noqa: F821
+                address("rocket_{}_path".format(side))
+            )
+        )
+        path.fFaceForward = True
+
+        self._hiss_snd = base.sound_mgr.loadSfx("sounds/rocket_fly1.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._hiss_snd, self._model)  # noqa: F821
+
+        self._hiss_snd2 = base.sound_mgr.loadSfx("sounds/rocket_hiss.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._hiss_snd2, self._model)  # noqa: F821
+
+        self._hiss_snd.play()
+        seq = Sequence(
+            LerpPosInterval(
+                self._model, 7, (x_coor, -0.627, 0.561), blendType="easeOut"
+            ),
+            Wait(0.3),
+            Parallel(
+                SoundInterval(self._hiss_snd2),
+                MopathInterval(
+                    path, self._model, duration=0.5, name="rocket_current_path"
+                ),
+            ),
+            Func(self._explode, side),
+        )
+        seq.start()
+
+    def _explode(self, side):
+        """Explode the rocket.
+
+        Args:
+            side (str):
+                Locomotive's side where the rocket is exploded.
+        """
+        self._model.cleanup()
+        self._model.removeNode()
+        self._smoke.softStop()
+
+        self._hiss_snd.stop()
+        base.sound_mgr.detach_sound(self._hiss_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self._hiss_snd2)  # noqa: F821
+
+        base.train.explode_rocket(side)  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            2,
+            self._smoke.disable,
+            "disable_rocket_smoke",
+            extraArgs=[],
+            appendTask=False,
+        )

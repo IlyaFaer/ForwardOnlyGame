@@ -76,6 +76,7 @@ class Train:
             self._barrier_hit_snd,
             self._lighter_snd,
             self._creak_snds,
+            self._rocket_explosion_snd,
         ) = self._set_sounds()
 
         self.ctrl = TrainController(self.model)
@@ -149,6 +150,8 @@ class Train:
 
         self.do_turn = 0
         self.cells = 7
+
+        self._armor_plate = None
 
     @property
     def durability(self):
@@ -515,6 +518,11 @@ class Train:
         creak_snd3 = base.loader.loadSfx("sounds/metal_creak3.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd3, self.model)  # noqa: F821
 
+        rocket_explosion = base.loader.loadSfx(  # noqa: F821
+            "sounds/rocket_explosion.ogg"
+        )
+        base.sound_mgr.attachSoundToObject(rocket_explosion, self.model)  # noqa: F821
+
         return (
             clunk_snd,
             clunk_snd2,
@@ -522,6 +530,7 @@ class Train:
             hit_snd,
             lighter_snd,
             (creak_snd1, creak_snd2, creak_snd3),
+            rocket_explosion,
         )
 
     def update_physics(self, y_coor):
@@ -609,6 +618,8 @@ class Train:
         self._rocket_explosion.start(self.model, render)  # noqa: F821
         self._rocket_explosion.softStart()
 
+        self._rocket_explosion_snd.play()
+
         taskMgr.doMethodLater(  # noqa: F821
             0.8,
             self._rocket_explosion.softStop,
@@ -621,11 +632,11 @@ class Train:
             self.get_damage(100)
             return
 
-        if side == "right" and not self._armor_plate.cur_position == "right":
+        if side == "left" and not self._armor_plate.cur_position == "right":
             self.get_damage(100)
             return
 
-        if side == "left" and not self._armor_plate.cur_position == "left":
+        if side == "right" and not self._armor_plate.cur_position == "left":
             self.get_damage(100)
             return
 
