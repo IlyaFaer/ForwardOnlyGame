@@ -46,6 +46,14 @@ Use 5, 6, 7 keys to move it.""",
         "cost": "70$",
         "model": "armor_plate",
     },
+    "Fire Extinguishers": {
+        "name": "Fire Extinguishers",
+        "desc": """Gradually restores locomotive
+durability up to 400 points
+in case of a big damage""",
+        "cost": "200$",
+        "model": "fire_extinguishers",
+    },
 }
 
 
@@ -818,6 +826,20 @@ class Train:
 
             for light in self._lights[1:]:
                 light.node().setAttenuation(1.7)
+
+        if upgrade["name"] == "Fire Extinguishers":
+            taskMgr.doMethodLater(30, self._repair, "train_repair")  # noqa: F821
+
+    def _repair(self, task):
+        """Repair the Train.
+
+        Started as a task, when Fire Extinguishers
+        Train upgrade is installed on.
+        """
+        if self.durability < 400:
+            self.durability += 30
+
+        return task.again
 
     def cover_part(self, part):
         """Cover the given Train part with the armor plate.
