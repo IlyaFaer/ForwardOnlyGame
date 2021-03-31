@@ -33,10 +33,9 @@ class CharacterGUI:
 
     def __init__(self):
         self.char = None  # the chosen character
+        self.rest_list_shown = False
         self._status_lab = None
         self._rest_buttons = {}
-        self._rest_list_active = False
-
         self._char_desc_wids = []
         self._char_desc_shown = False
 
@@ -169,7 +168,7 @@ class CharacterGUI:
         for but in self._rest_buttons.values():
             but.destroy()
 
-        self._rest_list_active = False
+        self.rest_list_shown = False
 
     def show_char_info(self, char):
         """Show the given character status.
@@ -217,7 +216,7 @@ class CharacterGUI:
         if not base.mouseWatcherNode.hasMouse():  # noqa: F821
             return
 
-        if self._rest_list_active and text == "Rest zone":
+        if self.rest_list_shown and text == "Rest zone":
             return
 
         self._tip.setText(text)
@@ -229,17 +228,43 @@ class CharacterGUI:
         """Hide the tooltip."""
         self._tip.hide()
 
+    def update_resting_chars(self, part):
+        """Update the list of the resting characters.
+
+        Args:
+            part (train_part.TrainPart): Rest train part.
+        """
+        for key, but in self._rest_buttons.items():
+            if key != "title":
+                but.destroy()
+                self._rest_buttons[key] = None
+
+        x, _, z = self._rest_buttons["title"].getPos()
+
+        shift = -0.039
+        for char in part.chars:
+            self._rest_buttons[char.id] = DirectButton(
+                pos=(x, 0, z + shift),
+                text=char.name,
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.6),
+                command=base.common_ctrl.choose_char,  # noqa: F821
+                extraArgs=[char.id],
+                scale=(0.04, 0, 0.03),
+            )
+            shift -= 0.033
+
     def show_resting_chars(self, part):
         """Show a list of the characters resting in this part.
 
         Args:
             part (Train.RestPart): Rest part of the Train.
         """
-        if self._rest_list_active:
+        if self.rest_list_shown:
             return
 
         self._tip.hide()
-        self._rest_list_active = True
+        self.rest_list_shown = True
 
         x = base.mouseWatcherNode.getMouseX()  # noqa: F821
         z = base.mouseWatcherNode.getMouseY()  # noqa: F821

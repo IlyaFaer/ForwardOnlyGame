@@ -334,6 +334,13 @@ class Character(Shooter, Unit):
 
         self.current_part = part
         self._current_pos = pos
+
+        if (
+            part.name == "part_rest_locomotive"
+            and base.char_gui.rest_list_shown  # noqa: F821
+        ):
+            base.char_gui.update_resting_chars(part)  # noqa: F821
+
         return True
 
     def attack(self, enemy_unit):
