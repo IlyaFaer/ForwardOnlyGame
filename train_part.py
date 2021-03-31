@@ -166,6 +166,7 @@ class RestPart:
         self.parent = parent
         self.name = name
         self.angle = 0
+        self.cells = 2
 
         # rest zone collisions
         col_node = CollisionNode(name)
@@ -183,7 +184,7 @@ class RestPart:
         Returns:
             int: The number of free cells.
         """
-        return 2 - len(self.chars)
+        return self.cells - len(self.chars)
 
     def give_cell(self, character):
         """Check if there is a free cell.
@@ -195,7 +196,7 @@ class RestPart:
         Returns:
             dict: Dict with position to move character to.
         """
-        if len(self.chars) >= 2:
+        if len(self.chars) >= self.cells:
             return None
 
         self.chars.append(character)

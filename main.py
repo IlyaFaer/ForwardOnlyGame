@@ -181,7 +181,6 @@ class ForwardOnly(ShowBase):
 
         self.team = Team()
         self.res_gui = ResourcesGUI()
-        self.team.load(save["team"], self.train.parts, save["cohesion"])
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
         self.common_ctrl.set_controls()
@@ -199,9 +198,10 @@ class ForwardOnly(ShowBase):
             save["cur_blocks"], save["last_angle"]
         )
 
-        self.char_gui = CharacterGUI()
-
         self.train.load_upgrades(save["train"]["upgrades"])
+        self.team.load(save["team"], self.train.parts, save["cohesion"])
+
+        self.char_gui = CharacterGUI()
 
         self.doMethodLater(3, self._start_game, "start_game")
         self.doMethodLater(

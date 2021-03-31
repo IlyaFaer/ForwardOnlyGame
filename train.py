@@ -54,6 +54,13 @@ in case of a big damage""",
         "cost": "200$",
         "model": "fire_extinguishers",
     },
+    "Sleeper": {
+        "name": "Sleeper",
+        "desc": """Add one more character cell
+into the locomotive rest zone""",
+        "cost": "160$",
+        "model": "sleeper1",
+    },
 }
 
 
@@ -829,6 +836,11 @@ class Train:
 
         if upgrade["name"] == "Fire Extinguishers":
             taskMgr.doMethodLater(30, self._repair, "train_repair")  # noqa: F821
+
+        if upgrade["name"] == "Sleeper":
+            self.cells += 1
+            self.parts["part_rest_locomotive"].cells += 1
+            base.res_gui.update_chars()  # noqa: F821
 
     def _repair(self, task):
         """Repair the Train.
