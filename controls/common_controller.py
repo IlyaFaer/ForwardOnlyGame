@@ -104,16 +104,10 @@ class CommonController:
         self.traverser.addCollider(
             base.cam.attachNewNode(col_node), handler  # noqa: F821
         )
-        # set events and tasks to organize pointing
-        # and clicking on characters and Train parts
-        base.accept("mouse1", self._choose_obj)  # noqa: F821
-        base.accept("mouse3", self._char_action)  # noqa: F821
-        base.accept("mouse_ray-into", self._point_obj)  # noqa: F821
-        base.accept("mouse_ray-again", self._point_obj)  # noqa: F821
-        base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
+        self.set_mouse_events()
 
-        taskMgr.doMethodLater(0.05, self._collide_mouse, "collide_mouse")  # noqa: F821
-        taskMgr.doMethodLater(0.06, self._traverse, name="main_traverse")  # noqa: F821
+        taskMgr.doMethodLater(0.03, self._collide_mouse, "collide_mouse")  # noqa: F821
+        taskMgr.doMethodLater(0.04, self._traverse, name="main_traverse")  # noqa: F821
 
     def choose_char(self, char_id):
         """Choose a character with the given id.
@@ -266,3 +260,14 @@ class CommonController:
             base.team.show_relations(self.chosen_char)  # noqa: F821
         else:
             base.team.hide_relations()  # noqa: F821
+
+    def set_mouse_events(self):
+        """
+        Set events to organize pointing and clicking
+        on characters, enemies and the Train parts.
+        """
+        base.accept("mouse1", self._choose_obj)  # noqa: F821
+        base.accept("mouse3", self._char_action)  # noqa: F821
+        base.accept("mouse_ray-into", self._point_obj)  # noqa: F821
+        base.accept("mouse_ray-again", self._point_obj)  # noqa: F821
+        base.accept("mouse_ray-out", self._unpoint_obj)  # noqa: F821
