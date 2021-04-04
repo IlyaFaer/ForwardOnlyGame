@@ -19,7 +19,7 @@ from controls import TrainController
 from gui.train import TrainGUI
 from train_part import RestPart, TrainPart
 from utils import address, take_random
-from world.objects import ArmorPlate
+from world.objects import ArmorPlate, GrenadeLauncher
 
 UPGRADES = {
     "Ram": {
@@ -53,6 +53,14 @@ durability up to 400 points
 in case of a big damage""",
         "cost": "200$",
         "model": "fire_extinguishers",
+    },
+    "Grenade Launcher": {
+        "name": "Grenade Launcher",
+        "desc": """Active gun, which can do a
+lot of damage on a small area.
+Use 1 key to aim and shoot.""",
+        "cost": "250$",
+        "model": "grenade_launcher",
     },
     "Sleeper": {
         "name": "Sleeper",
@@ -636,11 +644,7 @@ class Train:
         self._rocket_explosion_snd.play()
 
         taskMgr.doMethodLater(  # noqa: F821
-            0.8,
-            self._rocket_explosion.softStop,
-            "disable_rocket_smoke",
-            extraArgs=[],
-            appendTask=False,
+            0.8, self._rocket_explosion.softStop, "disable_rocket_smoke", extraArgs=[],
         )
 
         if self._armor_plate is None:
@@ -834,13 +838,20 @@ class Train:
             for light in self._lights[1:]:
                 light.node().setAttenuation(1.7)
 
+            return
+
         if upgrade["name"] == "Fire Extinguishers":
             taskMgr.doMethodLater(30, self._repair, "train_repair")  # noqa: F821
+            return
 
         if upgrade["name"] == "Sleeper":
             self.cells += 1
             self.parts["part_rest_locomotive"].cells += 1
             base.res_gui.update_chars()  # noqa: F821
+            return
+
+        if upgrade["name"] == "Grenade Launcher":
+            GrenadeLauncher(self.model)
 
     def _repair(self, task):
         """Repair the Train.
