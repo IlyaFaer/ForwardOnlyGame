@@ -175,6 +175,7 @@ class Train:
         self.cells = 7
 
         self._armor_plate = None
+        self._grenade_launcher = None
 
     @property
     def durability(self):
@@ -851,7 +852,14 @@ class Train:
             return
 
         if upgrade["name"] == "Grenade Launcher":
-            GrenadeLauncher(self.model)
+            self._grenade_launcher = GrenadeLauncher(self.model)
+            self._gui.activate_weapon(
+                "Grenade Launcher", base.train.load_grenade_launcher  # noqa: F821
+            )
+
+    def load_grenade_launcher(self):
+        """Change the grenade launcher state."""
+        self._grenade_launcher.change_state()
 
     def _repair(self, task):
         """Repair the Train.
@@ -924,3 +932,11 @@ class Train:
             self._upgrade_highlight, self._upgrade_highlight, self._upgrade_highlight, 1
         )
         return task.again
+
+    def make_shot(self, weapon):
+        """Shoot from the given weapon.
+
+        Args:
+            weapon (str): Weapon to shoot from.
+        """
+        self._gui.make_shot(weapon)

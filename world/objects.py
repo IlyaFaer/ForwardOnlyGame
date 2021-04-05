@@ -343,7 +343,7 @@ class GrenadeLauncher:
         self._grenade_smoke = ParticleEffect()
         self._grenade_smoke.loadConfig("effects/bomb_smoke1.ptf")
 
-        base.accept("1", self._change_state)  # noqa: F821
+        base.accept("1", self.change_state)  # noqa: F821
 
         self._shot_snd = loader.loadSfx(  # noqa: F821
             "sounds/grenade_launcher_shot.ogg"
@@ -371,7 +371,7 @@ class GrenadeLauncher:
         self._is_loading = False
         return task.done
 
-    def _change_state(self):
+    def change_state(self):
         """Change the launcher state."""
         if not base.world.is_on_et or self._is_loading:  # noqa: F821
             return
@@ -452,7 +452,7 @@ class GrenadeLauncher:
     def _shot(self):
         """Make a shot."""
         self._shot_snd.play()
-        self._change_state()
+        self.change_state()
         base.ignore("1")  # noqa: F82
 
         self._smoke.start(self._model, render)  # noqa: F82
@@ -471,8 +471,9 @@ class GrenadeLauncher:
             20,
             base.accept,  # noqa: F82
             "unblock_launcher",
-            extraArgs=["1", self._change_state],
+            extraArgs=["1", self.change_state],
         )
+        base.train.make_shot("Grenade Launcher")  # noqa: F82
 
     def _start_aiming(self):
         """Show aiming GUI and tweak shooting events."""
