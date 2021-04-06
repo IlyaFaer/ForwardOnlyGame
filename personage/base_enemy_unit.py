@@ -119,6 +119,8 @@ class EnemyUnit(Unit):
         self._explode()
         self.transport_snd.stop()
         self._y_positions.append(self._y_pos)
+
+        base.add_head(self.class_data["class"].__name__)  # noqa: F821
         return True
 
     def _float_move(self, task):

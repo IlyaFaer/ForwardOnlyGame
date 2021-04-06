@@ -73,6 +73,7 @@ class ForwardOnly(ShowBase):
             "smoke_filters": 0,
             "stimulators": 0,
         }
+        self._heads = {}
         self.main_menu = MainMenu()
 
     @property
@@ -95,6 +96,17 @@ class ForwardOnly(ShowBase):
         """
         self._dollars = max(0, value)
         self.res_gui.update_resource("dollars", value)
+
+    @property
+    def heads(self):
+        """
+        The enemies, for whose death player
+        didn't yet get a money reward.
+
+        Returns:
+            dict: Index of the destroyed enemies.
+        """
+        return self._heads
 
     def _configure_window(self):
         """Configure the game window.
@@ -162,6 +174,21 @@ class ForwardOnly(ShowBase):
                 self.effects_mgr.stench_effect.play_clouds()
 
             self.team.stop_stench_activity()
+
+    def add_head(self, enemy):
+        """Make a record about the destroyed enemy.
+
+        Args:
+            enemy (str): The destroyed enemy class name.
+        """
+        if enemy not in self._heads:
+            self._heads[enemy] = 0
+
+        self._heads[enemy] += 1
+
+    def clear_heads(self):
+        """Clear all the records about previously destroyed enemies."""
+        self._heads.clear()
 
     def load_game(self, num):
         """Load the previously saved game.

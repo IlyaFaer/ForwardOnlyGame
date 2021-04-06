@@ -7,7 +7,7 @@ Cities GUI.
 import random
 
 from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
-from panda3d.core import TransparencyAttrib
+from panda3d.core import TextNode, TransparencyAttrib
 
 from personage.character_data import TRAITS
 from .widgets import (
@@ -18,6 +18,13 @@ from .widgets import (
     ItemChooser,
     UpgradeChooser,
 )
+
+HEAD_COST = {
+    "MotoShooter": 5,
+    "BrakeThrower": 3,
+    "StunBombThrower": 10,
+    "DodgeShooter": 20,
+}
 
 
 class ResourceChooser(ItemChooser):
@@ -159,6 +166,8 @@ class CityGUI:
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
         self._fr.hide()
+
+        self._reward_fr = None
 
         DirectLabel(
             parent=self._fr,
@@ -711,6 +720,93 @@ class CityGUI:
         self._amb_snd.setVolume(cur_vol - 0.05)
         return task.again
 
+    def _show_headhunting_reward(self):
+        """Show a reward interface.
+
+        When getting into a city, player gains money as a reward
+        for destroying enemies. Money amount depends on what
+        enemies were destroyed.
+        """
+        if not base.heads:  # noqa: F821
+            return
+
+        self._reward_fr = DirectFrame(
+            frameSize=(-0.3, 0.3, -0.45, 0.45),
+            frameTexture="gui/tex/paper1.png",
+            state=DGG.NORMAL,
+            pos=(0.9, 0, -0.15),
+        )
+        self._reward_fr.setDepthTest(False)
+        self._reward_fr.setTransparency(TransparencyAttrib.MAlpha)
+
+        heads_list = ""
+        costs_list = ""
+        total = 0
+        for head, num in base.heads.items():  # noqa: F821
+            heads_list += head + " x" + str(num) + "\n"
+            costs_list += str(num * HEAD_COST[head]) + "$\n"
+            total += num * HEAD_COST[head]
+
+        DirectLabel(
+            parent=self._reward_fr,
+            frameColor=(0, 0, 0, 0),
+            frameSize=(-0.3, 0.3, -0.1, 0.1),
+            text="""The city government awards
+you with money for
+your help in clearing
+the region of skinheads.
+
+Heads you've taken:
+"""
+            + "\n" * 15
+            + "Total reward:\n"
+            + str(total)
+            + "$",
+            text_scale=0.03,
+            pos=(0, 0, 0.35),
+        )
+        DirectLabel(
+            parent=self._reward_fr,
+            frameColor=(0, 0, 0, 0),
+            frameSize=(-0.3, 0.3, -0.1, 0.1),
+            text=heads_list,
+            text_scale=0.03,
+            text_align=TextNode.ALeft,
+            pos=(-0.21, 0, 0.08),
+        )
+        DirectLabel(
+            parent=self._reward_fr,
+            frameColor=(0, 0, 0, 0),
+            frameSize=(-0.3, 0.3, -0.1, 0.1),
+            text=costs_list,
+            text_scale=0.03,
+            text_align=TextNode.ALeft,
+            pos=(0.16, 0, 0.08),
+        )
+        DirectButton(
+            parent=self._reward_fr,
+            pos=(0, 0, -0.38),
+            text="Acquire",
+            text_fg=RUST_COL,
+            frameColor=(0, 0, 0, 0.3),
+            command=self._acquire_reward,
+            extraArgs=[total],
+            scale=(0.04, 0, 0.04),
+        )
+
+    def _acquire_reward(self, dollars):
+        """Claim a reward, given by a city for destroying enemies.
+
+        Args:
+            dollars (int): Gained dollars amount.
+        """
+        self._coins_l_snd.play()
+        base.dollars += dollars  # noqa: F821
+
+        self._reward_fr.destroy()
+        self._reward_fr = None
+        base.clear_heads()  # noqa: F821
+
     def show(self):
         """Show city GUI."""
         self._amb_snd.play()
@@ -718,3 +814,5 @@ class CityGUI:
         self._recruits = base.team.gen_recruits()  # noqa: F821
         self._fr.show()
         self._show_train(0.56)
+
+        self._show_headhunting_reward()
