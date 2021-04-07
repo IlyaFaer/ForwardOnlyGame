@@ -603,7 +603,7 @@ class DodgeShooter(EnemyUnit):
             Sequence(
                 LerpScaleInterval(fire, 0.07, (1, 1, 1)),
                 LerpScaleInterval(fire, 0.07, (1, 0.0001, 1)),
-                Wait(0.13),
+                Wait(0.12),
             ),
             SoundInterval(shot_snd, duration=0.25),
         )

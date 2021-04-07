@@ -264,7 +264,7 @@ class Team:
                     continue
 
                 rel_id = tuple(sorted([char1.id, char2.id]))
-                factor = 1.25 if char1.current_part == char2.current_part else 1
+                factor = 1.3 if char1.current_part == char2.current_part else 1
 
                 if (
                     "Liberal" in char1.traits + char2.traits

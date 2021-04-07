@@ -861,6 +861,7 @@ class World:
 
         self._hangar = Hangar()
 
+        self.stop_ambient_snd()
         self.city_gui.show()
         base.train.move_to_hangar()  # noqa: F821
         base.team.rest_all()  # noqa: F821
@@ -879,6 +880,7 @@ class World:
         self._hangar.clear(turn_around)
         self._hangar = None
 
+        self.resume_ambient_snd()
         base.train.ctrl.set_controls(base.train)  # noqa: F821
         base.camera_ctrl.enable_ctrl_keys()  # noqa: F821
         base.team.stop_rest_all()  # noqa: F821
