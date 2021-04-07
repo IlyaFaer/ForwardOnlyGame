@@ -27,6 +27,6 @@
 [YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)
 
 **Что дальше**  
-[Скачать последннюю сборку игры](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
+[Скачать последнюю сборку игры](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
 [Доп. информация в Wiki](https://github.com/IlyaFaer/ForwardOnlyGame/wiki)  
 [План разработки](https://github.com/IlyaFaer/ForwardOnlyGame/projects)
