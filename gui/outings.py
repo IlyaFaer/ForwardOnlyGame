@@ -181,10 +181,11 @@ class OutingsGUI:
             )
             self._outing_widgets.append(
                 DirectButton(
-                    pos=(0, 0, -0.75),
+                    pos=(0, 0, -0.77),
                     text="Done",
                     text_fg=RUST_COL,
-                    frameColor=(0, 0, 0, 0.4),
+                    text_shadow=(0, 0, 0, 1),
+                    frameColor=(0, 0, 0, 0),
                     command=self._finish_outing,
                     extraArgs=[selected_effect, recruit_effect],
                     scale=(0.05, 0, 0.05),
@@ -261,7 +262,8 @@ class OutingsGUI:
                     pos=(-0.2, 0, -0.75),
                     text="Recruit",
                     text_fg=RUST_COL,
-                    frameColor=(0, 0, 0, 0.3),
+                    text_shadow=(0, 0, 0, 1),
+                    frameColor=(0, 0, 0, 0),
                     command=self._hire_unit,
                     extraArgs=[char, recruit_effect],
                     scale=(0.05, 0, 0.05),
@@ -272,7 +274,8 @@ class OutingsGUI:
                     pos=(0.2, 0, -0.75),
                     text="Don't recruit",
                     text_fg=RUST_COL,
-                    frameColor=(0, 0, 0, 0.3),
+                    text_shadow=(0, 0, 0, 1),
+                    frameColor=(0, 0, 0, 0),
                     command=self._dont_hire_unit,
                     scale=(0.05, 0, 0.05),
                 )
@@ -311,7 +314,8 @@ class OutingsGUI:
                 pos=(0, 0, -0.75),
                 text="Done",
                 text_fg=RUST_COL,
-                frameColor=(0, 0, 0, 0.3),
+                text_shadow=(0, 0, 0, 1),
+                frameColor=(0, 0, 0, 0),
                 command=self._do_effect_and_finish,  # noqa: F821
                 extraArgs=[selected_effect],
                 scale=(0.05, 0, 0.05),
@@ -469,7 +473,8 @@ class OutingsGUI:
                 pos=(-0.15, 0, -0.75),
                 text="Don't send",
                 text_fg=RUST_COL,
-                frameColor=(0, 0, 0, 0.4),
+                text_shadow=(0, 0, 0, 1),
+                frameColor=(0, 0, 0, 0),
                 command=self.hide_outing,
                 scale=(0.05, 0, 0.05),
                 clickSound=base.main_menu.click_snd,  # noqa: F821
@@ -480,7 +485,8 @@ class OutingsGUI:
                 pos=(0.15, 0, -0.75),
                 text="Send",
                 text_fg=RUST_COL,
-                frameColor=(0, 0, 0, 0.4),
+                text_shadow=(0, 0, 0, 1),
+                frameColor=(0, 0, 0, 0),
                 command=base.world.outings_mgr.go_for_outing,  # noqa: F821
                 extraArgs=[outing, self._assignees],
                 clickSound=base.main_menu.click_snd,  # noqa: F821
@@ -532,8 +538,8 @@ class OutingsGUI:
         bars = []
         shift = -0.07
         for name, maximum, col, value in (
-            ("Character classes fit:", 45, (0.46, 0.61, 0.53, 1), class_score),
-            ("Characters condition:", 25, RUST_COL, cond_score),
+            ("Character classes fit:", 45, (0.36, 0.6, 0.42, 1), class_score),
+            ("Characters condition:", 25, (0.65, 0.2, 0.2, 1), cond_score),
             ("Characters cohesion:", 20, SILVER_COL, cohesion_score),
             ("Day part and traits:", 10, (0.42, 0.42, 0.8, 1), day_part_score),
         ):
@@ -550,6 +556,7 @@ class OutingsGUI:
             bar = DirectWaitBar(
                 parent=self._list,
                 frameSize=(-0.17, 0.17, -0.005, 0.005),
+                frameColor=(0.3, 0.3, 0.3, 0.5),
                 value=0,
                 range=maximum,
                 barColor=col,

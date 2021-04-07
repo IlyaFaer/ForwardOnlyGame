@@ -50,7 +50,7 @@ class TraitsGUI:
             text="List of distinguished",
             frameSize=(0.4, 0.4, 0.4, 0.4),
             text_scale=0.045,
-            pos=(-0.35, 0, 0.66),
+            pos=(-0.35, 0, 0.65),
         )
         DirectLabel(
             parent=self._list,
@@ -183,7 +183,8 @@ class TraitsGUI:
             pos=(-0.35, 0, -0.57),
             text="Praise",
             text_fg=RUST_COL,
-            frameColor=(0, 0, 0, 0.3),
+            text_shadow=(0, 0, 0, 1),
+            frameColor=(0, 0, 0, 0),
             parent=self._list,
             command=self._gen_new_traits,
             scale=(0.04, 0, 0.04),
@@ -193,7 +194,8 @@ class TraitsGUI:
             pos=(0.3, 0, -0.57),
             text="Scold",
             text_fg=SILVER_COL,
-            frameColor=(0, 0, 0, 0.3),
+            text_shadow=(0, 0, 0, 1),
+            frameColor=(0, 0, 0, 0),
             parent=self._list,
             scale=(0.04, 0, 0.04),
             clickSound=base.main_menu.click_snd,  # noqa: F821
@@ -202,7 +204,8 @@ class TraitsGUI:
             pos=(-0.02, 0, -0.7),
             text="Done",
             text_fg=RUST_COL,
-            frameColor=(0, 0, 0, 0.3),
+            text_shadow=(0, 0, 0, 1),
+            frameColor=(0, 0, 0, 0),
             parent=self._list,
             scale=(0.04, 0, 0.04),
             clickSound=base.main_menu.click_snd,  # noqa: F821
