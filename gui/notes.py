@@ -33,6 +33,9 @@ Study their tactics!""",
     """Enemy territory is not
 considered on the railways
 scheme""",
+    """City governments will reward
+you with money for destroying
+skinheads nearby""",
     # cohesion
     """Increasing team cohesion unlocks
 team skills. These are powerful
@@ -82,6 +85,8 @@ enemy attention""",
 can damage your Train wheels.
 Slow down when you hear a
 metal creak.""",
+    """Locomotive active weapons can only
+be used on enemy territory""",
     # characters and classes
     """Women are nice and social, they
 reduce stress at any collective""",

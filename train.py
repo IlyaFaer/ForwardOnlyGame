@@ -157,11 +157,12 @@ class Train:
         self._upgrade_highlight = 1
         self._highlight_step = 0.03
 
+        self._bomb_explosions = []
+
         (
             self._smoke,
             self._l_brake_sparks,
             self._r_brake_sparks,
-            self._bomb_explosions,
             self._rocket_explosion,
         ) = self._prepare_particles()
 
@@ -277,13 +278,6 @@ class Train:
         r_brake_sparks.loadConfig("effects/brake_sparks1.ptf")
         r_brake_sparks.setPos(0.058, 0.38, 0.025)
 
-        # bomb explosion effects
-        bomb_explosions = [
-            base.effects_mgr.bomb_explosion(self),  # noqa: F821
-            base.effects_mgr.bomb_explosion(self),  # noqa: F821
-            base.effects_mgr.bomb_explosion(self),  # noqa: F821
-        ]
-
         snow = ParticleEffect()
         snow.loadConfig("effects/snow.ptf")
         snow.setZ(0.05)
@@ -293,7 +287,23 @@ class Train:
         explosion = ParticleEffect()
         explosion.loadConfig("effects/rocket_explode.ptf")
 
-        return smoke, l_brake_sparks, r_brake_sparks, bomb_explosions, explosion
+        taskMgr.doMethodLater(  # noqa: F821
+            5, self._prepare_bomb_explosions, "prepare_bomb_explosions"
+        )
+        return smoke, l_brake_sparks, r_brake_sparks, explosion
+
+    def _prepare_bomb_explosions(self, task):
+        """Prepare bomb explosion effects."""
+        self._bomb_explosions.append(
+            base.effects_mgr.bomb_explosion(self)  # noqa: F821
+        )
+        self._bomb_explosions.append(
+            base.effects_mgr.bomb_explosion(self)  # noqa: F821
+        )
+        self._bomb_explosions.append(
+            base.effects_mgr.bomb_explosion(self)  # noqa: F821
+        )
+        return task.done
 
     def has_cell(self):
         """Check if there is a free cell for a new unit.
