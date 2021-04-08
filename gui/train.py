@@ -77,7 +77,10 @@ class TrainGUI:
             frameSize=(-0.115, 0.115, -0.05, 0.05),
             pos=(0, 0, -0.95),
             frameTexture=GUI_PIC + "metal1.png",
+            sortOrder=-1,
         )
+        frame_miles.set_transparency(TransparencyAttrib.MAlpha)
+
         but = DirectButton(
             parent=frame_miles,
             frameSize=(-0.015, 0.015, -0.025, 0.025),

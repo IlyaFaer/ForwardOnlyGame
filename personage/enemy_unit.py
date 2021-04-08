@@ -208,7 +208,7 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
         """Start fighting in the given part.
 
         Args:
-            part (train_part.TrainPart): Train part this enemy entered.
+            part (train.part.TrainPart): Train part this enemy entered.
         """
         self.current_part = part
         self._aim(False)
@@ -396,7 +396,7 @@ class BrakeThrower(EnemyMotorcyclist):
         """Start fighting in the given part.
 
         Args:
-            part (train_part.TrainPart): Train part this enemy entered.
+            part (train.part.TrainPart): Train part this enemy entered.
         """
         if not part.name.endswith("_front") or self._train_captured:
             return
@@ -490,7 +490,7 @@ class StunBombThrower(EnemyMotorcyclist):
         """Start fighting in the given part.
 
         Args:
-            part (train_part.TrainPart): Train part this enemy entered.
+            part (train.part.TrainPart): Train part this enemy entered.
         """
         self.current_part = part
         taskMgr.doMethodLater(5, self._throw, self.id + "_throw")  # noqa: F821
@@ -621,7 +621,7 @@ class DodgeShooter(EnemyUnit):
         """Start fighting in the given part.
 
         Args:
-            part (train_part.TrainPart): Train part this enemy entered.
+            part (train.part.TrainPart): Train part this enemy entered.
         """
         self.current_part = part
 

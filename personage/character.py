@@ -299,7 +299,7 @@ class Character(Shooter, Unit):
         one character with another one.
 
         Args:
-            part (train_part.TrainPart):
+            part (train.part.TrainPart):
                 Train part to move this Character to.
             to_pos (dict):
                 Position to move this Character to.

@@ -15,61 +15,12 @@ from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
 from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 
+from .part import RestPart, TrainPart
+from .upgrades import ArmorPlate, GrenadeLauncher, UPGRADES_DESC
+
 from controls import TrainController
 from gui.train import TrainGUI
-from train_part import RestPart, TrainPart
 from utils import address, take_random
-from world.objects import ArmorPlate, GrenadeLauncher
-
-UPGRADES = {
-    "Ram": {
-        "name": "Ram",
-        "desc": """With this ram your locomotive
-will be breaking road barriers
-without getting damage""",
-        "cost": "180$",
-        "model": "ram1",
-    },
-    "Floodlights": {
-        "name": "Floodlights",
-        "desc": """All the negative darkness
-factors are no more actual with
-these floodlights on""",
-        "cost": "220$",
-        "model": "floodlights1",
-    },
-    "Armor Plate": {
-        "name": "Armor Plate",
-        "desc": """An active shield which can
-cover one of the Train parts.
-Use 5, 6, 7 keys to move it.""",
-        "cost": "70$",
-        "model": "armor_plate",
-    },
-    "Fire Extinguishers": {
-        "name": "Fire Extinguishers",
-        "desc": """Gradually restores locomotive
-durability up to 400 points
-in case of a big damage""",
-        "cost": "200$",
-        "model": "fire_extinguishers",
-    },
-    "Grenade Launcher": {
-        "name": "Grenade Launcher",
-        "desc": """Active gun, which can do a
-lot of damage on a small area.
-Use 1 key to aim and shoot.""",
-        "cost": "250$",
-        "model": "grenade_launcher",
-    },
-    "Sleeper": {
-        "name": "Sleeper",
-        "desc": """Add one more character cell
-into the locomotive rest zone""",
-        "cost": "160$",
-        "model": "sleeper1",
-    },
-}
 
 
 class Train:
@@ -223,7 +174,7 @@ class Train:
         Returns:
             dict: Possible upgrades index.
         """
-        ups = copy.deepcopy(UPGRADES)
+        ups = copy.deepcopy(UPGRADES_DESC)
         for upgrade in self.upgrades:
             ups.pop(upgrade)
 
@@ -328,7 +279,7 @@ class Train:
             upgrades (list): Names of the upgrades to load.
         """
         for up in upgrades:
-            self.install_upgrade(UPGRADES[up])
+            self.install_upgrade(UPGRADES_DESC[up])
 
     def place_recruit(self, char):
         """Place the new recruit somewhere on the Train.

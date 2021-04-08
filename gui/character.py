@@ -232,7 +232,7 @@ class CharacterGUI:
         """Update the list of the resting characters.
 
         Args:
-            part (train_part.TrainPart): Rest train part.
+            part (train.part.TrainPart): Rest train part.
         """
         for key, but in self._rest_buttons.items():
             if key != "title":
