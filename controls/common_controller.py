@@ -58,7 +58,7 @@ class CommonController:
         self._pointed_obj = ""
         self._chosen_char = None
 
-        self._move_char_snd = loader.loadSfx("sounds/move_char1.ogg")  # noqa: F821
+        self._move_char_snd = loader.loadSfx("sounds/move_char.ogg")  # noqa: F821
 
         self._font = loader.loadFont("arial.ttf")  # noqa: F821
         self._char_pointer = loader.loadModel(  # noqa: F821

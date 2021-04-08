@@ -873,7 +873,7 @@ class Character(Shooter, Unit):
             self.inhale -= 1
             return
 
-        self.get_damage(10)
+        self.get_damage(1)
 
 
 def generate_char(id_, class_, sex, team=None):

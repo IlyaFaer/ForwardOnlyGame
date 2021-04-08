@@ -37,9 +37,9 @@ class MainMenu:
         self._save_wids = []
         self._save_blocked_lab = None
 
-        self._hover_snd = loader.loadSfx("sounds/menu1.ogg")  # noqa: F821
+        self._hover_snd = loader.loadSfx("sounds/GUI/menu1.ogg")  # noqa: F821
         self._hover_snd.setVolume(0.1)
-        self.click_snd = loader.loadSfx("sounds/menu2.ogg")  # noqa: F821
+        self.click_snd = loader.loadSfx("sounds/GUI/menu2.ogg")  # noqa: F821
         self.click_snd.setVolume(0.1)
 
         self._main_fr = DirectFrame(

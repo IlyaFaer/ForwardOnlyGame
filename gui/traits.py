@@ -34,8 +34,8 @@ class TraitsGUI:
         self._cur_traits = []
         self._new_traits = []
 
-        self._open_snd = loader.loadSfx("sounds/paper1.ogg")  # noqa: F821
-        self._close_snd = loader.loadSfx("sounds/paper2.ogg")  # noqa: F821
+        self._open_snd = loader.loadSfx("sounds/GUI/paper1.ogg")  # noqa: F821
+        self._close_snd = loader.loadSfx("sounds/GUI/paper2.ogg")  # noqa: F821
         self._list = DirectFrame(
             frameSize=(-0.75, 0.75, -0.77, 0.77),
             frameTexture=GUI_PIC + "paper1.png",

@@ -58,15 +58,15 @@ class TrainController:
             (panda3d.core.AudioSound...):
                 Interactive Train sounds.
         """
-        move_snd = base.sound_mgr.loadSfx("sounds/train_moves1.ogg")  # noqa: F821
+        move_snd = base.sound_mgr.loadSfx("sounds/train/ride.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(move_snd, model)  # noqa: F821
         move_snd.setLoop(True)
         move_snd.play()
 
-        stop_snd = base.sound_mgr.loadSfx("sounds/train_stop1.ogg")  # noqa: F821
+        stop_snd = base.sound_mgr.loadSfx("sounds/train/stop.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(stop_snd, model)  # noqa: F821
 
-        brake_snd = base.sound_mgr.loadSfx("sounds/train_brake.ogg")  # noqa: F821
+        brake_snd = base.sound_mgr.loadSfx("sounds/train/brake.ogg")  # noqa: F821
         brake_snd.setLoop(True)
         base.sound_mgr.attachSoundToObject(brake_snd, model)  # noqa: F821
         return move_snd, stop_snd, brake_snd

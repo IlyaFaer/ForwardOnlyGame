@@ -32,7 +32,7 @@ class ResourcesGUI:
         self._resources = {}
         self._blink_step = 0
 
-        self._err_snd = loader.loadSfx("sounds/error.ogg")  # noqa: F821
+        self._err_snd = loader.loadSfx("sounds/GUI/error.ogg")  # noqa: F821
 
         self._res_frame = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821

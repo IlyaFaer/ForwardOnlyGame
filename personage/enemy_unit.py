@@ -282,10 +282,10 @@ class BrakeThrower(EnemyMotorcyclist):
         )
         self._r_mopath.fFaceForward = True
 
-        self._jump_snd = base.sound_mgr.loadSfx("sounds/moto_jump1.ogg")  # noqa: F821
+        self._jump_snd = base.sound_mgr.loadSfx("sounds/moto_jump.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._jump_snd, self.model)  # noqa: F821
 
-        self._fall_snd = base.sound_mgr.loadSfx("sounds/moto_fall1.ogg")  # noqa: F821
+        self._fall_snd = base.sound_mgr.loadSfx("sounds/moto_fall.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._fall_snd, self.model)  # noqa: F821
 
     def _drop_brake(self, brake):
@@ -587,7 +587,9 @@ class DodgeShooter(EnemyUnit):
             direct.interval.MetaInterval.Sequence:
                 Shooting animation and sounds sequence.
         """
-        shot_snd = base.sound_mgr.loadSfx("sounds/machine_gun_shot1.ogg")  # noqa: F821
+        shot_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/combat/machine_gun_shot1.ogg"
+        )
         base.sound_mgr.attachSoundToObject(shot_snd, self.model)  # noqa: F821
 
         fire = loader.loadModel(address("gun_fire2"))  # noqa: F821

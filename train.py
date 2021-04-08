@@ -528,32 +528,38 @@ class Train:
         Returns:
             (panda3d.core.AudioSound...): The Train sounds.
         """
-        clunk_snd = base.sound_mgr.loadSfx("sounds/metal_clunk1.ogg")  # noqa: F821
+        clunk_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/train/metal_clunk1.ogg"
+        )
         base.sound_mgr.attachSoundToObject(clunk_snd, self.model)  # noqa: F821
 
-        clunk_snd2 = base.sound_mgr.loadSfx("sounds/metal_clunk2.ogg")  # noqa: F821
+        clunk_snd2 = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/train/metal_clunk2.ogg"
+        )
         base.sound_mgr.attachSoundToObject(clunk_snd2, self.model)  # noqa: F821
 
-        filter_open_snd = base.sound_mgr.loadSfx("sounds/filter_open.ogg")  # noqa: F821
+        filter_open_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/train/filter_open.ogg"
+        )
         base.sound_mgr.attachSoundToObject(filter_open_snd, self.model)  # noqa: F821
 
-        hit_snd = base.sound_mgr.loadSfx("sounds/concrete_hit1.ogg")  # noqa: F821
+        hit_snd = base.sound_mgr.loadSfx("sounds/concrete_hit.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(hit_snd, self.model)  # noqa: F821
 
-        lighter_snd = base.loader.loadSfx("sounds/switcher1.ogg")  # noqa: F821
+        lighter_snd = base.loader.loadSfx("sounds/train/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
 
-        creak_snd1 = base.loader.loadSfx("sounds/metal_creak1.ogg")  # noqa: F821
+        creak_snd1 = base.loader.loadSfx("sounds/train/metal_creak1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd1, self.model)  # noqa: F821
 
-        creak_snd2 = base.loader.loadSfx("sounds/metal_creak2.ogg")  # noqa: F821
+        creak_snd2 = base.loader.loadSfx("sounds/train/metal_creak2.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd2, self.model)  # noqa: F821
 
-        creak_snd3 = base.loader.loadSfx("sounds/metal_creak3.ogg")  # noqa: F821
+        creak_snd3 = base.loader.loadSfx("sounds/train/metal_creak3.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd3, self.model)  # noqa: F821
 
         rocket_explosion = base.loader.loadSfx(  # noqa: F821
-            "sounds/rocket_explosion.ogg"
+            "sounds/combat/rocket_explosion.ogg"
         )
         base.sound_mgr.attachSoundToObject(rocket_explosion, self.model)  # noqa: F821
 

@@ -104,7 +104,9 @@ class ArmorPlate:
         self._is_on_move = False
         self.cur_position = "top"
 
-        self._snd = base.sound_mgr.loadSfx("sounds/armor_plate_move.ogg")  # noqa: F821
+        self._snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/train/armor_plate_move.ogg"
+        )
         base.sound_mgr.attachSoundToObject(self._snd, train_model)  # noqa: F821
 
         self._model = Actor(address("armor_plate"))
@@ -265,7 +267,7 @@ class Rocket:
         )
         path.fFaceForward = True
 
-        self._hiss_snd = base.sound_mgr.loadSfx("sounds/rocket_fly1.ogg")  # noqa: F821
+        self._hiss_snd = base.sound_mgr.loadSfx("sounds/rocket_fly.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._hiss_snd, self._model)  # noqa: F821
 
         self._hiss_snd2 = base.sound_mgr.loadSfx("sounds/rocket_hiss.ogg")  # noqa: F821
@@ -346,9 +348,11 @@ class GrenadeLauncher:
         base.accept("1", self.change_state)  # noqa: F821
 
         self._shot_snd = loader.loadSfx(  # noqa: F821
-            "sounds/grenade_launcher_shot.ogg"
+            "sounds/combat/grenade_launcher_shot.ogg"
         )
-        self._explosion_snd = loader.loadSfx("sounds/bomb_explosion1.ogg")  # noqa: F821
+        self._explosion_snd = loader.loadSfx(  # noqa: F821
+            "sounds/combat/bomb_explosion1.ogg"
+        )
         self._explosion_snd.setVolume(0.15)
 
     def _change_mode(self, task):

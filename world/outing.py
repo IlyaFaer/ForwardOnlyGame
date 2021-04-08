@@ -22,9 +22,11 @@ class OutingsManager:
         self._outings = copy.deepcopy(OUTINGS)
         self._types = tuple(self._outings.keys())
         self._snds = {
-            "Looting": loader.loadSfx("sounds/looting_result.ogg"),  # noqa: F821
-            "Enemy Camp": loader.loadSfx("sounds/enemy_camp_result.ogg"),  # noqa: F821
-            "Meet": loader.loadSfx("sounds/meet_result.ogg"),  # noqa: F821
+            "Looting": loader.loadSfx("sounds/GUI/looting_result.ogg"),  # noqa: F821
+            "Enemy Camp": loader.loadSfx(  # noqa: F821
+                "sounds/GUI/enemy_camp_result.ogg"
+            ),
+            "Meet": loader.loadSfx("sounds/GUI/meet_result.ogg"),  # noqa: F821
         }
         self._gui = OutingsGUI()
 

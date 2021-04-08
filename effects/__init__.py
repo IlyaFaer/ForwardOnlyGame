@@ -138,7 +138,7 @@ class Explosion:
         self._fire.loadConfig("effects/{}.ptf".format(ptf))
         self._fire.setY(0.1)
 
-        self._snd = base.sound_mgr.loadSfx("sounds/explosion1.ogg")  # noqa: F821
+        self._snd = base.sound_mgr.loadSfx("sounds/combat/explosion1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._snd, parent.model)  # noqa: F821
 
     def _clear(self, task):
@@ -251,7 +251,9 @@ class BombExplosion:
         self._sparks = ParticleEffect()
         self._sparks.loadConfig("effects/white_sparks1.ptf")
 
-        self._snd = base.sound_mgr.loadSfx("sounds/bomb_explosion1.ogg")  # noqa: F821
+        self._snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/combat/bomb_explosion1.ogg"
+        )
         base.sound_mgr.attachSoundToObject(self._snd, parent.model)  # noqa: F821
 
     def _stop_explosion(self, task):
@@ -295,13 +297,13 @@ class Stench:
         background.setDepthTest(0)
         background.setDepthWrite(0)
 
-        self._snd1 = loader.loadSfx("sounds/hollow1.ogg")  # noqa: F821
+        self._snd1 = loader.loadSfx("sounds/Stench/hollow.ogg")  # noqa: F821
         self._snd1.setLoop(True)
-        self._snd2 = loader.loadSfx("sounds/creepy1.ogg")  # noqa: F821
+        self._snd2 = loader.loadSfx("sounds/Stench/creepy.ogg")  # noqa: F821
         self._snd2.setLoop(True)
-        self._snd3 = loader.loadSfx("sounds/breathing1.ogg")  # noqa: F821
+        self._snd3 = loader.loadSfx("sounds/Stench/breathing.ogg")  # noqa: F821
         self._snd3.setLoop(True)
-        self._snd4 = loader.loadSfx("sounds/teeth.ogg")  # noqa: F821
+        self._snd4 = loader.loadSfx("sounds/Stench/teeth.ogg")  # noqa: F821
         self._snd4.setLoop(True)
 
         self._stench = ParticleEffect()

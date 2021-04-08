@@ -26,8 +26,8 @@ class RailsScheme:
         self.is_shown = False
         self._temp_wids = []
 
-        self._open_snd = loader.loadSfx("sounds/paper1.ogg")  # noqa: F821
-        self._close_snd = loader.loadSfx("sounds/paper2.ogg")  # noqa: F821
+        self._open_snd = loader.loadSfx("sounds/GUI/paper1.ogg")  # noqa: F821
+        self._close_snd = loader.loadSfx("sounds/GUI/paper2.ogg")  # noqa: F821
         self._world_map = world_map
 
         self._list = DirectFrame(

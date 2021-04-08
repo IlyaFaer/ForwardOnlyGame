@@ -45,8 +45,8 @@ class Team:
         self.hold_together = False
 
         taskMgr.doMethodLater(5, self._calc_cohesion, "calc_cohesion")  # noqa: F821
-        self._medicine_snd = loader.loadSfx("sounds/medicine.ogg")  # noqa: F821
-        self._stimulator_snd = loader.loadSfx("sounds/stimulator.ogg")  # noqa: F821
+        self._medicine_snd = loader.loadSfx("sounds/GUI/medicine.ogg")  # noqa: F821
+        self._stimulator_snd = loader.loadSfx("sounds/GUI/stimulator.ogg")  # noqa: F821
 
     @property
     def current_cohesion(self):

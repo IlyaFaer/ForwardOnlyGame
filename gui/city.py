@@ -152,10 +152,10 @@ class CityGUI:
         self._amb_snd.setVolume(0)
         self._amb_snd.setLoop(True)
 
-        self._coins_s_snd = loader.loadSfx("sounds/coins_short.ogg")  # noqa: F821
-        self._coins_l_snd = loader.loadSfx("sounds/coins_long.ogg")  # noqa: F821
-        self._toot_snd = loader.loadSfx("sounds/toot1.ogg")  # noqa: F821
-        self.write_snd = loader.loadSfx("sounds/write.ogg")  # noqa: F821
+        self._coins_s_snd = loader.loadSfx("sounds/GUI/coins_short.ogg")  # noqa: F821
+        self._coins_l_snd = loader.loadSfx("sounds/GUI/coins_long.ogg")  # noqa: F821
+        self._toot_snd = loader.loadSfx("sounds/train/toot1.ogg")  # noqa: F821
+        self.write_snd = loader.loadSfx("sounds/GUI/write.ogg")  # noqa: F821
 
         self._fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821

@@ -102,7 +102,7 @@ class Shooter(metaclass=abc.ABCMeta):
             panda3d.core.AudioSound: Shooting sound.
         """
         shot_snd = base.sound_mgr.loadSfx(  # noqa: F821
-            "sounds/{name}.ogg".format(name=name)
+            "sounds/combat/{name}.ogg".format(name=name)
         )
         base.sound_mgr.attachSoundToObject(shot_snd, self.model)  # noqa: F821
         return shot_snd
