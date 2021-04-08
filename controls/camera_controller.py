@@ -328,6 +328,7 @@ class CameraController:
             hangar (panda3d.core.NodePath): Hangar model.
         """
         self._disable_ctrl_keys()
+        self._stop(True, is_hard=True)
         base.ignore("c")  # noqa: F821
 
         self._last_pos = base.cam.getPos()  # noqa: F821

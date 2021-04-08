@@ -175,6 +175,7 @@ class UpgradeChooser(ItemChooser):
             self._chosen_item = None
             self._desc["text"] = ""
             self._cost["text"] = ""
+            base.train.clear_upgrade_preview()  # noqa: F821
             return
 
         if self._ind == len(self._items):

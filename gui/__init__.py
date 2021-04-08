@@ -265,22 +265,24 @@ class MainMenu:
 
         descs = {
             "soldiers": (
-                "Your Train - your fortress! Improve it, build its defense, "
-                "hardness, and it'll bring you there.\nSoldiers are good shooters at "
-                "medium distance and good fortification assaulters.\n\n"
+                "Soldiers are people of a tough discipline. They are good "
+                "shooters at medium\ndistance and good fortification assaulters. "
+                "Their tactic is based mostly on a good\ndefence and locomotive "
+                "upgrading, which can make the Train a real fortress.\n\n"
                 "You'll start with 3 soldier males."
             ),
             "raiders": (
-                "You're accustomed to difficulties and can recover no matter how "
-                "tough was the damage."
-                "\nRaiders are good fighters at short distance and they know how to "
-                "find resources.\n\n You'll start with 2 male and 1 "
-                "female raiders."
+                "Raiders are accustomed to difficulties and can recover from "
+                "anything. They are\ngood fighters at short distance and they "
+                "know how to find resources. Their tactic\nis based on getting "
+                "and using expendable resources and fast recovering.\n\n"
+                "You'll start with 2 male and 1 female raiders."
             ),
             "anarchists": (
-                "Your main value is solid collective! Build relations, and your "
-                "party will survive anything.\nAnarchists build cohesion faster "
-                "than others and getting higher factors from it.\n\n"
+                "Anarchists are the force of nature! They build cohesion "
+                "faster than others and\nalways value those, who life brought "
+                "them with. The tactic is based on\ngetting more people, "
+                "tweaking their traits and using team skills.\n\n"
                 "You'll start with 2 male and 1 female anarchists."
             ),
         }
