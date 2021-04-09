@@ -74,7 +74,7 @@ class TrainGUI:
             text_fg=SILVER_COL,
         )
         frame_miles = DirectFrame(
-            frameSize=(-0.115, 0.115, -0.05, 0.05),
+            frameSize=(-0.115, 0.115, -0.06, 0.05),
             pos=(0, 0, -0.95),
             frameTexture=GUI_PIC + "metal1.png",
             sortOrder=-1,

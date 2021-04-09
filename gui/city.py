@@ -314,7 +314,7 @@ class CityGUI:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_fg=SILVER_COL,
-            pos=(0.25, 0, z_coor - 0.18),
+            pos=(0.23, 0, z_coor - 0.17),
         )
         self._repl_wids.append(up_cost)
 

@@ -114,11 +114,12 @@ class World:
         Returns:
             bool: True if the Train is near a city.
         """
+        factor = -1 if self._loaded_blocks[-2].id < self._loaded_blocks[-1].id else 1
         return (
             self._is_in_city
-            or self._map[self._block_num - 1].is_city
-            or self._map[self._block_num - 2].is_city
-            or self._map[self._block_num - 3].is_city
+            or self._map[self._block_num + 1 * factor].is_city
+            or self._map[self._block_num + 2 * factor].is_city
+            or self._map[self._block_num + 3 * factor].is_city
         )
 
     @property

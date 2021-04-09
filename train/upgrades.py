@@ -28,16 +28,16 @@ without getting damage""",
     "Floodlights": {
         "name": "Floodlights",
         "desc": """All the negative darkness
-factors are no more actual with
-these floodlights on""",
+factors are no more actual
+with these floodlights on""",
         "cost": "220$",
         "model": "floodlights1",
     },
     "Armor Plate": {
         "name": "Armor Plate",
         "desc": """An active shield which can
-cover one of the Train parts.
-Use 5, 6, 7 keys to move it.""",
+cover one of the Train sides.
+Press 4, 5, 6 keys to move it.""",
         "cost": "70$",
         "model": "armor_plate",
     },
@@ -53,7 +53,7 @@ in case of a big damage""",
         "name": "Grenade Launcher",
         "desc": """Active gun, which can do a
 lot of damage on a small area.
-Use 1 key to aim and shoot.""",
+Press 1 key to aim and shoot.""",
         "cost": "250$",
         "model": "grenade_launcher",
     },
@@ -110,9 +110,9 @@ class ArmorPlate:
                 SoundInterval(self._snd),
             ),
         )
-        base.accept("5", self._turn_left)  # noqa: F821
-        base.accept("6", self._turn_top)  # noqa: F821
-        base.accept("7", self._turn_right)  # noqa: F821
+        base.accept("4", self._turn_left)  # noqa: F821
+        base.accept("5", self._turn_top)  # noqa: F821
+        base.accept("6", self._turn_right)  # noqa: F821
 
     def _cover_side(self, side):
         """Actually change the plate position.
