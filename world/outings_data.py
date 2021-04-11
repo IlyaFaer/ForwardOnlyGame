@@ -1325,6 +1325,94 @@ You're getting 1 smoke filter and 1 medicine box""",
                 },
             ),
         },
+        {  # 8
+            "name": "Wooden Barn",
+            "type": "Looting",
+            "class_weights": {"soldier": 20, "raider": 45, "anarchist": 9},
+            "assignees": 1,
+            "day_part_weights": {"night": 7, "morning": 0, "noon": 3, "evening": 10},
+            "desc": """Gazing at the horizon line, you've been overlooking corn fields
+for the last two hours. But suddenly you see a big dark wooden
+barn, standing on the edge of the green field, a little covered
+with snow. Large entrance gates are opened, but lack of chains and
+locks makes you think it was never actually closed. So, it can be
+a good place for looting as well as just an empty building. Who
+should be sent to clarify the situation?""",
+            "results": (
+                {
+                    "score": range(0, 20),
+                    "desc": """{name1}, chosen as your messenger, takes {hisher1} gear
+and runs to the barn fast. You're staying sharp, looking at the
+nearlands very careful, but nothing promises any troubles. Entering
+the barn in the meantime, {name1} sees several old naked bodies,
+hanged from the ceiling. Big numbers of bruises and dry blood
+saying that these people were tortured. Moving {hisher1} eyes out
+of the terrible sight, {name1} walks to the table, covered with
+different stuff. Passports. Opening them one by one, {name1} sees
+that all of them are foreign. Looks like this place belonged to
+skinheads, and here they were killing those, who came from abroad.
+Throwing the last gaze at the hanged, {name1} exits the barn.
+{name1} getting -35 energy""",
+                    "effects": {"char_1": {"energy": -35}},
+                },
+                {
+                    "score": range(20, 40),
+                    "desc": """You're sending {name1} to recon the old building.
+Jumping off the locomotive, {heshe1} takes a direction to the barn,
+but in the next moment you see a fire flash in the gates opening.
+A big rocket with a loud hiss flies in the direction of the train
+and explodes just in a couple of meters aside of its wheels. {name1}
+makes several shots, and in the next second a man in a brown coat
+falls from behind the gates. You're nodding to {name1}, permitting
+{himher1} to take a look at the barn. Jumping off the locomotive,
+you're observing the wheels: damage doesn't seem very serious, still,
+it's damage. {name1} in the meantime exits back, showing that
+there was nothing interesting inside the wooden barn.
+Train getting -60 durability""",
+                    "effects": {"train": {"durability": -60}},
+                },
+                {
+                    "score": range(40, 60),
+                    "desc": """As the barn doesn't seem to be very inhabited
+and it stands very close to the railway, you're deciding to send
+{name1} just alone. Not poking around too long, {heshe1} runs to
+the building, enters it and observes emptiness. It's clear that
+owner took everything useful and flew away. The only strange
+detail is several horse skeletons. They were left here, on leashes,
+and now seem to be dead for a very long time. Not the most humane
+decision! Still, we don't know what actually happened here, maybe
+it's not what it looks like. Anyway {name1} returns back empty.""",
+                    "effects": {},
+                },
+                {
+                    "score": range(60, 80),
+                    "desc": """{name1}, chosen as your messenger, takes {hisher1}
+gear and moves to the old barn. Quetly entering the building, {heshe1}
+sees several horse skeletons on a leashes; the place seems to be not
+looted, so it can be said the owner leaved the barn in a hurry.
+Walking around, {name1} catches {hisher1} eyes on an aid kit. It looks to be
+intended for animals, but inside {name1} finds several syringes that
+can be also useful for humans. Nothing more attracts your messenger
+attention, so {heshe1} takes medicines and returns back to the Train.
+Single character can get +30 health""",
+                    "effects": {"select_char": {"health": 30}},
+                },
+                {
+                    "score": range(80, 101),
+                    "desc": """{name1}, driven by your command, jumps to the ground and
+moves to the wooden barn. Nothing promises troubles, so {heshe1} enters
+inside and starts to rummage through the old stuff. The place doesn't
+seem looted, but all the things are really ancient - horse leashes, rusty
+tools, dark blue cloth pieces... The owner probably was a jockey - {name1}
+see several saddles and a blue jockey suit. Almost without hope your
+envoy opens a first aid kit and finds a horse doping there. Hm-m, it
+can be diluted and used for people as well. {name1} decides to take
+the syringe and go back to the train, as there is nothing more in here.
+You're getting 2 stimulators""",
+                    "effects": {"stimulators": 2},
+                },
+            ),
+        },
     ),
     "meet": (
         {  # 1
