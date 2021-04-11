@@ -371,7 +371,7 @@ skinheads with guns are appearing, with clear intent to attack the
 gas point. {name1} and {name2}, not yet detected by robbers, upper their
 guns and shooting off all of these cruds. The station dwellers moving
 outside the building to see what's happening, and understand that your
-people saved them from skinheads. They applaud {name1} and {name2}
+people saved them from skinheads. They applaud {name1} and {name2},
 speaking of weird language unfamiliar to your messengers. {name1} and
 {name2} nod their heads, turning back to the Train, but one of the
 dwellers stops them and gives them several dollar banknotes.
@@ -383,14 +383,14 @@ You're getting +70$""",
                     "desc": """{name1} and {name2} fastly moving to the gas station. Getting
 closer, they slow down, but after several seconds they see that the
 building is abandoned. The glass door is open, music is still playing,
-but dust lies everywhere and silence. {name1} and {name2} together
-walking around the station, enter it and, seeing no threats, splitting
-to take two things simultaneously: cash and fuel. Cash machine,
-fortunately, is open, and {name2} finds a canister very fast. Filling
-it to the brim, {name1} and {name2} in a good mood returning back
-to the Train with their catch.
-You're getting +90$ and fuel for 50 miles""",
-                    "effects": {"money": 90},
+but dust lies everywhere and silence fills the air. {name1} and {name2}
+together walking around the station, enter it and, seeing no threats,
+splitting to check two places simultaneously: the cash and the storeroom.
+Cash machine, fortunately, is open, and {name2} finds a toolbox really
+fast. Energetically taking their lucky catches, {name1} and {name2} in
+a good mood returning back to the Train.
+You're getting +90$ and +80 Train durability""",
+                    "effects": {"money": 90, "durability": 80},
                 },
             ),
         },
@@ -1092,18 +1092,18 @@ Train durability +40""",
                 {
                     "score": range(40, 60),
                     "desc": """You're sending {name1} with {name2} to take a look
-at the crash site. {name2} takes a fuel tank in hope there will be
+at the crash site. {name2} takes a big backpack in hope there will be
 something to bring back. Both they are moving to the damaged truck
-and starting to search through the plastic boxes scatter around the
+and starting to search through the plastic boxes scattered around the
 place. At the first minute they understand that someone already emptied
 every container at the place, probably, the same one who attacked the
-truck - they see a lot of sleeves and shot holes. Taking a look
-inside the car cabin {name2} finds that it also emptied. Almost without
-hope {heshe2} moves to the gas tank, and... Yes! There is petrol! Inhaling
-its strong smell {name2} drains the gasoline, and, satisfied, your people
-are returning back to the Train.
-You're getting diesel fuel for 50 more miles.""",
-                    "effects": {},
+truck - they see a lot of sleeves, shot holes and some blood spots.
+Taking a look inside the car cabin, {name2} finds that it wasn't looted
+somewhy, and there is a small black plastic box with several syringes
+inside. Gazing at the label carefully, {name2} understands that it's
+some kind of a not very legal doping. Well, it's still something!
+You're getting 1 stimulator""",
+                    "effects": {"stimulators": 1},
                 },
                 {
                     "score": range(60, 80),
