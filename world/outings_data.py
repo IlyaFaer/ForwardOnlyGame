@@ -678,6 +678,101 @@ You're getting 170$""",
                 },
             ),
         },
+        {  # 8
+            "name": "Kid's camp",
+            "type": "Enemy Camp",
+            "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
+            "assignees": 1,
+            "day_part_weights": {"night": 10, "morning": 7, "noon": 0, "evening": 3},
+            "desc": """From a big distance you've noticed several dark green buildings. Got
+closer, you see that they are old, but still in a good shape. A bunch of
+colorful attractions makes you think that this is a summer camp for kids.
+There are no kids, however, but the place is definitely inhabited, most
+likely by skinheads - you see bodies lying here and there, smoke rising
+from a couple of buildings and a lot of fresh litter. It looks like
+the current owners of the camp didn't notice your arrival, so it makes
+sense to send just one scout for a quet place recon.""",
+            "results": (
+                {
+                    "score": range(0, 20),
+                    "desc": """You're sending {name1} for a scouting. Without delays {heshe1} takes
+the direction to the camp and silently approaches it. The place seems
+quiet for some time, but suddenly several doors are opening, and shots
+are tearing the air. Felling to the ground, {name1} start to shoot
+all around, and you're trying to help {himher1} from the Train. It takes
+about three minutes for your messenger to get back to you, but the
+skinheads doesn't want to leave you be - they run to the locomotive
+with loud shouts. Lucky for you, they didn't think about getting into
+open place until it became too late. Your coordinated fire drops them
+one by one. Making a quick roll call, you understand that you all,
+however, got some wounds during this skirmish.
+All of your teammates are getting -30 health""",
+                    "effects": {"all": {"health": -30}},
+                },
+                {
+                    "score": range(20, 40),
+                    "desc": """You're choosing {name1} as a scout. Jumping to the ground, {heshe1}
+puts on a hood against the cold wind and walks to the spot. It takes
+a couple of minutes for your messenger to understand that the camp is
+forsaken, not long ago though. Walking around, {heshe1} tries to find
+something useful, but nothing except empty backpacks and clothes
+shows up. In some moment a strong wind gust swepts in the air, and
+{name1} hear a metal creak. Uppering {hisher1} head, {heshe1} see that big
+metal water storage, standing in the middle of the camp, leans
+over, and in the next second fails to the ground. Dirty water rises
+between the buildings, and {name1} spurts back to the locomotive. Wet
+and cold, {heshe1} jumps to the Train and runs into the deck, closer
+to the engine to get warm faster.
+{name1} getting -30 energy""",
+                    "effects": {"char_1": {"energy": -30}},
+                },
+                {
+                    "score": range(40, 60),
+                    "desc": """You're deciding to send {name1} alone to take a look at the camp.
+Grabbing {hisher1} gun, {heshe1} runs to the spot and starts to quetly
+walk through the green buildings. It seems like the camp is forsaken
+not very long ago - empty backpacks, clothes, some photos - the usual
+stuff for a kid's camp, but nothing really useful while you're on a
+road. Having examined three buildings, {name1} walks to the street
+and feels a cold wind blowing. Not wanting to stay longer in such a
+weather, {heshe1} takes a direction back to the locomotive: there is
+nothing valuable in this place anyway.""",
+                    "effects": {},
+                },
+                {
+                    "score": range(60, 80),
+                    "desc": """By your command, {name1} prepares for a walk and jumps to
+the ground. Getting closer to the camp, {heshe1} sees several skinhead
+sentries. That, however, doesn't scare your messenger and {heshe1} sneaks
+into the building with a red cross. It appears to be not just a medical
+structure, but also a weapon storage. Throwing a gaze at the
+containments, {name1} notices a big first aid kit and moves to it.
+Several syringes, paper boxes of tablets, white bandages - {name1}
+takes the whole kit and moves out of the building. Carefully walking
+out of the camp aside of the watch, {heshe1} runs to the locomotive
+and proudly enters the deck house with {hisher1} rich catch.
+All of your teammates getting +20 health""",
+                    "effects": {"all": {"health": 20}},
+                },
+                {
+                    "score": range(80, 100),
+                    "desc": """{name1} becomes your messenger on this operation. Grabbing
+{hisher1} stuff, {heshe1} silently jumps down to the ground and moves
+into the camp. Only a couple of skinhead sentries lazily walk
+around the buildings, talking loudly. Without a single effort
+{name1} sneaks into the camp and penetrates into the wooden building,
+which looks pretty much like a storage. Inside {heshe1} sees so many
+different things that it becomes really hard to tell, what is actually
+stored in here. Jewelry, money, paintings, sculptures - it looks like
+skinheads are robbing everyone around and store the catch here. It's
+a pirate treasure really! Hearing some kind of a fuss on the street,
+{name1} grabs several small things, lying closely, and silently exits
+the building to take a direction to the locomotive.
+You're getting +130$""",
+                    "effects": {"money": 130},
+                },
+            ),
+        },
     ),
     "looting": (
         {  # 1
