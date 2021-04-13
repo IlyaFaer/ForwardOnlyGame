@@ -2208,5 +2208,105 @@ One person can be recruited""",
                 },
             ),
         },
+        {  # 8
+            "name": "Old Church",
+            "type": "Meet",
+            "class_weights": {"soldier": 7, "anarchist": 15, "raider": 3},
+            "assignees": 3,
+            "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
+            "desc": """The tall wooden spear that attracted your attention and made you
+stop here appears to be a part of an old church. Its dark wooden
+walls are ancient, white paint on the windows became grey, but you
+see several people in black cassocks near it. They all are also old
+- you can notice their long hoary beards. The people doesn't look
+dangerous or even able to fight back in case of troubles, so you're
+thinking about sending several of your teammates to speak with
+locals. As an old dwellers they probably can tell you something
+useful about the region you travelled into.""",
+            "results": (
+                {
+                    "score": range(0, 20),
+                    "desc": """You decide to send {name1}, {name2} and {name3} to negotiate
+with monks. Seeing your people jumping off the Train, dwellers move
+inside the church, keeping the door open however. Exchanging gazes,
+your messengers approach carefully and hear a worship. Getting
+closer to the door, {name3} takes a look inside, and in that
+moment a hiss sounds in the air. In the next second scouts see
+orange clouds in front of eyes, feel something heavy in their
+heads, and cold sweat covers their skin. The Stench! Trying to
+hold breath, without clear seeing of the way, they run back to the
+Train... They find themselves on the half of a road between the
+locomotive and the church, where the Stench didn't reach. "Let's
+go, let's go, go!" - they shout, from a run jumping on the Train.
+{name1}, {name2} and {name3} get -15 health and -25 energy""",
+                    "effects": {"assignees": {"health": -15, "energy": -25}},
+                },
+                {
+                    "score": range(20, 40),
+                    "desc": """You're choosing {name1}, {name2} and {name3} as a negotiation
+party. Your people carefully get closer to the monks, and one of
+the dwellers makes a step forward: "These sinners came from the
+Hinnom Valley, they brought us the Stench of Hell itself!". In
+the next moment a bunch of big rocks fly to your messengers.
+Making several shots into the sky, {name1} commands others to get
+back to the Train. Monks, seeing guns, run in different directions.
+Retreating to you, your scouts climb to the Train fastly. It appears
+{name3} got a rock right into {hisher1} head. The wound doesn't
+seem to be very serious, but it's still very unpleasant.
+{name3} getting -7 health and Motion Sickness""",
+                    "effects": {
+                        "char_3": {"health": -7, "add_trait": "Motion sickness"}
+                    },
+                },
+                {
+                    "score": range(40, 60),
+                    "desc": """{name1}, {name2} and {name3}, chosen as a talk group, jump
+off the Train and go to the monks. The priests gather together,
+looking at your people with a great attention. {name1} moves forward
+and starts to speak with the Lord's people. The dwellers talk with
+meek phrases, looking confused and embarrassed. It seems like they
+don't have a lot of guests here... A couple of minutes of talking
+ends with an invitation for a meal in the church. Exchanging gazes,
+your people politely reject the proposition. Something not right with
+these monks. They speak shy and meek, but their eyes are energetically
+moving on your scouts, making small stops on the guns, knives
+and sometimes on the Train standing in distance. It's better
+not to trust these guys. Thus, your people return empty.""",
+                    "effects": {},
+                },
+                {
+                    "score": range(60, 80),
+                    "desc": """You choose {name1}, {name2} and {name3} as a negotiation
+group. Your people take their guns and move to the monks. After
+several minutes of talking one of the church inhabitants, a
+young one, takes your messengers aside and speaks with them
+tet-a-tet. It appears he want to buy a gun! "The elder part of
+the commune thinks that God will keep us save, but, you know,
+Lord will help those who will help themselves." - he explains,
+stretching out a dollar banknote. Not thinking too long, {name2}
+gives him {hisher2} excess pistol and takes money. Friendly
+smiling, the priest hides the gun under cassock and says goodbye.
+You're getting 50$""",
+                    "effects": {"money": 50},
+                },
+                {
+                    "score": range(80, 101),
+                    "desc": """You decide to send {name1}, {name2} and {name3} to talk
+with the church beholders. Your people walk to the monks, and
+the dwellers meet them with an open arms. It appears they heard
+about your company fighting skinheads here and there, helping
+people in the country. Two of the monks move into the church
+and return back several minutes later with a basket of gifts!
+Giving your people blesses and promising to pray for you, they
+spend your messengers to the very Train. After all the goodbyes
+said you open the basket and see cheese, wine, bread, flowers,
+and, plus to this, a bunch of medicines and bandages! Exchanging
+smiles, you and your teammates start to prepare a feast.
+All of your teammates getting +30 energy
+You're getting +1 medicine box""",
+                    "effects": {"all": {"energy": 30}, "medicine_boxes": 1},
+                },
+            ),
+        },
     ),
 }
