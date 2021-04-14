@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Includes game Sun systems.
+Includes the game Sun systems.
 """
 import copy
 import itertools
@@ -40,7 +40,7 @@ SUN_COLORS = itertools.cycle(
 
 
 class Sun:
-    """Game Sun. Includes ambient and directional lights.
+    """The game Sun. Includes ambient and directional lights.
 
     Sun changes its color according to game day time.
     Simulates real Sun movement as well.

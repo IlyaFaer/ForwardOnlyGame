@@ -165,16 +165,6 @@ class Explosion:
         light.node().setAttenuation((self._light_coef - 1, 0, self._light_coef))
         return task.again
 
-    def _stop_fire(self, task):
-        """Disable fire particle effect."""
-        self._fire.disable()
-        return task.done
-
-    def _stop_sparks(self, task):
-        """Disable sparks particle effect."""
-        self._sparks.disable()
-        return task.done
-
     def play(self):
         """Make actual explosion and plan its clearing."""
         self._snd.play()
@@ -195,10 +185,16 @@ class Explosion:
             )
 
         taskMgr.doMethodLater(  # noqa: F821
-            self._length, self._stop_fire, self._parent.id + "_disable_exlode_fire"
+            self._length,
+            self._fire.disable,
+            self._parent.id + "_disable_exlode_fire",
+            extraArgs=[],
         )
         taskMgr.doMethodLater(  # noqa: F821
-            4.95, self._stop_sparks, self._parent.id + "_disable_exlode_sparks"
+            4.95,
+            self._sparks.disable,
+            self._parent.id + "_disable_exlode_sparks",
+            extraArgs=[],
         )
         taskMgr.doMethodLater(  # noqa: F821
             5.05, self._clear, self._parent.id + "_clear_explode"

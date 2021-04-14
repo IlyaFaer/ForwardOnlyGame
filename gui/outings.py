@@ -329,7 +329,7 @@ class OutingsGUI:
         and finish the outing.
 
         Args:
-            effect (dict): Effect to do.
+            effect (dict): The effect to do.
         """
         self._char_chooser.chosen_item.do_effects(effect)
         self._char_chooser.destroy()

@@ -10,7 +10,7 @@ import random
 from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
-from .locations import LOCATION_CONF
+from .location import LOCATION_CONF
 from .objects import BARRIER_THRESHOLD, ROCKET_THRESHOLD, Barrier, Rocket
 
 ANGLES = (0, 90, 180, 270)

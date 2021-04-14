@@ -76,6 +76,68 @@ class CommonController:
         """
         return self._chosen_char
 
+    def _char_action(self):
+        """Event: right mouse button pressed.
+
+        Make the chosen character act on the pointed object.
+        """
+        if self._pointed_obj and self._chosen_char:
+            if self._pointed_obj.startswith("part_"):
+                if self._chosen_char.move_to(self._parts[self._pointed_obj]):
+                    self._move_char_snd.play()
+                return
+
+            if self._pointed_obj.startswith("enemy_"):
+                self._chosen_char.attack(
+                    base.world.enemy.active_units[self._pointed_obj]  # noqa: F821
+                )
+                return
+
+            if self._pointed_obj.startswith("character_"):
+                self.chosen_char.exchange_pos(self._chars[self._pointed_obj])
+                self._move_char_snd.play()
+
+    def _choose_obj(self):
+        """Event: left mouse button clicked.
+
+        Organizes clicking on active objects:
+        characters, rest zones, enemies.
+        """
+        if not self._pointed_obj:
+            self.deselect()
+            return
+
+        if self._pointed_obj.startswith("character_"):
+            self._chosen_char = self._chars[self._pointed_obj]
+            self._char_pointer.reparentTo(self._chosen_char.model)
+
+            for part in self._parts.values():
+                part.show_arrow()
+
+            base.char_gui.show_char_info(self._chosen_char)  # noqa: F821
+            if self._is_relations_shown:
+                base.team.show_relations(self._chosen_char)  # noqa: F821
+
+            return
+
+        if self._pointed_obj.startswith("part_rest_"):
+            base.char_gui.show_resting_chars(  # noqa: F821
+                base.train.parts[self._pointed_obj]  # noqa: F821
+            )
+
+    def _collide_mouse(self, task):
+        """Organize mouse collision ray movement.
+
+        Args:
+            task (panda3d.core.PythonTask): Point by mouse task
+        """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return task.again
+
+        mpos = base.mouseWatcherNode.getMouse()  # noqa: F821
+        self._mouse_ray.setFromLens(base.camNode, mpos.x, mpos.y)  # noqa: F821
+        return task.again
+
     def set_controls(self):
         """Configure common game controls.
 
@@ -85,7 +147,7 @@ class CommonController:
         base.accept("f1", self._show_keys)  # noqa: F821
         base.accept("escape", base.main_menu.show)  # noqa: F821
         base.accept("r", self._show_char_relations)  # noqa: F821
-        base.accept("m", self._show_railways_scheme)  # noqa: F821
+        base.accept("m", base.world.show_scheme)  # noqa: F821
 
         # configure mouse collisions
         col_node = CollisionNode("mouse_ray")
@@ -133,55 +195,6 @@ class CommonController:
             base.team.hide_relations()  # noqa: F821
             self._is_relations_shown = False
 
-    def _choose_obj(self):
-        """Event: left mouse button clicked.
-
-        Organizes clicking on active objects:
-        characters, rest zones, enemies.
-        """
-        if not self._pointed_obj:
-            self.deselect()
-            return
-
-        if self._pointed_obj.startswith("character_"):
-            self._chosen_char = self._chars[self._pointed_obj]
-            self._char_pointer.reparentTo(self._chosen_char.model)
-
-            for part in self._parts.values():
-                part.show_arrow()
-
-            base.char_gui.show_char_info(self._chosen_char)  # noqa: F821
-            if self._is_relations_shown:
-                base.team.show_relations(self._chosen_char)  # noqa: F821
-
-            return
-
-        if self._pointed_obj.startswith("part_rest_"):
-            base.char_gui.show_resting_chars(  # noqa: F821
-                base.train.parts[self._pointed_obj]  # noqa: F821
-            )
-
-    def _char_action(self):
-        """Event: right mouse button pressed.
-
-        Make the chosen character act on the pointed object.
-        """
-        if self._pointed_obj and self._chosen_char:
-            if self._pointed_obj.startswith("part_"):
-                if self._chosen_char.move_to(self._parts[self._pointed_obj]):
-                    self._move_char_snd.play()
-                return
-
-            if self._pointed_obj.startswith("enemy_"):
-                self._chosen_char.attack(
-                    base.world.enemy.active_units[self._pointed_obj]  # noqa: F821
-                )
-                return
-
-            if self._pointed_obj.startswith("character_"):
-                self.chosen_char.exchange_pos(self._chars[self._pointed_obj])
-                self._move_char_snd.play()
-
     def _point_obj(self, event):
         """Event: mouse pointer hits a collision solid."""
         pointed_obj = event.getIntoNodePath().getName()
@@ -206,27 +219,10 @@ class CommonController:
         if self._pointed_obj.startswith("part_rest_"):
             base.char_gui.show_tooltip("Rest zone")  # noqa: F821
 
-    def _show_railways_scheme(self):
-        """Show railways scheme GUI."""
-        base.world.show_scheme()  # noqa: F821
-
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
         base.char_gui.hide_tip()  # noqa: F821
-
-    def _collide_mouse(self, task):
-        """Organize mouse collision ray movement.
-
-        Args:
-            task (panda3d.core.PythonTask): Point by mouse task
-        """
-        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
-            return task.again
-
-        mpos = base.mouseWatcherNode.getMouse()  # noqa: F821
-        self._mouse_ray.setFromLens(base.camNode, mpos.x, mpos.y)  # noqa: F821
-        return task.again
 
     def _traverse(self, task):
         """Main traverser task."""

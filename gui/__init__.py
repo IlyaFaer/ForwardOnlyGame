@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Game graphical interfaces.
+Game graphical interfaces module.
 """
 import shelve
 import sys
@@ -26,7 +26,7 @@ from .widgets import GUI_PIC, RUST_COL, SILVER_COL  # noqa: F401
 class MainMenu:
     """The main game menu.
 
-    Includes starting a game, loading, saving and exiting functions.
+    Includes starting a game, loading, saving and exiting GUI.
     """
 
     def __init__(self):
@@ -200,7 +200,6 @@ class MainMenu:
             "clickSound": self.click_snd,
             "command": self._show_team,
         }
-
         self._team_buts = {
             "soldiers": DirectButton(
                 text="Soldiers",

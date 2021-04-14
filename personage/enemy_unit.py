@@ -204,6 +204,14 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
 
         self._stop_tasks("_shoot", "_choose_target")
 
+    def clear(self, task=None):
+        """Clear all the graphical data of this unit."""
+        EnemyUnit.clear(self, task)
+        base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
+
+        if task is not None:
+            return task.done
+
     def enter_the_part(self, part):
         """Start fighting in the given part.
 
@@ -228,14 +236,6 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
 
         self.current_part = None
         self._target = None
-
-    def clear(self, task=None):
-        """Clear all the graphical data of this unit."""
-        EnemyUnit.clear(self, task)
-        base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
-
-        if task is not None:
-            return task.done
 
 
 class BrakeThrower(EnemyMotorcyclist):

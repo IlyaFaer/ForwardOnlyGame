@@ -48,6 +48,61 @@ class TrainController:
         """
         return 0 if self._is_stopped else self._move_anim_int.getPlayRate()
 
+    def _change_speed(self, diff, task):
+        """Actually change the Train speed.
+
+        Args:
+            diff (float): Coefficient to change the Train speed.
+        """
+        if self._is_stopped and diff > 0:
+            self._start_move()
+
+        new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
+        if (
+            self.on_et  # don't stop on enemy territory
+            and diff < 0
+            # stop on enemy territory only
+            # in case of critical damage
+            and not self.critical_damage
+            and new_rate < MIN_SPEED
+        ):
+            return task.again
+
+        if new_rate > self.max_speed and diff > 0:
+            return task.again
+
+        # change speed
+        if 0 < new_rate <= 1:
+            self._move_anim_int.setPlayRate(new_rate)
+            self._move_par.setPlayRate(new_rate)
+
+            new_snd_rate = new_rate * 1.2
+            if 0.25 <= new_snd_rate <= 1:
+                self._move_snd.setPlayRate(new_snd_rate)
+
+            return task.again
+
+        if new_rate == 0:
+            self._stop_move()
+
+        return task.done
+
+    def _change_speed_delayed(self, diff):
+        """Start changing the Train speed.
+
+        To make speed changing smoother delayed task is used.
+
+        Args:
+            diff (float): Coefficient to change speed.
+        """
+        taskMgr.doMethodLater(  # noqa: F821
+            0.6,
+            self._change_speed,
+            "change_train_speed",
+            extraArgs=[diff],
+            appendTask=True,
+        )
+
     def _set_sounds(self, model):
         """Set interactive Train sounds.
 
@@ -143,22 +198,6 @@ class TrainController:
             self._move_snd.stop()
             self._is_stopped = True
 
-    def _change_speed_delayed(self, diff):
-        """Start changing the Train speed.
-
-        To make speed changing smoother delayed task is used.
-
-        Args:
-            diff (float): Coefficient to change speed.
-        """
-        taskMgr.doMethodLater(  # noqa: F821
-            0.6,
-            self._change_speed,
-            "change_train_speed",
-            extraArgs=[diff],
-            appendTask=True,
-        )
-
     def _start_move(self):
         """Start the Train movement."""
         self._move_par.resume()
@@ -188,45 +227,6 @@ class TrainController:
     def _play_stop_snd(self, task):
         """Play Train stop sound."""
         self._stop_snd.play()
-        return task.done
-
-    def _change_speed(self, diff, task):
-        """Actually change the Train speed.
-
-        Args:
-            diff (float): Coefficient to change the Train speed.
-        """
-        if self._is_stopped and diff > 0:
-            self._start_move()
-
-        new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
-        if (
-            self.on_et  # don't stop on enemy territory
-            and diff < 0
-            # stop on enemy territory only
-            # in case of critical damage
-            and not self.critical_damage
-            and new_rate < MIN_SPEED
-        ):
-            return task.again
-
-        if new_rate > self.max_speed and diff > 0:
-            return task.again
-
-        # change speed
-        if 0 < new_rate <= 1:
-            self._move_anim_int.setPlayRate(new_rate)
-            self._move_par.setPlayRate(new_rate)
-
-            new_snd_rate = new_rate * 1.2
-            if 0.25 <= new_snd_rate <= 1:
-                self._move_snd.setPlayRate(new_snd_rate)
-
-            return task.again
-
-        if new_rate == 0:
-            self._stop_move()
-
         return task.done
 
     def speed_to_min(self):

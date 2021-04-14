@@ -30,7 +30,7 @@ ROCKET_THRESHOLD = 16
 class Barrier:
     """Enemy barrier.
 
-    Deals damage to the Train on hit.
+    Deals damage to the Train on a hit.
 
     Args:
         block (world.block.Block): Block to set this barrier on.
@@ -42,21 +42,13 @@ class Barrier:
         self._rb_nodes = []
 
         self._prepare_physics(
-            id_,
-            block,
-            loader.loadModel(address("barrier1")),  # noqa: F821
-            0.07,
-            y_coor,
+            id_, block, 0.07, y_coor,
         )
         self._prepare_physics(
-            id_,
-            block,
-            loader.loadModel(address("barrier1")),  # noqa: F821
-            -0.07,
-            y_coor,
+            id_, block, -0.07, y_coor,
         )
 
-    def _prepare_physics(self, id_, block, model, x_coor, y_coor):
+    def _prepare_physics(self, id_, block, x_coor, y_coor):
         """Prepare physics for the given model.
 
         Args:
@@ -64,7 +56,6 @@ class Barrier:
                 Barrier id. Used as a prefix in rigid body id.
             block (world.block.Block):
                 Block to set barrier on.
-            model (panda3d.core.NodePath): Barrier model.
             x_coor (float): X axis coordinate to set block on.
             y_coor (float): Y axis coordinate to set block on.
         """
@@ -75,7 +66,7 @@ class Barrier:
         phys_np = block.rails_mod.attachNewNode(rb_node)
         phys_np.setPos(x_coor, y_coor, 0.07)
         phys_np.setH(random.randint(-20, 20))
-        model.reparentTo(phys_np)
+        loader.loadModel(address("barrier1")).reparentTo(phys_np)  # noqa: F821
 
         base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
         self._rb_nodes.append(rb_node)

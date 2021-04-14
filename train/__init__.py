@@ -104,11 +104,12 @@ class Train:
         self._phys_shape = None
         self._upgrades = []
         self._pre_upgrade = None
+        self._bomb_explosions = []
         self._floodlights_mat = None
+        self._armor_plate = None
+        self._grenade_launcher = None
         self._upgrade_highlight = 1
         self._highlight_step = 0.03
-
-        self._bomb_explosions = []
 
         (
             self._smoke,
@@ -125,9 +126,6 @@ class Train:
 
         self.do_turn = 0
         self.cells = 7
-
-        self._armor_plate = None
-        self._grenade_launcher = None
 
     @property
     def durability(self):

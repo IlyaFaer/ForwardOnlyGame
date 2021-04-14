@@ -18,7 +18,7 @@ from personage.enemy import Enemy
 from utils import address, chance
 
 from .block import Block
-from .locations import LOCATION_CONF
+from .location import LOCATION_CONF
 from .outing import OutingsManager
 from .railway_generator import RailwayGenerator
 from .sun import Sun
@@ -440,14 +440,13 @@ class World:
         """
         self.outings_mgr.start_outing(type_)
 
-    def generate_location(self, location, size):
+    def generate_location(self, size):
         """Generate game location.
 
         Location consists of blocks, enemy and
         a list of available outings.
 
         Args:
-            location (str): Location name.
             size (int): Quantity of blocks to generate.
         """
         rails_gen = RailwayGenerator()
@@ -669,11 +668,10 @@ class World:
         """Show railways scheme GUI."""
         self.rails_scheme.show()
 
-    def load_location(self, location, num, enemy_score, disease_threshold, stench_step):
+    def load_location(self, num, enemy_score, disease_threshold, stench_step):
         """Load the given location from the last save.
 
         Args:
-            location (str): Location name.
             num (int): The save slot number.
             enemy_score (int): Enemy score.
             disease_threshold (int): Disease activity score.
@@ -688,7 +686,7 @@ class World:
         self.outings_mgr = OutingsManager()
 
         world_save = shelve.open("saves/world{}".format(str(num)))
-        for desc in world_save[location]:
+        for desc in world_save["Plains"]:
             block = Block(
                 name=desc["name"],
                 id_=desc["id"],
@@ -712,7 +710,7 @@ class World:
         self.enemy = Enemy()
         self.enemy.score = enemy_score
 
-        self._branches = world_save[location + "_branches"]
+        self._branches = world_save["Plains_branches"]
 
     def load_blocks(self, cur_blocks, angle):
         """Load blocks around player to continue the saved game.
@@ -787,8 +785,7 @@ class World:
     def _track_cities(self):
         """Track upcoming cities.
 
-        Slow down and stop the Train when
-        approaching to a city.
+        Slow down and stop the Train when approaching a city.
         """
         if len(self._loaded_blocks) < 2:
             return

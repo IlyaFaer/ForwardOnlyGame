@@ -69,7 +69,7 @@ class EnemyUnit(Unit):
 
     @property
     def clear_delay(self):
-        """Delay between this character's death and clearing.
+        """Delay between this character death and clearing.
 
         Returns:
             int: Seconds to hold the unit before delete.
@@ -101,7 +101,7 @@ class EnemyUnit(Unit):
         stop all the tasks for this enemy, plan clearing.
 
         Returns:
-            bool: True, if enemy dies in the first time.
+            bool: True, if the unit dies for the first time.
         """
         if not Unit._die(self):
             return False

@@ -302,6 +302,14 @@ class CameraController:
         )
         self._zoom(x, z, 0.2)
 
+    def enable_ctrl_keys(self):
+        """Enable all the camera control keys."""
+        self._set_move_keys()
+        base.accept("c", self._toggle_centered_view)  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+        )
+
     def set_controls(self, train):
         """Configure the main camera and its controls.
 
@@ -342,19 +350,9 @@ class CameraController:
         self._np.reparentTo(hangar)
         self._np.setPosHpr(-0.35, 1.36, 0.12, -163, 5, 0)
 
-    def enable_ctrl_keys(self):
-        """Enable all the camera control keys."""
-        self._set_move_keys()
-        base.accept("c", self._toggle_centered_view)  # noqa: F821
-        taskMgr.doMethodLater(  # noqa: F821
-            0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
-        )
-
     def unset_hangar_pos(self):
         """Return camera back to normal position."""
-        base.cam.setPos(self._last_pos)  # noqa: F821
-        base.cam.setHpr(self._last_hpr)  # noqa: F821
+        base.cam.setPosHpr(*self._last_pos, *self._last_hpr)  # noqa: F821
 
         self._np.reparentTo(base.train.node)  # noqa: F821
-        self._np.setPos(self._last_np_pos)
-        self._np.setHpr(self._last_np_hpr)
+        self._np.setPosHpr(*self._last_np_pos, *self._last_np_hpr)

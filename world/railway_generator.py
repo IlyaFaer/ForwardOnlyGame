@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Railways path generator.
+Railways network generator.
 """
 import random
 from utils import chance
@@ -35,11 +35,10 @@ class Bound:
             return "l90_turn" if prev_value < 0 else "r90_turn"
 
         direction = "r" if self._model[0] == "l" else "l"
-
         return direction + self._model[1:]
 
     def is_crossed(self, prev, current):
-        """Check if this bound crossed.
+        """Check if this bound is crossed.
 
         Args:
             prev (float): Previous func value.
@@ -54,7 +53,7 @@ class Bound:
         """Calculate railway turn and new generator step.
 
         Args:
-            prev_bound (Bound): Previous crossed bound object.
+            prev_bound (Bound): Previously crossed bound object.
 
         Returns:
             (float, str): New step value, turn model name.
@@ -135,10 +134,7 @@ class RailwayGenerator:
             self._city_threshold = 400
             return "city"
 
-        if chance(10):
-            return random.choice(("rs", "ls"))
-
-        return "direct"
+        return random.choice(("rs", "ls")) if chance(10) else "direct"
 
     def _choose_branch_block(self):
         """Generate a world block for a branch.
@@ -149,10 +145,7 @@ class RailwayGenerator:
             self._station_threshold = 90
             return "station"
 
-        if chance(10):
-            return random.choice(("rs", "ls"))
-
-        return "direct"
+        return random.choice(("rs", "ls")) if chance(10) else "direct"
 
     def generate_main_line(self, size):
         """Generate the main railway line according to sin-like function.

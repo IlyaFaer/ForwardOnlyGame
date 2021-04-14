@@ -46,9 +46,10 @@ logging.basicConfig(
 class ForwardOnly(ShowBase):
     """Object, which represents the game itself.
 
-    Includes the major game systems. The main mechanism represents
-    infinite Train movement along the World blocks, which are
-    loaded and unloaded on a fly.
+    Includes the major game systems: starting, loading and saving a game,
+    holds the game resource, orchestrates GUIs and the high level game
+    instances. The main mechanism represents, infinite Train movement
+    along the World blocks, which are loaded and unloaded on a fly.
     """
 
     def __init__(self):
@@ -146,7 +147,7 @@ class ForwardOnly(ShowBase):
         self.main_menu.hide()
         self.enableAllAudio()
 
-        self.taskMgr.doMethodLater(60, self.world.disease_activity, "disease")
+        taskMgr.doMethodLater(60, self.world.disease_activity, "disease")  # noqa: F821
 
         self.accept("block_finished", self._move_along_block)
         self._move_along_block()
@@ -210,20 +211,16 @@ class ForwardOnly(ShowBase):
         self.res_gui = ResourcesGUI()
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
-        self.common_ctrl.set_controls()
 
         # build game world
         self.world = World(save["day_part"])
         self.world.load_location(
-            "Plains",
-            num,
-            save["enemy_score"],
-            save["disease_threshold"],
-            save["stench_step"],
+            num, save["enemy_score"], save["disease_threshold"], save["stench_step"],
         )
         self.current_block = self.world.load_blocks(
             save["cur_blocks"], save["last_angle"]
         )
+        self.common_ctrl.set_controls()
 
         self.train.load_upgrades(save["train"]["upgrades"])
         self.team.load(save["team"], self.train.parts, save["cohesion"])
@@ -244,8 +241,20 @@ class ForwardOnly(ShowBase):
 
         save.close()
 
+    def plus_resource(self, name, value):
+        """Increase the amount of the given resource.
+
+        Updates the corresponding GUI indicator.
+
+        Args:
+            name (str): Name of the resource.
+            value (int): Amount to plus.
+        """
+        self._resources[name] += value
+        self.res_gui.update_resource(name, self._resources[name])
+
     def resource(self, name):
-        """Return the amount of the given resource.
+        """Return the current amount of the given resource.
 
         Args:
             name (str): Resource name.
@@ -261,7 +270,7 @@ class ForwardOnly(ShowBase):
         os.execl(sys.executable, sys.executable, *sys.argv)
 
     def save_game(self, num):
-        """Save the current game.
+        """Save the current game description into a file.
 
         Args:
             num (int): The save slot number.
@@ -292,18 +301,6 @@ class ForwardOnly(ShowBase):
 
         save.close()
 
-    def plus_resource(self, name, value):
-        """Increase the amount of the given resource.
-
-        Updates the corresponding GUI indicator.
-
-        Args:
-            name (str): Name of the resource.
-            value (int): Amount to please.
-        """
-        self._resources[name] += value
-        self.res_gui.update_resource(name, self._resources[name])
-
     def start_new_game(self, chosen_team):
         """Start new game.
 
@@ -321,12 +318,13 @@ class ForwardOnly(ShowBase):
         self.team.gen_default(chosen_team)
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
-        self.common_ctrl.set_controls()
 
         # build game world
         self.world = World()
-        self.world.generate_location("Plains", 900)
+        self.world.generate_location(900)
         self.current_block = self.world.prepare_next_block()
+
+        self.common_ctrl.set_controls()
 
         self.char_gui = CharacterGUI()
         self.res_gui = ResourcesGUI()

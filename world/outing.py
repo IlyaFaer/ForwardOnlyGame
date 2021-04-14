@@ -4,7 +4,6 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 API to manage outings.
 """
-import copy
 import random
 
 from gui import OutingsGUI
@@ -19,8 +18,7 @@ class OutingsManager:
 
     def __init__(self):
         self._threshold = random.randint(25, 45)
-        self._outings = copy.deepcopy(OUTINGS)
-        self._types = tuple(self._outings.keys())
+        self._types = tuple(OUTINGS.keys())
         self._snds = {
             "Looting": loader.loadSfx("sounds/GUI/looting_result.ogg"),  # noqa: F821
             "Enemy Camp": loader.loadSfx(  # noqa: F821
@@ -59,7 +57,7 @@ class OutingsManager:
         Args:
             type_ (str): Outing type.
         """
-        self._gui.start(random.choice(self._outings[type_]))
+        self._gui.start(random.choice(OUTINGS[type_]))
 
     def plan_outing(self):
         """Generate an outing.

@@ -58,24 +58,29 @@ class Character(Shooter, Unit):
         self._is_stunned = False
         self._is_stimulated = False
         self._health_bar = None
+
         self.inhale = 15
+        self.damage_range = [4, 6]
+        self.clear_damage = [4, 6]
 
         self.name = name
         self.sex = sex
-        self.heshe = "he" if sex == "male" else "she"
-        self.hisher = "his" if sex == "male" else "her"
-        self.himher = "him" if sex == "male" else "her"
-
-        self.damage_range = [4, 6]
-        self.clear_damage = [4, 6]
+        if sex == "male":
+            self.heshe = "he"
+            self.hisher = "his"
+            self.himher = "him"
+        else:
+            self.heshe = "she"
+            self.hisher = "her"
+            self.himher = "her"
 
         if desc:
             self._energy = desc["energy"]
             self.is_diseased = desc["is_diseased"]
             self.get_well_score = desc["get_well_score"]
-
             self.traits = desc["traits"]
             self.disabled_traits = desc["disabled_traits"]
+
             if self.is_diseased:
                 taskMgr.doMethodLater(  # noqa: F821
                     60, self.get_well, self.id + "_get_well"
