@@ -278,6 +278,9 @@ class CharacterGUI:
         )
         shift = -0.039
         for char in part.chars:
+            if char.is_dead:
+                continue
+
             self._rest_buttons[char.id] = DirectButton(
                 pos=(x, 0, z + shift),
                 text=char.name,

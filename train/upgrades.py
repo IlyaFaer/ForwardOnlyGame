@@ -22,7 +22,7 @@ UPGRADES_DESC = {
         "desc": """With this ram your locomotive
 will be breaking road barriers
 without getting damage""",
-        "cost": "180$",
+        "cost": "170$",
         "model": "ram1",
     },
     "Floodlights": {
@@ -30,7 +30,7 @@ without getting damage""",
         "desc": """All the negative darkness
 factors are no more actual
 with these floodlights on""",
-        "cost": "220$",
+        "cost": "210$",
         "model": "floodlights1",
     },
     "Armor Plate": {
@@ -54,14 +54,14 @@ in case of a big damage""",
         "desc": """Active gun, which can do a
 lot of damage on a small area.
 Press 1 key to aim and shoot.""",
-        "cost": "250$",
+        "cost": "230$",
         "model": "grenade_launcher",
     },
     "Sleeper": {
         "name": "Sleeper",
         "desc": """Add one more character cell
 into the locomotive rest zone""",
-        "cost": "160$",
+        "cost": "150$",
         "model": "sleeper1",
     },
 }
