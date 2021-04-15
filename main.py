@@ -223,9 +223,8 @@ class ForwardOnly(ShowBase):
         self.common_ctrl.set_controls()
 
         self.train.load_upgrades(save["train"]["upgrades"])
-        self.team.load(save["team"], self.train.parts, save["cohesion"])
-
         self.char_gui = CharacterGUI()
+        self.team.load(save["team"], self.train.parts, save["cohesion"])
 
         self.doMethodLater(3, self._start_game, "start_game")
         self.doMethodLater(
@@ -235,6 +234,7 @@ class ForwardOnly(ShowBase):
             extraArgs=[save["train"]["speed"]],
         )
         self.dollars = save["dollars"]
+        self._heads = save["heads"]
         self.plus_resource("medicine_boxes", save["medicine_boxes"])
         self.plus_resource("smoke_filters", save["smoke_filters"])
         self.plus_resource("stimulators", save["stimulators"])
@@ -286,6 +286,7 @@ class ForwardOnly(ShowBase):
         save["enemy_score"] = self.world.enemy.score
         save["disease_threshold"] = self.world.disease_threshold
         save["stench_step"] = self.world.stench_step
+        save["heads"] = self.heads
 
         save["train"] = self.train.description
         save["dollars"] = self.dollars

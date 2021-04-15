@@ -311,7 +311,7 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +20 energy. Cooldown: 10 min.",
+                text="Every character gets +25 energy. Cooldown: 10 min.",
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,

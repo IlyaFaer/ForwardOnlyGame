@@ -60,8 +60,8 @@ class Character(Shooter, Unit):
         self._health_bar = None
 
         self.inhale = 15
-        self.damage_range = [4, 6]
-        self.clear_damage = [4, 6]
+        self.damage_range = [4, 7]
+        self.clear_damage = [4, 7]
 
         self.name = name
         self.sex = sex
@@ -603,8 +603,13 @@ class Character(Shooter, Unit):
 
         Unit._die(self)
 
+        if base.common_ctrl.chosen_char == self:  # noqa: F821
+            base.common_ctrl.deselect(clear_resting=False)  # noqa: F821
+
         self._health_bar.hide_health()
-        self._stop_tasks("_reduce_energy", "_get_well", "_infect", "_stop_stimul")
+        self._stop_tasks(
+            "_reduce_energy", "_get_well", "_infect", "_stop_stimul", "_gain_energy"
+        )
 
         base.char_gui.destroy_char_button(self.id)  # noqa: F821
         self._team.delete_relations(self.id)

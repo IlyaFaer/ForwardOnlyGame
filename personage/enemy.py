@@ -139,7 +139,7 @@ class Enemy:
         Returns:
             bool: True if enemy is going to attack, False otherwise.
         """
-        if self._is_first_attack:
+        if self._is_first_attack and self.score == 3:
             self._is_first_attack = False
             EnemyDesc("MotoShooter")
 

@@ -181,15 +181,21 @@ class CommonController:
         self._choose_obj()
         self._pointed_obj = None
 
-    def deselect(self):
-        """Hide manipulating GUI and deselect character."""
+    def deselect(self, clear_resting=True):
+        """Hide manipulating GUI and deselect character.
+
+        Args:
+            clear_resting (bool):
+                Optional. A flag indicating if the list of the
+                resting characters should also be closed.
+        """
         self._char_pointer.detachNode()
         self._chosen_char = None
 
         for part in self._parts.values():
             part.hide_arrow()
 
-        base.char_gui.clear_char_info()  # noqa: F821
+        base.char_gui.clear_char_info(clear_resting)  # noqa: F821
 
         if self._is_relations_shown:
             base.team.hide_relations()  # noqa: F821

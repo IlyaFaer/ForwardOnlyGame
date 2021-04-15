@@ -146,8 +146,14 @@ class CharacterGUI:
 
         self.clear_char_info()
 
-    def clear_char_info(self):
-        """Clear the character GUI."""
+    def clear_char_info(self, clear_resting=True):
+        """Clear the character GUI.
+
+        Args:
+            clear_resting (bool):
+                Optional. A flag indicating if the list of the
+                resting characters should also be closed.
+        """
         for wid in (
             self._char_name,
             self._char_class,
@@ -165,8 +171,9 @@ class CharacterGUI:
         taskMgr.remove("track_char_info")  # noqa: F821
         self.char = None
 
-        for but in self._rest_buttons.values():
-            but.destroy()
+        if clear_resting:
+            for but in self._rest_buttons.values():
+                but.destroy()
 
         self.rest_list_shown = False
 

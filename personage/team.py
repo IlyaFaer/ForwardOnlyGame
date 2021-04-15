@@ -138,7 +138,7 @@ class Team:
             return
 
         for char in self.chars.values():
-            char.energy += 20
+            char.energy += 25
 
         self._plan_cohesion_cooldown(600)
 
@@ -264,7 +264,7 @@ class Team:
                     continue
 
                 rel_id = tuple(sorted([char1.id, char2.id]))
-                factor = 1.3 if char1.current_part == char2.current_part else 1
+                factor = 1.35 if char1.current_part == char2.current_part else 1
 
                 if (
                     "Liberal" in char1.traits + char2.traits

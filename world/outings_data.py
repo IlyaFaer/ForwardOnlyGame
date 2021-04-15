@@ -183,8 +183,8 @@ disappears in the tent inners. You're feeling little bit nervous, but
 several minutes passes, and {name1} walks out on the meadow. Carefully
 choosing the steps, {heshe1} returns back to the Train and shakes a
 bunch of dollars in {hisher1} left hand, showing it to you.
-You're getting +50$""",
-                    "effects": {"money": 50},
+You're getting +60$""",
+                    "effects": {"money": 60},
                 },
                 {
                     "score": range(80, 100),
@@ -278,8 +278,8 @@ gang in the jeep, approaching fast, are starting to shoot, and you're
 opening fire back. {name1} and {name2}, using your cover shooting, are
 returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.
-You're getting +60$""",
-                    "effects": {"money": 60},
+You're getting +70$""",
+                    "effects": {"money": 70},
                 },
                 {
                     "score": range(80, 100),

@@ -462,7 +462,7 @@ class World:
 
             if num > 100:
                 if not stench_blocks and chance(2):
-                    stench_blocks = random.randint(6, 10)
+                    stench_blocks = random.randint(5, 9)
 
             is_city = False
             is_station = False
@@ -846,7 +846,10 @@ class World:
                 new_block < current_block.id,
             )
 
-        if current_block.name in ("l_fork", "r_fork", "exit_from_fork"):
+        if (
+            current_block.name in ("l_fork", "r_fork", "exit_from_fork")
+            or current_block.enemy_territory
+        ):
             base.train.hide_turning_ability()  # noqa: F821
 
     def _load_hangar_scene(self, task):
