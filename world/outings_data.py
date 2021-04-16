@@ -1115,9 +1115,9 @@ gathering, your people returning back to the Train.""",
                     "score": range(60, 80),
                     "desc": """On your command {name1}, {name2} and {name3} are moving
 to the monastery. First they are approaching the building quietly, but
-soon they see it's completely forsaken long time ago. Entering inside
+soon they see it's completely forsaken long time ago. Entering inside,
 they find a lot of wood wreck. Air smells mold and dust, strong silence
-soar in the old monastery. Walking along the building your people
+soar in the old monastery. Walking along the building, your people
 discover a huge wall icon, which seems untouched by time. Colors are
 saturated, lack of any cracks or dirt - it looks surprisingly well
 for this place. {name1}, {name2} and {name3} spending a couple of

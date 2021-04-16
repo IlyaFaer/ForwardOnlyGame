@@ -532,7 +532,7 @@ class Character(Shooter, Unit):
 
     def _aim(self, task):
         """Rotate the character to aim on enemy."""
-        if self._target.is_dead and "Bloodthirsty" in self.traits:
+        if self._target and self._target.is_dead and "Bloodthirsty" in self.traits:
             self.health += 7
 
         if self.current_part and self._target in self.current_part.enemies:

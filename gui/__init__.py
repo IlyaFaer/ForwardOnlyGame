@@ -475,6 +475,9 @@ class MainMenu:
             is_game_over (bool):
                 True, if the main menu is shown on game over.
         """
+        if base.world.rails_scheme.is_shown:  # noqa: F821
+            base.world.rails_scheme.show()  # noqa: F821
+
         self._main_fr.show()
 
         if is_game_over:

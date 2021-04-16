@@ -551,7 +551,7 @@ class Train:
             if contact.getNode1().getName().startswith("barrier_"):
                 self._barrier_hit_snd.play()
                 if "Ram" not in self._upgrades:
-                    self.get_damage(100)
+                    self.get_damage(90)
 
                 task.delayTime = 0.3
                 return task.again
@@ -614,19 +614,19 @@ class Train:
         )
 
         if self._armor_plate is None:
-            self.get_damage(100)
+            self.get_damage(80)
             return
 
         if side == "left" and not self._armor_plate.cur_position == "right":
-            self.get_damage(100)
+            self.get_damage(80)
             return
 
         if side == "right" and not self._armor_plate.cur_position == "left":
-            self.get_damage(100)
+            self.get_damage(80)
             return
 
         if side == "top" and not self._armor_plate.cur_position == "top":
-            self.get_damage(100)
+            self.get_damage(80)
 
     def get_damage(self, damage):
         """Get damage from an enemy.

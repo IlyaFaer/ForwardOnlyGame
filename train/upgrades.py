@@ -54,7 +54,7 @@ in case of a big damage""",
         "desc": """Active gun, which can do a
 lot of damage on a small area.
 Press 1 key to aim and shoot.""",
-        "cost": "210$",
+        "cost": "180$",
         "model": "grenade_launcher",
     },
     "Sleeper": {

@@ -14,12 +14,12 @@ COHESION_FACTORS = {
     ("anarchist", "anarchist"): 0.68,
     ("soldier", "soldier"): 0.57,
     ("raider", "raider"): 0.57,
-    ("soldier", "raider"): 0.41,
-    ("raider", "soldier"): 0.41,
-    ("raider", "anarchist"): 0.5,
-    ("anarchist", "raider"): 0.5,
-    ("anarchist", "soldier"): 0.46,
-    ("soldier", "anarchist"): 0.46,
+    ("soldier", "raider"): 0.42,
+    ("raider", "soldier"): 0.42,
+    ("raider", "anarchist"): 0.51,
+    ("anarchist", "raider"): 0.51,
+    ("anarchist", "soldier"): 0.47,
+    ("soldier", "anarchist"): 0.47,
 }
 
 DEFAULT_TEAMS = {
@@ -290,7 +290,7 @@ class Team:
                     )
 
         self._calc_total_cohesion()
-        task.delayTime = 190
+        task.delayTime = 185
         return task.again
 
     def _calc_total_cohesion(self):

@@ -85,8 +85,9 @@ enemy attention""",
 can damage your Train wheels.
 Slow down when you hear a
 metal creak.""",
-    """Locomotive active weapons can only
-be used on enemy territory""",
+    """Locomotive active weapons
+can only be used
+on enemy territory""",
     # characters and classes
     """Women are nice and social, they
 reduce stress at any collective""",
