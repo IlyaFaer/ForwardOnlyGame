@@ -364,7 +364,7 @@ class World:
                 self._et_rusty_blocks = random.randint(4, 8)
 
             if not self._et_stench_blocks and chance(2):
-                self._et_stench_blocks = random.randint(4, 8)
+                self._et_stench_blocks = random.randint(4, 7)
 
         block = Block(
             name="direct",

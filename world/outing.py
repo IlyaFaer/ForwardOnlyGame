@@ -17,7 +17,7 @@ class OutingsManager:
     """
 
     def __init__(self):
-        self._threshold = random.randint(25, 45)
+        self._threshold = random.randint(25, 42)
         self._types = tuple(OUTINGS.keys())
         self._snds = {
             "Looting": loader.loadSfx("sounds/GUI/looting_result.ogg"),  # noqa: F821
@@ -68,7 +68,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(25, 45)
+            self._threshold = random.randint(25, 42)
             return random.choice(self._types)
 
     def show_upcoming(self, type_):

@@ -317,7 +317,7 @@ class TraitsGUI:
 
     def _update_traits(self, task):
         """Update the list of the character's traits."""
-        self._cohesion_pts["text"] = str(round(base.team.cohesion))  # noqa: F821
+        self._cohesion_pts["text"] = str(int(base.team.cohesion))  # noqa: F821
 
         if self._char_chooser.chosen_item == self._cur_char and not self._need_update:
             return task.again

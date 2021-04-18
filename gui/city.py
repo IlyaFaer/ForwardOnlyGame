@@ -21,9 +21,9 @@ from .widgets import (
 
 HEAD_COST = {
     "MotoShooter": 5,
-    "BrakeThrower": 3,
+    "BrakeThrower": 5,
     "StunBombThrower": 10,
-    "DodgeShooter": 20,
+    "DodgeShooter": 25,
 }
 
 

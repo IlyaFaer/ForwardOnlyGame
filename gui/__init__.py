@@ -478,6 +478,9 @@ class MainMenu:
         if base.world.rails_scheme.is_shown:  # noqa: F821
             base.world.rails_scheme.show()  # noqa: F821
 
+        if base.traits_gui.is_shown:  # noqa: F821
+            base.traits_gui.hide()  # noqa: F821
+
         self._main_fr.show()
 
         if is_game_over:

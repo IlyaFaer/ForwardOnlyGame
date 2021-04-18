@@ -14,12 +14,12 @@ COHESION_FACTORS = {
     ("anarchist", "anarchist"): 0.68,
     ("soldier", "soldier"): 0.57,
     ("raider", "raider"): 0.57,
-    ("soldier", "raider"): 0.42,
-    ("raider", "soldier"): 0.42,
-    ("raider", "anarchist"): 0.51,
-    ("anarchist", "raider"): 0.51,
-    ("anarchist", "soldier"): 0.47,
-    ("soldier", "anarchist"): 0.47,
+    ("soldier", "raider"): 0.43,
+    ("raider", "soldier"): 0.43,
+    ("raider", "anarchist"): 0.53,
+    ("anarchist", "raider"): 0.53,
+    ("anarchist", "soldier"): 0.49,
+    ("soldier", "anarchist"): 0.49,
 }
 
 DEFAULT_TEAMS = {
@@ -494,7 +494,7 @@ class Team:
         """Start dealing the Stench damage to characters."""
         if not self._is_in_stench:
             taskMgr.doMethodLater(  # noqa: F821
-                4, self.stench_activity, "stench_activity"
+                4.2, self.stench_activity, "stench_activity"
             )
             self._is_in_stench = True
 
