@@ -20,7 +20,19 @@ from .resources import ResourcesGUI  # noqa: F401
 from .teaching import EnemyDesc  # noqa: F401
 from .train import TrainGUI  # noqa: F401
 from .traits import TraitsGUI  # noqa: F401
-from .widgets import GUI_PIC, RUST_COL, SILVER_COL  # noqa: F401
+from .widgets import GUI_PIC, RUST_COL, SILVER_COL, ResolutionChooser  # noqa: F401
+
+RESOLUTIONS = {
+    "800x600": "800x600",
+    "1024x768": "1024x768",
+    "1176x664": "1176x664",
+    "1280x720": "1280x720",
+    "1280x960": "1280x960",
+    "1280x1024": "1280x1024",
+    "1440x900": "1440x900",
+    "1768x992": "1768x992",
+    "1920x1080": "1920x1080",
+}
 
 
 class MainMenu:
@@ -35,6 +47,7 @@ class MainMenu:
         self._is_first_pause = True
         self._tactics_wids = []
         self._save_wids = []
+        self._conf_wids = []
         self._save_blocked_lab = None
 
         self._hover_snd = loader.loadSfx("sounds/GUI/menu1.ogg")  # noqa: F821
@@ -54,32 +67,45 @@ class MainMenu:
             "clickSound": self.click_snd,
         }
         self._new_game_but = DirectButton(
-            pos=(-1, 0, 0.5),
+            pos=(-1.12, 0, 0.5),
             text_fg=RUST_COL,
             text="New game",
             command=self._choose_tactics,
+            text_align=TextNode.ALeft,
             **but_params,
         )
         self.bind_button(self._new_game_but)
 
         is_save_exists = save_exists(1) or save_exists(2) or save_exists(3)
         self._load_but = DirectButton(
-            pos=(-0.996, 0, 0.4),
+            pos=(-1.12, 0, 0.4),
             text_fg=RUST_COL if is_save_exists else (0.5, 0.5, 0.5, 1),
             text="Load game",
             command=self._show_slots if is_save_exists else None,
             extraArgs=[True],
+            text_align=TextNode.ALeft,
             **but_params,
         )
         self.bind_button(self._load_but)
 
         self.bind_button(
             DirectButton(
-                pos=(-1.083, 0, 0),
+                pos=(-1.12, 0, 0.2),
+                text_fg=RUST_COL,
+                text="Options",
+                text_align=TextNode.ALeft,
+                command=self._show_conf,
+                **but_params,
+            )
+        )
+        self.bind_button(
+            DirectButton(
+                pos=(-1.12, 0, 0),
                 text_fg=RUST_COL,
                 text="Exit",
                 command=sys.exit,
                 extraArgs=[1],
+                text_align=TextNode.ALeft,
                 **but_params,
             )
         )
@@ -173,6 +199,7 @@ class MainMenu:
             return
 
         self.hide_slots()
+        self.hide_conf()
 
         self._tactics_wids.append(
             DirectLabel(
@@ -250,6 +277,60 @@ class MainMenu:
         self._tactics_wids.append(start_but)
         self._show_team("soldiers")
 
+    def _save_conf_and_restart(self, res_chooser):
+        """Save configurations and restart the game program.
+
+        Args:
+            res_chooser (GUI.widgets.ResolutionChooser):
+                Widget to choose a screen resolution.
+        """
+        with open("options.cfg", "w") as opts_file:
+            opts_file.write(res_chooser.chosen_item + "\nEN")
+
+        base.restart_game()  # noqa: F821
+
+    def _show_conf(self):
+        """Show game configurations."""
+        self.hide_slots()
+        self.hide_teams()
+
+        self._conf_wids.append(
+            DirectLabel(
+                self._main_fr,
+                text="Resolution:",
+                text_fg=RUST_COL,
+                text_scale=0.04,
+                pos=(-0.3, 0, 0.5),
+                frameColor=(0, 0, 0, 0),
+            )
+        )
+        with open("options.cfg", "r") as opts_file:
+            res, _ = opts_file.readlines()
+
+        res_chooser = ResolutionChooser()
+
+        res_chooser.prepare(
+            self._main_fr,
+            (0.1, 0, 0.51),
+            RESOLUTIONS,
+            list(RESOLUTIONS.keys()).index(res.strip()),
+        )
+        self._conf_wids.append(res_chooser)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            text_scale=0.045,
+            text_fg=RUST_COL,
+            text="Save and restart",
+            relief=None,
+            command=self._save_conf_and_restart,
+            extraArgs=[res_chooser],
+            pos=(0.1, 0, 0),
+            clickSound=self.click_snd,
+        )
+        self.bind_button(but)
+        self._conf_wids.append(but)
+
     def _show_team(self, team):
         """Show the description of the chosen tactics.
 
@@ -289,10 +370,7 @@ class MainMenu:
 
     def _clear_temp_wids(self, task):
         """Destroy widgets from the first game screen."""
-        for wid in self._tactics_wids:
-            wid.destroy()
-
-        self._tactics_wids.clear()
+        self.hide_teams()
         self._alpha_disclaimer.destroy()
         self._load_msg.destroy()
         return task.done
@@ -336,10 +414,8 @@ class MainMenu:
         if self._save_wids:
             return
 
-        for wid in self._tactics_wids:
-            wid.destroy()
-
-        self._tactics_wids.clear()
+        self.hide_teams()
+        self.hide_conf()
 
         if for_loading:
             is_active = True
@@ -449,6 +525,20 @@ class MainMenu:
 
         self._save_wids.clear()
 
+    def hide_conf(self):
+        """Hide configurations GUI."""
+        for wid in self._conf_wids:
+            wid.destroy()
+
+        self._conf_wids.clear()
+
+    def hide_teams(self):
+        """Hide team choose GUI."""
+        for wid in self._tactics_wids:
+            wid.destroy()
+
+        self._tactics_wids.clear()
+
     def show_loading(self):
         """Show "Loading..." note on the screen."""
         self._load_msg = DirectLabel(
@@ -513,7 +603,6 @@ class MainMenu:
         self._main_fr["frameColor"] = (0, 0, 0, 0.6)
 
         self._new_game_but["text"] = "Resume"
-        self._new_game_but.setPos(-1.028, 0, 0.4)
         if not is_game_over:
             self._new_game_but["command"] = self.hide
 
@@ -541,12 +630,13 @@ class MainMenu:
         self.bind_button(
             DirectButton(
                 parent=self._main_fr,
-                pos=(-1, 0, 0.1),
+                pos=(-1.12, 0, 0.1),
                 text_scale=0.05,
                 text_fg=RUST_COL,
                 text="Main menu",
                 relief=None,
                 command=base.restart_game,  # noqa: F821
+                text_align=TextNode.ALeft,
                 clickSound=self.click_snd,
             )
         )

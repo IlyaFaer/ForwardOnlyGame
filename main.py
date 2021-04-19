@@ -54,7 +54,20 @@ class ForwardOnly(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
-        self._configure_window()
+
+        if not os.path.exists("options.cfg"):
+            with open("options.cfg", "w") as opt_file:
+                opt_file.write(
+                    str(self.pipe.getDisplayWidth())
+                    + "x"
+                    + str(self.pipe.getDisplayHeight())
+                    + "\nEN"
+                )
+
+        with open("options.cfg", "r") as opts_file:
+            res, lang = opts_file.readlines()
+
+        self._configure_window(res)
 
         if not os.path.exists("saves"):
             os.mkdir("saves")
@@ -109,17 +122,21 @@ class ForwardOnly(ShowBase):
         """
         return self._heads
 
-    def _configure_window(self):
+    def _configure_window(self, res):
         """Configure the game window.
 
-        Set title, fullscreen mode and resolution
-        according to the player's screen size.
+        Set title, fullscreen mode and the given resolution.
+
+        Args:
+            res (str): Screen resolution to be set.
         """
         props = WindowProperties()
 
         props.setTitle("Forward Only Game")
         props.setFullscreen(True)
-        props.setSize(self.pipe.getDisplayWidth(), self.pipe.getDisplayHeight())
+
+        x, z = res.split("x")
+        props.setSize(int(x), int(z))
 
         self.openDefaultWindow(props=props)
 

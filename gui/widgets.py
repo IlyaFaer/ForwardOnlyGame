@@ -209,3 +209,19 @@ class UpgradeChooser(ItemChooser):
 
         self._ind = 0
         self._show_info()
+
+
+class ResolutionChooser(ItemChooser):
+    """A widget to choose screen resolution."""
+
+    def _show_info(self):
+        """Show the chosen resolution."""
+        if self._ind == len(self._items):
+            self._ind = 0
+        elif self._ind == -1:
+            self._ind = len(self._items) - 1
+
+        key = list(self._items.keys())[self._ind]
+        self._chosen_item = self._items[key]
+
+        self._name["text"] = self._chosen_item
