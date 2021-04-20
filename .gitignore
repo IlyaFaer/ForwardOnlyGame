@@ -6,5 +6,6 @@ dev_utils/
 dist/
 saves/
 logs.txt
+options.cfg
 setup.py
 test_environment.py

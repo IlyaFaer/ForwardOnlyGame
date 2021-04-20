@@ -44,6 +44,8 @@ class MainMenu:
     def __init__(self):
         self._save_but = None
         self._chosen_team = None
+        self._load_msg = None
+        self._load_screen = None
         self._is_first_pause = True
         self._tactics_wids = []
         self._save_wids = []
@@ -372,7 +374,6 @@ class MainMenu:
         """Destroy widgets from the first game screen."""
         self.hide_teams()
         self._alpha_disclaimer.destroy()
-        self._load_msg.destroy()
         return task.done
 
     def _read_saves(self):
@@ -487,7 +488,7 @@ class MainMenu:
         taskMgr.doMethodLater(  # noqa: F821
             4, self._clear_temp_wids, "clear_main_menu_temp_wids"
         )
-        self.show_loading()
+        self.show_loading(is_game_start=True)
         taskMgr.doMethodLater(  # noqa: F821
             0.25,
             base.start_new_game,  # noqa: F821
@@ -539,10 +540,54 @@ class MainMenu:
 
         self._tactics_wids.clear()
 
-    def show_loading(self):
-        """Show "Loading..." note on the screen."""
+    def show_loading(self, is_game_start=False):
+        """Show game loading screen.
+
+        Args:
+            is_game_start (bool):
+                Flag, indicating if the player just started a new game.
+        """
+        if is_game_start:
+            self.hide()
+            self._load_screen = DirectFrame(
+                frameSize=(-2, 2, -1, 1),
+                frameColor=(0.15, 0.15, 0.15, 1),
+                state=DGG.NORMAL,
+            )
+            DirectLabel(
+                parent=self._load_screen,
+                text="Seepage",
+                text_scale=0.06,
+                text_fg=RUST_COL,
+                frameColor=(0, 0, 0, 0),
+                text_align=TextNode.ALeft,
+                pos=(-1, 0, 0.5),
+            )
+            DirectLabel(
+                parent=self._load_screen,
+                text="""Good morning, Captain!
+
+People are ready for duty and the Adjutant, our good locomotive, is in acceptable shape!
+
+We've crossed Silewer border at 11:45 pm, the checkpoint was abandoned. Soon we've made
+a stop near an improvised refugees camp. Criminals, looking pretty much like skinheads,
+was robbing the camp dwellers in the meantime. We've shown them our guns, and they let
+those people be, but also promised to find us later. Still, we've decided not to wake
+you up and let you rest till the morning...
+
+Munich just went dark, which means the Stench frontier is in a couple of hours behind.
+We should keep the speed high not to let those poisonous orange clouds overtake us.
+
+That's all, Captain, handing command over to you!""",
+                text_scale=0.035,
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0),
+                text_align=TextNode.ALeft,
+                pos=(-1, 0, 0.4),
+            )
+
         self._load_msg = DirectLabel(
-            parent=self._main_fr,
+            parent=self._load_screen or self._main_fr,
             text="Loading...",
             text_fg=RUST_COL,
             frameSize=(1, 1, 1, 1),
@@ -554,6 +599,10 @@ class MainMenu:
         """Hide the main menu."""
         self._main_fr.hide()
         self.hide_slots()
+
+        if self._load_screen is not None:
+            self._load_screen.destroy()
+            self._load_screen = None
 
         base.accept("escape", self.show)  # noqa: F821
         taskMgr.remove("check_can_save")  # noqa: F821
@@ -641,3 +690,20 @@ class MainMenu:
             )
         )
         self._is_first_pause = False
+
+    def show_start_button(self):
+        """Show a button to start a game on the loading screen."""
+        parent = self._load_msg.getParent()
+        self._load_msg.destroy()
+
+        self._load_msg = DirectButton(
+            parent=parent,
+            text="Take command",
+            text_fg=RUST_COL,
+            text_scale=0.04,
+            pos=(0, 0, -0.75),
+            relief=None,
+            clickSound=self.click_snd,
+            command=base.start_game,  # noqa: F821
+        )
+        self.bind_button(self._load_msg)

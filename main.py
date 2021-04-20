@@ -156,7 +156,7 @@ class ForwardOnly(ShowBase):
 
         self.current_block = next_block
 
-    def _start_game(self, task):
+    def start_game(self, task=None):
         """Actually start the game process."""
         self.notes = TeachingNotes()
         self.traits_gui = TraitsGUI()
@@ -164,11 +164,15 @@ class ForwardOnly(ShowBase):
         self.main_menu.hide()
         self.enableAllAudio()
 
+        taskMgr.doMethodLater(  # noqa: F821
+            23, self.world.make_stench_step, "stench_step"
+        )
         taskMgr.doMethodLater(60, self.world.disease_activity, "disease")  # noqa: F821
 
         self.accept("block_finished", self._move_along_block)
         self._move_along_block()
-        return task.done
+        if task is not None:
+            return task.done
 
     def _track_stench(self, next_block):
         """Track the Stench.
@@ -243,7 +247,7 @@ class ForwardOnly(ShowBase):
         self.char_gui = CharacterGUI()
         self.team.load(save["team"], self.train.parts, save["cohesion"])
 
-        self.doMethodLater(3, self._start_game, "start_game")
+        self.doMethodLater(3, self.start_game, "start_game")
         self.doMethodLater(
             3.01,
             self.train.ctrl.load_speed,
@@ -346,9 +350,7 @@ class ForwardOnly(ShowBase):
 
         self.char_gui = CharacterGUI()
         self.res_gui = ResourcesGUI()
-
-        self.doMethodLater(3, self._start_game, "start_game")
-
+        self.main_menu.show_start_button()
         self.dollars = 300
 
 

@@ -218,7 +218,7 @@ class World:
 
         return all_surf_vertices
 
-    def _make_stench_step(self, task):
+    def make_stench_step(self, task):
         """Move the Stench edge one block further."""
         self._map[self._stench_step].is_stenchy = True
         self._stench_step += 1
@@ -636,7 +636,6 @@ class World:
 
         self._set_sounds()
         self.enemy = Enemy()
-        taskMgr.doMethodLater(23, self._make_stench_step, "stench_step")  # noqa: F821
 
     def invert(self, block):
         """Invert the given block.
@@ -681,7 +680,6 @@ class World:
         self._disease_threshold = disease_threshold
 
         self._stench_step = stench_step
-        taskMgr.doMethodLater(30, self._make_stench_step, "stench_step")  # noqa: F821
 
         self.outings_mgr = OutingsManager()
 
