@@ -909,7 +909,8 @@ class World:
 
         if (
             len(self._loaded_blocks) > 2
-            and self._loaded_blocks[-2].id >= 15
+            and self._loaded_blocks[-2].id
+            >= (21 if base.tutorial_enabled else 15)  # noqa: F821
             and not self._et_blocks
             and self.enemy.going_to_attack(
                 self.sun.day_part, base.train.lights_on  # noqa: F821

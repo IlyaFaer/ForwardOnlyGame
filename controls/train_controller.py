@@ -55,7 +55,7 @@ class TrainController:
             diff (float): Coefficient to change the Train speed.
         """
         if self._is_stopped and diff > 0:
-            self._start_move()
+            self.start_move()
 
         new_rate = round(self._move_anim_int.getPlayRate() + diff, 2)
         if (
@@ -198,7 +198,7 @@ class TrainController:
             self._move_snd.stop()
             self._is_stopped = True
 
-    def _start_move(self):
+    def start_move(self):
         """Start the Train movement."""
         self._move_par.resume()
         self._move_anim_int.resume()
@@ -228,6 +228,12 @@ class TrainController:
         """Play Train stop sound."""
         self._stop_snd.play()
         return task.done
+
+    def pause_movement(self):
+        """Make a movement pause (used when a tutorial page is shown)."""
+        self._move_par.pause()
+        self._move_anim_int.pause()
+        self._move_snd.stop()
 
     def speed_to_min(self):
         """Accelerate to minimum speed."""

@@ -21,6 +21,7 @@ from effects import EffectsManager
 from gui import (
     CharacterGUI,
     MainMenu,
+    MechanicDesc,
     ResourcesGUI,
     TeachingNotes,
     TraitsGUI,
@@ -61,11 +62,12 @@ class ForwardOnly(ShowBase):
                     str(self.pipe.getDisplayWidth())
                     + "x"
                     + str(self.pipe.getDisplayHeight())
-                    + "\nEN"
+                    + "\nEN\nTrue"
                 )
 
         with open("options.cfg", "r") as opts_file:
-            res, lang = opts_file.readlines()
+            res, lang, tutorial_enabled = opts_file.readlines()
+            self.tutorial_enabled = tutorial_enabled == "True"
 
         self._configure_window(res)
 
@@ -154,6 +156,9 @@ class ForwardOnly(ShowBase):
         self.train.move_along_block(self.current_block)
         self._track_stench(next_block)
 
+        if self.tutorial_enabled:
+            self._track_tutorial(self.current_block.id)
+
         self.current_block = next_block
 
     def start_game(self, task=None):
@@ -164,15 +169,21 @@ class ForwardOnly(ShowBase):
         self.main_menu.hide()
         self.enableAllAudio()
 
-        taskMgr.doMethodLater(  # noqa: F821
-            23, self.world.make_stench_step, "stench_step"
-        )
+        if not self.tutorial_enabled:
+            taskMgr.doMethodLater(  # noqa: F821
+                23, self.world.make_stench_step, "stench_step"
+            )
         taskMgr.doMethodLater(60, self.world.disease_activity, "disease")  # noqa: F821
 
         self.accept("block_finished", self._move_along_block)
         self._move_along_block()
+
         if task is not None:
             return task.done
+        elif self.tutorial_enabled:
+            self.doMethodLater(
+                0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
+            )
 
     def _track_stench(self, next_block):
         """Track the Stench.
@@ -196,6 +207,32 @@ class ForwardOnly(ShowBase):
                 self.effects_mgr.stench_effect.play_clouds()
 
             self.team.stop_stench_activity()
+
+    def _track_tutorial(self, block_id):
+        """Check if a tutorial page should be shown on this block.
+
+        Args:
+            block_id (int): The current block id.
+        """
+        tutorial_name = {
+            1: "locomotive",
+            3: "characters",
+            6: "the Stench",
+            9: "cohesion",
+            12: "outings",
+            15: "resources",
+            18: "character status",
+        }.get(block_id)
+
+        if not tutorial_name:
+            return
+
+        MechanicDesc(tutorial_name)
+
+        if block_id == 18 and self.tutorial_enabled:
+            taskMgr.doMethodLater(  # noqa: F821
+                23, self.world.make_stench_step, "stench_step"
+            )
 
     def add_head(self, enemy):
         """Make a record about the destroyed enemy.

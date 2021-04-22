@@ -7,7 +7,13 @@ Game graphical interfaces module.
 import shelve
 import sys
 
-from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
+from direct.gui.DirectGui import (
+    DGG,
+    DirectButton,
+    DirectCheckButton,
+    DirectFrame,
+    DirectLabel,
+)
 from panda3d.core import TextNode, TransparencyAttrib
 
 from utils import save_exists
@@ -17,7 +23,7 @@ from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsGUI  # noqa: F401
 from .rails_scheme import RailsScheme  # noqa: F401
 from .resources import ResourcesGUI  # noqa: F401
-from .teaching import EnemyDesc  # noqa: F401
+from .teaching import EnemyDesc, MechanicDesc  # noqa: F401
 from .train import TrainGUI  # noqa: F401
 from .traits import TraitsGUI  # noqa: F401
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL, ResolutionChooser  # noqa: F401
@@ -279,15 +285,21 @@ class MainMenu:
         self._tactics_wids.append(start_but)
         self._show_team("soldiers")
 
-    def _save_conf_and_restart(self, res_chooser):
+    def _save_conf_and_restart(self, res_chooser, tutorial_check):
         """Save configurations and restart the game program.
 
         Args:
             res_chooser (GUI.widgets.ResolutionChooser):
                 Widget to choose a screen resolution.
+            tutorial_check (direct.gui.DirectCheckButton):
+                Tutorial enabling check button.
         """
         with open("options.cfg", "w") as opts_file:
-            opts_file.write(res_chooser.chosen_item + "\nEN")
+            opts_file.write(
+                res_chooser.chosen_item
+                + "\nEN\n"
+                + str(bool(tutorial_check["indicatorValue"]))
+            )
 
         base.restart_game()  # noqa: F821
 
@@ -298,7 +310,7 @@ class MainMenu:
 
         self._conf_wids.append(
             DirectLabel(
-                self._main_fr,
+                parent=self._main_fr,
                 text="Resolution:",
                 text_fg=RUST_COL,
                 text_scale=0.04,
@@ -307,7 +319,8 @@ class MainMenu:
             )
         )
         with open("options.cfg", "r") as opts_file:
-            res, _ = opts_file.readlines()
+            res, _, tutorial = opts_file.readlines()
+            tutorial = tutorial == "True"
 
         res_chooser = ResolutionChooser()
 
@@ -319,6 +332,31 @@ class MainMenu:
         )
         self._conf_wids.append(res_chooser)
 
+        self._conf_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                text="Tutorial:",
+                text_fg=RUST_COL,
+                text_scale=0.04,
+                pos=(-0.3, 0, 0.4),
+                frameColor=(0, 0, 0, 0),
+            )
+        )
+        tutorial_check = DirectCheckButton(
+            parent=self._main_fr,
+            indicatorValue=tutorial,
+            clickSound=self.click_snd,
+            scale=0.02,
+            pos=(0.12, 0, 0.4),
+            boxBorder=0,
+            boxImage=(GUI_PIC + "no_check.png", GUI_PIC + "check.png", None),
+            boxRelief=None,
+            relief="flat",
+            frameColor=RUST_COL,
+        )
+        tutorial_check.setTransparency(TransparencyAttrib.MAlpha)
+        self._conf_wids.append(tutorial_check)
+
         but = DirectButton(
             parent=self._main_fr,
             text_scale=0.045,
@@ -326,7 +364,7 @@ class MainMenu:
             text="Save and restart",
             relief=None,
             command=self._save_conf_and_restart,
-            extraArgs=[res_chooser],
+            extraArgs=[res_chooser, tutorial_check],
             pos=(0.1, 0, 0),
             clickSound=self.click_snd,
         )
