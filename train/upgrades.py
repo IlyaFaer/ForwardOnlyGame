@@ -64,6 +64,14 @@ into the locomotive rest zone""",
         "cost": "140$",
         "model": "sleeper1",
     },
+    "Window Frames": {
+        "name": "Window Frames",
+        "desc": """With this window frames
+characters in the rest zone are
+protected from the Stench""",
+        "cost": "150$",
+        "model": "isolation",
+    },
 }
 
 

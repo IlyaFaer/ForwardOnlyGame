@@ -885,6 +885,13 @@ class Character(Shooter, Unit):
             self.inhale -= 1
             return
 
+        if (
+            self.current_part
+            and self.current_part.name == "part_rest_locomotive"
+            and "Window Frames" in base.train.upgrades  # noqa: F821
+        ):
+            return
+
         self.get_damage(1)
 
 
