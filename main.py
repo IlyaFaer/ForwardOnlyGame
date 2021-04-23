@@ -170,9 +170,11 @@ class ForwardOnly(ShowBase):
         self.enableAllAudio()
 
         if not self.tutorial_enabled:
+            self.notes.start()
             taskMgr.doMethodLater(  # noqa: F821
                 23, self.world.make_stench_step, "stench_step"
             )
+
         taskMgr.doMethodLater(60, self.world.disease_activity, "disease")  # noqa: F821
 
         self.accept("block_finished", self._move_along_block)
@@ -230,6 +232,7 @@ class ForwardOnly(ShowBase):
         MechanicDesc(tutorial_name)
 
         if block_id == 18 and self.tutorial_enabled:
+            self.notes.start()
             taskMgr.doMethodLater(  # noqa: F821
                 23, self.world.make_stench_step, "stench_step"
             )

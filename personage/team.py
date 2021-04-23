@@ -191,13 +191,13 @@ class Team:
     def rest_all(self):
         """Make all the characters rest."""
         for char in self.chars.values():
-            if not char.current_part.name.startswith("part_rest_"):
+            if not char.current_part.name == "part_rest":
                 char.rest()
 
     def stop_rest_all(self):
         """Stop the team rest."""
         for char in self.chars.values():
-            if not char.current_part.name.startswith("part_rest_"):
+            if not char.current_part.name == "part_rest":
                 char.stop_rest()
 
     def _stop_cover_fire(self, task):
@@ -239,7 +239,7 @@ class Team:
     def prepare_to_fight(self):
         """Prepare every character to fight."""
         for char in self.chars.values():
-            if char.current_part.name.startswith("part_rest_"):
+            if char.current_part.name == "part_rest":
                 continue
             char.prepare_to_fight()
 

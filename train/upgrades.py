@@ -161,7 +161,7 @@ class ArmorPlate:
             cover_delay,
             base.train.cover_part,  # noqa: F821
             "cover_part",
-            extraArgs=["part_locomotive_left"],
+            extraArgs=["part_left"],
         )
         taskMgr.doMethodLater(  # noqa: F821
             0.5,
@@ -194,7 +194,7 @@ class ArmorPlate:
             cover_delay,
             base.train.cover_part,  # noqa: F821
             "cover_part",
-            extraArgs=["part_locomotive_right"],
+            extraArgs=["part_right"],
         )
         taskMgr.doMethodLater(  # noqa: F821
             0.5,

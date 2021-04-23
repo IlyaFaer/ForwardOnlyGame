@@ -659,8 +659,8 @@ class World:
             map_to_save.append(block.description())
 
         world_save = shelve.open("saves/world{}".format(str(num)), "n")
-        world_save["Plains"] = map_to_save
-        world_save["Plains_branches"] = self.branches
+        world_save["main_line"] = map_to_save
+        world_save["branches"] = self.branches
         world_save.close()
 
     def show_scheme(self):
@@ -684,7 +684,7 @@ class World:
         self.outings_mgr = OutingsManager()
 
         world_save = shelve.open("saves/world{}".format(str(num)))
-        for desc in world_save["Plains"]:
+        for desc in world_save["main_line"]:
             block = Block(
                 name=desc["name"],
                 id_=desc["id"],
@@ -708,7 +708,7 @@ class World:
         self.enemy = Enemy()
         self.enemy.score = enemy_score
 
-        self._branches = world_save["Plains_branches"]
+        self._branches = world_save["branches"]
 
     def load_blocks(self, cur_blocks, angle):
         """Load blocks around player to continue the saved game.

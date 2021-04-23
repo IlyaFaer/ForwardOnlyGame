@@ -327,10 +327,10 @@ class Character(Shooter, Unit):
             else:
                 self.current_part.release_cell(self._current_pos, self)
 
-            if self.current_part.name.startswith("part_rest_"):
+            if self.current_part.name == "part_rest":
                 self.stop_rest()
 
-        if part.name.startswith("part_rest_"):
+        if part.name == "part_rest":
             self.rest()
 
         self.model.wrtReparentTo(part.parent)
@@ -340,10 +340,7 @@ class Character(Shooter, Unit):
         self.current_part = part
         self._current_pos = pos
 
-        if (
-            part.name == "part_rest_locomotive"
-            and base.char_gui.rest_list_shown  # noqa: F821
-        ):
+        if part.name == "part_rest" and base.char_gui.rest_list_shown:  # noqa: F821
             base.char_gui.update_resting_chars(part)  # noqa: F821
 
         return True
@@ -887,7 +884,7 @@ class Character(Shooter, Unit):
 
         if (
             self.current_part
-            and self.current_part.name == "part_rest_locomotive"
+            and self.current_part.name == "part_rest"
             and "Window Frames" in base.train.upgrades  # noqa: F821
         ):
             return

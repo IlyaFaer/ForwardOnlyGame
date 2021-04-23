@@ -647,7 +647,7 @@ class CityGUI:
         char.prepare()
         base.train.place_recruit(char)  # noqa: F821
         base.res_gui.update_chars()  # noqa: F821
-        if not char.current_part.name.startswith("part_rest_"):
+        if not char.current_part.name == "part_rest":
             char.rest()
 
     def _repair(self, value):

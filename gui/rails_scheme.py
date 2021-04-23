@@ -150,6 +150,7 @@ class RailsScheme:
                     outs += block.outing_available[0]
 
             if outs:
+                outs = outs.lower()
                 self._temp_wids.append(
                     DirectLabel(
                         parent=self._scheme,
@@ -186,7 +187,7 @@ class RailsScheme:
                 outs = ""
 
             if block.outing_available:
-                outs += block.outing_available[0]
+                outs += block.outing_available[0].lower()
 
             if block.is_city:
                 self._temp_wids.append(

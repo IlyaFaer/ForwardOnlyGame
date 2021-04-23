@@ -2,8 +2,8 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Locations configurations. Describes which models should be
-used on each location and their arrangement formulas.
+Location configurations. Describes which models should be
+used on the episode location and their arrangement formulas.
 """
 
 PLAINS_TREES = ("tree1", "tree2", "tree3", "red_tree", "yellow_tree")

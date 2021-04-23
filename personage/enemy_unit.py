@@ -692,13 +692,13 @@ class DodgeShooter(EnemyUnit):
             x = random.randint(6500, 8500)
 
         self._rb_node.applyForce(
-            Vec3(x, y, random.randint(1000, 2000)), Point3(0, -0.1, 0)
+            Vec3(x, y, random.randint(1500, 2500)), Point3(0, -0.1, 0)
         )
         self._rb_node.applyTorque(
             Vec3(
-                random.randint(-40, 40),
-                random.randint(-40, 40),
-                random.randint(-40, 40),
+                random.randint(-35, 35),
+                random.randint(-35, 35),
+                random.randint(-35, 35),
             )
         )
 

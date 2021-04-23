@@ -57,28 +57,28 @@ class Train:
         self.ctrl.set_controls(self)
 
         self.parts = {
-            "part_locomotive_left": TrainPart(
+            "part_left": TrainPart(
                 self.model,
-                "part_locomotive_left",
+                "part_left",
                 positions=[(-0.063, -0.02, 0.147), (-0.063, 0.15, 0.147)],
                 angle=90,
                 arrow_pos=(-0.2, 0.09, 0.147),
             ),
-            "part_locomotive_right": TrainPart(
+            "part_right": TrainPart(
                 self.model,
-                "part_locomotive_right",
+                "part_right",
                 positions=[(0.063, -0.02, 0.147), (0.063, 0.15, 0.147)],
                 angle=-90,
                 arrow_pos=(0.2, 0.09, 0.147),
             ),
-            "part_locomotive_front": TrainPart(
+            "part_front": TrainPart(
                 self.model,
-                "part_locomotive_front",
+                "part_front",
                 positions=[(0, 0.41, 0.147)],
                 angle=0,
                 arrow_pos=(0, 0.55, 0.147),
             ),
-            "part_rest_locomotive": RestPart(self.model, "part_rest_locomotive"),
+            "part_rest": RestPart(self.model, "part_rest"),
         }
 
         self._lights = self._set_lights()
@@ -701,9 +701,7 @@ class Train:
         if y_coor < -0.1:  # too far from characters
             return
 
-        for char in self.parts[
-            "part_locomotive_left" if x_coor < 0 else "part_locomotive_right"
-        ].chars:
+        for char in self.parts["part_left" if x_coor < 0 else "part_right"].chars:
             if abs(char.model.getY() - y_coor) < 0.11:
                 char.get_damage(4)
                 char.get_stunned(5)
@@ -812,7 +810,7 @@ class Train:
 
         if upgrade["name"] == "Sleeper":
             self.cells += 1
-            self.parts["part_rest_locomotive"].cells += 1
+            self.parts["part_rest"].cells += 1
             base.res_gui.update_chars()  # noqa: F821
             return
 

@@ -120,7 +120,7 @@ class CommonController:
 
             return
 
-        if self._pointed_obj.startswith("part_rest_"):
+        if self._pointed_obj == "part_rest":
             base.char_gui.show_resting_chars(  # noqa: F821
                 base.train.parts[self._pointed_obj]  # noqa: F821
             )
@@ -222,7 +222,7 @@ class CommonController:
             )
             return
 
-        if self._pointed_obj.startswith("part_rest_"):
+        if self._pointed_obj == "part_rest":
             base.char_gui.show_tooltip("Rest zone")  # noqa: F821
 
     def _unpoint_obj(self, event):

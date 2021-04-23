@@ -174,8 +174,6 @@ class TeachingNotes:
         )
         self._fr.hide()
 
-        taskMgr.doMethodLater(30, self._show_note, "show_teaching_note")  # noqa: F821
-
     def _hide_note(self, task):
         """Hire the current note and choose the next one."""
         self._fr.hide()
@@ -195,6 +193,10 @@ class TeachingNotes:
         """Resume showing teaching notes."""
         self._note_text = random.choice(NOTES)
         taskMgr.doMethodLater(200, self._show_note, "show_teaching_note")  # noqa: F821
+
+    def start(self):
+        """Start showing teaching notes in period."""
+        taskMgr.doMethodLater(30, self._show_note, "show_teaching_note")  # noqa: F821
 
     def stop(self):
         """Stop showing teaching notes."""

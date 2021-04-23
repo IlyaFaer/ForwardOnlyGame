@@ -18,9 +18,9 @@ from personage.character_data import TRAIT_DESC
 from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 
 OUTINGS_ICONS = {
-    "looting": "gui/tex/looting.png",
-    "enemy camp": "gui/tex/enemy_camp.png",
-    "meet": "gui/tex/meet.png",
+    "Looting": "gui/tex/looting.png",
+    "Enemy Camp": "gui/tex/enemy_camp.png",
+    "Meet": "gui/tex/meet.png",
 }
 
 
