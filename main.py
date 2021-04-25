@@ -6,6 +6,8 @@ The main game file. Starts the game itself
 and maintains the major systems.
 """
 import dbm.dumb  # noqa: F401
+import languages.EN  # noqa: F401
+import languages.RU  # noqa: F401
 import logging
 import os
 import shelve
@@ -29,6 +31,10 @@ from gui import (
 from personage.team import Team
 from train import Train
 from world import World
+
+# build hack: import languages module to add it into the build,
+# delete the module later not to keep both languages in game
+del languages
 
 loadPrcFileData("", "threading-model Cull/Draw")
 loadPrcFileData(
@@ -66,14 +72,16 @@ class ForwardOnly(ShowBase):
                 )
 
         with open("options.cfg", "r") as opts_file:
-            res, lang, tutorial_enabled = opts_file.readlines()
+            resolution, lang, tutorial_enabled = opts_file.readlines()
             self.tutorial_enabled = tutorial_enabled == "True"
+            self.labels = getattr(__import__("languages." + lang.strip()), lang.strip())
 
-        self._configure_window(res)
+        self._configure_window(resolution)
 
         if not os.path.exists("saves"):
             os.mkdir("saves")
 
+        self.default_font = self.loader.loadFont("arial.ttf")
         self.setBackgroundColor(0.1, 0.17, 0.1)
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
@@ -124,20 +132,20 @@ class ForwardOnly(ShowBase):
         """
         return self._heads
 
-    def _configure_window(self, res):
+    def _configure_window(self, resolution):
         """Configure the game window.
 
         Set title, fullscreen mode and the given resolution.
 
         Args:
-            res (str): Screen resolution to be set.
+            resolution (str): Screen resolution to be set.
         """
         props = WindowProperties()
 
         props.setTitle("Forward Only Game")
         props.setFullscreen(True)
 
-        x, z = res.split("x")
+        x, z = resolution.split("x")
         props.setSize(int(x), int(z))
 
         self.openDefaultWindow(props=props)
