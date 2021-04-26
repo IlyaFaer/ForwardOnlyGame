@@ -35,7 +35,7 @@ crawling back to the Train, as the enemy seems to be full of ammo.
 You're trying to help others with your fire, and the rival shots are
 starting to fly to the Train. Taking cover, you're waiting for {name1},
 {name2} and {name3} to return and giving the order to start the engine.
-Train getting -80 durability""",
+Adjutant getting -80 durability""",
                 "effects": {"train": {"durability": -80}},
             },
             {
@@ -242,7 +242,7 @@ is terribly inaccurate, still, bullets are flying and flying to you,
 throwing sparkles all around and ringing with the Train metal. You're
 commanding to start moving, and {name1} with {name2} are jumping on the
 Train on the run. Rival bullets following you for two more minutes,
-and then suddenly falls silent. Train getting -40 durability""",
+and then suddenly falls silent. Adjutant getting -40 durability""",
                 "effects": {"train": {"durability": -40}},
             },
             {
@@ -384,7 +384,7 @@ splitting to check two places simultaneously: the cash and the storeroom.
 Cash machine, fortunately, is open, and {name2} finds a toolbox really
 fast. Energetically taking their lucky catches, {name1} and {name2} in
 a good mood returning back to the Train.
-You're getting +90$ and +80 Train durability""",
+You're getting +90$ and +80 Adjutant durability""",
                 "effects": {"money": 90, "durability": 80},
             },
         ),
@@ -510,7 +510,7 @@ a lot of damage. In some moment the guns silences, and you're uppering
 your head. A lot of shot holes are gapping on the Train. Are these armor-
 piercing bullets!? Is it worth getting this guy? It's probably better to
 leave before this gun made even more damage to the locomotive.
-The Train durability -60""",
+Adjutant durability -60""",
                 "effects": {"train": {"durability": -60}},
             },
             {
@@ -837,7 +837,7 @@ the results. {name1} jumps out of the car and moves to you with a small
 box in {hisher1} hands. "That guy wasn't very thrifty, I've found only
 these tools." - {heshe1} says. Well, it's still better than nothing:
 we can repair the train a little.
-Train durability +100.""",
+Adjutant durability +100""",
                 "effects": {"train": {"durability": 100}},
             },
             {
@@ -1033,7 +1033,7 @@ messengers for some time. "Oh, I got something!" - {name2} shouts loudly.
 {name1} and {name3} moving to the room {heshe2} was checking, and seeing a
 big tool kit. {name1} and {name2} are taking it together and moving
 back to Train, while {name3} is watching around for possible threats.
-Train durability +90""",
+Adjutant durability +90""",
                 "effects": {"train": {"durability": 90}},
             },
         ),
@@ -1177,7 +1177,7 @@ less than twenty containers they finally see one untouched. Opening it
 they are staring at a bunch of metal details. And tools! "With this stuff
 we can repair our Train a little!" - {name2} whopping. They are taking
 the box together and returning back to you with it.
-Train durability +40""",
+Adjutant durability +40""",
                 "effects": {"train": {"durability": 90}},
             },
             {
@@ -1312,7 +1312,7 @@ traces on the ground - somebody already looted the place. Still, {name3}
 jumps onto the truck to take a closer look at the inner part of the
 cargo hold. To everyone's joy, {heshe3} moves outside the car with a
 big plastic box of tools. Seems like assaulters have only taken weapons.
-Train durability +70""",
+Adjutant durability +70""",
                 "effects": {"train": {"durability": 70}},
             },
         ),
@@ -1459,7 +1459,7 @@ falls from behind the gates. You're nodding to {name1}, permitting
 you're observing the wheels: damage doesn't seem very serious, still,
 it's damage. {name1} in the meantime exits back, showing that
 there was nothing interesting inside the wooden barn.
-Train getting -60 durability""",
+Adjutant getting -60 durability""",
                 "effects": {"train": {"durability": -60}},
             },
             {
@@ -1501,6 +1501,95 @@ can be diluted and used for people as well. {name1} decides to take
 the syringe and go back to the train, as there is nothing more in here.
 You're getting 2 stimulators""",
                 "effects": {"stimulators": 2},
+            },
+        ),
+    },
+    {  # 9
+        "name": "Refugees Camp",
+        "type": "Looting",
+        "class_weights": {"soldier": 9, "raider": 45, "anarchist": 19},
+        "assignees": 1,
+        "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 4},
+        "desc": """From at least 500 meters you've caught your eyes
+on some kind of a rubbish pile. Dark cloth pieces, black heaps of
+bonfires and several colored plastic boxes... Getting closer to the
+place, you understand, that it was a temporary camp, most likely
+of foreigners, who came to Silewer in search of a shelter. Well,
+that makes sense to take a look at the place, maybe something
+useful left there. One messenger should be enough.""",
+        "results": (
+            {
+                "score": range(0, 20),
+                "desc": """You decide to send {name1} into the camp for a recon of
+the place. As the nearlands are very open, only several trees
+obstruct the gaze, you don't expect any troubles. {name1} gets
+closer to the camp remnants, inclines and starts to rummage through
+the things scattered around. Nothing attracts {hisher1} attention
+for a very long time: empty cans, plastic bottles, cling film, and
+nothing interesting. But in some moment {heshe1} sees a big cauldron,
+covered with metal cap. Unlikely it's worth checking, but {name1}
+opens it, and recoils in the same second - a vile cloud of rotten
+food flyes from under it. Coughing wildly, {name1} turns back to
+you. It appears, the things left in the cauldron was so ancient
+that became even little bit poisonous.
+{name1} getting -25 health.""",
+                "effects": {"char_1": {"health": -25}},
+            },
+            {
+                "score": range(20, 40),
+                "desc": """You're choosing {name1} as a messengers for this recon.
+Without delays, {heshe1} takes {hisher1} gun and jumps down to the ground.
+The pale grass, covered with water because of the cold air and the
+locomotive warmth faced with each other, appears to be very slippery.
+{name1}, touching it with {hisher1} legs, loses balance, and falls to
+the ground. You see several papers flying out of {hisher1} pocket, and
+by wind blowing raise up really fast. {name1} gets up, and you try to
+find the loss with your eyes, but looks like the papers flew away.
+Recounting {hisher1} money, {name1} pronounces sadly: "Thirty dollars!
+It's about thirty dollars just got lost in wind."
+You're losing 30$""",
+                "effects": {"money": -30},
+            },
+            {
+                "score": range(40, 60),
+                "desc": """You're sending {name1} for a fast overview of the camp
+remnants. Taking the gun, {heshe1} jumps off the locomotive, and runs
+to the place. It looks like someone attacked the refugees, as there
+are several dark red blood spots on the grass, and bullet liners are
+shining here and there. There are no bodies, but if there was something
+useful in this place, it's already taken. Making a couple of circles
+around and carefully looking at what's left, just for sure, {name1}
+takes direction back to the locomotive. Nothing interesting.""",
+                "effects": {},
+            },
+            {
+                "score": range(60, 80),
+                "desc": """After a short overthinking you decide to send {name1} to
+take a closer look at the refugees camp remnants. Carefully watching
+around, {heshe1} walks to the place. It appears there was a skirmish in
+here: {heshe1} sees bullet liners and even a round of a scorched grass.
+A grenade explosion, ha? There are also several bodies, skinheads and
+others. The camp was left in a hurry, so {name1} starts to rummage
+through the stuff scattered around. After several minutes of a search
+{heshe1} finally see a personal pocket aid kit. Opening it, {name1}
+finds a tiny syringe of a painkiller, water clearing tablets and
+even more. That's actually a good catch!
+Single character can get +25 health and +20 energy""",
+                "effects": {"select_char": {"health": 25, "energy": 20}},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """You make a decision to send {name1} for the place recon.
+Without long preparations {heshe1} moves to the camp. Getting closer,
+{heshe1} finds a lot of bullet liners, blood spots, but no bodies. It seems
+like there was a skirmish, but refugees successfully left. {name1} starts
+to observe things remaining at the place. Just a couple of seconds
+makes it clear that the camp dwellers left all the heavy equipment and
+tools. Inspired, {name1} takes the most valuable things and returns
+to the locomotive to ask others to join. In three runs you and your
+people take almost everything useful from the camp.
+Adjutant durability +100""",
+                "effects": {"durability": 100},
             },
         ),
     },
@@ -1846,7 +1935,7 @@ to build their own stronghold, for those, whom nearby cities doesn't
 want to invite. I've gave them some money, 'cause it looks like a good
 idea for me." - {name1} throws a gaze to the construction sight. Well,
 who knows, who knows, this idea can also be completely useless.
-You losing 40$""",
+You're losing 40$""",
                 "effects": {"money": -40},
             },
             {
@@ -2149,7 +2238,7 @@ to fight back, and, feeling that gun power is on your side, the
 truck spurts away really fast. What's happened? No one seems to
 be wounded, and that's good, but, taking a look at the locomotive,
 you see several big holes, made by the truck's machine guns.
-Train durability -50""",
+Adjutant durability -50""",
                 "effects": {"train": {"durability": -50}},
             },
             {
