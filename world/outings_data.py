@@ -768,6 +768,100 @@ You're getting +130$""",
             },
         ),
     },
+    {  # 9
+        "name": "Auto Repair",
+        "type": "Enemy Camp",
+        "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
+        "assignees": 1,
+        "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
+        "desc": """An old highway, stretched out to the left of the railway, has taken your
+attention, and your supervision at some moment pays off: you see an
+auto repair shop. It's small, just three car places without utility
+rooms, but it's still something. Roller shutters are all closed,
+window glasses are intact - everything says the place is over watched
+by someone. It makes sense to send a scout to take a closer look at
+the building. It's an auto repair shop after all, meaning there
+should be tools, which can be used for the locomotive maintenance.""",
+        "results": (
+            {
+                "score": range(0, 20),
+                "desc": """You're sending {name1} to the auto repair shop for a closer look.
+While your messenger approaches the building, you notice some kind
+of a movement inside it - shadows slide near windows, but nothing
+promises troubles so far. You do a loud whistle and show {name1}
+that it's better to stay sharp. Nodding {hisher1} head, {heshe1} slows
+a little and moves further with more caution. Suddenly all three
+roller shutters explode, and orange fire mushrooms break out of
+the building. Shock wave knocks {name1} down to the ground, and
+makes locomotive windows shaking. Getting up, {name1} runs back
+to you, while you're observing the auto shop burning remnants.
+Seems like something gone terribly wrong inside it...
+{name1} getting Nervousness""",
+                "effects": {"char_1": {"add_trait": "Nervousness"}},
+            },
+            {
+                "score": range(20, 40),
+                "desc": """{name1} takes {hisher1} gun and moves to the auto repair shop by your
+command. On the middle of {hisher1} way the right roller shutter
+moves up with a loud bolt, and a couple of men start to shoot at
+your messenger. You upper your gun and cover {name1}. Just several
+seconds of shooting, and both of the rivals fall to the ground. With
+caution {name1} continue the way, but suddenly an explosion tears
+the shop, throwing its plastic and metal walls to all sides at
+once. {name1} falls to the ground because of the shock wave, but
+gets up in the next seconds. Looks like no serious wounds happened.
+While {heshe1} returns back to the locomotive, you're thinking if
+there were more people and they decided to explode
+themselves, or it is just an occasional catastrophe?
+{name1} getting -25 health""",
+                "effects": {"char_1": {"health": -25}},
+            },
+            {
+                "score": range(40, 60),
+                "desc": """{name1} takes a direction to the auto repair shop. You're tracking
+{himher1} from the locomotive. Silently your messenger gets closer and
+opens a roller shutter. Nothing happens, no shooting, no people
+appearing, looks like the building is abandoned already. {name1}
+carefully enters inside and disappears from your gaze for at least
+ten minutes. You're becoming nervous little by little, but finally
+{heshe1} exits the shop. You see nothing in {hisher1} hands, and,
+climbing to the locomotive, your messengers confirms your
+thoughts - there was nothing. Someone already looted the
+building, taking every-single-thing useful.""",
+                "effects": {},
+            },
+            {
+                "score": range(60, 80),
+                "desc": """{name1}, following your command, takes {hisher1} gear and walks
+to the auto repair shop. Getting closer to the building, {heshe1} opens
+a roller shutter and enters inside. For some time silence flies in the
+air, but suddenly you hear shots. Three, four-five, six... A couple of
+seconds passes, and you see {name1} in the entrance arch, showing you
+that everything is okay. Disappearing in the shop inners, {heshe1} returns
+back after a half of minute with a big metal box. Tools, ha?! You're
+commanding others to help {himher1} with the catch, while you're
+listing the parts of the locomotive, which should be given an
+engineering attention in the first place.
+Adjutant durability +60""",
+                "effects": {"train": {"durability": 60}},
+            },
+            {
+                "score": range(80, 100),
+                "desc": """{name1} takes {hisher1} gun and, following your command, walks
+towards the auto repair shop. It's clear that someone is in there:
+through the window you see shadows moving inside. {name1} see them
+as well, so {heshe1} makes a circle around the shop and climbs to
+its roof. Ceiling windows make it possible for {himher1} to drop
+the ambushing skinheads even before they understood who's firing.
+Climbing down and entering the shop, {name1} walks out with someone
+else. When close enough to the locomotive, {heshe1} explains:
+"There was a hostage there. Thought maybe we can give a ride."
+Looking at your scout's companion, you evaluate a possible recruit.
+One person can be recruited""",
+                "effects": {"recruit": 70},
+            },
+        ),
+    },
 ]
 
 LOOTING = [

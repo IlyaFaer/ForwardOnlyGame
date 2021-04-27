@@ -55,4 +55,6 @@ MAIN_MENU = (
     "Tutorial:",
     "Language:",
     "Save and restart",
+    "Loading...",
+    "Take command",
 )

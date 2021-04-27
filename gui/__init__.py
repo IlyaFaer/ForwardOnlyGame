@@ -479,12 +479,13 @@ class MainMenu:
 
         saves = self._read_saves()
 
-        shift = 0.4
+        z_shift = 0.5
+        x_shift = -0.2
         for num in range(1, 4):
             but = DirectButton(
                 parent=self._main_fr,
                 text="Slot {}".format(str(num)),
-                pos=(-0.553, 0, shift),
+                pos=(x_shift - 0.103, 0, z_shift),
                 text_scale=0.04,
                 text_fg=RUST_COL,
                 relief=None,
@@ -498,7 +499,7 @@ class MainMenu:
             self._save_wids.append(
                 DirectLabel(
                     parent=self._main_fr,
-                    pos=(-0.45, 0, shift - 0.05),
+                    pos=(x_shift, 0, z_shift - 0.05),
                     text_scale=0.03,
                     text_fg=SILVER_COL,
                     frameColor=(0, 0, 0, 0),
@@ -508,7 +509,7 @@ class MainMenu:
             self._save_wids.append(
                 DirectLabel(
                     parent=self._main_fr,
-                    pos=(-0.55, 0, shift - 0.1),
+                    pos=(x_shift - 0.1, 0, z_shift - 0.1),
                     text_scale=0.03,
                     text_fg=SILVER_COL,
                     frameColor=(0, 0, 0, 0),
@@ -518,7 +519,7 @@ class MainMenu:
             self._save_wids.append(
                 DirectLabel(
                     parent=self._main_fr,
-                    pos=(-0.1, 0, shift - 0.1),
+                    pos=(x_shift + 0.35, 0, z_shift - 0.1),
                     text_scale=0.03,
                     text_fg=SILVER_COL,
                     frameColor=(0, 0, 0, 0),
@@ -527,7 +528,7 @@ class MainMenu:
                     ),
                 )
             )
-            shift -= 0.2
+            z_shift -= 0.2
 
     def _start_new_game(self):
         """Start a new game."""
@@ -634,7 +635,8 @@ That's all, Captain, handing command over to you!""",
 
         self._load_msg = DirectLabel(
             parent=self._load_screen or self._main_fr,
-            text="Loading...",
+            text=base.labels.MAIN_MENU[26],  # noqa: F821,
+            text_font=base.default_font,  # noqa: F821
             text_fg=RUST_COL,
             frameSize=(1, 1, 1, 1),
             text_scale=0.04,
@@ -747,7 +749,8 @@ That's all, Captain, handing command over to you!""",
 
         self._load_msg = DirectButton(
             parent=parent,
-            text="Take command",
+            text=base.labels.MAIN_MENU[27],  # noqa: F821,
+            text_font=base.default_font,  # noqa: F821
             text_fg=RUST_COL,
             text_scale=0.04,
             pos=(0, 0, -0.75),
