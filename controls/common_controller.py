@@ -16,26 +16,6 @@ from panda3d.core import (
 from const import MOUSE_MASK, NO_MASK
 from utils import address
 
-KEYS_INFO = u"""
-Game controls:
-
-Mouse Left Button - choose a character
-Mouse Right Button On Arrow - move character
-R - show the character's cohesion with others
-Choose a character and click on resource button to use it
-
-W - hold to accelerate
-S - hold to slow down
-F - toggle Train lights
-M - see railways scheme
-
-Camera:
-\u2190\u2191\u2193\u2192 or push screen edge with mouse - move
-Alt + \u2190\u2191\u2193\u2192 or hold mouse wheel - rotate
-"+", "-" or scroll mouse wheel - zoom
-C - toggle centered view
-"""
-
 
 class CommonController:
     """Common controller.
@@ -241,7 +221,7 @@ class CommonController:
             self._keys_info.destroy()
         else:
             self._keys_info = OnscreenText(
-                text=KEYS_INFO,
+                text=base.labels.KEYS_INFO,  # noqa: F821
                 align=TextNode.ACenter,
                 font=self._font,
                 scale=0.07,

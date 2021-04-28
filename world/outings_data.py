@@ -2483,4 +2483,104 @@ You're getting +1 medicine box""",
             },
         ),
     },
+    {  # 9
+        "name": "Old Carriage",
+        "type": "Meet",
+        "class_weights": {"soldier": 20, "anarchist": 45, "raider": 9},
+        "assignees": 1,
+        "day_part_weights": {"night": 3, "morning": 0, "noon": 10, "evening": 7},
+        "desc": """"On the east departure of Salzburg, on highway 158, big skirmish
+happened today about 10:25 a.m.! Refugees, who got stuck in traffic,
+started to threaten the people around to make them clear the road,
+which caused a real fight..." Turning off the radio, you walk
+outside the deck house. Fight for survival expands... A big dark
+metal thing lying on the meadow between trees interrupts your heavy
+thoughts. It seems to be an old railway carriage, moved out of the
+way and abandoned. It wouldn't attract your attention, but you
+also see a thin column of grey smoke, uppering from its inners.
+Someone made a camp there?! It worth checking, maybe those
+people need help or something.""",
+        "results": (
+            {
+                "score": range(0, 20),
+                "desc": """You call {name1} closer and show {himher1} the carriage. Squinting
+eyes, {heshe1} nodds {hisher1} head and gears up for an outing. It
+takes just several minutes for {himher1} to get to the carriage, and
+you see how your messenger enters inside. In the next moment a din
+thunders in the air. You're moving binoculars to your eyes, but
+can't get what happened. Taking one more team mate, you run to
+the carriage and, getting closer, see the problem. Heavy metal
+door of the carriage slammed, prisoning {name1} inside. With common
+efforts for about five minutes you finally release your trapped
+messenger. Covered with spider web and dust, {heshe1} coughs, but
+you don't see serious wounds. And the carriage itself appears
+to be empty, you see only snow intensively melting to steam.
+{name1} getting Fear Of Dark""",
+                "effects": {"char_1": {"add_trait": "Fear of dark"}},
+            },
+            {
+                "score": range(20, 40),
+                "desc": """You decide {name1} will be an appropriate messengers this time.
+Taking the gun, {heshe1} runs to the carriage, while you're observing
+{hisher1} progress from the locomotive. {name1} slows down and approaches
+the carriage quietly. You see {himher1} opening the sliding doors
+and making a step inside. In that moment one of the doors breaks
+down and falls right on your messenger. Pushing the metal thing away,
+{name1} presses {hisher1} right hand to {hisher1} body. For several
+seconds {heshe1} disappears inside the carriage, but then exits and
+takes a direction to you. It seems like nothing interesting was there,
+while {name1} got a minor right arm injury. Well, it could be worse.
+{name1} getting -20 health""",
+                "effects": {"char_1": {"health": -20}},
+            },
+            {
+                "score": range(40, 60),
+                "desc": """You call {name1} and explain {himher1} your thoughts. Nodding {hisher1}
+head, {heshe1} runs to the carriage. You observe your messenger progress
+from the Adjutant, seeing how {heshe1} carefully opens the carriage
+doors and enters inside. Several minutes passes, and {name1} exits,
+walking back to you. Getting closer, {heshe1} tells you the following:
+"A refugees family made a camp there. Not sure how long they live in
+that metal thing, but they are not going to leave. And they don't
+want anything with us. They're not aggressive though, just not very
+trustful. Can't blame them." Agreeing on that, you're giving a command
+to warm up the Adjutant's engine. Let's continue the road.""",
+                "effects": {},
+            },
+            {
+                "score": range(60, 80),
+                "desc": """You ask {name1} to get closer and explain {himher1} your thoughts.
+Without arguments {heshe1} takes {hisher1} gear and walks to the
+lying carriage. Carefully opening it, your messenger enters inside.
+Time passes, three minutes, five, ten. At some moment you're going
+to send more people to the carriage, to check if everythings is okay
+with {name1}, but finally {heshe1} exits from the carriage. Getting
+closer and climbing back on the Adjutant, {heshe1} explains: "There
+are kids there! Not very young, but still kids. Asked me for some
+ammo and gave me money. I've tried to reject, but they said they have
+a lot of money. Not sure if it is true, still, I wasn't able to convince
+them. Thus, we have some income." - {heshe1} puts a dollar paper on
+the metal table. You give a command to warm up the engine.
+You're getting 50$""",
+                "effects": {"money": 50},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """You're sending {name1} to take a closer look at the lying carriage.
+Your teammate gears up and runs to the place, and then disappears
+inside. After several seconds {heshe1} shows up and uppers {hisher1}
+hand, making it clear that everything is alright. You take a seat and
+start waiting. Not less than a half of hour passes, before {name1}
+exits the carriage and runs back to you. "There are several refugees,
+hiding in that carriage." - {heshe1} explains. - "Asked me to help them
+with a water purifier. I'm not an expert, but dealt with the thing.
+Still, they didn't have anything to repay except the kind words, so..."
+You're accepting this - well, there's nothing wrong in helping
+others. After all, your party is not in a critical state. You're
+giving an order to start the Adjutant's engine.
+{name1} getting Mechanic""",
+                "effects": {"char_1": {"add_trait": "Mechanic"}},
+            },
+        ),
+    },
 ]

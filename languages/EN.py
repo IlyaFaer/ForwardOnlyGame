@@ -58,3 +58,22 @@ MAIN_MENU = (
     "Loading...",
     "Take command",
 )
+
+KEYS_INFO = u"""
+Game controls:
+
+Mouse Left Button - choose character/rest zone
+Mouse Right Button - move character/set target
+R - show the character's cohesion with others
+
+W - hold to accelerate
+S - hold to slow down
+F - toggle flood lights
+M - see railways scheme
+
+Camera:
+\u2190\u2191\u2193\u2192 or push screen edge with mouse - move
+Alt + \u2190\u2191\u2193\u2192 or hold mouse wheel - rotate
+"+", "-" or scroll mouse wheel - zoom
+C - toggle centered view
+"""
