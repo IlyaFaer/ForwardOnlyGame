@@ -543,6 +543,7 @@ class ClusterHowitzer:
             "unblock_cluster_launcher",
             extraArgs=["3", self.change_state],
         )
+        base.train.make_shot("Cluster Howitzer")  # noqa: F82
 
     def _bombs_down(self):
         """Move bombs down to the ground and do explosion."""

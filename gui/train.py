@@ -96,10 +96,35 @@ class TrainGUI:
             "but": but,
             "reload_step": 0,
             "dis_command": None,
+            "reloading_len": 20,
             "frame": DirectFrame(
                 parent=frame_miles,
                 frameColor=(0, 0, 0, 0.25),
                 pos=(-0.075, 0, -0.01),
+                frameSize=(-0.013, 0.013, 0, 0.05),
+            ),
+        }
+
+        but = DirectButton(
+            parent=frame_miles,
+            frameSize=(-0.015, 0.015, -0.025, 0.025),
+            frameTexture=GUI_PIC + "cluster_rocket.png",
+            pos=(0.075, 0, 0.015),
+            relief="flat",
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        but.bind(DGG.ENTER, self._highlight_weapon_but, extraArgs=[but])
+        but.bind(DGG.EXIT, self._dehighlight_weapon_but, extraArgs=[but])
+
+        self._weapon_buts["Cluster Howitzer"] = {
+            "but": but,
+            "reload_step": 0,
+            "dis_command": None,
+            "reloading_len": 60,
+            "frame": DirectFrame(
+                parent=frame_miles,
+                frameColor=(0, 0, 0, 0.25),
+                pos=(0.075, 0, -0.01),
                 frameSize=(-0.013, 0.013, 0, 0.05),
             ),
         }
@@ -154,25 +179,28 @@ class TrainGUI:
             1,
             self._show_reloading,
             "show_reloading_" + weapon,
-            extraArgs=[weapon],
+            extraArgs=[weapon, self._weapon_buts[weapon]["reloading_len"]],
             appendTask=True,
         )
 
-    def _show_reloading(self, weapon, task):
+    def _show_reloading(self, weapon, length, task):
         """Show reloading shadow on the weapon button.
 
         Args:
             weapon (str): The reloading weapon name.
+            length (int): Reloading length in seconds.
         """
         self._weapon_buts[weapon]["frame"]["frameSize"] = (
             -0.013,
             0.013,
             0,
-            0.05 - self._weapon_buts[weapon]["reload_step"] / 400,
+            0.05
+            - self._weapon_buts[weapon]["reload_step"]
+            / (self._weapon_buts[weapon]["reloading_len"] * 20),
         )
         self._weapon_buts[weapon]["reload_step"] += 1
 
-        if self._weapon_buts[weapon]["reload_step"] == 20:
+        if self._weapon_buts[weapon]["reload_step"] == length:
             self._weapon_buts[weapon]["reload_step"] = 0
             self._weapon_buts[weapon]["frame"]["frameSize"] = (0, 0, 0, 0)
 

@@ -108,6 +108,7 @@ class Train:
         self._floodlights_mat = None
         self._armor_plate = None
         self._grenade_launcher = None
+        self._cluster_howitzer = None
         self._upgrade_highlight = 1
         self._highlight_step = 0.03
 
@@ -822,11 +823,18 @@ class Train:
             return
 
         if upgrade["name"] == "Cluster Howitzer":
-            ClusterHowitzer(self.model)
+            self._cluster_howitzer = ClusterHowitzer(self.model)
+            self._gui.activate_weapon(
+                "Cluster Howitzer", base.train.load_cluster_howitzer  # noqa: F821
+            )
 
     def load_grenade_launcher(self):
         """Change the grenade launcher state."""
         self._grenade_launcher.change_state()
+
+    def load_cluster_howitzer(self):
+        """Change the cluster howitzer state."""
+        self._cluster_howitzer.change_state()
 
     def _repair(self, task):
         """Repair the Train.
