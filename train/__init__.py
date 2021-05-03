@@ -16,7 +16,7 @@ from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
 from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 
 from .part import RestPart, TrainPart
-from .upgrades import ArmorPlate, GrenadeLauncher, UPGRADES_DESC
+from .upgrades import ArmorPlate, ClusterHowitzer, GrenadeLauncher, UPGRADES_DESC
 
 from controls import TrainController
 from gui.train import TrainGUI
@@ -819,6 +819,10 @@ class Train:
             self._gui.activate_weapon(
                 "Grenade Launcher", base.train.load_grenade_launcher  # noqa: F821
             )
+            return
+
+        if upgrade["name"] == "Cluster Howitzer":
+            ClusterHowitzer(self.model)
 
     def load_grenade_launcher(self):
         """Change the grenade launcher state."""

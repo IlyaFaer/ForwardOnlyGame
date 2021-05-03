@@ -4,8 +4,13 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 The Train upgrades API.
 """
+import random
+
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import (
+    Func,
+    LerpHprInterval,
+    LerpPosInterval,
     Parallel,
     Sequence,
     SoundInterval,
@@ -71,6 +76,14 @@ characters in the rest zone are
 protected from the Stench""",
         "cost": "150$",
         "model": "isolation",
+    },
+    "Cluster Howitzer": {
+        "name": "Cluster Howitzer",
+        "desc": """Shots a cluster rocket, which
+splits to four grenades, doing
+damage on several circles""",
+        "cost": "200$",
+        "model": "cluster_bomb_launcher",
     },
 }
 
@@ -418,3 +431,256 @@ class GrenadeLauncher:
         self._smoke.disable()
         self._smoke.cleanup()
         return task.done
+
+
+class ClusterHowitzer:
+    """Cluster bombs launcher locomotive upgrade.
+
+    Args:
+        train_model (panda3d.core.NodePath): The locomotive model.
+    """
+
+    def __init__(self, train_model):
+        self._is_loading = False
+        self._is_up = False
+
+        self._coors = [None, None, None, None]
+        self._sights = []
+        self._explosions = []
+        self._smokes = []
+        self._bombs = []
+        self._explosion_snds = []
+
+        self._train_mod = train_model
+        self._model = Actor(address("cluster_bomb_launcher"))
+        self._model.reparentTo(train_model)
+
+        for _ in range(4):
+            sight = loader.loadModel(address("grenade_sight"))  # noqa: F82
+            sight.reparentTo(train_model)
+            sight.hide()
+            self._sights.append(sight)
+
+            explosion = ParticleEffect()
+            explosion.loadConfig("effects/grenade_explode.ptf")
+            self._explosions.append(explosion)
+
+            smoke = ParticleEffect()
+            smoke.loadConfig("effects/bomb_smoke1.ptf")
+            self._smokes.append(smoke)
+
+            snd = loader.loadSfx("sounds/combat/bomb_explosion1.ogg")  # noqa: F821
+            snd.setVolume(random.uniform(0.1, 0.15))
+            snd.setPlayRate(random.uniform(0.8, 1))
+            self._explosion_snds.append(snd)
+
+        base.accept("3", self.change_state)  # noqa: F82
+
+    def _change_mode(self, task):
+        """Change the launcher mode: aiming or idle."""
+        if self._is_up:
+            self._end_aiming()
+        else:
+            taskMgr.doMethodLater(0.05, self._show_sights, "show_sights")  # noqa: F82
+            base.common_ctrl.deselect()  # noqa: F82
+            base.accept("mouse1", self._shot)  # noqa: F821
+
+        self._is_up = not self._is_up
+        self._is_loading = False
+        return task.done
+
+    def _show_sights(self, task):
+        """Show four aiming sights."""
+        self._move_sights()
+        for sight in self._sights:
+            sight.show()
+
+        taskMgr.doMethodLater(1, self._move_sights, "move_cluster_sights")  # noqa: F82
+        return task.done
+
+    def _end_aiming(self):
+        """End aiming mode, hide sights."""
+        for sight in self._sights:
+            sight.hide()
+
+        taskMgr.remove("move_cluster_sights")  # noqa: F82
+        base.common_ctrl.set_mouse_events()  # noqa: F82
+
+    def _shot(self):
+        """Make a cluster howitzer shot."""
+        self.change_state()
+        base.ignore("3")  # noqa: F82
+
+        rocket = loader.loadModel(address("cluster_rocket"))  # noqa: F82
+        rocket.reparentTo(self._model)
+        rocket.setPos(0, -0.325, 0.3)
+        rocket.setP(20)
+
+        smoke = ParticleEffect()
+        smoke.loadConfig("effects/smoke_tail.ptf")
+        smoke.start(rocket, render)  # noqa: F821
+
+        hiss_snd = base.sound_mgr.loadSfx("sounds/rocket_fly.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(hiss_snd, rocket)  # noqa: F821
+        hiss_snd.play()
+
+        open_snd = base.sound_mgr.loadSfx("sounds/cluster_open.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(open_snd, rocket)  # noqa: F821
+
+        Sequence(
+            Parallel(
+                LerpPosInterval(rocket, 2, (0, 1.8, 3)),
+                LerpHprInterval(rocket, 2, (0, 80, 0)),
+            ),
+            SoundInterval(open_snd),
+            Func(self._clear_rocket, rocket, smoke, hiss_snd),
+            Func(self._bombs_down),
+        ).start()
+
+        taskMgr.doMethodLater(  # noqa: F82
+            60,
+            base.accept,  # noqa: F82
+            "unblock_cluster_launcher",
+            extraArgs=["3", self.change_state],
+        )
+
+    def _bombs_down(self):
+        """Move bombs down to the ground and do explosion."""
+        move_par = Parallel()
+        for num in range(4):
+            bomb = loader.loadModel(address("hand_bomb1"))  # noqa: F82
+            bomb.reparentTo(self._train_mod)
+            bomb.setPos(*self._coors[num], 2)
+            bomb.setScale(2)
+
+            self._bombs.append(bomb)
+            move_par.append(
+                LerpPosInterval(
+                    bomb, random.uniform(0.5, 0.65), (*self._coors[num], 0)
+                ),
+            )
+
+        Sequence(
+            move_par, Func(self._clear_grenades), Func(self._explode_grenades),
+        ).start()
+
+    def _clear_grenades(self):
+        """Delete bomb models."""
+        for bomb in self._bombs:
+            bomb.removeNode()
+
+        self._bombs.clear()
+
+    def _do_grenade_damage(self, event):
+        """Event which is called by a grenade explosion.
+
+        The method do damage to the enemy units, which
+        were in the grenade explosion area.
+        """
+        base.world.enemy.active_units[  # noqa: F821
+            event.getFromNodePath().getName()
+        ].get_damage(50)
+
+    def _explode_grenades(self):
+        """Organize grenades explosion effects and damaging."""
+        col_nps = []
+        for num, coor in enumerate(self._coors):
+            col_node = CollisionNode("grenade_explosion{}".format(num))
+            col_node.setFromCollideMask(NO_MASK)
+            col_node.setIntoCollideMask(SHOT_RANGE_MASK)
+            col_node.addSolid(CollisionSphere(0, 0, 0, 0.096))
+
+            col_np = self._model.attachNewNode(col_node)
+            col_np.setPos(*coor, 0.1)
+            col_nps.append(col_np)
+
+            base.accept(  # noqa: F821
+                "into-grenade_explosion{}".format(num), self._do_grenade_damage
+            )
+            self._explosions[num].setPos(*coor, 0.1)
+            self._explosions[num].start(self._model, render)  # noqa: F82
+            self._explosions[num].softStart()
+
+            self._smokes[num].setPos(*coor, 0.1)
+            self._smokes[num].start(self._model, render)  # noqa: F82
+            self._smokes[num].softStart()
+
+            taskMgr.doMethodLater(  # noqa: F82
+                random.uniform(0, 0.5),
+                self._explosion_snds[num].play,
+                "play_explosion_snd",
+                extraArgs=[],
+            )
+
+        taskMgr.doMethodLater(  # noqa: F821
+            1, self._grenade_explosions_stop, "stop_grenade_explosions"
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            2.5, self._grenade_smokes_stop, "stop_grenade_smokes"
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            0.1, self._clear_grenade_solids, "clear_grenade_solid", extraArgs=[col_nps]
+        )
+
+    def _grenade_explosions_stop(self, task):
+        """Stop grenade explosion effects."""
+        for explosion in self._explosions:
+            explosion.softStop()
+
+        return task.done
+
+    def _grenade_smokes_stop(self, task):
+        """Stop explosion smoke effects."""
+        for smoke in self._smokes:
+            smoke.softStop()
+
+        return task.done
+
+    def _clear_grenade_solids(self, col_nps):
+        """Delete explosion solids, which are dealing the damage to enemies.
+
+        Args:
+            col_nps (list): List of collision solids.
+        """
+        for col_np in col_nps:
+            col_np.removeNode()
+
+    def _clear_rocket(self, rocket, smoke, hiss_snd):
+        """Clear the cluster rocket model and its effects.
+
+        Args:
+            rocket (panda3d.core.NodePath): The rocket model.
+            smoke (direct.particles.ParticleEffect.ParticleEffect):
+                The rocket smoke tail effect.
+            hiss_snd (panda3d.core.AudioSound):
+                The rocket hiss sound.
+        """
+        hiss_snd.stop()
+        base.sound_mgr.detach_sound(hiss_snd)  # noqa: F82
+        smoke.disable()
+        rocket.removeNode()
+
+    def _move_sights(self, task=None):
+        """Randomly periodically move aiming sights within shoot-range."""
+        for ind, sight in enumerate(self._sights):
+            x = random.uniform(*random.choice(((-1.1, -0.15), (1.1, 0.15))))
+            y = random.uniform(-0.11, 0.5)
+
+            self._coors[ind] = (x, y)
+            sight.setPos(x, y, 0.01)
+
+        if task:
+            return task.again
+
+    def change_state(self):
+        """Change the launcher mode."""
+        if not base.world.is_on_et or self._is_loading:  # noqa: F82
+            return
+
+        self._is_loading = True
+        self._model.setPlayRate(-4 if self._is_up else 4, "gun_up")
+        self._model.play("gun_up")
+
+        taskMgr.doMethodLater(  # noqa: F82
+            0.2, self._change_mode, "cluster_bomb_launcher_aim"
+        )
