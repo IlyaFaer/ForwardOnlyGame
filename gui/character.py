@@ -57,7 +57,8 @@ class CharacterGUI:
         )
         DirectLabel(
             parent=self._fr,
-            text="Name:",
+            text=base.labels.CHARACTERS[0],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -81,7 +82,8 @@ class CharacterGUI:
         )
         DirectLabel(
             parent=self._fr,
-            text="Type:",
+            text=base.labels.CHARACTERS[1],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -97,7 +99,8 @@ class CharacterGUI:
         )
         DirectLabel(
             parent=self._fr,
-            text="Health",
+            text=base.labels.CHARACTERS[2],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -113,7 +116,8 @@ class CharacterGUI:
         )
         DirectLabel(
             parent=self._fr,
-            text="Energy",
+            text=base.labels.CHARACTERS[3],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,

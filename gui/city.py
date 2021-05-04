@@ -72,8 +72,14 @@ class ResourceChooser(ItemChooser):
         self._chosen_item = self._items[key]
 
         self._name["text"] = key
-        self._buy_but["text"] = "Buy\n{}$".format(str(self._costs[self._chosen_item]))
-        self._sell_but["text"] = "Sell\n{}$".format(str(self._costs[self._chosen_item]))
+        self._buy_but["text"] = "{label}\n{cost}$".format(
+            label=base.labels.CITY[15],  # noqa: F821
+            cost=str(self._costs[self._chosen_item]),
+        )
+        self._sell_but["text"] = "{label}\n{cost}$".format(
+            label=base.labels.CITY[14],  # noqa: F821
+            cost=str(self._costs[self._chosen_item]),
+        )
 
 
 class RecruitChooser(CharacterChooser):
@@ -131,8 +137,9 @@ class RecruitChooser(CharacterChooser):
     def _show_info(self):
         """Show the chosen recruit info and his/her cost."""
         CharacterChooser._show_info(self)
-        self._hire_but["text"] = "Hire unit\n{}$".format(
-            str(self._costs[self._chosen_item.id])
+        self._hire_but["text"] = "{label}\n{cost}$".format(
+            label=base.labels.CITY[13],  # noqa: F821
+            cost=str(self._costs[self._chosen_item.id]),
         )
 
 
@@ -169,19 +176,21 @@ class CityGUI:
 
         self._reward_fr = None
 
-        DirectLabel(
+        DirectLabel(  # Services
             parent=self._fr,
-            text="Services",
+            text=base.labels.CITY[0],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.045,
             text_fg=RUST_COL,
             pos=(0, 0, 0.62),
         )
-        self._party_but = DirectButton(
+        self._party_but = DirectButton(  # Party
             parent=self._fr,
             text_scale=0.035,
             text_fg=SILVER_COL,
-            text="Party",
+            text=base.labels.CITY[1],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             relief=None,
             command=self._show_party,
             extraArgs=[0.56],
@@ -190,11 +199,12 @@ class CityGUI:
         )
         base.main_menu.bind_button(self._party_but)  # noqa: F821
 
-        self._train_but = DirectButton(
+        self._train_but = DirectButton(  # Train
             parent=self._fr,
             text_scale=0.035,
             text_fg=RUST_COL,
-            text="Train",
+            text=base.labels.CITY[2],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             relief=None,
             command=self._show_train,
             extraArgs=[0.56],
@@ -204,22 +214,24 @@ class CityGUI:
         base.main_menu.bind_button(self._train_but)  # noqa: F821
 
         base.main_menu.bind_button(  # noqa: F821
-            DirectButton(
+            DirectButton(  # Exit city
                 parent=self._fr,
                 pos=(-0.205, 0, -0.35),
                 text_fg=RUST_COL,
-                text="Exit city",
+                text=base.labels.CITY[3],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 relief=None,
                 text_scale=0.035,
                 command=self._exit_city,
             )
         )
         base.main_menu.bind_button(  # noqa: F821
-            DirectButton(
+            DirectButton(  # Turn around and exit
                 parent=self._fr,
                 pos=(0.1, 0, -0.35),
                 text_fg=RUST_COL,
-                text="Turn around and exit",
+                text=base.labels.CITY[4],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 relief=None,
                 text_scale=0.035,
                 command=self._exit_city,
@@ -240,30 +252,34 @@ class CityGUI:
 
         z_coor -= 0.07
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Locomotive
                 parent=self._fr,
-                text="Locomotive",
+                text=base.labels.CITY[5],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
+                text_align=TextNode.ALeft,
                 text_fg=RUST_COL,
-                pos=(-0.22, 0, z_coor),
+                pos=(-0.3, 0, z_coor),
             )
         )
         z_coor -= 0.08
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Repair
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
-                text="Repair",
+                text=base.labels.CITY[6],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
+                text_align=TextNode.ALeft,
                 text_scale=0.03,
-                pos=(-0.2, 0, z_coor),
+                pos=(-0.25, 0, z_coor),
             )
         )
         self._repl_wids.append(
             DirectButton(
                 parent=self._fr,
-                pos=(-0.05, 0, z_coor),
+                pos=(-0.05, 0, z_coor + 0.015),
                 text_fg=SILVER_COL,
                 text="+50\n20$",
                 scale=(0.075, 0, 0.075),
@@ -276,7 +292,7 @@ class CityGUI:
         self._repl_wids.append(
             DirectButton(
                 parent=self._fr,
-                pos=(0.07, 0, z_coor),
+                pos=(0.07, 0, z_coor + 0.015),
                 text_fg=SILVER_COL,
                 text="+200\n80$",
                 scale=(0.075, 0, 0.075),
@@ -289,13 +305,15 @@ class CityGUI:
 
         z_coor -= 0.09
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Upgrade
                 parent=self._fr,
-                text="Upgrades",
+                text=base.labels.CITY[7],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
                 text_fg=RUST_COL,
-                pos=(-0.24, 0, z_coor),
+                pos=(-0.3, 0, z_coor),
             )
         )
         up_desc = DirectLabel(
@@ -318,11 +336,12 @@ class CityGUI:
         )
         self._repl_wids.append(up_cost)
 
-        but = DirectButton(
+        but = DirectButton(  # Purchase
             parent=self._fr,
             pos=(0.2, 0, z_coor - 0.3),
             text_fg=RUST_COL,
-            text="Purchase",
+            text=base.labels.CITY[8],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             relief=None,
             text_scale=0.035,
             command=self._purchase_upgrade,
@@ -368,13 +387,15 @@ class CityGUI:
         shift -= 0.07
         # team gui
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Crew
                 parent=self._fr,
-                text="Team",
+                text=base.labels.CITY[9],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
                 text_fg=RUST_COL,
-                pos=(-0.27, 0, shift),
+                pos=(-0.3, 0, shift),
             )
         )
 
@@ -386,11 +407,12 @@ class CityGUI:
 
         shift -= 0.14
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Health
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
-                text="Health",
+                text=base.labels.CHARACTERS[2],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 text_scale=0.03,
                 pos=(-0.2, 0, shift),
             )
@@ -423,11 +445,12 @@ class CityGUI:
         )
         shift -= 0.1
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Energy
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
-                text="Energy",
+                text=base.labels.CHARACTERS[3],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 text_scale=0.03,
                 pos=(-0.2, 0, shift),
             )
@@ -460,11 +483,12 @@ class CityGUI:
         )
         shift -= 0.08
         self._repl_wids.append(
-            DirectButton(
+            DirectButton(  # Leave unit
                 parent=self._fr,
                 pos=(0.2, 0, shift),
                 text_fg=SILVER_COL,
-                text="Leave unit",
+                text=base.labels.CITY[12],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -474,22 +498,25 @@ class CityGUI:
         shift -= 0.08
         # recruits gui
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Recruits
                 parent=self._fr,
-                text="Recruits",
+                text=base.labels.CITY[10],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
                 text_fg=RUST_COL,
-                pos=(-0.25, 0, shift),
+                pos=(-0.3, 0, shift),
             )
         )
 
         shift -= 0.13
-        hire_but = DirectButton(
+        hire_but = DirectButton(  # Hire unit
             parent=self._fr,
             pos=(0.2, 0, shift),
             text_fg=SILVER_COL,
-            text="Hire unit",
+            text=base.labels.CITY[13],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=0.45,
@@ -504,21 +531,24 @@ class CityGUI:
         shift -= 0.08
         # resources
         self._repl_wids.append(
-            DirectLabel(
+            DirectLabel(  # Resources
                 parent=self._fr,
-                text="Resources",
+                text=base.labels.CITY[11],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
+                text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
                 text_fg=RUST_COL,
-                pos=(-0.23, 0, shift),
+                pos=(-0.3, 0, shift),
             )
         )
         shift -= 0.12
-        buy_res_but = DirectButton(
+        buy_res_but = DirectButton(  # Buy
             parent=self._fr,
-            pos=(0.21, 0, shift),
+            pos=(0.08, 0, shift),
             text_fg=SILVER_COL,
-            text="Buy",
+            text=base.labels.CITY[15],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=0.45,
@@ -526,11 +556,12 @@ class CityGUI:
         )
         self._repl_wids.append(buy_res_but)
 
-        sell_res_but = DirectButton(
+        sell_res_but = DirectButton(  # Sell
             parent=self._fr,
-            pos=(0.11, 0, shift),
+            pos=(-0.08, 0, shift),
             text_fg=SILVER_COL,
-            text="Sell",
+            text=base.labels.CITY[14],  # noqa: F821
+            text_font=base.default_font,  # noqa: F821
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=0.45,

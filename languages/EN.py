@@ -77,3 +77,33 @@ Alt + \u2190\u2191\u2193\u2192 or hold mouse wheel - rotate
 "+", "-" or scroll mouse wheel - zoom
 C - toggle centered view
 """
+
+RESOURCES = (
+    "Expendable resources:",
+    "Medicine",
+    "Cure sick/wounded character",
+    "Smoke filter",
+    "Reduce attack chance (5 min)",
+    "Stimulator",
+    "Disable negative traits (5 min)",
+)
+
+CHARACTERS = ("Name:", "Class:", "Health", "Energy")
+CITY = (
+    "Services",
+    "Party",
+    "Train",
+    "Exit city",
+    "Turn around and exit",
+    "Locomotive",
+    "Repair",
+    "Upgrades",
+    "Purchase",
+    "Crew",
+    "Recruits",  # 10
+    "Resources",
+    "Leave unit",
+    "Hire unit",
+    "Sell",
+    "Buy",
+)

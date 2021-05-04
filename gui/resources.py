@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Resources GUI.
+The game expendable resources GUI.
 """
 from direct.gui.DirectGui import (
     DGG,
@@ -464,7 +464,8 @@ class ResourcesGUI:
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Expendable resources:",
+                text=base.labels.RESOURCES[0],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
@@ -476,14 +477,15 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
                 frameTexture=GUI_PIC + "medicine.png",
-                pos=(-0.21, 0, -0.16),
+                pos=(-0.22, 0, -0.16),
                 relief="flat",
             )
         )
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Medicine box",
+                text=base.labels.RESOURCES[1],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
@@ -493,7 +495,8 @@ class ResourcesGUI:
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Cure sick/wounded character",
+                text=base.labels.RESOURCES[2],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -505,14 +508,15 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
                 frameTexture=GUI_PIC + "smoke_filter.png",
-                pos=(-0.21, 0, -0.25),
+                pos=(-0.22, 0, -0.25),
                 relief="flat",
             )
         )
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Smoke filter",
+                text=base.labels.RESOURCES[3],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
@@ -522,7 +526,8 @@ class ResourcesGUI:
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Reduce attack chance (5 min)",
+                text=base.labels.RESOURCES[4],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -534,14 +539,15 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.018, 0.018, -0.028, 0.028),
                 frameTexture=GUI_PIC + "stimulator.png",
-                pos=(-0.21, 0, -0.349),
+                pos=(-0.22, 0, -0.349),
                 relief="flat",
             )
         )
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Stimulator",
+                text=base.labels.RESOURCES[5],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
@@ -551,7 +557,8 @@ class ResourcesGUI:
         self._res_desc_wids.append(
             DirectLabel(
                 parent=self._res_frame,
-                text="Disable negative traits (5 min)",
+                text=base.labels.RESOURCES[6],  # noqa: F821
+                text_font=base.default_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
