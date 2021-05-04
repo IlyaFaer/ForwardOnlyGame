@@ -28,7 +28,7 @@ from gui import (
     TeachingNotes,
     TraitsGUI,
 )
-from personage.team import Team
+from personage.crew import Crew
 from train import Train
 from world import World
 
@@ -53,8 +53,8 @@ logging.basicConfig(
 class ForwardOnly(ShowBase):
     """Object, which represents the game itself.
 
-    Includes the major game systems: starting, loading and saving a game,
-    holds the game resource, orchestrates GUIs and the high level game
+    Includes the major game systems: starting, loading and saving a game;
+    holds the game resources, orchestrates GUIs and the high level game
     instances. The main mechanism represents, infinite Train movement
     along the World blocks, which are loaded and unloaded on a fly.
     """
@@ -62,36 +62,21 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
-        if not os.path.exists("options.cfg"):
-            with open("options.cfg", "w") as opt_file:
-                opt_file.write(
-                    str(self.pipe.getDisplayWidth())
-                    + "x"
-                    + str(self.pipe.getDisplayHeight())
-                    + "\nEN\nTrue"
-                )
-
-        with open("options.cfg", "r") as opts_file:
-            resolution, lang, tutorial_enabled = opts_file.readlines()
-            self.tutorial_enabled = tutorial_enabled == "True"
-            self.labels = getattr(__import__("languages." + lang.strip()), lang.strip())
-
+        resolution, self.tutorial_enabled, self.labels = self._process_options()
         self._configure_window(resolution)
 
         if not os.path.exists("saves"):
             os.mkdir("saves")
 
-        self.default_font = self.loader.loadFont("arial.ttf")
+        self.main_font = self.loader.loadFont("arial.ttf")
         self.setBackgroundColor(0.1, 0.17, 0.1)
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
         self.sound_mgr.setDropOffFactor(5)
 
-        self.enableParticles()
         self.effects_mgr = EffectsManager()
 
         self._dollars = 0
-
         self._resources = {
             "medicine_boxes": 0,
             "smoke_filters": 0,
@@ -169,31 +154,32 @@ class ForwardOnly(ShowBase):
 
         self.current_block = next_block
 
-    def start_game(self, task=None):
-        """Actually start the game process."""
-        self.notes = TeachingNotes()
-        self.traits_gui = TraitsGUI()
+    def _process_options(self):
+        """Read or create the default game options.
 
-        self.main_menu.hide()
-        self.enableAllAudio()
+        Returns:
+            str, bool, module:
+                Graphical resolution, tutorial enabled flag, module
+                with the text labels in the chosen language.
+        """
+        if not os.path.exists("options.cfg"):
+            with open("options.cfg", "w") as opt_file:
+                opt_file.write(
+                    str(self.pipe.getDisplayWidth())
+                    + "x"
+                    + str(self.pipe.getDisplayHeight())
+                    + "\nEN\nTrue"
+                )
 
-        if not self.tutorial_enabled:
-            self.notes.start()
-            taskMgr.doMethodLater(  # noqa: F821
-                23, self.world.make_stench_step, "stench_step"
-            )
+        with open("options.cfg", "r") as opts_file:
+            resolution, lang, tutorial_enabled = opts_file.readlines()
 
-        taskMgr.doMethodLater(60, self.world.disease_activity, "disease")  # noqa: F821
-
-        self.accept("block_finished", self._move_along_block)
-        self._move_along_block()
-
-        if task is not None:
-            return task.done
-        elif self.tutorial_enabled:
-            self.doMethodLater(
-                0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
-            )
+        lang_code = lang.strip()
+        return (
+            resolution,
+            tutorial_enabled == "True",
+            getattr(__import__("languages." + lang_code), lang_code),
+        )
 
     def _track_stench(self, next_block):
         """Track the Stench.
@@ -241,8 +227,29 @@ class ForwardOnly(ShowBase):
 
         if block_id == 18 and self.tutorial_enabled:
             self.notes.start()
-            taskMgr.doMethodLater(  # noqa: F821
-                23, self.world.make_stench_step, "stench_step"
+            self.doMethodLater(23, self.world.make_stench_step, "stench_step")
+
+    def start_game(self, task=None):
+        """Actually start the game process."""
+        self.notes = TeachingNotes()
+        self.traits_gui = TraitsGUI()
+
+        self.main_menu.hide()
+        self.enableAllAudio()
+
+        if not self.tutorial_enabled:
+            self.notes.start()
+            self.doMethodLater(23, self.world.make_stench_step, "stench_step")
+
+        self.doMethodLater(60, self.world.disease_activity, "disease")
+        self.accept("block_finished", self._move_along_block)
+        self._move_along_block()
+
+        if task is not None:
+            return task.done
+        elif self.tutorial_enabled:
+            self.doMethodLater(
+                0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
             )
 
     def add_head(self, enemy):
@@ -276,7 +283,7 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl = CameraController()
         self.camera_ctrl.set_controls(self.train)
 
-        self.team = Team()
+        self.team = Crew()
         self.res_gui = ResourcesGUI()
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
@@ -384,7 +391,7 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl = CameraController()
         self.camera_ctrl.set_controls(self.train)
 
-        self.team = Team()
+        self.team = Crew()
         self.team.gen_default(chosen_team)
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)

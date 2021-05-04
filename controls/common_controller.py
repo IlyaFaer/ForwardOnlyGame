@@ -39,8 +39,6 @@ class CommonController:
         self._chosen_char = None
 
         self._move_char_snd = loader.loadSfx("sounds/move_char.ogg")  # noqa: F821
-
-        self._font = loader.loadFont("arial.ttf")  # noqa: F821
         self._char_pointer = loader.loadModel(  # noqa: F821
             address("character_pointer")
         )
@@ -48,7 +46,7 @@ class CommonController:
 
     @property
     def chosen_char(self):
-        """Returns the chosen character.
+        """The chosen character object.
 
         Returns:
             personage.character.Chatacter:
@@ -118,6 +116,35 @@ class CommonController:
         self._mouse_ray.setFromLens(base.camNode, mpos.x, mpos.y)  # noqa: F821
         return task.again
 
+    def _point_obj(self, event):
+        """Event: mouse pointer hits a collision solid."""
+        pointed_obj = event.getIntoNodePath().getName()
+        if pointed_obj == self._pointed_obj and pointed_obj is not None:
+            return
+
+        self._pointed_obj = pointed_obj
+
+        # show_tooltip
+        if self._pointed_obj.startswith("character_"):
+            base.char_gui.show_tooltip(  # noqa: F821
+                self._chars[self._pointed_obj].tooltip
+            )
+            return
+
+        if self._pointed_obj.startswith("enemy_"):
+            base.char_gui.show_tooltip(  # noqa: F821
+                base.world.enemy.active_units[self._pointed_obj].tooltip  # noqa: F821
+            )
+            return
+
+        if self._pointed_obj == "part_rest":
+            base.char_gui.show_tooltip("Rest zone")  # noqa: F821
+
+    def _unpoint_obj(self, event):
+        """Event: mouse pointer moved out of an object."""
+        self._pointed_obj = ""
+        base.char_gui.hide_tip()  # noqa: F821
+
     def set_controls(self):
         """Configure common game controls.
 
@@ -181,35 +208,6 @@ class CommonController:
             base.team.hide_relations()  # noqa: F821
             self._is_relations_shown = False
 
-    def _point_obj(self, event):
-        """Event: mouse pointer hits a collision solid."""
-        pointed_obj = event.getIntoNodePath().getName()
-        if pointed_obj == self._pointed_obj and pointed_obj is not None:
-            return
-
-        self._pointed_obj = pointed_obj
-
-        # show_tooltip
-        if self._pointed_obj.startswith("character_"):
-            base.char_gui.show_tooltip(  # noqa: F821
-                self._chars[self._pointed_obj].tooltip
-            )
-            return
-
-        if self._pointed_obj.startswith("enemy_"):
-            base.char_gui.show_tooltip(  # noqa: F821
-                base.world.enemy.active_units[self._pointed_obj].tooltip  # noqa: F821
-            )
-            return
-
-        if self._pointed_obj == "part_rest":
-            base.char_gui.show_tooltip("Rest zone")  # noqa: F821
-
-    def _unpoint_obj(self, event):
-        """Event: mouse pointer moved out of an object."""
-        self._pointed_obj = ""
-        base.char_gui.hide_tip()  # noqa: F821
-
     def _traverse(self, task):
         """Main traverser task."""
         self.traverser.traverse(render)  # noqa: F821
@@ -223,7 +221,7 @@ class CommonController:
             self._keys_info = OnscreenText(
                 text=base.labels.KEYS_INFO,  # noqa: F821
                 align=TextNode.ACenter,
-                font=self._font,
+                font=base.main_font,  # noqa: F821
                 scale=0.07,
                 pos=(0, 0.7),
                 fg=(0.7, 0.7, 0.7, 1),

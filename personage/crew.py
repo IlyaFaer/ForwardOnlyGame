@@ -29,7 +29,7 @@ DEFAULT_TEAMS = {
 }
 
 
-class Team:
+class Crew:
     """All the player's characters together object."""
 
     def __init__(self):

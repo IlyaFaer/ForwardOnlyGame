@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Teaching notes GUI.
+In-game teaching notes GUI.
 """
 import random
 

@@ -145,7 +145,7 @@ class CameraController:
         base.accept("mouse2", self._turn_camera_with_mouse)  # noqa: F821
         base.accept(  # noqa: F821
             "mouse2-up",
-            base.taskMgr.remove,  # noqa: F821
+            taskMgr.remove,  # noqa: F821
             extraArgs=["rotate_camera_with_mouse"],
         )
 

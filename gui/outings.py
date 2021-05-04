@@ -33,8 +33,8 @@ class OutingsGUI:
         self._outing_widgets = []
         self._assignees = []
         self._char_buttons = {}
-
         self._blink_step = 0
+
         self._upcome_ico = DirectFrame(
             frameSize=(-0.1, 0.1, -0.1, 0.1),
             pos=(0, 0, 0.8),
@@ -415,7 +415,7 @@ class OutingsGUI:
         self._outing_widgets.append(
             DirectLabel(
                 parent=self._list,
-                text="Team:",
+                text="Crew:",
                 frameSize=(0.6, 0.6, 0.6, 0.6),
                 text_scale=0.035,
                 pos=(-0.35, 0, 0),

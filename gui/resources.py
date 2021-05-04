@@ -465,7 +465,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[0],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
@@ -485,7 +485,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[1],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
@@ -496,7 +496,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[2],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -516,7 +516,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[3],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
@@ -527,7 +527,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[4],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,
@@ -547,7 +547,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[5],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=SILVER_COL,
@@ -558,7 +558,7 @@ class ResourcesGUI:
             DirectLabel(
                 parent=self._res_frame,
                 text=base.labels.RESOURCES[6],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.029,
                 text_fg=SILVER_COL,

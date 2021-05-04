@@ -20,7 +20,7 @@ class TrainController:
     Also manages moving the Train along motion paths.
 
     Args:
-        model (panda3d.core.NodePath): The Train model.
+        model (panda3d.core.NodePath): The locomotive model.
     """
 
     def __init__(self, model):

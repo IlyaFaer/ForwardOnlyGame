@@ -40,7 +40,7 @@ class Character(Shooter, Unit):
         name (str): The character name.
         class_ (str): Unit class.
         sex (str): The character gender.
-        team (team.Team): Team object.
+        team (crew.Crew): The Crew object.
         desc (dict): Optional. The character description.
     """
 
@@ -899,7 +899,7 @@ def generate_char(id_, class_, sex, team=None):
         id_ (str): Character id.
         class_ (str): Character class.
         sex (str): Character gender.
-        team (team.Team): Optional. Team to add new character into.
+        team (crew.Crew): Optional. Crew to add new character into.
 
     Returns:
         Character: The generated character.
@@ -914,7 +914,7 @@ def load_char(desc, team, parts):
 
     Args:
         desc (dict): Character description.
-        team (team.Team): The team object.
+        team (crew.Crew): The crew object.
         parts (dict): Train parts index.
 
     Returns:

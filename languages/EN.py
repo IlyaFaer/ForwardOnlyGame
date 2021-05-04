@@ -16,11 +16,11 @@ MAIN_MENU = (
         "\nThus, it's mostly a conceptual release, to demonstrate you the main "
         "game princips. Enjoy your play!"
     ),
-    "Choose your team",
+    "Choose your crew",
     "Soldiers",
     "Raiders",
     "Anarchists",
-    "Team description",
+    "Crew description",
     "Start",  # 10
     (
         "Soldiers are people of a tough discipline. They are good "

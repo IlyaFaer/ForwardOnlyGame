@@ -55,10 +55,10 @@ class CharacterGUI:
             clickSound=base.main_menu.click_snd,  # noqa: F821
             **ABOUT_BUT_PARAMS,
         )
-        DirectLabel(
+        DirectLabel(  # Name:
             parent=self._fr,
             text=base.labels.CHARACTERS[0],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -80,10 +80,10 @@ class CharacterGUI:
             text_fg=SILVER_COL,
             pos=(0, 0, 0.025),
         )
-        DirectLabel(
+        DirectLabel(  # Class:
             parent=self._fr,
             text=base.labels.CHARACTERS[1],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -97,10 +97,10 @@ class CharacterGUI:
             text_fg=SILVER_COL,
             pos=(0.17, 0, 0.068),
         )
-        DirectLabel(
+        DirectLabel(  # Health
             parent=self._fr,
             text=base.labels.CHARACTERS[2],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -114,10 +114,10 @@ class CharacterGUI:
             barColor=(0.85, 0.2, 0.28, 1),
             pos=(0.07, 0, -0.008),
         )
-        DirectLabel(
+        DirectLabel(  # Energy
             parent=self._fr,
             text=base.labels.CHARACTERS[3],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=RUST_COL,
@@ -181,6 +181,20 @@ class CharacterGUI:
 
         self.rest_list_shown = False
 
+    def destroy_char_button(self, char_id):
+        """Hide the button related to the given character id.
+
+        Args:
+            char_id (str): Character id.
+        """
+        if char_id in self._rest_buttons.keys():
+            self._rest_buttons[char_id].destroy()
+            self._rest_buttons.pop(char_id)
+
+    def hide_tip(self):
+        """Hide the tooltip."""
+        self._tip.hide()
+
     def show_char_info(self, char):
         """Show the given character status.
 
@@ -234,10 +248,6 @@ class CharacterGUI:
         self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
         self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
         self._tip.show()
-
-    def hide_tip(self):
-        """Hide the tooltip."""
-        self._tip.hide()
 
     def update_resting_chars(self, part):
         """Update the list of the resting characters.
@@ -302,16 +312,6 @@ class CharacterGUI:
                 scale=(0.04, 0, 0.03),
             )
             shift -= 0.033
-
-    def destroy_char_button(self, char_id):
-        """Hide the button related to the given character id.
-
-        Args:
-            char_id (str): Character id.
-        """
-        if char_id in self._rest_buttons.keys():
-            self._rest_buttons[char_id].destroy()
-            self._rest_buttons.pop(char_id)
 
     def _update_char_info(self, task):
         """Track the chosen character parameters in the GUI."""

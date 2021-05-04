@@ -22,6 +22,7 @@ class EffectsManager:
     """Manager to control the game visual effects."""
 
     def __init__(self):
+        base.enableParticles()  # noqa: F821
         render.setShaderAuto()  # noqa: F821
 
         self._explosion_lights = self._set_explosion_lights()

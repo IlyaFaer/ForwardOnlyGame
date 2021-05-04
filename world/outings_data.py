@@ -1863,7 +1863,7 @@ alone." You're making a step towards {name1}: "These times no
 one should be alone." {name1} stands up: "Good we have our own team"
 - {heshe1} smiles to you. - "Thanks, you've brought us together."
 Silently nodding, you point to the Train with your head.
-Team cohesion +6""",
+Crew cohesion +6""",
                 "effects": {"cohesion_gain": 6},
             },
             {
@@ -2060,7 +2060,7 @@ wheels!" Both workers get closer and view the locomotive. "That's
 incredible!" - the same man proclaims. - "You're very lucky to get
 your hands on it!"... After several minutes of talk the workers turn
 back to their outpost, but the jealous words still make you proud.
-Team cohesion +6""",
+Crew cohesion +6""",
                 "effects": {"cohesion_gain": 6},
             },
             {

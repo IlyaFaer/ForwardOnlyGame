@@ -28,6 +28,7 @@ from .train import TrainGUI  # noqa: F401
 from .traits import TraitsGUI  # noqa: F401
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL, ListChooser  # noqa: F401
 
+LANGUAGES = ("EN", "RU")
 RESOLUTIONS = (
     "800x600",
     "1024x768",
@@ -39,8 +40,6 @@ RESOLUTIONS = (
     "1768x992",
     "1920x1080",
 )
-
-LANGUAGES = ("EN", "RU")
 
 
 class MainMenu:
@@ -75,9 +74,9 @@ class MainMenu:
             "relief": None,
             "parent": self._main_fr,
             "clickSound": self.click_snd,
-            "text_font": base.default_font,  # noqa: F821
+            "text_font": base.main_font,  # noqa: F821
         }
-        self._new_game_but = DirectButton(
+        self._new_game_but = DirectButton(  # New game
             pos=(-1.12, 0, 0.5),
             text_fg=RUST_COL,
             text=base.labels.MAIN_MENU[0],  # noqa: F821
@@ -88,7 +87,7 @@ class MainMenu:
         self.bind_button(self._new_game_but)
 
         is_save_exists = save_exists(1) or save_exists(2) or save_exists(3)
-        self._load_but = DirectButton(
+        self._load_but = DirectButton(  # Load game
             pos=(-1.12, 0, 0.4),
             text_fg=RUST_COL if is_save_exists else (0.5, 0.5, 0.5, 1),
             text=base.labels.MAIN_MENU[1],  # noqa: F821
@@ -100,7 +99,7 @@ class MainMenu:
         self.bind_button(self._load_but)
 
         self.bind_button(
-            DirectButton(
+            DirectButton(  # Options
                 pos=(-1.12, 0, 0.2),
                 text_fg=RUST_COL,
                 text=base.labels.MAIN_MENU[2],  # noqa: F821
@@ -110,7 +109,7 @@ class MainMenu:
             )
         )
         self.bind_button(
-            DirectButton(
+            DirectButton(  # Exit
                 pos=(-1.12, 0, 0),
                 text_fg=RUST_COL,
                 text=base.labels.MAIN_MENU[3],  # noqa: F821
@@ -126,12 +125,12 @@ class MainMenu:
             text_scale=0.03,
             text_fg=SILVER_COL,
             frameColor=(0, 0, 0, 0),
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text=base.labels.MAIN_MENU[4],  # noqa: F821
         )
 
     def _check_can_save(self, task):
-        """Check if the game can be saved.
+        """Check if the game can be saved right now.
 
         If the game can't be saved, the cause will
         be shown under the "Save game" button.
@@ -158,7 +157,7 @@ class MainMenu:
                     text_scale=0.026,
                     text_fg=SILVER_COL,
                     text=cause,
-                    text_font=base.default_font,  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
                     text_align=TextNode.ALeft,
                 )
             self._save_blocked_lab["text"] = cause
@@ -210,32 +209,32 @@ class MainMenu:
         self.hide_conf()
 
         self._tactics_wids.append(
-            DirectLabel(
+            DirectLabel(  # Choose your crew
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[5],  # noqa: F821
                 text_fg=RUST_COL,
                 text_scale=0.04,
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameColor=(0, 0, 0, 0),
                 pos=(0.7, 0, 0.75),
             )
         )
-        self._team_preview = DirectFrame(
+        self._crew_preview = DirectFrame(
             parent=self._main_fr,
             frameSize=(-0.61, 0.61, -0.35, 0.35),
             pos=(0.7, 0, 0.3),
         )
-        self._team_preview.setTransparency(TransparencyAttrib.MAlpha)
-        self._tactics_wids.append(self._team_preview)
+        self._crew_preview.setTransparency(TransparencyAttrib.MAlpha)
+        self._tactics_wids.append(self._crew_preview)
 
         but_params = {
             "parent": self._main_fr,
             "text_scale": 0.035,
             "text_fg": RUST_COL,
-            "text_font": base.default_font,  # noqa: F821
+            "text_font": base.main_font,  # noqa: F821
             "relief": None,
             "clickSound": self.click_snd,
-            "command": self._show_team,
+            "command": self._show_crew,
         }
         self._team_buts = {
             "soldiers": DirectButton(
@@ -262,23 +261,23 @@ class MainMenu:
         for but in self._team_buts.values():
             self.bind_button(but)
 
-        self._team_description = DirectLabel(
+        self._team_description = DirectLabel(  # Crew description
             parent=self._main_fr,
             text=base.labels.MAIN_MENU[9],  # noqa: F821
             text_fg=SILVER_COL,
             text_scale=0.03,
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameColor=(0, 0, 0, 0),
             pos=(0.7, 0, -0.26),
         )
         self._tactics_wids.append(self._team_description)
 
-        start_but = DirectButton(
+        start_but = DirectButton(  # Start
             parent=self._main_fr,
             text_scale=0.045,
             text_fg=RUST_COL,
-            text=base.labels.MAIN_MENU[10],  # noqa: F821,
-            text_font=base.default_font,  # noqa: F821
+            text=base.labels.MAIN_MENU[10],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             relief=None,
             command=self._start_new_game,
             pos=(0.7, 0, -0.5),
@@ -287,7 +286,13 @@ class MainMenu:
         self.bind_button(start_but)
 
         self._tactics_wids.append(start_but)
-        self._show_team("soldiers")
+        self._show_crew("soldiers")
+
+    def _clear_temp_wids(self, task):
+        """Destroy widgets from the first game screen."""
+        self.hide_teams()
+        self._alpha_disclaimer.destroy()
+        return task.done
 
     def _save_conf_and_restart(self, res_chooser, tutorial_check, lang_chooser):
         """Save configurations and restart the game program.
@@ -317,12 +322,12 @@ class MainMenu:
         self.hide_teams()
 
         self._conf_wids.append(
-            DirectLabel(
+            DirectLabel(  # Resolution:
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[22],  # noqa: F821,
                 text_fg=RUST_COL,
                 text_scale=0.04,
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 pos=(-0.3, 0, 0.5),
                 frameColor=(0, 0, 0, 0),
             )
@@ -332,19 +337,18 @@ class MainMenu:
             tutorial = tutorial == "True"
 
         res_chooser = ListChooser()
-
         res_chooser.prepare(
             self._main_fr, (0.1, 0, 0.51), RESOLUTIONS, RESOLUTIONS.index(res.strip()),
         )
         self._conf_wids.append(res_chooser)
 
         self._conf_wids.append(
-            DirectLabel(
+            DirectLabel(  # Tutorial:
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[23],  # noqa: F821,
                 text_fg=RUST_COL,
                 text_scale=0.04,
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 pos=(-0.3, 0, 0.4),
                 frameColor=(0, 0, 0, 0),
             )
@@ -365,12 +369,12 @@ class MainMenu:
         self._conf_wids.append(tutorial_check)
 
         self._conf_wids.append(
-            DirectLabel(
+            DirectLabel(  # Language
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[24],  # noqa: F821,
                 text_fg=RUST_COL,
                 text_scale=0.04,
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 pos=(-0.3, 0, 0.3),
                 frameColor=(0, 0, 0, 0),
             )
@@ -382,12 +386,12 @@ class MainMenu:
         )
         self._conf_wids.append(lang_chooser)
 
-        but = DirectButton(
+        but = DirectButton(  # Save and restart
             parent=self._main_fr,
             text_scale=0.045,
             text_fg=RUST_COL,
             text=base.labels.MAIN_MENU[25],  # noqa: F821,
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             relief=None,
             command=self._save_conf_and_restart,
             extraArgs=[res_chooser, tutorial_check, lang_chooser],
@@ -397,30 +401,24 @@ class MainMenu:
         self.bind_button(but)
         self._conf_wids.append(but)
 
-    def _show_team(self, team):
+    def _show_crew(self, crew):
         """Show the description of the chosen tactics.
 
         Args:
-            team (str): The chosen tactics name.
+            crew (str): The chosen tactics name.
         """
-        self._chosen_team = team
-        self._team_preview["frameTexture"] = "gui/tex/preview/{}.png".format(team)
+        self._chosen_team = crew
+        self._crew_preview["frameTexture"] = "gui/tex/preview/{}.png".format(crew)
 
         for key, but in self._team_buts.items():
-            but["text_fg"] = SILVER_COL if key == team else RUST_COL
+            but["text_fg"] = SILVER_COL if key == crew else RUST_COL
 
         descs = {
             "soldiers": base.labels.MAIN_MENU[11],  # noqa: F821
             "raiders": base.labels.MAIN_MENU[12],  # noqa: F821
             "anarchists": base.labels.MAIN_MENU[13],  # noqa: F821
         }
-        self._team_description["text"] = descs[team]
-
-    def _clear_temp_wids(self, task):
-        """Destroy widgets from the first game screen."""
-        self.hide_teams()
-        self._alpha_disclaimer.destroy()
-        return task.done
+        self._team_description["text"] = descs[crew]
 
     def _read_saves(self):
         """Read all the game save slots.
@@ -636,7 +634,7 @@ That's all, Captain, handing command over to you!""",
         self._load_msg = DirectLabel(
             parent=self._load_screen or self._main_fr,
             text=base.labels.MAIN_MENU[26],  # noqa: F821,
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=RUST_COL,
             frameSize=(1, 1, 1, 1),
             text_scale=0.04,
@@ -718,7 +716,7 @@ That's all, Captain, handing command over to you!""",
             text_scale=0.05,
             text_fg=RUST_COL if can_save else SILVER_COL,
             text=base.labels.MAIN_MENU[15],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             relief=None,
             text_align=TextNode.ALeft,
             command=self._show_slots if can_save else None,  # noqa: F821
@@ -733,7 +731,7 @@ That's all, Captain, handing command over to you!""",
                 text_scale=0.05,
                 text_fg=RUST_COL,
                 text=base.labels.MAIN_MENU[14],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 relief=None,
                 command=base.restart_game,  # noqa: F821
                 text_align=TextNode.ALeft,
@@ -750,7 +748,7 @@ That's all, Captain, handing command over to you!""",
         self._load_msg = DirectButton(
             parent=parent,
             text=base.labels.MAIN_MENU[27],  # noqa: F821,
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=RUST_COL,
             text_scale=0.04,
             pos=(0, 0, -0.75),

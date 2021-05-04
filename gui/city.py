@@ -19,13 +19,6 @@ from .widgets import (
     UpgradeChooser,
 )
 
-HEAD_COST = {
-    "MotoShooter": 5,
-    "BrakeThrower": 5,
-    "StunBombThrower": 10,
-    "DodgeShooter": 25,
-}
-
 
 class ResourceChooser(ItemChooser):
     """Widget to choose a resource to buy/sell it.
@@ -108,6 +101,14 @@ class RecruitChooser(CharacterChooser):
         """
         return self._costs[self._chosen_item.id]
 
+    def _show_info(self):
+        """Show the chosen recruit info and his/her cost."""
+        CharacterChooser._show_info(self)
+        self._hire_but["text"] = "{label}\n{cost}$".format(
+            label=base.labels.CITY[13],  # noqa: F821
+            cost=str(self._costs[self._chosen_item.id]),
+        )
+
     def prepare(self, parent, pos, items, init_ind=None):
         """Prepare the chooser widget.
 
@@ -134,14 +135,6 @@ class RecruitChooser(CharacterChooser):
 
         CharacterChooser.prepare(self, parent, pos, items, init_ind=None)
 
-    def _show_info(self):
-        """Show the chosen recruit info and his/her cost."""
-        CharacterChooser._show_info(self)
-        self._hire_but["text"] = "{label}\n{cost}$".format(
-            label=base.labels.CITY[13],  # noqa: F821
-            cost=str(self._costs[self._chosen_item.id]),
-        )
-
 
 class CityGUI:
     """City GUI.
@@ -164,6 +157,7 @@ class CityGUI:
         self._toot_snd = loader.loadSfx("sounds/train/toot1.ogg")  # noqa: F821
         self.write_snd = loader.loadSfx("sounds/GUI/write.ogg")  # noqa: F821
 
+        self._reward_fr = None
         self._fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.35, 0.35, -0.4, 0.7),
@@ -174,12 +168,10 @@ class CityGUI:
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
         self._fr.hide()
 
-        self._reward_fr = None
-
         DirectLabel(  # Services
             parent=self._fr,
             text=base.labels.CITY[0],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.045,
             text_fg=RUST_COL,
@@ -190,7 +182,7 @@ class CityGUI:
             text_scale=0.035,
             text_fg=SILVER_COL,
             text=base.labels.CITY[1],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             relief=None,
             command=self._show_party,
             extraArgs=[0.56],
@@ -204,7 +196,7 @@ class CityGUI:
             text_scale=0.035,
             text_fg=RUST_COL,
             text=base.labels.CITY[2],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             relief=None,
             command=self._show_train,
             extraArgs=[0.56],
@@ -219,7 +211,7 @@ class CityGUI:
                 pos=(-0.205, 0, -0.35),
                 text_fg=RUST_COL,
                 text=base.labels.CITY[3],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 relief=None,
                 text_scale=0.035,
                 command=self._exit_city,
@@ -231,7 +223,7 @@ class CityGUI:
                 pos=(0.1, 0, -0.35),
                 text_fg=RUST_COL,
                 text=base.labels.CITY[4],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 relief=None,
                 text_scale=0.035,
                 command=self._exit_city,
@@ -255,7 +247,7 @@ class CityGUI:
             DirectLabel(  # Locomotive
                 parent=self._fr,
                 text=base.labels.CITY[5],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
                 text_align=TextNode.ALeft,
@@ -270,7 +262,7 @@ class CityGUI:
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
                 text=base.labels.CITY[6],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 text_scale=0.03,
                 pos=(-0.25, 0, z_coor),
@@ -308,7 +300,7 @@ class CityGUI:
             DirectLabel(  # Upgrade
                 parent=self._fr,
                 text=base.labels.CITY[7],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
@@ -341,7 +333,7 @@ class CityGUI:
             pos=(0.2, 0, z_coor - 0.3),
             text_fg=RUST_COL,
             text=base.labels.CITY[8],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             relief=None,
             text_scale=0.035,
             command=self._purchase_upgrade,
@@ -385,12 +377,12 @@ class CityGUI:
         self._train_but["text_fg"] = RUST_COL
 
         shift -= 0.07
-        # team gui
+        # the crew GUI
         self._repl_wids.append(
             DirectLabel(  # Crew
                 parent=self._fr,
                 text=base.labels.CITY[9],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
@@ -412,7 +404,7 @@ class CityGUI:
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
                 text=base.labels.CHARACTERS[2],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_scale=0.03,
                 pos=(-0.2, 0, shift),
             )
@@ -450,7 +442,7 @@ class CityGUI:
                 frameColor=(0, 0, 0, 0.3),
                 text_fg=SILVER_COL,
                 text=base.labels.CHARACTERS[3],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_scale=0.03,
                 pos=(-0.2, 0, shift),
             )
@@ -488,7 +480,7 @@ class CityGUI:
                 pos=(0.2, 0, shift),
                 text_fg=SILVER_COL,
                 text=base.labels.CITY[12],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -501,7 +493,7 @@ class CityGUI:
             DirectLabel(  # Recruits
                 parent=self._fr,
                 text=base.labels.CITY[10],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
@@ -516,7 +508,7 @@ class CityGUI:
             pos=(0.2, 0, shift),
             text_fg=SILVER_COL,
             text=base.labels.CITY[13],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=0.45,
@@ -534,7 +526,7 @@ class CityGUI:
             DirectLabel(  # Resources
                 parent=self._fr,
                 text=base.labels.CITY[11],  # noqa: F821
-                text_font=base.default_font,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.035,
@@ -548,7 +540,7 @@ class CityGUI:
             pos=(0.08, 0, shift),
             text_fg=SILVER_COL,
             text=base.labels.CITY[15],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=0.45,
@@ -561,7 +553,7 @@ class CityGUI:
             pos=(-0.08, 0, shift),
             text_fg=SILVER_COL,
             text=base.labels.CITY[14],  # noqa: F821
-            text_font=base.default_font,  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             scale=(0.075, 0, 0.075),
             relief=None,
             text_scale=0.45,
@@ -758,6 +750,12 @@ class CityGUI:
         for destroying enemies. Money amount depends on what
         enemies were destroyed.
         """
+        heads_cost = {
+            "MotoShooter": 5,
+            "BrakeThrower": 5,
+            "StunBombThrower": 10,
+            "DodgeShooter": 25,
+        }
         if not base.heads:  # noqa: F821
             return
 
@@ -775,8 +773,8 @@ class CityGUI:
         total = 0
         for head, num in base.heads.items():  # noqa: F821
             heads_list += head + " x" + str(num) + "\n"
-            costs_list += str(num * HEAD_COST[head]) + "$\n"
-            total += num * HEAD_COST[head]
+            costs_list += str(num * heads_cost[head]) + "$\n"
+            total += num * heads_cost[head]
 
         DirectLabel(
             parent=self._reward_fr,
