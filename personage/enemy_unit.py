@@ -627,7 +627,7 @@ class DodgeShooter(EnemyUnit):
 
         self.model.play("turn_right" if self._y_pos < 0 else "turn_left")
 
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             2, self._shoot_at_train, self.id + "_shoot_at_train"
         )
 
@@ -639,12 +639,12 @@ class DodgeShooter(EnemyUnit):
     def _shoot_at_train(self, task):
         """Start shooting volley, including logic, animations, sounds."""
         self._shoot_seq.start()
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             0.5, self._do_damage_to_train, self.id + "_do_damage_to_train"
         )
-        base.taskMgr.doMethodLater(  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
             6,
-            base.taskMgr.remove,  # noqa: F821
+            taskMgr.remove,  # noqa: F821
             self.id + "_stop_doing_damage",
             extraArgs=[self.id + "_do_damage_to_train"],
         )

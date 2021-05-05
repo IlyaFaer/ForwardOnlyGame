@@ -28,7 +28,6 @@ class ResourcesGUI:
         self._coh_desc_shown = False
         self._res_desc_wids = []
         self._res_desc_shown = False
-
         self._resources = {}
         self._blink_step = 0
 
@@ -635,15 +634,6 @@ class ResourcesGUI:
         for icon in self._coh_icons:
             icon["wid"]["frameTexture"] = GUI_PIC + "ny_" + icon["file"]
 
-    def update_resource(self, name, value):
-        """Update the indicator with the given value.
-
-        Args:
-            name (str): The indicator name.
-            value (Any): The new indicator value.
-        """
-        self._resources[name]["text"] = str(value)
-
     def update_chars(self):
         """Update characters number widget."""
         self._resources["chars"]["text"] = "{current}/{maximum}".format(
@@ -669,3 +659,12 @@ class ResourcesGUI:
                 icon["wid"]["frameTexture"] = GUI_PIC + icon["file"]
             else:
                 icon["wid"]["frameTexture"] = GUI_PIC + "ny_" + icon["file"]
+
+    def update_resource(self, name, value):
+        """Update the indicator with the given value.
+
+        Args:
+            name (str): The indicator name.
+            value (Any): The new indicator value.
+        """
+        self._resources[name]["text"] = str(value)

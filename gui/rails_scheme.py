@@ -50,7 +50,6 @@ class RailsScheme:
             parent=self._list,
             frameSize=(-1.1, 1.1, -0.3, 0.3),
             frameTexture="gui/tex/world_scheme.png",
-            pos=(0, 0, 0),
         )
         self._scheme.setTransparency(TransparencyAttrib.MAlpha)
 
@@ -60,7 +59,6 @@ class RailsScheme:
             frameTexture="gui/tex/scheme_arrow.png",
             pos=(-0.967, 0, 0.1),
         )
-
         self._build_legend()
 
     def _build_legend(self):
@@ -72,7 +70,7 @@ class RailsScheme:
             "frameSize": (-0.1, 0.1, -0.1, 0.1),
         }
         DirectLabel(
-            text=("Legend:\nm - Meet\n" "e - Enemy Camp\n" "l - Looting"),
+            text="Legend:\nm - Meet\ne - Enemy Camp\nl - Looting",
             text_align=TextNode.ALeft,
             pos=(-1, 0, -0.35),
             **lab_opts,
@@ -97,7 +95,6 @@ class RailsScheme:
         DirectLabel(
             text="- railway branch", pos=(0.29, 0, -0.38), **lab_opts,
         )
-
         DirectFrame(
             parent=self._scheme,
             frameColor=(0.71, 0.25, 0.05, 0.2),

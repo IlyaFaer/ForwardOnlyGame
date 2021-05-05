@@ -143,9 +143,5 @@ class Rocket:
 
         base.train.explode_rocket(side)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            2,
-            self._smoke.disable,
-            "disable_rocket_smoke",
-            extraArgs=[],
-            appendTask=False,
+            2, self._smoke.disable, "disable_rocket_smoke", extraArgs=[],
         )

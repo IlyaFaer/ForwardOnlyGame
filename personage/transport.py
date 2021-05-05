@@ -26,7 +26,7 @@ class TransportManager:
         self._models["moto2"].setPlayRate(1.5, "ride")
         self._models["dodge"].setPlayRate(2.5, "ride")
 
-    def _load_snd(self, unit, type_, task):
+    def _load_snd(self, unit, type_):
         """Load transport sound.
 
         Args:
@@ -43,7 +43,6 @@ class TransportManager:
         base.sound_mgr.attachSoundToObject(  # noqa: F821
             unit.transport_snd, unit.transport
         )
-        return task.done
 
     def load_transport(self, unit):
         """Load transport for the given unit.
@@ -64,7 +63,6 @@ class TransportManager:
             self._load_snd,
             "load_transport_sound_" + unit.id,
             extraArgs=[unit, "moto" if transport_model.startswith("moto") else "car"],
-            appendTask=True,
         )
 
     def stop(self):

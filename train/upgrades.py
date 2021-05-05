@@ -89,27 +89,27 @@ damage on several circles""",
 
 
 class ArmorPlate:
-    """An active shield Train upgrade.
+    """An active shield locomotive upgrade.
 
-    Represents an active defense upgrade - plate, which
-    can cover one of Train sides: left, right, top.
+    Represents an active defense upgrade - plate, which can
+    cover one of the locomotive sides: left, right, top.
 
     Args:
-        train_model (panda3d.core.NodePath):
-            The Train model - parent for the plate.
+        loc_model (panda3d.core.NodePath):
+            The locomotive model - parent for the plate.
     """
 
-    def __init__(self, train_model):
+    def __init__(self, loc_model):
         self._is_on_move = False
         self.cur_position = "top"
 
         self._snd = base.sound_mgr.loadSfx(  # noqa: F821
             "sounds/train/armor_plate_move.ogg"
         )
-        base.sound_mgr.attachSoundToObject(self._snd, train_model)  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._snd, loc_model)  # noqa: F821
 
         self._model = Actor(address("armor_plate"))
-        self._model.reparentTo(train_model)
+        self._model.reparentTo(loc_model)
 
         self._right_to_left = Sequence(
             Parallel(

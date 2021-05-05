@@ -129,6 +129,11 @@ class Enemy:
         self._is_cooldown = False
         return task.done
 
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        for enemy in self.active_units.values():
+            enemy.capture_train()
+
     def going_to_attack(self, day_part, lights_on):
         """Checks if enemy is going to attack.
 
@@ -217,11 +222,6 @@ class Enemy:
         for class_ in CLASSES["classes"] + NOT_TRANSPORT_CLASSES:
             if class_["threshold"] == self.score:
                 EnemyDesc(class_["class"].__name__)
-
-    def capture_train(self):
-        """The Train got critical damage - stop near it."""
-        for enemy in self.active_units.values():
-            enemy.capture_train()
 
     def stop_ride_anim(self, task):
         """Stop riding animation and sounds."""

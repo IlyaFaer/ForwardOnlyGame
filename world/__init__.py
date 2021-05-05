@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Game world systems.
+The Game world systems.
 """
 import glob
 import random
@@ -30,7 +30,8 @@ class World:
     Consists of blocks and is randomly generated.
 
     Args:
-        day_part_desc (dict): Day part description.
+        day_part_desc (dict):
+            Day part description. Use when loading a saved game.
     """
 
     def __init__(self, day_part_desc=None):
@@ -46,6 +47,10 @@ class World:
         self._block_coor_step = 0
         self._loaded_blocks = []  # currently loaded world blocks
         self._last_angle = 0
+        self._hangar = None
+        self._is_in_city = False
+        self._et_rusty_blocks = 0
+        self._et_stench_blocks = 0
         # index of the block, which is
         # processed by World now
         self._block_num = -1
@@ -59,10 +64,6 @@ class World:
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
         self._inversions = self._prepare_inversions()
-        self._hangar = None
-        self._is_in_city = False
-        self._et_rusty_blocks = 0
-        self._et_stench_blocks = 0
 
         self.sun = Sun(day_part_desc)
         self.city_gui = CityGUI()
@@ -678,7 +679,6 @@ class World:
                 Number of the block, where the Stench edge is located.
         """
         self._disease_threshold = disease_threshold
-
         self._stench_step = stench_step
 
         self.outings_mgr = OutingsManager()
@@ -1151,7 +1151,6 @@ class Hangar:
 
     def __init__(self):
         self._train_pos = base.train.root_node.getPos()  # noqa: F821
-
         self._mod = loader.loadModel(address("city_hangar"))  # noqa: F821
 
         base.camera_ctrl.set_hangar_pos(self._mod)  # noqa: F821

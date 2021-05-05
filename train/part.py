@@ -12,7 +12,7 @@ from utils import address, take_random
 class TrainPart:
     """A Train part where characters can be set.
 
-    Contains characters set to this part and enemies
+    Contains characters set on this part and enemies
     within its shooting range. Has a manipulating arrow,
     which can be used to move a character to this part.
     Also includes a "shooting range" collider - area,

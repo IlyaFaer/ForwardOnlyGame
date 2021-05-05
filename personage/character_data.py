@@ -60,6 +60,7 @@ NAMES = {
     "male": (
         "Aaron",
         "Adam",
+        "Aidan",
         "Alex",
         "Alexis",
         "Antony",
@@ -106,6 +107,7 @@ NAMES = {
         "Charlotte",
         "Christine",
         "Claudia",
+        "Clara",
         "Cobie",
         "Dolores",
         "Elizabeth",

@@ -244,15 +244,10 @@ class Train:
 
     def _prepare_bomb_explosions(self, task):
         """Prepare bomb explosion effects."""
-        self._bomb_explosions.append(
-            base.effects_mgr.bomb_explosion(self)  # noqa: F821
-        )
-        self._bomb_explosions.append(
-            base.effects_mgr.bomb_explosion(self)  # noqa: F821
-        )
-        self._bomb_explosions.append(
-            base.effects_mgr.bomb_explosion(self)  # noqa: F821
-        )
+        for _ in range(3):
+            self._bomb_explosions.append(
+                base.effects_mgr.bomb_explosion(self)  # noqa: F821
+            )
         return task.done
 
     def has_cell(self):

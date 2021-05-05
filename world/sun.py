@@ -78,7 +78,7 @@ class Sun:
         self._amb_light, self._dir_light, sun_np = self._set_general_lights(
             base.train.node  # noqa: F821
         )
-        self._set_day_night_cycle(sun_np, base.train.model, day_part_desc)  # noqa: F821
+        self._set_day_night_cycle(sun_np, day_part_desc)
 
     @property
     def day_part(self):
@@ -142,23 +142,20 @@ class Sun:
         sun_np = train_np.attachNewNode(sun_light)
 
         render.setLight(sun_np)  # noqa: F821
-
         return amb_light, sun_light, sun_np
 
-    def _set_day_night_cycle(self, sun_np, train_mod, day_time):
+    def _set_day_night_cycle(self, sun_np, day_time):
         """Set intervals and methods for day-night cycle.
 
         Args:
             sun_np (panda3d.core.NodePath): Sun node path.
-            train_mod (panda3d.core.NodePath): Train model.
             day_time (dict): Day time description.
         """
         taskMgr.doMethodLater(  # noqa: F821
             self._step_duration,
             self._change_sun_state,
             "change_sun_color",
-            extraArgs=[sun_np, train_mod],
-            appendTask=True,
+            extraArgs=[sun_np],
         )
         self._arch_int = MopathInterval(
             self._path,
@@ -183,12 +180,11 @@ class Sun:
         sun_np.lookAt(base.train.model)  # noqa: F821
         return task.again
 
-    def _change_sun_state(self, sun_np, train_mod, task):
+    def _change_sun_state(self, sun_np):
         """Change Sun color and angle with a small step.
 
         Args:
             sun_np (panda3d.core.NodePath): Sun node path.
-            task (panda3d.core.PythonTask): Task object.
         """
         if self._color_step == self._day_part_duration:
             self._color_step = 0
@@ -217,8 +213,6 @@ class Sun:
         self._dir_light.setColor(self._color["dir"])
         self._amb_light.setColor(self._color["amb"])
         self._color_step += 1
-
-        return task.again
 
     def _calc_color_vec(self, color, next_color, steps):
         """Calculate vector to change color in given steps number.

@@ -30,6 +30,7 @@ class EnemyUnit(Unit):
 
         self.transport_snd = None
         self._move_int = None
+        self._rb_node = None
         self._tooltip = "Skinhead - " + self.class_
 
         self._y_positions = y_positions
@@ -43,8 +44,6 @@ class EnemyUnit(Unit):
         self.model = model
         self.model.pose("ride", 1)
         self.model.reparentTo(self.node)
-
-        self._rb_node = None
 
         # organize movement and aiming tasks
         time_to_overtake = random.randint(33, 50)

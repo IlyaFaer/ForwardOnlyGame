@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Player characters as a single team API.
+Player characters as a single crew object.
 """
 import copy
 import random
