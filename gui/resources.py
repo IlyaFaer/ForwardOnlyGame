@@ -13,6 +13,8 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TextNode, TransparencyAttrib
 
+from utils import clear_wids
+
 from .character import ABOUT_BUT_PARAMS
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
@@ -266,10 +268,7 @@ class ResourcesGUI:
         if self._coh_desc_shown:
             self._coh_frame["frameSize"] = (-0.55, 0.55, -0.05, 0.05)
 
-            for wid in self._coh_desc_wids:
-                wid.destroy()
-
-            self._coh_desc_wids.clear()
+            clear_wids(self._coh_desc_wids)
             self._coh_desc_shown = False
             return
 
@@ -451,10 +450,7 @@ class ResourcesGUI:
         if self._res_desc_shown:
             self._res_frame["frameSize"] = (-0.3, 0.3, -0.03, 0.028)
 
-            for wid in self._res_desc_wids:
-                wid.destroy()
-
-            self._res_desc_wids.clear()
+            clear_wids(self._res_desc_wids)
             self._res_desc_shown = False
             return
 

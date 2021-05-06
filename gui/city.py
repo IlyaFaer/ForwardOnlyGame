@@ -10,6 +10,7 @@ from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TextNode, TransparencyAttrib
 
 from personage.character_data import TRAITS
+from utils import clear_wids
 from .widgets import (
     GUI_PIC,
     RUST_COL,
@@ -237,7 +238,7 @@ class CityGUI:
         Args:
             z_coor (float): Z-coordinate for widgets.
         """
-        self._clear_repl_wids()
+        clear_wids(self._repl_wids)
 
         self._party_but["text_fg"] = RUST_COL
         self._train_but["text_fg"] = SILVER_COL
@@ -371,7 +372,7 @@ class CityGUI:
         Args:
             shift (float): Z-coordinate.
         """
-        self._clear_repl_wids()
+        clear_wids(self._repl_wids)
 
         self._party_but["text_fg"] = SILVER_COL
         self._train_but["text_fg"] = RUST_COL
@@ -594,13 +595,6 @@ class CityGUI:
 
         base.dollars += self._res_chooser.chosen_resource_cost  # noqa: F821
         base.plus_resource(self._res_chooser.chosen_item, -1)  # noqa: F821
-
-    def _clear_repl_wids(self):
-        """Clear replacable widgets in the current tab."""
-        for wid in self._repl_wids:
-            wid.destroy()
-
-        self._repl_wids = []
 
     def _exit_city(self, turn_around=False):
         """Exit the current city.

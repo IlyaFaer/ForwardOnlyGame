@@ -16,7 +16,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TextNode, TransparencyAttrib
 
-from utils import save_exists
+from utils import clear_wids, save_exists
 from .character import CharacterGUI  # noqa: F401
 from .city import CityGUI  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
@@ -54,10 +54,10 @@ class MainMenu:
         self._load_msg = None
         self._load_screen = None
         self._is_first_pause = True
-        self._tactics_wids = []
-        self._save_wids = []
-        self._conf_wids = []
         self._save_blocked_lab = None
+        self.tactics_wids = []
+        self.save_wids = []
+        self.conf_wids = []
 
         self._hover_snd = loader.loadSfx("sounds/GUI/menu1.ogg")  # noqa: F821
         self._hover_snd.setVolume(0.1)
@@ -163,7 +163,7 @@ class MainMenu:
             self._save_blocked_lab["text"] = cause
             self._save_but["text_fg"] = SILVER_COL
             self._save_but["command"] = None
-            self.hide_slots()
+            clear_wids(self.save_wids)
         else:
             self._save_but["text_fg"] = RUST_COL
             self._save_but["command"] = self._show_slots
@@ -202,13 +202,13 @@ class MainMenu:
 
     def _choose_tactics(self):
         """Choose initial tactics before new game start."""
-        if self._tactics_wids:
+        if self.tactics_wids:
             return
 
-        self.hide_slots()
-        self.hide_conf()
+        clear_wids(self.save_wids)
+        clear_wids(self.conf_wids)
 
-        self._tactics_wids.append(
+        self.tactics_wids.append(
             DirectLabel(  # Choose your crew
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[5],  # noqa: F821
@@ -225,7 +225,7 @@ class MainMenu:
             pos=(0.7, 0, 0.3),
         )
         self._crew_preview.setTransparency(TransparencyAttrib.MAlpha)
-        self._tactics_wids.append(self._crew_preview)
+        self.tactics_wids.append(self._crew_preview)
 
         but_params = {
             "parent": self._main_fr,
@@ -256,7 +256,7 @@ class MainMenu:
                 **but_params,
             ),
         }
-        self._tactics_wids += self._team_buts.values()
+        self.tactics_wids += self._team_buts.values()
 
         for but in self._team_buts.values():
             self.bind_button(but)
@@ -270,7 +270,7 @@ class MainMenu:
             frameColor=(0, 0, 0, 0),
             pos=(0.7, 0, -0.26),
         )
-        self._tactics_wids.append(self._team_description)
+        self.tactics_wids.append(self._team_description)
 
         start_but = DirectButton(  # Start
             parent=self._main_fr,
@@ -285,12 +285,12 @@ class MainMenu:
         )
         self.bind_button(start_but)
 
-        self._tactics_wids.append(start_but)
+        self.tactics_wids.append(start_but)
         self._show_crew("soldiers")
 
     def _clear_temp_wids(self, task):
         """Destroy widgets from the first game screen."""
-        self.hide_teams()
+        clear_wids(self.tactics_wids)
         self._alpha_disclaimer.destroy()
         return task.done
 
@@ -318,10 +318,10 @@ class MainMenu:
 
     def _show_conf(self):
         """Show game configurations."""
-        self.hide_slots()
-        self.hide_teams()
+        clear_wids(self.save_wids)
+        clear_wids(self.tactics_wids)
 
-        self._conf_wids.append(
+        self.conf_wids.append(
             DirectLabel(  # Resolution:
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[22],  # noqa: F821,
@@ -340,9 +340,9 @@ class MainMenu:
         res_chooser.prepare(
             self._main_fr, (0.1, 0, 0.51), RESOLUTIONS, RESOLUTIONS.index(res.strip()),
         )
-        self._conf_wids.append(res_chooser)
+        self.conf_wids.append(res_chooser)
 
-        self._conf_wids.append(
+        self.conf_wids.append(
             DirectLabel(  # Tutorial:
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[23],  # noqa: F821,
@@ -366,9 +366,9 @@ class MainMenu:
             frameColor=RUST_COL,
         )
         tutorial_check.setTransparency(TransparencyAttrib.MAlpha)
-        self._conf_wids.append(tutorial_check)
+        self.conf_wids.append(tutorial_check)
 
-        self._conf_wids.append(
+        self.conf_wids.append(
             DirectLabel(  # Language
                 parent=self._main_fr,
                 text=base.labels.MAIN_MENU[24],  # noqa: F821,
@@ -384,7 +384,7 @@ class MainMenu:
         lang_chooser.prepare(
             self._main_fr, (0.1, 0, 0.31), ("EN", "RU"), LANGUAGES.index(lang.strip()),
         )
-        self._conf_wids.append(lang_chooser)
+        self.conf_wids.append(lang_chooser)
 
         but = DirectButton(  # Save and restart
             parent=self._main_fr,
@@ -399,7 +399,7 @@ class MainMenu:
             clickSound=self.click_snd,
         )
         self.bind_button(but)
-        self._conf_wids.append(but)
+        self.conf_wids.append(but)
 
     def _show_crew(self, crew):
         """Show the description of the chosen tactics.
@@ -456,11 +456,11 @@ class MainMenu:
             for_loading (bool):
                 Optional. True if slots must be shown for loading.
         """
-        if self._save_wids:
+        if self.save_wids:
             return
 
-        self.hide_teams()
-        self.hide_conf()
+        clear_wids(self.tactics_wids)
+        clear_wids(self.conf_wids)
 
         if for_loading:
             is_active = True
@@ -492,9 +492,9 @@ class MainMenu:
                 clickSound=self.click_snd,
             )
             self.bind_button(but)
-            self._save_wids.append(but)
+            self.save_wids.append(but)
 
-            self._save_wids.append(
+            self.save_wids.append(
                 DirectLabel(
                     parent=self._main_fr,
                     pos=(x_shift, 0, z_shift - 0.05),
@@ -504,7 +504,7 @@ class MainMenu:
                     text=saves[num - 1].get("save_time", "-"),
                 )
             )
-            self._save_wids.append(
+            self.save_wids.append(
                 DirectLabel(
                     parent=self._main_fr,
                     pos=(x_shift - 0.1, 0, z_shift - 0.1),
@@ -514,7 +514,7 @@ class MainMenu:
                     text=(str(saves[num - 1].get("miles") or "- ")) + " mi",
                 )
             )
-            self._save_wids.append(
+            self.save_wids.append(
                 DirectLabel(
                     parent=self._main_fr,
                     pos=(x_shift + 0.35, 0, z_shift - 0.1),
@@ -563,27 +563,6 @@ class MainMenu:
         """
         button.bind(DGG.ENTER, self._highlight_but, extraArgs=[button])
         button.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[button])
-
-    def hide_slots(self):
-        """Hide save slots GUI."""
-        for wid in self._save_wids:
-            wid.destroy()
-
-        self._save_wids.clear()
-
-    def hide_conf(self):
-        """Hide configurations GUI."""
-        for wid in self._conf_wids:
-            wid.destroy()
-
-        self._conf_wids.clear()
-
-    def hide_teams(self):
-        """Hide team choose GUI."""
-        for wid in self._tactics_wids:
-            wid.destroy()
-
-        self._tactics_wids.clear()
 
     def show_loading(self, is_game_start=False):
         """Show game loading screen.
@@ -644,7 +623,7 @@ That's all, Captain, handing command over to you!""",
     def hide(self):
         """Hide the main menu."""
         self._main_fr.hide()
-        self.hide_slots()
+        clear_wids(self.save_wids)
 
         if self._load_screen is not None:
             self._load_screen.destroy()

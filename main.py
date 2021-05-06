@@ -31,6 +31,7 @@ from gui import (
 from personage.crew import Crew
 from train import Train
 from world import World
+from utils import clear_wids
 
 # build hack: import languages module to add it into the build,
 # delete the module later not to keep both languages in game
@@ -273,7 +274,7 @@ class ForwardOnly(ShowBase):
         Args:
             num (int): The save slot number.
         """
-        self.main_menu.hide_slots()
+        clear_wids(self.main_menu.save_wids)
         save = shelve.open("saves/save{}".format(num))
 
         self.disableAllAudio()
@@ -351,7 +352,7 @@ class ForwardOnly(ShowBase):
         Args:
             num (int): The save slot number.
         """
-        self.main_menu.hide_slots()
+        clear_wids(self.main_menu.save_wids)
         self.world.save_map(num)
 
         save = shelve.open("saves/save{}".format(num))

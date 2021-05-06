@@ -36,6 +36,18 @@ def chance(percent):
     return random.randint(1, 100) <= percent
 
 
+def clear_wids(wids):
+    """Clear all the GUI given in the given list.
+
+    Args:
+        wids (list): List of Panda3D GUI objects.
+    """
+    for wid in wids:
+        wid.destroy()
+
+    wids.clear()
+
+
 def drown_snd(snd, task):
     """Drown the given sound.
 
@@ -84,6 +96,4 @@ def take_random(list_):
     Returns:
         Any: The chosen element.
     """
-    element = random.choice(list_)
-    list_.remove(element)
-    return element
+    return list_.pop(random.randint(0, len(list_) - 1))

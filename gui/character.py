@@ -15,6 +15,7 @@ from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import CardMaker, NodePath, TransparencyAttrib
 
 from personage.character_data import TRAIT_DESC
+from utils import clear_wids
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
 ABOUT_BUT_PARAMS = {
@@ -412,10 +413,7 @@ class CharacterGUI:
         """
         if self._char_desc_shown:
             self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.115)
-            for wid in self._char_desc_wids:
-                wid.destroy()
-
-            self._char_desc_wids = []
+            clear_wids(self._char_desc_wids)
             self._status_lab = None
         else:
             shift = 0.7

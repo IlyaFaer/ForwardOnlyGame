@@ -11,6 +11,8 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TextNode, TransparencyAttrib
 
+from utils import clear_wids
+
 
 class RailsScheme:
     """Rails scheme GUI.
@@ -230,9 +232,7 @@ class RailsScheme:
             self._list.hide()
             taskMgr.remove("update_scheme_arrow")  # noqa: F821
 
-            for wid in self._temp_wids:
-                wid.destroy()
-            self._temps_wids = []
+            clear_wids(self._temp_wids)
         else:
             self._open_snd.play()
             taskMgr.doMethodLater(  # noqa: F821

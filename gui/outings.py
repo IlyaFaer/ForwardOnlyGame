@@ -15,6 +15,7 @@ from direct.gui.DirectGui import (
 from panda3d.core import TransparencyAttrib
 
 from personage.character_data import TRAIT_DESC
+from utils import clear_wids
 from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 
 OUTINGS_ICONS = {
@@ -236,7 +237,7 @@ class OutingsGUI:
             recruit_effect (int):
                 Cost of a possible recruit.
         """
-        self._clear_temporary_widgets()
+        clear_wids(self._outing_widgets)
 
         if not (selected_effect or recruit_effect):
             self.hide_outing()
@@ -335,12 +336,6 @@ class OutingsGUI:
         self._char_chooser.destroy()
         self.hide_outing()
 
-    def _clear_temporary_widgets(self):
-        """Destroy all the one-time widgets."""
-        for wid in self._outing_widgets:
-            wid.destroy()
-        self._outing_widgets.clear()
-
     def show_upcoming(self, text, icon):
         """Show the upcoming event notification.
 
@@ -393,7 +388,7 @@ class OutingsGUI:
 
             self._list.hide()
             self.is_shown = False
-            self._clear_temporary_widgets()
+            clear_wids(self._outing_widgets)
 
     def start(self, outing):
         """Start the outing scenario.
@@ -523,7 +518,7 @@ class OutingsGUI:
             recruit_effect (int):
                 Cost of a possible recruit.
         """
-        self._clear_temporary_widgets()
+        clear_wids(self._outing_widgets)
 
         self._desc["text"] = desc
 
