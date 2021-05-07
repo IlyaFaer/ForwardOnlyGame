@@ -22,8 +22,8 @@ SUN_COLORS = itertools.cycle(
         },
         {
             "name": "noon",
-            "dir": Vec4(0.56, 0.53, 0.39, 1),
-            "amb": Vec4(0.515, 0.515, 0.515, 1),
+            "dir": Vec4(0.55, 0.52, 0.39, 1),
+            "amb": Vec4(0.51, 0.51, 0.51, 1),
         },
         {
             "name": "evening",
@@ -156,6 +156,7 @@ class Sun:
             self._change_sun_state,
             "change_sun_color",
             extraArgs=[sun_np],
+            appendTask=True,
         )
         self._arch_int = MopathInterval(
             self._path,
@@ -180,7 +181,7 @@ class Sun:
         sun_np.lookAt(base.train.model)  # noqa: F821
         return task.again
 
-    def _change_sun_state(self, sun_np):
+    def _change_sun_state(self, sun_np, task):
         """Change Sun color and angle with a small step.
 
         Args:
@@ -213,6 +214,7 @@ class Sun:
         self._dir_light.setColor(self._color["dir"])
         self._amb_light.setColor(self._color["amb"])
         self._color_step += 1
+        return task.again
 
     def _calc_color_vec(self, color, next_color, steps):
         """Calculate vector to change color in given steps number.

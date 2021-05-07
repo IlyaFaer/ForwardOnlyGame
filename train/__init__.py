@@ -547,7 +547,7 @@ class Train:
             if contact.getNode1().getName().startswith("barrier_"):
                 self._barrier_hit_snd.play()
                 if "Ram" not in self._upgrades:
-                    self.get_damage(90)
+                    self.get_damage(80)
 
                 task.delayTime = 0.3
                 return task.again

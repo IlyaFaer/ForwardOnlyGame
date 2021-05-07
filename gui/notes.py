@@ -12,6 +12,8 @@ from panda3d.core import TransparencyAttrib
 from .widgets import GUI_PIC, SILVER_COL
 
 NOTES = (
+    """Don't forget to save your
+game progress!""",
     # traits
     """Single character can have up
 to three different traits""",
@@ -38,7 +40,7 @@ you with money for destroying
 skinheads nearby""",
     # cohesion
     """Increasing team cohesion unlocks
-team skills. These are powerful
+crew skills. These are powerful
 temporary effects, which can
 help you to survive.""",
     """Raiders and soldiers don't like
@@ -48,6 +50,9 @@ cohesion between them.""",
 between particular characters
 keep them closer to
 each other""",
+    """Good way to increase cohesion
+between particular characters
+is to send them for outing""",
     # outings
     """Different types of outings
 are offering different
@@ -65,16 +70,14 @@ dangerous, while other are
 sure case. Take your risks!""",
     """Press M to see the railways
 scheme and choose an
-optimal path""",
+optimal route""",
     """Railway branches always merge
 back to the main
 railway line""",
-    """You can find more outings and
-events on side railway branches""",
     # Train
     """You can turn around in a city.
 Consider it, while choosing
-an optimal path.""",
+an optimal route.""",
     """It's reckless to stop while
 on enemy territory""",
     """Switching on lights helps to save
@@ -196,7 +199,7 @@ class TeachingNotes:
 
     def start(self):
         """Start showing teaching notes in period."""
-        taskMgr.doMethodLater(30, self._show_note, "show_teaching_note")  # noqa: F821
+        taskMgr.doMethodLater(60, self._show_note, "show_teaching_note")  # noqa: F821
 
     def stop(self):
         """Stop showing teaching notes."""

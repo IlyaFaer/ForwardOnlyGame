@@ -624,6 +624,7 @@ That's all, Captain, handing command over to you!""",
         """Hide the main menu."""
         self._main_fr.hide()
         clear_wids(self.save_wids)
+        clear_wids(self.conf_wids)
 
         if self._load_screen is not None:
             self._load_screen.destroy()

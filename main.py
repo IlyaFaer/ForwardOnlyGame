@@ -228,7 +228,7 @@ class ForwardOnly(ShowBase):
 
         if block_id == 18 and self.tutorial_enabled:
             self.notes.start()
-            self.doMethodLater(23, self.world.make_stench_step, "stench_step")
+            self.doMethodLater(24, self.world.make_stench_step, "stench_step")
 
     def start_game(self, task=None):
         """Actually start the game process."""
@@ -240,7 +240,7 @@ class ForwardOnly(ShowBase):
 
         if not self.tutorial_enabled:
             self.notes.start()
-            self.doMethodLater(23, self.world.make_stench_step, "stench_step")
+            self.doMethodLater(24, self.world.make_stench_step, "stench_step")
 
         self.doMethodLater(60, self.world.disease_activity, "disease")
         self.accept("block_finished", self._move_along_block)

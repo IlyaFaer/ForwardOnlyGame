@@ -664,10 +664,6 @@ class World:
         world_save["branches"] = self.branches
         world_save.close()
 
-    def show_scheme(self):
-        """Show railways scheme GUI."""
-        self.rails_scheme.show()
-
     def load_location(self, num, enemy_score, disease_threshold, stench_step):
         """Load the given location from the last save.
 

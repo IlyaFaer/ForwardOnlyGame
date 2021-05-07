@@ -107,11 +107,11 @@ MECHANIC_DESC = {
     "characters": {
         "descs": (
             (
-                "Your team consists of several unique fighters.\n"
-                "Every unit has energy, which should be kept at a\n"
-                "high level, as it influences character's shooting\n"
-                "accuracy and efficiency on outings. The simplest\n"
-                "way to restore unit's energy is to make him rest."
+                "Your crew consists of several unique fighters. Every\n"
+                "unit has energy, which should be kept at a high\n"
+                "level, as it influences character's shooting accuracy\n"
+                "and efficiency on outings. The simplest way to\n"
+                "restore unit's energy and health is to make him rest."
             ),
             (
                 "Click LMB on a character to choose him; control\n"
@@ -139,9 +139,9 @@ MECHANIC_DESC = {
         "descs": (
             (
                 "Your characters build cohesion with each other\n"
-                "by time. Total team cohesion is reflected at\n"
+                "by time. Total crew cohesion is reflected at\n"
                 "the right top corner of the screen. Increasing\n"
-                "cohesion unlocks team skills - powerful temporary\n"
+                "cohesion unlocks crew skills - powerful temporary\n"
                 "effects, which influence your every character.\n"
             ),
             (
@@ -192,13 +192,13 @@ MECHANIC_DESC = {
                 "and bad). Traits give (dis-)advantages and can\n"
                 "be considered as perks. You can change character's\n"
                 "traits in Distinguished List, but remember that\n"
-                "it'll lower common team cohesion for some time."
+                "it'll lower common crew cohesion for some time."
             ),
             (
                 "The current effects influencing the unit can be\n"
                 "seen in his/her Status GUI. Also keep an eye for\n"
                 "the disease icon - a sick character can bring a\n"
-                "lot of troubles for the team. Try to isolate\n"
+                "lot of troubles for the crew. Try to isolate\n"
                 "diseased and cure them as soon as possible."
             ),
         ),

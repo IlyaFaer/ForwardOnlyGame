@@ -9,7 +9,7 @@ ENEMY_CAMP = [
     {  # 1
         "name": "Car Column",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 15, "raider": 4, "anarchist": 7},
+        "class_weights": {"soldier": 13.3, "raider": 4, "anarchist": 6},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 8},
         "desc": """You're catching your eyes on four big black jeeps, standing in a row.
@@ -85,7 +85,7 @@ to the moment they grabbed their guns and started to shoot, {name1},
 {name2} and {name3} are jumping onto the Train. "No empty hands!"
 - {name2} proclaims and shows dollars on {hisher2} palm.
 You're getting +80$""",
-                "effects": {"money": 80},
+                "effects": {"money": 90},
             },
             {
                 "score": range(80, 100),
@@ -101,14 +101,14 @@ to shoot at those on the other side, but they fight back tough, so
 {heshe1} has to retreat. Returning fast, your people show the catch.
 You're getting +90$ and 1 stimulator
 {name1} getting -15 health""",
-                "effects": {"money": 90, "stimulators": 1, "char_1": {"health": -15}},
+                "effects": {"money": 100, "stimulators": 1, "char_1": {"health": -15}},
             },
         ),
     },
     {  # 2
         "name": "Big Tent",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
+        "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 6, "evening": 4},
         "desc": """It takes not less than ten seconds for you to understand is something
@@ -179,7 +179,7 @@ several minutes passes, and {name1} walks out on the meadow. Carefully
 choosing the steps, {heshe1} returns back to the Train and shakes a
 bunch of dollars in {hisher1} left hand, showing it to you.
 You're getting +60$""",
-                "effects": {"money": 60},
+                "effects": {"money": 70},
             },
             {
                 "score": range(80, 100),
@@ -194,14 +194,14 @@ Train. "Skinhead scum!" - {heshe1} says, entering the Train cabin. - "Seems
 like he tried to shot me before he actually saw me. Missed." - {heshe1} adds,
 pointedly putting several banknotes onto the table.
 You're getting +90$""",
-                "effects": {"money": 90},
+                "effects": {"money": 100},
             },
         ),
     },
     {  # 3
         "name": "Bus",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 22.5, "raider": 6, "anarchist": 14},
+        "class_weights": {"soldier": 20, "raider": 6, "anarchist": 12},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
         "desc": """The big red two-storied bus standing at the middle of the meadow
@@ -267,14 +267,14 @@ direction to the old vehicle. As the meadow looks too open, they are
 running fast to cross it as soon as possible. Disappearing within the
 car, your people start to rummage through it, swinging the old metal
 carcass. While it all happening, you're seeing a big jeep on a horizon.
-Whistling loudly to your people you're preparing for a fight. It takes
+Whistling loudly to your people, you're preparing for a fight. It takes
 two more minutes for {name1} and {name2} to jump outside the bus. The
 gang in the jeep, approaching fast, are starting to shoot, and you're
 opening fire back. {name1} and {name2}, using your cover shooting, are
 returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.
 You're getting +70$""",
-                "effects": {"money": 70},
+                "effects": {"money": 80},
             },
             {
                 "score": range(80, 100),
@@ -296,7 +296,7 @@ You're getting +100$""",
     {  # 4
         "name": "Gas Station",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 22.5, "raider": 7, "anarchist": 17},
+        "class_weights": {"soldier": 20, "raider": 7, "anarchist": 12},
         "assignees": 2,
         "day_part_weights": {"night": 4, "morning": 5, "noon": 10, "evening": 2},
         "desc": """For at least twenty minutes you've been watching a highway to the left
@@ -322,9 +322,9 @@ that {name1} has a lot of cut wounds. Taking a quick look around,
 {heshe2} detects no threats - seems, the one tried to explode them,
 and retreated right after the shot. Lifting {name1} on the shoulders,
 {heshe2} moves back to the Train.
-{name1} getting -45 health
+{name1} getting -40 health
 {name2} getting -10 health""",
-                "effects": {"char_1": {"health": -45}, "char_2": {"health": -10}},
+                "effects": {"char_1": {"health": -40}, "char_2": {"health": -10}},
             },
             {
                 "score": range(20, 40),
@@ -371,7 +371,7 @@ speaking of weird language unfamiliar to your messengers. {name1} and
 {name2} nod their heads, turning back to the Train, but one of the
 dwellers stops them and gives them several dollar banknotes.
 You're getting +70$""",
-                "effects": {"money": 70},
+                "effects": {"money": 80},
             },
             {
                 "score": range(80, 100),
@@ -392,7 +392,7 @@ You're getting +90$ and +80 Adjutant durability""",
     {  # 5
         "name": "Trailers",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 15, "raider": 4, "anarchist": 11},
+        "class_weights": {"soldier": 13.3, "raider": 4, "anarchist": 9},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
         "desc": """From a very long distance you're catching your eyes on several grey
@@ -448,7 +448,7 @@ lucky finds, mostly there is just an old useless stuff, like someone very
 old and most likely little bit mad was living in the truck, but at least
 {name3} finds 30$ in there. With this find your messengers return back.
 You're getting 30$""",
-                "effects": {"money": 30},
+                "effects": {"money": 40},
             },
             {
                 "score": range(60, 80),
@@ -485,7 +485,7 @@ You're getting 200$""",
     {  # 6
         "name": "Construction",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 15, "raider": 10, "anarchist": 5},
+        "class_weights": {"soldier": 13.3, "raider": 10, "anarchist": 5},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 2, "noon": 6, "evening": 10},
         "desc": """Standing on a cool air, you're observing the horizon line. For the
@@ -582,7 +582,7 @@ You're getting 130$""",
     {  # 7
         "name": "Cloth Piece",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 22.5, "raider": 14, "anarchist": 5},
+        "class_weights": {"soldier": 20, "raider": 12, "anarchist": 5},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 7},
         "desc": """The horizon line is lost behind trees for hours. The lands seems
@@ -676,7 +676,7 @@ You're getting 170$""",
     {  # 8
         "name": "Kid's camp",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
+        "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 7, "noon": 0, "evening": 3},
         "desc": """From a big distance you've noticed several dark green buildings. Got
@@ -771,7 +771,7 @@ You're getting +130$""",
     {  # 9
         "name": "Auto Repair",
         "type": "Enemy Camp",
-        "class_weights": {"soldier": 45, "raider": 20, "anarchist": 9},
+        "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
         "desc": """An old highway, stretched out to the left of the railway, has taken your
@@ -868,7 +868,7 @@ LOOTING = [
     {  # 1
         "name": "Abandoned Car",
         "type": "Looting",
-        "class_weights": {"soldier": 22.5, "raider": 45, "anarchist": 9},
+        "class_weights": {"soldier": 20, "raider": 40, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 5},
         "desc": """At the first look you didn't pay attention to
@@ -951,7 +951,7 @@ You're getting a smoke filter in a good shape.""",
     {  # 2
         "name": "Meadow Tent",
         "type": "Looting",
-        "class_weights": {"soldier": 6, "raider": 22.5, "anarchist": 16},
+        "class_weights": {"soldier": 6, "raider": 20, "anarchist": 13},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 3},
         "desc": """The big dark green spot on the meadow attracted your
@@ -1043,7 +1043,7 @@ You're getting 1 medicine box.""",
     {  # 3
         "name": "Old Hut",
         "type": "Looting",
-        "class_weights": {"soldier": 10, "raider": 15, "anarchist": 3},
+        "class_weights": {"soldier": 9, "raider": 13.3, "anarchist": 3},
         "assignees": 3,
         "day_part_weights": {"night": 8, "morning": 2, "noon": 5, "evening": 10},
         "desc": """Called by one of your teammates, you're walking out of
@@ -1135,7 +1135,7 @@ Adjutant durability +90""",
     {  # 4
         "name": "Monastery",
         "type": "Looting",
-        "class_weights": {"soldier": 9, "raider": 15, "anarchist": 4},
+        "class_weights": {"soldier": 9, "raider": 13.3, "anarchist": 4},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 2, "noon": 5, "evening": 8},
         "desc": """You've caught your eyes on some kind of big dark spike
@@ -1235,7 +1235,7 @@ You're getting +40$""",
     {  # 5
         "name": "Wrecked Truck",
         "type": "Looting",
-        "class_weights": {"soldier": 7, "raider": 22.5, "anarchist": 16},
+        "class_weights": {"soldier": 7, "raider": 20, "anarchist": 14},
         "assignees": 2,
         "day_part_weights": {"night": 2, "morning": 4, "noon": 10, "evening": 8},
         "desc": """You're looking at the horizon line trying to find a sign of a
@@ -1324,7 +1324,7 @@ Every character getting +35 energy""",
     {  # 6
         "name": "Grey Smoke",
         "type": "Looting",
-        "class_weights": {"soldier": 4, "raider": 15, "anarchist": 12},
+        "class_weights": {"soldier": 4, "raider": 13.3, "anarchist": 10},
         "assignees": 3,
         "day_part_weights": {"night": 5, "morning": 7, "noon": 10, "evening": 2},
         "desc": """From a very long distance you are seeing a big, wide
@@ -1414,7 +1414,7 @@ Adjutant durability +70""",
     {  # 7
         "name": "Silo",
         "type": "Looting",
-        "class_weights": {"soldier": 6, "raider": 22.5, "anarchist": 16},
+        "class_weights": {"soldier": 6, "raider": 20, "anarchist": 13},
         "assignees": 2,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 5},
         "desc": """When the Train started to move along sown fields, you've concentrated
@@ -1513,7 +1513,7 @@ You're getting 1 smoke filter and 1 medicine box""",
     {  # 8
         "name": "Wooden Barn",
         "type": "Looting",
-        "class_weights": {"soldier": 20, "raider": 45, "anarchist": 9},
+        "class_weights": {"soldier": 20, "raider": 40, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 7, "morning": 0, "noon": 3, "evening": 10},
         "desc": """Gazing at the horizon line, you've been overlooking corn fields
@@ -1601,7 +1601,7 @@ You're getting 2 stimulators""",
     {  # 9
         "name": "Refugees Camp",
         "type": "Looting",
-        "class_weights": {"soldier": 9, "raider": 45, "anarchist": 19},
+        "class_weights": {"soldier": 9, "raider": 40, "anarchist": 19},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 4},
         "desc": """From at least 500 meters you've caught your eyes
@@ -1693,7 +1693,7 @@ MEET = [
     {  # 1
         "name": "Tents",
         "type": "Meet",
-        "class_weights": {"soldier": 5, "anarchist": 22.5, "raider": 17},
+        "class_weights": {"soldier": 5, "anarchist": 20, "raider": 13},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 4},
         "desc": """Gazing around, you're catching your eyes on a thick column of smoke
@@ -1792,7 +1792,7 @@ One person can be recruited""",
     {  # 2
         "name": "Lying Man",
         "type": "Meet",
-        "class_weights": {"soldier": 10, "anarchist": 45, "raider": 28},
+        "class_weights": {"soldier": 10, "anarchist": 40, "raider": 22},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 4, "noon": 8, "evening": 10},
         "desc": """Thinking about the Stench nature, you're absently looking around the
@@ -1888,7 +1888,7 @@ Single character can get Masochism""",
     {  # 3
         "name": "Assassin",
         "type": "Meet",
-        "class_weights": {"soldier": 10, "anarchist": 15, "raider": 4},
+        "class_weights": {"soldier": 8, "anarchist": 13.3, "raider": 4},
         "assignees": 3,
         "day_part_weights": {"night": 8, "morning": 10, "noon": 4, "evening": 0},
         "desc": """In the moment the Train stopped, you're finding your eyes on a dark
@@ -1984,7 +1984,7 @@ Single character can get Fast hands""",
     {  # 4
         "name": "New Outpost",
         "type": "Meet",
-        "class_weights": {"soldier": 10, "anarchist": 45, "raider": 25},
+        "class_weights": {"soldier": 10, "anarchist": 40, "raider": 21},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 7, "evening": 10},
         "desc": """From a big distance you're catching your eyes on a small building,
@@ -2085,7 +2085,7 @@ Single character can get Bloodthirsty""",
     {  # 5
         "name": "Cargo Column",
         "type": "Meet",
-        "class_weights": {"soldier": 5, "anarchist": 22.5, "raider": 12.5},
+        "class_weights": {"soldier": 5, "anarchist": 20, "raider": 12.5},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 3},
         "desc": """For the last ten minutes you've been observing a road, which turned
@@ -2184,7 +2184,7 @@ One person can be recruited""",
     {  # 6
         "name": "Ill Deer",
         "type": "Meet",
-        "class_weights": {"soldier": 3, "anarchist": 15, "raider": 7},
+        "class_weights": {"soldier": 3, "anarchist": 13.3, "raider": 7},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 6},
         "desc": """For a long time you've been observing only light snowflakes, calmly
@@ -2290,7 +2290,7 @@ Single character can get Deep Breath""",
     {  # 7
         "name": "Injured",
         "type": "Meet",
-        "class_weights": {"soldier": 11, "anarchist": 22.5, "raider": 5},
+        "class_weights": {"soldier": 11, "anarchist": 20, "raider": 5},
         "assignees": 2,
         "day_part_weights": {"night": 3, "morning": 10, "noon": 7, "evening": 0},
         "desc": """You've noticed a big grey truck long ago. It has been riding in
@@ -2388,7 +2388,7 @@ One person can be recruited""",
     {  # 8
         "name": "Old Church",
         "type": "Meet",
-        "class_weights": {"soldier": 7, "anarchist": 15, "raider": 3},
+        "class_weights": {"soldier": 7, "anarchist": 13.3, "raider": 3},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
         "desc": """The tall wooden spear that attracted your attention and made you
@@ -2486,7 +2486,7 @@ You're getting +1 medicine box""",
     {  # 9
         "name": "Old Carriage",
         "type": "Meet",
-        "class_weights": {"soldier": 20, "anarchist": 45, "raider": 9},
+        "class_weights": {"soldier": 20, "anarchist": 40, "raider": 9},
         "assignees": 1,
         "day_part_weights": {"night": 3, "morning": 0, "noon": 10, "evening": 7},
         "desc": """"On the east departure of Salzburg, on highway 158, big skirmish

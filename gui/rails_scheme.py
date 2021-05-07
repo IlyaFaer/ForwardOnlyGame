@@ -234,6 +234,9 @@ class RailsScheme:
 
             clear_wids(self._temp_wids)
         else:
+            if base.world.is_on_et:  # noqa: F821
+                return
+
             self._open_snd.play()
             taskMgr.doMethodLater(  # noqa: F821
                 0.2, self._update_arrow, "update_scheme_arrow"

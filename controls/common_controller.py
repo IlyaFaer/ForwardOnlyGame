@@ -154,7 +154,7 @@ class CommonController:
         base.accept("f1", self._show_keys)  # noqa: F821
         base.accept("escape", base.main_menu.show)  # noqa: F821
         base.accept("r", self._show_char_relations)  # noqa: F821
-        base.accept("m", base.world.show_scheme)  # noqa: F821
+        base.accept("m", base.world.rails_scheme.show)  # noqa: F821
 
         # configure mouse collisions
         col_node = CollisionNode("mouse_ray")

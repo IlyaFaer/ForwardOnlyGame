@@ -343,7 +343,7 @@ class Crew:
                     used_rels.append(rel_id)
                     cohesion += self._relations[rel_id] / 100
 
-        cohesion = round((cohesion / rel_num) * 20, 2)
+        cohesion = round((cohesion / rel_num) * 25, 2)
         return cohesion
 
     def calc_cohesion_factor(self, chars, for_char):
