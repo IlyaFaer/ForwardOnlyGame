@@ -126,10 +126,10 @@ class RecruitChooser(CharacterChooser):
             for trait in rec.traits:
                 for trait_pair in TRAITS:
                     if trait == trait_pair[0]:
-                        cost += 25
+                        cost += 20
                         break
                     if trait == trait_pair[1]:
-                        cost -= 25
+                        cost -= 20
                         break
 
             self._costs[id_] = cost
@@ -274,7 +274,7 @@ class CityGUI:
                 parent=self._fr,
                 pos=(-0.05, 0, z_coor + 0.015),
                 text_fg=SILVER_COL,
-                text="+50\n20$",
+                text="+50\n15$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -287,7 +287,7 @@ class CityGUI:
                 parent=self._fr,
                 pos=(0.07, 0, z_coor + 0.015),
                 text_fg=SILVER_COL,
-                text="+200\n80$",
+                text="+200\n60$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -676,7 +676,7 @@ class CityGUI:
             value (int):
                 Points of the Train durability to repair.
         """
-        spent = 20 if value == 50 else 80
+        spent = 15 if value == 50 else 60
         if not base.res_gui.check_enough_money(spent):  # noqa: F821
             return
 

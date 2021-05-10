@@ -696,9 +696,9 @@ class DodgeShooter(EnemyUnit):
         )
         self._rb_node.applyTorque(
             Vec3(
-                random.randint(-35, 35),
-                random.randint(-35, 35),
-                random.randint(-35, 35),
+                random.randint(-30, 30),
+                random.randint(-30, 30),
+                random.randint(-30, 30),
             )
         )
 

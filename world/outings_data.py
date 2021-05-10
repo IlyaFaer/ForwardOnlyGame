@@ -84,7 +84,7 @@ Confirming this, several naked people appearing near the jeeps. But
 to the moment they grabbed their guns and started to shoot, {name1},
 {name2} and {name3} are jumping onto the Train. "No empty hands!"
 - {name2} proclaims and shows dollars on {hisher2} palm.
-You're getting +80$""",
+You're getting 90$""",
                 "effects": {"money": 90},
             },
             {
@@ -99,7 +99,7 @@ shoot to somewhere behind the column. {name3} grabs the first thing
 {heshe3} see and turns to the Train. {name1} takes few more seconds
 to shoot at those on the other side, but they fight back tough, so
 {heshe1} has to retreat. Returning fast, your people show the catch.
-You're getting +90$ and 1 stimulator
+You're getting 100$ and 1 stimulator
 {name1} getting -15 health""",
                 "effects": {"money": 100, "stimulators": 1, "char_1": {"health": -15}},
             },
@@ -178,7 +178,7 @@ disappears in the tent inners. You're feeling little bit nervous, but
 several minutes passes, and {name1} walks out on the meadow. Carefully
 choosing the steps, {heshe1} returns back to the Train and shakes a
 bunch of dollars in {hisher1} left hand, showing it to you.
-You're getting +60$""",
+You're getting 70$""",
                 "effects": {"money": 70},
             },
             {
@@ -193,7 +193,7 @@ enters it. In the next second {heshe1} jumps out of it and runs back to the
 Train. "Skinhead scum!" - {heshe1} says, entering the Train cabin. - "Seems
 like he tried to shot me before he actually saw me. Missed." - {heshe1} adds,
 pointedly putting several banknotes onto the table.
-You're getting +90$""",
+You're getting 100$""",
                 "effects": {"money": 100},
             },
         ),
@@ -273,7 +273,7 @@ gang in the jeep, approaching fast, are starting to shoot, and you're
 opening fire back. {name1} and {name2}, using your cover shooting, are
 returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.
-You're getting +70$""",
+You're getting 80$""",
                 "effects": {"money": 80},
             },
             {
@@ -288,7 +288,7 @@ staying on the watch for case if more skinheads will come. Your
 people entering inside the car, and returning back into a field of
 view in less than thirty seconds. Getting back to the Train, they
 showing you a bunch of crumpled dollars.
-You're getting +100$""",
+You're getting 100$""",
                 "effects": {"money": 100},
             },
         ),
@@ -370,7 +370,7 @@ people saved them from skinheads. They applaud {name1} and {name2},
 speaking of weird language unfamiliar to your messengers. {name1} and
 {name2} nod their heads, turning back to the Train, but one of the
 dwellers stops them and gives them several dollar banknotes.
-You're getting +70$""",
+You're getting 80$""",
                 "effects": {"money": 80},
             },
             {
@@ -384,8 +384,8 @@ splitting to check two places simultaneously: the cash and the storeroom.
 Cash machine, fortunately, is open, and {name2} finds a toolbox really
 fast. Energetically taking their lucky catches, {name1} and {name2} in
 a good mood returning back to the Train.
-You're getting +90$ and +80 Adjutant durability""",
-                "effects": {"money": 90, "durability": 80},
+You're getting 90$ and +100 Adjutant durability""",
+                "effects": {"money": 90, "durability": 100},
             },
         ),
     },
@@ -446,8 +446,8 @@ they open it, and {name1} with {name3} are entering inside. It takes some
 time for them to search through the car. It doesn't give a lot of
 lucky finds, mostly there is just an old useless stuff, like someone very
 old and most likely little bit mad was living in the truck, but at least
-{name3} finds 30$ in there. With this find your messengers return back.
-You're getting 30$""",
+{name3} finds 40$ in there. With this find your messengers return back.
+You're getting 40$""",
                 "effects": {"money": 40},
             },
             {
@@ -763,7 +763,7 @@ skinheads are robbing everyone around and store the catch here. It's
 a pirate treasure really! Hearing some kind of a fuss on the street,
 {name1} grabs several small things, lying closely, and silently exits
 the building to take a direction to the locomotive.
-You're getting +130$""",
+You're getting 130$""",
                 "effects": {"money": 130},
             },
         ),
@@ -842,8 +842,8 @@ back after a half of minute with a big metal box. Tools, ha?! You're
 commanding others to help {himher1} with the catch, while you're
 listing the parts of the locomotive, which should be given an
 engineering attention in the first place.
-Adjutant durability +60""",
-                "effects": {"train": {"durability": 60}},
+Adjutant durability +70""",
+                "effects": {"train": {"durability": 70}},
             },
             {
                 "score": range(80, 100),
@@ -1127,8 +1127,8 @@ messengers for some time. "Oh, I got something!" - {name2} shouts loudly.
 {name1} and {name3} moving to the room {heshe2} was checking, and seeing a
 big tool kit. {name1} and {name2} are taking it together and moving
 back to Train, while {name3} is watching around for possible threats.
-Adjutant durability +90""",
-                "effects": {"train": {"durability": 90}},
+Adjutant durability +100""",
+                "effects": {"train": {"durability": 100}},
             },
         ),
     },
@@ -1271,8 +1271,8 @@ less than twenty containers they finally see one untouched. Opening it
 they are staring at a bunch of metal details. And tools! "With this stuff
 we can repair our Train a little!" - {name2} whopping. They are taking
 the box together and returning back to you with it.
-Adjutant durability +40""",
-                "effects": {"train": {"durability": 90}},
+Adjutant durability +50""",
+                "effects": {"train": {"durability": 50}},
             },
             {
                 "score": range(40, 60),
@@ -1406,8 +1406,8 @@ traces on the ground - somebody already looted the place. Still, {name3}
 jumps onto the truck to take a closer look at the inner part of the
 cargo hold. To everyone's joy, {heshe3} moves outside the car with a
 big plastic box of tools. Seems like assaulters have only taken weapons.
-Adjutant durability +70""",
-                "effects": {"train": {"durability": 70}},
+Adjutant durability +100""",
+                "effects": {"train": {"durability": 100}},
             },
         ),
     },

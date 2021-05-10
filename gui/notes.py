@@ -35,8 +35,9 @@ Study their tactics!""",
     """Enemy territory is not
 considered on the railways
 scheme""",
-    """City governments will reward
-you with money for destroying
+    """Governments of Silewer cities
+will reward you with
+money for destroying
 skinheads nearby""",
     # cohesion
     """Increasing team cohesion unlocks

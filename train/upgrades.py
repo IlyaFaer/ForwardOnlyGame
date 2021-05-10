@@ -27,7 +27,7 @@ UPGRADES_DESC = {
         "desc": """With this ram your locomotive
 will be breaking road barriers
 without getting damage""",
-        "cost": "130$",
+        "cost": "120$",
         "model": "ram1",
     },
     "Floodlights": {

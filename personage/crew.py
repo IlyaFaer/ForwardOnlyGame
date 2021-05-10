@@ -391,7 +391,7 @@ class Crew:
         """Increase cohesion for those who went for an outing.
 
         Increase factor depends on outing score: the higher
-        it is the higher will be cohesion increase.
+        it is - the higher will be cohesion increase.
 
         Args:
             chars (list): Chars who went for an outing.
@@ -403,7 +403,7 @@ class Crew:
                     continue
 
                 rel_id = tuple(sorted([char1.id, char2.id]))
-                factor = 1 + outing_score // 25 * 0.25
+                factor = 1 + outing_score // 25 * 0.3
 
                 if rel_id in self._relations:
                     self._relations[rel_id] += (

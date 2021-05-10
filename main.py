@@ -238,7 +238,9 @@ class ForwardOnly(ShowBase):
         self.main_menu.hide()
         self.enableAllAudio()
 
-        if not self.tutorial_enabled:
+        if not self.tutorial_enabled or (
+            self.tutorial_enabled and self.current_block.id > 18
+        ):
             self.notes.start()
             self.doMethodLater(24, self.world.make_stench_step, "stench_step")
 
@@ -317,6 +319,7 @@ class ForwardOnly(ShowBase):
         self.plus_resource("stimulators", save["stimulators"])
 
         save.close()
+        self.main_menu.hide_loading_msg()
 
     def plus_resource(self, name, value):
         """Increase the amount of the given resource.

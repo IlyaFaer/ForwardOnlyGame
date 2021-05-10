@@ -591,14 +591,13 @@ class MainMenu:
                 parent=self._load_screen,
                 text="""Good morning, Captain!
 
-People are ready for duty and the Adjutant, our good locomotive, is in acceptable shape!
-
 We've crossed Silewer border at 11:45 pm, the checkpoint was abandoned. Soon we've made
 a stop near an improvised refugees camp. Criminals, looking pretty much like skinheads,
-was robbing the camp dwellers in the meantime. We've shown them our guns, and they let
+were robbing the camp dwellers in the meantime. We've shown them our guns, and they let
 those people be, but also promised to find us later. Still, we've decided not to wake
 you up and let you rest till the morning...
 
+The Adjutant, our good locomotive, is in acceptable shape, and crew is ready for duty.
 Munich just went dark, which means the Stench frontier is in a couple of hours behind.
 We should keep the speed high not to let those poisonous orange clouds overtake us.
 
@@ -610,7 +609,7 @@ That's all, Captain, handing command over to you!""",
                 pos=(-1, 0, 0.4),
             )
 
-        self._load_msg = DirectLabel(
+        self._load_msg = DirectLabel(  # Loading...
             parent=self._load_screen or self._main_fr,
             text=base.labels.MAIN_MENU[26],  # noqa: F821,
             text_font=base.main_font,  # noqa: F821
@@ -737,3 +736,7 @@ That's all, Captain, handing command over to you!""",
             command=base.start_game,  # noqa: F821
         )
         self.bind_button(self._load_msg)
+
+    def hide_loading_msg(self):
+        """Hide the "Loading..." message widget."""
+        self._load_msg.destroy()

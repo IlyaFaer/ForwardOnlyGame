@@ -60,8 +60,8 @@ class Character(Shooter, Unit):
         self._health_bar = None
 
         self.inhale = 15
-        self.damage_range = [4, 7]
-        self.clear_damage = [4, 7]
+        self.damage_range = [5, 7]
+        self.clear_damage = [5, 7]
 
         self.name = name
         self.sex = sex

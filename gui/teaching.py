@@ -75,8 +75,8 @@ CLASS_DESCS = {
             "Your progress is really pissing skinheads off.\n"
             "To stop you they bring more and more forces.\n"
             "Their new thought - telecontrolled rockets can\n"
-            "do a lot of damage to your locomotive. Stay sharp\n"
-            "and use Armor Plate train upgrade for protection."
+            "do a lot of damage to your locomotive. Use Armor\n"
+            "Plate upgrade to cover a side targeted by a rocket."
         ),
         "preview": "rocket",
         "but_text": "They won't stop us!",
