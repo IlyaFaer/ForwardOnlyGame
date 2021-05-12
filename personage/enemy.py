@@ -32,7 +32,7 @@ CLASSES = {
             "score": 4,
             "threshold": 6,
             "part": "front",
-            "health": 50,
+            "health": 55,
             "transport_model": "moto1",
         },
         {
@@ -47,7 +47,7 @@ CLASSES = {
         {
             "class": DodgeShooter,
             "model": "dodge_gun",
-            "score": 7,
+            "score": 6,
             "threshold": 13,
             "part": "side",
             "health": 100,

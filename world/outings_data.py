@@ -252,7 +252,7 @@ of the bus. Nearlands of the vehicle seems silent, so your people are
 moving to the spot fast, but in some moment both are suddenly stopping.
 You're passing your gaze around to understand what has gone wrong.
 Jeep! Big black jeep roaring in a distance of kilometer seems to be
-heading to the old bus! Feeling the bad luck you're shouting to your
+heading to the old bus! Feeling the bad luck, you're shouting to your
 people: "{name1}, {name2}, get back!". Gazing at each other for a second
 they are turning around and retreating to the Train. Jeep in the same
 time approaches the bus, several armed people are jumping outside.
@@ -1105,7 +1105,7 @@ disappointed mood, and you're commanding to move.""",
             {
                 "score": range(60, 80),
                 "desc": """{name1}, {name2} and {name3} are gearing up and taking direction
-to the hut. Approaching to it they see that wood building is long
+to the hut. Approaching to it, they see that wood building is long
 abandoned: weeds are crossing the door, windows are broken, and
 stillness fills the air. {name2} and {name3} are moving into the house, while
 {name1} is standing outside on a watch. It takes a lot of time for {name3}
@@ -1138,7 +1138,7 @@ Adjutant durability +100""",
         "class_weights": {"soldier": 9, "raider": 13.3, "anarchist": 4},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 2, "noon": 5, "evening": 8},
-        "desc": """You've caught your eyes on some kind of big dark spike
+        "desc": """You've caught your eyes on some kind of a big dark spike
 from a very long distance. It was difficult to understand what it
 actually is, but when the Train went around a hill, and the building
 appeared before you in its best, you're seeing an old monastery. Its
@@ -1293,7 +1293,7 @@ You're getting 1 stimulator""",
             {
                 "score": range(60, 80),
                 "desc": """{name1} and {name2} are taking their guns and going
-to the damaged truck. Fastly closing to it they see a lot of sleeves and
+to the damaged truck. Fastly closing to it, they see a lot of sleeves and
 shot holes - it's not just a crash, someone attacked the transport! There
 are no bodies around, but your people notice several big and dark blood
 spots. They are exchanging their glances and starting to open plastic
@@ -2096,7 +2096,7 @@ staying on the grey concrete: bus, several big trucks, filled with
 different stuff, such as furniture, metal and garden inventar, and a
 couple of smaller cars. Several heavy machine guns and at least ten
 weaponized men are complementing the picture. The beholders doesn't
-look like a thugs, so it's probably makes sense to speak with them.
+look like thugs, so it's probably makes sense to speak with them.
 Maybe they have something to trade or exchange.""",
         "results": (
             {

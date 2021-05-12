@@ -20,7 +20,7 @@ class OutingsManager:
     """
 
     def __init__(self):
-        self._threshold = random.randint(25, 38)
+        self._threshold = random.randint(25, 36)
         self._types = ("Meet", "Enemy Camp", "Looting")
         self._outings = {
             "Enemy Camp": copy.deepcopy(ENEMY_CAMP),
@@ -84,7 +84,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(25, 38)
+            self._threshold = random.randint(25, 36)
             return random.choice(self._types)
 
     def show_upcoming(self, type_):

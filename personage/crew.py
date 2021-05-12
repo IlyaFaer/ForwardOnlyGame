@@ -11,15 +11,15 @@ from utils import chance, take_random
 from .character import generate_char, load_char
 
 COHESION_FACTORS = {
-    ("anarchist", "anarchist"): 0.68,
+    ("anarchist", "anarchist"): 0.71,
     ("soldier", "soldier"): 0.57,
     ("raider", "raider"): 0.57,
     ("soldier", "raider"): 0.43,
     ("raider", "soldier"): 0.43,
-    ("raider", "anarchist"): 0.53,
-    ("anarchist", "raider"): 0.53,
-    ("anarchist", "soldier"): 0.49,
-    ("soldier", "anarchist"): 0.49,
+    ("raider", "anarchist"): 0.55,
+    ("anarchist", "raider"): 0.55,
+    ("anarchist", "soldier"): 0.52,
+    ("soldier", "anarchist"): 0.52,
 }
 
 DEFAULT_TEAMS = {
@@ -292,6 +292,18 @@ class Crew:
         self._calc_total_cohesion()
         task.delayTime = 185
         return task.again
+
+    def init_relations(self, new_char):
+        """Initialize new character's relations with other characters.
+
+        Args:
+            new_char (personage.character.Character):
+                A new character in the crew.
+        """
+        for char in self.chars.values():
+            if char.id == new_char.id:
+                continue
+            self._relations[tuple(sorted([new_char.id, char.id]))] = 0
 
     def _calc_total_cohesion(self):
         """Calculate total cohesion score considering all the relations."""

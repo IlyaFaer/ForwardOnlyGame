@@ -60,8 +60,8 @@ class Character(Shooter, Unit):
         self._health_bar = None
 
         self.inhale = 15
-        self.damage_range = [5, 7]
-        self.clear_damage = [5, 7]
+        self.damage_range = [5, 8]
+        self.clear_damage = [5, 8]
 
         self.name = name
         self.sex = sex
@@ -217,7 +217,7 @@ class Character(Shooter, Unit):
             statuses.append("Hemophobia: +25% energy spend")
 
         if self.is_diseased:
-            statuses.append("Diseased: -20 max energy")
+            statuses.append("Sick: -20 max energy")
 
         if (
             "Motion sickness" in self.traits
@@ -266,6 +266,8 @@ class Character(Shooter, Unit):
 
         self.model.loop("stand")
         self._health_bar = HealthBar(self)
+
+        base.team.init_relations(self)  # noqa: F821
 
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
@@ -552,9 +554,9 @@ class Character(Shooter, Unit):
         """Return to passive state."""
         self._stop_tasks("_shoot")
         if self.current_part:
-            self.model.hprInterval(2, (self.current_part.angle, 0, 0)).start()
+            self.model.hprInterval(0.1, (self.current_part.angle, 0, 0)).start()
 
-        LerpAnimInterval(self.model, 2, "stand_and_aim", "stand").start()
+        LerpAnimInterval(self.model, 0.1, "stand_and_aim", "stand").start()
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
