@@ -88,7 +88,7 @@ You're getting 90$""",
                 "effects": {"money": 90},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """{name1}, {name2} and {name3} are taking the direction to the jeeps
 column. {name2} and {name3} are opening two of the cars at once,
 while {name1} stands on the watch. You're seeing {name2} grabbing a
@@ -182,7 +182,7 @@ You're getting 70$""",
                 "effects": {"money": 70},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """You're sending {name1} for a small recon. Taking {hisher1} gun,
 {heshe1} moves fast to the tent, while you're tracking {hisher1} movement
 through the binoculars. At a few seconds {heshe1} closes to the spot from the
@@ -277,7 +277,7 @@ You're getting 80$""",
                 "effects": {"money": 80},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """While you were deciding who to send for a search, several
 skinhead scums are jumped out of the bus. Your whole team seeing
 them starts to shoot, and after six-eight seconds all of the rivals are
@@ -374,7 +374,7 @@ You're getting 80$""",
                 "effects": {"money": 80},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """{name1} and {name2} fastly moving to the gas station. Getting
 closer, they slow down, but after several seconds they see that the
 building is abandoned. The glass door is open, music is still playing,
@@ -466,7 +466,7 @@ You're getting 1 smoke filter and 60$""",
                 "effects": {"money": 60, "smoke_filters": 1},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """{name1}, {name2} and {name3} energetically jump off the Train
 and take the direction to the trailers camp. After few seconds of
 silence they hear some movement near the cars. Uppering their guns,
@@ -563,7 +563,7 @@ You're getting 80$""",
                 "effects": {"money": 80},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """{name1}, {name2} and {name3} jump off the Train and
 run to the construction site. Getting closer, they smell smoke, so,
 holding teamwise, they starting to move fast from one room to another,
@@ -657,7 +657,7 @@ Your teammates getting +10 health""",
                 "effects": {"all": {"health": 10}},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """After little overthinking you're decided to send
 {name1} and {name2} to take a look at the place. Fastly moving to
 the spot, they hide behing the strained cloth, and after few seconds
@@ -750,7 +750,7 @@ All of your teammates getting +20 health""",
                 "effects": {"all": {"health": 20}},
             },
             {
-                "score": range(80, 100),
+                "score": range(80, 101),
                 "desc": """{name1} becomes your messenger on this operation. Grabbing
 {hisher1} stuff, {heshe1} silently jumps down to the ground and moves
 into the camp. Only a couple of skinhead sentries lazily walk
@@ -832,21 +832,6 @@ building, taking every-single-thing useful.""",
             },
             {
                 "score": range(60, 80),
-                "desc": """{name1}, following your command, takes {hisher1} gear and walks
-to the auto repair shop. Getting closer to the building, {heshe1} opens
-a roller shutter and enters inside. For some time silence flies in the
-air, but suddenly you hear shots. Three, four-five, six... A couple of
-seconds passes, and you see {name1} in the entrance arch, showing you
-that everything is okay. Disappearing in the shop inners, {heshe1} returns
-back after a half of minute with a big metal box. Tools, ha?! You're
-commanding others to help {himher1} with the catch, while you're
-listing the parts of the locomotive, which should be given an
-engineering attention in the first place.
-Adjutant durability +70""",
-                "effects": {"train": {"durability": 70}},
-            },
-            {
-                "score": range(80, 100),
                 "desc": """{name1} takes {hisher1} gun and, following your command, walks
 towards the auto repair shop. It's clear that someone is in there:
 through the window you see shadows moving inside. {name1} see them
@@ -859,6 +844,21 @@ else. When close enough to the locomotive, {heshe1} explains:
 Looking at your scout's companion, you evaluate a possible recruit.
 One person can be recruited""",
                 "effects": {"recruit": 70},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """{name1}, following your command, takes {hisher1} gear and walks
+to the auto repair shop. Getting closer to the building, {heshe1} opens
+a roller shutter and enters inside. For some time silence flies in the
+air, but suddenly you hear shots. Three, four-five, six... A couple of
+seconds passes, and you see {name1} in the entrance arch, showing you
+that everything is okay. Disappearing in the shop inners, {heshe1} returns
+back after a half of minute with a big metal box. Tools, ha?! You're
+commanding others to help {himher1} with the catch, while you're
+listing the parts of the locomotive, which should be given an
+engineering attention in the first place.
+Adjutant durability +70""",
+                "effects": {"train": {"durability": 70}},
             },
         ),
     },
@@ -1759,6 +1759,20 @@ commanding... Understandable, trust is not often that days.""",
             },
             {
                 "score": range(60, 80),
+                "desc": """You're giving an order to {name1} and {name2} to move
+to the tent camp and see if everything is alright there. Your people
+getting to the place in minute, and you see them starting to speak
+with the inhabitants. The campers looks calm and positive, so you're
+relaxing a bit... After several minutes of talk, your people turn
+back to the Train, but you also see one more person with them. They
+getting closer to you, and {name1} explains: "Looks like we've found
+a recruit. Do we have a free place?" Taking a quick gaze at the
+newbie, you're starting to think if the team needs one more head.
+One person can be recruited""",
+                "effects": {"recruit": 80},
+            },
+            {
+                "score": range(80, 101),
                 "desc": """{name1} and {name2} taking a direction to the tent camp
 by your command. You're seeing them approaching the place and
 speaking with inhabitants. After a couple of minutes of conversation
@@ -1772,20 +1786,6 @@ people. You're waiting for about 10 minutes, and both {name1} and
 "But very distrustful." "No wonder." - you're answering.
 Single character can get Immunity""",
                 "effects": {"select_char": {"add_trait": "Immunity"}},
-            },
-            {
-                "score": range(80, 101),
-                "desc": """You're giving an order to {name1} and {name2} to move
-to the tent camp and see if everything is alright there. Your people
-getting to the place in minute, and you see them starting to speak
-with the inhabitants. The campers looks calm and positive, so you're
-relaxing a bit... After several minutes of talk, your people turn
-back to the Train, but you also see one more person with them. They
-getting closer to you, and {name1} explains: "Looks like we've found
-a recruit. Do we have a free place?" Taking a quick gaze at the
-newbie, you're starting to think if the team needs one more head.
-One person can be recruited""",
-                "effects": {"recruit": 80},
             },
         ),
     },
@@ -2353,22 +2353,6 @@ again to your messengers and moves back to the truck.""",
             },
             {
                 "score": range(60, 80),
-                "desc": """Your messengers, {name1} and {name2}, take direction to
-the truck. A man jumps from the car down to the ground and starts
-to move towards them. "Hey, folks!" - he says loudly. - "We're
-helping wounded people all around the place. Don't any of you
-need help?" {name1} and {name2} exchange glances, wondering the
-man's kindness. "We're okay, thanks!" - {name1} answers. "Alright!"
-- the man says something to his people, and one of them throws
-a grey box to him. - "Take this at least!" - he holds out a box
-to {name2}. Throwing one more glance to {name1}, {heshe2} takes
-the gift, still wondering why the guy is so helpful. "Okay, let's
-go!" - the man smiles to your messengers and climbs to the car.
-You're getting 1 stimulator""",
-                "effects": {"stimulators": 1},
-            },
-            {
-                "score": range(80, 101),
                 "desc": """{name1} and {name2} start to move to the truck. A man
 jumps down from it to meet them. "Hey, folks!" - he greets them
 loudly. - "If you have badly wounded guys, we can take them to
@@ -2382,6 +2366,22 @@ the element is eager to go to war! We're little bit tired already!"
 "Well, that's something for our captain to decide" - {name1} answers.
 One person can be recruited""",
                 "effects": {"recruit": 60},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """Your messengers, {name1} and {name2}, take direction to
+the truck. A man jumps from the car down to the ground and starts
+to move towards them. "Hey, folks!" - he says loudly. - "We're
+helping wounded people all around the place. Don't any of you
+need help?" {name1} and {name2} exchange glances, wondering the
+man's kindness. "We're okay, thanks!" - {name1} answers. "Alright!"
+- the man says something to his people, and one of them throws
+a grey box to him. - "Take this at least!" - he holds out a box
+to {name2}. Throwing one more glance to {name1}, {heshe2} takes
+the gift, still wondering why the guy is so helpful. "Okay, let's
+go!" - the man smiles to your messengers and climbs to the car.
+You're getting 1 stimulator""",
+                "effects": {"stimulators": 1},
             },
         ),
     },

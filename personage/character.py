@@ -410,7 +410,7 @@ class Character(Shooter, Unit):
         self._col_node.stash()
 
         taskMgr.doMethodLater(  # noqa: F821
-            0.05, self._calm_down, self.id + "_calm_down"
+            0.05, self._calm_down, self.id + "_calm_down", extraArgs=[True],
         )
         taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
@@ -523,7 +523,7 @@ class Character(Shooter, Unit):
         # enemies retreated - return to passive state
         if not base.world.enemy.active_units:  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
-                3, self._calm_down, self.id + "_calm_down"
+                3, self._calm_down, self.id + "_calm_down", extraArgs=[False],
             )
             return task.done
 
@@ -547,21 +547,32 @@ class Character(Shooter, Unit):
             )
             return task.done
 
-        taskMgr.doMethodLater(3, self._calm_down, self.id + "_calm_down")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            3, self._calm_down, self.id + "_calm_down", extraArgs=[False]
+        )
         return task.done
 
-    def _calm_down(self, task):
-        """Return to passive state."""
+    def _calm_down(self, force):
+        """Return to passive state.
+
+        Args:
+            force (bool):
+                If True, change to passive animation fast.
+                Change animation in usual speed otherwise.
+        """
         self._stop_tasks("_shoot")
         if self.current_part:
-            self.model.hprInterval(0.1, (self.current_part.angle, 0, 0)).start()
+            self.model.hprInterval(
+                0.1 if force else 2, (self.current_part.angle, 0, 0)
+            ).start()
 
-        LerpAnimInterval(self.model, 0.1, "stand_and_aim", "stand").start()
+        LerpAnimInterval(
+            self.model, 0.1 if force else 2, "stand_and_aim", "stand"
+        ).start()
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
         self._health_bar.hide_health()
-        return task.done
 
     def _idle_animation(self, task):
         """Play one of the idle animations.
