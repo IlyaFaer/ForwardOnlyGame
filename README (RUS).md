@@ -6,13 +6,13 @@
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
-Смотрите [альфа-видео на YouTube](https://www.youtube.com/watch?v=RKOVbCejowc).
+Смотрите [альфа-видео на YouTube](https://youtu.be/Ot2uFTCRRvs).
 
 **Статус Проекта**  
 Игра - это авторское произведение, его использование регулируется [Лицензией](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
 
 **Текущее состояние проекта**  
-Игра находится в стадии разработки (~60% завершено). Она разработана на Python 3.7 и [игровом движке Panda3D](https://www.panda3d.org/), модели созданы в Blender и MakeHuman.
+Игра находится в стадии разработки (~70% завершено). Она разработана на Python 3.7 и [игровом движке Panda3D](https://www.panda3d.org/), модели созданы в Blender и MakeHuman.
 
 Основные черты игры на данный момент:
 - 3 класса персонажей разных полов с различными тактическими преимуществами
