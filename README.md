@@ -7,13 +7,13 @@ The World dies because of the terrible cataclysm called "the Stench". The only w
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
-See [alpha footage on YouTube](https://www.youtube.com/watch?v=RKOVbCejowc).
+See [alpha footage on YouTube](https://youtu.be/Ot2uFTCRRvs).
 
 **The Project legal status**  
 The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
 
 **Current stage**  
-The Game is in development stage (~64% finished). It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
+The Game is in development stage (~70% finished). It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
 
 The major features the Game includes now:
 - 3 character classes with different tactical preferences
