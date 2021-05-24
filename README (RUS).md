@@ -24,7 +24,8 @@
 - вылазки, изношенные рельсы, Смрад, расходуемые ресурсы и др.
 
 **Подписки**  
-[YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)
+[YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
+[IndieDB](https://www.indiedb.com/games/forward-only)
 
 **Что дальше**  
 [Скачать последнюю сборку игры](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
