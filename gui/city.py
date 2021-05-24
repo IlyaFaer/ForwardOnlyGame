@@ -156,6 +156,9 @@ class CityGUI:
         self._coins_s_snd = loader.loadSfx("sounds/GUI/coins_short.ogg")  # noqa: F821
         self._coins_l_snd = loader.loadSfx("sounds/GUI/coins_long.ogg")  # noqa: F821
         self._toot_snd = loader.loadSfx("sounds/train/toot1.ogg")  # noqa: F821
+        self._add_upgrade_snd = loader.loadSfx(  # noqa: F821
+            "sounds/GUI/install_upgrade.ogg"
+        )
         self.write_snd = loader.loadSfx("sounds/GUI/write.ogg")  # noqa: F821
 
         self._reward_fr = None
@@ -361,6 +364,7 @@ class CityGUI:
             return
 
         base.main_menu.click_snd.play()  # noqa: F821
+        self._add_upgrade_snd.play()
         base.dollars -= int(upgrade["cost"][:-1])  # noqa: F821
 
         base.train.install_upgrade(upgrade)  # noqa: F821

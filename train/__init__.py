@@ -51,6 +51,7 @@ class Train:
             self._lighter_snd,
             self._creak_snds,
             self._rocket_explosion_snd,
+            self._attack_started_snd,
         ) = self._set_sounds()
 
         self.ctrl = TrainController(self.model)
@@ -249,6 +250,14 @@ class Train:
                 base.effects_mgr.bomb_explosion(self)  # noqa: F821
             )
         return task.done
+
+    def attack_started(self):
+        """Enemy started an attack.
+
+        Give a sound singal and increase the locomotive speed if needed.
+        """
+        self.ctrl.speed_to_min()
+        self._attack_started_snd.play()
 
     def has_cell(self):
         """Check if there is a free cell for a new unit.
@@ -491,22 +500,27 @@ class Train:
         hit_snd = base.sound_mgr.loadSfx("sounds/concrete_hit.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(hit_snd, self.model)  # noqa: F821
 
-        lighter_snd = base.loader.loadSfx("sounds/train/switcher1.ogg")  # noqa: F821
+        lighter_snd = loader.loadSfx("sounds/train/switcher1.ogg")  # noqa: F821
         lighter_snd.setVolume(0.8)
 
-        creak_snd1 = base.loader.loadSfx("sounds/train/metal_creak1.ogg")  # noqa: F821
+        creak_snd1 = loader.loadSfx("sounds/train/metal_creak1.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd1, self.model)  # noqa: F821
 
-        creak_snd2 = base.loader.loadSfx("sounds/train/metal_creak2.ogg")  # noqa: F821
+        creak_snd2 = loader.loadSfx("sounds/train/metal_creak2.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd2, self.model)  # noqa: F821
 
-        creak_snd3 = base.loader.loadSfx("sounds/train/metal_creak3.ogg")  # noqa: F821
+        creak_snd3 = loader.loadSfx("sounds/train/metal_creak3.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(creak_snd3, self.model)  # noqa: F821
 
-        rocket_explosion = base.loader.loadSfx(  # noqa: F821
+        rocket_explosion = loader.loadSfx(  # noqa: F821
             "sounds/combat/rocket_explosion.ogg"
         )
         base.sound_mgr.attachSoundToObject(rocket_explosion, self.model)  # noqa: F821
+
+        attack_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/train/attack_started.ogg"
+        )
+        base.sound_mgr.attachSoundToObject(attack_snd, self.model)  # noqa: F821
 
         return (
             clunk_snd,
@@ -516,6 +530,7 @@ class Train:
             lighter_snd,
             (creak_snd1, creak_snd2, creak_snd3),
             rocket_explosion,
+            attack_snd,
         )
 
     def update_physics(self, y_coor):

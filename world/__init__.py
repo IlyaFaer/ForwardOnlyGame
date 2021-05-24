@@ -918,7 +918,7 @@ class World:
             self._et_blocks = 30
             self.enemy.prepare(base.train.model)  # noqa: F821
             base.team.prepare_to_fight()  # noqa: F821
-            base.train.ctrl.speed_to_min()  # noqa: F821
+            base.train.attack_started()  # noqa: F821
 
         if self._loaded_blocks:
             current_block = self._loaded_blocks[-1]
