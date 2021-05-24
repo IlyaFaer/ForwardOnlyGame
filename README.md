@@ -25,7 +25,8 @@ The major features the Game includes now:
 - outings, diseases, the Stench, expendable resources, etc.
 
 **Subscribe**  
-[YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)
+[YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
+[IndieDB](https://www.indiedb.com/games/forward-only)
 
 **What's next**  
 [Download the last Game release](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
