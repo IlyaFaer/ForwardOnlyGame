@@ -771,6 +771,20 @@ class Train:
             self._armor_plate = ArmorPlate(self.model)
             return
 
+        if upgrade["name"] == "Grenade Launcher":
+            self._grenade_launcher = GrenadeLauncher(self.model)
+            self._gui.activate_weapon(
+                "Grenade Launcher", base.train.load_grenade_launcher  # noqa: F821
+            )
+            return
+
+        if upgrade["name"] == "Cluster Howitzer":
+            self._cluster_howitzer = ClusterHowitzer(self.model)
+            self._gui.activate_weapon(
+                "Cluster Howitzer", base.train.load_cluster_howitzer  # noqa: F821
+            )
+            return
+
         up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821
         up_model.reparentTo(self.model)
 
@@ -824,19 +838,6 @@ class Train:
             self.parts["part_rest"].cells += 1
             base.res_gui.update_chars()  # noqa: F821
             return
-
-        if upgrade["name"] == "Grenade Launcher":
-            self._grenade_launcher = GrenadeLauncher(self.model)
-            self._gui.activate_weapon(
-                "Grenade Launcher", base.train.load_grenade_launcher  # noqa: F821
-            )
-            return
-
-        if upgrade["name"] == "Cluster Howitzer":
-            self._cluster_howitzer = ClusterHowitzer(self.model)
-            self._gui.activate_weapon(
-                "Cluster Howitzer", base.train.load_cluster_howitzer  # noqa: F821
-            )
 
     def load_grenade_launcher(self):
         """Change the grenade launcher state."""

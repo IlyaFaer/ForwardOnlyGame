@@ -282,6 +282,10 @@ class GrenadeLauncher:
         )
         self._explosion_snd.setVolume(0.15)
 
+        self._load_snd = loader.loadSfx(  # noqa: F821
+            "sounds/combat/grenade_launcher_load.ogg"
+        )
+
     def _change_mode(self, task):
         """Change controls mode - common or grenade launcher shooting."""
         if self._is_up:
@@ -310,6 +314,9 @@ class GrenadeLauncher:
         self._is_loading = True
         self._model.setPlayRate(-4 if self._is_up else 4, "gun_up")
         self._model.play("gun_up")
+
+        if not self._is_up:
+            self._load_snd.play()
 
         taskMgr.doMethodLater(  # noqa: F821
             0.2, self._change_mode, "grenade_launcher_aim"
@@ -473,6 +480,9 @@ class ClusterHowitzer:
             snd.setVolume(random.uniform(0.1, 0.15))
             snd.setPlayRate(random.uniform(0.8, 1))
             self._explosion_snds.append(snd)
+
+        self._load_snd = loader.loadSfx("sounds/combat/howitzer_load.ogg")  # noqa: F821
+        self._load_snd.setPlayRate(0.8)
 
         base.accept("3", self.change_state)  # noqa: F82
 
@@ -681,6 +691,9 @@ class ClusterHowitzer:
         self._is_loading = True
         self._model.setPlayRate(-4 if self._is_up else 4, "gun_up")
         self._model.play("gun_up")
+
+        if not self._is_up:
+            self._load_snd.play()
 
         taskMgr.doMethodLater(  # noqa: F82
             0.2, self._change_mode, "cluster_bomb_launcher_aim"

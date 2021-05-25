@@ -126,9 +126,10 @@ MECHANIC_DESC = {
     "the Stench": {
         "descs": (
             (
-                "Your main problem is the Stench. Its poisonous\n"
-                "clouds are spreading fast and chaotic. If you\n"
-                "got into it, you better accelerate to cross the\n"
+                "The main threat is the Stench. Its poisonous clouds\n"
+                "are spreading fast and chaotic, and most likely will\n"
+                "cover the whole Silewer in a couple of weeks. If\n"
+                "you got into it, you better accelerate to cross the\n"
                 "cloud as fast as possible. You also should not\n"
                 "stay long on the same place or ride in circles."
             ),
@@ -255,6 +256,7 @@ class EnemyDesc:
                 clickSound=base.main_menu.click_snd,  # noqa: F821
             )
         )
+        base.main_menu.new_enemy_snd.play()  # noqa: F821
 
     def _hide(self):
         """Destroy the teaching note."""

@@ -63,6 +63,8 @@ class MainMenu:
         self._hover_snd.setVolume(0.1)
         self.click_snd = loader.loadSfx("sounds/GUI/menu2.ogg")  # noqa: F821
         self.click_snd.setVolume(0.1)
+        self.new_enemy_snd = loader.loadSfx("sounds/new_enemy.ogg")  # noqa: F821
+        self.new_enemy_snd.setPlayRate(0.95)
 
         self._main_fr = DirectFrame(
             frameSize=(-2, 2, -1, 1),
