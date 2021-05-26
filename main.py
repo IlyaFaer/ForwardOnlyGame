@@ -16,7 +16,7 @@ import time
 
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import loadPrcFileData, WindowProperties
+from panda3d.core import loadPrcFileData, Filename, WindowProperties
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
@@ -64,7 +64,7 @@ class ForwardOnly(ShowBase):
         ShowBase.__init__(self)
 
         resolution, self.tutorial_enabled, self.labels = self._process_options()
-        self._configure_window(resolution)
+        self._win_prors = self._configure_window(resolution)
 
         if not os.path.exists("saves"):
             os.mkdir("saves")
@@ -84,6 +84,7 @@ class ForwardOnly(ShowBase):
             "stimulators": 0,
         }
         self._heads = {}
+        self._cur_mouse_pointer = "normal"
         self.main_menu = MainMenu()
 
     @property
@@ -125,6 +126,10 @@ class ForwardOnly(ShowBase):
 
         Args:
             resolution (str): Screen resolution to be set.
+
+        Returns:
+            panda3d.core.WindowProperties:
+                The main window properties object.
         """
         props = WindowProperties()
 
@@ -133,8 +138,10 @@ class ForwardOnly(ShowBase):
 
         x, z = resolution.split("x")
         props.setSize(int(x), int(z))
+        props.setCursorFilename(Filename.binaryFilename("GUI/pointers/normal.ico"))
 
         self.openDefaultWindow(props=props)
+        return props
 
     def _move_along_block(self):
         """Move the Train along the current world block.
@@ -411,6 +418,23 @@ class ForwardOnly(ShowBase):
         self.res_gui = ResourcesGUI()
         self.main_menu.show_start_button()
         self.dollars = 300
+
+    def change_mouse_pointer(self, state):
+        """Change mouse pointer icon.
+
+        Shows an ability of action.
+
+        Args:
+            state (str): New pointer state.
+        """
+        if state == self._cur_mouse_pointer:
+            return
+
+        self._cur_mouse_pointer = state
+        self._win_prors.setCursorFilename(
+            Filename.binaryFilename("GUI/pointers/" + state + ".ico")
+        )
+        self.win.requestProperties(self._win_prors)
 
 
 try:

@@ -99,6 +99,8 @@ class CommonController:
             return
 
         if self._pointed_obj == "part_rest":
+            self.deselect()
+            base.change_mouse_pointer("normal")  # noqa: F821
             base.char_gui.show_resting_chars(  # noqa: F821
                 base.train.parts[self._pointed_obj]  # noqa: F821
             )
@@ -129,21 +131,31 @@ class CommonController:
             base.char_gui.show_tooltip(  # noqa: F821
                 self._chars[self._pointed_obj].tooltip
             )
+            if (
+                self.chosen_char is not None
+                and self.chosen_char.id != self._pointed_obj
+            ):
+                base.change_mouse_pointer("exchange")  # noqa: F82
             return
 
         if self._pointed_obj.startswith("enemy_"):
             base.char_gui.show_tooltip(  # noqa: F821
                 base.world.enemy.active_units[self._pointed_obj].tooltip  # noqa: F821
             )
+            if self.chosen_char is not None:
+                base.change_mouse_pointer("attack")  # noqa: F821
             return
 
         if self._pointed_obj == "part_rest":
             base.char_gui.show_tooltip("Rest zone")  # noqa: F821
+            if self.chosen_char is not None:
+                base.change_mouse_pointer("rest")  # noqa: F821
 
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
         base.char_gui.hide_tip()  # noqa: F821
+        base.change_mouse_pointer("normal")  # noqa: F821
 
     def set_controls(self):
         """Configure common game controls.
