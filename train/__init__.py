@@ -166,21 +166,6 @@ class Train:
         }
 
     @property
-    def possible_upgrades(self):
-        """
-        Return the index of the upgrades, which
-        can be installed on the Train.
-
-        Returns:
-            dict: Possible upgrades index.
-        """
-        ups = copy.deepcopy(UPGRADES_DESC)
-        for upgrade in self.upgrades:
-            ups.pop(upgrade)
-
-        return ups
-
-    @property
     def upgrades(self):
         """The currently installed upgrades.
 
@@ -295,6 +280,31 @@ class Train:
             if part.free_cells > 0:
                 char.move_to(part)
                 return
+
+    def possible_upgrades(self, visit_num):
+        """
+        Return the index of the upgrades, which can
+        be installed on the Adjutant right now.
+
+        Args:
+            visit_num (int): A number of the current visit to a city.
+
+        Returns:
+            dict: Possible upgrades index.
+        """
+        ups = copy.deepcopy(UPGRADES_DESC)
+        for upgrade in self.upgrades:
+            ups.pop(upgrade)
+
+        to_del = []
+        for upgrade in ups.values():
+            if upgrade["threshold"] > visit_num:
+                to_del.append(upgrade["name"])
+
+        for upgrade in to_del:
+            ups.pop(upgrade)
+
+        return ups
 
     def set_physics(self, phys_mgr):
         """Set the Train physics.

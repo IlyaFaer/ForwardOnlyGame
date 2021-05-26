@@ -29,6 +29,7 @@ will be breaking road barriers
 without getting damage""",
         "cost": "120$",
         "model": "ram1",
+        "threshold": 1,
     },
     "Floodlights": {
         "name": "Floodlights",
@@ -37,6 +38,7 @@ factors are no more actual
 with these floodlights on""",
         "cost": "190$",
         "model": "floodlights1",
+        "threshold": 2,
     },
     "Armor Plate": {
         "name": "Armor Plate",
@@ -45,6 +47,7 @@ cover one of the Train sides.
 Press 4, 5, 6 keys to move it.""",
         "cost": "70$",
         "model": "armor_plate",
+        "threshold": 1,
     },
     "Fire Extinguishers": {
         "name": "Fire Extinguishers",
@@ -53,6 +56,7 @@ durability up to 400 points
 in case of a big damage""",
         "cost": "190$",
         "model": "fire_extinguishers",
+        "threshold": 2,
     },
     "Grenade Launcher": {
         "name": "Grenade Launcher",
@@ -61,6 +65,7 @@ lot of damage on a small area.
 Press 1 key to aim and shoot.""",
         "cost": "180$",
         "model": "grenade_launcher",
+        "threshold": 1,
     },
     "Sleeper": {
         "name": "Sleeper",
@@ -68,6 +73,7 @@ Press 1 key to aim and shoot.""",
 into the locomotive rest zone""",
         "cost": "140$",
         "model": "sleeper1",
+        "threshold": 1,
     },
     "Window Frames": {
         "name": "Window Frames",
@@ -76,6 +82,7 @@ characters in the rest zone are
 protected from the Stench""",
         "cost": "150$",
         "model": "isolation",
+        "threshold": 2,
     },
     "Cluster Howitzer": {
         "name": "Cluster Howitzer",
@@ -84,6 +91,7 @@ splits to four grenades, doing
 damage on several circles""",
         "cost": "200$",
         "model": "cluster_bomb_launcher",
+        "threshold": 2,
     },
 }
 
