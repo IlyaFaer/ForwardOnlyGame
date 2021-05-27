@@ -12,8 +12,13 @@ from panda3d.core import TransparencyAttrib
 from .widgets import GUI_PIC, SILVER_COL
 
 NOTES = (
+    # controls
     """Don't forget to save your
 game progress!""",
+    """Choose a character and press
+right mouse button on
+another one to exchange
+their positions""",
     # traits
     """Single character can have up
 to three different traits""",

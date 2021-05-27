@@ -420,6 +420,19 @@ class Block:
             self.load_additional_surface()
             self._req_add_surface = False
 
+        if self.id == 0:
+            surf_mod = loader.loadModel(address("surface1"))  # noqa: F821
+            surf_mod.reparentTo(self.rails_mod)
+            surf_mod.setPos(-4, -4, 0)
+
+            surf_mod = loader.loadModel(address("surface1"))  # noqa: F821
+            surf_mod.reparentTo(self.rails_mod)
+            surf_mod.setPos(4, -4, 0)
+
+            rails_mod = loader.loadModel(address("direct_rails"))  # noqa: F821
+            rails_mod.reparentTo(self.rails_mod)
+            rails_mod.setPos(0, -8, 0)
+
         return self
 
     def load_additional_surface(self):
