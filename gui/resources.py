@@ -32,6 +32,8 @@ class ResourcesGUI:
         self._res_desc_shown = False
         self._resources = {}
         self._blink_step = 0
+        self._reload_ico = None
+        self._reload_min = None
 
         self._err_snd = loader.loadSfx("sounds/GUI/error.ogg")  # noqa: F821
 
@@ -629,6 +631,40 @@ class ResourcesGUI:
         """Disable all the cohesion abilities."""
         for icon in self._coh_icons:
             icon["wid"]["frameTexture"] = GUI_PIC + "ny_" + icon["file"]
+
+        self._reload_ico = DirectButton(
+            parent=self._coh_frame,
+            frameSize=(-0.023, 0.023, -0.023, 0.023),
+            frameTexture=GUI_PIC + "reload.png",
+            pos=(-0.433, 0, -0.017),
+            relief="flat",
+        )
+        self._reload_ico.setTransparency(TransparencyAttrib.MAlpha)
+
+        self._reload_min = DirectLabel(
+            parent=self._coh_frame,
+            frameSize=(0.1, 0.1, 0.1, 0.1),
+            frameColor=(0, 0, 0, 0),
+            text="? min",
+            text_fg=SILVER_COL,
+            text_scale=0.025,
+            pos=(-0.37, 0, -0.025),
+        )
+
+    def finish_reload(self):
+        """Hide reloading timer widgets."""
+        self._reload_ico.destroy()
+        self._reload_min.destroy()
+        self._reload_ico = None
+        self._reload_min = None
+
+    def show_reload_min(self, min_num):
+        """Update reloading timer.
+
+        Args:
+            min_num (int): Number of minutes left for the delay to finish.
+        """
+        self._reload_min["text"] = str(min_num) + " min"
 
     def update_chars(self):
         """Update characters number widget."""

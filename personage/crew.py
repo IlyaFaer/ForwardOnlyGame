@@ -220,6 +220,7 @@ class Crew:
     def _stop_cohesion_cooldown(self, task):
         """End cohesion abilities cooldown."""
         self.cohesion_cooldown = False
+        base.res_gui.finish_reload()  # noqa: F821
         base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
         return task.done
 
@@ -235,6 +236,13 @@ class Crew:
         taskMgr.doMethodLater(  # noqa: F821
             delay, self._stop_cohesion_cooldown, "stop_cohesion_cooldown"
         )
+        for m in range(int(delay / 60)):
+            taskMgr.doMethodLater(  # noqa: F821
+                m * 60,
+                base.res_gui.show_reload_min,  # noqa: F821
+                "show_reloading_eta",
+                extraArgs=[(int(delay / 60) - m)],
+            )
 
     def prepare_to_fight(self):
         """Prepare every character to fight."""
