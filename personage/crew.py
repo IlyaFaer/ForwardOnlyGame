@@ -48,6 +48,11 @@ class Crew:
         self._medicine_snd = loader.loadSfx("sounds/GUI/medicine.ogg")  # noqa: F821
         self._stimulator_snd = loader.loadSfx("sounds/GUI/stimulator.ogg")  # noqa: F821
 
+        self._victory_snd = base.sound_mgr.loadSfx("sounds/victory.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(  # noqa: F821
+            self._victory_snd, base.train.model  # noqa: F821
+        )
+
     @property
     def current_cohesion(self):
         """Current team cohesion values.
@@ -224,6 +229,18 @@ class Crew:
         base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
         return task.done
 
+    def celebrate(self):
+        """Run victory celebration."""
+        if len(self.chars) > 2:
+            taskMgr.doMethodLater(  # noqa: F821
+                0.5, self._victory_snd.play, "play_victory_sound", extraArgs=[]
+            )
+
+            for char in self.chars.values():
+                taskMgr.doMethodLater(  # noqa: F821
+                    random.uniform(0, 0.4), char.celebrate, "celebrate_victory"
+                )
+
     def _plan_cohesion_cooldown(self, delay):
         """Start cohesion abilities cooldown.
 
@@ -250,6 +267,16 @@ class Crew:
             if char.current_part.name == "part_rest":
                 continue
             char.prepare_to_fight()
+
+        taskMgr.doMethodLater(0.7, self._check_enemies, "check_enemies")  # noqa: F821
+
+    def _check_enemies(self, task):
+        """Check if all the enemies are defeated."""
+        if base.world.enemy.active_units:  # noqa: F821
+            return task.again
+
+        self.celebrate()
+        return task.done
 
     def surrender(self):
         """Make the whole team surrender."""

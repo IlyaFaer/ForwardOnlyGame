@@ -255,6 +255,7 @@ class Character(Shooter, Unit):
                 "turn_head1",
                 "stunned",
                 "cough",
+                "celebrate",
             )
         }
         self.model = Actor(address(self.sex + "_" + self.class_), animations)
@@ -265,6 +266,7 @@ class Character(Shooter, Unit):
         self.model.setPlayRate(0.6, "stand")
 
         self.model.loop("stand")
+        self._current_anim = "stand"
         self._health_bar = HealthBar(self)
 
         base.team.init_relations(self)  # noqa: F821
@@ -296,6 +298,13 @@ class Character(Shooter, Unit):
             self._reduce_energy,
             self.id + "_reduce_energy",
         )
+
+    def celebrate(self, task):
+        """Play victory celebration animation."""
+        LerpAnimInterval(self.model, 1, "stand_and_aim", "celebrate").start()
+        self._current_anim = "celebrate"
+        self.model.play("celebrate")
+        return task.done
 
     def move_to(self, part, to_pos=None):
         """Move this Character to the given Train part.
@@ -389,6 +398,7 @@ class Character(Shooter, Unit):
             self._idle_seq.finish()
 
         self.model.loop("stand_and_aim")
+        self._current_anim = "stand_and_aim"
         LerpAnimInterval(self.model, 0.8, self._current_anim, "stand_and_aim").start()
         LerpAnimInterval(self.model, 0.8, "stand", "stand_and_aim").start()
 
@@ -523,7 +533,7 @@ class Character(Shooter, Unit):
         # enemies retreated - return to passive state
         if not base.world.enemy.active_units:  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
-                3, self._calm_down, self.id + "_calm_down", extraArgs=[False],
+                6, self._calm_down, self.id + "_calm_down", extraArgs=[False],
             )
             return task.done
 
@@ -548,7 +558,7 @@ class Character(Shooter, Unit):
             return task.done
 
         taskMgr.doMethodLater(  # noqa: F821
-            3, self._calm_down, self.id + "_calm_down", extraArgs=[False]
+            6, self._calm_down, self.id + "_calm_down", extraArgs=[False]
         )
         return task.done
 
@@ -567,7 +577,7 @@ class Character(Shooter, Unit):
             ).start()
 
         LerpAnimInterval(
-            self.model, 0.1 if force else 2, "stand_and_aim", "stand"
+            self.model, 0.1 if force else 2, self._current_anim, "stand"
         ).start()
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
