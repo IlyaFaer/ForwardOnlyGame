@@ -107,3 +107,152 @@ CITY = (
     "Sell",
     "Buy",
 )
+
+NOTES = (
+    # controls
+    """Don't forget to save your
+game progress!""",
+    """Choose a character and press
+right mouse button on
+another one to exchange
+their positions""",
+    # traits
+    """Single character can have up
+to three different traits""",
+    """Characters with strong cohesion
+can randomly adopt traits
+from each other""",
+    # enemy
+    """Skinheads activity is at
+maximum during evening""",
+    """Skinheads activity is at
+minimum during morning""",
+    """The slower the Train is moving
+the easier for enemies to
+hit it with throwing weapon""",
+    """Some enemies are shooting, some
+are slowing you down, some
+are deafening your people.
+Study their tactics!""",
+    """Enemy territory is not
+considered on the railways
+scheme""",
+    """Governments of Silewer cities
+will reward you with
+money for destroying
+skinheads nearby""",
+    # cohesion
+    """Increasing team cohesion unlocks
+crew skills. These are powerful
+temporary effects, which can
+help you to survive.""",
+    """Raiders and soldiers don't like
+each other. It's hard to build
+cohesion between them.""",
+    """To build stronger cohesion
+between particular characters
+keep them closer to
+each other""",
+    """Good way to increase cohesion
+between particular characters
+is to send them for outing""",
+    # outings
+    """Different types of outings
+are offering different
+kinds of trophies""",
+    """Outing can turn dangerous, it's
+better to send people who are
+familiar with each other to
+get better chances""",
+    """You can not command your people
+while they are on outing. You
+only can choose right people
+to send.""",
+    """Some outings can turn very
+dangerous, while other are
+sure case. Take your risks!""",
+    """Press M to see the railways
+scheme and choose an
+optimal route""",
+    """Railway branches always merge
+back to the main
+railway line""",
+    # Train
+    """You can turn around in a city.
+Consider it, while choosing
+an optimal route.""",
+    """It's reckless to stop while
+on enemy territory""",
+    """Switching on lights helps to save
+characters energy and to increase
+their accuracy, but also attracts
+enemy attention""",
+    """Deteriorated rusty rails
+can damage your Train wheels.
+Slow down when you hear a
+metal creak.""",
+    """Locomotive active weapons
+can only be used
+on enemy territory""",
+    # characters and classes
+    """Women are nice and social, they
+reduce stress at any collective""",
+    """Women have less health points,
+but they are much more
+energetic""",
+    """People tired faster while in
+dark and during fight""",
+    # raiders
+    """Raider's life is mostly about
+looting. They know how to find
+useful things.""",
+    """Raiders are good shooters at
+short distance""",
+    """Raiders are spending energy
+faster, but they also rest
+faster than others""",
+    # soldiers
+    """Soldiers are good shooters at
+medium distance""",
+    """If you want to hit an enemy
+fortification, soldiers are
+your choice""",
+    # anarchists
+    """Anarchists are companionable,
+they build cohesion much
+faster than others""",
+    """Anarchists get damage factor
+x2 from cohesion""",
+    """Anarchists are people from
+crowd. They value mutual
+assistance with those
+life has brought them.""",
+    # accuracy
+    """Shooting accuracy is affected
+by lighting, distance,
+character class and his
+energy level""",
+    """Send your character into a Train
+rest zone. Rest helps to regain
+energy and heal wounds.""",
+    # diseases
+    """Disease lowers character energy
+maximum down to 80 and disables
+all the positive traits until
+getting well""",
+    """Try to reduce diseased character
+contacts to avoid spreading
+the infection""",
+    """Wounded and tired characters are
+more vulnerable for diseases""",
+    # the Stench
+    """The Stench orange clouds are
+highly poisonous""",
+    # resources
+    """Stimulator temporarily disables
+the character's negative
+traits. It also gives
+immunity from deafening.""",
+)
+
+DEFAULT_NOTE = "Press F1 key to open game\ncontrols help"
