@@ -118,6 +118,7 @@ class Train:
             self._l_brake_sparks,
             self._r_brake_sparks,
             self._rocket_explosion,
+            self._stop_steam,
         ) = self._prepare_particles()
 
         self.smoke_filtered = False
@@ -226,7 +227,12 @@ class Train:
         taskMgr.doMethodLater(  # noqa: F821
             5, self._prepare_bomb_explosions, "prepare_bomb_explosions"
         )
-        return smoke, l_brake_sparks, r_brake_sparks, explosion
+
+        stop_steam = ParticleEffect()
+        stop_steam.loadConfig("effects/stop_steam.ptf")
+        stop_steam.setPos(0.06, 0.2, 0.1)
+
+        return smoke, l_brake_sparks, r_brake_sparks, explosion, stop_steam
 
     def _prepare_bomb_explosions(self, task):
         """Prepare bomb explosion effects."""
@@ -684,6 +690,14 @@ class Train:
         """Stop sparks effects."""
         self._l_brake_sparks.softStop()
         self._r_brake_sparks.softStop()
+
+    def stop(self):
+        """Stop the locomotive and release steam."""
+        self._stop_steam.start(self.model, render)  # noqa: F821
+        self._stop_steam.softStart()
+        taskMgr.doMethodLater(  # noqa: F821
+            5, self._stop_steam.softStop, "stop_smoke", extraArgs=[]
+        )
 
     def show_turning_ability(self, fork, branch, invert):
         """Show turning GUI.

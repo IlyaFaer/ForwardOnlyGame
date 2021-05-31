@@ -211,6 +211,9 @@ class TrainController:
         base.train.stop_sparks()  # noqa: F821
         self._move_par.pause()
         self._move_anim_int.pause()
+        taskMgr.doMethodLater(  # noqa: F821
+            0.7, base.train.stop, "release_steam", extraArgs=[]  # noqa: F821
+        )
 
         self._is_stopped = True
         taskMgr.doMethodLater(  # noqa: F821
