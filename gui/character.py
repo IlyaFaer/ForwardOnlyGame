@@ -135,6 +135,7 @@ class CharacterGUI:
         self._tip = OnscreenText(
             parent=base.render2d,  # noqa: F821
             text="",
+            font=base.main_font,  # noqa: F821
             scale=(0.021, 0.027),
             fg=SILVER_COL,
             bg=(0, 0, 0, 0.4),
@@ -293,8 +294,9 @@ class CharacterGUI:
 
         self._rest_buttons["title"] = DirectButton(
             pos=(x, 0, z),
-            text="Resting:",
+            text=base.labels.TIPS[0],  # noqa: F821
             text_fg=RUST_COL,
+            text_font=base.main_font,  # noqa: F821
             frameColor=(0, 0, 0, 0.6),
             scale=(0.04, 0, 0.03),
         )

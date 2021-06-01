@@ -147,7 +147,7 @@ class CommonController:
             return
 
         if self._pointed_obj == "part_rest":
-            base.char_gui.show_tooltip("Rest zone")  # noqa: F821
+            base.char_gui.show_tooltip(base.labels.TIPS[1])  # noqa: F821
             if self.chosen_char is not None:
                 base.change_mouse_pointer("rest")  # noqa: F821
 

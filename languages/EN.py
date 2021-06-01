@@ -256,3 +256,42 @@ immunity from deafening.""",
 )
 
 DEFAULT_NOTE = "Press F1 key to open game\ncontrols help"
+
+TIPS = ("Resting:", "Rest zone", "Approaching a city")
+
+COHESION = (
+    "Cohesion skills",
+    "Recall the past",
+    "Every character gets +25 energy. Cooldown: 10 min.",
+    "Cover fire",
+    "Every character gets +20% accuracy. Cooldown: 5 min.",
+    "Not leaving ours",
+    "Characters with health < 30 getting +20 health. Cooldown: 10 min.",
+    "Common rage",
+    "Every character gets +30% to damage. Cooldown: 10 min.",
+    "Hold together",
+    "No characters will die in next 1.5 min. Cooldown: 15 min.",
+)
+
+DISTINGUISHED = (
+    "List of distinguished",
+    (
+        "Here you can praise your people or scold them "
+        "to change their traits.\nPointing to a person is "
+        "usually harmful for collective relations,\nso every "
+        "praise/scold will reduce common team cohesion a bit.\n\n"
+        "Choose one of the current character's traits (positive "
+        "or negative) and\nscold the character to erase the trait. "
+        "It'll cost you 4 cohesion points.\n\n"
+        "If the character has less than 3 traits, you can praise "
+        "him/her to\ngenerate 3 new traits and add one of them "
+        "to the character's\ntraits list. It'll cost you 4 "
+        "cohesion points."
+    ),
+    "Cohesion points:",
+    "New traits:",
+    "Praise",
+    "Scold",
+    "Done",
+    "Current traits",
+)

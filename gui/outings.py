@@ -46,6 +46,7 @@ class OutingsGUI:
 
         self._upcome_text = DirectLabel(
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.4, 0.4, 0.4, 0.4),
             text_scale=0.04,
             text_fg=SILVER_COL,
@@ -366,7 +367,7 @@ class OutingsGUI:
 
     def show_city(self):
         """Show upcoming city notification."""
-        self.show_upcoming("Approaching a city", "gui/tex/city.png")
+        self.show_upcoming(base.labels.TIPS[2], "gui/tex/city.png")  # noqa: F821
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""

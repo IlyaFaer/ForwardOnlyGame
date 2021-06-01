@@ -279,7 +279,8 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Cohesion skills",
+                text=base.labels.COHESION[0],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
@@ -300,10 +301,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Recall the past",
+                text=base.labels.COHESION[1],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.03,
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.117),
             )
@@ -311,10 +313,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +25 energy. Cooldown: 10 min.",
+                text=base.labels.COHESION[2],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.029,
+                text_scale=0.028,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.155),
             )
@@ -331,10 +334,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Cover fire",
+                text=base.labels.COHESION[3],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.03,
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.217),
             )
@@ -342,10 +346,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +20% accuracy. Cooldown: 5 min.",
+                text=base.labels.COHESION[4],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.029,
+                text_scale=0.028,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.255),
             )
@@ -362,10 +367,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Not leaving ours",
+                text=base.labels.COHESION[5],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.03,
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.317),
             )
@@ -373,13 +379,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text=(
-                    "Characters with health < 30 "
-                    "getting +20 health. Cooldown: 10 min."
-                ),
+                text=base.labels.COHESION[6],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.029,
+                text_scale=0.028,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.355),
             )
@@ -396,10 +400,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Common rage",
+                text=base.labels.COHESION[7],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.03,
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.417),
             )
@@ -407,10 +412,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Every character gets +30% to damage. Cooldown: 10 min.",
+                text=base.labels.COHESION[8],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.029,
+                text_scale=0.028,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.455),
             )
@@ -427,10 +433,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="Hold together",
+                text=base.labels.COHESION[9],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.03,
+                text_scale=0.029,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.517),
             )
@@ -438,10 +445,11 @@ class ResourcesGUI:
         self._coh_desc_wids.append(
             DirectLabel(
                 parent=self._coh_frame,
-                text="No characters will die in next 1.5 min. Cooldown: 15 min.",
+                text=base.labels.COHESION[10],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_align=TextNode.ALeft,
                 frameSize=(0.1, 0.1, 0.1, 0.1),
-                text_scale=0.029,
+                text_scale=0.028,
                 text_fg=SILVER_COL,
                 pos=(x_coor, 0, -0.555),
             )

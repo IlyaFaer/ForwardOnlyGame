@@ -47,26 +47,16 @@ class TraitsGUI:
 
         DirectLabel(
             parent=self._list,
-            text="List of distinguished",
+            text=base.labels.DISTINGUISHED[0],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.4, 0.4, 0.4, 0.4),
             text_scale=0.045,
             pos=(-0.35, 0, 0.65),
         )
         DirectLabel(
             parent=self._list,
-            text=(
-                "Here you can praise your people or scold them "
-                "to change their traits.\nPointing to a person is "
-                "usually harmful for collective relations,\nso every "
-                "praise/scold will reduce common team cohesion a bit.\n\n"
-                "Choose one of the current character's traits (positive "
-                "or negative) and\nscold the character to erase the trait. "
-                "It'll cost you 4 cohesion points.\n\n"
-                "If the character has less than 3 traits, you can praise "
-                "him/her to\ngenerate 3 new traits and add one of them "
-                "to the character's\ntraits list. It'll cost you 4 "
-                "cohesion points."
-            ),
+            text=base.labels.DISTINGUISHED[1],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.3, 0.3, 0.3, 0.3),
             text_scale=0.035,
             text_bg=(0, 0, 0, 0),
@@ -76,7 +66,8 @@ class TraitsGUI:
 
         DirectLabel(
             parent=self._list,
-            text="Cohesion points:",
+            text=base.labels.DISTINGUISHED[2],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.035,
             text_bg=(0, 0, 0, 0),
@@ -93,6 +84,7 @@ class TraitsGUI:
         self._cur_traits_num = DirectLabel(
             parent=self._list,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.032,
             text_bg=(0, 0, 0, 0),
@@ -100,7 +92,8 @@ class TraitsGUI:
         )
         DirectLabel(
             parent=self._list,
-            text="New traits:",
+            text=base.labels.DISTINGUISHED[3],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.032,
             text_bg=(0, 0, 0, 0),
@@ -181,7 +174,8 @@ class TraitsGUI:
         )
         self._praise_but = DirectButton(
             pos=(-0.35, 0, -0.57),
-            text="Praise",
+            text=base.labels.DISTINGUISHED[4],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=RUST_COL,
             text_shadow=(0, 0, 0, 1),
             frameColor=(0, 0, 0, 0),
@@ -192,7 +186,8 @@ class TraitsGUI:
         )
         self._scold_but = DirectButton(
             pos=(0.3, 0, -0.57),
-            text="Scold",
+            text=base.labels.DISTINGUISHED[5],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=SILVER_COL,
             text_shadow=(0, 0, 0, 1),
             frameColor=(0, 0, 0, 0),
@@ -202,7 +197,8 @@ class TraitsGUI:
         )
         DirectButton(
             pos=(-0.02, 0, -0.7),
-            text="Done",
+            text=base.labels.DISTINGUISHED[6],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=RUST_COL,
             text_shadow=(0, 0, 0, 1),
             frameColor=(0, 0, 0, 0),
@@ -329,7 +325,9 @@ class TraitsGUI:
         self._scold_but["command"] = None
 
         traits = self._cur_char.traits + self._cur_char.disabled_traits
-        self._cur_traits_num["text"] = "Current traits ({}/3):".format(str(len(traits)))
+        self._cur_traits_num["text"] = "{label} ({num}/3):".format(
+            label=base.labels.DISTINGUISHED[7], num=str(len(traits))  # noqa: F821
+        )
 
         if len(traits) == 3:
             self._praise_but["text_fg"] = SILVER_COL
