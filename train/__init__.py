@@ -16,7 +16,13 @@ from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
 from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 
 from .part import RestPart, TrainPart
-from .upgrades import ArmorPlate, ClusterHowitzer, GrenadeLauncher, UPGRADES_DESC
+from .upgrades import (
+    UPGRADES_DESC,
+    ArmorPlate,
+    ClusterHowitzer,
+    GrenadeLauncher,
+    MachineGun,
+)
 
 from controls import TrainController
 from gui.train import TrainGUI
@@ -809,6 +815,10 @@ class Train:
             )
             return
 
+        if upgrade["name"] == "Machine Gun":
+            self._machine_gun = MachineGun(self.model)
+            return
+
         up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821
         up_model.reparentTo(self.model)
 
@@ -913,6 +923,9 @@ class Train:
 
         self._pre_upgrade = loader.loadModel(address(model))  # noqa: F821
         self._pre_upgrade.reparentTo(self.model)
+
+        if "machine_gun" in model:
+            self._pre_upgrade.setPos(-0.02, -0.27, 0.31)
 
         taskMgr.doMethodLater(  # noqa: F821
             0.05, self._highlight_upgrade, "highlight_upgrade"

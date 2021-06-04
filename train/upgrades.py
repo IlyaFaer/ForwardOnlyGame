@@ -11,6 +11,7 @@ from direct.interval.IntervalGlobal import (
     Func,
     LerpHprInterval,
     LerpPosInterval,
+    LerpScaleInterval,
     Parallel,
     Sequence,
     SoundInterval,
@@ -88,9 +89,19 @@ protected from the Stench""",
         "name": "Cluster Howitzer",
         "desc": """Shots a cluster rocket, which
 splits to four grenades, doing
-damage on several circles""",
+damage on several circles.
+Press 3 to aim and shoot.""",
         "cost": "200$",
         "model": "cluster_bomb_launcher",
+        "threshold": 2,
+    },
+    "Machine Gun": {
+        "name": "Machine Gun",
+        "desc": """Fires aiming burst. Better be
+used for a single target.
+Press 2 to aim and shoot.""",
+        "cost": "160$",
+        "model": "machine_gun",
         "threshold": 2,
     },
 }
@@ -706,3 +717,198 @@ class ClusterHowitzer:
         taskMgr.doMethodLater(  # noqa: F82
             0.2, self._change_mode, "cluster_bomb_launcher_aim"
         )
+
+
+class MachineGun:
+    """Machine gun locomotive upgrade, active weapon.
+
+    Does a lot of damage on a narrow range, so
+    usually harms only one enemy target.
+
+    Args:
+        train_model (panda3d.core.NodePath): The Train model.
+    """
+
+    def __init__(self, train_model):
+        self._is_up = False
+        # flag, which indicates if the launcher
+        # is in (un-)loading process
+        self._is_loading = False
+        self._col_np = None
+
+        self._model = loader.loadModel(address("machine_gun"))  # noqa: F821
+        self._model.reparentTo(train_model)
+        self._model.setPos(-0.02, -0.27, 0.31)
+
+        self._sight = loader.loadModel(address("machine_gun_sight"))  # noqa: F821
+        self._sight.reparentTo(train_model)
+        self._sight.hide()
+
+        self._shot_snd = base.sound_mgr.loadSfx(  # noqa: F82
+            "sounds/combat/loc_machine_gun.ogg"
+        )
+        base.sound_mgr.attachSoundToObject(self._shot_snd, self._model)  # noqa: F82
+        self._load_snd = loader.loadSfx(  # noqa: F82
+            "sounds/combat/machine_gun_load.ogg"
+        )
+
+        fire = loader.loadModel(address("gun_fire2"))  # noqa: F821
+        fire.reparentTo(self._model)
+        fire.setScale(1, 0.0001, 1)
+        fire.setPos(0, 0.095, 0.029)
+        fire.setH(90)
+
+        self._shoot_seq = Sequence(
+            LerpScaleInterval(fire, 0.16, (1.3, 1, 1.3)),
+            LerpScaleInterval(fire, 0.085, (1, 0.0001, 1)),
+        )
+        base.accept("2", self.change_state)  # noqa: F82
+
+    def _aim_machine_gun(self, task):
+        """Aim machine gun to the place pointed by the sight."""
+        self._model.headsUp(self._sight)
+        return task.again
+
+    def _change_mode(self, task):
+        """Change controls mode - aiming and shooting or passive."""
+        if self._is_up:
+            self._sight.hide()
+            self._end_aiming()
+        else:
+            taskMgr.doMethodLater(  # noqa: F821
+                0.05, self._sight.show, "show_sight", extraArgs=[]
+            )
+            base.common_ctrl.deselect()  # noqa: F821
+            self._start_aiming()
+
+        self._is_up = not self._is_up
+        self._is_loading = False
+        return task.done
+
+    def _do_damage(self, event):
+        """Do the machine gun damage."""
+        base.world.enemy.active_units[  # noqa: F821
+            event.getFromNodePath().getName()
+        ].get_damage(7)
+
+    def _end_aiming(self):
+        """Stop aiming and disable aiming GUI."""
+        base.ignore("mouse1-up")  # noqa: F82
+        taskMgr.remove("aim_machine_gun")  # noqa: F82
+
+        self._range_col_np.removeNode()
+        base.common_ctrl.set_mouse_events()  # noqa: F82
+
+        LerpHprInterval(self._model, 0.5, (0, 0, 0)).start()
+
+    def _make_shot(self, task):
+        """Make a single machine gun shot."""
+        pos = self._sight.getPos()
+        Parallel(
+            Sequence(
+                LerpPosInterval(
+                    self._sight,
+                    0.125,
+                    (
+                        pos.getX() + random.uniform(-0.05, 0.05),
+                        pos.getY() + random.uniform(-0.05, 0.05),
+                        0,
+                    ),
+                ),
+                LerpPosInterval(self._sight, 0.125, pos, blendType="easeOut"),
+            ),
+            self._shoot_seq,
+        ).start()
+        return task.again
+
+    def _move_sight(self, event):
+        """Move the machine gun sight sprite.
+
+        The machine gun sight can be moved only
+        within the locomotive parts shooting range.
+        """
+        if event.getIntoNodePath().getName() != "machine_gun_range":
+            return
+
+        point = event.getSurfacePoint(base.train.model)  # noqa: F821
+        self._sight.setPos(point.getX(), point.getY(), 0.01)
+
+    def _start_aiming(self):
+        """Show aiming GUI and tweak shooting events."""
+        col_node = CollisionNode("machine_gun_range")
+        col_node.setFromCollideMask(NO_MASK)
+        col_node.setIntoCollideMask(MOUSE_MASK)
+        col_node.addSolid(
+            CollisionPolygon(
+                Point3(-1.2, -0.3, 0),
+                Point3(-1.2, 1.5, 0),
+                Point3(1.2, 1.5, 0),
+                Point3(1.2, -0.3, 0),
+            )
+        )
+        self._range_col_np = base.train.model.attachNewNode(col_node)  # noqa: F821
+
+        base.accept("mouse1", self._start_shooting)  # noqa: F821
+        base.accept("mouse1-up", self._stop_shooting)  # noqa: F821
+        base.accept("mouse_ray-into", self._move_sight)  # noqa: F821
+        base.accept("mouse_ray-again", self._move_sight)  # noqa: F82
+
+        taskMgr.doMethodLater(  # noqa: F82
+            0.05, self._aim_machine_gun, "aim_machine_gun"
+        )
+
+    def _start_shooting(self):
+        """Start the machine gun shooting sequence."""
+        self._shot_snd.play()
+        taskMgr.doMethodLater(0.25, self._make_shot, "machine_gun_shoot")  # noqa: F82
+        taskMgr.doMethodLater(  # noqa: F82
+            4, self._stop_shooting, "stop_machine_gun_shooting"
+        )
+
+        col_node = CollisionNode("machine_gun_bullet")
+        col_node.setFromCollideMask(NO_MASK)
+        col_node.setIntoCollideMask(SHOT_RANGE_MASK)
+        col_node.addSolid(CollisionSphere(0, 0, 0, 0.005))
+        self._col_np = self._sight.attachNewNode(col_node)
+
+        base.accept("into-machine_gun_bullet", self._do_damage)  # noqa: F82
+
+    def _stop_shooting(self, task=None):
+        """Stop machine gun shooting and start reloading."""
+        taskMgr.remove("stop_machine_gun_shooting")  # noqa: F82
+        taskMgr.remove("machine_gun_shoot")  # noqa: F82
+
+        self._col_np.removeNode()
+        self._col_np = None
+
+        taskMgr.doMethodLater(  # noqa: F82
+            0.05, self._change_mode, "change_machine_gun_mode"
+        )
+
+        base.ignore("2")  # noqa: F82
+        taskMgr.doMethodLater(  # noqa: F82
+            30,
+            base.accept,  # noqa: F82
+            "unblock_machine_gun",
+            extraArgs=["2", self.change_state],
+        )
+        taskMgr.doMethodLater(  # noqa: F82
+            2, self._shot_snd.setTime, "change_shooting_snd_time", extraArgs=[0]
+        )
+
+        if task is not None:
+            return task.done
+        else:
+            self._shot_snd.setTime(4)
+
+    def change_state(self):
+        """Change the machine gun state: aiming and shooting or passive."""
+        if not base.world.is_on_et or self._is_loading:  # noqa: F821
+            return
+
+        self._is_loading = True
+
+        if not self._is_up:
+            self._load_snd.play()
+
+        taskMgr.doMethodLater(0.2, self._change_mode, "machine_gun_aim")  # noqa: F821
