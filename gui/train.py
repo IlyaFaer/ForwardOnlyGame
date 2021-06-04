@@ -108,6 +108,30 @@ class TrainGUI:
         but = DirectButton(
             parent=frame_miles,
             frameSize=(-0.015, 0.015, -0.025, 0.025),
+            frameTexture=GUI_PIC + "machine_gun.png",
+            pos=(0, 0, 0.015),
+            relief="flat",
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        but.bind(DGG.ENTER, self._highlight_weapon_but, extraArgs=[but])
+        but.bind(DGG.EXIT, self._dehighlight_weapon_but, extraArgs=[but])
+
+        self._weapon_buts["Machine Gun"] = {
+            "but": but,
+            "reload_step": 0,
+            "dis_command": None,
+            "reloading_len": 30,
+            "frame": DirectFrame(
+                parent=frame_miles,
+                frameColor=(0, 0, 0, 0.25),
+                pos=(0, 0, -0.01),
+                frameSize=(-0.013, 0.013, 0, 0.05),
+            ),
+        }
+
+        but = DirectButton(
+            parent=frame_miles,
+            frameSize=(-0.015, 0.015, -0.025, 0.025),
             frameTexture=GUI_PIC + "cluster_rocket.png",
             pos=(0.075, 0, 0.015),
             relief="flat",

@@ -881,6 +881,7 @@ class MachineGun:
         self._col_np.removeNode()
         self._col_np = None
 
+        base.train.make_shot("Machine Gun")  # noqa: F82
         taskMgr.doMethodLater(  # noqa: F82
             0.05, self._change_mode, "change_machine_gun_mode"
         )

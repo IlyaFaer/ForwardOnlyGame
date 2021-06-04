@@ -817,6 +817,9 @@ class Train:
 
         if upgrade["name"] == "Machine Gun":
             self._machine_gun = MachineGun(self.model)
+            self._gui.activate_weapon(
+                "Machine Gun", base.train.load_machine_gun  # noqa: F821
+            )
             return
 
         up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821
@@ -880,6 +883,10 @@ class Train:
     def load_cluster_howitzer(self):
         """Change the cluster howitzer state."""
         self._cluster_howitzer.change_state()
+
+    def load_machine_gun(self):
+        """Change the machine gun state."""
+        self._machine_gun.change_state()
 
     def _repair(self, task):
         """Repair the Train.
