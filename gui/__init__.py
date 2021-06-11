@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 Game graphical interfaces module.
 """
+import os
 import shelve
 import sys
 
@@ -553,6 +554,10 @@ class MainMenu:
         Args:
             num (int): The slot number.
         """
+        save_file = "saves/save{}.dat".format(num)
+        if not os.path.exists(save_file):
+            return
+
         self.show_loading()
         taskMgr.doMethodLater(  # noqa: F821
             4, self._clear_temp_wids, "clear_main_menu_temp_wids"
