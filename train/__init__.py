@@ -56,7 +56,7 @@ class Train:
             self._barrier_hit_snd,
             self._lighter_snd,
             self._creak_snds,
-            self._rocket_explosion_snd,
+            self._rocket_explosions_snd,
             self._attack_started_snd,
         ) = self._set_sounds()
 
@@ -123,7 +123,7 @@ class Train:
             self._smoke,
             self._l_brake_sparks,
             self._r_brake_sparks,
-            self._rocket_explosion,
+            self._rocket_explosions,
             self._stop_steam,
         ) = self._prepare_particles()
 
@@ -227,8 +227,11 @@ class Train:
         snow.setH(180)
         snow.start(base.cam, render)  # noqa: F821
 
-        explosion = ParticleEffect()
-        explosion.loadConfig("effects/rocket_explode.ptf")
+        explosions = []
+        for _ in range(3):
+            explosion = ParticleEffect()
+            explosion.loadConfig("effects/rocket_explode.ptf")
+            explosions.append(explosion)
 
         taskMgr.doMethodLater(  # noqa: F821
             5, self._prepare_bomb_explosions, "prepare_bomb_explosions"
@@ -238,7 +241,7 @@ class Train:
         stop_steam.loadConfig("effects/stop_steam.ptf")
         stop_steam.setPos(0.06, 0.2, 0.1)
 
-        return smoke, l_brake_sparks, r_brake_sparks, explosion, stop_steam
+        return smoke, l_brake_sparks, r_brake_sparks, explosions, stop_steam
 
     def _prepare_bomb_explosions(self, task):
         """Prepare bomb explosion effects."""
@@ -623,6 +626,16 @@ class Train:
 
         self.lights_on = not self.lights_on
 
+    def _stop_rocket_explosion(self, explosion):
+        """Stop the given rocket explosion particle effect.
+
+        Args:
+            explosion (direct.particles.ParticleEffect):
+                Rocket explosion to stop.
+        """
+        explosion.softStop()
+        self._rocket_explosions.append(explosion)
+
     def explode_rocket(self, side):
         """Explode a rocket on the given side of the locomotive.
 
@@ -636,14 +649,18 @@ class Train:
         else:
             x_coor = 0.11
 
-        self._rocket_explosion.setPos(x_coor, 0.11, 0.33 if side == "top" else 0.22)
-        self._rocket_explosion.start(self.model, render)  # noqa: F821
-        self._rocket_explosion.softStart()
+        rocket_explosion = take_random(self._rocket_explosions)
+        rocket_explosion.setPos(x_coor, 0.11, 0.33 if side == "top" else 0.22)
+        rocket_explosion.start(self.model, render)  # noqa: F821
+        rocket_explosion.softStart()
 
-        self._rocket_explosion_snd.play()
+        self._rocket_explosions_snd.play()
 
         taskMgr.doMethodLater(  # noqa: F821
-            0.8, self._rocket_explosion.softStop, "disable_rocket_smoke", extraArgs=[],
+            0.8,
+            self._stop_rocket_explosion,
+            "disable_rocket_smoke",
+            extraArgs=[rocket_explosion],
         )
 
         if self._armor_plate is None:

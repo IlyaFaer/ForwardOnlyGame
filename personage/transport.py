@@ -20,10 +20,12 @@ class TransportManager:
         self._models = {
             "moto1": Actor(address("motocycle1")),
             "moto2": Actor(address("motocycle2")),
+            "moto3": Actor(address("motocycle3")),
             "dodge": Actor(address("car1")),
         }
         self._models["moto1"].setPlayRate(1.5, "ride")
         self._models["moto2"].setPlayRate(1.5, "ride")
+        self._models["moto3"].setPlayRate(1.5, "ride")
         self._models["dodge"].setPlayRate(2.5, "ride")
 
     def _load_snd(self, unit, type_):
