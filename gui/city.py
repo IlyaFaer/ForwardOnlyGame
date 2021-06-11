@@ -757,7 +757,7 @@ class CityGUI:
             "BrakeThrower": 5,
             "StunBombThrower": 10,
             "DodgeShooter": 25,
-            "Kamikadze": 15,
+            "Kamikaze": 15,
         }
         if not base.heads:  # noqa: F821
             return

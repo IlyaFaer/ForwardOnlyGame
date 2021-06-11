@@ -18,13 +18,15 @@ from direct.interval.IntervalGlobal import (
     Wait,
 )
 from direct.interval.MopathInterval import MopathInterval
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
-from panda3d.core import CollisionBox, CollisionSphere, Point3, Vec3
+from panda3d.core import CollisionBox, CollisionNode, CollisionSphere, Point3, Vec3
 
-from const import MOUSE_MASK, SHOT_RANGE_MASK
+from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from utils import address, chance, take_random
 from .base_enemy_unit import EnemyUnit
 from .shooter import Shooter
+from .unit import Unit
 
 
 class EnemyMotorcyclist(EnemyUnit):
@@ -561,6 +563,13 @@ class DodgeShooter(EnemyUnit):
 
     Represents an enemy unit, which attacks with
     long pauses, but also deals a lot of damage.
+
+    Args:
+        model (actor.Actor): Enemy character model.
+        id_ (int): Enemy unit id.
+        y_positions (list): Free positions along Y.
+        enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
+        class_data (dict): This unit class description.
     """
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
@@ -713,3 +722,229 @@ class DodgeShooter(EnemyUnit):
             self._stop_tasks(
                 "_shoot_at_train", "_stop_doing_damage", "_do_damage_to_train"
             )
+
+
+class Kamikaze(EnemyMotorcyclist):
+    """An enemy type, which can do a lot of damage, but only once.
+
+    Player can protect against Kamikaze's explosion with the
+    Armor Plate locomotive upgrade. If a Kamikaze was destroyed
+    before a self-explosion, he will do a lot of damage to other
+    enemy units nearby.
+
+    Args:
+        model (actor.Actor): Enemy character model.
+        id_ (int): Enemy unit id.
+        y_positions (list): Free positions along Y.
+        enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
+        class_data (dict): This unit class description.
+    """
+
+    def __init__(self, model, id_, y_positions, enemy_handler, class_data):
+        EnemyMotorcyclist.__init__(
+            self, id_, "Moto Shooter", class_data, model, y_positions, enemy_handler
+        )
+
+        self._train_captured = False
+        self._explosion_col_np = None
+        self.is_jumping = False
+        self.current_part = None
+
+        self._side = "left" if self._y_pos > 0 else "right"
+
+        self._jump_path = Mopath.Mopath(
+            objectToLoad=loader.loadModel(  # noqa: F821
+                address(self._side[0] + "_kamikaze_jump")
+            )
+        )
+        self._jump_path.fFaceForward = True
+
+        self._jump_snd = base.sound_mgr.loadSfx("sounds/moto_jump.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._jump_snd, self.model)  # noqa: F821
+
+        self._wick_snd = base.sound_mgr.loadSfx("sounds/combat/wick.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._wick_snd, self.model)  # noqa: F821
+
+        self._wick = ParticleEffect()
+
+        self._fire_ring = ParticleEffect()
+        self._fire_ring.loadConfig("effects/fire_ring.ptf")
+        self._fire_ring.setZ(0.2)
+
+    def _ignite_the_wick(self):
+        """Ignite the kamikaze's wick.
+
+        Play the sound and start particle effect.
+        """
+        self._wick.loadConfig("effects/kamikaze_wick.ptf")
+        self._wick.start(self.model, render)  # noqa: F821
+
+        self._wick_snd.play()
+
+    def _explode(self, kamikaze=False):
+        """Explode the kamikaze.
+
+        Args:
+            kamikaze (bool):
+                If True, than the unit self-exploded.
+                Destroyed by a player otherwise.
+        """
+        if kamikaze:
+            self.model.hide()
+            base.train.explode_rocket(self._side)  # noqa: F821
+            self._wick.softStop()
+            return
+
+        EnemyMotorcyclist._explode(self)
+
+        self._fire_ring.start(self.model, render)  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            0.99,
+            self._fire_ring.softStop,
+            self.id + "_cleanup_ring_of_fire",
+            extraArgs=[],
+        )
+
+        col_node = CollisionNode("kamikaze_explosion")
+        col_node.setFromCollideMask(NO_MASK)
+        col_node.setIntoCollideMask(SHOT_RANGE_MASK)
+        col_node.addSolid(CollisionSphere(0, 0, 0, 0.2))
+
+        base.accept("into-kamikaze_explosion", self._do_kamikaze_damage)  # noqa: F821
+
+        self._explosion_col_np = self.model.attachNewNode(col_node)
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.05,
+            self._clear_explosion_collisions,
+            self.id + "_clear_explosion_collisions",
+        )
+
+    def _clear_explosion_collisions(self, task):
+        """
+        Erase the collision node, which was used
+        to do damage for other enemy units.
+        """
+        self._explosion_col_np.removeNode()
+        return task.done
+
+    def _do_kamikaze_damage(self, event):
+        """Do damage because of the kamikaze explosion.
+
+        The method is used only when the
+        kamikaze was destroyed by a player.
+        """
+        base.world.enemy.active_units[  # noqa: F821
+            event.getFromNodePath().getName()
+        ].get_damage(40)
+
+    def _jump_and_explode(self, task):
+        """Jump to the Adjutant and self-explode."""
+        if self.current_part is None:
+            return task.done
+
+        for char in base.world.enemy.active_units.values():  # noqa: F821
+            if type(char) == Kamikaze and char.id != self.id and char.is_jumping:
+                return task.again
+
+        self.is_jumping = True
+        self._stop_tasks("_float_move")
+        self._move_int.pause()
+
+        Sequence(
+            LerpPosInterval(
+                self.node, 2.5, (self._y_pos, -0.5, 0), blendType="easeInOut"
+            ),
+            Func(self._ignite_the_wick),
+            LerpPosInterval(
+                self.node,
+                4.5,
+                (-0.45 if self._y_pos < 0 else 0.45, -0.8, 0),
+                blendType="easeInOut",
+            ),
+            Func(self._jump_snd.play),
+            MopathInterval(
+                self._jump_path, self.model, duration=0.8, name=self.id + "_jump"
+            ),
+            Func(self._die, True),
+        ).start()
+        return task.done
+
+    def _release_pos(self):
+        """Release the position currently taken by the unit."""
+        self._y_positions.append(self._y_pos)
+
+    def capture_train(self):
+        """The Train got critical damage - stop near it."""
+        self._train_captured = True
+
+        self._stop_tasks("_jump_and_explode")
+        EnemyMotorcyclist.capture_train(self)
+
+    def enter_the_part(self, part):
+        """Start fighting on the given part.
+
+        Args:
+            part (train.part.TrainPart): Train part this enemy entered.
+        """
+        if self._train_captured:
+            return
+
+        self.current_part = part
+        taskMgr.doMethodLater(  # noqa: F821
+            10, self._jump_and_explode, self.id + "_jump_and_explode"
+        )
+
+    def leave_the_part(self, part):
+        """Stop fighting on the current part.
+
+        Args:
+            part (train.part.TrainPart): Train part this enemy entered.
+        """
+        self._release_pos()
+        self.current_part = None
+
+    def _die(self, kamikaze=False):
+        """Make this enemy unit die.
+
+        Play death sequence of movements and sounds,
+        stop all the tasks for this enemy, plan clearing.
+
+        Returns:
+            bool: True, if the unit dies for the first time.
+        """
+        if not Unit._die(self):
+            return False
+
+        self.model.setColorScale(1, 1, 1, 1)
+        self._stop_tasks("_float_move", "_jump_and_explode")
+        self._move_int.pause()
+
+        if self.id in base.world.enemy.active_units:  # noqa: F821
+            base.world.enemy.active_units.pop(self.id)  # noqa: F821
+            if self.current_part and self in self.current_part.enemies:
+                self.current_part.enemies.remove(self)
+
+        self._explode(kamikaze=kamikaze)
+        self.transport_snd.stop()
+        self._y_positions.append(self._y_pos)
+
+        if not kamikaze:
+            base.add_head(self.class_data["class"].__name__)  # noqa: F821
+
+        return True
+
+    def stop(self):
+        """Smoothly stop this unit following the Train."""
+        self._stop_tasks("_jump_and_explode")
+        EnemyUnit.stop(self)
+
+    def clear(self, task=None):
+        """Clear all the graphical data of this unit."""
+        self._wick.cleanup()
+        self._fire_ring.cleanup()
+
+        base.sound_mgr.detach_sound(self._jump_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self._wick_snd)  # noqa: F821
+
+        EnemyUnit.clear(self, task)

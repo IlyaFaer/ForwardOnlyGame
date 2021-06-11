@@ -82,6 +82,18 @@ CLASS_DESCS = {
         "but_text": "They won't stop us!",
         "title": "Skinheads start to use rockets!",
     },
+    "Kamikaze": {
+        "desc": (
+            "Skinhead kamikazes are after you! They can do\n"
+            "a lot of damage to the Adjutant, use Armor Plate\n"
+            "upgrade to protect the locomotive. You can also\n"
+            "destroy those guys before they'll ignite the wick.\n"
+            "If done in a right moment, they damage other enemies."
+        ),
+        "preview": "kamikaze",
+        "but_text": "We'll defeat them!",
+        "title": "All skinheads are chasing you!",
+    },
 }
 
 MECHANIC_DESC = {

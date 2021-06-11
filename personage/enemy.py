@@ -12,7 +12,13 @@ from panda3d.core import CollisionHandlerEvent
 from gui.teaching import EnemyDesc
 from utils import address, chance
 from world.objects import BARRIER_THRESHOLD, ROCKET_THRESHOLD, Barrier, Rocket
-from .enemy_unit import BrakeThrower, DodgeShooter, MotoShooter, StunBombThrower
+from .enemy_unit import (
+    BrakeThrower,
+    DodgeShooter,
+    Kamikaze,
+    MotoShooter,
+    StunBombThrower,
+)
 from .transport import TransportManager
 
 CLASSES = {
@@ -52,6 +58,15 @@ CLASSES = {
             "part": "side",
             "health": 100,
             "transport_model": "dodge",
+        },
+        {
+            "class": Kamikaze,
+            "model": "skinhead_kamikaze",
+            "score": 8,
+            "threshold": 19,
+            "part": "side",
+            "health": 50,
+            "transport_model": "moto3",
         },
     ),
     "attack_chances": {"morning": 6, "noon": 20, "evening": 35, "night": 20},
@@ -183,6 +198,7 @@ class Enemy:
         brakers = 0
         throwers = 0
         cars = 0
+        kamikazes = 0
         while wave_score < self.score:
             unit_class = random.choice(available)
 
@@ -199,6 +215,11 @@ class Enemy:
             if unit_class["class"] == DodgeShooter:
                 cars += 1
                 if cars == 2:
+                    available.remove(unit_class)
+
+            if unit_class["class"] == Kamikaze:
+                kamikazes += 1
+                if kamikazes == 3:
                     available.remove(unit_class)
 
             self._unit_id += 1
