@@ -1687,6 +1687,97 @@ Adjutant durability +100""",
             },
         ),
     },
+    {  # 10
+        "name": "Motor Boat",
+        "type": "Looting",
+        "class_weights": {"soldier": 12, "raider": 20, "anarchist": 7},
+        "assignees": 2,
+        "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 3},
+        "desc": """In some moment you catch your eyes on a big white spot in the
+middle of the meadow. Your first thought is that it's a snow heap,
+but it's not enough snow failing from the skies to gather this
+big pile. Getting closer to the place, you understand this is a
+motor boat, lying on a hindcarriage forsaken near the dark grey
+stone of an old road. Looks like someone decided to get rid of an
+excess cargo right in the middle of the way. Chances are low to
+find something useful there, but it still worth sending a couple
+of people to take a closer look at the boat.""",
+        "results": (
+            {
+                "score": range(0, 20),
+                "desc": """You're sending {name1} and {name2} for a better recon of
+the loss. They move to the white boat fast. It appears it stands
+on a very-very old hindcarriage, rusty and shabby. Without any word
+{name2} climbs on it to be able to see the boat inners, and in the
+next moment the hindcarriage bends over with a loud creak. The
+boat slides right to {name2} and pushes {hisher2} leg to the back wall
+of the carriage. Trying to hold a cry, {name2} drops {hisher2} gun
+and by two hands pushes the boat back. Understanding, that it can
+turn into a serious trauma, {name1} also throws {hisher1} gun and
+makes an attempt to help the team mate. In several seconds of efforts
+they push the boat back enough to release {name2}'s leg. Looking
+at the bloody spot on trousers, they hurry up back to you.
+{name2} getting -25 health""",
+                "effects": {"char_2": {"health": -25}},
+            },
+            {
+                "score": range(20, 40),
+                "desc": """You decide to choose {name1} and {name2} for this outing.
+Not delaying the fulfillment, they run to the boat and examine
+it carefully. It seems like the loss owners didn't left anything,
+except the boat itself, still {name1} notices a small metal box,
+pinned down by the wherry to the hildcarriage bottom. "Let's get
+it up a little, I'll kick the box with my leg." - {heshe1} proposes. With
+no arguments {name2} gets on the carriage, and they make efforts
+hard to get the boat up. Successfully releasing the box, they drop
+the trans and, heavy breathing, open the conitainer. Nothing! "For
+God's sake!" - {name2} whoops. - "The damn thing was overweighting,
+and there is nothing! To Hell the stuff!". They both turn back.
+{name1} and {name2} getting -20 energy""",
+                "effects": {"assignees": {"energy": -20}},
+            },
+            {
+                "score": range(40, 60),
+                "desc": """You've decided to send {name1} and {name2} for a revision.
+Not pocking around, they run to the boat fast and start to examine
+it. The trans seems to be long forsaken, covered with dirt and in
+some parts even with rust. However, your messengers see three small
+metal containers with padlocks. Using the gun's butts, they open
+them one by one... and they all are empty! "That looks like a joke."
+- {name2} pronounces annoyed. - "A very stupid one." {name1} takes
+several seconds to think, but in the end agrees on that they were
+played. "Let's return to the Adjutant then." - {heshe1} adds.""",
+                "effects": {},
+            },
+            {
+                "score": range(60, 80),
+                "desc": """{name1} and {name2}, chosen for the task, running to the
+boat fast. The white trans seems to be ancient, dirty and even rusty
+in some parts. Its owners most likely have taken all the things
+except the boat itself. Still, after a careful examination, {name2}
+sees an old skin wallet, lying in few meters from the hildcarriage.
+Getting to it, {heshe2} opens the thing and see several old soaked
+dollar papers. Well, if to dry them carefully, the recon can even
+turn successful. With such a catch you messengers go back to you.
+You're getting 70$""",
+                "effects": {"money": 70},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """By your command, {name1} and {name2} take a direction to
+the white boat. While getting closer to it, they see that it's really
+ancient. Doesn't look like its owners left something behind, but your
+scouts still getting on to the hindcarriage and take a look inside
+the transport inners. And, luck, it appears that a kind of an aid
+kit is still there. "A suite for a survival on water." - it says.
+Opening the kit, your people check shelf life of the inners, and
+yeah! Some things are still intact and okay to use. Closing the box,
+{name1} and {name2} clap a high-five and run back to the locomotive.
+You're getting 1 stimulator and 1 medicine""",
+                "effects": {"stimulators": 1, "medicine_boxes": 1},
+            },
+        ),
+    },
 ]
 
 MEET = [
