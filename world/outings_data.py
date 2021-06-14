@@ -862,6 +862,100 @@ Adjutant durability +70""",
             },
         ),
     },
+    {  # 10
+        "name": "Stone Circle",
+        "type": "Enemy Camp",
+        "class_weights": {"soldier": 13.3, "raider": 8, "anarchist": 5},
+        "assignees": 3,
+        "day_part_weights": {"night": 10, "morning": 7, "noon": 0, "evening": 3},
+        "desc": """Three meters fencing, standing right in the center of the meadow,
+attracted your attention from a very big distance. Looking through
+binoculars, you see semicircle light grey parts of hollow cylinders,
+put one to another, organizing a circle of stone walls, covering
+about sixty square meters. The camp is tough! A big wooden tower
+standing in the center of the stronghold seems to be not inhabited,
+but ones who built it definitely were planning to stay here for a
+long time. Unlikely they left the camp. So, it requires to be very
+careful on reckoning the place: it can turn into a good catch as
+well as into a hard fight.""",
+        "results": (
+            {
+                "score": range(0, 20),
+                "desc": """You insctruct {name1}, {name2} and {name3} to approach the camp
+and take a careful look at it. Your messengers energetically jump
+down to the ground and walk to the place. Suddenly, you see some
+kind of an unrest move on the top of the tower. In the next moment
+a loud shot thunders in the air, and a bunch of sparks flyes out
+of the Adjutant hull. Inclining your head for a second, you gaze to
+where the bullet hit, and see a big smoking hole. An anti-tank
+rifle?! Can't be! You shout to your scouts to get back to the train,
+and giving a command to start engine. No more shots rattle - looks
+like the camp beholders are satisfied with your retreat. Still, the
+big hole in the hull has to be repaired now. Not good!
+Adjutant getting -60 durability""",
+                "effects": {"train": {"durability": -60}},
+            },
+            {
+                "score": range(20, 40),
+                "desc": """{name1}, {name2} and {name3} take their gear and go to the camp.
+Nothing promises troubles, your messengers enter the concrete circle.
+Several minutes passes, and you see them exiting back. There is nothing
+in their hands... Still, while they're getting closer, you understand
+that something bad happened inside the camp. The first who started to
+speak, {name2}, explains: "There was a trap. About forty well-armed
+fighters, professionals. They took our money, but let us keep our guns."
+{name1} interrupts the speech: "Let's move before they decided to attack
+the train itself!". Weighing the information, you decide not to disturb
+the camp dwellers anymore. Forty professionals - it's too much.
+You're losing 50$""",
+                "effects": {"money": -50},
+            },
+            {
+                "score": range(40, 60),
+                "desc": """You're sending {name1}, {name2} and {name3} to take a closer
+look at the camp. Nothing promises troubles, the place stays quite,
+your people enter the concrete circle, and about ten minutes you
+don't see or hear any fuss. Calmly exiting the camp, scouts move back
+to the Adjutant. Getting closer, {name3} reports to you: "The camp
+seems to be not inhabited yet. There are some tools, construction
+materials, but nothing really valuable." Nodding your head, you wait
+when your messengers get on the locomotive, and command to start
+the engine. Maybe it's not as bad that you didn't meet the camp
+owners. They seem to be serious people not to be crossed.""",
+                "effects": {},
+            },
+            {
+                "score": range(60, 80),
+                "desc": """You decide that {name1}, {name2} and {name3} will be a good
+recon party. Without delays they take direction to the camp. Nothing
+promises troubles, you don't see any movement in the camp and its
+tower, so your people entering the concrete circle calmly. About
+fifteen minutes passed, and you see them again, carrying something in
+their hands. "There was a drug cache there. Really a lot of chemicals
+are carefully buried within these walls, but {name1} have a sharp eye.
+So, we've taken some of them, those medically useful chemicals of
+course." - {name3} explains. Well, better us than addicts.
+You're getting 1 medicine""",
+                "effects": {"medicine_boxes": 1},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """You choose {name1}, {name2} and {name3} to be a recon party this
+time. Your people organizedly  move to the camp, and, getting to the
+entrance, start to shoot. You take your gun to be prepared to cover
+them, but your scouts just sit near the entrance and shoot, shoot,
+shoot. Several minutes passed, and the fight finally silences. Your
+messengers enter the camp, and the waiting starts... About fifteen
+minutes later you see your people exiting the concrete circle. "There
+were a lot of armed guys, but they were mostly stoned bad. We've
+cleared the place and gathered some money." - {name1} reports and
+puts a bunch of dollars on your desk. - "Nothing more useful for
+us there." - {heshe1} finalizes. Well, that's still a victory!
+You're getting 120$""",
+                "effects": {"money": 120},
+            },
+        ),
+    },
 ]
 
 LOOTING = [
