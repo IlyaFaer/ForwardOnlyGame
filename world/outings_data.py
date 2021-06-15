@@ -2768,4 +2768,98 @@ giving an order to start the Adjutant's engine.
             },
         ),
     },
+    {  # 10
+        "name": "Tents",
+        "type": "Meet",
+        "class_weights": {"soldier": 7, "anarchist": 20, "raider": 11},
+        "assignees": 1,
+        "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
+        "desc": """Getting closer to a dark green spot you've noticed earlier, you see
+that it's some kind of a romani truck. Old and battered by a long
+travelling, it stands right in the middle of the meadow, opened to
+the right side like a showcase. A lot of colorful knick knacks,
+metal dishes, clothes - all of it hanging on the walls and lying,
+pinned down by a rough rope. A human body in a grey suit stands near
+the truck, smoking and looking carefully to your locomotive. From that
+distance you can't tell if there is anything you can use on a road,
+so it makes sense to send someone to see what the trader has to sell.""",
+        "results": (
+            {
+                "score": range(0, 20),
+                "desc": """You're ordering {name1} to speak with the man and see what
+he can offer. Your messenger jumps on the ground and without sudden
+moves gets closer to the trader. You see them speaking for a couple of
+minutes, and then the man takes a grenade launcher. {name1} moves
+several steps aside of him and waits for the demonstration. The truck
+owner aims into a tree standing in about thirty meters, and in the
+next moment the gun in his hands explodes. {name1} staggers back...
+Seeing that there is no more threat, {heshe1} approaches the place
+where the truck owner was. Doesn't seem much left of him... While
+{name1} moves back to the train, you notice that {hisher1} movements
+are little bit inaccurate - the explosion probably deafened {name1}.
+{name1} getting Snail""",
+                "effects": {"char_1": {"add_trait": "Snail"}},
+            },
+            {
+                "score": range(20, 40),
+                "desc": """You're sending {name1} for shopping. Without sudden moves {heshe1}
+approaches the trader truck and starts negotiations. Several minutes
+passed, and you see that your messenger buys something, looking like
+a grenade launcher. With this burden and a box of ammo {name1} returns
+back to the locomotive. "The man was already going to continue his way."
+- he says. As an approval you see that the truck starts its engine and
+moves away. "Let's try one shot!" - {name1} proposes. Opening the ammo
+box, {heshe1} puts a grenade into the gun and, aiming to a tree in a
+thirty meters, does a shot... Zilch. Gazing at you, {name1} changes the
+grenade, shots and... Zilch. "Whatta?!" - {name1} pronounces annoyed.
+Trying other shells, you understand that the gun doesn't work.
+Tricked! And the trader already got too far to get the bastard.
+You're losing 50$""",
+                "effects": {"money": -50},
+            },
+            {
+                "score": range(40, 60),
+                "desc": """{name1} becomes your messenger this time. With no delays {heshe1}
+approaches the trader, and you see them negotiating. Minute, two,
+five, ten - you notice that {name1} makes a step back toward the
+train, and then one more, and more, but the truck owner doesn't give
+up and continue mumble without a half-second pause. You wait
+for about fifteen more minutes, and finally {name1} speeds up. While
+approaching the locomotive, {heshe1} shakes {hisher1} head, showing that
+it was horrorable. You all smile seeing this. "Man, this octopus!" -
+{heshe1} pronounces, while climbing on the train. - "He really got me!
+Let's spurt away before he decided to follow me to the Adjutant!" """,
+                "effects": {},
+            },
+            {
+                "score": range(60, 80),
+                "desc": """{name1} takes a direction to the trader truck. You see {himher1}
+approaching the showcase and speaking with the car owner. It takes
+just a couple of minutes for your messenger to make a deal with the
+trader, and {heshe1} moves back to the locomotive. From the first
+second you understand that there are two aid kits in {hisher1} hands.
+"Can you believe this?" - {name1} asks loudly, while climbing on the
+train. - "Two medicine boxes for just five bucks! Apologies, four and
+ninety nine. I wasn't able to walk along!". "Did you check the shelf
+life?" - you asking carefully. "Sure, who do you think I am?" - {name1}
+answers fast. Satisfied by the bought you command to start engine.
+You're getting 2 meidicines for 5$""",
+                "effects": {"money": -5, "medicine_boxes": 2},
+            },
+            {
+                "score": range(80, 101),
+                "desc": """{name1}, chosen as a negotiator this time, walks to the
+trader truck. You see {himher1} speaking with the car owner for about
+ten minutes, and during this conversation they doesn't throw a gaze
+to the merchandise. Interesting! A couple more minutes passed, and
+{name1} takes a direction back to the Adjutant. Patiently waiting for
+{hisher1} report, you hear following: "The trader is desperate, wants
+to join us. Says, has experience running trains, not steam though,
+but claims to be useful in maintain anyway." Finding this
+interesting, you wave your hand, asking the trader to come closer.
+One person can be recruited""",
+                "effects": {"recruit": 60},
+            },
+        ),
+    },
 ]
