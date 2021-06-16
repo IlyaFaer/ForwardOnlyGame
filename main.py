@@ -28,7 +28,7 @@ from gui import (
     TeachingNotes,
     TraitsGUI,
 )
-from personage.crew import Crew
+from units.crew.crew import Crew
 from train import Train
 from world import World
 from utils import clear_wids

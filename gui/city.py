@@ -9,7 +9,7 @@ import random
 from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TextNode, TransparencyAttrib
 
-from personage.character_data import TRAITS
+from units.crew.character_data import TRAITS
 from utils import clear_wids
 from .widgets import (
     GUI_PIC,

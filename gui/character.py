@@ -14,7 +14,7 @@ from direct.gui.DirectGui import (
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import CardMaker, NodePath, TransparencyAttrib
 
-from personage.character_data import TRAIT_DESC
+from units.crew.character_data import TRAIT_DESC
 from utils import clear_wids
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
@@ -201,7 +201,7 @@ class CharacterGUI:
         """Show the given character status.
 
         Args:
-            char (personage.character.Character):
+            char (units.crew.character.Character):
                 The chosen character object.
         """
         self._char_name["text"] = char.name
@@ -497,7 +497,7 @@ class HealthBar(NodePath):
     """Widget to show character's health.
 
     Args:
-        char (personage.character.Character):
+        char (units.crew.character.Character):
             Character, whos health must be shown.
     """
 

@@ -25,8 +25,8 @@ from panda3d.core import CollisionBox, CollisionNode, CollisionSphere, Point3, V
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from utils import address, chance, take_random
 from .base_enemy_unit import EnemyUnit
-from .shooter import Shooter
-from .unit import Unit
+from units.shooter import Shooter
+from units.unit import Unit
 
 
 class EnemyMotorcyclist(EnemyUnit):
@@ -748,7 +748,6 @@ class Kamikaze(EnemyMotorcyclist):
         self._train_captured = False
         self._explosion_col_np = None
         self.is_jumping = False
-        self.current_part = None
 
         self._side = "left" if self._y_pos > 0 else "right"
 

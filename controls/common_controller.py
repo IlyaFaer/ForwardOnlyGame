@@ -49,7 +49,7 @@ class CommonController:
         """The chosen character object.
 
         Returns:
-            personage.character.Chatacter:
+            units.crew.character.Chatacter:
                 The currently chosen character object.
         """
         return self._chosen_char

@@ -93,7 +93,7 @@ class Crew:
         """Generate one random recruit.
 
         Returns:
-            personage.character.Character: The generated character.
+            units.character.Character: The generated character.
         """
         self._char_id += 1
 
@@ -332,7 +332,7 @@ class Crew:
         """Initialize new character's relations with other characters.
 
         Args:
-            new_char (personage.character.Character):
+            new_char (units.character.Character):
                 A new character in the crew.
         """
         for char in self.chars.values():
@@ -403,7 +403,7 @@ class Crew:
             chars (list):
                 Characters, for whom a damage factor must
                 be calculated.
-            for_char (personage.Character):
+            for_char (units.Character):
                 Unit for whom the factor must be calculated.
 
         Returns:
@@ -470,7 +470,7 @@ class Crew:
         characters except the chosen.
 
         Args:
-            char (personage.character.Character):
+            char (units.crew.character.Character):
                 The character, whose relations must be shown.
         """
         char.hide_relations_ball()

@@ -170,7 +170,7 @@ class Enemy:
         ):
             return False
 
-        if chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0)):
+        if chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0) + 80):
             self._is_cooldown = True
             taskMgr.doMethodLater(  # noqa: F821
                 395, self._stop_cooldown, "stop_attack_cooldown"

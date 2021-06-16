@@ -271,7 +271,7 @@ class GrenadeLauncher:
     """
 
     def __init__(self, train_model):
-        self._is_up = False
+        self.is_up = False
         # flag, which indicates if the launcher
         # is in (un-)loading process
         self._is_loading = False
@@ -307,7 +307,7 @@ class GrenadeLauncher:
 
     def _change_mode(self, task):
         """Change controls mode - common or grenade launcher shooting."""
-        if self._is_up:
+        if self.is_up:
             self._sight.hide()
             self._end_aiming()
         else:
@@ -321,7 +321,7 @@ class GrenadeLauncher:
             base.common_ctrl.deselect()  # noqa: F821
             self._start_aiming()
 
-        self._is_up = not self._is_up
+        self.is_up = not self.is_up
         self._is_loading = False
         return task.done
 
@@ -330,11 +330,13 @@ class GrenadeLauncher:
         if not base.world.is_on_et or self._is_loading:  # noqa: F821
             return
 
+        base.train.disable_enabled_weapon(self)  # noqa: F821
+
         self._is_loading = True
-        self._model.setPlayRate(-4 if self._is_up else 4, "gun_up")
+        self._model.setPlayRate(-4 if self.is_up else 4, "gun_up")
         self._model.play("gun_up")
 
-        if not self._is_up:
+        if not self.is_up:
             self._load_snd.play()
 
         taskMgr.doMethodLater(  # noqa: F821
@@ -468,7 +470,7 @@ class ClusterHowitzer:
 
     def __init__(self, train_model):
         self._is_loading = False
-        self._is_up = False
+        self.is_up = False
 
         self._coors = [None, None, None, None]
         self._sights = []
@@ -507,14 +509,14 @@ class ClusterHowitzer:
 
     def _change_mode(self, task):
         """Change the launcher mode: aiming or idle."""
-        if self._is_up:
+        if self.is_up:
             self._end_aiming()
         else:
             taskMgr.doMethodLater(0.05, self._show_sights, "show_sights")  # noqa: F82
             base.common_ctrl.deselect()  # noqa: F82
             base.accept("mouse1", self._shot)  # noqa: F821
 
-        self._is_up = not self._is_up
+        self.is_up = not self.is_up
         self._is_loading = False
         return task.done
 
@@ -707,11 +709,13 @@ class ClusterHowitzer:
         if not base.world.is_on_et or self._is_loading:  # noqa: F82
             return
 
+        base.train.disable_enabled_weapon(self)  # noqa: F821
+
         self._is_loading = True
-        self._model.setPlayRate(-4 if self._is_up else 4, "gun_up")
+        self._model.setPlayRate(-4 if self.is_up else 4, "gun_up")
         self._model.play("gun_up")
 
-        if not self._is_up:
+        if not self.is_up:
             self._load_snd.play()
 
         taskMgr.doMethodLater(  # noqa: F82
@@ -730,7 +734,7 @@ class MachineGun:
     """
 
     def __init__(self, train_model):
-        self._is_up = False
+        self.is_up = False
         # flag, which indicates if the launcher
         # is in (un-)loading process
         self._is_loading = False
@@ -771,7 +775,7 @@ class MachineGun:
 
     def _change_mode(self, task):
         """Change controls mode - aiming and shooting or passive."""
-        if self._is_up:
+        if self.is_up:
             self._sight.hide()
             self._end_aiming()
         else:
@@ -781,7 +785,7 @@ class MachineGun:
             base.common_ctrl.deselect()  # noqa: F821
             self._start_aiming()
 
-        self._is_up = not self._is_up
+        self.is_up = not self.is_up
         self._is_loading = False
         return task.done
 
@@ -907,9 +911,10 @@ class MachineGun:
         if not base.world.is_on_et or self._is_loading:  # noqa: F821
             return
 
-        self._is_loading = True
+        base.train.disable_enabled_weapon(self)  # noqa: F821
 
-        if not self._is_up:
+        self._is_loading = True
+        if not self.is_up:
             self._load_snd.play()
 
         taskMgr.doMethodLater(0.2, self._change_mode, "machine_gun_aim")  # noqa: F821

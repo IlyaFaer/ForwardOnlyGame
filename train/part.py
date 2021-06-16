@@ -115,7 +115,7 @@ class TrainPart:
         """Choose a non taken cell.
 
         Args:
-            character (personage.character.Character):
+            character (units.crew.character.Character):
                 Unit to set to this part.
 
         Returns:
@@ -137,7 +137,7 @@ class TrainPart:
         Args:
             position (dict):
                 Position and rotation of the taken cell.
-            character (personage.character.Character):
+            character (units.crew.character.Character):
                 Character to remove from this part.
         """
         self._cells.append(position)
@@ -190,7 +190,7 @@ class RestPart:
         """Check if there is a free cell.
 
         Args:
-            character (personage.character.Character):
+            character (units.crew.character.Character):
                 Character to move to this part.
 
         Returns:
@@ -212,7 +212,7 @@ class RestPart:
         Args:
             position (dict):
                 Position and rotation of the taken cell.
-            character (personage.character.Character):
+            character (units.crew.character.Character):
                 Character to remove from this part.
         """
         self.chars.remove(character)

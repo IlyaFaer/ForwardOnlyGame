@@ -14,7 +14,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
-from personage.character_data import TRAIT_DESC
+from units.crew.character_data import TRAIT_DESC
 from utils import clear_wids
 from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 
@@ -207,7 +207,7 @@ class OutingsGUI:
         """Hire unit from the outing.
 
         Args:
-            char (personage.character.Character):
+            char (units.crew.character.Character):
                 Character to recruit.
             cost (int): Cost of the recruitement.
         """

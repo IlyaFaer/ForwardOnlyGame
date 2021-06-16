@@ -10,7 +10,7 @@ import random
 from direct.interval.IntervalGlobal import LerpPosInterval
 
 from utils import chance, take_random
-from .unit import Unit
+from units.unit import Unit
 
 
 class EnemyUnit(Unit):

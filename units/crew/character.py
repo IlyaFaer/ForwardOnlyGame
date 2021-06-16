@@ -16,8 +16,8 @@ from gui.character import HealthBar
 from utils import address, chance, take_random
 
 from .character_data import CLASSES, NAMES, TRAITS
-from .shooter import Shooter
-from .unit import Unit
+from units.shooter import Shooter
+from units.unit import Unit
 
 # cohesion relation indicator colors
 RELATION_COLORS = {
@@ -360,7 +360,7 @@ class Character(Shooter, Unit):
         """Make the given enemy unit this character's target.
 
         Args:
-            enemy_unit (personage.enemy.EnemyUnit):
+            enemy_unit (units.enemy.EnemyUnit):
                 Enemy unit to attack.
         """
         if enemy_unit in self.current_part.enemies:
@@ -676,7 +676,7 @@ class Character(Shooter, Unit):
         """Exchange positions of this Character and the given one.
 
         Args:
-            char (personage.character.Character):
+            char (units.character.Character):
                 Character to exchange the positions with.
         """
         o_part, o_pos = self.current_part, self._current_pos
@@ -941,7 +941,7 @@ def load_char(desc, team, parts):
         parts (dict): Train parts index.
 
     Returns:
-        character.Character: A ready-to-go character object.
+        crew.character.Character: A ready-to-go character object.
     """
     char = Character(desc["id"], desc["name"], desc["class"], desc["sex"], team, desc)
     char.health = desc["health"]

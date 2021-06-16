@@ -32,7 +32,8 @@ class TransportManager:
         """Load transport sound.
 
         Args:
-            unit (enemy_unit.EnemyUnit): Unit to make motorcyclist.
+            unit (units.enemy.enemy_unit.EnemyUnit):
+                Unit to make motorcyclist.
             type_ (str): The transport type: car or motorcycle.
         """
         unit.transport_snd = base.sound_mgr.loadSfx(  # noqa: F821
@@ -50,7 +51,8 @@ class TransportManager:
         """Load transport for the given unit.
 
         Args:
-            unit (enemy_unit.EnemyUnit): The unit to set onto transport.
+            unit (units.enemy.enemy_unit.EnemyUnit):
+                The unit to set onto transport.
         """
         transport_model = unit.class_data["transport_model"]
 

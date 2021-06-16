@@ -12,7 +12,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
-from personage.character_data import TRAIT_DESC
+from units.crew.character_data import TRAIT_DESC
 from utils import take_random
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL, CharacterChooser
 

@@ -113,11 +113,13 @@ class Train:
         self._pre_upgrade = None
         self._bomb_explosions = []
         self._floodlights_mat = None
+        self._upgrade_highlight = 1
+        self._highlight_step = 0.03
+
         self._armor_plate = None
         self._grenade_launcher = None
         self._cluster_howitzer = None
-        self._upgrade_highlight = 1
-        self._highlight_step = 0.03
+        self._machine_gun = None
 
         (
             self._smoke,
@@ -259,6 +261,25 @@ class Train:
         self.ctrl.speed_to_min()
         self._attack_started_snd.play()
 
+    def disable_enabled_weapon(self, except_weapon):
+        """Disable previously active weapon.
+
+        If player enabled a weapon and then enables
+        another one, previous should be disabled.
+
+        Args:
+            except_weapon (
+                Union[MachineGun, ClusterHowitzer, GrenadeLauncner]
+            ): The weapon to keep enabled (currently chosen).
+        """
+        for weapon in (
+            self._grenade_launcher,
+            self._machine_gun,
+            self._cluster_howitzer,
+        ):
+            if weapon.is_up and weapon != except_weapon:
+                weapon.change_state()
+
     def has_cell(self):
         """Check if there is a free cell for a new unit.
 
@@ -288,7 +309,7 @@ class Train:
         """Place the new recruit somewhere on the Train.
 
         Args:
-            char (personage.character.Character):
+            char (units.crew.character.Character):
                 New recruit object.
         """
         for part in self.parts.values():

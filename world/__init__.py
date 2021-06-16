@@ -14,7 +14,7 @@ from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotligh
 
 from const import MOD_DIR
 from gui import CityGUI, RailsScheme
-from personage.enemy import Enemy
+from units.enemy import Enemy
 from utils import address, chance
 
 from .block import Block

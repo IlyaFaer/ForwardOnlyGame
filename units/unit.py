@@ -27,6 +27,7 @@ class Unit(metaclass=abc.ABCMeta):
         self.class_ = class_
         self.is_dead = False
         self.model = None
+        self.current_part = None
 
     @abc.abstractmethod
     def clear(self):

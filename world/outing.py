@@ -210,7 +210,7 @@ def calc_condition_score(cond_max, char):
     Args:
         cond_max (float):
             Maximum points to get from a single character.
-        char (personage.character.Character):
+        char (units.crew.character.Character):
             Character to calculate.
 
     Returns:
