@@ -55,7 +55,7 @@ class MainMenu:
 
     def __init__(self):
         self._save_but = None
-        self._chosen_team = None
+        self._chosen_crew = None
         self._load_msg = None
         self._load_screen = None
         self._is_first_pause = True
@@ -180,33 +180,6 @@ class MainMenu:
 
         return task.again
 
-    def _highlight_but(self, button, _):
-        """Highlight the button pointed by mouse.
-
-        Args:
-            button (panda3d.gui.DirectGui.DirectButton):
-                Button to highlight.
-        """
-        if button["command"] is not None:
-            button["text_scale"] = (
-                button["text_scale"][0] + 0.002,
-                button["text_scale"][1] + 0.003,
-            )
-            self._hover_snd.play()
-
-    def _dehighlight_but(self, button, _):
-        """Dehighlight the button, when mouse pointer leaved it.
-
-        Args:
-            button (panda3d.gui.DirectGui.DirectButton):
-                Button to dehighlight.
-        """
-        if button["command"] is not None:
-            button["text_scale"] = (
-                button["text_scale"][0] - 0.002,
-                button["text_scale"][1] - 0.003,
-            )
-
     def _choose_tactics(self):
         """Choose initial tactics before new game start."""
         if self.tactics_wids:
@@ -226,6 +199,7 @@ class MainMenu:
                 pos=(0.7, 0, 0.75),
             )
         )
+        # an image with a crew representer
         self._crew_preview = DirectFrame(
             parent=self._main_fr,
             frameSize=(-0.61, 0.61, -0.35, 0.35),
@@ -243,7 +217,7 @@ class MainMenu:
             "clickSound": self.click_snd,
             "command": self._show_crew,
         }
-        self._team_buts = {
+        self._crew_buts = {
             "soldiers": DirectButton(
                 text=base.labels.MAIN_MENU[6],  # noqa: F821
                 extraArgs=["soldiers"],
@@ -263,9 +237,9 @@ class MainMenu:
                 **but_params,
             ),
         }
-        self.tactics_wids += self._team_buts.values()
+        self.tactics_wids += self._crew_buts.values()
 
-        for but in self._team_buts.values():
+        for but in self._crew_buts.values():
             self.bind_button(but)
 
         self._team_description = DirectLabel(  # Crew description
@@ -301,6 +275,80 @@ class MainMenu:
         self._alpha_disclaimer.destroy()
         return task.done
 
+    def _dehighlight_but(self, button, _):
+        """Dehighlight the button, when mouse pointer leaved it.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to dehighlight.
+        """
+        if button["command"] is not None:
+            button["text_scale"] = (
+                button["text_scale"][0] - 0.002,
+                button["text_scale"][1] - 0.003,
+            )
+
+    def _highlight_but(self, button, _):
+        """Highlight the button pointed by mouse.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to highlight.
+        """
+        if button["command"] is not None:
+            button["text_scale"] = (
+                button["text_scale"][0] + 0.002,
+                button["text_scale"][1] + 0.003,
+            )
+            self._hover_snd.play()
+
+    def _load_game(self, num):
+        """Load previously saved game.
+
+        Args:
+            num (int): The slot number.
+        """
+        save_file = "saves/save{}.dat".format(num)
+        if not os.path.exists(save_file):
+            return
+
+        self.show_loading()
+        taskMgr.doMethodLater(  # noqa: F821
+            4, self._clear_temp_wids, "clear_main_menu_temp_wids"
+        )
+        base.doMethodLater(  # noqa: F821
+            0.25, base.load_game, "load_game", extraArgs=[num]  # noqa: F821
+        )
+
+    def _read_saves(self):
+        """Read all the game save slots.
+
+        Returns:
+            list: Dicts, each of which describes a save.
+        """
+        saves = []
+        for num in range(1, 4):
+            if save_exists(num):
+                save = shelve.open("saves/save{}".format(str(num)))
+                classes = [char["class"] for char in save["team"]]
+
+                saves.append(
+                    {
+                        "save_time": save["save_time"],
+                        "miles": save["train"]["miles"],
+                        "chars": (
+                            classes.count("soldier"),
+                            classes.count("raider"),
+                            classes.count("anarchist"),
+                        ),
+                    }
+                )
+                save.close()
+            else:
+                saves.append({})
+
+        return saves
+
     def _save_conf_and_restart(self, res_chooser, tutorial_check, lang_chooser):
         """Save configurations and restart the game program.
 
@@ -324,7 +372,7 @@ class MainMenu:
         base.restart_game()  # noqa: F821
 
     def _show_conf(self):
-        """Show game configurations."""
+        """Show game configurations GUI."""
         clear_wids(self.save_wids)
         clear_wids(self.tactics_wids)
 
@@ -414,10 +462,10 @@ class MainMenu:
         Args:
             crew (str): The chosen tactics name.
         """
-        self._chosen_team = crew
+        self._chosen_crew = crew
         self._crew_preview["frameTexture"] = "gui/tex/preview/{}.png".format(crew)
 
-        for key, but in self._team_buts.items():
+        for key, but in self._crew_buts.items():
             but["text_fg"] = SILVER_COL if key == crew else RUST_COL
 
         descs = {
@@ -426,35 +474,6 @@ class MainMenu:
             "anarchists": base.labels.MAIN_MENU[13],  # noqa: F821
         }
         self._team_description["text"] = descs[crew]
-
-    def _read_saves(self):
-        """Read all the game save slots.
-
-        Returns:
-            list: Dicts, each of which describes a save.
-        """
-        saves = []
-        for num in range(1, 4):
-            if save_exists(num):
-                save = shelve.open("saves/save{}".format(str(num)))
-                classes = [char["class"] for char in save["team"]]
-
-                saves.append(
-                    {
-                        "save_time": save["save_time"],
-                        "miles": save["train"]["miles"],
-                        "chars": (
-                            classes.count("soldier"),
-                            classes.count("raider"),
-                            classes.count("anarchist"),
-                        ),
-                    }
-                )
-                save.close()
-            else:
-                saves.append({})
-
-        return saves
 
     def _show_slots(self, for_loading=False):
         """Show save slots GUI.
@@ -545,25 +564,7 @@ class MainMenu:
             0.25,
             base.start_new_game,  # noqa: F821
             "start_new_game",
-            extraArgs=[self._chosen_team],
-        )
-
-    def _load_game(self, num):
-        """Load previously saved game.
-
-        Args:
-            num (int): The slot number.
-        """
-        save_file = "saves/save{}.dat".format(num)
-        if not os.path.exists(save_file):
-            return
-
-        self.show_loading()
-        taskMgr.doMethodLater(  # noqa: F821
-            4, self._clear_temp_wids, "clear_main_menu_temp_wids"
-        )
-        base.doMethodLater(  # noqa: F821
-            0.25, base.load_game, "load_game", extraArgs=[num]  # noqa: F821
+            extraArgs=[self._chosen_crew],
         )
 
     def bind_button(self, button):

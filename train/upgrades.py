@@ -2,7 +2,11 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The Train upgrades API.
+The locomotive upgrades API.
+
+Upgrades can be active and passive. Passive upgrades give some permanent
+effects. Acitve uprades (weapons mostly) are manually controlled by
+player, otherwise doesn't give any effects.
 """
 import random
 
@@ -159,8 +163,7 @@ class ArmorPlate:
 
         Args:
             side (str):
-                Side of the train, which is
-                now covered by the plate.
+                Side of the locomotive, which is now covered by the plate.
         """
         self.cur_position = side
 
@@ -170,7 +173,7 @@ class ArmorPlate:
         return task.done
 
     def _turn_left(self):
-        """Cover the left side of the Train with the plate."""
+        """Cover the left side of the locomotive with the plate."""
         if self.cur_position == "left" or self._is_on_move:
             return
 
@@ -203,7 +206,7 @@ class ArmorPlate:
         )
 
     def _turn_right(self):
-        """Cover the right side of the Train with the plate."""
+        """Cover the right side of the locomotive with the plate."""
         if self.cur_position == "right" or self._is_on_move:
             return
 
@@ -261,16 +264,16 @@ class ArmorPlate:
 
 
 class GrenadeLauncher:
-    """Grenade launcher Train upgrade.
+    """Grenade launcher locomotive upgrade.
 
     Represents an active weapon, which can
     do a lot of damage on some radius.
 
     Args:
-        train_model (panda3d.core.NodePath): The Train model.
+        loc_model (panda3d.core.NodePath): The locomotive model.
     """
 
-    def __init__(self, train_model):
+    def __init__(self, loc_model):
         self.is_up = False
         # flag, which indicates if the launcher
         # is in (un-)loading process
@@ -279,10 +282,10 @@ class GrenadeLauncher:
         self._range_col_np = None
 
         self._model = Actor(address("grenade_launcher"))
-        self._model.reparentTo(train_model)
+        self._model.reparentTo(loc_model)
 
         self._sight = loader.loadModel(address("grenade_sight"))  # noqa: F821
-        self._sight.reparentTo(train_model)
+        self._sight.reparentTo(loc_model)
         self._sight.hide()
 
         self._grenade_explosion = ParticleEffect()
@@ -465,10 +468,10 @@ class ClusterHowitzer:
     """Cluster bombs launcher locomotive upgrade.
 
     Args:
-        train_model (panda3d.core.NodePath): The locomotive model.
+        loc_model (panda3d.core.NodePath): The locomotive model.
     """
 
-    def __init__(self, train_model):
+    def __init__(self, loc_model):
         self._is_loading = False
         self.is_up = False
 
@@ -479,13 +482,13 @@ class ClusterHowitzer:
         self._bombs = []
         self._explosion_snds = []
 
-        self._train_mod = train_model
+        self._train_mod = loc_model
         self._model = Actor(address("cluster_bomb_launcher"))
-        self._model.reparentTo(train_model)
+        self._model.reparentTo(loc_model)
 
         for _ in range(4):
             sight = loader.loadModel(address("grenade_sight"))  # noqa: F82
-            sight.reparentTo(train_model)
+            sight.reparentTo(loc_model)
             sight.hide()
             self._sights.append(sight)
 
@@ -730,10 +733,10 @@ class MachineGun:
     usually harms only one enemy target.
 
     Args:
-        train_model (panda3d.core.NodePath): The Train model.
+        loc_model (panda3d.core.NodePath): The locomotive model.
     """
 
-    def __init__(self, train_model):
+    def __init__(self, loc_model):
         self.is_up = False
         # flag, which indicates if the launcher
         # is in (un-)loading process
@@ -741,11 +744,11 @@ class MachineGun:
         self._col_np = None
 
         self._model = loader.loadModel(address("machine_gun"))  # noqa: F821
-        self._model.reparentTo(train_model)
+        self._model.reparentTo(loc_model)
         self._model.setPos(-0.02, -0.27, 0.31)
 
         self._sight = loader.loadModel(address("machine_gun_sight"))  # noqa: F821
-        self._sight.reparentTo(train_model)
+        self._sight.reparentTo(loc_model)
         self._sight.hide()
 
         self._shot_snd = base.sound_mgr.loadSfx(  # noqa: F82

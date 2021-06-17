@@ -24,7 +24,7 @@ class CommonController:
     mouse clicking and common collisions.
 
     Args:
-        parts (dict): Train parts to set characters on.
+        parts (dict): Locomotive parts to set characters on.
         chars (dict): Characters index.
     """
 
@@ -151,6 +151,39 @@ class CommonController:
             if self.chosen_char is not None:
                 base.change_mouse_pointer("rest")  # noqa: F821
 
+    def _show_char_relations(self):
+        """Show the chosen character relations GUI."""
+        if not self.chosen_char:
+            return
+
+        self._is_relations_shown = not self._is_relations_shown
+
+        if self._is_relations_shown:
+            base.team.show_relations(self.chosen_char)  # noqa: F821
+        else:
+            base.team.hide_relations()  # noqa: F821
+
+    def _show_keys(self):
+        """Show/hide control keys info."""
+        if self._is_keys_shown:
+            self._keys_info.destroy()
+        else:
+            self._keys_info = OnscreenText(
+                text=base.labels.KEYS_INFO,  # noqa: F821
+                align=TextNode.ACenter,
+                font=base.main_font,  # noqa: F821
+                scale=0.07,
+                pos=(0, 0.7),
+                fg=(0.7, 0.7, 0.7, 1),
+            )
+
+        self._is_keys_shown = not self._is_keys_shown
+
+    def _traverse(self, task):
+        """Main traverser task."""
+        self.traverser.traverse(render)  # noqa: F821
+        return task.again
+
     def _unpoint_obj(self, event):
         """Event: mouse pointer moved out of an object."""
         self._pointed_obj = ""
@@ -219,39 +252,6 @@ class CommonController:
         if self._is_relations_shown:
             base.team.hide_relations()  # noqa: F821
             self._is_relations_shown = False
-
-    def _traverse(self, task):
-        """Main traverser task."""
-        self.traverser.traverse(render)  # noqa: F821
-        return task.again
-
-    def _show_keys(self):
-        """Show/hide control keys info."""
-        if self._is_keys_shown:
-            self._keys_info.destroy()
-        else:
-            self._keys_info = OnscreenText(
-                text=base.labels.KEYS_INFO,  # noqa: F821
-                align=TextNode.ACenter,
-                font=base.main_font,  # noqa: F821
-                scale=0.07,
-                pos=(0, 0.7),
-                fg=(0.7, 0.7, 0.7, 1),
-            )
-
-        self._is_keys_shown = not self._is_keys_shown
-
-    def _show_char_relations(self):
-        """Show the chosen character relations GUI."""
-        if not self.chosen_char:
-            return
-
-        self._is_relations_shown = not self._is_relations_shown
-
-        if self._is_relations_shown:
-            base.team.show_relations(self.chosen_char)  # noqa: F821
-        else:
-            base.team.hide_relations()  # noqa: F821
 
     def set_mouse_events(self):
         """

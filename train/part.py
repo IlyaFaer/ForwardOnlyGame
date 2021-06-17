@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The Train parts API.
+The locomotive parts API.
 """
 from panda3d.core import CollisionBox, CollisionNode, CollisionPolygon, Point3
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
@@ -10,13 +10,13 @@ from utils import address, take_random
 
 
 class TrainPart:
-    """A Train part where characters can be set.
+    """A locomotive part where characters can be set.
 
-    Contains characters set on this part and enemies
+    Contains characters set on this part and tracks enemies
     within its shooting range. Has a manipulating arrow,
     which can be used to move a character to this part.
-    Also includes a "shooting range" collider - area,
-    on which characters can choose their targets.
+    Also includes a "shooting range" collider - area, on
+    which characters can choose their enemy unit targets.
 
     Args:
         parent (panda3d.core.NodePath):
@@ -42,7 +42,7 @@ class TrainPart:
 
         self._arrow = self._prepare_arrow(name, arrow_pos)
 
-        # shooting zone for this TrainPart
+        # shooting range for this TrainPart
         col_node = CollisionNode("shoot_zone_" + name)
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(SHOT_RANGE_MASK)
@@ -68,7 +68,7 @@ class TrainPart:
 
         Args:
             name (str): Name of the part.
-            arrow_pos (dict): Arrows position.
+            arrow_pos (dict): Arrow position.
 
         Returns:
             panda3d.core.NodePath: Arrow node.
@@ -79,6 +79,7 @@ class TrainPart:
         arrow.clearLight()
 
         # set manipulating arrow collisions
+        # used to detect pointing the arrow by mouse
         col_node = CollisionNode(name)
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(MOUSE_MASK)
@@ -149,14 +150,14 @@ class TrainPart:
 
 
 class RestPart:
-    """Part of the Train on which characters can rest.
+    """Part of the locomotive on which characters can rest.
 
     Rest helps to regain energy and heal wounds.
 
     Args:
         parent (panda3d.core.NodePath):
             Model, to which characters will be
-            reparented while on this part.
+            parented while on this part.
         name (str): Part name.
     """
 
@@ -169,6 +170,7 @@ class RestPart:
         self.cells = 2
 
         # rest zone collisions
+        # used to detect pointing the Rest Zone by mouse
         col_node = CollisionNode(name)
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(MOUSE_MASK)

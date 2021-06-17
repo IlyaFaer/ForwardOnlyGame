@@ -234,7 +234,7 @@ class EnemyDesc:
             frameColor=(0.14, 0.14, 0.14, 0.82),
             state=DGG.NORMAL,
         )
-        DirectLabel(
+        DirectLabel(  # the note title
             parent=self._fr,
             text=CLASS_DESCS[class_]["title"],
             text_fg=RUST_COL,
@@ -242,12 +242,15 @@ class EnemyDesc:
             pos=(0, 0, 0.44),
             frameColor=(0, 0, 0, 0),
         )
+        # an image on the note (usually demonstrates
+        # the new enemy class/object representer)
         DirectFrame(
             parent=self._fr,
             frameTexture="teach_shots/{}.png".format(CLASS_DESCS[class_]["preview"]),
             pos=(0, 0, 0.15),
             frameSize=(-0.39, 0.39, -0.24, 0.24),
         ).setTransparency(TransparencyAttrib.MAlpha)
+
         DirectLabel(
             parent=self._fr,
             pos=(0, 0, -0.18),
@@ -278,6 +281,8 @@ class EnemyDesc:
 class MechanicDesc:
     """Teaching description of a game mechanic.
 
+    Are shown on particular world blocks on the game start.
+
     Args:
         mechanic (str): The name of the game mechanic to be explained.
     """
@@ -298,7 +303,7 @@ class MechanicDesc:
             pos=(0, 0, 0.44),
             frameColor=(0, 0, 0, 0),
         )
-        self._preview = DirectFrame(
+        self._preview = DirectFrame(  # an image describing the mechanic
             parent=self._fr,
             frameTexture="teach_shots/{}.png".format(
                 MECHANIC_DESC[mechanic]["previews"][self._page]

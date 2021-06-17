@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The game expendable resources GUI.
+Expendable resources GUI.
 """
 from direct.gui.DirectGui import (
     DGG,
@@ -230,6 +230,16 @@ class ResourcesGUI:
             **ABOUT_BUT_PARAMS,
         ).setTransparency(TransparencyAttrib.MAlpha)
 
+    def _dehighlight_but(self, button, _):
+        """Dehighlight button.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to dehighlight.
+        """
+        if "hover_" in button["frameTexture"]:
+            button["frameTexture"] = button["frameTexture"].replace("hover_", "")
+
     def _highlight_coh_but(self, button, _):
         """Highlight cohesion skill button, if it can be used.
 
@@ -241,16 +251,6 @@ class ResourcesGUI:
             button["frameTexture"] = (
                 GUI_PIC + "hover_" + button["frameTexture"].split("/")[-1]
             )
-
-    def _dehighlight_but(self, button, _):
-        """Dehighlight button.
-
-        Args:
-            button (panda3d.gui.DirectGui.DirectButton):
-                Button to dehighlight.
-        """
-        if "hover_" in button["frameTexture"]:
-            button["frameTexture"] = button["frameTexture"].replace("hover_", "")
 
     def _highlight_res_but(self, button, resource, _):
         """Highlight resource button, if it can be used.

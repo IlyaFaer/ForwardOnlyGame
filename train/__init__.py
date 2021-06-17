@@ -2,9 +2,9 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Train - the main game object, API.
+Locomotive - the main game object, API.
 
-Includes the systems of the Train loading, preparations,
+Includes the systems of the locomotive loading, preparations,
 animation, sounds, lights, physics, upgrades.
 """
 import copy
@@ -15,6 +15,10 @@ from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletCharacterControllerNode
 from panda3d.core import PerspectiveLens, PointLight, Spotlight, Vec3
 
+from controls import TrainController
+from gui.train import TrainGUI
+from utils import address, take_random
+
 from .part import RestPart, TrainPart
 from .upgrades import (
     UPGRADES_DESC,
@@ -24,15 +28,11 @@ from .upgrades import (
     MachineGun,
 )
 
-from controls import TrainController
-from gui.train import TrainGUI
-from utils import address, take_random
-
 
 class Train:
     """The Train - the main game object.
 
-    Includes train model, lights, sounds, parts to set
+    Includes locomotive model, lights, sounds, parts to set
     characters on, controller, upgrades and physics.
 
     Args:
@@ -95,11 +95,11 @@ class Train:
 
         self._durability = None
 
-        if description:  # loading params from the last save
+        if description:  # loading params from the game save
             self.durability = description["durability"]
             self._miles = description["miles"] - 1
             self.node.setHpr(description["node_angle"])
-        else:  # new game params
+        else:  # params for a new game
             self.durability = 1000
             self._miles = -1
 
@@ -109,12 +109,13 @@ class Train:
         self._creak_snd_cooldown = False
         self._phys_node = None
         self._phys_shape = None
-        self._upgrades = []
-        self._pre_upgrade = None
         self._bomb_explosions = []
         self._floodlights_mat = None
         self._upgrade_highlight = 1
         self._highlight_step = 0.03
+
+        self._upgrades = []
+        self._pre_upgrade = None
 
         self._armor_plate = None
         self._grenade_launcher = None
@@ -140,18 +141,18 @@ class Train:
 
     @property
     def durability(self):
-        """The Train durability points.
+        """The locomotive durability points.
 
         Returns:
-            int: Current Train durability.
+            int: Current locomotive durability.
         """
         return self._durability
 
     @durability.setter
     def durability(self, value):
-        """Set new Train durability value.
+        """Set new locomotive durability value.
 
-        Updates the durability GUI.
+        Updates the durability GUI as well.
 
         Args:
             value (int): New value.
@@ -161,10 +162,10 @@ class Train:
 
     @property
     def description(self):
-        """The Train state description for game saving.
+        """The locomotive state description for game saving.
 
         Returns:
-            dict: Saveable Train state description.
+            dict: Saveable locomotive state description.
         """
         return {
             "durability": self.durability,
@@ -176,7 +177,7 @@ class Train:
 
     @property
     def upgrades(self):
-        """The currently installed upgrades.
+        """The currently installed locomotive upgrades.
 
         Returns:
             list: Ids of the installed upgrades.
@@ -188,8 +189,7 @@ class Train:
 
         Args:
             side (str): Side label: 'l' or 'r'.
-            brake (panda3d.core.NodePath):
-                Brake model to drop.
+            brake (panda3d.core.NodePath): Brake model to drop.
         """
         if side == "l":
             self._l_brake_sparks.softStop()
@@ -201,14 +201,22 @@ class Train:
         self.ctrl.max_speed += 0.25
         brake.removeNode()
 
+    def _prepare_bomb_explosions(self, task):
+        """Prepare bomb explosion effects."""
+        for _ in range(3):
+            self._bomb_explosions.append(
+                base.effects_mgr.bomb_explosion(self)  # noqa: F821
+            )
+        return task.done
+
     def _prepare_particles(self):
         """
-        Prepare the Train particle effects: smoke,
-        sparks and explosions.
+        Prepare the locomotive particle effects:
+        smoke, sparks and explosions.
 
         Returns:
             (direct.particles.ParticleEffect.ParticleEffect...):
-                Particle effects for the Train.
+                Particle effects for the locomotive.
         """
         smoke = ParticleEffect()
         smoke.loadConfig("effects/smoke1.ptf")
@@ -229,7 +237,7 @@ class Train:
         snow.setH(180)
         snow.start(base.cam, render)  # noqa: F821
 
-        explosions = []
+        explosions = []  # rocket and kamikaze explosions
         for _ in range(3):
             explosion = ParticleEffect()
             explosion.loadConfig("effects/rocket_explode.ptf")
@@ -245,21 +253,38 @@ class Train:
 
         return smoke, l_brake_sparks, r_brake_sparks, explosions, stop_steam
 
-    def _prepare_bomb_explosions(self, task):
-        """Prepare bomb explosion effects."""
-        for _ in range(3):
-            self._bomb_explosions.append(
-                base.effects_mgr.bomb_explosion(self)  # noqa: F821
-            )
-        return task.done
-
     def attack_started(self):
         """Enemy started an attack.
 
-        Give a sound singal and increase the locomotive speed if needed.
+        Give a sound signal and increase the locomotive speed in
+        case it's lower than minimum speed on enemy territory.
         """
         self.ctrl.speed_to_min()
         self._attack_started_snd.play()
+
+    def brake(self, side, brake):
+        """Start braking on the given side.
+
+        Args:
+            side (str): Side label: 'l' or 'r'.
+            brake (panda3d.core.NodePath): Brake shoe model.
+        """
+        self._clunk_snd.play()
+
+        sparks = self._l_brake_sparks if side == "l" else self._r_brake_sparks
+        sparks.start(self.model, self.model)
+        sparks.softStart()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            30, self._clear_brake, side + "_clear_brake", extraArgs=[side, brake],
+        )
+        if self.l_brake and self.r_brake:
+            self.ctrl.max_speed = 0.5
+            self.ctrl.brake_down_to(0.5)
+            return
+
+        self.ctrl.max_speed = 0.75
+        self.ctrl.brake_down_to(0.75)
 
     def disable_enabled_weapon(self, except_weapon):
         """Disable previously active weapon.
@@ -284,7 +309,7 @@ class Train:
         """Check if there is a free cell for a new unit.
 
         Returns:
-            bool: True, if there is a free cell.
+            bool: True, if there is a free cell on locomotive.
         """
         for part in self.parts.values():
             if part.free_cells:
@@ -297,7 +322,7 @@ class Train:
         self._gui.hide_turning_ability()
 
     def load_upgrades(self, upgrades):
-        """Load the Train upgrades saved earlier.
+        """Load the locomotive upgrades from a game save.
 
         Args:
             upgrades (list): Names of the upgrades to load.
@@ -306,11 +331,10 @@ class Train:
             self.install_upgrade(UPGRADES_DESC[up])
 
     def place_recruit(self, char):
-        """Place the new recruit somewhere on the Train.
+        """Place the new recruit somewhere on the locomotive.
 
         Args:
-            char (units.crew.character.Character):
-                New recruit object.
+            char (units.crew.character.Character): New recruit object.
         """
         for part in self.parts.values():
             if part.free_cells > 0:
@@ -329,6 +353,8 @@ class Train:
             dict: Possible upgrades index.
         """
         ups = copy.deepcopy(UPGRADES_DESC)
+
+        # exclude already installed upgrades
         for upgrade in self.upgrades:
             ups.pop(upgrade)
 
@@ -343,7 +369,7 @@ class Train:
         return ups
 
     def set_physics(self, phys_mgr):
-        """Set the Train physics.
+        """Set the locomotive physics.
 
         Args:
             phys_mgr (panda3d.bullet.BulletWorld): Physical world.
@@ -364,33 +390,8 @@ class Train:
             appendTask=True,
         )
 
-    def brake(self, side, brake):
-        """Start braking on the given side.
-
-        Args:
-            side (str): Side label: 'l' or 'r'.
-            brake (panda3d.core.NodePath):
-                Brake shoe model.
-        """
-        self._clunk_snd.play()
-
-        sparks = self._l_brake_sparks if side == "l" else self._r_brake_sparks
-        sparks.start(self.model, self.model)
-        sparks.softStart()
-
-        taskMgr.doMethodLater(  # noqa: F821
-            30, self._clear_brake, side + "_clear_brake", extraArgs=[side, brake],
-        )
-        if self.l_brake and self.r_brake:
-            self.ctrl.max_speed = 0.5
-            self.ctrl.brake_down_to(0.5)
-            return
-
-        self.ctrl.max_speed = 0.75
-        self.ctrl.brake_down_to(0.75)
-
     def slow_down_to(self, target):
-        """Slow down the Train to the given speed.
+        """Slow down the locomotive to the given speed.
 
         Args:
             target (float): Target speed.
@@ -411,8 +412,7 @@ class Train:
         """Move the Train along the given world block.
 
         Args:
-            block (world.block.Block):
-                The world block to move along.
+            block (world.block.Block): The world block to move along.
         """
         self._miles += 1
         self._gui.update_miles(self._miles)
@@ -463,9 +463,9 @@ class Train:
     def _get_rusty_damage(self, task):
         """Do damage because of rusty rails.
 
-        The Train is getting damage on rusty rails, if
-        its speed is higher than 0.7. Damage is indicated
-        with a metal creak sound.
+        The locomotive gets damage on rusty rails, if its
+        speed is higher than 0.7. Damage is indicated with
+        a metal creak sound.
         """
         if self.ctrl.current_speed > 0.7:
             self.durability -= 2
@@ -485,9 +485,9 @@ class Train:
         return task.done
 
     def _set_lights(self):
-        """Configure the Train lights.
+        """Configure the locomotive lights.
 
-        Sets the main Train lighter and lights above the doors.
+        Sets the main locomotive lighter and lights above the doors.
 
         Returns:
             list: NodePath's of the Train lights.
@@ -702,7 +702,7 @@ class Train:
     def get_damage(self, damage):
         """Get damage from an enemy.
 
-        If damage become critical, stop Train.
+        If damage become critical, stop the locomotive.
 
         Args:
             damage (int): Damage points to get.
@@ -720,7 +720,9 @@ class Train:
             base.team.surrender()  # noqa: F821
 
     def do_effects(self, effects):
-        """Do outing effects to the Train.
+        """Do outing effects to the locomotive.
+
+        The main effect is the locomotive durability change.
 
         Args:
             effects (dict): Effects and their values.
@@ -828,7 +830,7 @@ class Train:
         return task.done
 
     def install_upgrade(self, upgrade):
-        """Install the given upgrade on to the Train.
+        """Install the given upgrade on to the locomotive.
 
         Args:
             upgrade (dict): The upgrade description.
@@ -927,10 +929,10 @@ class Train:
         self._machine_gun.change_state()
 
     def _repair(self, task):
-        """Repair the Train.
+        """Repair the locomotive.
 
         Started as a task, when Fire Extinguishers
-        Train upgrade is installed on.
+        locomotive upgrade is installed on.
         """
         if self.durability < 400:
             self.durability += 30
@@ -938,7 +940,7 @@ class Train:
         return task.again
 
     def cover_part(self, part):
-        """Cover the given Train part with the armor plate.
+        """Cover the given locomotive part with the Armor Plate.
 
         Args:
             part (TrainPart): The Train part to cover.
@@ -957,7 +959,7 @@ class Train:
                 break
 
     def preview_upgrade(self, model):
-        """Preview the given upgrade model on the Train.
+        """Preview the given upgrade model on the locomotive.
 
         Used when buying upgrades in a city.
 

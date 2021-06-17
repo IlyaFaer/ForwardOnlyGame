@@ -56,7 +56,7 @@ class ForwardOnly(ShowBase):
 
     Includes the major game systems: starting, loading and saving a game;
     holds the game resources, orchestrates GUIs and the high level game
-    instances. The main mechanism represents, infinite Train movement
+    instances. The main mechanism represents infinite locomotive movement
     along the World blocks, which are loaded and unloaded on a fly.
     """
 
@@ -144,9 +144,9 @@ class ForwardOnly(ShowBase):
         return props
 
     def _move_along_block(self):
-        """Move the Train along the current world block.
+        """Move the locomotive along the current world block.
 
-        While the Train is moving along the current block,
+        While the locomotive is moving along the current block,
         the game prepares the next one and clears penalt.
         """
         self.train.switch_to_current_block()
@@ -272,6 +272,23 @@ class ForwardOnly(ShowBase):
             self._heads[enemy] = 0
 
         self._heads[enemy] += 1
+
+    def change_mouse_pointer(self, state):
+        """Change mouse pointer icon.
+
+        Shows an ability of action.
+
+        Args:
+            state (str): New pointer state.
+        """
+        if state == self._cur_mouse_pointer:
+            return
+
+        self._cur_mouse_pointer = state
+        self._win_prors.setCursorFilename(
+            Filename.binaryFilename("GUI/pointers/" + state + ".ico")
+        )
+        self.win.requestProperties(self._win_prors)
 
     def clear_heads(self):
         """Clear all the records about previously destroyed enemies."""
@@ -418,23 +435,6 @@ class ForwardOnly(ShowBase):
         self.res_gui = ResourcesGUI()
         self.main_menu.show_start_button()
         self.dollars = 300
-
-    def change_mouse_pointer(self, state):
-        """Change mouse pointer icon.
-
-        Shows an ability of action.
-
-        Args:
-            state (str): New pointer state.
-        """
-        if state == self._cur_mouse_pointer:
-            return
-
-        self._cur_mouse_pointer = state
-        self._win_prors.setCursorFilename(
-            Filename.binaryFilename("GUI/pointers/" + state + ".ico")
-        )
-        self.win.requestProperties(self._win_prors)
 
 
 try:

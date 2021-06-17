@@ -38,7 +38,7 @@ class TeachingNotes:
         self._fr.hide()
 
     def _hide_note(self, task):
-        """Hire the current note and choose the next one."""
+        """Hide the current note and choose the next one."""
         self._fr.hide()
         self._note_text = random.choice(base.labels.NOTES)  # noqa: F821
         return task.done

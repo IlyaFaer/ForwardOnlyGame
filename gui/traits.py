@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Character traits control GUI.
+List Of Distinguished - a GUI to control characters' traits.
 """
 from direct.gui.DirectGui import (
     DGG,
@@ -21,7 +21,7 @@ class TraitsGUI:
     """GUI to praise/scold characters.
 
     This GUI gives players an opportunity to
-    control their characters traits.
+    control their characters' traits.
     """
 
     def __init__(self):
@@ -45,7 +45,7 @@ class TraitsGUI:
         self._list.setTransparency(TransparencyAttrib.MAlpha)
         self._list.hide()
 
-        DirectLabel(
+        DirectLabel(  # List of distinguished
             parent=self._list,
             text=base.labels.DISTINGUISHED[0],  # noqa: F821
             text_font=base.main_font,  # noqa: F821
@@ -53,7 +53,7 @@ class TraitsGUI:
             text_scale=0.045,
             pos=(-0.35, 0, 0.65),
         )
-        DirectLabel(
+        DirectLabel(  # the praise/scold mechanisms description
             parent=self._list,
             text=base.labels.DISTINGUISHED[1],  # noqa: F821
             text_font=base.main_font,  # noqa: F821
@@ -64,7 +64,7 @@ class TraitsGUI:
         )
         self._char_chooser = CharacterChooser(is_shadowed=True)
 
-        DirectLabel(
+        DirectLabel(  # Cohesion points:
             parent=self._list,
             text=base.labels.DISTINGUISHED[2],  # noqa: F821
             text_font=base.main_font,  # noqa: F821
@@ -81,7 +81,7 @@ class TraitsGUI:
             text_bg=(0, 0, 0, 0),
             pos=(0.47, 0, 0.065),
         )
-        self._cur_traits_num = DirectLabel(
+        self._cur_traits_num = DirectLabel(  # Current traits
             parent=self._list,
             text="",
             text_font=base.main_font,  # noqa: F821
@@ -90,7 +90,7 @@ class TraitsGUI:
             text_bg=(0, 0, 0, 0),
             pos=(0.3, 0, -0.08),
         )
-        DirectLabel(
+        DirectLabel(  # New traits:
             parent=self._list,
             text=base.labels.DISTINGUISHED[3],  # noqa: F821
             text_font=base.main_font,  # noqa: F821

@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The Train indicators GUI.
+The locomotive indicators GUI.
 """
 from direct.gui.DirectGui import (
     DGG,
@@ -17,7 +17,7 @@ from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
 
 class TrainGUI:
-    """The Train state GUI."""
+    """The locomotive state GUI."""
 
     def __init__(self):
         self._weapon_buts = {}
@@ -29,14 +29,14 @@ class TrainGUI:
             frameTexture=GUI_PIC + "metal1.png",
         )
         frame.setTransparency(TransparencyAttrib.MAlpha)
-        DirectFrame(
+        DirectFrame(  # an icon for the locomotive durability
             parent=frame,
             frameSize=(-0.023, 0.023, -0.023, 0.023),
             pos=(0.05, 0, 0.24),
             frameTexture=GUI_PIC + "train.png",
         ).setTransparency(TransparencyAttrib.MAlpha)
 
-        DirectFrame(
+        DirectFrame(  # an icon for the locomotive speed
             parent=frame,
             frameSize=(-0.028, 0.028, -0.023, 0.023),
             pos=(-0.012, 0, 0.24),
@@ -64,7 +64,7 @@ class TrainGUI:
         )
         self._speed.setR(-90)
 
-        DirectLabel(
+        DirectLabel(  # speed gauge scale
             parent=frame,
             pos=(-0.05, 0, 0.19),
             frameSize=(-0.25, 0.25, -0.01, 0.01),
@@ -166,6 +166,16 @@ class TrainGUI:
         )
         self._fork_lab = None
 
+    def _dehighlight_weapon_but(self, button, _):
+        """Dehighlight weapon button.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to dehighlight.
+        """
+        if "hover_" in button["frameTexture"]:
+            button["frameTexture"] = button["frameTexture"].replace("hover_", "")
+
     def _highlight_weapon_but(self, button, _):
         """Hightlight weapon button.
 
@@ -177,35 +187,6 @@ class TrainGUI:
             button["frameTexture"] = (
                 GUI_PIC + "hover_" + button["frameTexture"].split("/")[-1]
             )
-
-    def _dehighlight_weapon_but(self, button, _):
-        """Dehighlight weapon button.
-
-        Args:
-            button (panda3d.gui.DirectGui.DirectButton):
-                Button to dehighlight.
-        """
-        if "hover_" in button["frameTexture"]:
-            button["frameTexture"] = button["frameTexture"].replace("hover_", "")
-
-    def make_shot(self, weapon):
-        """Disable the weapon button until reloading complete.
-
-        Args:
-            weapon (str): The reloaded weapon name.
-        """
-        self._weapon_buts[weapon]["dis_command"] = self._weapon_buts[weapon]["but"][
-            "command"
-        ]
-        self._weapon_buts[weapon]["but"]["command"] = None
-
-        taskMgr.doMethodLater(  # noqa: F821
-            1,
-            self._show_reloading,
-            "show_reloading_" + weapon,
-            extraArgs=[weapon, self._weapon_buts[weapon]["reloading_len"]],
-            appendTask=True,
-        )
 
     def _show_reloading(self, weapon, length, task):
         """Show reloading shadow on the weapon button.
@@ -248,8 +229,27 @@ class TrainGUI:
         self._weapon_buts[weapon]["frame"]["frameSize"] = (0, 0, 0, 0)
         self._weapon_buts[weapon]["but"]["command"] = command
 
+    def make_shot(self, weapon):
+        """Disable the weapon button until reloading complete.
+
+        Args:
+            weapon (str): The reloaded weapon name.
+        """
+        self._weapon_buts[weapon]["dis_command"] = self._weapon_buts[weapon]["but"][
+            "command"
+        ]
+        self._weapon_buts[weapon]["but"]["command"] = None
+
+        taskMgr.doMethodLater(  # noqa: F821
+            1,
+            self._show_reloading,
+            "show_reloading_" + weapon,
+            extraArgs=[weapon, self._weapon_buts[weapon]["reloading_len"]],
+            appendTask=True,
+        )
+
     def _turn_on_fork(self, fork):
-        """Turn the Train on the next fork.
+        """Turn the locomotive on the next fork.
 
         Args:
             fork (world.block.Block): Fork block to turn on.

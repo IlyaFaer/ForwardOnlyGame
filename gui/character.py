@@ -49,6 +49,7 @@ class CharacterGUI:
         )
         self._fr.setTransparency(TransparencyAttrib.MAlpha)
 
+        # a "?" button to open a detailed description of the character
         self._char_desc_but = DirectButton(
             parent=self._fr,
             pos=(0.27, 0, 0.0675),
@@ -151,170 +152,6 @@ class CharacterGUI:
         self._disease.setTransparency(TransparencyAttrib.MAlpha)
 
         self.clear_char_info()
-
-    def clear_char_info(self, clear_resting=True):
-        """Clear the character GUI.
-
-        Args:
-            clear_resting (bool):
-                Optional. A flag indicating if the list of the
-                resting characters should also be closed.
-        """
-        for wid in (
-            self._char_name,
-            self._char_class,
-            self._char_health,
-            self._char_energy,
-            self._traits,
-            self._char_desc_but,
-            self._disease,
-        ):
-            wid.hide()
-
-        if self._char_desc_shown:
-            self._show_char_desc()
-
-        taskMgr.remove("track_char_info")  # noqa: F821
-        self.char = None
-
-        if clear_resting:
-            for but in self._rest_buttons.values():
-                but.destroy()
-
-        self.rest_list_shown = False
-
-    def destroy_char_button(self, char_id):
-        """Hide the button related to the given character id.
-
-        Args:
-            char_id (str): Character id.
-        """
-        if char_id in self._rest_buttons.keys():
-            self._rest_buttons[char_id].destroy()
-            self._rest_buttons.pop(char_id)
-
-    def hide_tip(self):
-        """Hide the tooltip."""
-        self._tip.hide()
-
-    def show_char_info(self, char):
-        """Show the given character status.
-
-        Args:
-            char (units.crew.character.Character):
-                The chosen character object.
-        """
-        self._char_name["text"] = char.name
-        self._char_class["text"] = char.class_.capitalize()
-        self._traits["text"] = ", ".join(char.traits)
-
-        self._char_health["range"] = char.class_data["health"]
-        self._char_health["value"] = char.health
-        self._char_energy["value"] = char.energy
-
-        if char.is_diseased:
-            self._disease.show()
-        else:
-            self._disease.hide()
-
-        self.char = char
-
-        self._char_name.show()
-        self._char_class.show()
-        self._char_health.show()
-        self._char_energy.show()
-        self._traits.show()
-        self._char_desc_but.show()
-
-        if self._char_desc_shown:
-            self._show_char_desc()
-            self._show_char_desc()
-
-        taskMgr.doMethodLater(  # noqa: F821
-            0.5, self._update_char_info, "track_char_info"
-        )
-
-    def show_tooltip(self, text):
-        """Show tooltip with the given text.
-
-        Args:
-            text (str): Text to show in the tooltip.
-        """
-        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
-            return
-
-        if self.rest_list_shown and text == "Rest zone":
-            return
-
-        self._tip.setText(text)
-        self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
-        self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
-        self._tip.show()
-
-    def update_resting_chars(self, part):
-        """Update the list of the resting characters.
-
-        Args:
-            part (train.part.TrainPart): Rest train part.
-        """
-        for key, but in self._rest_buttons.items():
-            if key != "title":
-                but.destroy()
-                self._rest_buttons[key] = None
-
-        x, _, z = self._rest_buttons["title"].getPos()
-
-        shift = -0.039
-        for char in part.chars:
-            self._rest_buttons[char.id] = DirectButton(
-                pos=(x, 0, z + shift),
-                text=char.name,
-                text_fg=SILVER_COL,
-                frameColor=(0, 0, 0, 0.6),
-                command=base.common_ctrl.choose_char,  # noqa: F821
-                extraArgs=[char.id],
-                scale=(0.04, 0, 0.03),
-            )
-            shift -= 0.033
-
-    def show_resting_chars(self, part):
-        """Show a list of the characters resting in this part.
-
-        Args:
-            part (Train.RestPart): Rest part of the Train.
-        """
-        if self.rest_list_shown:
-            return
-
-        self._tip.hide()
-        self.rest_list_shown = True
-
-        x = base.mouseWatcherNode.getMouseX()  # noqa: F821
-        z = base.mouseWatcherNode.getMouseY()  # noqa: F821
-
-        self._rest_buttons["title"] = DirectButton(
-            pos=(x, 0, z),
-            text=base.labels.TIPS[0],  # noqa: F821
-            text_fg=RUST_COL,
-            text_font=base.main_font,  # noqa: F821
-            frameColor=(0, 0, 0, 0.6),
-            scale=(0.04, 0, 0.03),
-        )
-        shift = -0.039
-        for char in part.chars:
-            if char.is_dead:
-                continue
-
-            self._rest_buttons[char.id] = DirectButton(
-                pos=(x, 0, z + shift),
-                text=char.name,
-                text_fg=SILVER_COL,
-                frameColor=(0, 0, 0, 0.6),
-                command=base.common_ctrl.choose_char,  # noqa: F821
-                extraArgs=[char.id],
-                scale=(0.04, 0, 0.03),
-            )
-            shift -= 0.033
 
     def _update_char_info(self, task):
         """Track the chosen character parameters in the GUI."""
@@ -483,6 +320,170 @@ class CharacterGUI:
         """
         button["frameTexture"] = GUI_PIC + "like.png"
 
+    def clear_char_info(self, clear_resting=True):
+        """Clear the character GUI.
+
+        Args:
+            clear_resting (bool):
+                Optional. A flag indicating if the list of the
+                resting characters should also be closed.
+        """
+        for wid in (
+            self._char_name,
+            self._char_class,
+            self._char_health,
+            self._char_energy,
+            self._traits,
+            self._char_desc_but,
+            self._disease,
+        ):
+            wid.hide()
+
+        if self._char_desc_shown:
+            self._show_char_desc()
+
+        taskMgr.remove("track_char_info")  # noqa: F821
+        self.char = None
+
+        if clear_resting:
+            for but in self._rest_buttons.values():
+                but.destroy()
+
+        self.rest_list_shown = False
+
+    def destroy_char_button(self, char_id):
+        """Hide the button related to the given character id.
+
+        Args:
+            char_id (str): Character id.
+        """
+        if char_id in self._rest_buttons.keys():
+            self._rest_buttons[char_id].destroy()
+            self._rest_buttons.pop(char_id)
+
+    def hide_tip(self):
+        """Hide the tooltip."""
+        self._tip.hide()
+
+    def show_char_info(self, char):
+        """Show the given character status.
+
+        Args:
+            char (units.crew.character.Character):
+                The chosen character object.
+        """
+        self._char_name["text"] = char.name
+        self._char_class["text"] = char.class_.capitalize()
+        self._traits["text"] = ", ".join(char.traits)
+
+        self._char_health["range"] = char.class_data["health"]
+        self._char_health["value"] = char.health
+        self._char_energy["value"] = char.energy
+
+        if char.is_diseased:
+            self._disease.show()
+        else:
+            self._disease.hide()
+
+        self.char = char
+
+        self._char_name.show()
+        self._char_class.show()
+        self._char_health.show()
+        self._char_energy.show()
+        self._traits.show()
+        self._char_desc_but.show()
+
+        if self._char_desc_shown:
+            self._show_char_desc()
+            self._show_char_desc()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.5, self._update_char_info, "track_char_info"
+        )
+
+    def show_tooltip(self, text):
+        """Show tooltip with the given text.
+
+        Args:
+            text (str): Text to show in the tooltip.
+        """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return
+
+        if self.rest_list_shown and text == "Rest zone":
+            return
+
+        self._tip.setText(text)
+        self._tip.setX(base.mouseWatcherNode.getMouseX())  # noqa: F821
+        self._tip.setY(base.mouseWatcherNode.getMouseY())  # noqa: F821
+        self._tip.show()
+
+    def show_resting_chars(self, part):
+        """Show a list of the characters resting in this part.
+
+        Args:
+            part (Train.RestPart): Rest part of the Train.
+        """
+        if self.rest_list_shown:
+            return
+
+        self._tip.hide()
+        self.rest_list_shown = True
+
+        x = base.mouseWatcherNode.getMouseX()  # noqa: F821
+        z = base.mouseWatcherNode.getMouseY()  # noqa: F821
+
+        self._rest_buttons["title"] = DirectButton(
+            pos=(x, 0, z),
+            text=base.labels.TIPS[0],  # noqa: F821
+            text_fg=RUST_COL,
+            text_font=base.main_font,  # noqa: F821
+            frameColor=(0, 0, 0, 0.6),
+            scale=(0.04, 0, 0.03),
+        )
+        shift = -0.039
+        for char in part.chars:
+            if char.is_dead:
+                continue
+
+            self._rest_buttons[char.id] = DirectButton(
+                pos=(x, 0, z + shift),
+                text=char.name,
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.6),
+                command=base.common_ctrl.choose_char,  # noqa: F821
+                extraArgs=[char.id],
+                scale=(0.04, 0, 0.03),
+            )
+            shift -= 0.033
+
+    def update_resting_chars(self, part):
+        """Update the list of the resting characters.
+
+        Args:
+            part (train.part.TrainPart): Rest train part.
+        """
+        for key, but in self._rest_buttons.items():
+            if key != "title":
+                but.destroy()
+                self._rest_buttons[key] = None
+
+        x, _, z = self._rest_buttons["title"].getPos()
+
+        shift = -0.039
+        for char in part.chars:
+            self._rest_buttons[char.id] = DirectButton(
+                pos=(x, 0, z + shift),
+                text=char.name,
+                text_fg=SILVER_COL,
+                frameColor=(0, 0, 0, 0.6),
+                command=base.common_ctrl.choose_char,  # noqa: F821
+                extraArgs=[char.id],
+                scale=(0.04, 0, 0.03),
+            )
+            shift -= 0.033
+
     def move_status_label(self, place):
         """Move the status label widget.
 
@@ -495,6 +496,8 @@ class CharacterGUI:
 
 class HealthBar(NodePath):
     """Widget to show character's health.
+
+    Is shown only during fights.
 
     Args:
         char (units.crew.character.Character):
@@ -526,7 +529,7 @@ class HealthBar(NodePath):
         self._bg.setColor(0.5, 0.5, 0.5, 1)
 
     def _set_health(self, task):
-        """Show the character's health level on the widget."""
+        """Show the current character health on the widget."""
         value = self._char.health / self._char.class_data["health"]
         self._fg.setScale(value or 0.001, 1, 1)
         self._bg.setScale((1 - value) or 0.001, 1, 1)
@@ -538,7 +541,7 @@ class HealthBar(NodePath):
         self.hide()
 
     def show_health(self):
-        """Show the widget and start tracking the character's health."""
+        """Show the widget and start tracking the character's health on it."""
         self.show()
 
         taskMgr.doMethodLater(  # noqa: F821

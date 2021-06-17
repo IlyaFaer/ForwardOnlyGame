@@ -38,6 +38,9 @@ class EffectsManager:
     def _set_explosion_lights(self):
         """Prepare three explosion lights.
 
+        Build a list-pool of light objects to
+        be used in different explosions.
+
         Returns:
             list: List of lights to be used for explosions.
         """
@@ -101,14 +104,14 @@ class EffectsManager:
         """
         return Explosion(self._explosion_lights, parent, "explode_fire2", 1.9)
 
-    def fade_out_screen(self, task):
-        """Smoothly fill the screen with black color."""
-        self._transition.fadeOut(3)
-        return task.done
-
     def fade_in_screen(self, task):
         """Smoothly fill the screen with natural colors."""
         self._transition.fadeIn(3)
+        return task.done
+
+    def fade_out_screen(self, task):
+        """Smoothly fill the screen with black color."""
+        self._transition.fadeOut(3)
         return task.done
 
 
@@ -118,7 +121,7 @@ class Explosion:
     Includes sound, light and particle effects.
 
     Args:
-        explode_lights (list): List of explosion lights.
+        explode_lights (list): Explosion lights pool.
         parent (object): Object to explode.
         ptf (str): Name of the particles file to use.
         length (float): The length of the effect.
@@ -152,8 +155,10 @@ class Explosion:
     def _light_change(self, light, task):
         """Change the explosion light attenuation.
 
+        Implements a gradual (but fast) fall off of the light power.
+
         Args:
-            light (panda3d.core.NodePath): Explosion lights.
+            light (panda3d.core.NodePath): Explosion light object.
         """
         self._light_coef += 0.1
 
@@ -167,7 +172,7 @@ class Explosion:
         return task.again
 
     def play(self):
-        """Make actual explosion and plan its clearing."""
+        """Do the actual explosion and plan its clearing."""
         self._snd.play()
         self._sparks.start(self._parent.model, render)  # noqa: F821
         self._fire.start(self._parent.model, render)  # noqa: F821
@@ -229,7 +234,7 @@ class BurnSmoke:
 
 
 class BombExplosion:
-    """A hand bomb explosion effect.
+    """A hand bomb explosion reusable effect.
 
     Includes sound and particle effects.
 

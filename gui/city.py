@@ -2,7 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-Cities GUI.
+A city GUI.
 """
 import random
 
@@ -83,6 +83,9 @@ class RecruitChooser(CharacterChooser):
     but it also calculates a cost of the chosen recruit
     and inserts it into the "Hire unit" button.
 
+    The recruit's cost depends on his/her traits: positive
+    traits are increasing the cost, negative decreasing.
+
     Args:
         hire_but (panda3d.gui.DirectGui.DirectButton):
             "Hire unit" button object.
@@ -141,14 +144,15 @@ class CityGUI:
     """City GUI.
 
     Includes several services: healing and regaining energy of the
-    player characters, recruiting new characters, repairing the Train,
-    buying the Train upgrades.
+    player characters, recruiting new characters, repairing the
+    locomotive, buying the locomotive upgrades.
     """
 
     def __init__(self):
-        self._repl_wids = []
+        self._temp_wids = []
         self._recruits = []
         self._visit_num = 1
+        self._reward_fr = None
 
         self._amb_snd = loader.loadSfx("sounds/hangar_ambient.ogg")  # noqa: F821
         self._amb_snd.setVolume(0)
@@ -162,7 +166,6 @@ class CityGUI:
         )
         self.write_snd = loader.loadSfx("sounds/GUI/write.ogg")  # noqa: F821
 
-        self._reward_fr = None
         self._fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.35, 0.35, -0.4, 0.7),
@@ -237,18 +240,18 @@ class CityGUI:
         )
 
     def _show_train(self, z_coor):
-        """Show the Train management GUI tab.
+        """Show the locomotive management GUI tab.
 
         Args:
             z_coor (float): Z-coordinate for widgets.
         """
-        clear_wids(self._repl_wids)
+        clear_wids(self._temp_wids)
 
         self._party_but["text_fg"] = RUST_COL
         self._train_but["text_fg"] = SILVER_COL
 
         z_coor -= 0.07
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Locomotive
                 parent=self._fr,
                 text=base.labels.CITY[5],  # noqa: F821
@@ -261,7 +264,7 @@ class CityGUI:
             )
         )
         z_coor -= 0.08
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Repair
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
@@ -273,7 +276,7 @@ class CityGUI:
                 pos=(-0.25, 0, z_coor),
             )
         )
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(
                 parent=self._fr,
                 pos=(-0.05, 0, z_coor + 0.015),
@@ -286,7 +289,7 @@ class CityGUI:
                 extraArgs=[50],
             )
         )
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(
                 parent=self._fr,
                 pos=(0.07, 0, z_coor + 0.015),
@@ -301,7 +304,7 @@ class CityGUI:
         )
 
         z_coor -= 0.09
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Upgrade
                 parent=self._fr,
                 text=base.labels.CITY[7],  # noqa: F821
@@ -321,7 +324,7 @@ class CityGUI:
             text_fg=SILVER_COL,
             pos=(-0.1, 0, z_coor - 0.14),
         )
-        self._repl_wids.append(up_desc)
+        self._temp_wids.append(up_desc)
 
         up_cost = DirectLabel(
             parent=self._fr,
@@ -331,7 +334,7 @@ class CityGUI:
             text_fg=SILVER_COL,
             pos=(0.23, 0, z_coor - 0.17),
         )
-        self._repl_wids.append(up_cost)
+        self._temp_wids.append(up_cost)
 
         but = DirectButton(  # Purchase
             parent=self._fr,
@@ -343,7 +346,7 @@ class CityGUI:
             text_scale=0.035,
             command=self._purchase_upgrade,
         )
-        self._repl_wids.append(but)
+        self._temp_wids.append(but)
         base.main_menu.bind_button(but)  # noqa: F821
 
         z_coor -= 0.05
@@ -353,16 +356,13 @@ class CityGUI:
             (0, 0, z_coor),
             base.train.possible_upgrades(self._visit_num),  # noqa: F821
         )
-        self._repl_wids.append(self._up_chooser)
+        self._temp_wids.append(self._up_chooser)
 
     def _purchase_upgrade(self):
         """Buy the chosen upgrade and install it on to the Train."""
         upgrade = self._up_chooser.chosen_item
-        if (
-            upgrade is None
-            or not base.res_gui.check_enough_money(  # noqa: F821:  # noqa: F821
-                int(upgrade["cost"][:-1])
-            )
+        if upgrade is None or not base.res_gui.check_enough_money(  # noqa: F821
+            int(upgrade["cost"][:-1])
         ):
             return
 
@@ -379,14 +379,14 @@ class CityGUI:
         Args:
             shift (float): Z-coordinate.
         """
-        clear_wids(self._repl_wids)
+        clear_wids(self._temp_wids)
 
         self._party_but["text_fg"] = SILVER_COL
         self._train_but["text_fg"] = RUST_COL
 
         shift -= 0.07
         # the crew GUI
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Crew
                 parent=self._fr,
                 text=base.labels.CITY[9],  # noqa: F821
@@ -403,10 +403,10 @@ class CityGUI:
         self._char_chooser.prepare(
             self._fr, (0, 0, 0.45), base.team.chars  # noqa: F821
         )
-        self._repl_wids.append(self._char_chooser)
+        self._temp_wids.append(self._char_chooser)
 
         shift -= 0.14
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Health
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
@@ -417,7 +417,7 @@ class CityGUI:
                 pos=(-0.2, 0, shift),
             )
         )
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(
                 parent=self._fr,
                 pos=(-0.05, 0, shift + 0.02),
@@ -430,7 +430,7 @@ class CityGUI:
                 extraArgs=[10],
             )
         )
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(
                 parent=self._fr,
                 pos=(0.07, 0, shift + 0.02),
@@ -444,7 +444,7 @@ class CityGUI:
             )
         )
         shift -= 0.1
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Energy
                 parent=self._fr,
                 frameColor=(0, 0, 0, 0.3),
@@ -455,7 +455,7 @@ class CityGUI:
                 pos=(-0.2, 0, shift),
             )
         )
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(
                 parent=self._fr,
                 pos=(-0.05, 0, shift + 0.02),
@@ -468,7 +468,7 @@ class CityGUI:
                 extraArgs=[10],
             )
         )
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(
                 parent=self._fr,
                 pos=(0.07, 0, shift + 0.02),
@@ -482,7 +482,7 @@ class CityGUI:
             )
         )
         shift -= 0.08
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectButton(  # Leave unit
                 parent=self._fr,
                 pos=(0.2, 0, shift),
@@ -497,7 +497,7 @@ class CityGUI:
         )
         shift -= 0.08
         # recruits gui
-        self._repl_wids.append(
+        self._temp_wids.append(
             DirectLabel(  # Recruits
                 parent=self._fr,
                 text=base.labels.CITY[10],  # noqa: F821
@@ -522,15 +522,15 @@ class CityGUI:
             text_scale=0.45,
             command=self._hire,
         )
-        self._repl_wids.append(hire_but)
+        self._temp_wids.append(hire_but)
 
         self._recruit_chooser = RecruitChooser(hire_but)
         self._recruit_chooser.prepare(self._fr, (0, 0, 0.05), self._recruits)
-        self._repl_wids.append(self._recruit_chooser)
+        self._temp_wids.append(self._recruit_chooser)
 
         shift -= 0.08
-        # resources
-        self._repl_wids.append(
+        # expendable resources
+        self._temp_wids.append(
             DirectLabel(  # Resources
                 parent=self._fr,
                 text=base.labels.CITY[11],  # noqa: F821
@@ -554,7 +554,7 @@ class CityGUI:
             text_scale=0.45,
             command=self._buy_supply,
         )
-        self._repl_wids.append(buy_res_but)
+        self._temp_wids.append(buy_res_but)
 
         sell_res_but = DirectButton(  # Sell
             parent=self._fr,
@@ -567,7 +567,7 @@ class CityGUI:
             text_scale=0.45,
             command=self._sell_supply,
         )
-        self._repl_wids.append(sell_res_but)
+        self._temp_wids.append(sell_res_but)
 
         self._res_chooser = ResourceChooser(buy_res_but, sell_res_but)
         self._res_chooser.prepare(
@@ -579,7 +579,7 @@ class CityGUI:
                 "Smoke filter": "smoke_filters",
             },
         )
-        self._repl_wids.append(self._res_chooser)
+        self._temp_wids.append(self._res_chooser)
 
     def _buy_supply(self):
         """Buy the chosen resource."""
