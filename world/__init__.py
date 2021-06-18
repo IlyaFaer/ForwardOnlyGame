@@ -31,13 +31,14 @@ class World:
 
     Args:
         day_part_desc (dict):
-            Day part description. Use when loading a saved game.
+            Day part description. Used when loading a saved game.
     """
 
     def __init__(self, day_part_desc=None):
         self.enemy = None
         self.outings_mgr = None
 
+        # a time factor for periodical disease "attacks"
         self._disease_threshold = 25
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
@@ -151,10 +152,10 @@ class World:
 
     @property
     def last_cleared_block_angle(self):
-        """The last cleared block angle.
+        """The last cleared world block angle relatevely to the render.
 
         Need to be saved to reproduce part of
-        the path on loading a saved game.
+        the path when loading a saved game.
 
         Returns:
             int: The block angle.
@@ -169,10 +170,9 @@ class World:
     def _cache_warmup(self):
         """Load all the game resources once to cache them.
 
-        When a resource is loaded for the first time,
-        render can twitch a little. This can be avoid by
-        loading models before the game actually started
-        and caching them.
+        When a resource is loaded for the first time, the game can twitch
+        a little. This can be avoided by loading models before the game
+        actually started and caching them.
 
         Returns:
             dict: Index of vertices of every surface model.
@@ -206,7 +206,7 @@ class World:
             mod.setZ(-20)
             mod.reparentTo(render)  # noqa: F821
 
-            # remember surface models vertices coordinates,
+            # remember surface model's vertices coordinates,
             # later they will be used to positionate
             # environment models
             if "surface" in path:
@@ -219,21 +219,14 @@ class World:
 
         return all_surf_vertices
 
-    def make_stench_step(self, task):
-        """Move the Stench edge one block further."""
-        self._map[self._stench_step].is_stenchy = True
-        self._stench_step += 1
-
-        if self._stench_step == self._block_num:
-            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
-            base.effects_mgr.stench_effect.play()  # noqa: F821
-
-            base.team.start_stench_activity()  # noqa: F821
-
-        return task.again
-
     def _prepare_inversions(self):
-        """Prepare inversion variants."""
+        """Prepare model inversion variants.
+
+        When you ride along the turn from left to right, you're
+        turning in the opposite direction than in case of moving
+        from right to left. To organize this effect, all the railway
+        turns must have mirrored copies.
+        """
         inversions = {
             "r90_turn": (
                 "l90_turn",
@@ -249,6 +242,23 @@ class World:
             "r_fork": ("l_fork", self._paths["l_fork"], self._paths["cam_l_fork"]),
         }
         return inversions
+
+    def make_stench_step(self, task):
+        """Move the Stench frontier one block further.
+
+        The Stench frontier moves from the left side of the
+        game world to the right, filling blocks one by one.
+        """
+        self._map[self._stench_step].is_stenchy = True
+        self._stench_step += 1
+
+        if self._stench_step == self._block_num:
+            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
+            base.effects_mgr.stench_effect.play()  # noqa: F821
+
+            base.team.start_stench_activity()  # noqa: F821
+
+        return task.again
 
     def _set_physics(self):
         """Set the world physics.
@@ -326,7 +336,7 @@ class World:
         return surf_vertices
 
     def _load_motion_paths(self):
-        """Load all motion path models into index.
+        """Load all motion path models into single index.
 
         Returns:
             dict: Index of paths.
@@ -355,7 +365,7 @@ class World:
         return paths
 
     def _prepare_et_block(self):
-        """Prepare enemy territory block.
+        """Prepare an enemy territory block.
 
         Returns:
             world.block.Block: Prepared enemy territory block.
@@ -514,7 +524,7 @@ class World:
                 )
             )
 
-        # generating branches
+        # generating railway branches
         self._branches = rails_gen.generate_branches(self._map)
         for branch in self._branches:
             br_start_block = Block(
@@ -649,7 +659,7 @@ class World:
             block.name, block.path, block.cam_path = self._inversions[block.name]
 
     def save_map(self, num):
-        """Save the world map.
+        """Save the world map into a file.
 
         Args:
             num (int): The number of save slot.
@@ -885,15 +895,15 @@ class World:
     def prepare_next_block(self, block_num=None, from_city=False):
         """Prepare the next world block.
 
+        Block configurations will be taken from the generated
+        world map. All of its environment models and
+        textures will be loaded and placed on the block.
+
         Args:
             block_num (int): Optional. Id of the block to prepare.
             from_city (bool):
                 Optional. True if the next block is
                 loaded to continue the way from a city.
-
-        Block configurations will be taken from the generated
-        world map. All of its environment models and
-        textures will be loaded and placed on the block.
 
         Returns:
             block.Block: Prepared world block.

@@ -14,9 +14,7 @@ class Unit(metaclass=abc.ABCMeta):
     Args:
         id_ (str): This unit id.
         class_ (str): This unit class.
-        class_data (dict):
-            This unit class definition, including
-            max health points.
+        class_data (dict): This unit class configurations.
     """
 
     def __init__(self, id_, class_, class_data):
@@ -31,7 +29,7 @@ class Unit(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def clear(self):
-        """Deleting this unit from the Game method."""
+        """Delete this unit from the Game."""
         raise NotImplementedError("Every unit class must have clear() method.")
 
     @abc.abstractproperty
@@ -112,7 +110,7 @@ class Unit(metaclass=abc.ABCMeta):
         """Stop this unit related tasks.
 
         Args:
-            names (tuple): Tasks names to stop.
+            names (tuple): Tasks' names to stop.
         """
         for name in names:
             taskMgr.remove(self.id + name)  # noqa: F821

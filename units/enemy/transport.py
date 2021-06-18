@@ -29,11 +29,11 @@ class TransportManager:
         self._models["dodge"].setPlayRate(2.5, "ride")
 
     def _load_snd(self, unit, type_):
-        """Load transport sound.
+        """Load transport move sound.
 
         Args:
             unit (units.enemy.enemy_unit.EnemyUnit):
-                Unit to make motorcyclist.
+                Unit to put on transport.
             type_ (str): The transport type: car or motorcycle.
         """
         unit.transport_snd = base.sound_mgr.loadSfx(  # noqa: F821
@@ -52,7 +52,7 @@ class TransportManager:
 
         Args:
             unit (units.enemy.enemy_unit.EnemyUnit):
-                The unit to set onto transport.
+                The unit to put on transport.
         """
         transport_model = unit.class_data["transport_model"]
 

@@ -39,13 +39,12 @@ FLOWER_RANGES = {
 class Block:
     """Single world block.
 
-    Consists of railway block, path for the Train to
-    move along, environment models and two surface blocks.
+    Consists of railway model, path for the locomotive to move along,
+    environment models and two terrain blocks.
 
-    On creation it chooses surface models and arranges
-    environment models, but only coordinates and model names
-    are generated. All of that content will be loaded on
-    Block.prepare() call.
+    On creation it chooses terrains models and arranges environment
+    models, but only coordinates and model names are generated.
+    All of that content will be loaded on Block.prepare() call.
 
     Args:
         path (Mopath.Mopath): Motion path.
@@ -135,13 +134,12 @@ class Block:
         """Randomly select and arrange environment models.
 
         Args:
-            vertices (list): Vertices of the surface model.
+            vertices (list): Vertices of the terrain model.
 
         Returns:
             list:
-                Lists in which the first element is an
-                environment model name, and the second is
-                its position.
+                Lists in which the first element is an environment
+                model name, and the second is its position.
         """
         models = []
         et_suf = "et_" if self.enemy_territory else ""
@@ -194,17 +192,18 @@ class Block:
         return (address(model), (coor, random.randint(0, 8)), angle)
 
     def _gen_surface(self, side):
-        """Generate surface block.
+        """Generate a terrain block.
 
-        Randomly choose one of the surface blocks proper for
-        this rails block. Randomly rotate it. Use special
-        surface blocks for enemy territory.
+        Randomly choose one of the terrain blocks proper for this
+        rails block. Randomly rotate it. Use special terrain blocks
+        for enemy territory.
 
         Args:
-            side (str): Side of the surface block.
+            side (str):
+                Side of the terrain block, relatively to the railway.
 
         Returns:
-            str, int: Surface model name, angle.
+            str, int: Terrain model name, angle.
         """
         if self.enemy_territory:
             return address("surface_en1"), random.choice(ANGLES)
@@ -232,11 +231,10 @@ class Block:
         return surface, 0
 
     def _load_surface_block(self, name, x_pos, y_pos, angle, side=None, invert=False):
-        """Load surface model and set it to the given coords.
+        """Load terrain model and set it to the given coords.
 
-        Surface model will be reparented to the rails model
-        of this Block. Models are loaded asynchronous to
-        avoid freezing.
+        Terrain model will be reparented to the rails model of this
+        Block. Models are loaded asynchronous to avoid freezing.
 
         Args:
             name (str): Surface model name.
@@ -248,7 +246,7 @@ class Block:
                 True if the Train is moving in the direction
                 opposite to the main railway line.
         """
-        # load surface
+        # load terrain
         surf_mod = loader.loadModel(name)  # noqa: F821
         surf_mod.reparentTo(self.rails_mod)
         surf_mod.setPos(x_pos, y_pos, 0)
@@ -295,7 +293,7 @@ class Block:
                 surf_mod.setH(surf_mod, -90)
 
     def turn_around(self):
-        """Turn the surfaces of the block around."""
+        """Turn the terrain of the block around."""
         l_surf, r_surf = self._surfs
 
         l_pos = l_surf.getPos()

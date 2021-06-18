@@ -68,7 +68,7 @@ class EnemyUnit(Unit):
 
     @property
     def clear_delay(self):
-        """Delay between this character death and clearing.
+        """Delay between this unit death and its clearing.
 
         Returns:
             int: Seconds to hold the unit before delete.
@@ -123,7 +123,7 @@ class EnemyUnit(Unit):
         return True
 
     def _float_move(self, task):
-        """Make enemy floatly move along Train."""
+        """Make enemy floatly move along the Train."""
         if chance(80):
             shift = random.choice((-0.05, 0.05))
             if self._y_pos + shift in self._y_positions:
@@ -157,7 +157,7 @@ class EnemyUnit(Unit):
         self._stop_tasks("_float_move")
 
     def clear(self, task=None):
-        """Clear all the graphical data of this unit."""
+        """Clear all the graphical, physical and sound data of this unit."""
         base.sound_mgr.detach_sound(self.transport_snd)  # noqa: F821
 
         self._move_int.finish()
@@ -172,6 +172,8 @@ class EnemyUnit(Unit):
 
     def get_damage(self, damage):
         """Take damage points and change model color.
+
+        The more damage the unit taken the more red it'll be.
 
         Args:
             damage (int): Damage points to get.

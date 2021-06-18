@@ -99,10 +99,10 @@ class EnemyMotorcyclist(EnemyUnit):
 class MotoShooter(EnemyMotorcyclist, Shooter):
     """A shooter-motorcyclist unit.
 
-    Includes character and his transport.
+    Includes the unit and his transport.
 
     Args:
-        model (actor.Actor): Enemy character model.
+        model (actor.Actor): Enemy unit model.
         id_ (int): Enemy unit id.
         y_positions (list): Free positions along Y.
         enemy_handler (CollisionHandlerEvent): Enemy collisions handler.
@@ -244,7 +244,7 @@ class BrakeThrower(EnemyMotorcyclist):
     """Brake shoes thrower unit.
 
     Brakers are trying to slow down the Train, to make
-    it easier for other enemy units to deal damage.
+    it easier for other enemy units to deal damage to it.
 
     Args:
         model (actor.Actor): Enemy character model.
@@ -290,12 +290,23 @@ class BrakeThrower(EnemyMotorcyclist):
         self._fall_snd = base.sound_mgr.loadSfx("sounds/moto_fall.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(self._fall_snd, self.model)  # noqa: F821
 
+    def _die(self):
+        """Make this enemy unit die.
+
+        Stop all the braking tasks and jumping intervals.
+        """
+        self._stop_tasks("_jump_and_brake", "_fall_sound", "_drop_brake")
+
+        if self._jump_int is not None:
+            self._jump_int.pause()
+
+        EnemyUnit._die(self)
+
     def _drop_brake(self, brake):
-        """Drop braking shoes to slow down Train.
+        """Drop braking shoes to slow down the locomotive.
 
         Args:
-            brake (panda3d.core.NodePath):
-                Brake model to drop.
+            brake (panda3d.core.NodePath): Brake model to drop.
         """
         brake.wrtReparentTo(base.train.model)  # noqa: F821
 
@@ -426,18 +437,6 @@ class BrakeThrower(EnemyMotorcyclist):
 
         if task is not None:
             return task.done
-
-    def _die(self):
-        """Make this enemy die.
-
-        Stop all the braking tasks and jumping interval.
-        """
-        self._stop_tasks("_jump_and_brake", "_fall_sound", "_drop_brake")
-
-        if self._jump_int is not None:
-            self._jump_int.pause()
-
-        EnemyUnit._die(self)
 
 
 class StunBombThrower(EnemyMotorcyclist):

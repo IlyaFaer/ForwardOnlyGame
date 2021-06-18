@@ -59,6 +59,18 @@ class OutingsManager:
             if score in result["score"]:
                 return result["desc"], result["effects"]
 
+    def plan_outing(self):
+        """Generate an outing.
+
+        Returns:
+            str: if outing planned, None otherwise.
+        """
+        self._threshold -= 1
+
+        if self._threshold <= 0:
+            self._threshold = random.randint(25, 36)
+            return random.choice(self._types)
+
     def start_outing(self, type_):
         """Choose and start outing scenario.
 
@@ -74,18 +86,6 @@ class OutingsManager:
                 self._outings[type_] = copy.deepcopy(MEET)
 
         self._gui.start(take_random(self._outings[type_]))
-
-    def plan_outing(self):
-        """Generate an outing.
-
-        Returns:
-            str: if outing planned, None otherwise.
-        """
-        self._threshold -= 1
-
-        if self._threshold <= 0:
-            self._threshold = random.randint(25, 36)
-            return random.choice(self._types)
 
     def show_upcoming(self, type_):
         """Show upcoming outing info.
@@ -126,6 +126,7 @@ class OutingsManager:
 
         base.world.drop_outing_ability()  # noqa: F821
 
+        # calculate outing score
         cond_score = 0
         class_score = 0
         cond_max = 25 / len(chars)
@@ -143,6 +144,7 @@ class OutingsManager:
         score += cohesion_score
         score = round(score)
 
+        # do the outing result effects
         desc, effects = self._get_result(score, outing["results"])
         format_dict = {}
         for index, char in enumerate(chars, start=1):
@@ -161,6 +163,7 @@ class OutingsManager:
         selected_effect = effects.get("select_char")
         recruit_effect = effects.get("recruit")
 
+        # show the outing result on the GUI
         self._gui.show_result(
             desc,
             score,

@@ -10,6 +10,7 @@ import random
 from utils import chance, take_random
 from .character import generate_char, load_char
 
+# cohesion factors, which are used on every cohesion increasing step
 COHESION_FACTORS = {
     ("anarchist", "anarchist"): 0.71,
     ("soldier", "soldier"): 0.57,
@@ -22,20 +23,13 @@ COHESION_FACTORS = {
     ("soldier", "anarchist"): 0.52,
 }
 
-DEFAULT_TEAMS = {
-    "soldiers": {"class": "soldier", "sexes": ("male", "male", "male")},
-    "raiders": {"class": "raider", "sexes": ("male", "male", "female")},
-    "anarchists": {"class": "anarchist", "sexes": ("male", "male", "female")},
-}
-
 
 class Crew:
     """All the player's characters together object."""
 
     def __init__(self):
         self._char_id = 0  # variable to count character ids
-        # cohesion relations between characters
-        self._relations = {}
+        self._relations = {}  # cohesion relations between characters
         self._is_in_stench = False
 
         self.chars = {}
@@ -55,34 +49,65 @@ class Crew:
 
     @property
     def current_cohesion(self):
-        """Current team cohesion values.
+        """Current crew cohesion values.
 
         Returns:
             float, dict:
-                Total team cohesion, relations index.
+                Total crew cohesion, relations index.
         """
         return self.cohesion, self._relations
 
     @property
     def description(self):
-        """Saveable team description.
+        """Saveable crew description.
 
         Returns:
             list: Saveable description of every unit.
         """
         return [char.description for char in self.chars.values()]
 
-    def gen_default(self, chosen_team):
-        """Generate a default team.
+    def _plan_cohesion_cooldown(self, delay):
+        """Start cohesion abilities cooldown.
+
+        If cohesion skill was used, all the cohesion
+        skills become non-active for some time.
 
         Args:
-            chosen_team (str): The tactics to generate team for.
+            delay (int): Cooldown length in seconds.
         """
-        for sex in DEFAULT_TEAMS[chosen_team]["sexes"]:
+        self.cohesion_cooldown = True
+        base.res_gui.disable_cohesion()  # noqa: F821
+
+        taskMgr.doMethodLater(  # noqa: F821
+            delay, self._stop_cohesion_cooldown, "stop_cohesion_cooldown"
+        )
+        for m in range(int(delay / 60)):
+            taskMgr.doMethodLater(  # noqa: F821
+                m * 60,
+                base.res_gui.show_reload_min,  # noqa: F821
+                "show_reloading_eta",
+                extraArgs=[(int(delay / 60) - m)],
+            )
+
+    def gen_default(self, chosen_crew):
+        """Generate a default crew.
+
+        There are three default crew types:
+        Soldiers, Raiders and Anarchists.
+
+        Args:
+            chosen_crew (str): The crew type to generate.
+        """
+        default_crews = {
+            "soldiers": {"class": "soldier", "sexes": ("male", "male", "male")},
+            "raiders": {"class": "raider", "sexes": ("male", "male", "female")},
+            "anarchists": {"class": "anarchist", "sexes": ("male", "male", "female")},
+        }
+        for sex in default_crews[chosen_crew]["sexes"]:
             self._char_id += 1
 
             char = generate_char(
-                self._char_id, DEFAULT_TEAMS[chosen_team]["class"], sex, self
+                self._char_id, default_crews[chosen_crew]["class"], sex, self
             )
             char.prepare()
 
@@ -90,7 +115,7 @@ class Crew:
             self.chars[char.id] = char
 
     def generate_recruit(self):
-        """Generate one random recruit.
+        """Generate a single random recruit.
 
         Returns:
             units.character.Character: The generated character.
@@ -119,12 +144,12 @@ class Crew:
         return chars
 
     def load(self, char_desc, parts, cohesion_desc):
-        """Load the team according to the given description.
+        """Load the crew according to the given description.
 
         Args:
             char_desc (list): Characters descriptions.
             parts (dict): Train parts index.
-            cohesion_desc (tuple): Cohesion.
+            cohesion_desc (tuple): Crew relations description.
         """
         for char_desc in char_desc:
             char = load_char(char_desc, self, parts)
@@ -230,7 +255,7 @@ class Crew:
         return task.done
 
     def celebrate(self):
-        """Run victory celebration."""
+        """Run victory celebration sequence."""
         if len(self.chars) > 2:
             taskMgr.doMethodLater(  # noqa: F821
                 0.5, self._victory_snd.play, "play_victory_sound", extraArgs=[]
@@ -241,28 +266,8 @@ class Crew:
                     random.uniform(0, 0.4), char.celebrate, "celebrate_victory"
                 )
 
-    def _plan_cohesion_cooldown(self, delay):
-        """Start cohesion abilities cooldown.
-
-        Args:
-            delay (int): Cooldown length in seconds.
-        """
-        self.cohesion_cooldown = True
-        base.res_gui.disable_cohesion()  # noqa: F821
-
-        taskMgr.doMethodLater(  # noqa: F821
-            delay, self._stop_cohesion_cooldown, "stop_cohesion_cooldown"
-        )
-        for m in range(int(delay / 60)):
-            taskMgr.doMethodLater(  # noqa: F821
-                m * 60,
-                base.res_gui.show_reload_min,  # noqa: F821
-                "show_reloading_eta",
-                extraArgs=[(int(delay / 60) - m)],
-            )
-
     def prepare_to_fight(self):
-        """Prepare every character to fight."""
+        """Prepare every character for a fight."""
         for char in self.chars.values():
             if char.current_part.name == "part_rest":
                 continue
@@ -271,7 +276,7 @@ class Crew:
         taskMgr.doMethodLater(0.7, self._check_enemies, "check_enemies")  # noqa: F821
 
     def _check_enemies(self, task):
-        """Check if all the enemies are defeated."""
+        """Check if all enemies are defeated."""
         if base.world.enemy.active_units:  # noqa: F821
             return task.again
 
@@ -279,18 +284,18 @@ class Crew:
         return task.done
 
     def surrender(self):
-        """Make the whole team surrender."""
+        """Make the whole crew surrender."""
         for char in self.chars.values():
             char.surrender()
 
     def _calc_cohesion(self, task):
-        """Calculate the current team cohesion.
+        """Calculate the current crew cohesion.
 
         Relations between all the characters are tracked.
         While characters are staying together, cohesion
         between them increases. Total cohesion is calculated
         as a sum of all relations relatively to the number
-        of all relations in team. Different unit classes
+        of all relations in the crew. Different unit classes
         have different cohesion factors.
         """
         for char1 in self.chars.values():
@@ -354,12 +359,12 @@ class Crew:
         base.res_gui.update_cohesion(self.cohesion)  # noqa: F821
 
     def calc_cohesion_for_chars(self, chars):
-        """Calculate cohesion for an outing party.
+        """Calculate cohesion for the given characters.
 
         Cohesion will be calculated only with relations
         between the given characters. If only one character
         given, all of his relations will be calculated.
-        Resulting sum will be relative to 20 - maximum
+        Resulting sum will be relative to 25 - maximum
         cohesion score in any outing.
 
         Args:
@@ -486,10 +491,10 @@ class Crew:
             char.hide_relations_ball()
 
     def use_medicine(self):
-        """Use medicine box on the chosen character.
+        """Use a medicine on the chosen character.
 
         Will help the character to get well.
-        Uses single medicine box resource.
+        Uses single Medicine resource.
         """
         if not base.resource("medicine_boxes"):  # noqa: F821
             return

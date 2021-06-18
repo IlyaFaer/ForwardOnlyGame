@@ -15,9 +15,9 @@ from const import MOUSE_MASK, NO_MASK
 from gui.character import HealthBar
 from utils import address, chance, take_random
 
-from .character_data import CLASSES, NAMES, TRAITS
 from units.shooter import Shooter
 from units.unit import Unit
+from .character_data import CLASSES, NAMES, TRAITS
 
 # cohesion relation indicator colors
 RELATION_COLORS = {
@@ -36,12 +36,14 @@ class Character(Shooter, Unit):
     Represents a unit controlled by a player.
 
     Args:
-        id_ (int): The character unique id.
-        name (str): The character name.
-        class_ (str): Unit class.
-        sex (str): The character gender.
+        id_ (int): This character unique id.
+        name (str): This character name.
+        class_ (str): This character class.
+        sex (str): This character gender.
         team (crew.Crew): The Crew object.
-        desc (dict): Optional. The character description.
+        desc (dict):
+            Optional. This character description (used
+            for loading character from a saved game).
     """
 
     def __init__(self, id_, name, class_, sex, team, desc=None):
@@ -229,12 +231,21 @@ class Character(Shooter, Unit):
 
     @property
     def tooltip(self):
-        """Tooltip to show on mouse pointing to this character.
+        """Tooltip to show on this character mouse pointing.
 
         Returns:
             str: This character name.
         """
         return self.name
+
+    def attack(self, enemy_unit):
+        """Make the given enemy unit this character's target.
+
+        Args:
+            enemy_unit (units.enemy.EnemyUnit): Enemy unit to attack.
+        """
+        if enemy_unit in self.current_part.enemies:
+            self._target = enemy_unit
 
     def prepare(self):
         """Load the character model and positionate it.
@@ -264,9 +275,9 @@ class Character(Shooter, Unit):
 
         self.model.setPlayRate(0.8, "stand_and_aim")
         self.model.setPlayRate(0.6, "stand")
-
         self.model.loop("stand")
         self._current_anim = "stand"
+
         self._health_bar = HealthBar(self)
 
         base.team.init_relations(self)  # noqa: F821
@@ -356,18 +367,10 @@ class Character(Shooter, Unit):
 
         return True
 
-    def attack(self, enemy_unit):
-        """Make the given enemy unit this character's target.
-
-        Args:
-            enemy_unit (units.enemy.EnemyUnit):
-                Enemy unit to attack.
-        """
-        if enemy_unit in self.current_part.enemies:
-            self._target = enemy_unit
-
     def do_effects(self, effects):
         """Do outing effects to this character.
+
+        Effects are: adding traits, changing health and energy.
 
         Args:
             effects (dict): Effects and their values.
@@ -389,7 +392,7 @@ class Character(Shooter, Unit):
                 setattr(self, key, getattr(self, key) + value)
 
     def prepare_to_fight(self):
-        """Prepare the character to fight.
+        """Prepare this character for a fight.
 
         Switch animations and run a task to choose a target.
         """
@@ -410,8 +413,7 @@ class Character(Shooter, Unit):
     def rest(self):
         """Make this character rest.
 
-        Stops all the active tasks and
-        starts energy regaining/healing.
+        Stops all the active tasks and starts energy regaining/healing.
         """
         self._stop_tasks(
             "_reduce_energy", "_shoot", "_aim", "_choose_target", "_idle_anim"
@@ -485,7 +487,10 @@ class Character(Shooter, Unit):
         return task.again
 
     def _gain_energy(self, task):
-        """Regain this character energy."""
+        """Regain this character energy.
+
+        Used as a timed task while the character is resting.
+        """
         if (
             "Motion sickness" in self.traits
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
@@ -502,7 +507,10 @@ class Character(Shooter, Unit):
         return task.again
 
     def _heal(self, task):
-        """Regain this character health."""
+        """Regain this character health.
+
+        Used as a timed task while the character is resting.
+        """
         if (
             "Motion sickness" in self.traits
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
@@ -563,7 +571,7 @@ class Character(Shooter, Unit):
         return task.done
 
     def _calm_down(self, force):
-        """Return to passive state.
+        """Return to passive state on a combat over.
 
         Args:
             force (bool):
@@ -609,10 +617,10 @@ class Character(Shooter, Unit):
         return task.again
 
     def _die(self):
-        """Character death code.
+        """Character death sequence.
 
-        Stop all the character's tasks, play death
-        animation and plan the character clearing.
+        Stop all the character's tasks, play death animation
+        and plan the character object clearing.
         """
         if self._team.hold_together:
             self.health = 1
@@ -931,7 +939,7 @@ def generate_char(id_, class_, sex, team=None):
 
 
 def load_char(desc, team, parts):
-    """Load a char using the given description.
+    """Load a character, using the given description.
 
     Load the model, state and move to the saved position.
 

@@ -30,7 +30,7 @@ ROCKET_THRESHOLD = 16
 class Barrier:
     """Enemy barrier.
 
-    Deals damage to the Train on a hit.
+    Deals damage to the locomotive on a hit.
 
     Args:
         block (world.block.Block): Block to set this barrier on.
@@ -49,15 +49,13 @@ class Barrier:
         )
 
     def _prepare_physics(self, id_, block, x_coor, y_coor):
-        """Prepare physics for the given model.
+        """Prepare physics for the given barrier model.
 
         Args:
-            id_ (str):
-                Barrier id. Used as a prefix in rigid body id.
-            block (world.block.Block):
-                Block to set barrier on.
-            x_coor (float): X axis coordinate to set block on.
-            y_coor (float): Y axis coordinate to set block on.
+            id_ (str): Barrier id. Used as a prefix in rigid body id.
+            block (world.block.Block): Block to set barrier on.
+            x_coor (float): X coordinate to set block on.
+            y_coor (float): Y coordinate to set block on.
         """
         rb_node = BulletRigidBodyNode(id_ + str(x_coor))
         rb_node.setMass(150)
@@ -127,7 +125,7 @@ class Rocket:
         seq.start()
 
     def _explode(self, side):
-        """Explode the rocket.
+        """Explode the rocket and deal damage to the locomotive.
 
         Args:
             side (str):

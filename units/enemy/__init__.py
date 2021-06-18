@@ -21,6 +21,7 @@ from .enemy_unit import (
 )
 from .transport import TransportManager
 
+# enemy classes description
 CLASSES = {
     "classes": (
         {
@@ -72,6 +73,7 @@ CLASSES = {
     "attack_chances": {"morning": 6, "noon": 20, "evening": 35, "night": 20},
 }
 
+# enemy objects
 NOT_TRANSPORT_CLASSES = (
     {"class": Barrier, "threshold": BARRIER_THRESHOLD},
     {"class": Rocket, "threshold": ROCKET_THRESHOLD},
@@ -81,7 +83,7 @@ NOT_TRANSPORT_CLASSES = (
 class Enemy:
     """Class to hold an enemy fraction overall.
 
-    Includes all the currently active enemies.
+    Includes all the currently active enemy units/objects.
     """
 
     def __init__(self):
@@ -122,7 +124,7 @@ class Enemy:
         """Load single enemy unit.
 
         Args:
-            train_mod (panda3d.core.NodePath): Train model to move.
+            train_mod (panda3d.core.NodePath): Train model to overtake.
             class_data (dict): Enemy class description.
             id_ (int): Unit id.
         """
