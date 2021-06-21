@@ -22,8 +22,8 @@ SUN_COLORS = itertools.cycle(
         },
         {
             "name": "noon",
-            "dir": Vec4(0.55, 0.52, 0.39, 1),
-            "amb": Vec4(0.51, 0.51, 0.51, 1),
+            "dir": Vec4(0.545, 0.515, 0.385, 1),
+            "amb": Vec4(0.505, 0.505, 0.505, 1),
         },
         {
             "name": "evening",

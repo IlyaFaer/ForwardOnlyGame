@@ -401,9 +401,9 @@ class Character(Shooter, Unit):
             self._idle_seq.finish()
 
         self.model.loop("stand_and_aim")
-        self._current_anim = "stand_and_aim"
         LerpAnimInterval(self.model, 0.8, self._current_anim, "stand_and_aim").start()
         LerpAnimInterval(self.model, 0.8, "stand", "stand_and_aim").start()
+        self._current_anim = "stand_and_aim"
 
         taskMgr.doMethodLater(  # noqa: F821
             0.5, self._choose_target, self.id + "_choose_target"

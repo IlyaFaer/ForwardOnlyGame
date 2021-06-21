@@ -258,12 +258,12 @@ class Crew:
         """Run victory celebration sequence."""
         if len(self.chars) > 2:
             taskMgr.doMethodLater(  # noqa: F821
-                0.5, self._victory_snd.play, "play_victory_sound", extraArgs=[]
+                0.6, self._victory_snd.play, "play_victory_sound", extraArgs=[]
             )
 
             for char in self.chars.values():
                 taskMgr.doMethodLater(  # noqa: F821
-                    random.uniform(0, 0.4), char.celebrate, "celebrate_victory"
+                    random.uniform(0.1, 0.5), char.celebrate, "celebrate_victory"
                 )
 
     def prepare_to_fight(self):

@@ -20,7 +20,7 @@ PLAINS_GRASS = (
 LOCATION_CONF = {
     "ambient_sounds": ("meadow_noon", "meadow_night"),
     "with_quantity": (
-        {"models": PLAINS_TREES, "quantity": (15, 25), "square": "wide"},
+        {"models": PLAINS_TREES, "quantity": (17, 25), "square": "wide"},
         {"models": ("small_tree1",), "quantity": (1, 3), "square": "wide"},
         {"models": ("stump1",), "quantity": (1, 4), "square": "wide"},
         {"models": PLAINS_GRASS, "quantity": (20, 35), "square": "wide"},
@@ -39,7 +39,7 @@ LOCATION_CONF = {
     ),
     # enemy territory configurations
     "et_with_quantity": (
-        {"models": PLAINS_TREES, "quantity": (5, 10), "square": "narrow"},
+        {"models": PLAINS_TREES, "quantity": (7, 10), "square": "narrow"},
         {"models": ("small_tree1",), "quantity": (1, 3), "square": "narrow"},
         {"models": PLAINS_GRASS, "quantity": (15, 40), "square": "wide"},
         {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},

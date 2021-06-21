@@ -177,6 +177,10 @@ optimal route""",
     """Railway branches always merge
 back to the main
 railway line""",
+    """Even bad outing result can
+be very useful -
+characters will
+increase cohesion""",
     # Train
     """You can turn around in a city.
 Consider it, while choosing

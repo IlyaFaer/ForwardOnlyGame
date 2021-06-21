@@ -248,9 +248,15 @@ class Train:
         )
 
         stop_steam = ParticleEffect()
-        stop_steam.loadConfig("effects/stop_steam.ptf")
-        stop_steam.setPos(0.06, 0.2, 0.1)
-
+        taskMgr.doMethodLater(  # noqa: F821
+            1,
+            stop_steam.loadConfig,
+            "load_steam_particle",
+            extraArgs=["effects/stop_steam.ptf"],
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            1.1, stop_steam.setPos, "set_steam_particle", extraArgs=[0.06, 0.2, 0.1]
+        )
         return smoke, l_brake_sparks, r_brake_sparks, explosions, stop_steam
 
     def attack_started(self):

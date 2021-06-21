@@ -397,13 +397,14 @@ You're getting 90$ and +100 Adjutant durability""",
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
         "desc": """From a very long distance you're catching your eyes on several grey
 rectangles. Buses? That can promise troubles as well as a good place
-for looting. While the Train getting closer to the vehicle, it becomes
-clearer that it's not just a bunch of cars, it's a small auto camp.
-Five big trailers with clotheslines stretched between them, soccer
-balls and bonfires looking quiet, but definitely inhabited. You're
-not able to find any human by your eyes, and that fact makes the
-situation even harder: there can be dozens of fighters there. It
-makes sense to prepare well before entering this trailer camp.""",
+for looting. While the Adjutant getting closer to the vehicle, it
+becomes clearer that it's not just a bunch of cars, it's a small
+auto camp. Five big trailers with clotheslines stretched between
+them, soccer balls and bonfires looking quiet, but definitely
+inhabited. You're not able to find any human by your eyes, and
+that fact makes the situation even harder: there can be dozens
+of fighters there. It makes sense to prepare well before
+entering this trailer camp.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -2769,9 +2770,9 @@ giving an order to start the Adjutant's engine.
         ),
     },
     {  # 10
-        "name": "Tents",
+        "name": "Romani Truck",
         "type": "Meet",
-        "class_weights": {"soldier": 7, "anarchist": 20, "raider": 11},
+        "class_weights": {"soldier": 9, "anarchist": 40, "raider": 19},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
         "desc": """Getting closer to a dark green spot you've noticed earlier, you see
