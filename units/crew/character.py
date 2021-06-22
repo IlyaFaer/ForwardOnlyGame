@@ -8,7 +8,7 @@ import copy
 import random
 
 from direct.actor.Actor import Actor
-from direct.interval.IntervalGlobal import LerpAnimInterval, Sequence
+from direct.interval.IntervalGlobal import Func, LerpAnimInterval, Sequence
 from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
@@ -312,7 +312,7 @@ class Character(Shooter, Unit):
 
     def celebrate(self, task):
         """Play victory celebration animation."""
-        LerpAnimInterval(self.model, 1, "stand_and_aim", "celebrate").start()
+        LerpAnimInterval(self.model, 1, self._current_anim, "celebrate").start()
         self._current_anim = "celebrate"
         self.model.play("celebrate")
         return task.done
@@ -541,7 +541,7 @@ class Character(Shooter, Unit):
         # enemies retreated - return to passive state
         if not base.world.enemy.active_units:  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
-                6, self._calm_down, self.id + "_calm_down", extraArgs=[False],
+                7, self._calm_down, self.id + "_calm_down", extraArgs=[False],
             )
             return task.done
 
@@ -566,7 +566,7 @@ class Character(Shooter, Unit):
             return task.done
 
         taskMgr.doMethodLater(  # noqa: F821
-            6, self._calm_down, self.id + "_calm_down", extraArgs=[False]
+            7, self._calm_down, self.id + "_calm_down", extraArgs=[False]
         )
         return task.done
 
@@ -587,6 +587,7 @@ class Character(Shooter, Unit):
         LerpAnimInterval(
             self.model, 0.1 if force else 2, self._current_anim, "stand"
         ).start()
+        self._current_anim = "stand"
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
         )
@@ -605,16 +606,21 @@ class Character(Shooter, Unit):
             self._current_anim = random.choice(
                 ("incline1", "gun_up", "release_gun", "tread1", "turn_head1")
             )
-        LerpAnimInterval(self.model, 0.3, "stand", self._current_anim).start()
+        LerpAnimInterval(self.model, 0.2, "stand", self._current_anim).start()
 
         self._idle_seq = Sequence(
             self.model.actorInterval(self._current_anim, playRate=0.75),
-            LerpAnimInterval(self.model, 0.3, self._current_anim, "stand"),
+            Func(self._stand),
         )
         self._idle_seq.start()
 
         task.delayTime = random.randint(40, 60)
         return task.again
+
+    def _stand(self):
+        """Return to the idle stand animation."""
+        LerpAnimInterval(self.model, 0.2, self._current_anim, "stand").start()
+        self._current_anim = "stand"
 
     def _die(self):
         """Character death sequence.

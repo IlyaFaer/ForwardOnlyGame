@@ -360,7 +360,7 @@ to leave them as they were and move along.""",
             {
                 "score": range(60, 80),
                 "desc": """{name1} and {name2} moving to the gas station by your order.
-Getting closer to the building, they hear music, and see three people
+Getting closer to the building, they hear music and see three people
 within. In the next moment from the other side of the station four
 skinheads with guns are appearing, with clear intent to attack the
 gas point. {name1} and {name2}, not yet detected by robbers, upper their

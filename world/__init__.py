@@ -1078,6 +1078,9 @@ class World:
             self._last_angle = block_to_clear.rails_mod.getH()
 
             self._loaded_blocks[0].rails_mod.wrtReparentTo(render)  # noqa: F821
+            if block_to_clear.enemy_territory and block_to_clear.id != -1:
+                block_to_clear.enemy_territory = False
+
             block_to_clear.clear()
 
             # don't keep enemy territory in the world
