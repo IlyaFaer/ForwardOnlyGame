@@ -40,7 +40,7 @@ MAIN_MENU = (
         "Anarchists are the force of nature! They build cohesion "
         "faster than others and\nalways value those, who life brought "
         "them with. The tactic is based on\ngetting more people, "
-        "tweaking their traits and using team skills.\n\n"
+        "tweaking their traits and using crew skills.\n\n"
         "You'll start with 2 male and 1 female anarchists."
     ),
     "Main menu",

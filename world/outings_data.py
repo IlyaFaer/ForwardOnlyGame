@@ -1130,7 +1130,7 @@ there, but nothing gives a sign of lucky find. Done with backpacks
 for {himher2} to deal with the inner stuff, but to everyone's joy
 {heshe2} shows up with a white aid kit. Smiling both {name1} and {name2}
 are returning to Train with this burden.
-You're getting 1 medicine box.""",
+You're getting 1 medicine.""",
                 "effects": {"medicine_boxes": 1},
             },
         ),
@@ -1397,7 +1397,7 @@ in one of them {name1} finds a couple of aid kits. The first one seems
 damaged bad, but the second looks okay, so {name1} grabs it. As {name2}
 didn't find anything, but broken containers, your people returning
 back to the Train with this only find.
-You're getting +1 medicine box""",
+You're getting +1 medicine""",
                 "effects": {"medicine_boxes": 1},
             },
             {
@@ -1600,7 +1600,7 @@ even a gram of grain. But pointing a flashlight inside the structure,
 they catch their eyes on two metal boxes. {name2} jumps inside
 and opens the first one: medicines! "Whoh!" - {heshe2} shouts and
 opens the second one: a smoke filter! Now, that's a find!
-You're getting 1 smoke filter and 1 medicine box""",
+You're getting 1 smoke filter and 1 medicine""",
                 "effects": {"medicine_boxes": 1, "smoke_filters": 1},
             },
         ),
@@ -2434,7 +2434,7 @@ direction to the exit. {name3} follows her outside to ensure she won't
 do anything stupid, while {name1} and {name2} gazing at each other.
 What was that? {name2} opens the aid kit: "I have an idea." Empty
 syringe of painkillers lies inside with a blood drop on it. Addict!
-You're losing -1 medicine box""",
+You're losing -1 medicine""",
                 "effects": {"medicine_boxes": -1},
             },
             {
@@ -2664,7 +2664,7 @@ said you open the basket and see cheese, wine, bread, flowers,
 and, plus to this, a bunch of medicines and bandages! Exchanging
 smiles, you and your teammates start to prepare a feast.
 All of your teammates getting +30 energy
-You're getting +1 medicine box""",
+You're getting +1 medicine""",
                 "effects": {"all": {"energy": 30}, "medicine_boxes": 1},
             },
         ),

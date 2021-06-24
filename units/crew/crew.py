@@ -12,15 +12,15 @@ from .character import generate_char, load_char
 
 # cohesion factors, which are used on every cohesion increasing step
 COHESION_FACTORS = {
-    ("anarchist", "anarchist"): 0.71,
+    ("anarchist", "anarchist"): 0.77,
     ("soldier", "soldier"): 0.57,
     ("raider", "raider"): 0.57,
     ("soldier", "raider"): 0.43,
     ("raider", "soldier"): 0.43,
-    ("raider", "anarchist"): 0.55,
-    ("anarchist", "raider"): 0.55,
-    ("anarchist", "soldier"): 0.52,
-    ("soldier", "anarchist"): 0.52,
+    ("raider", "anarchist"): 0.61,
+    ("anarchist", "raider"): 0.61,
+    ("anarchist", "soldier"): 0.58,
+    ("soldier", "anarchist"): 0.58,
 }
 
 

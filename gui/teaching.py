@@ -61,8 +61,8 @@ CLASS_DESCS = {
     "DodgeShooter": {
         "desc": (
             "Dodge with a machine gun is a strong enemy! It can\n"
-            "do a lot of damage to your locomotive, but the\n"
-            "machine gun overheat fast and requires time to\n"
+            "do a lot of damage to your locomotive, but its\n"
+            "machine gun overheats fast and requires time to\n"
             "cool down. Armor Plate train upgrade recommended\n"
             "to be used for protection against this enemy."
         ),

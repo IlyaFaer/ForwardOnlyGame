@@ -308,7 +308,7 @@ class Train:
             self._machine_gun,
             self._cluster_howitzer,
         ):
-            if weapon.is_up and weapon != except_weapon:
+            if weapon is not None and weapon.is_up and weapon != except_weapon:
                 weapon.change_state()
 
     def has_cell(self):

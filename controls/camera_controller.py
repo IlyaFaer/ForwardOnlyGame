@@ -237,7 +237,7 @@ class CameraController:
             self._np.setHpr(*self._last_np_hpr)
 
             taskMgr.doMethodLater(  # noqa: F821
-                0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+                0.15, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
             )
 
         self._is_centered = not self._is_centered
@@ -307,7 +307,7 @@ class CameraController:
         self._set_move_keys()
         base.accept("c", self._toggle_centered_view)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+            0.15, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
         )
 
     def set_controls(self, train):
@@ -326,7 +326,7 @@ class CameraController:
         self._set_move_keys()
         base.accept("c", self._toggle_centered_view)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            0.2, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+            0.15, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
         )
 
     def set_hangar_pos(self, hangar):

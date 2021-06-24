@@ -312,7 +312,10 @@ class Character(Shooter, Unit):
 
     def celebrate(self, task):
         """Play victory celebration animation."""
-        LerpAnimInterval(self.model, 1, self._current_anim, "celebrate").start()
+        if self.current_part.name == "part_rest":
+            return task.done
+
+        LerpAnimInterval(self.model, 0.1, self._current_anim, "celebrate").start()
         self._current_anim = "celebrate"
         self.model.play("celebrate")
         return task.done
@@ -578,15 +581,22 @@ class Character(Shooter, Unit):
                 If True, change to passive animation fast.
                 Change animation in usual speed otherwise.
         """
-        self._stop_tasks("_shoot")
+        self._stop_tasks("_shoot", "_calm_down")
         if self.current_part:
             self.model.hprInterval(
                 0.1 if force else 2, (self.current_part.angle, 0, 0)
             ).start()
 
-        LerpAnimInterval(
-            self.model, 0.1 if force else 2, self._current_anim, "stand"
-        ).start()
+        if force:
+            for anim in self.model.get_anim_names():
+                self.model.setControlEffect(anim, 0)
+
+            self.model.stop()
+            self.model.setControlEffect("stand", 1)
+            self.model.loop("stand")
+        else:
+            LerpAnimInterval(self.model, 2, self._current_anim, "stand").start()
+
         self._current_anim = "stand"
         taskMgr.doMethodLater(  # noqa: F821
             random.randint(40, 60), self._idle_animation, self.id + "_idle_anim"
