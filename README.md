@@ -13,13 +13,13 @@ See [alpha footage on YouTube](https://youtu.be/Ot2uFTCRRvs).
 The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
 
 **Current stage**  
-The Game is in development stage (~70% finished). It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
+The Game is in development stage (~75% finished). It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
 
 The major features the Game includes now:
 - 3 character classes with different tactical preferences
 - 16 traits, making characters stronger or weaker in different situations
 - cohesion system which makes characters tougher together and unlocks powerful team skills
-- real-time strategic fights with enemies of 6 classes
+- real-time strategic fights with enemies of 7 classes
 - cities, where you can use money to restore your team and upgrade the Train with active weapons
 - pseudo-open randomly built world which provides several ways to travel through
 - outings, diseases, the Stench, expendable resources, etc.
