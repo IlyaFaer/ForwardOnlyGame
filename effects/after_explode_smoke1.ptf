@@ -30,6 +30,7 @@ p0.renderer.setUserAlpha(1.00)
 geomRef = loader.loadModel("effects/smoke1.bam")
 geomRef.setBin("transparent", 30)
 geomRef.setDepthWrite(False)
+geomRef.setBillboardPointWorld()
 p0.renderer.setGeomNode(geomRef.node())
 p0.geomReference = "effects/smoke1.bam"
 p0.renderer.setXScaleFlag(1)

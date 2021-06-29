@@ -29,6 +29,7 @@ p0.renderer.setUserAlpha(1.00)
 # Geom parameters
 geomRef = loader.loadModel("effects/fire1.bam")
 geomRef.clearLight()
+geomRef.setBillboardPointWorld()
 base.world.sun.ignore_shadows(geomRef)
 p0.renderer.setGeomNode(geomRef.node())
 p0.geomReference = "effects/fire1.bam"
