@@ -72,7 +72,10 @@ class RailsScheme:
             "frameSize": (-0.1, 0.1, -0.1, 0.1),
         }
         DirectLabel(
-            text="Legend:\nm - Meet\ne - Enemy Camp\nl - Looting",
+            text=(
+                "Legend:\nm - Meet\nl - Looting\n"
+                "e - Enemy Camp\ni - Place of interest"
+            ),
             text_align=TextNode.ALeft,
             pos=(-1, 0, -0.35),
             **lab_opts,
@@ -148,6 +151,9 @@ class RailsScheme:
                 if block.outing_available:
                     outs += block.outing_available[0]
 
+                if block.is_station:
+                    outs += "i"
+
             if outs:
                 outs = outs.lower()
                 self._temp_wids.append(
@@ -187,6 +193,9 @@ class RailsScheme:
 
             if block.outing_available:
                 outs += block.outing_available[0].lower()
+
+            if block.is_station:
+                outs += "i"
 
             if block.is_city:
                 self._temp_wids.append(

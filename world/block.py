@@ -104,6 +104,7 @@ class Block:
         self.z_dir = z_dir
         self.directions = directions
         self.branch = branch
+        self.is_station = is_station
 
         if desc:  # loading block
             self._station_side = desc["station_side"]
@@ -116,6 +117,7 @@ class Block:
             self.id = desc["id"]
             self.branch = desc["branch"]
             self.directions = desc["directions"]
+            self.is_station = desc["is_station"]
             return
 
         # generating block
@@ -499,6 +501,7 @@ class Block:
             "r_angle": self._r_angle,
             "env_mods": self._env_mods,
             "railways_model": self._railways_model,
+            "is_station": self.is_station,
         }
         return desc
 
