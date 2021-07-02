@@ -404,6 +404,10 @@ class Train:
         """
         self.ctrl.slow_down_to(target)
 
+    def stop_urgent(self):
+        """"Urgently stop the locomotive."""
+        self.ctrl.stop(urgent=True)
+
     def move_to_hangar(self):
         """Move the Train into a city hangar."""
         self.root_node.setZ(50)

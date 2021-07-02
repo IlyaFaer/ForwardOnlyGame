@@ -313,23 +313,40 @@ class TrainController:
             extraArgs=["slow_down_train"],
         )
 
-    def stop(self):
-        """Completely stop the Train."""
+    def stop(self, urgent=False):
+        """Completely stop the locomotive.
+
+        Args:
+            urgent (bool):
+                If True, deceleration speed will be much higher.
+                Used for stopping in places of interest.
+        """
         base.ignore("w")  # noqa: F821
         base.ignore("s")  # noqa: F821
         taskMgr.remove("change_train_speed")  # noqa: F821
 
+        delay = 0.3 if urgent else 0.6
+
         # calculate deceleration length
         speed = self._move_anim_int.getPlayRate()
         taskMgr.doMethodLater(  # noqa: F821
-            0.6, self._change_speed, "stop_train", extraArgs=[-0.05], appendTask=True
+            delay, self._change_speed, "stop_train", extraArgs=[-0.05], appendTask=True
         )
+
         # stop decelerating
+        if urgent:
+            taskMgr.doMethodLater(  # noqa: F821
+                delay * (speed / 0.05) + 0.8,
+                base.scenario.start_chapter,  # noqa: F821
+                "start_scenario_chapter",
+            )
+        else:
+            taskMgr.doMethodLater(  # noqa: F821
+                delay * (speed / 0.05) + 0.8, self._finish_stopping, "finish_stopping"
+            )
+
         taskMgr.doMethodLater(  # noqa: F821
-            0.6 * (speed / 0.05) + 0.8, self._finish_stopping, "finish_stopping"
-        )
-        taskMgr.doMethodLater(  # noqa: F821
-            0.6 * (speed / 0.05) + 0.2,
+            delay * (speed / 0.05) + 0.2,
             base.world.enemy.stop_ride_anim,  # noqa: F821
             "stop_riding",
         )

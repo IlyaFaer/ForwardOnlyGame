@@ -22,6 +22,7 @@ OUTINGS_ICONS = {
     "Looting": "gui/tex/looting.png",
     "Enemy Camp": "gui/tex/enemy_camp.png",
     "Meet": "gui/tex/meet.png",
+    "Place Of Interest": "gui/tex/place_of_interest.png",
 }
 
 
@@ -352,6 +353,12 @@ class OutingsGUI:
 
         taskMgr.doMethodLater(  # noqa: F821
             0.3, self._blink_upcome_icon, "blink_outing_icon"
+        )
+
+    def show_place_of_interest(self):
+        """Show icon for a place of interest."""
+        self.show_upcoming(
+            "Place of interest! Stopping", OUTINGS_ICONS["Place Of Interest"],
         )
 
     def show_upcoming_outing(self, type_):

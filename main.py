@@ -28,9 +28,9 @@ from gui import (
     TeachingNotes,
     TraitsGUI,
 )
-from units.crew.crew import Crew
 from train import Train
-from world import World
+from world import Scenario, World
+from units.crew.crew import Crew
 from utils import clear_wids
 
 # build hack: import languages module to add it into the build,
@@ -241,6 +241,7 @@ class ForwardOnly(ShowBase):
         """Actually start the game process."""
         self.notes = TeachingNotes()
         self.traits_gui = TraitsGUI()
+        self.scenario = Scenario()
 
         self.main_menu.hide()
         self.enableAllAudio()

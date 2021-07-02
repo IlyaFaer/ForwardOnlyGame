@@ -87,6 +87,10 @@ class OutingsManager:
 
         self._gui.start(take_random(self._outings[type_]))
 
+    def show_place_of_interest(self):
+        """Show upcoming place of interest."""
+        self._gui.show_place_of_interest()
+
     def show_upcoming(self, type_):
         """Show upcoming outing info.
 

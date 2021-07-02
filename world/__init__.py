@@ -21,6 +21,7 @@ from .block import Block
 from .location import LOCATION_CONF
 from .outing import OutingsManager
 from .railway_generator import RailwayGenerator
+from .scenario import Scenario  # noqa: F401
 from .sun import Sun
 
 
@@ -519,7 +520,7 @@ class World:
                     is_rusty=is_rusty,
                     is_stenchy=is_stenchy,
                     outing_available=None
-                    if is_city
+                    if (is_city or is_station)
                     else self.outings_mgr.plan_outing(),
                 )
             )
@@ -545,7 +546,7 @@ class World:
                 is_city=False,
                 is_rusty=is_rusty,
                 is_stenchy=is_stenchy,
-                outing_available=self.outings_mgr.plan_outing(),
+                outing_available=None if is_station else self.outings_mgr.plan_outing(),
             )
 
             self._map[branch["start"]] = br_start_block
@@ -609,7 +610,9 @@ class World:
                         is_city=False,
                         is_rusty=is_rusty,
                         is_stenchy=is_stenchy,
-                        outing_available=self.outings_mgr.plan_outing(),
+                        outing_available=None
+                        if is_station
+                        else self.outings_mgr.plan_outing(),
                     )
                 )
                 # replace the block name with the block object
@@ -640,7 +643,7 @@ class World:
                 is_city=False,
                 is_rusty=is_rusty,
                 is_stenchy=is_stenchy,
-                outing_available=self.outings_mgr.plan_outing(),
+                outing_available=None if is_station else self.outings_mgr.plan_outing(),
             )
 
             self._map[branch["end"]] = br_end_block
@@ -785,6 +788,20 @@ class World:
 
         elif not self._is_in_city:
             self.outings_mgr.hide_outing()
+
+    def _track_places_of_interest(self):
+        """Track upcoming places of interest."""
+        if len(self._loaded_blocks) < 2:
+            return
+
+        current_block = self._loaded_blocks[-2]
+        if current_block.enemy_territory:
+            return
+
+        if current_block.is_station:
+            base.train.ctrl.unset_controls()  # noqa: F821
+            base.train.stop_urgent()  # noqa: F821
+            self.outings_mgr.show_place_of_interest()
 
     def _track_cities(self):
         """Track upcoming cities.
@@ -1065,6 +1082,7 @@ class World:
             self._track_cities()
             self._track_outings()
             self._track_forks()
+            self._track_places_of_interest()
 
         return block
 
