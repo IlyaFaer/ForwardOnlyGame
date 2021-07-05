@@ -244,7 +244,7 @@ class World:
         }
         return inversions
 
-    def make_stench_step(self, task):
+    def make_stench_step(self, task=None):
         """Move the Stench frontier one block further.
 
         The Stench frontier moves from the left side of the
@@ -259,7 +259,8 @@ class World:
 
             base.team.start_stench_activity()  # noqa: F821
 
-        return task.again
+        if task is not None:
+            return task.again
 
     def _set_physics(self):
         """Set the world physics.
