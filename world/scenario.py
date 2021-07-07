@@ -61,7 +61,7 @@ but it's still long, very long. Better keep your pace high now.
 
 The Stench frontier came 20 miles closer to you,
 but the Adjutant is in a good shape for now.""",
-                "effect": ("make_stench_steps", [20]),
+                "effects": (("do_stench_moves_effect", [20]),),
             },
             "Try to deal with the axle box on move": {
                 "desc": """You're giving Kenneth command to choose one of your team mates
@@ -84,7 +84,7 @@ get serious wounds. You better find him or her later to
 say your thanks.
 
 One of your fighters getting -20 health""",
-                "effect": ("do_charaters_effect", [{"health": -20}, True]),
+                "effects": (("do_charaters_effect", [{"health": -20}, True]),),
             },
             "Ignore the problem": {
                 "desc": """It's better not to stop for such long period. Asking Kenneth
@@ -103,7 +103,104 @@ Some time later you'll understand that the problem was not
 one of those to be ignored. The axle box will be damaged.
 
 The Adjutant loses 50 Durability""",
-                "effect": ("do_locomotive_damage", [50]),
+                "effects": (("do_locomotive_damage", [50]),),
+            },
+        },
+    },
+    {  # 2
+        "intro": """Taking a closer look at the bunch of people walking through the
+meadow, you understand that there are mostly children. Weird!
+Asking a couple of teammates to follow you, you get closer
+to the crowd, seeing a woman moving towards your party. In
+a few words she tells that they are workers and children
+from an orphan shelter. Understanding that the Stench moves
+fast to the place, and the governors are too busy saving
+themselves, adults, who worked there, gathered all the
+children and decided to move to Silewer on foot. Looking at
+pale and tired children, you silently think that it was really
+tough idea. But probably the decision saved their lives...
+Complaining about walking for six hours without a stop, the
+woman asks you to help them build a field camp. You understand
+that it'll take a lot of time, as there are about sixty
+children. On the other hand, it doesn't look right to just
+leave them here, in the foreign country, tired and
+shelterless. Maybe there is some time to help them a little?""",
+        "variants": {
+            "Help them to build a camp": {
+                "desc": """Feeling some qualm inside, you give your people order to help
+the children. Losing time is not okay... Still, twenty minutes
+later, seeing your people and children smiling while setting
+up big tents, igniting bonfires and boiling pottage in big
+cauldrons, you forget these heavy thoughts. This small break
+will be useful for the crew as well... It takes you about two
+hours to finish preparing the camp. Getting a lot of thanks
+from the children and their teachers, you gather again on the
+Adjutant. Everyone seems to be enlivened, still, the road calls.
+Giving an order to start engine, you approach a couple of your
+teammates, who are looking some kind of an article on a
+martphone. "Hey, Captain, you need to see this! Some of those
+children visited kinda research center a month ago and took
+an interview there. The woman speaks about interesting things."
+Telling them that you're going to take a closer look at the
+article later, you go to the deckhouse to plan the route,
+considering the recent delay.
+
+The Stench frontier came 20 miles closer to you""",
+                "effects": (
+                    ("do_build_camp_effect", []),
+                    ("do_stench_moves_effect", [20]),
+                ),
+            },
+            "Agree in words, but steal from them": {
+                "desc": """Calling the crew to speak aside, you're trying to convince
+them to use an ability to replenish resources. "The situation
+is getting tougher day after day, it's becoming about us or
+them." Your teammates lower their eyes. Everybody know that
+sooner or later it'll come to this, still, no one wants to take
+responsibility. "It's hard to admit, but those children are not
+going to make it. They are not fighters nor survivors. The first
+meet with skinheads, and..." The crew continue to keep silence,
+bit you feel them accepting the situation, so you're giving an
+order: "Build the camp hastily, and take useful stuff in case you
+see it!" Your teammates, avoiding to look at each other, go out
+of the deckhouse... About an hour and half passed, and all of
+your people gather together on the Adjutant. They still doesn't
+want to look at each other, but they put an aid kit and a energy
+drinks on the table. "Okay, let's move on!" - you command.
+
+You're getting 1 medicine and 1 stimulator
+Soon people of Silewer will know that you've stolen from kids.
+This will bring more fighters under the skinhead banners.""",
+                "effects": (
+                    ("do_enemy_inc_effect", []),
+                    ("do_plus_resource", ["medicine_boxes", 1]),
+                    ("do_plus_resource", ["stimulators", 1]),
+                ),
+            },
+            "Don't help them and continue the road": {
+                "desc": """You go back to the deckhouse and negotiate with the crew. It
+appears most of them would like to stop and help orphans, but
+all understand that it'll take at least several hours. Clouds
+of the Stench will not let you wait, so it makes sense to move
+faster. People know nothing about the cataclysm behavior, in
+theory it can accelerate or appear somewhere far from the
+supposed source in Germany. Overthinking it again, again and
+again, you decide to ignore the teachers plea. The crew don't
+like the decision very much, but everyone mind the situation.
+A hard silence forms in the air. No one wants to go there and
+say those orphans that you're going to leave. "So, what?" - you
+ask quietly. - "Should we continue the road without the last
+word? What's the point in it?" Your teammates lower their
+eyes and nod their heads. Taking this as an answer, you give
+a command to go...
+
+Some time later you see a paper on your table. Running through
+it with your eyes, you find out it's an interview log. Those
+orphans visited kind of a research center some time ago and
+took an interview from one of the scientists. Most likely one
+of your people got it from the children somehow. No thoughts
+why it was left on your table, but it should be read.""",
+                "effects": (("do_no_effect", []),),
             },
         },
     },
@@ -202,13 +299,27 @@ class Scenario:
             but.hide()
 
         self._desc["text"] = consequences["desc"]
-        taskMgr.doMethodLater(  # noqa: F821
-            0.05,
-            getattr(self, consequences["effect"][0]),
-            "do_choice_consequences",
-            extraArgs=consequences["effect"][1],
-        )
+        for effect in consequences["effects"]:
+            getattr(self, effect[0])(*effect[1])
+
         self._done_but.show()
+
+    def do_build_camp_effect(self):
+        """Do effects for building a camp for orphans choice."""
+        base.helped_children = True  # noqa: F821
+
+    def do_plus_resource(self, name, value):
+        """Change the given resource amount.
+
+        Args:
+            name (str): Resource name.
+            value (int): Amount delta.
+        """
+        base.plus_resource(name, value)  # noqa: F821
+
+    def do_enemy_inc_effect(self):
+        """Make enemy stronger effect."""
+        base.world.enemy.score += 3  # noqa: F821
 
     def do_character_effect(self, char, effect):
         """Do choice consequences effect to the given character.
@@ -241,11 +352,15 @@ class Scenario:
         """
         base.train.get_damage(damage)  # noqa: F821
 
+    def do_no_effect(self):
+        """No choice consequences method."""
+        pass
+
     def hide_chapter(self):
         """Hide the scenario GUI."""
         self._list.hide()
 
-    def make_stench_steps(self, steps):
+    def do_stench_moves_effect(self, steps):
         """Move the Stench frontier several miles deeper into the Silewer.
 
         Args:
@@ -264,7 +379,7 @@ class Scenario:
         base.world.outings_mgr.hide_outing()  # noqa: F821
         base.traits_gui.hide()  # noqa: F821
 
-        if self.current_chapter == 0:
+        if self.current_chapter <= 1:
             self.show_chapter_situation()  # noqa: F821
 
         return task.done

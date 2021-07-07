@@ -779,7 +779,7 @@ class CityGUI:
             costs_list += str(num * heads_cost[head]) + "$\n"
             total += num * heads_cost[head]
 
-        DirectLabel(
+        reward_desc = DirectLabel(
             parent=self._reward_fr,
             frameColor=(0, 0, 0, 0),
             frameSize=(-0.3, 0.3, -0.1, 0.1),
@@ -797,7 +797,7 @@ Heads you've taken:
             text_scale=0.03,
             pos=(0, 0, 0.35),
         )
-        DirectLabel(
+        heads_list = DirectLabel(
             parent=self._reward_fr,
             frameColor=(0, 0, 0, 0),
             frameSize=(-0.3, 0.3, -0.1, 0.1),
@@ -806,7 +806,7 @@ Heads you've taken:
             text_align=TextNode.ALeft,
             pos=(-0.21, 0, 0.08),
         )
-        DirectLabel(
+        costs_list = DirectLabel(
             parent=self._reward_fr,
             frameColor=(0, 0, 0, 0),
             frameSize=(-0.3, 0.3, -0.1, 0.1),
@@ -823,18 +823,40 @@ Heads you've taken:
             text_shadow=(0, 0, 0, 1),
             frameColor=(0, 0, 0, 0),
             command=self._acquire_reward,
-            extraArgs=[total],
+            extraArgs=[total, reward_desc, heads_list, costs_list],
             scale=(0.04, 0, 0.04),
         )
 
-    def _acquire_reward(self, dollars):
+    def _acquire_reward(self, dollars, reward_desc, heads_list, costs_list):
         """Claim a reward, given by a city for destroying enemies.
 
         Args:
             dollars (int): Gained dollars amount.
+            reward_desc (direct.gui.DirectGui.DirectLabel):
+                Reward description widget.
+            heads_list (direct.gui.DirectGui.DirectLabel):
+                List of taken heads widget.
+            costs_list (direct.gui.DirectGui.DirectLabel):
+                Money got for the heads list widget.
         """
         self._coins_l_snd.play()
         base.dollars += dollars  # noqa: F821
+
+        if base.helped_children:  # noqa: F821
+            reward_desc[
+                "text"
+            ] = """This city dwellers heard that
+you helped orphans to build
+camp. They respect good
+people and want to encourage
+you - the Adjutant gets +250
+Durability points free.
+"""
+            base.train.get_damage(-250)  # noqa: F821
+            heads_list.destroy()
+            costs_list.destroy()
+            base.helped_children = False  # noqa: F821
+            return
 
         self._reward_fr.destroy()
         self._reward_fr = None

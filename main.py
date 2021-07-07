@@ -86,6 +86,7 @@ class ForwardOnly(ShowBase):
         self._heads = {}
         self._cur_mouse_pointer = "normal"
         self.main_menu = MainMenu()
+        self.helped_children = False
 
     @property
     def dollars(self):
