@@ -281,6 +281,10 @@ class World:
         base.train.set_physics(world)  # noqa: F821
         return world
 
+    def drop_place_of_interest(self):
+        """Drop the processed place of interest."""
+        self._loaded_blocks[-2].is_station = False
+
     def update_physics(self, y_coor, task):
         """Update physics calculations.
 

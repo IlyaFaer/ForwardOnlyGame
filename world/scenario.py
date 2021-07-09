@@ -32,10 +32,16 @@ class Scenario:
     diary fashion. The note will give the player more info about
     the Stench, Captain, the Adjutant and how the cataclysm
     started to destroy the World.
+
+    Args:
+        current_chapter (int): The chapter number to start with.
     """
 
-    def __init__(self):
-        self.current_chapter = -1
+    def __init__(self, current_chapter=None):
+        if current_chapter is not None:
+            self.current_chapter = current_chapter
+        else:
+            self.current_chapter = -1
 
         self._list = DirectFrame(
             frameSize=(-0.73, 0.73, -0.9, 0.9),
@@ -204,6 +210,8 @@ class Scenario:
 
         if self.current_chapter <= 3:
             self.show_chapter_situation()  # noqa: F821
+
+            base.world.drop_place_of_interest()  # noqa: F821
 
         return task.done
 

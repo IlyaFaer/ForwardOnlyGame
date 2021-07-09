@@ -242,7 +242,6 @@ class ForwardOnly(ShowBase):
         """Actually start the game process."""
         self.notes = TeachingNotes()
         self.traits_gui = TraitsGUI()
-        self.scenario = Scenario()
 
         self.main_menu.hide()
         self.enableAllAudio()
@@ -344,6 +343,8 @@ class ForwardOnly(ShowBase):
         self.plus_resource("smoke_filters", save["smoke_filters"])
         self.plus_resource("stimulators", save["stimulators"])
 
+        self.scenario = Scenario(save["chapter"])
+
         save.close()
         self.main_menu.hide_loading_msg()
 
@@ -405,6 +406,7 @@ class ForwardOnly(ShowBase):
             "time": self.world.sun.day_part_time,
         }
         save["team"] = self.team.description
+        save["chapter"] = self.scenario.current_chapter
 
         save.close()
 
@@ -437,6 +439,8 @@ class ForwardOnly(ShowBase):
         self.res_gui = ResourcesGUI()
         self.main_menu.show_start_button()
         self.dollars = 300
+
+        self.scenario = Scenario()
 
 
 try:
