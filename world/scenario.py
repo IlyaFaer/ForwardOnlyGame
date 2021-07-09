@@ -162,6 +162,10 @@ class Scenario:
             self.do_character_effect(
                 random.choice(list(base.team.chars.values())), effect  # noqa: F821
             )
+            return
+
+        for char in base.team.chars.values():  # noqa: F821
+            self.do_character_effect(char, effect)
 
     def do_locomotive_damage(self, damage):
         """Do some damage to the Adjutant.
@@ -198,7 +202,7 @@ class Scenario:
         base.world.outings_mgr.hide_outing()  # noqa: F821
         base.traits_gui.hide()  # noqa: F821
 
-        if self.current_chapter <= 1:
+        if self.current_chapter <= 3:
             self.show_chapter_situation()  # noqa: F821
 
         return task.done

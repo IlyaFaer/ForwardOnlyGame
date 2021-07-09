@@ -286,7 +286,115 @@ very lucky coincidence here, you command your people to use
 the opportunity.
 
 All people in the crew getting +20 Health""",
-                "effects": (("do_characters_effect", [{"Health": 20}, False]),),
+                "effects": (("do_characters_effect", [{"health": 20}, False]),),
+            },
+        },
+    },
+    {  # 4
+        "intro": """From a very far distance you can discern that near the small
+motel a long line of cars jamms. You can even see people a
+string of people standing in front of the entrance. Looks
+like a lot of Silewer newcomers want to rent a room here.
+Sending your people to try to get inside the building, you
+caught your eyes on two banches of refugees arguing hard.
+Getting closer to them, you can hear that they are brawling
+because of the last place in the building. When they see
+you, however, they become silent, gazing at your guns. In
+a couple of moments you take a place of judge here, you
+see both sides looking at you with hopes to get your help.
+Observing them, you get it that one of them is a man with
+sick boy, about eight years old, most likely his son. The
+lad doesn't look good, his face is pale, dark rounds mark
+his eyes and skin is covered with sweat. But on the other
+side of the conflict you see a pregnant woman, skinny and
+tired. Both the father and the woman expect your judgment
+somewhy, probably because others are too busy by
+themselves to think about people around... Or maybe it's
+just because of guns... Anyway the decision is yours -
+there is only one place left in the motel and someone will
+have to sleep in the car here.""",
+        "variants": {
+            "The pregnant woman should rest": {
+                "desc": """Thinking about the situation, you tend to think that
+the woman is the one to take the last place in the motel.
+The man with the sick boy throws something on the ground
+and, grabbing his son, goes away. The woman, who still
+seem to be scared, thanks you greatly - you can even see
+tears in her eyes. Seeing your people returning back from
+the motel, you say her goodbye and join the crew. According
+their words, the place is filled to the very top, some
+unfamiliar people even rent rooms together. Plus to the
+things you already understood by yourself, your team mates
+give you a log paper - one of them heard how the motel
+dwellers were conversing about the same scientist those
+orphans were interviewing. She was here a couple of days
+ago! That's something to be read attentively.
+
+Some time passed, you're going to give a command to start
+an engine, but suddenly you see the man, who was trying to
+get the last place in the motel. The one you forced to go
+- he walks from the Adjutant back in the motel direction.
+What does it mean? You ask the crew to check if everything
+is okay on the locomotive, and it appears the man ignited
+it! You deal with fire fast, but still the Adjutant gets
+some damage.
+
+The Adjutant loses 70 Durability""",
+                "effects": (("do_locomotive_damage", [70]),),
+            },
+            "The man with the sick son should rest": {
+                "desc": """Overthinking the conflict, you decide that the man with
+the sick boy should rest in the motel. The woman seems to
+be tired, but not hard ill. Saying something silently, most
+likely damnations, she leaves the place. The man holds
+out his hand: "Thank you!" - he lowers his eyes back to
+son: "Jerry!" The boy slowly gets what his father is asking:
+"Thanks!" - he pronounces with a weak voice. Left them,
+you join your crew. They tell you that the motel is filled
+to the very top, but it's something you already got by
+yourself. In addition, they give you a note - they heard
+a conversation between two motel dwellers, who saw the same
+scientist woman those orphans were interviewing. And they
+said that she's one of those who responsible for cataclysms
+like the Stench. Interesting! The note made by your people
+definitely should be read.
+
+You're doing a short technical review of the Adjutant and
+then start the engine to continue the road.
+
+Soon all the Silewer will know that armed foreigners forced
+a pregnant woman to leave the motel, where she was going to
+rest after long road. This will bring more people into the
+skinhead bands.""",
+                "effects": (("do_enemy_inc_effect", []),),
+            },
+            "Force them both out and take their place": {
+                "desc": """The last room in the motel... Maybe it's better to keep
+it for your crew? A couple of hours in not moving place
+and shower would be good. Looking straight at both the
+man and the pregnant woman, you say in a cold voice: "Me
+and my crew will take the room." Your visavis stagger back,
+surprised greatly by the turn. Several seconds they look
+at each other, and then simultaneously turn around and go
+away. You join your crew and rent the room... The short rest
+goes okay, one of your team mates even give you a paper, on
+which he noted a conversation between two motel dwellers,
+who were speaking about that scientist woman, interviewed
+by orphans you met earlier, blaming her in cataclysms like
+the Stench. Interesting!
+
+In some moment you understand that a kind of a noise
+increases fast in the motel. Taking your guns, you all
+get out of the room and get into a fight! It takes about
+ten minutes for you to exit the building. Without clear
+understanding what happened - are refugees, who didn't
+manage to get a room, decided to attack the building? -
+you return back to the Adjutant. No one got serious
+wounds, still, there are several small injuries. Not
+the best stop!
+
+All people in the crew getting -20 health""",
+                "effects": (("do_characters_effect", [{"health": -20}]),),
             },
         },
     },
