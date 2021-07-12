@@ -145,8 +145,16 @@ MECHANIC_DESC = {
                 "cloud as fast as possible. You also should not\n"
                 "stay long on the same place or ride in circles."
             ),
+            (
+                "You need to find a way to survive the Stench. There\n"
+                "are several places of interest in Silewer - check\n"
+                "them for useful information. Use the railways scheme\n"
+                "(press M) to plan your route and visit as much places\n"
+                "as you can. You can also see outing abilities and\n"
+                "the Stench coverage on the railways scheme."
+            ),
         ),
-        "previews": ("the_stench1",),
+        "previews": ("the_stench1", "map"),
     },
     "cohesion": {
         "descs": (
