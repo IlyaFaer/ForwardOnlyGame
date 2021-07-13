@@ -21,7 +21,13 @@ from direct.interval.IntervalGlobal import (
     SoundInterval,
 )
 from direct.particles.ParticleEffect import ParticleEffect
-from panda3d.core import Point3, CollisionNode, CollisionPolygon, CollisionSphere
+from panda3d.core import (
+    CollisionNode,
+    CollisionPolygon,
+    CollisionSphere,
+    Point3,
+    TransparencyAttrib,
+)
 
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from utils import address
@@ -278,8 +284,9 @@ class GrenadeLauncher:
         # flag, which indicates if the launcher
         # is in (un-)loading process
         self._is_loading = False
-
         self._range_col_np = None
+
+        self._loc_model = loc_model
 
         self._model = Actor(address("grenade_launcher"))
         self._model.reparentTo(loc_model)
@@ -293,6 +300,11 @@ class GrenadeLauncher:
 
         self._grenade_smoke = ParticleEffect()
         self._grenade_smoke.loadConfig("effects/bomb_smoke1.ptf")
+
+        self._hole_sprite = loader.loadModel(address("ground_hole"))  # noqa: F821
+        self._hole_sprite.reparentTo(loc_model)
+        self._hole_sprite.setTransparency(TransparencyAttrib.MAlpha)
+        self._hole_sprite.hide()
 
         base.accept("1", self.change_state)  # noqa: F821
 
@@ -379,6 +391,12 @@ class GrenadeLauncher:
         col_np = self._model.attachNewNode(col_node)
         col_np.setPos(grenade_pos)
 
+        self._hole_sprite.setPos(grenade_pos)
+        self._hole_sprite.wrtReparentTo(
+            base.world.current_block.rails_mod  # noqa: F821
+        )
+        self._hole_sprite.show()
+
         self._grenade_explosion.setPos(grenade_pos)
         self._grenade_explosion.start(self._model, render)  # noqa: F821
         self._grenade_explosion.softStart()
@@ -398,6 +416,15 @@ class GrenadeLauncher:
         taskMgr.doMethodLater(  # noqa: F821
             0.1, col_np.removeNode, "remove_grenade_solid", extraArgs=[]
         )
+        taskMgr.doMethodLater(  # noqa: F821
+            4, self._return_hole_sprite, "hide_ground_hole",
+        )
+
+    def _return_hole_sprite(self, task):
+        """Return the hole sprite to the grenade launcher model."""
+        self._hole_sprite.hide()
+        self._hole_sprite.reparentTo(self._loc_model)
+        return task.done
 
     def _move_sight(self, event):
         """Move the launcher sight sprite.

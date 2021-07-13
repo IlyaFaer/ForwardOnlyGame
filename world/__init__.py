@@ -86,6 +86,15 @@ class World:
         return self._branches
 
     @property
+    def current_block(self):
+        """The current block object.
+
+        Returns:
+            world.block.Block: The current world block.
+        """
+        return self._loaded_blocks[-2]
+
+    @property
     def current_blocks(self):
         """The currently loaded blocks' ids.
 
