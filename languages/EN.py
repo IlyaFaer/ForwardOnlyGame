@@ -299,3 +299,9 @@ DISTINGUISHED = (
     "Done",
     "Current traits",
 )
+
+SPLASHES = (
+    "Word from author",
+    """Forward Only will strangle you gradually for your mistakes
+instead of punishing at once. Calculate steps ahead!""",
+)

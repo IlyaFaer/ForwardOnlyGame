@@ -76,6 +76,14 @@ class MainMenu:
             frameColor=(0.15, 0.15, 0.15, 1),
             state=DGG.NORMAL,
         )
+
+        wids = self._show_authors_word()
+        taskMgr.doMethodLater(  # noqa: F821
+            5, self._hide_authors_word, "stop_splash_screens", extraArgs=[wids]
+        )
+
+    def _build(self):
+        """Build the main menu."""
         but_params = {
             "text_scale": 0.05,
             "relief": None,
@@ -288,6 +296,17 @@ class MainMenu:
                 button["text_scale"][1] - 0.003,
             )
 
+    def _hide_authors_word(self, wids):
+        """Hide author's word splashscreen and build the main menu.
+
+        Args:
+            wids (list): Widgets to destroy.
+        """
+        for wid in wids:
+            wid.destroy()
+
+        self._build()
+
     def _highlight_but(self, button, _):
         """Highlight the button pointed by mouse.
 
@@ -370,6 +389,28 @@ class MainMenu:
             )
 
         base.restart_game()  # noqa: F821
+
+    def _show_authors_word(self):
+        """Show author's word splashscreen."""
+        title = DirectLabel(
+            pos=(0, 0, 0.2),
+            text_scale=0.045,
+            text_fg=SILVER_COL,
+            frameColor=(0, 0, 0, 0),
+            text=base.labels.SPLASHES[0],  # noqa: F821
+            state=DGG.NORMAL,
+            text_font=base.main_font,  # noqa: F821
+        )
+        msg = DirectLabel(
+            pos=(0, 0, 0.05),
+            text_scale=0.035,
+            text_fg=SILVER_COL,
+            frameColor=(0, 0, 0, 0),
+            text=base.labels.SPLASHES[1],  # noqa: F821,
+            state=DGG.NORMAL,
+            text_font=base.main_font,  # noqa: F821
+        )
+        return [title, msg]
 
     def _show_conf(self):
         """Show game configurations GUI."""

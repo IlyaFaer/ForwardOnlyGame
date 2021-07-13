@@ -100,11 +100,12 @@ MECHANIC_DESC = {
     "locomotive": {
         "descs": (
             (
-                "This is the Adjutant - your locomotive. It helps\n"
-                "you to move fast enough to overtake death, so\n"
-                "take care of it. If it'll not be able to ride, your\n"
-                "hours are numbered. The locomotive durability is\n"
-                "reflected in the right bottom corner of the GUI."
+                "This is the Adjutant - your locomotive. It moves fast\n"
+                "enough to overtake death, so take care of it. If\n"
+                "it'll not be able to ride, your hours are numbered.\n"
+                "Its durability is reflected in the right bottom\n"
+                "corner of the GUI. Keep an eye for rusty rails, they\n"
+                "damage your wheels - slow down if you hear creak."
             ),
             (
                 "The Adjutant includes three parts and a rest\n"
