@@ -505,6 +505,7 @@ class ClusterHowitzer:
         self._coors = [None, None, None, None]
         self._sights = []
         self._explosions = []
+        self._ground_holes = []
         self._smokes = []
         self._bombs = []
         self._explosion_snds = []
@@ -531,6 +532,12 @@ class ClusterHowitzer:
             snd.setVolume(random.uniform(0.1, 0.15))
             snd.setPlayRate(random.uniform(0.8, 1))
             self._explosion_snds.append(snd)
+
+            hole = loader.loadModel(address("ground_hole"))  # noqa: F821
+            hole.reparentTo(loc_model)
+            hole.setTransparency(TransparencyAttrib.MAlpha)
+            hole.hide()
+            self._ground_holes.append(hole)
 
         self._load_snd = loader.loadSfx("sounds/combat/howitzer_load.ogg")  # noqa: F821
         self._load_snd.setPlayRate(0.8)
@@ -674,6 +681,12 @@ class ClusterHowitzer:
                 extraArgs=[],
             )
 
+            self._ground_holes[num].setPos(*coor, 0.05)
+            self._ground_holes[num].wrtReparentTo(
+                base.world.current_block.rails_mod  # noqa: F82
+            )
+            self._ground_holes[num].show()
+
         taskMgr.doMethodLater(  # noqa: F821
             1, self._grenade_explosions_stop, "stop_grenade_explosions"
         )
@@ -683,6 +696,17 @@ class ClusterHowitzer:
         taskMgr.doMethodLater(  # noqa: F821
             0.1, self._clear_grenade_solids, "clear_grenade_solid", extraArgs=[col_nps]
         )
+        taskMgr.doMethodLater(  # noqa: F821
+            4, self._return_hole_sprites, "hide_ground_hole",
+        )
+
+    def _return_hole_sprites(self, task):
+        """Return groun hole sprites to the howitzer model."""
+        for hole in self._ground_holes:
+            hole.hide()
+            hole.reparentTo(self._train_mod)
+
+        return task.done
 
     def _grenade_explosions_stop(self, task):
         """Stop grenade explosion effects."""
