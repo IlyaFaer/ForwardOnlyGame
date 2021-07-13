@@ -379,15 +379,11 @@ class MainMenu:
             lang_chooser (GUI.widgets.ListChooser):
                 Widget to choose GUI language.
         """
-        with open("options.cfg", "w") as opts_file:
-            opts_file.write(
-                res_chooser.chosen_item
-                + "\n"
-                + lang_chooser.chosen_item
-                + "\n"
-                + str(bool(tutorial_check["indicatorValue"]))
-            )
-
+        base.game_config.update(  # noqa: F821
+            res_chooser.chosen_item,
+            lang_chooser.chosen_item,
+            str(bool(tutorial_check["indicatorValue"])),
+        )
         base.restart_game()  # noqa: F821
 
     def _show_authors_word(self):

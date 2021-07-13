@@ -20,6 +20,7 @@ from panda3d.core import loadPrcFileData, Filename, WindowProperties
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
+from game_config import Config
 from gui import (
     CharacterGUI,
     MainMenu,
@@ -63,8 +64,13 @@ class ForwardOnly(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
-        resolution, self.tutorial_enabled, self.labels = self._process_options()
-        self._win_prors = self._configure_window(resolution)
+        self.game_config = Config()
+
+        self.labels = getattr(
+            __import__("languages." + self.game_config.language),
+            self.game_config.language,
+        )
+        self._win_prors = self._configure_window()
 
         if not os.path.exists("saves"):
             os.mkdir("saves")
@@ -120,13 +126,10 @@ class ForwardOnly(ShowBase):
         """
         return self._heads
 
-    def _configure_window(self, resolution):
+    def _configure_window(self):
         """Configure the game window.
 
         Set title, fullscreen mode and the given resolution.
-
-        Args:
-            resolution (str): Screen resolution to be set.
 
         Returns:
             panda3d.core.WindowProperties:
@@ -137,7 +140,7 @@ class ForwardOnly(ShowBase):
         props.setTitle("Forward Only Game")
         props.setFullscreen(True)
 
-        x, z = resolution.split("x")
+        x, z = self.game_config.resolution.split("x")
         props.setSize(int(x), int(z))
         props.setCursorFilename(Filename.binaryFilename("GUI/pointers/normal.ico"))
 
@@ -158,37 +161,10 @@ class ForwardOnly(ShowBase):
         self.train.move_along_block(self.current_block)
         self._track_stench(next_block)
 
-        if self.tutorial_enabled:
+        if self.game_config.tutorial_enabled:
             self._track_tutorial(self.current_block.id)
 
         self.current_block = next_block
-
-    def _process_options(self):
-        """Read or create the default game options.
-
-        Returns:
-            str, bool, module:
-                Graphical resolution, tutorial enabled flag, module
-                with the text labels in the chosen language.
-        """
-        if not os.path.exists("options.cfg"):
-            with open("options.cfg", "w") as opt_file:
-                opt_file.write(
-                    str(self.pipe.getDisplayWidth())
-                    + "x"
-                    + str(self.pipe.getDisplayHeight())
-                    + "\nEN\nTrue"
-                )
-
-        with open("options.cfg", "r") as opts_file:
-            resolution, lang, tutorial_enabled = opts_file.readlines()
-
-        lang_code = lang.strip()
-        return (
-            resolution,
-            tutorial_enabled == "True",
-            getattr(__import__("languages." + lang_code), lang_code),
-        )
 
     def _track_stench(self, next_block):
         """Track the Stench.
@@ -234,7 +210,7 @@ class ForwardOnly(ShowBase):
 
         MechanicDesc(tutorial_name)
 
-        if block_id == 18 and self.tutorial_enabled:
+        if block_id == 18 and self.game_config.tutorial_enabled:
             self.notes.start()
             self.doMethodLater(24, self.world.make_stench_step, "stench_step")
 
@@ -246,8 +222,8 @@ class ForwardOnly(ShowBase):
         self.main_menu.hide()
         self.enableAllAudio()
 
-        if not self.tutorial_enabled or (
-            self.tutorial_enabled and self.current_block.id > 18
+        if not self.game_config.tutorial_enabled or (
+            self.game_config.tutorial_enabled and self.current_block.id > 18
         ):
             self.notes.start()
             self.doMethodLater(24, self.world.make_stench_step, "stench_step")
@@ -258,7 +234,7 @@ class ForwardOnly(ShowBase):
 
         if task is not None:
             return task.done
-        elif self.tutorial_enabled:
+        elif self.game_config.tutorial_enabled:
             self.doMethodLater(
                 0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
             )
