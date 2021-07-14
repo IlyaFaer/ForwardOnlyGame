@@ -411,10 +411,10 @@ class BrakeThrower(EnemyMotorcyclist):
         Args:
             part (train.part.TrainPart): Train part this enemy entered.
         """
+        self.current_part = part
         if not part.name.endswith("_front") or self._train_captured:
             return
 
-        self.current_part = part
         taskMgr.doMethodLater(  # noqa: F821
             15, self._jump_and_brake, self.id + "_jump_and_brake"
         )

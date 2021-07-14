@@ -131,7 +131,7 @@ class Sun:
 
         lens = PerspectiveLens()
         lens.setNearFar(1, 100)
-        lens.setFov(70, 70)
+        lens.setFov(20, 20)
 
         sun_light = Spotlight("sun_dir")
         sun_light.setColor(self._color["dir"])
