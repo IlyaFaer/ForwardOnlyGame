@@ -352,7 +352,7 @@ class CharacterGUI:
         self.rest_list_shown = False
 
     def destroy_char_button(self, char_id):
-        """Hide the button related to the given character id.
+        """Hide the given character button from the resting characters list.
 
         Args:
             char_id (str): Character id.
@@ -386,7 +386,6 @@ class CharacterGUI:
             self._disease.hide()
 
         self.char = char
-
         self._char_name.show()
         self._char_class.show()
         self._char_health.show()

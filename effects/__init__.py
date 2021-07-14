@@ -60,8 +60,7 @@ class EffectsManager:
         """Prepare a bomb explosion effect for the given object.
 
         Args:
-            parent (object):
-                Must include "model" property.
+            parent (object): Must include "model" property.
 
         Returns:
             BombExplosion: Hand bomb explosion effect object.
@@ -72,8 +71,7 @@ class EffectsManager:
         """Prepare a burning object smoke effect.
 
         Args:
-            parent (object):
-                Must include "id" and "model" properties.
+            parent (object): Must include "id" and "model" properties.
 
         Returns:
             BurnSmoke: Burning object smoke effect.
@@ -84,8 +82,7 @@ class EffectsManager:
         """Prepare an explosion effect for the given object.
 
         Args:
-            parent (object):
-                Must include "id" and "model" properties.
+            parent (object): Must include "id" and "model" properties.
 
         Returns:
             Explosion: Explosion effect object.
@@ -96,8 +93,7 @@ class EffectsManager:
         """Prepare a big explosion effect for the given object.
 
         Args:
-            parent (object):
-                Must include "id" and "model" properties.
+            parent (object): Must include "id" and "model" properties.
 
         Returns:
             Explosion: Explosion effect object.
@@ -239,9 +235,7 @@ class BombExplosion:
     Includes sound and particle effects.
 
     Args:
-        parent (object):
-            Object to explode. Must include
-            "model" property.
+        parent (object): Object to explode. Must include "model" property.
     """
 
     def __init__(self, parent):

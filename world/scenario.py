@@ -14,7 +14,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
-from gui.widgets import RUST_COL
+from gui.widgets import GUI_PIC, RUST_COL
 from .scenario_data import SCENARIO
 
 
@@ -45,7 +45,7 @@ class Scenario:
 
         self._list = DirectFrame(
             frameSize=(-0.73, 0.73, -0.9, 0.9),
-            frameTexture="gui/tex/paper1.png",
+            frameTexture=GUI_PIC + "paper1.png",
             state=DGG.NORMAL,
         )
         self._list.setDepthTest(False)

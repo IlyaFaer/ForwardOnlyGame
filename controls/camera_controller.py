@@ -113,6 +113,34 @@ class CameraController:
 
         return task.again
 
+    def _rotate_camera_with_mouse(self, x, z, task):
+        """Rotate the main camera according to the mouse movement.
+
+        Args:
+            x (float): The original mouse X position.
+            z (float): The original mouse Y position.
+        """
+        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
+            return
+
+        new_x = base.mouseWatcherNode.getMouseX()  # noqa: F821
+        new_z = base.mouseWatcherNode.getMouseY()  # noqa: F821
+
+        if new_x - x <= -0.125:
+            self._np.setH(self._np.getH() - 1)
+        elif new_x - x >= 0.125:
+            self._np.setH(self._np.getH() + 1)
+        elif new_z - z <= -0.125:
+            r = self._np.getR()
+            if r < 20:
+                self._np.setR(r + 1)
+        elif new_z - z >= 0.125:
+            r = self._np.getR()
+            if r > -60:
+                self._np.setR(r - 1)
+
+        return task.again
+
     def _set_move_keys(self):
         """Set camera move and rotate keys."""
         # key pressed - start movement
@@ -181,40 +209,11 @@ class CameraController:
             )
             self._move_int.start()
 
-    def _rotate_camera_with_mouse(self, x, z, task):
-        """Rotate the main camera according to the mouse movement.
-
-        Args:
-            x (float): The original mouse X position.
-            z (float): The original mouse Y position.
-        """
-        if not base.mouseWatcherNode.hasMouse():  # noqa: F821
-            return
-
-        new_x = base.mouseWatcherNode.getMouseX()  # noqa: F821
-        new_z = base.mouseWatcherNode.getMouseY()  # noqa: F821
-
-        if new_x - x <= -0.125:
-            self._np.setH(self._np.getH() - 1)
-        elif new_x - x >= 0.125:
-            self._np.setH(self._np.getH() + 1)
-        elif new_z - z <= -0.125:
-            r = self._np.getR()
-            if r < 20:
-                self._np.setR(r + 1)
-        elif new_z - z >= 0.125:
-            r = self._np.getR()
-            if r > -60:
-                self._np.setR(r - 1)
-
-        return task.again
-
     def _toggle_centered_view(self):
         """Set camera onto default position.
 
-        Centered position is optimal for characters
-        manipulations. Press repeating returns camera to
-        the previous position.
+        Centered position is optimal for characters manipulations.
+        Press repeating returns camera to the previous position.
         """
         if not self._is_centered:
             self._stop(False, is_hard=True)

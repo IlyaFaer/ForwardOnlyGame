@@ -72,8 +72,7 @@ class Shooter(metaclass=abc.ABCMeta):
             shots (int): Number of shots in animation.
 
         Returns:
-            direct.interval.MetaInterval.Sequence:
-                Shooting sequence.
+            direct.interval.MetaInterval.Sequence: Shooting sequence.
         """
         fire = loader.loadModel(address("gun_fire1"))  # noqa: F821
         fire.reparentTo(self.model)

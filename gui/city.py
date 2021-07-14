@@ -79,9 +79,9 @@ class ResourceChooser(ItemChooser):
 class RecruitChooser(CharacterChooser):
     """Recruits chooser widget.
 
-    Mostly it's working like a simple CharacterChooser,
-    but it also calculates a cost of the chosen recruit
-    and inserts it into the "Hire unit" button.
+    Mostly it's working like a simple CharacterChooser, but it also
+    calculates a cost of the chosen recruit and inserts it into the
+    "Hire unit" button.
 
     The recruit's cost depends on his/her traits: positive
     traits are increasing the cost, negative decreasing.
@@ -359,7 +359,7 @@ class CityGUI:
         self._temp_wids.append(self._up_chooser)
 
     def _purchase_upgrade(self):
-        """Buy the chosen upgrade and install it on to the Train."""
+        """Buy the chosen upgrade and install it on to the locomotive."""
         upgrade = self._up_chooser.chosen_item
         if upgrade is None or not base.res_gui.check_enough_money(  # noqa: F821
             int(upgrade["cost"][:-1])
@@ -639,7 +639,10 @@ class CityGUI:
         base.world.unload_hangar_scene(turn_around)  # noqa: F821
 
     def _send_away(self):
-        """Send the chosen unit away."""
+        """Send the chosen unit away.
+
+        The unit will leave the crew and can never be restored.
+        """
         if len(base.team.chars) == 1:  # noqa: F821
             return
 
@@ -676,7 +679,7 @@ class CityGUI:
             char.rest()
 
     def _repair(self, value):
-        """Repair the Train.
+        """Repair the locomotive.
 
         Spends money.
 

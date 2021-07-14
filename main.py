@@ -2,8 +2,7 @@
 Copyright (C) 2021 Ilya "Faer" Gurov (ilya.faer@mail.ru)
 License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
-The main game file. Starts the game itself
-and maintains the major systems.
+The main game file. Starts the game itself and maintains major systems.
 """
 import dbm.dumb  # noqa: F401
 import languages.EN  # noqa: F401
@@ -132,8 +131,7 @@ class ForwardOnly(ShowBase):
         Set title, fullscreen mode and the given resolution.
 
         Returns:
-            panda3d.core.WindowProperties:
-                The main window properties object.
+            panda3d.core.WindowProperties: The main window properties object.
         """
         props = WindowProperties()
 
@@ -214,6 +212,21 @@ class ForwardOnly(ShowBase):
             self.notes.start()
             self.doMethodLater(24, self.world.make_stench_step, "stench_step")
 
+    def add_head(self, enemy):
+        """Make a record about the destroyed enemy.
+
+        Args:
+            enemy (str): The destroyed enemy class name.
+        """
+        if enemy not in self._heads:
+            self._heads[enemy] = 0
+
+        self._heads[enemy] += 1
+
+    def clear_heads(self):
+        """Clear all the records about previously destroyed enemies."""
+        self._heads.clear()
+
     def start_game(self, task=None):
         """Actually start the game process."""
         self.notes = TeachingNotes()
@@ -239,17 +252,6 @@ class ForwardOnly(ShowBase):
                 0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
             )
 
-    def add_head(self, enemy):
-        """Make a record about the destroyed enemy.
-
-        Args:
-            enemy (str): The destroyed enemy class name.
-        """
-        if enemy not in self._heads:
-            self._heads[enemy] = 0
-
-        self._heads[enemy] += 1
-
     def change_mouse_pointer(self, state):
         """Change mouse pointer icon.
 
@@ -266,10 +268,6 @@ class ForwardOnly(ShowBase):
             Filename.binaryFilename("GUI/pointers/" + state + ".ico")
         )
         self.win.requestProperties(self._win_prors)
-
-    def clear_heads(self):
-        """Clear all the records about previously destroyed enemies."""
-        self._heads.clear()
 
     def load_game(self, num):
         """Load the previously saved game.

@@ -374,6 +374,11 @@ class Train:
 
         return ups
 
+    def resume_smoke(self, task):
+        """Resume the stopped smoke particle effect."""
+        self._smoke.softStart()
+        return task.done
+
     def set_physics(self, phys_mgr):
         """Set the locomotive physics.
 
@@ -412,11 +417,6 @@ class Train:
         """Move the Train into a city hangar."""
         self.root_node.setZ(50)
         self._smoke.softStop()
-
-    def resume_smoke(self, task):
-        """Resume the stopped smoke particle effect."""
-        self._smoke.softStart()
-        return task.done
 
     def move_along_block(self, block):
         """Move the Train along the given world block.

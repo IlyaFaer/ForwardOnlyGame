@@ -37,24 +37,14 @@ class ItemChooser(metaclass=abc.ABCMeta):
             text_scale=0.03,
             pos=(0, 0, -0.01),
         )
-        DirectButton(
-            parent=self._fr,
-            pos=(0.15, 0, -0.015),
-            text=">",
-            text_fg=SILVER_COL,
-            frameColor=font,
-            command=self._next,
-            scale=(0.075, 0, 0.075),
-        )
-        DirectButton(
-            parent=self._fr,
-            pos=(-0.15, 0, -0.015),
-            text="<",
-            text_fg=SILVER_COL,
-            frameColor=font,
-            command=self._prev,
-            scale=(0.075, 0, 0.075),
-        )
+        but_params = {
+            "parent": self._fr,
+            "text_fg": SILVER_COL,
+            "frameColor": font,
+            "scale": (0.075, 0, 0.075),
+        }
+        DirectButton(pos=(0.15, 0, -0.015), text=">", command=self._next, **but_params)
+        DirectButton(pos=(-0.15, 0, -0.015), text="<", command=self._prev, **but_params)
         self._fr.hide()
 
     @abc.abstractmethod
@@ -151,7 +141,7 @@ class CharacterChooser(ItemChooser):
 
 
 class UpgradeChooser(ItemChooser):
-    """Widget to choose one Train upgrade.
+    """Widget to choose one locomotive upgrade.
 
     Args:
         desc_label (direct.gui.DirectGui.DirectLabel):

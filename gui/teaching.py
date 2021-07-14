@@ -260,7 +260,7 @@ class EnemyDesc:
             frameSize=(-0.39, 0.39, -0.24, 0.24),
         ).setTransparency(TransparencyAttrib.MAlpha)
 
-        DirectLabel(
+        DirectLabel(  # the enemy class/object description
             parent=self._fr,
             pos=(0, 0, -0.18),
             frameColor=(0, 0, 0, 0),
@@ -322,7 +322,7 @@ class MechanicDesc:
         )
         self._preview.setTransparency(TransparencyAttrib.MAlpha)
 
-        self._desc = DirectLabel(
+        self._desc = DirectLabel(  # the mechanic description
             parent=self._fr,
             pos=(0, 0, -0.18),
             frameColor=(0, 0, 0, 0),

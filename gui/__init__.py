@@ -76,7 +76,6 @@ class MainMenu:
             frameColor=(0.15, 0.15, 0.15, 1),
             state=DGG.NORMAL,
         )
-
         wids = self._show_authors_word()
         taskMgr.doMethodLater(  # noqa: F821
             5, self._hide_authors_word, "stop_splash_screens", extraArgs=[wids]
@@ -273,8 +272,8 @@ class MainMenu:
             clickSound=self.click_snd,
         )
         self.bind_button(start_but)
-
         self.tactics_wids.append(start_but)
+
         self._show_crew("soldiers")
 
     def _clear_temp_wids(self, task):
@@ -387,7 +386,11 @@ class MainMenu:
         base.restart_game()  # noqa: F821
 
     def _show_authors_word(self):
-        """Show author's word splashscreen."""
+        """Show author's word splashscreen.
+
+        Returns:
+            list: Splash screen widgets.
+        """
         title = DirectLabel(
             pos=(0, 0, 0.2),
             text_scale=0.045,

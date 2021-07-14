@@ -190,6 +190,36 @@ class CommonController:
         base.char_gui.hide_tip()  # noqa: F821
         base.change_mouse_pointer("normal")  # noqa: F821
 
+    def choose_char(self, char_id):
+        """Choose a character with the given id.
+
+        Args:
+            char_id (str): Id of the Character to choose.
+        """
+        self._pointed_obj = char_id
+        self._choose_obj()
+        self._pointed_obj = None
+
+    def deselect(self, clear_resting=True):
+        """Hide manipulating GUI and deselect character.
+
+        Args:
+            clear_resting (bool):
+                Optional. A flag indicating if the list of the
+                resting characters should also be closed.
+        """
+        self._char_pointer.detachNode()
+        self._chosen_char = None
+
+        for part in self._parts.values():
+            part.hide_arrow()
+
+        base.char_gui.clear_char_info(clear_resting)  # noqa: F821
+
+        if self._is_relations_shown:
+            base.team.hide_relations()  # noqa: F821
+            self._is_relations_shown = False
+
     def set_controls(self):
         """Configure common game controls.
 
@@ -222,36 +252,6 @@ class CommonController:
 
         taskMgr.doMethodLater(0.03, self._collide_mouse, "collide_mouse")  # noqa: F821
         taskMgr.doMethodLater(0.04, self._traverse, name="main_traverse")  # noqa: F821
-
-    def choose_char(self, char_id):
-        """Choose a character with the given id.
-
-        Args:
-            char_id (str): Id of the Character to choose.
-        """
-        self._pointed_obj = char_id
-        self._choose_obj()
-        self._pointed_obj = None
-
-    def deselect(self, clear_resting=True):
-        """Hide manipulating GUI and deselect character.
-
-        Args:
-            clear_resting (bool):
-                Optional. A flag indicating if the list of the
-                resting characters should also be closed.
-        """
-        self._char_pointer.detachNode()
-        self._chosen_char = None
-
-        for part in self._parts.values():
-            part.hide_arrow()
-
-        base.char_gui.clear_char_info(clear_resting)  # noqa: F821
-
-        if self._is_relations_shown:
-            base.team.hide_relations()  # noqa: F821
-            self._is_relations_shown = False
 
     def set_mouse_events(self):
         """

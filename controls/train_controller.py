@@ -177,20 +177,6 @@ class TrainController:
             )
         self.slow_down_to(target)
 
-    def set_controls(self, train):
-        """Configure the locomotive control keys.
-
-        Args:
-            train (train.Train): The locomotive object.
-        """
-        # speed smoothly changes while holding w/s keys
-        base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
-        base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
-        base.accept("w-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
-        base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
-
-        base.accept("f", train.toggle_lights)  # noqa: F821
-
     def move_along_block(self, block, train_np, do_turn):
         """Start the locomotive move intervals for the given block.
 
@@ -234,8 +220,7 @@ class TrainController:
         """Load previously saved locomotive speed.
 
         Args:
-            speed (float):
-                Rate to set for animation, move and sounds.
+            speed (float): Rate to set for animation, move and sounds.
         """
         self._move_par.setPlayRate(speed)
         self._move_anim_int.setPlayRate(speed)
@@ -244,18 +229,32 @@ class TrainController:
             self._move_snd.stop()
             self._is_stopped = True
 
+    def pause_movement(self):
+        """Make a movement pause (used when a tutorial page is shown)."""
+        self._move_par.pause()
+        self._move_anim_int.pause()
+        self._move_snd.stop()
+
+    def set_controls(self, train):
+        """Configure the locomotive control keys.
+
+        Args:
+            train (train.Train): The locomotive object.
+        """
+        # speed smoothly changes while holding w/s keys
+        base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
+        base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
+        base.accept("w-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
+        base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
+
+        base.accept("f", train.toggle_lights)  # noqa: F821
+
     def start_move(self):
         """Start the Train movement."""
         self._move_par.resume()
         self._move_anim_int.resume()
         self._move_snd.play()
         self._is_stopped = False
-
-    def pause_movement(self):
-        """Make a movement pause (used when a tutorial page is shown)."""
-        self._move_par.pause()
-        self._move_anim_int.pause()
-        self._move_snd.stop()
 
     def speed_to_min(self):
         """Accelerate to minimum speed.

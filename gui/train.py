@@ -217,6 +217,22 @@ class TrainGUI:
 
         return task.again
 
+    def _turn_on_fork(self, fork):
+        """Turn the locomotive on the next fork.
+
+        Args:
+            fork (world.block.Block): Fork block to turn on.
+        """
+        base.train.do_turn = 1  # noqa: F821
+        base.ignore("t")  # noqa: F821
+        fork.load_additional_surface()
+        self.hide_turning_ability()
+
+    def _update_speed(self, task):
+        """Update the Train speed GUI indicator."""
+        self._speed["value"] = base.train.ctrl.current_speed  # noqa: F821
+        return task.again
+
     def activate_weapon(self, weapon, command):
         """
         Erase shadow on the reloaded weapon button
@@ -247,22 +263,6 @@ class TrainGUI:
             extraArgs=[weapon, self._weapon_buts[weapon]["reloading_len"]],
             appendTask=True,
         )
-
-    def _turn_on_fork(self, fork):
-        """Turn the locomotive on the next fork.
-
-        Args:
-            fork (world.block.Block): Fork block to turn on.
-        """
-        base.train.do_turn = 1  # noqa: F821
-        base.ignore("t")  # noqa: F821
-        fork.load_additional_surface()
-        self.hide_turning_ability()
-
-    def _update_speed(self, task):
-        """Update the Train speed GUI indicator."""
-        self._speed["value"] = base.train.ctrl.current_speed  # noqa: F821
-        return task.again
 
     def hide_turning_ability(self):
         """Hide turning GUI."""
