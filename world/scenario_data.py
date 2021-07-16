@@ -126,8 +126,8 @@ hours to finish preparing the camp. Getting a lot of thanks
 from the children and their teachers, you gather again on the
 Adjutant. Everyone seems to be enlivened, still, the road calls.
 Giving an order to start engine, you approach a couple of your
-teammates, who are looking some kind of an article on a
-martphone. "Hey, Captain, you need to see this! Some of those
+teammates, who are viewing some kind of an article on a
+smartphone. "Hey, Captain, you need to see this! Some of those
 children visited kinda research center a month ago and took
 an interview there. The woman speaks about interesting things."
 Telling them that you're going to take a closer look at the
@@ -292,7 +292,7 @@ All people in the crew getting +20 Health""",
     },
     {  # 4
         "intro": """From a very far distance you can discern that near the small
-motel a long line of cars jamms. You can even see people a
+motel a long line of cars jamms. You can even see a long
 string of people standing in front of the entrance. Looks
 like a lot of Silewer newcomers want to rent a room here.
 Sending your people to try to get inside the building, you

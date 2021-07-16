@@ -136,7 +136,7 @@ class Character(Shooter, Unit):
 
     @property
     def description(self):
-        """This character saveable parameters.
+        """This character state in saveable form.
 
         Used for saving the character.
 

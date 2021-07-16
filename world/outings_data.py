@@ -586,15 +586,16 @@ You're getting 130$""",
         "class_weights": {"soldier": 20, "raider": 12, "anarchist": 5},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 7},
-        "desc": """The horizon line is lost behind trees for hours. The lands seems
-to be very wild, still, you've given an order to everyone to keep eyes
-open. And in voluntary minute you're hearing your teammates calling you
-outside the cabin. Exiting the Train deckhouse, you're taking a binocular
-and gazing into the pointed direction. First you don't see anything
-except trees. But after few seconds a big piece of dark green cloth
-reveals, strained between two tree trunks. "Looks like a shelter" - you're
-pronouncing, thinking how many people should be sent there.
-Probably, two fighters will be enough.""",
+        "desc": """The horizon line is lost behind trees for hours. The lands
+seems to be very wild, still, you've given an order to everyone
+to keep eyes open. And in voluntary minute you're hearing your
+teammates calling you outside the cabin. Exiting the locomotive
+deckhouse, you're taking a binocular and gazing into the pointed
+direction. First you don't see anything except trees. But after
+few seconds a big piece of dark green cloth reveals, strained
+between two tree trunks. "It definitely looks like a shelter..."
+- you're pronouncing, thinking how many people should be
+sent there. Probably, two fighters will be enough.""",
         "results": (
             {
                 "score": range(0, 20),

@@ -43,7 +43,7 @@ class RailsScheme:
 
         DirectLabel(
             parent=self._list,
-            text="Railways scheme",
+            text="Silewer Railways Scheme",
             frameSize=(0.2, 0.2, 0.2, 0.2),
             text_scale=0.035,
             pos=(0, 0, 0.5),

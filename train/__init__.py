@@ -424,8 +424,9 @@ class Train:
         Args:
             block (world.block.Block): The world block to move along.
         """
-        self._miles += 1
-        self._gui.update_miles(self._miles)
+        if not block.enemy_territory:
+            self._miles += 1
+            self._gui.update_miles(self._miles)
 
         if block.is_rusty:
             if not self._is_on_rusty:

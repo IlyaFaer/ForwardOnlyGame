@@ -27,21 +27,24 @@ MAIN_MENU = (
         "shooters at medium\ndistance and good fortification assaulters. "
         "Their tactic is based mostly on a good\ndefence and locomotive "
         "upgrading, which can make the Train a real fortress.\n\n"
-        "You'll start with 3 soldier males."
+        "You'll start with 3 soldier males. "
+        "Prefered outings type: Enemy Camp."
     ),
     (
         "Raiders are accustomed to difficulties and can recover from "
         "anything. They are\ngood fighters at short distance and they "
         "know how to find resources. Their tactic\nis based on getting "
         "and using expendable resources and fast recovering.\n\n"
-        "You'll start with 2 male and 1 female raiders."
+        "You'll start with 2 male and 1 female raiders. "
+        "Prefered outings type: Looting."
     ),
     (
         "Anarchists are the force of nature! They build cohesion "
         "faster than others and\nalways value those, who life brought "
         "them with. The tactic is based on\ngetting more people, "
         "tweaking their traits and using crew skills.\n\n"
-        "You'll start with 2 male and 1 female anarchists."
+        "You'll start with 2 male and 1 female anarchists. "
+        "Prefered outings type: Meet."
     ),
     "Main menu",
     "Save game",
@@ -251,7 +254,8 @@ the infection""",
 more vulnerable for diseases""",
     # the Stench
     """The Stench orange clouds are
-highly poisonous""",
+highly poisonous. Cross
+them as fast as you can.""",
     # resources
     """Stimulator temporarily disables
 the character's negative
