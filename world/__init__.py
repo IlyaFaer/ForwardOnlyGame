@@ -804,7 +804,10 @@ class World:
             self.outings_mgr.hide_outing()
 
     def _track_places_of_interest(self):
-        """Track upcoming places of interest."""
+        """Track upcoming places of interest.
+
+        Always stop in places of interest.
+        """
         if len(self._loaded_blocks) < 2:
             return
 
@@ -814,13 +817,13 @@ class World:
 
         if current_block.is_station:
             base.train.ctrl.unset_controls()  # noqa: F821
-            base.train.stop_urgent()  # noqa: F821
+            base.train.stop_urgent(place_of_interest=True)  # noqa: F821
             self.outings_mgr.show_place_of_interest()
 
     def _track_cities(self):
         """Track upcoming cities.
 
-        Slow down and stop the Train when approaching a city.
+        Always stop in cities.
         """
         if len(self._loaded_blocks) < 2:
             return
@@ -829,21 +832,13 @@ class World:
         if current_block.enemy_territory:
             return
 
-        new_block = self._loaded_blocks[-1].directions[current_block.id]
-        if isinstance(new_block, tuple):
-            return
-
-        if self._map[new_block].is_city:
-            self._is_in_city = True
+        if current_block.is_city:
             base.train.ctrl.unset_controls()  # noqa: F821
-            base.train.slow_down_to(0.7)  # noqa: F821
+            base.train.stop_urgent()  # noqa: F821
             self.outings_mgr.show_city()
 
-        elif self._map[self._loaded_blocks[-1].id].is_city:
-            base.train.slow_down_to(0.5)  # noqa: F821
+            self._is_in_city = True
 
-        elif self._map[current_block.id].is_city:
-            base.train.slow_down_to(0)  # noqa: F821
             base.notes.stop()  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
                 10, base.effects_mgr.fade_out_screen, "fade_screen"  # noqa: F821

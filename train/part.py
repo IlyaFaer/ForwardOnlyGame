@@ -99,7 +99,7 @@ class TrainPart:
         enemy = base.world.enemy.active_units.get(  # noqa: F821
             event.getFromNodePath().getName()
         )
-        if enemy is not None:
+        if enemy is not None and not enemy.is_dead:
             self.enemies.append(enemy)
             enemy.enter_the_part(self)
 

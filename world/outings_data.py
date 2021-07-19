@@ -111,14 +111,15 @@ You're getting 100$ and 1 stimulator
         "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 6, "evening": 4},
-        "desc": """It takes not less than ten seconds for you to understand is something
-there, or it's just a big bush. Yes, something is definitely there - a square
-dark green tent, very similar to a soldier's one. It doesn't look like there
-are people in there, but the tent is still standing, so most likely someone
-cares about it. The maximum number of sleepers in such a tent equals to
-four, and they should have to hear the Train approaching. No signs of
-movement means no human, right? It's little bit dangerous, but makes
-sense to send someone to check if anything useful lies in this tent.""",
+        "desc": """It takes not less than ten seconds for you to understand is
+something there, or it's just a big bush. Yes, something is definitely
+there - a square dark green tent, very similar to a soldier's one.
+It doesn't look like there are people in there, but the tent is
+still standing, so most likely someone cares about it. The maximum
+number of sleepers in such a tent equals to six, and they should
+have to hear the Adjutant approaching. No signs of movement
+means no human, right? It's little bit dangerous, but makes sense
+to send someone to check if anything useful lies in this tent.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -967,12 +968,13 @@ LOOTING = [
         "class_weights": {"soldier": 20, "raider": 40, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 5},
-        "desc": """At the first look you didn't pay attention to
-a dark green spot in the middle of the meadow. But in the next
-second it becomes clear that it is not a part of the landscape,
-it's a car! It looks abandoned and old, standing there for a
-long time. Still, glass seems to be unbroken, and doors closed,
-so it may make sense to check if something remain within.""",
+        "desc": """At the first look you didn't pay attention to a
+dark green spot in the middle of the meadow. But in the
+next second it becomes clear that it is not a part of the
+landscape, it's a car! It looks abandoned and old, standing
+there for a long time. Still, glass seems to be unbroken,
+and doors are closed, so it may make sense to check if
+something remain within.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -1334,15 +1336,16 @@ You're getting +40$""",
         "class_weights": {"soldier": 7, "raider": 20, "anarchist": 14},
         "assignees": 2,
         "day_part_weights": {"night": 2, "morning": 4, "noon": 10, "evening": 8},
-        "desc": """You're looking at the horizon line trying to find a sign of a
-civilization. A couple of hours passed, and there were no single building,
-litter or any other sign of human. What are these wild plains? But once
-a distant grey spot attracts your eyes. You're taking a look at it through
-your binocular. Truck! Even from that big distance you can say it is
-damaged bad: at least one wheel is ripped off and the metal cargo hold
-is dented. Still, you can afford a short stop and fast recon of the
-transport crash site. It's not accurate to say from that distance, but
-looks like there are a lot of things scattered around it.""",
+        "desc": """You're looking at the horizon line trying to find a sign of
+a civilization. A couple of hours passed, and there were no single
+building, litter or any other sign of human. What are these wild
+plains? But once a distant grey spot attracts your eyes. You're
+taking a look at it through your binocular. Truck! Even from that
+big distance you can say it is damaged bad: at least one wheel is
+ripped off and the metal cargo hold is dented. Still, you can
+afford a short stop and fast recon of the transport crash site.
+It's not accurate to say from that distance, but looks like there
+are a lot of things scattered around it.""",
         "results": (
             {
                 "score": range(0, 20),

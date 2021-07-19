@@ -10,7 +10,7 @@ SCENARIO = (
         "intro": """Kenneth - the Adjutant mechanic approaches your table and sits to
 the right of you. "Captain, we probably have a trouble." You're
 uppering a spoon full of dry porridge to your mouth: "Yeah?!"
-"Yeah. Come see me after you snaсk is over." He gets up and
+"Yeah. Come see me after you snack is over." He gets up and
 leaves the deckhouse. Finishing the awfully tasteless portion,
 you're walking to the lower level of the Adjutant. Before you
 pronounce the first word, Kenneth rises his finger up, asking
@@ -73,7 +73,7 @@ get serious wounds. You better find him or her later to
 say your thanks.
 
 One of your fighters getting -20 health""",
-                "effects": (("do_charaters_effect", [{"health": -20}, True]),),
+                "effects": (("do_characters_effect", [{"health": -20}, True]),),
             },
             "Ignore the problem": {
                 "desc": """It's better not to stop for such long period. Asking Kenneth

@@ -409,9 +409,14 @@ class Train:
         """
         self.ctrl.slow_down_to(target)
 
-    def stop_urgent(self):
-        """"Urgently stop the locomotive."""
-        self.ctrl.stop(urgent=True)
+    def stop_urgent(self, place_of_interest=False):
+        """"Urgently stop the locomotive.
+
+        Args:
+            place_of_interest (bool): Optional. True, if the
+            stop was initiated by a place of interest.
+        """
+        self.ctrl.stop(urgent=True, place_of_interest=place_of_interest)
 
     def move_to_hangar(self):
         """Move the Train into a city hangar."""
@@ -750,7 +755,7 @@ class Train:
 
     def stop(self):
         """Stop the locomotive and release steam."""
-        self._stop_steam.start(self.model, render)  # noqa: F821
+        self._stop_steam.start(self.model, self.model)  # noqa: F821
         self._stop_steam.softStart()
         taskMgr.doMethodLater(  # noqa: F821
             5, self._stop_steam.softStop, "stop_smoke", extraArgs=[]
