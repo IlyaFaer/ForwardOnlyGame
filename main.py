@@ -194,13 +194,13 @@ class ForwardOnly(ShowBase):
             block_id (int): The current block id.
         """
         tutorial_name = {
-            1: "locomotive",
-            3: "characters",
-            6: "the Stench",
-            9: "cohesion",
-            12: "outings",
-            15: "resources",
-            18: "character status",
+            1: self.labels.MECHANIC_NAMES[0],
+            3: self.labels.MECHANIC_NAMES[1],
+            6: self.labels.MECHANIC_NAMES[2],
+            9: self.labels.MECHANIC_NAMES[3],
+            12: self.labels.MECHANIC_NAMES[4],
+            15: self.labels.MECHANIC_NAMES[5],
+            18: self.labels.MECHANIC_NAMES[6],
         }.get(block_id)
 
         if not tutorial_name:

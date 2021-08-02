@@ -184,6 +184,9 @@ railway line""",
 be very useful -
 characters will
 increase cohesion""",
+    """Recruits found on Meet outings
+request less fee
+than in cities""",
     # Train
     """You can turn around in a city.
 Consider it, while choosing
@@ -268,7 +271,7 @@ DEFAULT_NOTE = "Press F1 key to open game\ncontrols help"
 TIPS = ("Resting:", "Rest zone", "Approaching a city")
 
 COHESION = (
-    "Cohesion skills",
+    "Crew skills",
     "Recall the past",
     "Every character gets +25 energy. Cooldown: 10 min.",
     "Cover fire",
@@ -309,3 +312,147 @@ SPLASHES = (
     """Forward Only will strangle you gradually for your mistakes
 instead of punishing at once. Calculate steps ahead!""",
 )
+
+MECHANIC_DESC = {
+    "locomotive": {
+        "descs": (
+            (
+                "This is the Adjutant - your locomotive. It moves fast\n"
+                "enough to outrun death, so take care of it. If\n"
+                "it'll not be able to ride, your hours are numbered.\n"
+                "Its Durability is reflected in the right bottom\n"
+                "corner of the GUI. Keep an eye for rusty rails, they\n"
+                "damage your wheels - slow down if you hear creak."
+            ),
+            (
+                "The Adjutant includes three parts and a rest\n"
+                "zone, where you can arrange your teammates.\n"
+                "A wise units rotation is the key to success.\n\n"
+                "Train speed is reflected in the right bottom corner.\n"
+                "Hold W and S keys to accelerate and decelerate."
+            ),
+        ),
+        "previews": ("locomotive1", "locomotive2"),
+    },
+    "characters": {
+        "descs": (
+            (
+                "Your crew consists of several unique fighters. Every\n"
+                "unit has energy, which should be kept at a high\n"
+                "level, as it influences character's shooting accuracy\n"
+                "and efficiency on outings. The simplest way to\n"
+                "restore unit's energy and health is to make him rest."
+            ),
+            (
+                "Click LMB on a character to choose him; control\n"
+                "arrows will appear - click RMB on one to move\n"
+                "the character to the related locomotive part,\n"
+                "or click RMB on the rest zone to make him rest.\n"
+                "Number of unit cells on every part is limited."
+            ),
+        ),
+        "previews": ("characters1", "characters2",),
+    },
+    "the Stench": {
+        "descs": (
+            (
+                "The main threat is the Stench. Its poisonous clouds\n"
+                "are spreading fast and chaotic, and most likely will\n"
+                "cover the whole Silewer in a couple of weeks. If\n"
+                "you got into it, you better accelerate to cross the\n"
+                "cloud as fast as possible. You also should not\n"
+                "stay long on the same place or ride in circles."
+            ),
+            (
+                "You need to find a way to survive the Stench. There\n"
+                "are several places of interest in Silewer - check\n"
+                "them for useful information. Use the railways scheme\n"
+                "(press M) to plan your route and visit as much places\n"
+                "as you can. You can also see outing abilities and\n"
+                "the Stench coverage on the railways scheme."
+            ),
+        ),
+        "previews": ("the_stench1", "map"),
+    },
+    "cohesion": {
+        "descs": (
+            (
+                "Your characters build cohesion with each other\n"
+                "by time. Total crew cohesion is reflected at\n"
+                "the right top corner of the screen. Increasing\n"
+                "cohesion unlocks crew skills - powerful temporary\n"
+                "effects, which influence your every character.\n"
+            ),
+            (
+                "It's worth keeping units with high cohesion on\n"
+                "the same locomotive part, as they'll get higher\n"
+                "strength factor. Cohesion also increases faster\n"
+                "between characters on the same part. To see\n"
+                "cohesion level of the unit with others, press R."
+            ),
+        ),
+        "previews": ("cohesion1", "cohesion2"),
+    },
+    "outings": {
+        "descs": (
+            (
+                "Outings are the main source of money and other\n"
+                "facilities. It's an event that requires you to\n"
+                "stop and send units for it. There are three types\n"
+                "of outings, each offers own type of trophies and\n"
+                "prefers an exact unit class to be sent for it."
+            ),
+            (
+                "An outing have five finals; the higher is your score,\n"
+                "the better is final. Score includes four items:\n"
+                "class fit - for the sent units class, condition - for\n"
+                "their health and energy, cohesion - for total cohesion\n"
+                "of the units, and a small random piece of score."
+            ),
+        ),
+        "previews": ("outings1", "outings2"),
+    },
+    "resources": {
+        "descs": (
+            (
+                "You can find resources on outings or buy in cities.\n"
+                "To use a resource, choose a unit and then click\n"
+                "the resource button. Money is the major resource\n"
+                "among all, you can spend it in cities for repair,\n"
+                "healing, recruiting and upgrading the Adjutant."
+            ),
+        ),
+        "previews": ("resources1",),
+    },
+    "character status": {
+        "descs": (
+            (
+                "Every character can have up to three traits (good\n"
+                "and bad). Traits give (dis-)advantages and can\n"
+                "be considered as perks. You can change character's\n"
+                "traits in Distinguished List, but remember that\n"
+                "it'll lower common crew cohesion for some time."
+            ),
+            (
+                "The current effects influencing the unit can be\n"
+                "seen in his/her Status GUI. Also keep an eye for\n"
+                "the disease icon - a sick character can bring a\n"
+                "lot of troubles for the crew. Try to isolate\n"
+                "diseased and cure them as soon as possible."
+            ),
+        ),
+        "previews": ("character_status1", "character_status2"),
+    },
+}
+
+MECHANIC_NAMES = (
+    "locomotive",
+    "characters",
+    "the Stench",
+    "cohesion",
+    "outings",
+    "resources",
+    "character status",
+)
+
+MECHANIC_BUTS = ("Next", "Got it!")

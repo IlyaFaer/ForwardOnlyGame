@@ -544,7 +544,7 @@ class OutingsGUI:
             ("Character classes fit:", 40, (0.36, 0.6, 0.42, 1), class_score),
             ("Characters condition:", 25, (0.65, 0.2, 0.2, 1), cond_score),
             ("Characters cohesion:", 25, SILVER_COL, cohesion_score),
-            ("Day part and traits:", 10, (0.42, 0.42, 0.8, 1), day_part_score),
+            ("Day part:", 10, (0.42, 0.42, 0.8, 1), day_part_score),
         ):
             self._outing_widgets.append(
                 DirectLabel(
