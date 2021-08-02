@@ -456,3 +456,90 @@ MECHANIC_NAMES = (
 )
 
 MECHANIC_BUTS = ("Next", "Got it!")
+
+CLASS_DESCS = {
+    "MotoShooter": {
+        "desc": (
+            "Moto shooter will try to shoot at you and\n"
+            "your locomotive as much as he can. Most of\n"
+            "the skinheads prefer such a way of\n"
+            "communication with foreigners, so stay\n"
+            "sharp - there will be a lot of them."
+        ),
+        "preview": "shooter",
+        "but_text": "Got it!",
+        "title": "Some skinheads searching for you!",
+    },
+    "BrakeThrower": {
+        "desc": (
+            "Brake thrower will try to outrun you and\n"
+            "throw a brake shoe under your wheels to slow\n"
+            "you down. Such guys are not tough themselves,\n"
+            "but they can make other skinhead attacks more\n"
+            "successful. Try to deal with them fast!"
+        ),
+        "preview": "brake_thrower",
+        "but_text": "Understood!",
+        "title": "Skinheads rumoring about dare newbies!",
+    },
+    "Barrier": {
+        "desc": (
+            "Now skinheads are using heavy barriers to get\n"
+            "to you. A barrier can do a lot of damage to your\n"
+            "locomotive on a clash. It's highly recommended to\n"
+            "set the Ram train upgrade in the nearest city\n"
+            "to get better protection from barriers."
+        ),
+        "preview": "barrier",
+        "but_text": "We'll deal with it!",
+        "title": "Skinheads start to use barriers!",
+    },
+    "StunBombThrower": {
+        "desc": (
+            "Such a guy uses stun bombs to make your fighters\n"
+            "non-operational for several seconds. It's hard for\n"
+            "a thrower to get right into a fast moving target,\n"
+            "but if you'll lose some of your speed, throw\n"
+            "efficiency will significantly increase."
+        ),
+        "preview": "bomb_thrower",
+        "but_text": "We're ready!",
+        "title": "Skinheads start to take you seriously!",
+    },
+    "DodgeShooter": {
+        "desc": (
+            "Dodge with a machine gun is a strong enemy! It can\n"
+            "do a lot of damage to your locomotive, but its\n"
+            "machine gun overheats fast and requires time to\n"
+            "cool down. Armor Plate train upgrade recommended\n"
+            "to be used for protection against this enemy."
+        ),
+        "preview": "dodge",
+        "but_text": "Bring'em on!",
+        "title": "Skinheads gather vehicles to deal with you!",
+    },
+    "Rocket": {
+        "desc": (
+            "Your progress is really pissing skinheads off.\n"
+            "To stop you they bring more and more forces.\n"
+            "Their new thought - telecontrolled rockets - can\n"
+            "do a lot of damage to your locomotive. Use Armor\n"
+            "Plate upgrade to cover a side targeted by a rocket."
+        ),
+        "preview": "rocket",
+        "but_text": "They won't stop us!",
+        "title": "Skinheads start to use rockets!",
+    },
+    "Kamikaze": {
+        "desc": (
+            "Skinhead kamikazes are after you! They can do\n"
+            "a lot of damage to the Adjutant, use Armor Plate\n"
+            "upgrade to protect the locomotive. You can also\n"
+            "destroy those guys before they'll ignite the wick.\n"
+            "If done in a right moment, they damage other enemies."
+        ),
+        "preview": "kamikaze",
+        "but_text": "We'll defeat them!",
+        "title": "All skinheads are chasing you!",
+    },
+}
