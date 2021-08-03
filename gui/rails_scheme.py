@@ -41,9 +41,10 @@ class RailsScheme:
         self._list.setTransparency(TransparencyAttrib.MAlpha)
         self._list.hide()
 
-        DirectLabel(
+        DirectLabel(  # Silewer Railways Scheme
             parent=self._list,
-            text="Silewer Railways Scheme",
+            text=base.labels.SCHEME[0],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.2, 0.2, 0.2, 0.2),
             text_scale=0.035,
             pos=(0, 0, 0.5),
@@ -67,15 +68,13 @@ class RailsScheme:
         """Build the scheme legend GUI."""
         lab_opts = {
             "parent": self._list,
-            "text_scale": 0.035,
+            "text_scale": 0.033,
             "frameColor": (0, 0, 0, 0),
             "frameSize": (-0.1, 0.1, -0.1, 0.1),
         }
-        DirectLabel(
-            text=(
-                "Legend:\nm - Meet\nl - Looting\n"
-                "e - Enemy Camp\ni - Place of interest"
-            ),
+        DirectLabel(  # Legend
+            text=base.labels.SCHEME[1],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_align=TextNode.ALeft,
             pos=(-1, 0, -0.35),
             **lab_opts,
@@ -86,8 +85,11 @@ class RailsScheme:
             frameSize=(-0.04, 0.04, -0.04, 0.04),
             pos=(-0.39, 0, -0.41),
         )
-        DirectLabel(
-            text="- city", pos=(-0.3, 0, -0.42), **lab_opts,
+        DirectLabel(  # city
+            text=base.labels.SCHEME[2],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            pos=(-0.3, 0, -0.42),
+            **lab_opts,
         )
         DirectFrame(
             parent=self._scheme,
@@ -98,7 +100,10 @@ class RailsScheme:
         ).setR(90)
 
         DirectLabel(
-            text="- railway branch", pos=(0.29, 0, -0.38), **lab_opts,
+            text=base.labels.SCHEME[3],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            pos=(0.29, 0, -0.38),
+            **lab_opts,
         )
         DirectFrame(
             parent=self._scheme,
@@ -107,7 +112,10 @@ class RailsScheme:
             pos=(0.09, 0, -0.45),
         )
         DirectLabel(
-            text="- the Stench", pos=(0.26, 0, -0.46), **lab_opts,
+            text=base.labels.SCHEME[4],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            pos=(0.26, 0, -0.46),
+            **lab_opts,
         )
 
     def _fill_branches(self):

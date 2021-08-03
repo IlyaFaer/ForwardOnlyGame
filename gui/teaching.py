@@ -27,7 +27,7 @@ class EnemyDesc:
         DirectLabel(  # the note title
             parent=self._fr,
             text=base.labels.CLASS_DESCS[class_]["title"],  # noqa: F821
-            text_font=base.main_font, # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=RUST_COL,
             text_scale=0.038,
             pos=(0, 0, 0.44),
@@ -51,13 +51,13 @@ class EnemyDesc:
             text_fg=SILVER_COL,
             text_scale=0.035,
             text=base.labels.CLASS_DESCS[class_]["desc"],  # noqa: F821
-            text_font=base.main_font, # noqa: F821
+            text_font=base.main_font,  # noqa: F821
         )
         base.main_menu.bind_button(  # noqa: F821
             DirectButton(
                 parent=self._fr,
                 text=base.labels.CLASS_DESCS[class_]["but_text"],  # noqa: F821
-                text_font=base.main_font, # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_scale=0.04,
                 relief=None,
                 pos=(0, 0, -0.45),

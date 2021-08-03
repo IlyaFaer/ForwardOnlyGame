@@ -543,3 +543,12 @@ CLASS_DESCS = {
         "title": "All skinheads are chasing you!",
     },
 }
+
+SCHEME = (
+    "Silewer Railways Scheme",
+    "Legend:\nm - Meet\nl - Looting\ne - Enemy Camp\ni - Place of interest",
+    "- city",
+    "- railway branch",
+    "- the Stench",
+)
+
