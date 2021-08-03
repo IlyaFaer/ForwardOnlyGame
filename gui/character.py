@@ -14,7 +14,6 @@ from direct.gui.DirectGui import (
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import CardMaker, NodePath, TransparencyAttrib
 
-from units.crew.character_data import TRAIT_DESC
 from utils import clear_wids
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL
 
@@ -80,6 +79,7 @@ class CharacterGUI:
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=(0.028, 0.028),
             text_fg=SILVER_COL,
+            text_font=base.main_font,  # noqa: F821
             pos=(0, 0, 0.025),
         )
         DirectLabel(  # Class:
@@ -203,6 +203,7 @@ class CharacterGUI:
                     text=trait,
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.03,
+                    text_font=base.main_font,  # noqa: F821
                     text_fg=SILVER_COL
                     if trait in self.char.traits
                     else (0.3, 0.3, 0.3, 1),
@@ -212,7 +213,8 @@ class CharacterGUI:
             self._char_desc_wids.append(
                 DirectLabel(
                     parent=self._fr,
-                    text=TRAIT_DESC[trait],
+                    text=base.labels.TRAIT_DESC[trait],  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.029,
                     text_fg=SILVER_COL

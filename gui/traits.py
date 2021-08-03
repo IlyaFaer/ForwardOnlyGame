@@ -12,7 +12,6 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
-from units.crew.character_data import TRAIT_DESC
 from utils import take_random
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL, CharacterChooser
 
@@ -115,6 +114,7 @@ class TraitsGUI:
                         text="",
                         text_fg=SILVER_COL,
                         text_scale=0.032,
+                        text_font=base.main_font,  # noqa: F821
                         parent=traits_fr,
                         frameSize=(-0.2, 0.2, -0.05, 0.05),
                         relief=None,
@@ -126,6 +126,7 @@ class TraitsGUI:
                         text="",
                         text_fg=SILVER_COL,
                         text_scale=0.027,
+                        text_font=base.main_font,  # noqa: F821
                         parent=traits_fr,
                         frameSize=(-0.2, 0.2, -0.05, 0.05),
                         relief=None,
@@ -141,6 +142,7 @@ class TraitsGUI:
                         text="",
                         text_fg=SILVER_COL,
                         text_scale=0.032,
+                        text_font=base.main_font,  # noqa: F821
                         parent=traits_fr,
                         frameSize=(-0.2, 0.2, -0.05, 0.05),
                         relief=None,
@@ -152,6 +154,7 @@ class TraitsGUI:
                         text="",
                         text_fg=SILVER_COL,
                         text_scale=0.027,
+                        text_font=base.main_font,  # noqa: F821
                         parent=traits_fr,
                         frameSize=(-0.2, 0.2, -0.05, 0.05),
                         relief=None,
@@ -277,7 +280,7 @@ class TraitsGUI:
 
         char = self._char_chooser.chosen_item
 
-        pos_traits = list(TRAIT_DESC.keys())
+        pos_traits = list(base.labels.TRAIT_DESC.keys())  # noqa: F821
         for trait in char.traits + char.disabled_traits:
             pos_traits.remove(trait)
 
@@ -285,7 +288,9 @@ class TraitsGUI:
             new_trait = take_random(pos_traits)
             self._new_traits[index][0]["text"] = new_trait
             self._new_traits[index][0]["text_fg"] = SILVER_COL
-            self._new_traits[index][1]["text"] = TRAIT_DESC[new_trait]
+            self._new_traits[index][1]["text"] = base.labels.TRAIT_DESC[  # noqa: F821
+                new_trait
+            ]
             self._new_traits[index][1]["text_fg"] = SILVER_COL
 
         base.team.spend_cohesion(4)  # noqa: F821
@@ -341,7 +346,11 @@ class TraitsGUI:
                 trait = traits[index]
                 self._cur_traits[index][0]["text"] = trait
                 self._cur_traits[index][0]["text_fg"] = SILVER_COL
-                self._cur_traits[index][1]["text"] = TRAIT_DESC[trait]
+                self._cur_traits[index][1][
+                    "text"
+                ] = base.labels.TRAIT_DESC[  # noqa: F821
+                    trait
+                ]
                 self._cur_traits[index][1]["text_fg"] = SILVER_COL
             else:
                 self._cur_traits[index][0]["text"] = ""

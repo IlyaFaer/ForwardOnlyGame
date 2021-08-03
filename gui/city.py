@@ -9,7 +9,6 @@ import random
 from direct.gui.DirectGui import DGG, DirectButton, DirectFrame, DirectLabel
 from panda3d.core import TextNode, TransparencyAttrib
 
-from units.crew.character_data import TRAITS
 from utils import clear_wids
 from .widgets import (
     GUI_PIC,
@@ -127,7 +126,7 @@ class RecruitChooser(CharacterChooser):
         for id_, rec in items.items():
             cost = 150
             for trait in rec.traits:
-                for trait_pair in TRAITS:
+                for trait_pair in base.labels.TRAITS:  # noqa: F821
                     if trait == trait_pair[0]:
                         cost += 20
                         break

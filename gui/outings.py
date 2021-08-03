@@ -14,7 +14,6 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
-from units.crew.character_data import TRAIT_DESC
 from utils import clear_wids
 from .widgets import RUST_COL, SILVER_COL, CharacterChooser
 
@@ -290,7 +289,7 @@ class OutingsGUI:
         for key, value in selected_effect.items():
             if key == "add_trait":
                 effect_str = "Get {trait} trait\n ({desc})".format(
-                    trait=value, desc=TRAIT_DESC[value]
+                    trait=value, desc=base.labels.TRAIT_DESC[value]  # noqa: F821
                 )
             else:
                 effect_str += (

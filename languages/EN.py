@@ -552,3 +552,32 @@ SCHEME = (
     "- the Stench",
 )
 
+TRAITS = [
+    ("Fast hands", "Snail"),  # 0
+    ("Cat eyes", "Fear of dark"),  # 1
+    ("Masochism", "Hemophobia"),  # 2
+    ("Immunity", "Weak immunity"),  # 3
+    ("Liberal", "Loner"),  # 4
+    ("Bloodthirsty", "Nervousness"),  # 5
+    ("Deep breath", "Motion sickness"),  # 6
+    ("Mechanic", "Pharmacophobia"),  # 7
+]
+
+TRAIT_DESC = {
+    "Fast hands": "+30% shooting speed",
+    "Snail": "-20% shooting speed",
+    "Cat eyes": "+25% accuracy in darkness",
+    "Fear of dark": "+50% energy spend in darkness",
+    "Masochism": "regain energy when getting damage",
+    "Hemophobia": "+25% energy spend, if health < 50%",
+    "Immunity": "-40% chance to get sick",
+    "Weak immunity": "+20% chance to get sick",
+    "Liberal": "+30% cohesion increase with other classes",
+    "Loner": "x1.3 damage while alone on the Train part",
+    "Bloodthirsty": "+7 health for a killed enemy unit",
+    "Nervousness": "+25% energy spend while in fight",
+    "Deep breath": "Avoid the Stench poison for the first 1 min",
+    "Motion sickness": "Doesn't restore on high movement speed",
+    "Mechanic": "Repairs the Train, while not resting",
+    "Pharmacophobia": "Self-healing 40% slower",
+}

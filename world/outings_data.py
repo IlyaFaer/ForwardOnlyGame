@@ -800,7 +800,7 @@ makes locomotive windows shaking. Getting up, {name1} runs back
 to you, while you're observing the auto shop burning remnants.
 Seems like something gone terribly wrong inside it...
 {name1} getting Nervousness""",
-                "effects": {"char_1": {"add_trait": "Nervousness"}},
+                "effects": {"char_1": {"add_trait": (5, 1)}},
             },
             {
                 "score": range(20, 40),
@@ -1913,7 +1913,7 @@ You nod to the machinist, ordering to start engine.
 {name2} getting Nervousness""",
                 "effects": {
                     "char_1": {"health": -10},
-                    "char_2": {"add_trait": "Nervousness"},
+                    "char_2": {"add_trait": (5, 1)},
                 },
             },
             {
@@ -1975,7 +1975,7 @@ people. You're waiting for about 10 minutes, and both {name1} and
 {name2} return back to you. "Good people" - {name2} finalizes.
 "But very distrustful." "No wonder." - you're answering.
 Single character can get Immunity""",
-                "effects": {"select_char": {"add_trait": "Immunity"}},
+                "effects": {"select_char": {"add_trait": (3, 0)}},
             },
         ),
     },
@@ -2007,7 +2007,7 @@ it and jumps aside the body. "Oh, shit!" - {heshe1} inclines and
 spits. "Faster, go for the doc!" - you're pushing {himher1} to
 the Train and stopping your breath as well.
 {name1} getting Weak Immunity""",
-                "effects": {"char_1": {"add_trait": "Weak immunity"}},
+                "effects": {"char_1": {"add_trait": (3, 1)}},
             },
             {
                 "score": range(20, 40),
@@ -2071,7 +2071,7 @@ a step towards you and silently pronounces: "We better leave him."
 Taking a moment to overthink, you're deciding that it's a good idea,
 this man is mad and most likely diseased. No way to help him.
 Single character can get Masochism""",
-                "effects": {"select_char": {"add_trait": "Masochism"}},
+                "effects": {"select_char": {"add_trait": (2, 0)}},
             },
         ),
     },
@@ -2107,8 +2107,8 @@ continues: "The hitman is dead we suppose." Ordering your people
 to get clean and rest, you're commanding the machinist to take off.
 {name2} and {name3} getting Fear of dark""",
                 "effects": {
-                    "char_2": {"add_trait": "Fear of dark"},
-                    "char_3": {"add_trait": "Fear of dark"},
+                    "char_2": {"add_trait": (1, 1)},
+                    "char_3": {"add_trait": (1, 1)},
                 },
             },
             {
@@ -2167,7 +2167,7 @@ Everyone done something, the vespiary burned to the ground, and
 every messenger is very impressed by the hitman skills.
 You're getting 100$
 Single character can get Fast hands""",
-                "effects": {"select_char": {"add_trait": "Fast hands"}, "money": 100},
+                "effects": {"select_char": {"add_trait": (0, 0)}, "money": 100},
             },
         ),
     },
@@ -2204,7 +2204,7 @@ the locomotive. You see that {hisher1} eyes are open wide, and the skin
 became pale. "You're okay?" Turning head to you, {name1} keeps silent
 for a second... "Yes. I guess. Just..."  - {heshe1} looks at the outpost.
 {name1} getting Hemophobia""",
-                "effects": {"char_1": {"add_trait": "Hemophobia"}},
+                "effects": {"char_1": {"add_trait": (2, 1)}},
             },
             {
                 "score": range(20, 40),
@@ -2268,7 +2268,7 @@ it. It's really significant to clear so much filth. "Right, I have to
 return to my people" - {heshe1} takes leave of the constructor and,
 throwing the last gaze at bodies, takes a direction to the Train.
 Single character can get Bloodthirsty""",
-                "effects": {"select_char": {"add_trait": "Bloodthirsty"}},
+                "effects": {"select_char": {"add_trait": (5, 0)}},
             },
         ),
     },
@@ -2353,7 +2353,7 @@ Transporting people away from the Stench. Asked to help them a
 little and gave us this" - {name2} puts some dollars to the table.
 You're getting +90$
 One character can get Liberal""",
-                "effects": {"money": 90, "select_char": {"add_trait": "Liberal"}},
+                "effects": {"money": 90, "select_char": {"add_trait": (4, 0)}},
             },
             {
                 "score": range(80, 101),
@@ -2405,7 +2405,7 @@ running out of the door, jumping down to the ground. He has nothing
 in his hands, so {name3} decides not to shoot. "He didn't get time
 to grab anything." - {name2} says, appearing at the door. - "Let go."
 {name2} getting Fear Of Dark""",
-                "effects": {"char_2": {"add_trait": "Fear of dark"}},
+                "effects": {"char_2": {"add_trait": (1, 1)}},
             },
             {
                 "score": range(20, 40),
@@ -2473,7 +2473,7 @@ to deal with tears. When your gaze clears completely, you take one
 more careful look around, but no one seems to be in nearlands. Good!
 The ambush was not successful. Time to ventilate the deckhouse.
 Single character can get Deep Breath""",
-                "effects": {"select_char": {"add_trait": "Deep breath"}},
+                "effects": {"select_char": {"add_trait": (6, 0)}},
             },
         ),
     },
@@ -2508,7 +2508,7 @@ become more aggressive." - the man from the truck pronounces sadly.
 - "We do our best..." Convincing him they are okay, your people
 return back to you, trying to deal with the impact of the seen.
 {name2} getting Nervousness""",
-                "effects": {"char_2": {"add_trait": "Nervousness"}},
+                "effects": {"char_2": {"add_trait": (5, 1)}},
             },
             {
                 "score": range(20, 40),
@@ -2621,7 +2621,7 @@ Retreating to you, your scouts climb to the Train fastly. It appears
 {name3} got a rock right into {hisher1} head. The wound doesn't
 seem to be very serious, but it's still very unpleasant.
 {name3} getting -7 health and Motion Sickness""",
-                "effects": {"char_3": {"health": -7, "add_trait": "Motion sickness"}},
+                "effects": {"char_3": {"health": -7, "add_trait": (6, 1)}},
             },
             {
                 "score": range(40, 60),
@@ -2706,7 +2706,7 @@ messenger. Covered with spider web and dust, {heshe1} coughs, but
 you don't see serious wounds. And the carriage itself appears
 to be empty, you see only snow intensively melting to steam.
 {name1} getting Fear Of Dark""",
-                "effects": {"char_1": {"add_trait": "Fear of dark"}},
+                "effects": {"char_1": {"add_trait": (1, 1)}},
             },
             {
                 "score": range(20, 40),
@@ -2769,7 +2769,7 @@ You're accepting this - well, there's nothing wrong in helping
 others. After all, your party is not in a critical state. You're
 giving an order to start the Adjutant's engine.
 {name1} getting Mechanic""",
-                "effects": {"char_1": {"add_trait": "Mechanic"}},
+                "effects": {"char_1": {"add_trait": (7, 0)}},
             },
         ),
     },
@@ -2803,7 +2803,7 @@ where the truck owner was. Doesn't seem much left of him... While
 {name1} moves back to the train, you notice that {hisher1} movements
 are little bit inaccurate - the explosion probably deafened {name1}.
 {name1} getting Snail""",
-                "effects": {"char_1": {"add_trait": "Snail"}},
+                "effects": {"char_1": {"add_trait": (0, 1)}},
             },
             {
                 "score": range(20, 40),

@@ -17,7 +17,7 @@ from utils import address, chance, take_random
 
 from units.shooter import Shooter
 from units.unit import Unit
-from .character_data import CLASSES, NAMES, TRAITS
+from .character_data import CLASSES, NAMES
 
 # cohesion relation indicator colors
 RELATION_COLORS = {
@@ -94,7 +94,7 @@ class Character(Shooter, Unit):
 
             self.disabled_traits = []
             self.traits = []
-            traits = copy.copy(TRAITS)
+            traits = copy.copy(base.labels.TRAITS)  # noqa: F821
             for _ in range(random.randint(0, 2)):
                 self.traits.append(random.choice(take_random(traits)))
 
@@ -129,7 +129,11 @@ class Character(Shooter, Unit):
             float: Damage one-time made by this character.
         """
         factor = self._team.calc_cohesion_factor(self.current_part.chars, self)
-        if "Loner" in self.traits and len(self.current_part.chars) == 1:
+        if (
+            # Loner
+            base.labels.TRAITS[4][1] in self.traits  # noqa: F821
+            and len(self.current_part.chars) == 1
+        ):
             return factor * 1.3
 
         return factor
@@ -182,10 +186,12 @@ class Character(Shooter, Unit):
         Returns:
             float: Delay between shots in seconds.
         """
-        if "Fast hands" in self.traits:
+        if base.labels.TRAITS[0][0] in self.traits:  # noqa: F821
+            # Fast hands
             return 1.1 + random.uniform(0.1, 0.8)
 
-        if "Snail" in self.traits:
+        if base.labels.TRAITS[0][1] in self.traits:  # noqa: F821
+            # Snail
             return 2 + random.uniform(0.1, 1.1)
 
         return 1.7 + random.uniform(0.1, 0.9)
@@ -199,7 +205,7 @@ class Character(Shooter, Unit):
         """
         statuses = []
         if base.world.sun.is_dark:  # noqa: F821
-            if "Cat eyes" in self.traits:
+            if base.labels.TRAITS[1][0] in self.traits:  # noqa: F821
                 statuses.append("Cat eyes: +5% accuracy")
             elif base.train.lights_on:  # noqa: F821
                 if "Floodlights" not in base.train.upgrades:  # noqa: F821
@@ -215,14 +221,14 @@ class Character(Shooter, Unit):
             if factor != 1:
                 statuses.append("Damage factor: x{}".format(factor))
 
-        if self.health < 50 and "Hemophobia" in self.traits:
+        if self.health < 50 and base.labels.TRAITS[2][1] in self.traits:  # noqa: F821
             statuses.append("Hemophobia: +25% energy spend")
 
         if self.is_diseased:
             statuses.append("Sick: -20 max energy")
 
         if (
-            "Motion sickness" in self.traits
+            base.labels.TRAITS[6][1] in self.traits  # noqa: F821
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
         ):
             statuses.append("Motion sickness: doesn't restore")
@@ -384,7 +390,9 @@ class Character(Shooter, Unit):
         effects = copy.deepcopy(effects)
         self.get_damage(-effects.pop("health", 0))
 
-        trait = effects.get("add_trait")
+        ind1, ind2 = effects.get("add_trait")
+        trait = base.labels.TRAITS[ind1][ind2]  # noqa: F821
+
         if trait and trait not in self.traits + self.disabled_traits:
             self.traits.append(trait)
             base.char_gui.move_status_label(-1)  # noqa: F821
@@ -472,19 +480,28 @@ class Character(Shooter, Unit):
             else:
                 task.delayTime = 20
 
-            if "Fear of dark" in self.traits:
+            if base.labels.TRAITS[1][1] in self.traits:  # noqa: F821
+                # Fear of dark
                 task.delayTime /= 2
 
         elif self._target:
-            task.delayTime = 15 if "Nervousness" in self.traits else 20
+            # Nervousness
+            task.delayTime = (
+                15 if base.labels.TRAITS[5][1] in self.traits else 20  # noqa: F821
+            )
         else:
             task.delayTime = self.class_data["energy_spend"]
 
-        if "Hemophobia" in self.traits and self.health < self.class_data["health"] / 2:
+        if (
+            base.labels.TRAITS[2][1] in self.traits  # noqa: F821
+            and self.health < self.class_data["health"] / 2
+        ):
+            # Hemophobia
             task.delayTime *= 0.75
 
         self.energy -= 1
-        if "Mechanic" in self.traits:
+        if base.labels.TRAITS[7][0] in self.traits:  # noqa: F821
+            # Mechanic
             base.train.get_damage(-3)  # noqa: F821
 
         return task.again
@@ -495,9 +512,10 @@ class Character(Shooter, Unit):
         Used as a timed task while the character is resting.
         """
         if (
-            "Motion sickness" in self.traits
+            base.labels.TRAITS[6][1] in self.traits  # noqa: F821
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
         ):
+            # Motion sickness
             return task.again
 
         self.energy += 3
@@ -515,12 +533,14 @@ class Character(Shooter, Unit):
         Used as a timed task while the character is resting.
         """
         if (
-            "Motion sickness" in self.traits
+            base.labels.TRAITS[6][1] in self.traits  # noqa: F821
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
         ):
+            # Motion sickness
             return task.again
 
-        if "Pharmacophobia" in self.traits and chance(40):
+        if base.labels.TRAITS[7][1] in self.traits and chance(40):  # noqa: F821
+            # Pharmacophobia
             return task.again
 
         if self.health < self.class_data["health"]:
@@ -552,7 +572,12 @@ class Character(Shooter, Unit):
 
     def _aim(self, task):
         """Rotate the character to aim on enemy."""
-        if self._target and self._target.is_dead and "Bloodthirsty" in self.traits:
+        if (
+            self._target
+            and self._target.is_dead
+            and base.labels.TRAITS[5][0] in self.traits  # noqa: F821
+        ):
+            # Bloodthirsty
             self.health += 7
 
         if self.current_part and self._target in self.current_part.enemies:
@@ -757,7 +782,8 @@ class Character(Shooter, Unit):
                 miss_chance += 20
 
         if base.world.sun.is_dark:  # noqa: F821
-            if "Cat eyes" in self.traits:
+            if base.labels.TRAITS[1][0] in self.traits:  # noqa: F821
+                # Cat eyes
                 miss_chance -= 5
             elif base.train.lights_on:  # noqa: F821
                 if "Floodlights" not in base.train.upgrades:  # noqa: F821
@@ -816,8 +842,10 @@ class Character(Shooter, Unit):
             (
                 percent
                 + (20 if is_infect else 0)
-                - (40 if "Immunity" in self.traits else 0)
-                + (20 if "Weak immunity" in self.traits else 0)
+                # Immunity
+                - (40 if base.labels.TRAITS[3][0] in self.traits else 0)  # noqa: F821
+                # Weak immunity
+                + (20 if base.labels.TRAITS[3][1] in self.traits else 0)  # noqa: F821
             ),
         )
 
@@ -825,7 +853,7 @@ class Character(Shooter, Unit):
             self.is_diseased = True
             self.get_well_score = 0
 
-            for traits_pair in TRAITS:
+            for traits_pair in base.labels.TRAITS:  # noqa: F821
                 if traits_pair[0] in self.traits:
 
                     self.traits.remove(traits_pair[0])
@@ -842,7 +870,7 @@ class Character(Shooter, Unit):
 
         Disables all the negative traits for some time.
         """
-        for traits_pair in TRAITS:
+        for traits_pair in base.labels.TRAITS:  # noqa: F821
             if traits_pair[1] in self.traits:
                 self.traits.remove(traits_pair[1])
                 self.disabled_traits.append(traits_pair[1])
@@ -857,7 +885,7 @@ class Character(Shooter, Unit):
 
         Returns back all the disabled negative traits.
         """
-        for trait_pair in TRAITS:
+        for trait_pair in base.labels.TRAITS:  # noqa: F821
             if trait_pair[1] in self.disabled_traits:
                 self.traits.append(trait_pair[1])
                 self.disabled_traits.remove(trait_pair[1])
@@ -876,7 +904,7 @@ class Character(Shooter, Unit):
             return task.again
 
         self.is_diseased = False
-        for trait_pair in TRAITS:
+        for trait_pair in base.labels.TRAITS:  # noqa: F821
             if trait_pair[0] in self.disabled_traits:
                 self.traits.append(trait_pair[0])
                 self.disabled_traits.remove(trait_pair[0])
@@ -918,14 +946,16 @@ class Character(Shooter, Unit):
         Args:
             damage (int): Damage points to get.
         """
-        if "Masochism" in self.traits:
+        if base.labels.TRAITS[2][0] in self.traits:  # noqa: F821
+            # Masochism
             self.energy += 1
 
         Unit.get_damage(self, damage)
 
     def get_stench_damage(self):
         """Get damage from the Stench."""
-        if "Deep breath" in self.traits and self.inhale > 0:
+        if base.labels.TRAITS[6][0] in self.traits and self.inhale > 0:  # noqa: F821
+            # Deep breath
             self.inhale -= 1
             return
 

@@ -307,9 +307,11 @@ class Crew:
                 factor = 1.35 if char1.current_part == char2.current_part else 1
 
                 if (
-                    "Liberal" in char1.traits + char2.traits
+                    base.labels.TRAITS[4][0]  # noqa: F821
+                    in char1.traits + char2.traits
                     and char1.class_ != char2.class_
                 ):
+                    # Liberal
                     factor *= 1.15
 
                 if rel_id in self._relations:
