@@ -21,7 +21,6 @@ from utils import address, take_random
 
 from .part import RestPart, TrainPart
 from .upgrades import (
-    UPGRADES_DESC,
     ArmorPlate,
     ClusterHowitzer,
     GrenadeLauncher,
@@ -334,7 +333,7 @@ class Train:
             upgrades (list): Names of the upgrades to load.
         """
         for up in upgrades:
-            self.install_upgrade(UPGRADES_DESC[up])
+            self.install_upgrade(base.labels.UPGRADES_DESC[up])  # noqa: F821
 
     def place_recruit(self, char):
         """Place the new recruit somewhere on the locomotive.
@@ -358,7 +357,7 @@ class Train:
         Returns:
             dict: Possible upgrades index.
         """
-        ups = copy.deepcopy(UPGRADES_DESC)
+        ups = copy.deepcopy(base.labels.UPGRADES_DESC)  # noqa: F821
 
         # exclude already installed upgrades
         for upgrade in self.upgrades:
@@ -853,25 +852,25 @@ class Train:
         """
         self._upgrades.append(upgrade["name"])
 
-        if upgrade["name"] == "Armor Plate":
+        if upgrade["name"] in ("Armor Plate", "Пластина Брони"):
             self._armor_plate = ArmorPlate(self.model)
             return
 
-        if upgrade["name"] == "Grenade Launcher":
+        if upgrade["name"] in ("Grenade Launcher", "Гранатомёт"):
             self._grenade_launcher = GrenadeLauncher(self.model)
             self._gui.activate_weapon(
                 "Grenade Launcher", base.train.load_grenade_launcher  # noqa: F821
             )
             return
 
-        if upgrade["name"] == "Cluster Howitzer":
+        if upgrade["name"] in ("Cluster Howitzer", "Ракетомёт"):
             self._cluster_howitzer = ClusterHowitzer(self.model)
             self._gui.activate_weapon(
                 "Cluster Howitzer", base.train.load_cluster_howitzer  # noqa: F821
             )
             return
 
-        if upgrade["name"] == "Machine Gun":
+        if upgrade["name"] in ("Machine Gun", "Пулемёт"):
             self._machine_gun = MachineGun(self.model)
             self._gui.activate_weapon(
                 "Machine Gun", base.train.load_machine_gun  # noqa: F821
@@ -881,7 +880,7 @@ class Train:
         up_model = loader.loadModel(address(upgrade["model"]))  # noqa: F821
         up_model.reparentTo(self.model)
 
-        if upgrade["name"] == "Ram":
+        if upgrade["name"] in ("Ram", "Таран"):
             taskMgr.remove("update_physics")  # noqa: F821
             taskMgr.remove("check_train_contacts")  # noqa: F821
 
@@ -912,7 +911,7 @@ class Train:
             )
             return
 
-        if upgrade["name"] == "Floodlights":
+        if upgrade["name"] in ("Floodlights", "Прожекторы"):
             self._floodlights_mat = up_model.findMaterial("lamp_glass")
 
             self._lights[0].node().setColor((1, 1, 1, 1))
@@ -922,11 +921,11 @@ class Train:
 
             return
 
-        if upgrade["name"] == "Fire Extinguishers":
+        if upgrade["name"] in ("Fire Extinguishers", "Огнетушители"):
             taskMgr.doMethodLater(30, self._repair, "train_repair")  # noqa: F821
             return
 
-        if upgrade["name"] == "Sleeper":
+        if upgrade["name"] in ("Sleeper", "Место"):
             self.cells += 1
             self.parts["part_rest"].cells += 1
             base.res_gui.update_chars()  # noqa: F821

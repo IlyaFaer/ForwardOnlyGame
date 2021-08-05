@@ -318,6 +318,7 @@ class CityGUI:
         up_desc = DirectLabel(
             parent=self._fr,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.1, 0.1),
             text_scale=0.03,
             text_fg=SILVER_COL,
@@ -573,9 +574,9 @@ class CityGUI:
             self._fr,
             (0, 0, -0.165),
             {
-                "Medicine box": "medicine_boxes",
-                "Stimulator": "stimulators",
-                "Smoke filter": "smoke_filters",
+                base.labels.RESOURCES[1]: "medicine_boxes",  # noqa: F821
+                base.labels.RESOURCES[5]: "stimulators",  # noqa: F821
+                base.labels.RESOURCES[3]: "smoke_filters",  # noqa: F821
             },
         )
         self._temp_wids.append(self._res_chooser)
@@ -785,17 +786,12 @@ class CityGUI:
             parent=self._reward_fr,
             frameColor=(0, 0, 0, 0),
             frameSize=(-0.3, 0.3, -0.1, 0.1),
-            text="""The city government awards
-you with money for
-your help in clearing
-the region of skinheads.
-
-Heads you've taken:
-"""
-            + "\n" * 15
-            + "Total reward:\n"
+            text=base.labels.CITY[16]  # noqa: F821
+            + "\n" * 13
+            + base.labels.CITY[17]  # noqa: F821
             + str(total)
             + "$",
+            text_font=base.main_font,  # noqa: F821
             text_scale=0.03,
             pos=(0, 0, 0.35),
         )
@@ -845,15 +841,7 @@ Heads you've taken:
         base.dollars += dollars  # noqa: F821
 
         if base.helped_children:  # noqa: F821
-            reward_desc[
-                "text"
-            ] = """This city dwellers heard that
-you helped orphans to build
-camp. They respect good
-people and want to encourage
-you - the Adjutant gets +250
-Durability points free.
-"""
+            reward_desc["text"] = base.labels.CITY[18]  # noqa: F821
             base.train.get_damage(-250)  # noqa: F821
             heads_list.destroy()
             costs_list.destroy()

@@ -177,7 +177,13 @@ class CharacterGUI:
         """Update the chosen character description."""
         to_del = []
         for wid in self._char_desc_wids:
-            if wid["text"] not in ("Traits", "Status", ""):
+            if wid["text"] not in (
+                # Traits
+                base.labels.CHARACTERS[5],  # noqa: F821
+                # Status
+                base.labels.CHARACTERS[4],  # noqa: F821
+                "",
+            ):
                 wid.destroy()
                 to_del.append(wid)
 
@@ -263,7 +269,9 @@ class CharacterGUI:
             self._char_desc_wids.append(
                 DirectLabel(
                     parent=self._fr,
-                    text="Traits",
+                    # Traits
+                    text=base.labels.CHARACTERS[5],  # noqa: F821,
+                    text_font=base.main_font,  # noqa: F821,
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.03,
                     text_fg=RUST_COL,
@@ -291,9 +299,11 @@ class CharacterGUI:
 
             shift = self._fill_traits(shift)
 
-            self._status_lab = DirectLabel(
+            self._status_lab = DirectLabel(  # Status
                 parent=self._fr,
-                text="Status",
+                # Status
+                text=base.labels.CHARACTERS[4],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.1, 0.1, 0.1, 0.1),
                 text_scale=0.03,
                 text_fg=RUST_COL,

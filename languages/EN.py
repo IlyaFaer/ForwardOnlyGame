@@ -89,9 +89,10 @@ RESOURCES = (
     "Reduce attack chance (5 min)",
     "Stimulator",
     "Disable negative traits (5 min)",
+    " mi",
 )
 
-CHARACTERS = ("Name:", "Class:", "Health", "Energy")
+CHARACTERS = ("Name:", "Class:", "Health", "Energy", "Status", "Traits")
 CITY = (
     "Services",
     "Party",
@@ -109,6 +110,20 @@ CITY = (
     "Hire unit",
     "Sell",
     "Buy",
+    """The city government awards
+you with money for
+your help in clearing
+the region of skinheads.
+
+Heads you've taken:
+""",
+    "Total reward:\n",
+    """This city dwellers heard that
+you helped orphans to build
+camp. They respect good
+people and want to encourage
+you - the Adjutant gets +250
+Durability points free.""",
 )
 
 NOTES = (
@@ -580,4 +595,88 @@ TRAIT_DESC = {
     "Motion sickness": "Doesn't restore on high movement speed",
     "Mechanic": "Repairs the Train, while not resting",
     "Pharmacophobia": "Self-healing 40% slower",
+}
+
+UPGRADES_DESC = {
+    "Ram": {
+        "name": "Ram",
+        "desc": """With this ram your locomotive
+will be breaking road barriers
+without getting damage""",
+        "cost": "120$",
+        "model": "ram1",
+        "threshold": 1,
+    },
+    "Floodlights": {
+        "name": "Floodlights",
+        "desc": """All the negative darkness
+factors are no more actual
+with these floodlights on""",
+        "cost": "190$",
+        "model": "floodlights1",
+        "threshold": 2,
+    },
+    "Armor Plate": {
+        "name": "Armor Plate",
+        "desc": """An active shield which can
+cover one of the Train sides.
+Press 4, 5, 6 keys to move it.""",
+        "cost": "70$",
+        "model": "armor_plate",
+        "threshold": 1,
+    },
+    "Fire Extinguishers": {
+        "name": "Fire Extinguishers",
+        "desc": """Gradually restores locomotive
+durability up to 400 points
+in case of a big damage""",
+        "cost": "190$",
+        "model": "fire_extinguishers",
+        "threshold": 2,
+    },
+    "Grenade Launcher": {
+        "name": "Grenade Launcher",
+        "desc": """Active gun, which can do a
+lot of damage on a small area.
+Press 1 key to aim and shoot.""",
+        "cost": "180$",
+        "model": "grenade_launcher",
+        "threshold": 1,
+    },
+    "Sleeper": {
+        "name": "Sleeper",
+        "desc": """Add one more character cell
+into the locomotive rest zone""",
+        "cost": "140$",
+        "model": "sleeper1",
+        "threshold": 1,
+    },
+    "Window Frames": {
+        "name": "Window Frames",
+        "desc": """With this window frames
+characters in the rest zone are
+protected from the Stench""",
+        "cost": "150$",
+        "model": "isolation",
+        "threshold": 2,
+    },
+    "Cluster Howitzer": {
+        "name": "Cluster Howitzer",
+        "desc": """Shots a cluster rocket, which
+splits to four grenades, doing
+damage on several circles.
+Press 3 to aim and shoot.""",
+        "cost": "200$",
+        "model": "cluster_bomb_launcher",
+        "threshold": 2,
+    },
+    "Machine Gun": {
+        "name": "Machine Gun",
+        "desc": """Fires aiming burst. Better be
+used for a single target.
+Press 2 to aim and shoot.""",
+        "cost": "160$",
+        "model": "machine_gun",
+        "threshold": 2,
+    },
 }

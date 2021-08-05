@@ -156,8 +156,9 @@ class TrainGUI:
         self._miles_meter = DirectLabel(
             parent=frame_miles,
             text="0000000",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.1, 0.1, 0.15, 0.15),
-            text_scale=(0.033, 0.038),
+            text_scale=(0.033, 0.031),
             text_fg=RUST_COL,
             pos=(0, 0, -0.04),
         )
@@ -326,4 +327,7 @@ class TrainGUI:
         Args:
             new_miles (int): New milesmeter value.
         """
-        self._miles_meter["text"] = str(new_miles).rjust(7, "0") + " mi"
+        self._miles_meter["text"] = (
+            # mi
+            str(new_miles).rjust(7, "0") + base.labels.RESOURCES[7]  # noqa: F821
+        )

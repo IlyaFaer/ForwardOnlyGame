@@ -33,6 +33,7 @@ class ItemChooser(metaclass=abc.ABCMeta):
             parent=self._fr,
             frameColor=(0, 0, 0, 0.3),
             text_fg=SILVER_COL,
+            text_font=base.main_font,  # noqa: F821
             text="",
             text_scale=0.03,
             pos=(0, 0, -0.01),
