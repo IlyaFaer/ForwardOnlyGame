@@ -36,6 +36,8 @@ class OutingsGUI:
         self._char_buttons = {}
         self._blink_step = 0
 
+        self._outing_snd = loader.loadSfx("sounds/outing_event.ogg")  # noqa: F821
+
         self._upcome_ico = DirectFrame(
             frameSize=(-0.1, 0.1, -0.1, 0.1),
             pos=(0, 0, 0.8),
@@ -366,6 +368,7 @@ class OutingsGUI:
         Args:
             type_ (str): Outing type.
         """
+        self._outing_snd.play()
         self.show_upcoming(
             '"{}" outing available in 2 miles'.format(type_.capitalize()),
             OUTINGS_ICONS[type_],
