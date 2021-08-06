@@ -246,6 +246,10 @@ class TrainGUI:
         self._weapon_buts[weapon]["frame"]["frameSize"] = (0, 0, 0, 0)
         self._weapon_buts[weapon]["but"]["command"] = command
 
+    def increase_max_duration(self):
+        """Increase maximum of the locomotive Durability indicator."""
+        self._durability["range"] = 1500
+
     def make_shot(self, weapon):
         """Disable the weapon button until reloading complete.
 
@@ -329,5 +333,7 @@ class TrainGUI:
         """
         self._miles_meter["text"] = (
             # mi
-            str(new_miles).rjust(7, "0") + base.labels.RESOURCES[7]  # noqa: F821
+            str(new_miles).rjust(7, "0")
+            + base.labels.RESOURCES[7]  # noqa: F821
         )
+

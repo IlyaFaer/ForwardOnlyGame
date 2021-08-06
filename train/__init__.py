@@ -95,10 +95,12 @@ class Train:
         self._durability = None
 
         if description:  # loading params from the game save
+            self._max_durability = description["max_durability"]
             self.durability = description["durability"]
             self._miles = description["miles"] - 1
             self.node.setHpr(description["node_angle"])
         else:  # params for a new game
+            self._max_durability = 1000
             self.durability = 1000
             self._miles = -1
 
@@ -156,7 +158,7 @@ class Train:
         Args:
             value (int): New value.
         """
-        self._durability = max(0, min(1000, value))
+        self._durability = max(0, min(self._max_durability, value))
         self._gui.update_indicators(durability=self.durability)
 
     @property
@@ -172,6 +174,7 @@ class Train:
             "miles": self._miles,
             "node_angle": self.node.getHpr(),
             "upgrades": self.upgrades,
+            "max_durability": self._max_durability,
         }
 
     @property
@@ -930,6 +933,11 @@ class Train:
             self.parts["part_rest"].cells += 1
             base.res_gui.update_chars()  # noqa: F821
             return
+
+        if upgrade["name"] in ("Protectors", "Протекторы"):
+            self._max_durability = 1500
+            self.durability += 500
+            self._gui.increase_max_duration()
 
     def load_grenade_launcher(self):
         """Change the grenade launcher state."""

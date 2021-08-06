@@ -679,4 +679,13 @@ Press 2 to aim and shoot.""",
         "model": "machine_gun",
         "threshold": 2,
     },
+    "Protectors": {
+        "name": "Protectors",
+        "desc": """Armor for wheels and pushing
+mechanism. Increases max
+Durability to 150%.""",
+        "cost": "160$",
+        "model": "armor",
+        "threshold": 1,
+    },
 }
