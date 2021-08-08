@@ -179,6 +179,10 @@ class Crew:
             return
 
         self.cover_fire = True
+
+        for char in self.chars.values():
+            char.play_cohesion_aura("cover_fire")
+
         taskMgr.doMethodLater(  # noqa: F821
             90, self._stop_cover_fire, "stop_cover_fire"
         )
@@ -234,6 +238,9 @@ class Crew:
     def _stop_cover_fire(self, task):
         """Stop "Cover fire" cohesion ability."""
         self.cover_fire = False
+        for char in self.chars.values():
+            char.stop_aura_effect("cover_fire")
+
         return task.done
 
     def _stop_rage(self, task):

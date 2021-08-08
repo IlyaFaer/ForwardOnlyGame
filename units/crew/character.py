@@ -8,7 +8,12 @@ import copy
 import random
 
 from direct.actor.Actor import Actor
-from direct.interval.IntervalGlobal import Func, LerpAnimInterval, Sequence
+from direct.interval.IntervalGlobal import (
+    Func,
+    LerpAnimInterval,
+    LerpScaleInterval,
+    Sequence,
+)
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import CollisionCapsule
 
@@ -317,15 +322,30 @@ class Character(Shooter, Unit):
             self._reduce_energy,
             self.id + "_reduce_energy",
         )
+        self._prepare_cohesion_particles()
+        self._prepare_auras()
 
-        self._prepare_cohesion_effects()
-
-    def _prepare_cohesion_effects(self):
-        """Prepare all the cohesion skills effects."""
+    def _prepare_cohesion_particles(self):
+        """Prepare cohesion skills particle effects."""
         effect = ParticleEffect()
         effect.loadConfig("effects/recall_the_past.ptf")
 
         self.effects["recall_the_past"] = {"length": 2, "effect": effect}
+
+    def _prepare_auras(self):
+        """Prepare cohesion skills aura effects."""
+        aura = loader.loadModel(address("cover_fire_aura"))  # noqa: F821
+        aura.hide()
+        aura.reparentTo(self.model)
+        aura.setY(0.007)
+
+        self.effects["cover_fire"] = {
+            "model": aura,
+            "seq": Sequence(
+                LerpScaleInterval(aura, 1.5, (2, 2, 2), (1, 1, 1)),
+                LerpScaleInterval(aura, 1.5, (1, 1, 1), (2, 2, 2)),
+            ),
+        }
 
     def play_cohesion_effect(self, name):
         """Play the given cohesion skill effect.
@@ -342,6 +362,24 @@ class Character(Shooter, Unit):
             "stop_cohesion_effect",
             extraArgs=[],
         )
+
+    def play_cohesion_aura(self, name):
+        """Play the given aura effect.
+
+        Args:
+            name (str): The effect name.
+        """
+        self.effects[name]["model"].show()
+        self.effects[name]["seq"].loop()
+
+    def stop_aura_effect(self, name):
+        """Stop the given aura effect.
+
+        Args:
+            name (str): The effect name.
+        """
+        self.effects[name]["model"].hide()
+        self.effects[name]["seq"].finish()
 
     def celebrate(self, task):
         """Play victory celebration animation."""
