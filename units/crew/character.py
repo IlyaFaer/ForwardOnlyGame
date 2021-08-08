@@ -9,6 +9,7 @@ import random
 
 from direct.actor.Actor import Actor
 from direct.interval.IntervalGlobal import Func, LerpAnimInterval, Sequence
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import CollisionCapsule
 
 from const import MOUSE_MASK, NO_MASK
@@ -64,6 +65,7 @@ class Character(Shooter, Unit):
         self.inhale = 15
         self.damage_range = [5, 8]
         self.clear_damage = [5, 8]
+        self.effects = {}
 
         self.name = name
         self.sex = sex
@@ -314,6 +316,31 @@ class Character(Shooter, Unit):
             self.class_data["energy_spend"],
             self._reduce_energy,
             self.id + "_reduce_energy",
+        )
+
+        self._prepare_cohesion_effects()
+
+    def _prepare_cohesion_effects(self):
+        """Prepare all the cohesion skills effects."""
+        effect = ParticleEffect()
+        effect.loadConfig("effects/recall_the_past.ptf")
+
+        self.effects["recall_the_past"] = {"length": 2, "effect": effect}
+
+    def play_cohesion_effect(self, name):
+        """Play the given cohesion skill effect.
+
+        Args:
+            name (str): Name of the skill.
+        """
+        self.effects[name]["effect"].start(self.model, self.model)
+        self.effects[name]["effect"].softStart()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            self.effects[name]["length"],
+            self.effects[name]["effect"].softStop,
+            "stop_cohesion_effect",
+            extraArgs=[],
         )
 
     def celebrate(self, task):

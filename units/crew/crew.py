@@ -169,6 +169,7 @@ class Crew:
 
         for char in self.chars.values():
             char.energy += 25
+            char.play_cohesion_effect("recall_the_past")
 
         self._plan_cohesion_cooldown(600)
 
