@@ -196,6 +196,7 @@ class Crew:
         for char in self.chars.values():
             if char.health <= 30:
                 char.health += 20
+                char.play_cohesion_effect("not_leaving_ours")
 
         self._plan_cohesion_cooldown(600)
 

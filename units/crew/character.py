@@ -332,6 +332,11 @@ class Character(Shooter, Unit):
 
         self.effects["recall_the_past"] = {"length": 2, "effect": effect}
 
+        effect = ParticleEffect()
+        effect.loadConfig("effects/not_leaving_ours.ptf")
+
+        self.effects["not_leaving_ours"] = {"length": 2, "effect": effect}
+
     def _prepare_auras(self):
         """Prepare cohesion skills aura effects."""
         aura = loader.loadModel(address("cover_fire_aura"))  # noqa: F821
