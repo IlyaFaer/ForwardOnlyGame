@@ -370,6 +370,19 @@ class Character(Shooter, Unit):
             ),
         }
 
+        aura = loader.loadModel(address("hold_together_aura"))  # noqa: F821
+        aura.hide()
+        aura.reparentTo(self.model)
+        aura.setY(0.007)
+
+        self.effects["hold_together"] = {
+            "model": aura,
+            "seq": Sequence(
+                LerpScaleInterval(aura, 1.5, (2, 2, 2), (1, 1, 1)),
+                LerpScaleInterval(aura, 1.5, (1, 1, 1), (2, 2, 2)),
+            ),
+        }
+
     def play_cohesion_effect(self, name):
         """Play the given cohesion skill effect.
 

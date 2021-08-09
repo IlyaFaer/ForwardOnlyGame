@@ -222,6 +222,9 @@ class Crew:
             return
 
         self.hold_together = True
+        for char in self.chars.values():
+            char.play_cohesion_aura("hold_together")
+
         taskMgr.doMethodLater(  # noqa: F821
             90, self._stop_hold_together, "stop_hold_together"
         )
@@ -258,6 +261,9 @@ class Crew:
     def _stop_hold_together(self, task):
         """Stop "Hold together" cohesion ability."""
         self.hold_together = False
+        for char in self.chars.values():
+            char.stop_aura_effect("hold_together")
+
         return task.done
 
     def _stop_cohesion_cooldown(self, task):
