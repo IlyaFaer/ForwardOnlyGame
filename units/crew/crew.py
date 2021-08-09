@@ -210,6 +210,9 @@ class Crew:
             char.damage_range[0] *= 1.3
             char.damage_range[1] *= 1.3
 
+            char.play_cohesion_aura("common_rage_aura")
+            char.play_cohesion_effect("common_rage")
+
         taskMgr.doMethodLater(90, self._stop_rage, "stop_rage")  # noqa: F821
         self._plan_cohesion_cooldown(600)
 
@@ -248,6 +251,7 @@ class Crew:
         """Stop "Common rage" cohesion ability."""
         for char in self.chars.values():
             char.damage_range = copy.copy(char.clear_damage)
+            char.stop_aura_effect("common_rage_aura")
 
         return task.done
 

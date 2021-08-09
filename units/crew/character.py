@@ -337,6 +337,11 @@ class Character(Shooter, Unit):
 
         self.effects["not_leaving_ours"] = {"length": 2, "effect": effect}
 
+        effect = ParticleEffect()
+        effect.loadConfig("effects/common_rage.ptf")
+
+        self.effects["common_rage"] = {"length": 90, "effect": effect}
+
     def _prepare_auras(self):
         """Prepare cohesion skills aura effects."""
         aura = loader.loadModel(address("cover_fire_aura"))  # noqa: F821
@@ -345,6 +350,19 @@ class Character(Shooter, Unit):
         aura.setY(0.007)
 
         self.effects["cover_fire"] = {
+            "model": aura,
+            "seq": Sequence(
+                LerpScaleInterval(aura, 1.5, (2, 2, 2), (1, 1, 1)),
+                LerpScaleInterval(aura, 1.5, (1, 1, 1), (2, 2, 2)),
+            ),
+        }
+
+        aura = loader.loadModel(address("common_rage_aura"))  # noqa: F821
+        aura.hide()
+        aura.reparentTo(self.model)
+        aura.setY(0.007)
+
+        self.effects["common_rage_aura"] = {
             "model": aura,
             "seq": Sequence(
                 LerpScaleInterval(aura, 1.5, (2, 2, 2), (1, 1, 1)),
