@@ -330,7 +330,7 @@ class Character(Shooter, Unit):
         effect = ParticleEffect()
         effect.loadConfig("effects/recall_the_past.ptf")
 
-        self.effects["recall_the_past"] = {"length": 2, "effect": effect}
+        self.effects["recall_the_past"] = {"length": 0.7, "effect": effect}
 
         effect = ParticleEffect()
         effect.loadConfig("effects/not_leaving_ours.ptf")

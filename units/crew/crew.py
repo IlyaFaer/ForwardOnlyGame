@@ -47,6 +47,24 @@ class Crew:
             self._victory_snd, base.train.model  # noqa: F821
         )
 
+        snd1 = loader.loadSfx("sounds/GUI/recall_the_past.ogg")  # noqa: F821
+        snd1.setVolume(0.7)
+
+        snd2 = loader.loadSfx("sounds/GUI/hold_together.ogg")  # noqa: F821
+        snd2.setPlayRate(0.5)
+        snd2.setVolume(0.05)
+        snd2.setLoop(True)
+
+        self._cohesion_snds = {
+            "recall_the_past": snd1,
+            "cover_fire": loader.loadSfx("sounds/GUI/cover_fire.ogg"),  # noqa: F821
+            "not_leaving_ours": loader.loadSfx(  # noqa: F821
+                "sounds/GUI/not_leaving_ours.ogg"
+            ),
+            "common_rage": loader.loadSfx("sounds/GUI/common_rage.ogg"),  # noqa: F821
+            "hold_together": snd2,
+        }
+
     @property
     def current_cohesion(self):
         """Current crew cohesion values.
@@ -167,11 +185,12 @@ class Crew:
         if self.cohesion_cooldown or self.cohesion < 20:
             return
 
+        self._cohesion_snds["recall_the_past"].play()
         for char in self.chars.values():
             char.energy += 25
             char.play_cohesion_effect("recall_the_past")
 
-        self._plan_cohesion_cooldown(600)
+        self._plan_cohesion_cooldown(10)
 
     def cohesion_cover_fire(self):
         """Do cohesion ability "Cover fire"."""
@@ -180,6 +199,7 @@ class Crew:
 
         self.cover_fire = True
 
+        self._cohesion_snds["cover_fire"].play()
         for char in self.chars.values():
             char.play_cohesion_aura("cover_fire")
 
@@ -193,6 +213,7 @@ class Crew:
         if self.cohesion_cooldown or self.cohesion < 60:
             return
 
+        self._cohesion_snds["not_leaving_ours"].play()
         for char in self.chars.values():
             if char.health <= 30:
                 char.health += 20
@@ -205,6 +226,7 @@ class Crew:
         if self.cohesion_cooldown or self.cohesion < 80:
             return
 
+        self._cohesion_snds["common_rage"].play()
         for char in self.chars.values():
             char.clear_damage = copy.copy(char.damage_range)
             char.damage_range[0] *= 1.3
@@ -222,6 +244,8 @@ class Crew:
             return
 
         self.hold_together = True
+        self._cohesion_snds["hold_together"].play()
+
         for char in self.chars.values():
             char.play_cohesion_aura("hold_together")
 
@@ -261,6 +285,8 @@ class Crew:
     def _stop_hold_together(self, task):
         """Stop "Hold together" cohesion ability."""
         self.hold_together = False
+        self._cohesion_snds["hold_together"].stop()
+
         for char in self.chars.values():
             char.stop_aura_effect("hold_together")
 
