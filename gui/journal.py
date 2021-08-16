@@ -95,6 +95,10 @@ class Journal:
         )
         self._pages = {"diary": [], "note": []}
 
+        self._open_snd = loader.loadSfx("sounds/GUI/journal.ogg")  # noqa: F821
+        self._page_snd = loader.loadSfx("sounds/GUI/journal_page.ogg")  # noqa: F821
+        self._close_snd = loader.loadSfx("sounds/GUI/journal_close.ogg")  # noqa: F821
+
     def _open_page(self, type_, num):
         """Open the given page of the journal.
 
@@ -108,6 +112,7 @@ class Journal:
                 page["but"]["text_fg"] = RUST_COL
 
         self._pages[type_][num]["but"]["text_fg"] = SILVER_COL
+        self._page_snd.play()
 
     def add_page(self, num):
         """Add a page into the journal.
@@ -127,7 +132,6 @@ class Journal:
                 text_shadow=(0, 0, 0, 1),
                 frameColor=(0, 0, 0, 0),
                 scale=(0.029, 0, 0.029),
-                clickSound=base.main_menu.click_snd,  # noqa: F821
                 command=self._open_page,
                 extraArgs=[type_, number - 1],
                 pos=(-0.32 + number * 0.1, 0, 0.47 if type_ == "note" else 0.44,),
@@ -139,7 +143,9 @@ class Journal:
         """Show/hide the journal GUI."""
         if self._is_shown:
             self._main_fr.hide()
+            self._close_snd.play()
         else:
             self._main_fr.show()
+            self._open_snd.play()
 
         self._is_shown = not self._is_shown
