@@ -20,6 +20,7 @@ from panda3d.core import TextNode, TransparencyAttrib
 from utils import clear_wids, save_exists
 from .character import CharacterGUI  # noqa: F401
 from .city import CityGUI  # noqa: F401
+from .journal import Journal  # noqa: F401
 from .notes import TeachingNotes  # noqa: F401
 from .outings import OutingsGUI  # noqa: F401
 from .rails_scheme import RailsScheme  # noqa: F401

@@ -22,6 +22,7 @@ from effects import EffectsManager
 from game_config import Config
 from gui import (
     CharacterGUI,
+    Journal,
     MainMenu,
     MechanicDesc,
     ResourcesGUI,
@@ -91,6 +92,7 @@ class ForwardOnly(ShowBase):
         self._heads = {}
         self._cur_mouse_pointer = "normal"
         self.main_menu = MainMenu()
+        self.journal = Journal()
         self.helped_children = False
 
     @property

@@ -73,6 +73,7 @@ W - hold to accelerate
 S - hold to slow down
 F - toggle flood lights
 M - see railways scheme
+J - open journal
 
 Camera:
 \u2190\u2191\u2193\u2192 or push screen edge with mouse - move

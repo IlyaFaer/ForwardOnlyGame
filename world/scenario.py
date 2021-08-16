@@ -119,6 +119,7 @@ class Scenario:
         for effect in consequences["effects"]:
             getattr(self, effect[0])(*effect[1])
 
+        base.journal.add_page(self.current_chapter)  # noqa: F821
         self._done_but.show()
 
     def do_build_camp_effect(self):
