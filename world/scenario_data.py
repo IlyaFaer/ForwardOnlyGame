@@ -49,7 +49,11 @@ continue the road in the same moment. Four hours is not five,
 but it's still long, very long. Better keep your pace high now.
 
 The Stench frontier came 20 miles closer to you,
-but the Adjutant is in a good shape for now.""",
+but the Adjutant is in a good shape for now.
+
+You're getting a Captain's diary page. Better read it while
+on move not to lose distance from the Stench frontier.
+Press J to open/close Captain's journal.""",
                 "effects": (("do_stench_moves_effect", [20]),),
             },
             "Try to deal with the axle box on move": {
@@ -72,7 +76,11 @@ about your people safety. It's good that the helper didn't
 get serious wounds. You better find him or her later to
 say your thanks.
 
-One of your fighters getting -20 health""",
+One of your fighters getting -20 health
+
+You're getting a Captain's diary page. Better read it while
+on move not to lose distance from the Stench frontier.
+Press J to open/close Captain's journal.""",
                 "effects": (("do_characters_effect", [{"health": -20}, True]),),
             },
             "Ignore the problem": {
@@ -91,7 +99,11 @@ so he's not going to argue with you...
 Some time later you'll understand that the problem was not
 one of those to be ignored. The axle box will be damaged.
 
-The Adjutant loses 50 Durability""",
+The Adjutant loses 50 Durability
+
+You're getting a Captain's diary page. Better read it while
+on move not to lose distance from the Stench frontier.
+Press J to open/close Captain's journal.""",
                 "effects": (("do_locomotive_damage", [50]),),
             },
         },

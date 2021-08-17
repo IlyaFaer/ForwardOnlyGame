@@ -15,7 +15,52 @@ from panda3d.core import TextNode, TransparencyAttrib
 from gui.widgets import RUST_COL, SILVER_COL
 
 JOURNAL_PAGES = (
-    ("diary", "The page text"),
+    (
+        "diary",
+        """Never wrote diaries earlier, but now I feel
+that I need to put all of my thoughts
+down on paper and try to look at what
+happened recently, see a bigger picture...
+
+About a month ago social networks gave
+birth to a new flow of videos. People were
+filming streets, talking about some kind
+of orange mist. But there was no mist!
+What they were trying to film was only
+buildings, cars, sidewalks, and crystal
+clear air. Like they were hallucinating.
+
+It all looked as a new stupid joke from
+those internet guys, but in some moment
+they started to find bodies... More and
+more: people were dying right on a street,
+but no one was able to say why! Here
+someone noticed: bodies appearing in
+regions where that orange mist was spotted.
+
+As it usually happens, government first
+tried to hide the adversities scale. They
+started to close city blocks, speak of
+stupid explanations, while in Germany,
+Switzerland, Netherlands more and more
+bodies were appearing, more and more
+orange mist reports were happening.
+
+Finally, several police officers, seeing
+that the disaster is gaining momentum,
+decided to whistleblow. Photos they
+posted publicly were showing tens of dead
+bodies on streets, and several documents,
+where chemical specialists were summaring
+up that the orange mist, called by them
+as "The Stench", selectively kills people,
+no matter how good is their isolation
+or air filtering...
+
+This action caused panic to stroke most
+of the Europe countries, and in this
+moment I reilized I should do something.""",
+    ),
     ("note", "The note text"),
     ("diary", "The page text"),
     ("note", "The note text"),
@@ -41,7 +86,7 @@ class Journal:
             parent=self._main_fr,
             frameSize=(-0.35, 0.3, -0.46, 0.5),
             frameColor=(0, 0, 0, 0),
-            canvasSize=(-0.31, 0.3, -1.5, 1.5),
+            canvasSize=(-0.31, 0.3, -1, 1.5),
             state=DGG.NORMAL,
             pos=(0, 0, -0.1),
             verticalScroll_frameSize=(-0.002, 0.002, -0.5, 0.5),
@@ -90,7 +135,8 @@ class Journal:
             text_scale=0.03,
             text_font=base.main_font,  # noqa: F821
             text_align=TextNode.ALeft,
-            frameSize=(0.02, 0.02, 0.02, 0.02),
+            frameSize=(-0.02, 0.02, -2, 0.5),
+            frameColor=(0, 0, 0, 0),
             pos=(-0.27, 0, 1.45),
         )
         self._pages = {"diary": [], "note": []}
