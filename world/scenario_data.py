@@ -140,13 +140,17 @@ Adjutant. Everyone seems to be enlivened, still, the road calls.
 Giving an order to start engine, you approach a couple of your
 teammates, who are viewing some kind of an article on a
 smartphone. "Hey, Captain, you need to see this! Some of those
-children visited kinda research center a month ago and took
+children visited kinda scientist summit some time ago and took
 an interview there. The woman speaks about interesting things."
 Telling them that you're going to take a closer look at the
 article later, you go to the deckhouse to plan the route,
 considering the recent delay.
 
-The Stench frontier came 20 miles closer to you""",
+The Stench frontier came 20 miles closer to you
+
+A note added into Captain's journal. You can read it
+on move not to stay long at the same place, losing
+distance from the Stench frontier.""",
                 "effects": (
                     ("do_build_camp_effect", []),
                     ("do_stench_moves_effect", [20]),
@@ -171,13 +175,17 @@ drink on the table. "Okay, let's move on!" - you command.
 
 Some time later you find a paper on your table, which looks like
 an interview log. It appears those children visited a kind of a
-research center recently and had a word with one of scientists.
+scientist summit recently and had a word with one of scientists.
 No ideas why someone left the paper for you, but it worth reading.
 
 You're getting 1 medicine and 1 stimulator
 Soon people of Silewer will know that you've stolen from kids.
 This will be a bad example of what foreigners are like and will
-bring more people under the skinhead banners.""",
+bring more people under the skinhead banners.
+
+A note added into Captain's journal. You can read it
+on move not to stay long at the same place, losing
+distance from the Stench frontier.""",
                 "effects": (
                     ("do_enemy_inc_effect", []),
                     ("do_plus_resource", ["medicine_boxes", 1]),
@@ -203,10 +211,14 @@ a command to go...
 
 Some time later you see a paper on your table. Running through
 it with your eyes, you find out it's an interview log. Those
-orphans visited kind of a research center some time ago and
+orphans visited kind of a scientist summit some time ago and
 took an interview from one of the scientists. Most likely one
 of your people got it from the children somehow. No thoughts
-why it was left on your table, but it should be read.""",
+why it was left on your table, but it should be read.
+
+A note added into Captain's journal. You can read it
+on move not to stay long at the same place, losing
+distance from the Stench frontier.""",
                 "effects": (("do_no_effect", []),),
             },
         },

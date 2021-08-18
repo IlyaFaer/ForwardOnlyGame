@@ -61,7 +61,69 @@ This action caused panic to stroke most
 of the Europe countries, and in this
 moment I reilized I should do something.""",
     ),
-    ("note", "The note text"),
+    (
+        "note",
+        """Interview protocol from 2021-06-23, Zurich,
+56th World Scientist Summit.
+Interviewer: Emily Schlosser
+Interviewee: doctor Helga Wagner,
+leading system engineer of Wahrsager
+project team.
+
+- E: Helga, could you explain our
+subscribers in simple words what the
+Wahrsager project actually is?
+- H: Before talking about the project
+itself we should remember determinism:
+the methodology which proclaims that
+every event in the world has particular
+causes. This idea actually means that
+our past directs our future. With this
+in mind our group of scientist tried to
+find a way to take a look at our past,
+see what was actually happening there,
+measure previous events and, probably,
+we hope, use this information to predict
+our future! That's how the Wahrsager
+project idea was created.
+
+- E: What you're talking about sounds
+pretty much like a time machine!
+- H: Ya! But let's mention this machine
+doesn't make passages into another time,
+it only gives us an ability to take a
+look at it, do a detailed snapshot, which
+can be analyzed. Like a photo. The main
+point here is accuracy - our world consists
+of immeasurably number of events, which
+influence each other. We need Laplace's
+Demon to get results, as without high
+accuracy our data will be giving pretty
+unreliable predictions.
+
+- E: Sounds incredible! But it seems you
+need the best equipment and experts.
+- H: Sure, our team consists of the
+highest level professionals, and it's
+a great honor for me to work with these
+brilliant people! As for equipment, our
+government provides us everything we
+needed since we've run the very first
+presentation.
+
+- E: Could you tell us how it was?
+- H: Right now we proceeded further than
+that, but the first presentation included
+only a chamber with a chemical substance
+and equipment, which was able to show the
+state of this substance 48 hours back in
+the past...
+
+On this question our interview came to
+its end, as doctor Wagner was called by
+her colleagues to take part in some kind
+of an urgent online meeting.""",
+    ),
     ("diary", "The page text"),
     ("note", "The note text"),
 )
@@ -89,8 +151,8 @@ class Journal:
             canvasSize=(-0.31, 0.3, -1, 1.5),
             state=DGG.NORMAL,
             pos=(0, 0, -0.1),
-            verticalScroll_frameSize=(-0.002, 0.002, -0.5, 0.5),
-            verticalScroll_frameColor=(0.51, 0.46, 0.42, 1),
+            verticalScroll_frameSize=(-0.003, 0.003, -0.5, 0.5),
+            verticalScroll_frameColor=(0.46, 0.41, 0.37, 1),
             verticalScroll_thumb_frameColor=(0.31, 0.26, 0.22, 1),
             verticalScroll_incButton_relief=None,
             verticalScroll_decButton_relief=None,
