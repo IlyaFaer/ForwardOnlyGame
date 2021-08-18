@@ -263,7 +263,10 @@ power and strength, will be using it to survive, destroying
 others if needed. And it will be needed. You can't save
 all the others anyway, but you can take care about your crew.
 
-You're getting $100""",
+You're getting $100
+
+You've got one more diary page in Captain's
+journal. Better read it on move.""",
                 "effects": (("do_get_money", [100]),),
             },
             "Kill the bastards and free the family": {
@@ -282,7 +285,10 @@ in some distance. Without arguments, they take both dead
 policemen and exit the house. After a few seconds long pause
 you throwing the last gaze at the frightened family: "Sorry...
 Sorry for the mess." Not getting any sound from them, you're
-leaving the hut.""",
+leaving the hut.
+
+You've got one more diary page in Captain's
+journal. Better read it on move.""",
                 "effects": (("do_no_effect", []),),
             },
             "Use your superiority and intimidate them": {
@@ -309,7 +315,10 @@ crew a medical examination. Yeah, she's a doctor! Feeling the
 very lucky coincidence here, you command your people to use
 the opportunity.
 
-All people in the crew getting +20 Health""",
+All people in the crew getting +20 Health
+
+You've got one more diary page in Captain's
+journal. Better read it on move.""",
                 "effects": (("do_characters_effect", [{"health": 20}, False]),),
             },
         },

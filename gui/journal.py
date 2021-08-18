@@ -124,7 +124,54 @@ its end, as doctor Wagner was called by
 her colleagues to take part in some kind
 of an urgent online meeting.""",
     ),
-    ("diary", "The page text"),
+    (
+        "diary",
+        """When it became obvious that the Stench
+adversity is real, and it's not going to
+stop in the near future, I decided to close
+my company. Those who worked for me -
+we were always like a family. I don't have
+another, so it was hard to say goodbye to
+everyone... Still, we all made a decision
+to leave the city as soon as possible.
+The first Stench reports were made in
+Germany and Switzerland, most likely on
+the west, so we had an approximate
+direction - considering that the mist is
+going to spread in circle.
+
+As we were little bit slowly, we really got
+stuck! Airplanes, which've taken some
+people, flew away and refused to return.
+No single airplane left in the whole
+country! As for the cars, well, it was even
+worse - every road on the west of the city
+was clogged up in miles, MILES!
+Everybody was trying to leave the place.
+
+Here one of my friends, a machinist
+called me. He was in search of people,
+who are brave or desperate enough to help
+him to hijack the locomotive he was
+working on during the last several years.
+He know me as a daredevil, and decided
+to call me first. I liked his idea and
+made a proposition to my workers. Some
+of them have families, so they refused
+to take part in this risky operation,
+but three of them and Kenneth, my old
+friend mechanic, agreed.
+
+Daren, the machinist, who proposed all
+of it, told us about the Adjutant -
+tough locomotive he was driving, the
+fast and powerful machine, which is old,
+but very reliable transport. He said he
+knows a forsaken closed railway, which
+condition is still quite good and which
+can lead us out of the city. On that we
+all made a decision.""",
+    ),
     ("note", "The note text"),
 )
 
