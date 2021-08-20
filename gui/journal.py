@@ -172,7 +172,74 @@ condition is still quite good and which
 can lead us out of the city. On that we
 all made a decision.""",
     ),
-    ("note", "The note text"),
+    (
+        "note",
+        """Following is what I've heard from one of
+the motel dwellers, who was in a very
+dissatisfied manner telling a story about
+a strange woman to his friend.
+
+According to the source of information,
+yesterday in the morning he met a woman
+with a very strange thing on her neck,
+looking pretty much like a high-tech gas
+mask. She had several metal boxes and
+a bunch of helpers, all seem to be a part
+of university or a science group.
+
+The woman have been talking a lot with
+someone on the other end of the phone.
+He said she was reporting. According to
+what our man heard, they were working on
+some kind of a machine, which attracted
+government attention pretty strong.
+
+It's able to make a window into the past
+(Wahrsager project, no doubts). They
+wanted to use it to check if people are
+lying about things already happened, and
+for espionage - getting info about what
+happened some time ago, but didn't yet
+caused any consequences. As the machine
+shows how it was actually been, without
+embellishing, hiding or concealing, just an
+objectively truth, it all sound really smart.
+Let's say, a spy was rooted a couple of
+days ago into your organization; with this
+machine you can see the past, the period
+when he was recruited and instructed.
+You'll detect danger before the guy will
+actually get hands on something valuable.
+You can actually track anyone! With some
+delay, yes, but still...
+
+The woman also told about some of their
+early experiments. They created portable
+version of the machine and tried to
+look into 1928 to investigate a murder
+of a 10 years old girl named Grace.
+They've got good results and were able
+to track the whole horrors of the crime
+from the very start to the last second.
+
+An interesting thing is that on images
+scientists noticed color deformation of
+some fluids. They said that it has too
+much of red and green. Which means they
+were more ORANGE than they should. (I
+think here the guy gave free rein to his
+imagination, and there was nothing about
+it in the scientist's conversation).
+
+To the end of the story the man cursed
+scientists, saying that it's they who
+start adversities like the Stench,
+Bhopal Disaster, Fukushima-1 Nuclear
+Power Plant Accident, Minamata Disease
+and others, and one day they will kill
+us all. On that the interesting part
+of the conversation ends.""",
+    ),
 )
 
 

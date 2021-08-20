@@ -360,8 +360,8 @@ unfamiliar people even rent rooms together. Plus to the
 things you already understood by yourself, your team mates
 give you a log paper - one of them heard how the motel
 dwellers were conversing about the same scientist those
-orphans were interviewing. She was here a couple of days
-ago! That's something to be read attentively.
+orphans were interviewing. She was here not long ago!
+That's something should be read.
 
 Some time passed, you're going to give a command to start
 an engine, but suddenly you see the man, who was trying to
