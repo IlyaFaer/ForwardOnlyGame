@@ -187,10 +187,10 @@ class Crew:
 
         self._cohesion_snds["recall_the_past"].play()
         for char in self.chars.values():
-            char.energy += 25
+            char.energy += 10
             char.play_cohesion_effect("recall_the_past")
 
-        self._plan_cohesion_cooldown(10)
+        self._plan_cohesion_cooldown(240)
 
     def cohesion_cover_fire(self):
         """Do cohesion ability "Cover fire"."""
@@ -216,7 +216,7 @@ class Crew:
         self._cohesion_snds["not_leaving_ours"].play()
         for char in self.chars.values():
             if char.health <= 30:
-                char.health += 20
+                char.health += 25
                 char.play_cohesion_effect("not_leaving_ours")
 
         self._plan_cohesion_cooldown(600)

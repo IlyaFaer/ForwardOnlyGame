@@ -289,11 +289,11 @@ TIPS = ("Resting:", "Rest zone", "Approaching a city")
 COHESION = (
     "Crew skills",
     "Recall the past",
-    "Every character gets +25 energy. Cooldown: 10 min.",
+    "Every character gets +10 energy. Cooldown: 4 min.",
     "Cover fire",
     "Every character gets +20% accuracy. Cooldown: 5 min.",
     "Not leaving ours",
-    "Characters with health < 30 getting +20 health. Cooldown: 10 min.",
+    "Characters with health < 30 getting +25 health. Cooldown: 10 min.",
     "Common rage",
     "Every character gets +30% to damage. Cooldown: 10 min.",
     "Hold together",

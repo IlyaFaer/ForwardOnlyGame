@@ -506,7 +506,7 @@ class World:
             else:
                 is_rusty = False
 
-            if stench_blocks and not is_city:
+            if stench_blocks and not (is_city or is_station):
                 is_stenchy = True
                 stench_blocks -= 1
             else:
