@@ -246,6 +246,14 @@ class TrainGUI:
         self._weapon_buts[weapon]["frame"]["frameSize"] = (0, 0, 0, 0)
         self._weapon_buts[weapon]["but"]["command"] = command
 
+    def hide_turning_ability(self):
+        """Hide turning GUI."""
+        if self._fork_lab is None:
+            return
+
+        self._fork_lab.destroy()
+        self._fork_lab = None
+
     def increase_max_duration(self):
         """Increase maximum of the locomotive Durability indicator."""
         self._durability["range"] = 1500
@@ -269,14 +277,6 @@ class TrainGUI:
             appendTask=True,
         )
 
-    def hide_turning_ability(self):
-        """Hide turning GUI."""
-        if self._fork_lab is None:
-            return
-
-        self._fork_lab.destroy()
-        self._fork_lab = None
-
     def show_turning_ability(self, fork, branch, invert):
         """Show a notification about turning ability.
 
@@ -297,21 +297,22 @@ class TrainGUI:
 
         if fork.name == "l_fork":
             if invert or branch == "l":
-                text = "Approaching a fork:\npress T to turn right\nignore to proceed"
+                text = base.labels.FORKS[0]  # noqa: F821
             else:
-                text = "Approaching a fork:\npress T to turn left\nignore to proceed"
+                text = base.labels.FORKS[1]  # noqa: F821
         elif fork.name == "r_fork":
             if invert or branch == "r":
-                text = "Approaching a fork:\npress T to turn left\nignore to proceed"
+                text = base.labels.FORKS[1]  # noqa: F821
             else:
-                text = "Approaching a fork:\npress T to turn right\nignore to proceed"
+                text = base.labels.FORKS[0]  # noqa: F821
 
         base.accept("t", self._turn_on_fork, [fork])  # noqa: F821
 
         self._fork_lab = DirectLabel(
-            pos=(0, 0, -0.8),
+            pos=(0, 0, -0.75),
             text_scale=0.04,
             text_fg=SILVER_COL,
+            text_font=base.main_font,  # noqa: F821
             frameColor=(0, 0, 0, 0.4),
             text=text,
         )
@@ -336,4 +337,3 @@ class TrainGUI:
             str(new_miles).rjust(7, "0")
             + base.labels.RESOURCES[7]  # noqa: F821
         )
-

@@ -141,6 +141,22 @@ class Train:
         self.cells = 7
 
     @property
+    def description(self):
+        """The locomotive state description for game saving.
+
+        Returns:
+            dict: Saveable locomotive state description.
+        """
+        return {
+            "durability": self.durability,
+            "speed": self.ctrl.current_speed,
+            "miles": self._miles,
+            "node_angle": self.node.getHpr(),
+            "upgrades": self.upgrades,
+            "max_durability": self._max_durability,
+        }
+
+    @property
     def durability(self):
         """The locomotive durability points.
 
@@ -160,22 +176,6 @@ class Train:
         """
         self._durability = max(0, min(self._max_durability, value))
         self._gui.update_indicators(durability=self.durability)
-
-    @property
-    def description(self):
-        """The locomotive state description for game saving.
-
-        Returns:
-            dict: Saveable locomotive state description.
-        """
-        return {
-            "durability": self.durability,
-            "speed": self.ctrl.current_speed,
-            "miles": self._miles,
-            "node_angle": self.node.getHpr(),
-            "upgrades": self.upgrades,
-            "max_durability": self._max_durability,
-        }
 
     @property
     def upgrades(self):
@@ -261,6 +261,19 @@ class Train:
         )
         return smoke, l_brake_sparks, r_brake_sparks, explosions, stop_steam
 
+    def _set_lamps_material(self, mat):
+        """Set the Train lamps emission parameter.
+
+        Used when toggling the lights.
+
+        Args:
+            mat (tuple): New lamps material.
+        """
+        self.model.findMaterial("lamp_glass").setEmission(mat)
+
+        if self._floodlights_mat is not None:
+            self._floodlights_mat.setEmission(mat)
+
     def attack_started(self):
         """Enemy started an attack.
 
@@ -337,6 +350,11 @@ class Train:
         """
         for up in upgrades:
             self.install_upgrade(base.labels.UPGRADES_DESC[up])  # noqa: F821
+
+    def move_to_hangar(self):
+        """Move the Train into a city hangar."""
+        self.root_node.setZ(50)
+        self._smoke.softStop()
 
     def place_recruit(self, char):
         """Place the new recruit somewhere on the locomotive.
@@ -419,11 +437,6 @@ class Train:
             stop was initiated by a place of interest.
         """
         self.ctrl.stop(urgent=True, place_of_interest=place_of_interest)
-
-    def move_to_hangar(self):
-        """Move the Train into a city hangar."""
-        self.root_node.setZ(50)
-        self._smoke.softStop()
 
     def move_along_block(self, block):
         """Move the Train along the given world block.
@@ -634,19 +647,6 @@ class Train:
         task.delayTime = 0.1
         return task.again
 
-    def _set_lamps_material(self, mat):
-        """Set the Train lamps emission parameter.
-
-        Used when toggling the lights.
-
-        Args:
-            mat (tuple): New lamps material.
-        """
-        self.model.findMaterial("lamp_glass").setEmission(mat)
-
-        if self._floodlights_mat is not None:
-            self._floodlights_mat.setEmission(mat)
-
     def toggle_lights(self):
         """Toggle the Train lights."""
         self._lighter_snd.play()
@@ -718,9 +718,9 @@ class Train:
             self.get_damage(80)
 
     def get_damage(self, damage):
-        """Get damage from an enemy.
+        """Get damage.
 
-        If damage become critical, stop the locomotive.
+        If damage become critical, stop the locomotive and do game over.
 
         Args:
             damage (int): Damage points to get.
@@ -955,7 +955,7 @@ class Train:
         """Repair the locomotive.
 
         Started as a task, when Fire Extinguishers
-        locomotive upgrade is installed on.
+        locomotive upgrade is installed.
         """
         if self.durability < 400:
             self.durability += 30

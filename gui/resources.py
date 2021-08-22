@@ -670,7 +670,7 @@ class ResourcesGUI:
         """Update reloading timer.
 
         Args:
-            min_num (int): Number of minutes left for the delay to finish.
+            min_num (int): Number of minutes left in the reloading delay.
         """
         self._reload_min["text"] = str(min_num) + " min"
 

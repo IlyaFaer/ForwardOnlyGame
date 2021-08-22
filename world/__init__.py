@@ -253,24 +253,6 @@ class World:
         }
         return inversions
 
-    def make_stench_step(self, task=None):
-        """Move the Stench frontier one block further.
-
-        The Stench frontier moves from the left side of the
-        game world to the right, filling blocks one by one.
-        """
-        self._map[self._stench_step].is_stenchy = True
-        self._stench_step += 1
-
-        if self._stench_step == self._block_num:
-            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
-            base.effects_mgr.stench_effect.play()  # noqa: F821
-
-            base.team.start_stench_activity()  # noqa: F821
-
-        if task is not None:
-            return task.again
-
     def _set_physics(self):
         """Set the world physics.
 
@@ -290,9 +272,31 @@ class World:
         base.train.set_physics(world)  # noqa: F821
         return world
 
+    def drop_outing_ability(self):
+        """Drop the current block outing ability."""
+        self._loaded_blocks[-2].outing_available = None
+
     def drop_place_of_interest(self):
         """Drop the processed place of interest."""
         self._loaded_blocks[-2].is_station = False
+
+    def make_stench_step(self, task=None):
+        """Move the Stench frontier one block further.
+
+        The Stench frontier moves from the left side of the
+        game world to the right, filling blocks one by one.
+        """
+        self._map[self._stench_step].is_stenchy = True
+        self._stench_step += 1
+
+        if self._stench_step == self._block_num:
+            base.effects_mgr.stench_effect.play_clouds()  # noqa: F821
+            base.effects_mgr.stench_effect.play()  # noqa: F821
+
+            base.team.start_stench_activity()  # noqa: F821
+
+        if task is not None:
+            return task.again
 
     def update_physics(self, y_coor, task):
         """Update physics calculations.
@@ -453,10 +457,6 @@ class World:
 
         from_snd.stop()
         return task.done
-
-    def drop_outing_ability(self):
-        """Drop the current block outing ability."""
-        self._loaded_blocks[-2].outing_available = None
 
     def start_outing(self, type_):
         """Start an outing with the given type.

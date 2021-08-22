@@ -155,11 +155,9 @@ class MechanicDesc:
         """
         self._page += 1
 
-        is_last_page = self._page + 1 == len(
+        if self._page + 1 == len(
             base.labels.MECHANIC_DESC[mechanic]["descs"]  # noqa: F821
-        )
-
-        if is_last_page:
+        ):
             self._but["text"] = base.labels.MECHANIC_BUTS[1]  # noqa: F821
             self._but["command"] = self._hide
             self._but["extraArgs"] = []

@@ -88,7 +88,7 @@ class Block:
         self._surfs = []
         self._phys_objs = []
         self.rails_mod = None
-        self._req_add_surface = False
+        self._add_surface = False
         self._old_values = None
 
         self.name = name
@@ -416,9 +416,9 @@ class Block:
             self._load_surface_block(self._l_surface, 4, 12, self._r_angle)
             self._load_surface_block(self._l_surface, -4, 12, self._r_angle)
 
-        if self._req_add_surface:
+        if self._add_surface:
             self.load_additional_surface()
-            self._req_add_surface = False
+            self._add_surface = False
 
         if self.id == 0:
             surf_mod = loader.loadModel(address("surface1"))  # noqa: F821
@@ -440,7 +440,7 @@ class Block:
         # the rails model isn't prepared yet - delay the additional
         # surfaces loading until the rails model loading
         if self.rails_mod is None:
-            self._req_add_surface = True
+            self._add_surface = True
             return
 
         if self.name == "l_fork" or (

@@ -82,7 +82,7 @@ class RecruitChooser(CharacterChooser):
     calculates a cost of the chosen recruit and inserts it into the
     "Hire unit" button.
 
-    The recruit's cost depends on his/her traits: positive
+    The recruit's cost depends on their traits: positive
     traits are increasing the cost, negative decreasing.
 
     Args:
@@ -593,6 +593,16 @@ class CityGUI:
         base.dollars -= self._res_chooser.chosen_resource_cost  # noqa: F821
         base.plus_resource(self._res_chooser.chosen_item, 1)  # noqa: F821
 
+    def _clear(self, turn_around):
+        """Remove hangar scene and hide city GUI.
+
+        Args:
+            turn_around (bool): True, if the Train should be turned around.
+        """
+        self._fr.hide()
+        base.char_gui.clear_char_info()  # noqa: F821
+        base.world.unload_hangar_scene(turn_around)  # noqa: F821
+
     def _sell_supply(self):
         """Sell the chosen resource."""
         if not base.resource(self._res_chooser.chosen_item):  # noqa: F821
@@ -627,16 +637,6 @@ class CityGUI:
         taskMgr.doMethodLater(  # noqa: F821
             2, base.train.resume_smoke, "resume_train_smoke"  # noqa: F821
         )
-
-    def _clear(self, turn_around):
-        """Remove hangar scene and hide city GUI.
-
-        Args:
-            turn_around (bool): True, if the Train should be turned around.
-        """
-        self._fr.hide()
-        base.char_gui.clear_char_info()  # noqa: F821
-        base.world.unload_hangar_scene(turn_around)  # noqa: F821
 
     def _send_away(self):
         """Send the chosen unit away.
@@ -749,7 +749,7 @@ class CityGUI:
         return task.again
 
     def _show_headhunting_reward(self):
-        """Show a reward interface.
+        """Show a reward GUI.
 
         When getting into a city, player gains money as a reward
         for destroying enemies. Money amount depends on what

@@ -63,7 +63,6 @@ class ForwardOnly(ShowBase):
 
     def __init__(self):
         ShowBase.__init__(self)
-
         self.game_config = Config()
 
         self.labels = getattr(
@@ -91,9 +90,10 @@ class ForwardOnly(ShowBase):
         }
         self._heads = {}
         self._cur_mouse_pointer = "normal"
+        self.helped_children = False
+
         self.main_menu = MainMenu()
         self.journal = Journal()
-        self.helped_children = False
 
     @property
     def dollars(self):
@@ -210,6 +210,8 @@ class ForwardOnly(ShowBase):
 
         MechanicDesc(tutorial_name)
 
+        # start showing teaching notes and the Stench
+        # spreading only when the tutorial ended
         if block_id == 18 and self.game_config.tutorial_enabled:
             self.notes.start()
             self.doMethodLater(24, self.world.make_stench_step, "stench_step")

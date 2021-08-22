@@ -21,7 +21,6 @@ class OutingsManager:
 
     def __init__(self):
         self._threshold = random.randint(25, 36)
-        self._types = ("Meet", "Enemy Camp", "Looting")
         self._outings = {
             "Enemy Camp": copy.deepcopy(ENEMY_CAMP),
             "Looting": copy.deepcopy(LOOTING),
@@ -59,6 +58,10 @@ class OutingsManager:
             if score in result["score"]:
                 return result["desc"], result["effects"]
 
+    def hide_outing(self):
+        """Hide outing icon."""
+        self._gui.hide_outing()
+
     def plan_outing(self):
         """Generate an outing.
 
@@ -69,7 +72,31 @@ class OutingsManager:
 
         if self._threshold <= 0:
             self._threshold = random.randint(25, 36)
-            return random.choice(self._types)
+            return random.choice(("Meet", "Enemy Camp", "Looting"))
+
+    def show_can_start(self):
+        """Show that outing can be started."""
+        self._gui.show_can_start()
+
+    def show_city(self):
+        """Show upcoming city info."""
+        self._gui.show_city()
+
+    def show_place_of_interest(self):
+        """Show upcoming place of interest."""
+        self._gui.show_place_of_interest()
+
+    def show_upcoming(self, type_):
+        """Show upcoming outing info.
+
+        Args:
+            type(str): Outing type.
+        """
+        self._gui.show_upcoming_outing(type_)
+
+    def show_upcoming_closer(self):
+        """Show that 1 mile left until available outing."""
+        self._gui.show_upcoming_closer()
 
     def start_outing(self, type_):
         """Choose and start outing scenario.
@@ -86,34 +113,6 @@ class OutingsManager:
                 self._outings[type_] = copy.deepcopy(MEET)
 
         self._gui.start(take_random(self._outings[type_]))
-
-    def show_place_of_interest(self):
-        """Show upcoming place of interest."""
-        self._gui.show_place_of_interest()
-
-    def show_upcoming(self, type_):
-        """Show upcoming outing info.
-
-        Args:
-            type(str): Outing type.
-        """
-        self._gui.show_upcoming_outing(type_)
-
-    def show_city(self):
-        """Show upcoming city info."""
-        self._gui.show_city()
-
-    def show_upcoming_closer(self):
-        """Show that 1 mile left until available outing."""
-        self._gui.show_upcoming_closer()
-
-    def show_can_start(self):
-        """Show that outing can be started."""
-        self._gui.show_can_start()
-
-    def hide_outing(self):
-        """Hide outing icon."""
-        self._gui.hide_outing()
 
     def go_for_outing(self, outing, chars):
         """Make characters go for the given outing.

@@ -60,6 +60,12 @@ MAIN_MENU = (
     "Save and restart",
     "Loading...",
     "Take command",
+    (
+        "The Adjutant is critically damaged!\n"
+        "You're not able to continue the road, and\n"
+        "the Stench will not keep you waiting long.\n\n"
+        "It's all over...",
+    ),
 )
 
 KEYS_INFO = u"""
@@ -690,3 +696,10 @@ Durability to 150%.""",
         "threshold": 1,
     },
 }
+
+FORKS = (
+    "Approaching a fork:\npress T to turn right\nignore to proceed",
+    "Approaching a fork:\npress T to turn left\nignore to proceed",
+)
+
+JOURNAL = ("Journal", "Notes:", "Diary:")

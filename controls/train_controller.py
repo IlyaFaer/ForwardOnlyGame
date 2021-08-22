@@ -177,6 +177,12 @@ class TrainController:
             )
         self.slow_down_to(target)
 
+    def drown_move_snd(self):
+        """Reduce the main move sound volume."""
+        if self._move_snd_volume == 1:
+            self._move_snd.setVolume(0.5)
+            self._move_snd_volume = 0.5
+
     def move_along_block(self, block, train_np, do_turn):
         """Start the locomotive move intervals for the given block.
 
@@ -318,7 +324,7 @@ class TrainController:
         Args:
             urgent (bool):
                 If True, deceleration speed will be much higher.
-                Used for stopping in places of interest.
+                Used for stopping in places of interest and cities.
             place_of_interest (bool):
                 If True, that means the stop is
                 initiated by a place of interest.
@@ -352,12 +358,6 @@ class TrainController:
                 base.world.enemy.stop_ride_anim,  # noqa: F821
                 "stop_riding",
             )
-
-    def drown_move_snd(self):
-        """Reduce the main move sound volume."""
-        if self._move_snd_volume == 1:
-            self._move_snd.setVolume(0.5)
-            self._move_snd_volume = 0.5
 
     def raise_move_snd(self):
         """Restore full volume of the main move sound."""

@@ -275,9 +275,9 @@ class Journal:
             horizontalScroll_incButton_relief=None,
             horizontalScroll_decButton_relief=None,
         )
-        DirectLabel(
+        DirectLabel(  # Journal
             parent=self._main_fr,
-            text="Journal",
+            text=base.labels.JOURNAL[0],  # noqa: F821
             text_font=base.main_font,  # noqa: F821
             text_scale=0.045,
             text_bg=(0, 0, 0, 0),
@@ -287,7 +287,7 @@ class Journal:
         )
         DirectLabel(
             parent=self._main_fr,
-            text="Notes:",
+            text=base.labels.JOURNAL[1],  # noqa: F821
             text_font=base.main_font,  # noqa: F821
             text_scale=0.03,
             text_bg=(0, 0, 0, 0),
@@ -297,7 +297,7 @@ class Journal:
         )
         DirectLabel(
             parent=self._main_fr,
-            text="Diary:",
+            text=base.labels.JOURNAL[2],  # noqa: F821
             text_font=base.main_font,  # noqa: F821
             text_scale=0.03,
             text_bg=(0, 0, 0, 0),

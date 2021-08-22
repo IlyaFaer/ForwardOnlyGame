@@ -79,7 +79,7 @@ class CommonController:
         """Event: left mouse button clicked.
 
         Organizes clicking on active objects:
-        characters, rest zones, enemies.
+        characters, rest zone, enemies.
         """
         if not self._pointed_obj:
             self.deselect()

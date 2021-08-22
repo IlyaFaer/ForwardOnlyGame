@@ -256,7 +256,7 @@ class CharacterGUI:
         """Show detailed character description.
 
         Includes description of every character's
-        trait and his/her current status.
+        trait and their current status.
         """
         if self._char_desc_shown:
             self._fr["frameSize"] = (-0.31, 0.31, -0.1, 0.115)
@@ -314,15 +314,6 @@ class CharacterGUI:
 
         self._char_desc_shown = not self._char_desc_shown
 
-    def _highlight_traits_but(self, button, _):
-        """Hightlight traits tweaking button.
-
-        Args:
-            button (panda3d.gui.DirectGui.DirectButton):
-                Button to highlight.
-        """
-        button["frameTexture"] = GUI_PIC + "hover_like.png"
-
     def _dehighlight_traits_but(self, button, _):
         """Dehighlight traits tweaking button.
 
@@ -331,6 +322,15 @@ class CharacterGUI:
                 Button to dehighlight.
         """
         button["frameTexture"] = GUI_PIC + "like.png"
+
+    def _highlight_traits_but(self, button, _):
+        """Hightlight traits tweaking button.
+
+        Args:
+            button (panda3d.gui.DirectGui.DirectButton):
+                Button to highlight.
+        """
+        button["frameTexture"] = GUI_PIC + "hover_like.png"
 
     def clear_char_info(self, clear_resting=True):
         """Clear the character GUI.
@@ -469,6 +469,15 @@ class CharacterGUI:
             )
             shift -= 0.033
 
+    def move_status_label(self, place):
+        """Move the status label widget.
+
+        Args:
+            place (int): Place to shift the widget.
+        """
+        if self._status_lab is not None:
+            self._status_lab.setZ(self._status_lab.getZ() + place / 10)
+
     def update_resting_chars(self, part):
         """Update the list of the resting characters.
 
@@ -494,15 +503,6 @@ class CharacterGUI:
                 scale=(0.04, 0, 0.03),
             )
             shift -= 0.033
-
-    def move_status_label(self, place):
-        """Move the status label widget.
-
-        Args:
-            place (int): Place to shift the widget.
-        """
-        if self._status_lab is not None:
-            self._status_lab.setZ(self._status_lab.getZ() + place / 10)
 
 
 class HealthBar(NodePath):

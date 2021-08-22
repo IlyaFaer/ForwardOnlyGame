@@ -617,6 +617,23 @@ class MainMenu:
         button.bind(DGG.ENTER, self._highlight_but, extraArgs=[button])
         button.bind(DGG.EXIT, self._dehighlight_but, extraArgs=[button])
 
+    def hide(self):
+        """Hide the main menu."""
+        self._main_fr.hide()
+        clear_wids(self.save_wids)
+        clear_wids(self.conf_wids)
+
+        if self._load_screen is not None:
+            self._load_screen.destroy()
+            self._load_screen = None
+
+        base.accept("escape", self.show)  # noqa: F821
+        taskMgr.remove("check_can_save")  # noqa: F821
+
+    def hide_loading_msg(self):
+        """Hide the "Loading..." message widget."""
+        self._load_msg.destroy()
+
     def show_loading(self, is_game_start=False):
         """Show game loading screen.
 
@@ -672,19 +689,6 @@ That's all, Captain, handing command over to you!""",
             pos=(0, 0, -0.75),
         )
 
-    def hide(self):
-        """Hide the main menu."""
-        self._main_fr.hide()
-        clear_wids(self.save_wids)
-        clear_wids(self.conf_wids)
-
-        if self._load_screen is not None:
-            self._load_screen.destroy()
-            self._load_screen = None
-
-        base.accept("escape", self.show)  # noqa: F821
-        taskMgr.remove("check_can_save")  # noqa: F821
-
     def show(self, is_game_over=False):
         """Show the main menu.
 
@@ -705,16 +709,12 @@ That's all, Captain, handing command over to you!""",
             self._new_game_but["text_fg"] = SILVER_COL
             DirectLabel(
                 parent=self._main_fr,
-                pos=(0.7, 0, 0.3),
+                pos=(0.85, 0, 0.3),
                 frameColor=(0, 0, 0, 0),
                 text_scale=0.055,
                 text_fg=SILVER_COL,
-                text=(
-                    "Your locomotive is critically damaged!\n"
-                    "You're not able to continue the road, and\n"
-                    "the Stench will not keep you waiting long.\n\n"
-                    "It's all over...",
-                ),
+                text_font=base.main_font,  # noqa: F821
+                text=base.labels.MAIN_MENU[28],  # noqa: F821
             )
             base.ignore("escape")  # noqa: F821
         else:
@@ -789,7 +789,3 @@ That's all, Captain, handing command over to you!""",
             command=base.start_game,  # noqa: F821
         )
         self.bind_button(self._load_msg)
-
-    def hide_loading_msg(self):
-        """Hide the "Loading..." message widget."""
-        self._load_msg.destroy()

@@ -38,9 +38,9 @@ class Scenario:
     """
 
     def __init__(self, current_chapter=None):
-        if current_chapter is not None:
+        if current_chapter is not None:  # saved game
             self.current_chapter = current_chapter
-        else:
+        else:  # game start
             self.current_chapter = -1
 
         self._list = DirectFrame(
@@ -186,10 +186,6 @@ class Scenario:
         """No choice consequences method."""
         pass
 
-    def hide_chapter(self):
-        """Hide the scenario GUI."""
-        self._list.hide()
-
     def do_stench_moves_effect(self, steps):
         """Move the Stench frontier several miles deeper into the Silewer.
 
@@ -198,6 +194,10 @@ class Scenario:
         """
         for _ in range(steps):
             base.world.make_stench_step()  # noqa: F821
+
+    def hide_chapter(self):
+        """Hide the scenario GUI."""
+        self._list.hide()
 
     def start_chapter(self, task):
         """Start a new scenario chapter."""
