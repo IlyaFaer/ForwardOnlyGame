@@ -93,13 +93,13 @@ pretty much like a time machine!
 doesn't make passages into another time,
 it only gives us an ability to take a
 look at it, do a detailed snapshot, which
-can be analyzed. Like a photo. The main
-point here is accuracy - our world consists
-of immeasurably number of events, which
-influence each other. We need Laplace's
-Demon to get results, as without high
-accuracy our data will be giving pretty
-unreliable predictions.
+can be analyzed. Like a photo (smiles).
+The main point here is accuracy - our
+world consists of immeasurably number
+of events, which influence each other.
+We need Laplace's Demon to get results,
+as without high accuracy our data will
+be giving pretty unreliable predictions.
 
 - E: Sounds incredible! But it seems you
 need the best equipment and experts.

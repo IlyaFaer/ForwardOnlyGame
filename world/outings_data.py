@@ -206,13 +206,14 @@ You're getting 100$""",
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
         "desc": """The big red two-storied bus standing at the middle of the meadow
-catches your attention from a very long distance. Bringing the binoculars
-to your eyes, you're seeing that it's little bit old and shabby, but sand
-bags and logs placed around the car in defensive positions tells it's
-still inhabited. You also see that second floor doesn't have any glass
-in windows - probably a sniper point, but, except this fact, the
-bus seems to be safe. That makes sense to send a couple of people
-to check if there is something valuable in there.""",
+catches your attention from a very long distance. Bringing the
+binoculars to your eyes, you're seeing that it's little bit old
+and shabby, but sand bags and logs placed around the car in
+defensive positions tells it's still inhabited. You also see
+that second floor doesn't have any glass in windows - probably
+a sniper point, but, except this fact, the bus seems to be safe.
+That makes sense to send a couple of people to check if there
+is something valuable in there.""",
         "results": (
             {
                 "score": range(0, 20),

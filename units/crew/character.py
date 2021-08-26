@@ -68,8 +68,8 @@ class Character(Shooter, Unit):
         self._health_bar = None
 
         self.inhale = 15
-        self.damage_range = [5, 8]
-        self.clear_damage = [5, 8]
+        self.damage_range = [6, 8]
+        self.clear_damage = [6, 8]
         self.effects = {}
 
         self.name = name
@@ -491,13 +491,14 @@ class Character(Shooter, Unit):
         effects = copy.deepcopy(effects)
         self.get_damage(-effects.pop("health", 0))
 
-        ind1, ind2 = effects.get("add_trait")
-        trait = base.labels.TRAITS[ind1][ind2]  # noqa: F821
+        if "add_trait" in effects:
+            ind1, ind2 = effects["add_trait"]
+            trait = base.labels.TRAITS[ind1][ind2]  # noqa: F821
 
-        if trait and trait not in self.traits + self.disabled_traits:
-            self.traits.append(trait)
-            base.char_gui.move_status_label(-1)  # noqa: F821
-            effects.pop("add_trait")
+            if trait and trait not in self.traits + self.disabled_traits:
+                self.traits.append(trait)
+                base.char_gui.move_status_label(-1)  # noqa: F821
+                effects.pop("add_trait")
 
         for key, value in effects.items():
             if hasattr(self, key):

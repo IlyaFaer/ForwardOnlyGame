@@ -25,7 +25,7 @@ options?" Looking at you, Kenneth calculates something in his
 mind and then tells: "We need five hours long stop to deal with
 the axle box." It's much. "Other options?" The mechanic seems
 to be not very pleasant to say it, but he does: "We can try
-to do it on move. But that's dangerous, and will required two
+to do it on move. But that's dangerous, and will require two
 men - me here and someone on the other side of the locomotive.
 The second guy can get injured I warn you. Anyway I think not
 dealing with it can cause us troubles as well. Your call, Captain." """,
@@ -118,7 +118,7 @@ from an orphan shelter. Understanding that the Stench moves
 fast to the place, and the governors are too busy saving
 themselves, adults, who worked there, gathered all the
 children and decided to move to Silewer on foot. Looking at
-pale and tired children, you silently think that it was really
+pale and tired kids, you silently think that it was really
 tough idea. But probably the decision saved their lives...
 Complaining about walking for six hours without a stop, the
 woman asks you to help them build a field camp. You understand

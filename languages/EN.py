@@ -253,7 +253,7 @@ your choice""",
     """Anarchists are companionable,
 they build cohesion much
 faster than others""",
-    """Anarchists get damage factor
+    """Anarchists get strength factor
 x2 from cohesion""",
     """Anarchists are people from
 crowd. They value mutual
@@ -457,7 +457,7 @@ MECHANIC_DESC = {
             ),
             (
                 "The current effects influencing the unit can be\n"
-                "seen in his/her Status GUI. Also keep an eye for\n"
+                "seen in their Status GUI. Also keep an eye for\n"
                 "the disease icon - a sick character can bring a\n"
                 "lot of troubles for the crew. Try to isolate\n"
                 "diseased and cure them as soon as possible."
@@ -595,7 +595,7 @@ TRAIT_DESC = {
     "Immunity": "-40% chance to get sick",
     "Weak immunity": "+20% chance to get sick",
     "Liberal": "+30% cohesion increase with other classes",
-    "Loner": "x1.3 damage while alone on the Train part",
+    "Loner": "x1.3 strength while alone on the Train part",
     "Bloodthirsty": "+7 health for a killed enemy unit",
     "Nervousness": "+25% energy spend while in fight",
     "Deep breath": "Avoid the Stench poison for the first 1 min",
