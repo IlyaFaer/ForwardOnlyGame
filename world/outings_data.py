@@ -2143,14 +2143,15 @@ they could have decide to follows us." Well, on that you all agree.""",
             {
                 "score": range(60, 80),
                 "desc": """You're sending {name1}, {name2} and {name3} with the hitman
-as a support. They fastly disappear behind the hill, and two hours
-passed, before they get on sight again. Throwing a gaze through
-binoculars, you see that everyone is okay. The hitman is not with
-your people. "We've finished them all." - {name1} says, getting closer
-to the Train. - "The man gave us some money and vanished, like he
-never been there." Climbing up to the Train, your messengers moving
-each to his/her place. Well, the job is done, bad people were stopped,
-and some money earned. Sounds like a lucky outing!
+as a support. They fastly disappear behind the hill, and two
+hours passed, before they get on sight again. Throwing a gaze
+through binoculars, you see that everyone is okay. The hitman
+is not with your people. "We've finished them all." - {name1}
+says, getting closer to the Train. - "The man gave us some
+money and vanished, like he never been there." Climbing up to
+the Train, your messengers moving each to his/her place. Well,
+the job is done, bad people were stopped, and some money
+earned. Sounds like a lucky outing!
 You're getting 100$""",
                 "effects": {"money": 100},
             },
@@ -2239,7 +2240,7 @@ At least that means the next city is a good place for a stop.""",
             },
             {
                 "score": range(60, 80),
-                "desc": """Running through the team list, you're deciding to send {name1}
+                "desc": """Running through the crew list, you're deciding to send {name1}
 for negotiations. Energetically {heshe1} takes {hisher1} gun and directs
 to the construction sight, but in the next minute a couple of
 workers are moving out of the outpost, towards {name1}. Getting
@@ -2781,14 +2782,15 @@ giving an order to start the Adjutant's engine.
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
         "desc": """Getting closer to a dark green spot you've noticed earlier, you see
-that it's some kind of a romani truck. Old and battered by a long
-travelling, it stands right in the middle of the meadow, opened to
-the right side like a showcase. A lot of colorful knick knacks,
-metal dishes, clothes - all of it hanging on the walls and lying,
-pinned down by a rough rope. A human body in a grey suit stands near
-the truck, smoking and looking carefully to your locomotive. From that
-distance you can't tell if there is anything you can use on a road,
-so it makes sense to send someone to see what the trader has to sell.""",
+that it's some kind of a romani truck. Old and battered by a
+long travelling, it stands right in the middle of the meadow,
+opened to the right side like a showcase. A lot of colorful
+knick knacks, metal dishes, clothes - all of it hanging on
+the walls and lying, pinned down by a rough rope. A human body
+in a grey suit stands near the truck, smoking and looking
+carefully to your locomotive. From that distance you can't
+tell if there is anything you can use on a road, so it makes
+sense to send someone to see what the trader has to sell.""",
         "results": (
             {
                 "score": range(0, 20),

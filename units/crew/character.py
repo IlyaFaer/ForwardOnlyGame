@@ -226,7 +226,7 @@ class Character(Shooter, Unit):
         if not base.world.is_in_city and self.current_part is not None:  # noqa: F821
             factor = round(self.damage_factor, 2)
             if factor != 1:
-                statuses.append("Damage factor: x{}".format(factor))
+                statuses.append("Strength factor: x{}".format(factor))
 
         if self.health < 50 and base.labels.TRAITS[2][1] in self.traits:  # noqa: F821
             statuses.append("Hemophobia: +25% energy spend")

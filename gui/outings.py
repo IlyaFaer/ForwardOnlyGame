@@ -290,6 +290,8 @@ class OutingsGUI:
         effect_str = ""
         for key, value in selected_effect.items():
             if key == "add_trait":
+                ind1, ind2 = value
+                value = base.labels.TRAITS[ind1][ind2]  # noqa: F821
                 effect_str = "Get {trait} trait\n ({desc})".format(
                     trait=value, desc=base.labels.TRAIT_DESC[value]  # noqa: F821
                 )

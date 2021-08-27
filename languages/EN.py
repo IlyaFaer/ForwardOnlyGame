@@ -421,8 +421,9 @@ MECHANIC_DESC = {
                 "Outings are the main source of money and other\n"
                 "facilities. It's an event that requires you to\n"
                 "stop and send units for it. There are three types\n"
-                "of outings, each offers own type of trophies and\n"
-                "prefers an exact unit class to be sent for it."
+                "of outings: Looting, Meet and Enemy Camp, each\n"
+                "offers own type of trophies and prefers an\n"
+                "exact unit class to be sent for it."
             ),
             (
                 "An outing have five finals; the higher is your score,\n"
