@@ -1,29 +1,30 @@
 # Forward Only
 [на русском](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/README%20(RUS).md)
 
-The World dies because of the terrible cataclysm called "the Stench". The only way to survive is to move and do it quickly, as death spreads across the Earth. Fortunately, you have a locomotive that is still running, so prepare for a big journey in small company of cohesive heroes, who are trying to pull through severe adversities new World brings upon.
+The Europe is stroke by the terrible cataclysm called "the Stench". The only way to survive it is to move and do it quickly, as death spreads irrepressibly. Fortunately, you have a locomotive that is still running, so gather your crew and travel through the Silewer - country full of skinheads, who struggle against the avalanche of refugees.
 
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot1.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
-The game represents a route-strategy with arcade fights blotches. Search for an optimal way through the world, while fast spreading poisonous clouds of the Stench will force you to keep your pace high. There will be enemies, who'll do the best to stop you, diseases, tough decisions to make, resources searches, recruiting, cities where you can upgrade your locomotive with active guns and even more.
+The game represents a route-strategy with arcade fight blotches. Find an optimal way through the Silewer before the fast spreading poisonous clouds of the Stench outrun you. There are real-time fights with enemies, cities where you can upgrade your locomotive with active guns, tough decisions, recruiting, diseases, resources searches and even more.
 
 :cinema: See [alpha footage on YouTube](https://youtu.be/Ot2uFTCRRvs).
 
 **The Project legal status**  
-The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).
+The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).  
+It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
 
 **Current stage**  
-The Game is in alpha development stage (~80% finished). It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
+The Game is in active development stage (~80% finished) and is in a preparation for the first beta build.
 
 The major features the Game includes now:
-- randomly built world with several ways to travel through
-- 3 unit classes
-- 16 traits, making units stronger or weaker in different situations
+- 3 way of play determined by 3 unit classes
 - cohesion system which makes units tougher together and unlocks powerful crew skills
-- real-time fights with enemies of 7 classes
 - cities, where you can use money to restore your crew and upgrade the locomotive
+- real-time on-move fights with enemies of 7 classes
+- randomly built world with several ways to travel through
+- 16 traits, making units stronger or weaker in different situations
 
 **Subscribe**  
 [YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
