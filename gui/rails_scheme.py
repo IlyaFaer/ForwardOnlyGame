@@ -58,9 +58,9 @@ class RailsScheme:
 
         self._arrow = DirectFrame(
             parent=self._scheme,
-            frameSize=(-0.02, 0.02, -0.03, 0.03),
-            frameTexture="gui/tex/scheme_arrow.png",
-            pos=(-0.967, 0, 0.1),
+            frameSize=(-0.02, 0.02, -0.02, 0.02),
+            frameTexture="gui/tex/train_dir.png",
+            pos=(-0.967, 0, 0.07),
         )
         self._build_legend()
 
@@ -233,7 +233,12 @@ class RailsScheme:
         """Update the Train position on the scheme."""
         blocks = base.world.current_blocks  # noqa: F821
         if blocks and blocks[0] != -1 and blocks[0] < 900:
-            self._arrow.setPos(-0.967 + blocks[0] * 0.00216, 0, 0.1)
+            self._arrow.setPos(-0.967 + blocks[0] * 0.00216, 0, 0.07)
+
+            if blocks[0] < blocks[1]:
+                self._arrow["frameTexture"] = "gui/tex/train_dir.png"
+            else:
+                self._arrow["frameTexture"] = "gui/tex/train_dir_op.png"
 
         task.delayTime = 6
         return task.again
