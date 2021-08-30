@@ -15,7 +15,7 @@ import time
 
 from direct.showbase import Audio3DManager
 from direct.showbase.ShowBase import ShowBase
-from panda3d.core import loadPrcFileData, Filename, WindowProperties
+from panda3d.core import loadPrcFileData, ClockObject, Filename, WindowProperties
 
 from controls import CameraController, CommonController
 from effects import EffectsManager
@@ -143,6 +143,9 @@ class ForwardOnly(ShowBase):
         x, z = self.game_config.resolution.split("x")
         props.setSize(int(x), int(z))
         props.setCursorFilename(Filename.binaryFilename("GUI/pointers/normal.ico"))
+
+        globalClock.setMode(ClockObject.MLimited)  # noqa: F82
+        globalClock.setFrameRate(self.game_config.fps_limit)  # noqa: F82
 
         self.openDefaultWindow(props=props)
         return props

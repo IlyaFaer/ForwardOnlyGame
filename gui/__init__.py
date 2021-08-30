@@ -31,6 +31,7 @@ from .traits import TraitsGUI  # noqa: F401
 from .widgets import GUI_PIC, RUST_COL, SILVER_COL, ListChooser  # noqa: F401
 
 LANGUAGES = ("EN", "RU")
+FPS = ("30", "60", "120")
 RESOLUTIONS = (
     "800x600",
     "1024x768",
@@ -368,7 +369,9 @@ class MainMenu:
 
         return saves
 
-    def _save_conf_and_restart(self, res_chooser, tutorial_check, lang_chooser):
+    def _save_conf_and_restart(
+        self, res_chooser, tutorial_check, lang_chooser, fps_chooser
+    ):
         """Save configurations and restart the game program.
 
         Args:
@@ -378,11 +381,14 @@ class MainMenu:
                 Tutorial enabling check button.
             lang_chooser (GUI.widgets.ListChooser):
                 Widget to choose GUI language.
+            fps_chooser (GUI.widgets.ListChooser):
+                Framerate chooser.
         """
         base.game_config.update(  # noqa: F821
             res_chooser.chosen_item,
             lang_chooser.chosen_item,
             str(bool(tutorial_check["indicatorValue"])),
+            fps_chooser.chosen_item,
         )
         base.restart_game()  # noqa: F821
 
@@ -428,13 +434,13 @@ class MainMenu:
                 frameColor=(0, 0, 0, 0),
             )
         )
-        with open("options.cfg", "r") as opts_file:
-            res, lang, tutorial = opts_file.readlines()
-            tutorial = tutorial == "True"
 
         res_chooser = ListChooser()
         res_chooser.prepare(
-            self._main_fr, (0.1, 0, 0.51), RESOLUTIONS, RESOLUTIONS.index(res.strip()),
+            self._main_fr,
+            (0.1, 0, 0.51),
+            RESOLUTIONS,
+            RESOLUTIONS.index(base.game_config.resolution),  # noqa: F821,
         )
         self.conf_wids.append(res_chooser)
 
@@ -451,7 +457,7 @@ class MainMenu:
         )
         tutorial_check = DirectCheckButton(
             parent=self._main_fr,
-            indicatorValue=tutorial,
+            indicatorValue=base.game_config.tutorial_enabled,  # noqa: F821
             clickSound=self.click_snd,
             scale=0.02,
             pos=(0.12, 0, 0.4),
@@ -478,9 +484,33 @@ class MainMenu:
 
         lang_chooser = ListChooser()
         lang_chooser.prepare(
-            self._main_fr, (0.1, 0, 0.31), ("EN", "RU"), LANGUAGES.index(lang.strip()),
+            self._main_fr,
+            (0.1, 0, 0.31),
+            LANGUAGES,
+            LANGUAGES.index(base.game_config.language),  # noqa: F821,
         )
         self.conf_wids.append(lang_chooser)
+
+        self.conf_wids.append(
+            DirectLabel(  # Framerate limit
+                parent=self._main_fr,
+                text=base.labels.MAIN_MENU[29],  # noqa: F821,
+                text_fg=RUST_COL,
+                text_scale=0.04,
+                text_font=base.main_font,  # noqa: F821
+                pos=(-0.3, 0, 0.21),
+                frameColor=(0, 0, 0, 0),
+            )
+        )
+
+        fps_chooser = ListChooser()
+        fps_chooser.prepare(
+            self._main_fr,
+            (0.1, 0, 0.22),
+            FPS,
+            FPS.index(str(base.game_config.fps_limit)),  # noqa: F821
+        )
+        self.conf_wids.append(fps_chooser)
 
         but = DirectButton(  # Save and restart
             parent=self._main_fr,
@@ -490,7 +520,7 @@ class MainMenu:
             text_font=base.main_font,  # noqa: F821
             relief=None,
             command=self._save_conf_and_restart,
-            extraArgs=[res_chooser, tutorial_check, lang_chooser],
+            extraArgs=[res_chooser, tutorial_check, lang_chooser, fps_chooser],
             pos=(0.1, 0, 0),
             clickSound=self.click_snd,
         )

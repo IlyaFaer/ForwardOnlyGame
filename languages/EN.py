@@ -66,6 +66,7 @@ MAIN_MENU = (
         "the Stench will not keep you waiting long.\n\n"
         "It's all over...",
     ),
+    "Framerate limit:",
 )
 
 KEYS_INFO = u"""
