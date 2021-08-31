@@ -172,7 +172,7 @@ class RailsScheme:
                         text_bg=(0, 0, 0, 0),
                         text_fg=(0, 0, 0, 0.5),
                         frameColor=(0, 0, 0, 0),
-                        pos=(x_coor, 0, 0.25 if branch["side"] == "l" else -0.25),
+                        pos=(x_coor, 0, 0.25 if branch["side"] == "l" else -0.27),
                     )
                 )
 
@@ -232,8 +232,20 @@ class RailsScheme:
     def _update_arrow(self, task):
         """Update the Train position on the scheme."""
         blocks = base.world.current_blocks  # noqa: F821
-        if blocks and blocks[0] != -1 and blocks[0] < 900:
-            self._arrow.setPos(-0.967 + blocks[0] * 0.00216, 0, 0.07)
+        if blocks and blocks[0] != -1:
+
+            z_shift = 0
+            if base.world.current_block.branch == "l":  # noqa: F821
+                z_shift = 0.155
+            elif base.world.current_block.branch == "r":  # noqa: F821
+                z_shift = -0.295
+
+            if blocks[0] < 900:
+                x = -0.967 + blocks[0] * 0.00216
+            else:
+                x = self._arrow.getX()
+
+            self._arrow.setPos(x, 0, 0.07 + z_shift)
 
             if blocks[0] < blocks[1]:
                 self._arrow["frameTexture"] = "gui/tex/train_dir.png"
