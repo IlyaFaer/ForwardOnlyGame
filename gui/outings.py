@@ -103,7 +103,7 @@ class OutingsGUI:
         self._assignees.append(char)
         self._char_buttons[char.id].setX(0.35)
 
-        to_send_wid["text"] = "People to send ({cur_as}/{max_as}):".format(
+        to_send_wid["text"] = base.labels.OUTINGS_GUI[0].format(  # noqa: F821
             cur_as=str(len(self._assignees)), max_as=str(assignees)
         )
 
@@ -122,7 +122,7 @@ class OutingsGUI:
         self._assignees.remove(char)
         self._char_buttons[char.id].setX(-0.35)
 
-        to_send_wid["text"] = "People to send ({cur_as}/{max_as}):".format(
+        to_send_wid["text"] = base.labels.OUTINGS_GUI[0].format(  # noqa: F821
             cur_as=str(len(self._assignees)), max_as=str(assignees)
         )
 
@@ -175,18 +175,20 @@ class OutingsGUI:
                 shift -= 0.12
 
             self._outing_widgets.append(
-                DirectLabel(
+                DirectLabel(  # Total outing score:
                     parent=self._list,
-                    text="Total outing score:\n" + str(score) + "/100",
+                    text=base.labels.OUTINGS_GUI[1] + str(score) + "/100",  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
                     frameSize=(0.6, 0.6, 0.6, 0.6),
-                    text_scale=0.045,
+                    text_scale=0.042,
                     pos=(0, 0, -0.58),
                 )
             )
             self._outing_widgets.append(
-                DirectButton(
+                DirectButton(  # Done
                     pos=(0, 0, -0.77),
-                    text="Done",
+                    text=base.labels.DISTINGUISHED[6],  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
                     text_fg=RUST_COL,
                     text_shadow=(0, 0, 0, 1),
                     frameColor=(0, 0, 0, 0),
@@ -251,20 +253,22 @@ class OutingsGUI:
             base.char_gui.show_char_info(char)  # noqa: F821
 
             self._outing_widgets.append(
-                DirectLabel(
+                DirectLabel(  # You can recruit <name> for <cost>$
                     parent=self._list,
                     pos=(0, 0, 0),
-                    text="You can recruit {name} for {cost}$".format(
+                    text=base.labels.OUTINGS_GUI[12].format(  # noqa: F821
                         name=char.name, cost=recruit_effect
                     ),
+                    text_font=base.main_font,  # noqa: F821
                     frameSize=(0.6, 0.6, 0.6, 0.6),
                     text_scale=0.045,
                 )
             )
             self._outing_widgets.append(
-                DirectButton(
+                DirectButton(  # Recruit
                     pos=(-0.2, 0, -0.75),
-                    text="Recruit",
+                    text=base.labels.OUTINGS_GUI[10],  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
                     text_fg=RUST_COL,
                     text_shadow=(0, 0, 0, 1),
                     frameColor=(0, 0, 0, 0),
@@ -274,9 +278,10 @@ class OutingsGUI:
                 )
             )
             self._outing_widgets.append(
-                DirectButton(
+                DirectButton(  # Don't recruit
                     pos=(0.2, 0, -0.75),
-                    text="Don't recruit",
+                    text=base.labels.OUTINGS_GUI[11],  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
                     text_fg=RUST_COL,
                     text_shadow=(0, 0, 0, 1),
                     frameColor=(0, 0, 0, 0),
@@ -292,7 +297,7 @@ class OutingsGUI:
             if key == "add_trait":
                 ind1, ind2 = value
                 value = base.labels.TRAITS[ind1][ind2]  # noqa: F821
-                effect_str = "Get {trait} trait\n ({desc})".format(
+                effect_str = base.labels.OUTINGS_GUI[13].format(  # noqa: F821
                     trait=value, desc=base.labels.TRAIT_DESC[value]  # noqa: F821
                 )
             else:
@@ -301,12 +306,11 @@ class OutingsGUI:
                 )
 
         self._outing_widgets.append(
-            DirectLabel(
+            DirectLabel(  # Select one character as a target for the effect:
                 parent=self._list,
-                text="""Select one character as a target for the effect:
-{effect}""".format(
-                    effect=effect_str
-                ),
+                text=base.labels.OUTINGS_GUI[14]  # noqa: F821
+                + "\n{effect}".format(effect=effect_str),
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.6, 0.6, 0.6, 0.6),
                 text_scale=0.045,
             )
@@ -316,9 +320,10 @@ class OutingsGUI:
             self._list, (0, 0, -0.15), base.team.chars  # noqa: F821
         )
         self._outing_widgets.append(
-            DirectButton(
+            DirectButton(  # Done
                 pos=(0, 0, -0.75),
-                text="Done",
+                text=base.labels.DISTINGUISHED[6],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_fg=RUST_COL,
                 text_shadow=(0, 0, 0, 1),
                 frameColor=(0, 0, 0, 0),
@@ -420,9 +425,10 @@ class OutingsGUI:
         self._desc["text"] = outing["desc"]
 
         self._outing_widgets.append(
-            DirectLabel(
+            DirectLabel(  # Crew:
                 parent=self._list,
-                text="Crew:",
+                text=base.labels.OUTINGS_GUI[9],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.6, 0.6, 0.6, 0.6),
                 text_scale=0.035,
                 pos=(-0.35, 0, 0),
@@ -444,11 +450,14 @@ class OutingsGUI:
 
             shift -= 0.04
 
-        to_send = DirectLabel(
+        to_send = DirectLabel(  # People to send
             parent=self._list,
-            text="People to send (0/{}):".format(outing["assignees"]),
-            frameSize=(0.6, 0.6, 0.6, 0.6),
+            text=base.labels.OUTINGS_GUI[0].format(  # noqa: F821
+                cur_as="0", max_as=outing["assignees"]
+            ),
             text_scale=0.035,
+            text_font=base.main_font,  # noqa: F821
+            frameSize=(0.6, 0.6, 0.6, 0.6),
             pos=(0.35, 0, 0),
         )
         self._outing_widgets.append(to_send)
@@ -476,9 +485,10 @@ class OutingsGUI:
             )
         )
         self._outing_widgets.append(
-            DirectButton(
+            DirectButton(  # Don't send
                 pos=(-0.15, 0, -0.75),
-                text="Don't send",
+                text=base.labels.OUTINGS_GUI[2],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_fg=RUST_COL,
                 text_shadow=(0, 0, 0, 1),
                 frameColor=(0, 0, 0, 0),
@@ -488,9 +498,10 @@ class OutingsGUI:
             )
         )
         self._outing_widgets.append(
-            DirectButton(
+            DirectButton(  # Send
                 pos=(0.15, 0, -0.75),
-                text="Send",
+                text=base.labels.OUTINGS_GUI[3],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 text_fg=RUST_COL,
                 text_shadow=(0, 0, 0, 1),
                 frameColor=(0, 0, 0, 0),
@@ -535,25 +546,47 @@ class OutingsGUI:
         self._desc["text"] = desc
 
         self._outing_widgets.append(
-            DirectLabel(
+            DirectLabel(  # Outing score:
                 parent=self._list,
-                text="Outing score:",
+                text=base.labels.OUTINGS_GUI[4],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
                 frameSize=(0.6, 0.6, 0.6, 0.6),
-                text_scale=0.045,
+                text_scale=0.042,
             )
         )
         bars = []
         shift = -0.07
         for name, maximum, col, value in (
-            ("Character classes fit:", 40, (0.36, 0.6, 0.42, 1), class_score),
-            ("Characters condition:", 25, (0.65, 0.2, 0.2, 1), cond_score),
-            ("Characters cohesion:", 25, SILVER_COL, cohesion_score),
-            ("Day part:", 10, (0.42, 0.42, 0.8, 1), day_part_score),
+            (  # Character classes fit:
+                base.labels.OUTINGS_GUI[5],  # noqa: F821
+                40,
+                (0.36, 0.6, 0.42, 1),
+                class_score,
+            ),
+            (  # Characters condition:
+                base.labels.OUTINGS_GUI[6],  # noqa: F821
+                25,
+                (0.65, 0.2, 0.2, 1),
+                cond_score,
+            ),
+            (  # Characters cohesion:
+                base.labels.OUTINGS_GUI[7],  # noqa: F821
+                25,
+                SILVER_COL,
+                cohesion_score,
+            ),
+            (  # Day part:
+                base.labels.OUTINGS_GUI[8],  # noqa: F821
+                10,
+                (0.42, 0.42, 0.8, 1),
+                day_part_score,
+            ),
         ):
             self._outing_widgets.append(
                 DirectLabel(
                     parent=self._list,
                     text=name,
+                    text_font=base.main_font,  # noqa: F821
                     frameSize=(0.6, 0.6, 0.6, 0.6),
                     text_scale=0.035,
                     pos=(-0.08, 0, shift),

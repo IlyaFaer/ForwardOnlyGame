@@ -716,3 +716,21 @@ STATUSES = (
     "Sick: -20 max energy",
     "Motion sickness: doesn't restore",
 )
+
+OUTINGS_GUI = (
+    "People to send ({cur_as}/{max_as}):",
+    "Total outing score:\n",
+    "Don't send",
+    "Send",
+    "Outing score:",
+    "Character classes fit:",
+    "Characters condition:",
+    "Characters cohesion:",
+    "Day part:",
+    "Crew:",
+    "Recruit",  # 10
+    "Don't recruit",
+    "You can recruit {name} for {cost}$",
+    "Get {trait} trait\n ({desc})",
+    "Select one character as a target for the effect:",
+)
