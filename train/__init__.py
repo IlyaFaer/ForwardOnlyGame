@@ -57,6 +57,7 @@ class Train:
             self._creak_snds,
             self._rocket_explosions_snd,
             self._attack_started_snd,
+            self._brake_snd,
         ) = self._set_sounds()
 
         self.ctrl = TrainController(self.model)
@@ -436,6 +437,7 @@ class Train:
             place_of_interest (bool): Optional. True, if the
             stop was initiated by a place of interest.
         """
+        self._brake_snd.play()
         self.ctrl.stop(urgent=True, place_of_interest=place_of_interest)
 
     def move_along_block(self, block):
@@ -599,6 +601,9 @@ class Train:
         )
         base.sound_mgr.attachSoundToObject(attack_snd, self.model)  # noqa: F821
 
+        brake_snd = base.sound_mgr.loadSfx("sounds/train/self_brake.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(brake_snd, self.model)  # noqa: F821
+
         return (
             clunk_snd,
             clunk_snd2,
@@ -608,6 +613,7 @@ class Train:
             (creak_snd1, creak_snd2, creak_snd3),
             rocket_explosion,
             attack_snd,
+            brake_snd,
         )
 
     def update_physics(self, y_coor):
