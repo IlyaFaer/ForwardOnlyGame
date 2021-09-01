@@ -35,6 +35,9 @@ class TraitsGUI:
 
         self._open_snd = loader.loadSfx("sounds/GUI/paper1.ogg")  # noqa: F821
         self._close_snd = loader.loadSfx("sounds/GUI/paper2.ogg")  # noqa: F821
+        self._scold_snd = loader.loadSfx("sounds/GUI/scold.ogg")  # noqa: F821
+        self._praise_snd = loader.loadSfx("sounds/GUI/praise.ogg")  # noqa: F821
+
         self._list = DirectFrame(
             frameSize=(-0.75, 0.75, -0.77, 0.77),
             frameTexture=GUI_PIC + "paper1.png",
@@ -220,6 +223,7 @@ class TraitsGUI:
         if len(char.traits) == 3:
             return
 
+        self._praise_snd.play()
         char.traits.append(self._new_traits[self._ind_chosen][0]["text"])
 
         for but_pair in self._new_traits:
@@ -300,6 +304,7 @@ class TraitsGUI:
         if self._new_chosen or base.team.cohesion < 4:  # noqa: F821
             return
 
+        self._scold_snd.play()
         trait = self._cur_traits[self._ind_chosen][0]["text"]
         char = self._char_chooser.chosen_item
         if trait in char.traits:
