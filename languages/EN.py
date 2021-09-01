@@ -705,3 +705,14 @@ FORKS = (
 )
 
 JOURNAL = ("Journal", "Notes:", "Diary:")
+
+STATUSES = (
+    "Cat eyes: +5% accuracy",
+    "Dark: -10% accuracy",
+    "Dark: -20% accuracy",
+    "Tired: -{}% accuracy",
+    "Strength factor: x{}",
+    "Hemophobia: +25% energy spend",
+    "Sick: -20 max energy",
+    "Motion sickness: doesn't restore",
+)

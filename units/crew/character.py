@@ -213,32 +213,34 @@ class Character(Shooter, Unit):
         statuses = []
         if base.world.sun.is_dark:  # noqa: F821
             if base.labels.TRAITS[1][0] in self.traits:  # noqa: F821
-                statuses.append("Cat eyes: +5% accuracy")
+                statuses.append(base.labels.STATUSES[0])  # noqa: F821
             elif base.train.lights_on:  # noqa: F821
                 if "Floodlights" not in base.train.upgrades:  # noqa: F821
-                    statuses.append("Dark: -10% accuracy")
+                    statuses.append(base.labels.STATUSES[1])  # noqa: F821
             else:
-                statuses.append("Dark: -20% accuracy")
+                statuses.append(base.labels.STATUSES[2])  # noqa: F821
 
         if self.energy <= 95:
-            statuses.append("Tired: -{}% accuracy".format((100 - self.energy) // 5))
+            statuses.append(
+                base.labels.STATUSES[3].format((100 - self.energy) // 5)  # noqa: F821
+            )
 
         if not base.world.is_in_city and self.current_part is not None:  # noqa: F821
             factor = round(self.damage_factor, 2)
             if factor != 1:
-                statuses.append("Strength factor: x{}".format(factor))
+                statuses.append(base.labels.STATUSES[4].format(factor))  # noqa: F821
 
         if self.health < 50 and base.labels.TRAITS[2][1] in self.traits:  # noqa: F821
-            statuses.append("Hemophobia: +25% energy spend")
+            statuses.append(base.labels.STATUSES[5])  # noqa: F821
 
         if self.is_diseased:
-            statuses.append("Sick: -20 max energy")
+            statuses.append(base.labels.STATUSES[6])  # noqa: F821
 
         if (
             base.labels.TRAITS[6][1] in self.traits  # noqa: F821
             and base.train.ctrl.current_speed > 0.75  # noqa: F821
         ):
-            statuses.append("Motion sickness: doesn't restore")
+            statuses.append(base.labels.STATUSES[7])  # noqa: F821
 
         return statuses[:4]
 

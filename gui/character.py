@@ -244,6 +244,7 @@ class CharacterGUI:
                 DirectLabel(
                     parent=self._fr,
                     text=status,
+                    text_font=base.main_font,  # noqa: F821
                     frameSize=(0.1, 0.1, 0.1, 0.1),
                     text_scale=0.029,
                     text_fg=SILVER_COL,
