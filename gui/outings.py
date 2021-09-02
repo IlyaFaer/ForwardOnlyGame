@@ -366,7 +366,7 @@ class OutingsGUI:
     def show_place_of_interest(self):
         """Show icon for a place of interest."""
         self.show_upcoming(
-            "Place of interest! Stopping", OUTINGS_ICONS["Place Of Interest"],
+            base.labels.NOTIFIERS[0], OUTINGS_ICONS["Place Of Interest"],  # noqa: F821
         )
 
     def show_upcoming_outing(self, type_):
@@ -377,7 +377,7 @@ class OutingsGUI:
         """
         self._outing_snd.play()
         self.show_upcoming(
-            '"{}" outing available in 2 miles'.format(type_.capitalize()),
+            base.labels.NOTIFIERS[1].format(type_.capitalize()),  # noqa: F821
             OUTINGS_ICONS[type_],
         )
 
@@ -388,12 +388,12 @@ class OutingsGUI:
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""
         self._upcome_text["text"] = self._upcome_text["text"].replace(
-            "2 miles", "1 mile"
+            base.labels.NOTIFIERS[2], base.labels.NOTIFIERS[3],  # noqa: F821
         )
 
     def show_can_start(self):
         """Show that outing can be started."""
-        self._upcome_text["text"] = "Stop to start outing"
+        self._upcome_text["text"] = base.labels.NOTIFIERS[4]  # noqa: F821
 
     def hide_outing(self):
         """Hide all the outings gui."""

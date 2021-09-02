@@ -734,3 +734,11 @@ OUTINGS_GUI = (
     "Get {trait} trait\n ({desc})",
     "Select one character as a target for the effect:",
 )
+
+NOTIFIERS = (
+    "Place of interest! Stopping",
+    '"{}" outing available in 2 miles',
+    "2 miles",
+    "1 miles",
+    "Stop to start outing",
+)
