@@ -235,6 +235,9 @@ but they are much more
 energetic""",
     """People tired faster while in
 dark and during fight""",
+    """Don't forget to check units'
+status on the character
+detailed GUI""",
     # raiders
     """Raider's life is mostly about
 looting. They know how to find
@@ -300,11 +303,11 @@ COHESION = (
     "Cover fire",
     "Every character gets +20% accuracy. Cooldown: 5 min.",
     "Not leaving ours",
-    "Characters with health < 30 getting +25 health. Cooldown: 10 min.",
+    "Characters with health < 30 getting +25 health. Cooldown: 8 min.",
     "Common rage",
     "Every character gets +30% to damage. Cooldown: 10 min.",
     "Hold together",
-    "No characters will die in next 1.5 min. Cooldown: 15 min.",
+    "No characters will die in next 1 min. Cooldown: 10 min.",
 )
 
 DISTINGUISHED = (

@@ -219,7 +219,7 @@ class Crew:
                 char.health += 25
                 char.play_cohesion_effect("not_leaving_ours")
 
-        self._plan_cohesion_cooldown(600)
+        self._plan_cohesion_cooldown(480)
 
     def cohesion_rage(self):
         """Do cohesion ability "Common rage"."""
@@ -250,9 +250,9 @@ class Crew:
             char.play_cohesion_aura("hold_together")
 
         taskMgr.doMethodLater(  # noqa: F821
-            90, self._stop_hold_together, "stop_hold_together"
+            60, self._stop_hold_together, "stop_hold_together"
         )
-        self._plan_cohesion_cooldown(900)
+        self._plan_cohesion_cooldown(600)
 
     def rest_all(self):
         """Make all the characters rest."""

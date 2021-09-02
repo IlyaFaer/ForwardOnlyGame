@@ -9,7 +9,7 @@ import random
 
 from gui import OutingsGUI
 
-from utils import take_random
+from utils import chance, take_random
 from .outings_data import ENEMY_CAMP, LOOTING, MEET
 
 
@@ -17,9 +17,12 @@ class OutingsManager:
     """An object to manage outings.
 
     Rules the outings planning, manipulating, results calculating and GUI.
+
+    Args:
+        prefered_type (str): Optional. Name of the prefered outing type.
     """
 
-    def __init__(self):
+    def __init__(self, prefered_type=None):
         self._threshold = random.randint(25, 36)
         self._outings = {
             "Enemy Camp": copy.deepcopy(ENEMY_CAMP),
@@ -34,6 +37,7 @@ class OutingsManager:
             "Meet": loader.loadSfx("sounds/GUI/meet_result.ogg"),  # noqa: F821
         }
         self._gui = OutingsGUI()
+        self._prefered = prefered_type
 
     @property
     def gui_is_shown(self):
@@ -72,6 +76,10 @@ class OutingsManager:
 
         if self._threshold <= 0:
             self._threshold = random.randint(25, 36)
+
+            if self._prefered and chance(5):
+                return self._prefered
+
             return random.choice(("Meet", "Enemy Camp", "Looting"))
 
     def show_can_start(self):

@@ -466,7 +466,7 @@ class World:
         """
         self.outings_mgr.start_outing(type_)
 
-    def generate_location(self, size):
+    def generate_location(self, size, chosen_crew):
         """Generate game location.
 
         Location consists of blocks, enemy and
@@ -474,9 +474,14 @@ class World:
 
         Args:
             size (int): Quantity of blocks to generate.
+            chosen_crew (str): The chosen crew class.
         """
         rails_gen = RailwayGenerator()
-        self.outings_mgr = OutingsManager()
+        self.outings_mgr = OutingsManager(
+            {"soldiers": "Enemy Camp", "raiders": "Looting", "anarchists": "Meet"}[
+                chosen_crew
+            ]
+        )
         rusty_blocks = 0
         stench_blocks = 0
 

@@ -391,11 +391,11 @@ class ForwardOnly(ShowBase):
 
         save.close()
 
-    def start_new_game(self, chosen_team):
+    def start_new_game(self, chosen_crew):
         """Start new game.
 
         Args:
-            chosen_team (str): The chosen initial team.
+            chosen_crew (str): The chosen initial crew.
         """
         self.disableAllAudio()
 
@@ -405,13 +405,13 @@ class ForwardOnly(ShowBase):
         self.camera_ctrl.set_controls(self.train)
 
         self.team = Crew()
-        self.team.gen_default(chosen_team)
+        self.team.gen_default(chosen_crew)
 
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
 
         # build game world
         self.world = World()
-        self.world.generate_location(900)
+        self.world.generate_location(900, chosen_crew)
         self.current_block = self.world.prepare_next_block()
 
         self.common_ctrl.set_controls()
