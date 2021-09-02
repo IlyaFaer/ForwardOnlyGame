@@ -127,17 +127,17 @@ class CameraController:
         new_z = base.mouseWatcherNode.getMouseY()  # noqa: F821
 
         if new_x - x <= -0.125:
-            self._np.setH(self._np.getH() - 1)
+            self._np.setH(self._np.getH() - 1.5)
         elif new_x - x >= 0.125:
-            self._np.setH(self._np.getH() + 1)
+            self._np.setH(self._np.getH() + 1.5)
         elif new_z - z <= -0.125:
             r = self._np.getR()
             if r < 20:
-                self._np.setR(r + 1)
+                self._np.setR(r + 1.5)
         elif new_z - z >= 0.125:
             r = self._np.getR()
             if r > -60:
-                self._np.setR(r - 1)
+                self._np.setR(r - 1.5)
 
         return task.again
 
@@ -167,8 +167,8 @@ class CameraController:
         base.accept("+-up", self._stop, [False, True, True])  # noqa: F821
         base.accept("--up", self._stop, [False, True, True])  # noqa: F821
 
-        base.accept("wheel_up", self._zoom_timed, [0.7, 1.2])  # noqa: F821
-        base.accept("wheel_down", self._zoom_timed, [2, 3])  # noqa: F821
+        base.accept("wheel_up", self._zoom_with_mouse, [-0.25])  # noqa: F821
+        base.accept("wheel_down", self._zoom_with_mouse, [0.25])  # noqa: F821
 
         base.accept("mouse2", self._turn_camera_with_mouse)  # noqa: F821
         base.accept(  # noqa: F821
@@ -236,7 +236,7 @@ class CameraController:
             self._np.setHpr(*self._last_np_hpr)
 
             taskMgr.doMethodLater(  # noqa: F821
-                0.15, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+                0.1, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
             )
 
         self._is_centered = not self._is_centered
@@ -289,16 +289,22 @@ class CameraController:
         )
         self._move_int.start()
 
-    def _zoom_timed(self, x, z):
-        """Zoom camera for some time.
+    def _zoom_with_mouse(self, shift):
+        """Zoom camera with mouse.
 
         Args:
-            x (float): Translation along x axis.
-            z (float): Translation along z axis.
+            shift (float): Direction and coefficient of move.
         """
-        taskMgr.doMethodLater(  # noqa: F821
-            0.12, self._stop, "zoom_stop", extraArgs=[False, True, True]
-        )
+        x, _, z = base.cam.getPos()  # noqa: F821
+
+        new_x = x + shift
+        new_z = z + shift
+
+        if 2 >= new_x >= 0.7:
+            x = new_x
+        if 3 >= new_z >= 1.2:
+            z = new_z
+
         self._zoom(x, z, 0.2)
 
     def enable_ctrl_keys(self):
@@ -306,7 +312,7 @@ class CameraController:
         self._set_move_keys()
         base.accept("c", self._toggle_centered_view)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            0.15, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+            0.1, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
         )
 
     def set_controls(self, train):
@@ -325,7 +331,7 @@ class CameraController:
         self._set_move_keys()
         base.accept("c", self._toggle_centered_view)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            0.15, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
+            0.1, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
         )
 
     def set_hangar_pos(self, hangar):
