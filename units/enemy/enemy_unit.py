@@ -667,6 +667,7 @@ class DodgeShooter(EnemyUnit):
         else:
             base.train.get_damage(3)  # noqa: F821
 
+        base.train.get_shot(self._y_pos > 0)  # noqa: F821
         return task.again
 
     def _explode(self):

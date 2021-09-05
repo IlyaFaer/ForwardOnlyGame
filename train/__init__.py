@@ -27,6 +27,16 @@ from .upgrades import (
     MachineGun,
 )
 
+SHOT_COORS = [
+    [0.09, (-0.1, 0.38), (0.05, 0.15)],
+    [0.058, (-0.1, 0.38), (0.15, 0.2)],
+]
+
+PLATE_SHOT_COORS = [
+    [0.09, (-0.1, 0.38), (0.05, 0.15)],
+    [0.12, (0, 0.3), (0.15, 0.22)],
+]
+
 
 class Train:
     """The Train - the main game object.
@@ -130,6 +140,7 @@ class Train:
             self._r_brake_sparks,
             self._rocket_explosions,
             self._stop_steam,
+            self._shot_sparks,
         ) = self._prepare_particles()
 
         self.smoke_filtered = False
@@ -260,7 +271,22 @@ class Train:
         taskMgr.doMethodLater(  # noqa: F821
             1.1, stop_steam.setPos, "set_steam_particle", extraArgs=[0.06, 0.2, 0.1]
         )
-        return smoke, l_brake_sparks, r_brake_sparks, explosions, stop_steam
+
+        # prepare pool of shot sparks effects
+        shot_sparks = []
+        for _ in range(4):
+            shot_spark = ParticleEffect()
+            shot_spark.loadConfig("effects/shot_spark.ptf")
+            shot_sparks.append(shot_spark)
+
+        return (
+            smoke,
+            l_brake_sparks,
+            r_brake_sparks,
+            explosions,
+            stop_steam,
+            shot_sparks,
+        )
 
     def _set_lamps_material(self, mat):
         """Set the Train lamps emission parameter.
@@ -743,6 +769,45 @@ class Train:
             base.world.enemy.capture_train()  # noqa: F821
             base.team.surrender()  # noqa: F821
 
+    def get_shot(self, right_side):
+        """Play a particle effect of getting a shot.
+
+        Args:
+            right_side (bool): True if the shot came to the right part.
+        """
+
+        if self._shot_sparks:
+            shot = take_random(self._shot_sparks)
+
+            if self._armor_plate and (
+                (self._armor_plate.cur_position == "left" and not right_side)
+                or (self._armor_plate.cur_position == "right" and right_side)
+            ):
+                x, y_range, z_range = random.choice(PLATE_SHOT_COORS)
+            else:
+                x, y_range, z_range = random.choice(SHOT_COORS)
+
+            if not right_side:
+                x = -x
+
+            shot.setPos(x, random.uniform(*y_range), random.uniform(*z_range))
+            shot.start(self.model, self.model)
+            shot.softStart()
+
+            taskMgr.doMethodLater(  # noqa: F821
+                0.2, self._stop_shot_effect, "stop_shot_effect", extraArgs=[shot]
+            )
+
+    def _stop_shot_effect(self, shot):
+        """Stop the shot particle effect.
+
+        Args:
+            shot (direct.particles.ParticleEffect.ParticleEffect):
+                Particle effect to stop.
+        """
+        shot.softStop()
+        self._shot_sparks.append(shot)
+
     def do_effects(self, effects):
         """Do outing effects to the locomotive.
 
@@ -943,6 +1008,7 @@ class Train:
         if upgrade["name"] in ("Protectors", "Протекторы"):
             self._max_durability = 1500
             self.durability += 500
+            SHOT_COORS[0][0] += 0.02
             self._gui.increase_max_duration()
 
     def load_grenade_launcher(self):

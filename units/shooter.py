@@ -13,6 +13,7 @@ from direct.interval.IntervalGlobal import (
     SoundInterval,
 )
 
+from .enemy.base_enemy_unit import EnemyUnit
 from utils import address
 
 
@@ -59,6 +60,8 @@ class Shooter(metaclass=abc.ABCMeta):
         self._shoot_anim.start()
         if not self._missed_shot():
             self._target.get_damage(self.damage)
+            if isinstance(self, EnemyUnit):
+                base.train.get_shot(self._y_pos > 0)  # noqa: F821
 
         task.delayTime = self.shooting_speed
         return task.again
