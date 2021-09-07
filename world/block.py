@@ -221,6 +221,7 @@ class Block:
                         "surface_with_station2",
                         "surface_with_station3",
                         "surface_with_station4",
+                        "surface_with_station5",
                     )
                 )
             )
