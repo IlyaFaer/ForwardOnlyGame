@@ -14,7 +14,8 @@ MAIN_MENU = (
         "This is a game alpha build. It's not finally balanced and some"
         " features are in development yet."
         "\nThus, it's mostly a conceptual release, to demonstrate you the main "
-        "game princips. Enjoy your play!"
+        "game princips. Enjoy your play!\n"
+        """(c) Created by Ilya "Faer" Gurov. All rights reserved."""
     ),
     "Choose your crew",
     "Soldiers",
@@ -67,6 +68,12 @@ MAIN_MENU = (
         "It's all over...",
     ),
     "Framerate limit:",
+    "Credits",  # 30
+    """Created by Ilya "Faer" Gurov""",
+    "Project source code:",
+    "Subscribe:",
+    "Stack:",
+    "Tools:",
 )
 
 KEYS_INFO = u"""

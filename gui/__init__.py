@@ -7,6 +7,7 @@ Game graphical interfaces module.
 import os
 import shelve
 import sys
+import webbrowser
 
 from direct.gui.DirectGui import (
     DGG,
@@ -65,6 +66,7 @@ class MainMenu:
         self.tactics_wids = []
         self.save_wids = []
         self.conf_wids = []
+        self.cred_wids = []
 
         self._hover_snd = loader.loadSfx("sounds/GUI/menu1.ogg")  # noqa: F821
         self._hover_snd.setVolume(0.1)
@@ -125,8 +127,18 @@ class MainMenu:
             )
         )
         self.bind_button(
+            DirectButton(  # Credits
+                pos=(-1.12, 0, 0.1),
+                text_fg=RUST_COL,
+                text=base.labels.MAIN_MENU[30],  # noqa: F821
+                command=self._show_credits,
+                text_align=TextNode.ALeft,
+                **but_params,
+            )
+        )
+        self.bind_button(
             DirectButton(  # Exit
-                pos=(-1.12, 0, 0),
+                pos=(-1.12, 0, -0.1),
                 text_fg=RUST_COL,
                 text=base.labels.MAIN_MENU[3],  # noqa: F821
                 command=sys.exit,
@@ -196,6 +208,7 @@ class MainMenu:
 
         clear_wids(self.save_wids)
         clear_wids(self.conf_wids)
+        clear_wids(self.cred_wids)
 
         self.tactics_wids.append(
             DirectLabel(  # Choose your crew
@@ -422,6 +435,7 @@ class MainMenu:
         """Show game configurations GUI."""
         clear_wids(self.save_wids)
         clear_wids(self.tactics_wids)
+        clear_wids(self.cred_wids)
 
         self.conf_wids.append(
             DirectLabel(  # Resolution:
@@ -527,6 +541,215 @@ class MainMenu:
         self.bind_button(but)
         self.conf_wids.append(but)
 
+    def _show_credits(self):
+        """Show the game credits."""
+        clear_wids(self.save_wids)
+        clear_wids(self.conf_wids)
+        clear_wids(self.tactics_wids)
+
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(-0.2, 0, 0.5),
+                text_scale=0.04,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text=base.labels.MAIN_MENU[31],  # noqa: F821
+            )
+        )
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(-0.2, 0, 0.4),
+                text_scale=0.04,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text=base.labels.MAIN_MENU[32],  # noqa: F821
+            )
+        )
+        self.cred_wids.append(
+            DirectButton(
+                parent=self._main_fr,
+                pos=(0.54, 0, 0.4),
+                frameColor=(0, 0, 0, 0),
+                text_scale=0.04,
+                text_fg=RUST_COL,
+                text="github.com/IlyaFaer/ForwardOnlyGame",
+                text_font=base.main_font,  # noqa: F821
+                relief=None,
+                command=webbrowser.open,
+                extraArgs=["https://github.com/IlyaFaer/ForwardOnlyGame"],
+                clickSound=self.click_snd,
+            )
+        )
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(-0.2, 0, 0.3),
+                text_scale=0.04,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text=base.labels.MAIN_MENU[33],  # noqa: F821
+            )
+        )
+        self.cred_wids.append(
+            DirectButton(
+                parent=self._main_fr,
+                pos=(0.07, 0, 0.31),
+                frameTexture="credits/youtube.png",
+                frameSize=(-0.053, 0.053, -0.029, 0.029),
+                relief="flat",
+                command=webbrowser.open,
+                extraArgs=["https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w"],
+                clickSound=self.click_snd,
+            )
+        )
+        self.cred_wids.append(
+            DirectButton(
+                parent=self._main_fr,
+                pos=(0.2, 0, 0.31),
+                frameTexture="credits/indie_db.png",
+                frameSize=(-0.053, 0.053, -0.029, 0.029),
+                relief="flat",
+                command=webbrowser.open,
+                extraArgs=["https://www.indiedb.com/games/forward-only"],
+                clickSound=self.click_snd,
+            )
+        )
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(-0.2, 0, 0.2),
+                text_scale=0.04,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text=base.labels.MAIN_MENU[34],  # noqa: F821
+            )
+        )
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(-0.03, 0, 0.21),
+            frameTexture="credits/python.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://www.python.org/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.04, 0, 0.21),
+            frameTexture="credits/panda3d.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://www.panda3d.org/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.11, 0, 0.21),
+            frameTexture="credits/blender.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://www.blender.org/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.18, 0, 0.21),
+            frameTexture="credits/make_human.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["http://www.makehumancommunity.org/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(-0.2, 0, 0.1),
+                text_scale=0.04,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text=base.labels.MAIN_MENU[35],  # noqa: F821
+            )
+        )
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(-0.01, 0, 0.11),
+            frameTexture="credits/free_sound.png",
+            frameSize=(-0.057, 0.057, -0.029, 0.029),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://freesound.org/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.1, 0, 0.11),
+            frameTexture="credits/photopea.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://www.photopea.com/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.1, 0, 0.11),
+            frameTexture="credits/photopea.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://www.photopea.com/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.18, 0, 0.11),
+            frameTexture="credits/online_convert.png",
+            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://audio.online-convert.com/"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
     def _show_crew(self, crew):
         """Show the description of the chosen tactics.
 
@@ -558,6 +781,7 @@ class MainMenu:
 
         clear_wids(self.tactics_wids)
         clear_wids(self.conf_wids)
+        clear_wids(self.cred_wids)
 
         if for_loading:
             is_active = True
@@ -652,6 +876,7 @@ class MainMenu:
         self._main_fr.hide()
         clear_wids(self.save_wids)
         clear_wids(self.conf_wids)
+        clear_wids(self.cred_wids)
 
         if self._load_screen is not None:
             self._load_screen.destroy()
@@ -787,9 +1012,9 @@ That's all, Captain, handing command over to you!""",
         self.bind_button(self._save_but)
 
         self.bind_button(
-            DirectButton(
+            DirectButton(  # Main menu
                 parent=self._main_fr,
-                pos=(-1.12, 0, 0.1),
+                pos=(-1.12, 0, 0),
                 text_scale=0.05,
                 text_fg=RUST_COL,
                 text=base.labels.MAIN_MENU[14],  # noqa: F821
