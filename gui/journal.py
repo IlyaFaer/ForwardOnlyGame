@@ -240,6 +240,80 @@ and others, and one day they will kill
 us all. On that the interesting part
 of the conversation ends.""",
     ),
+    (
+        "note",
+        """Helga Wagner science diary.
+A record made on 2021-07-06. Several
+dark spots on the paper hints the
+author was crying while writing it.
+
+Finally, I have time to put my thoughts
+on a paper. Can't remember when I wrote
+the last time. Three month ago? More? Not
+in a mood to check now...
+
+Those bastards ruined our work today! Fat
+ugly politicians decided Wahrsager can
+be used for espionage. Espionage! I
+suspected long ago that their interest
+is not that big, they don't want to pay
+tons of money to make it really great.
+They don't need to see future, they just
+want a damn spying machine to catch video
+of another fat ugly politician shagging
+with his student boyfriend. Blackmail! So
+stupid that I want to puke!!! A machine
+which can PREDICT FUTURE will be used
+for prying at deeds of the last days!
+
+Of course, now I can't leave. They've
+thrown hooks, and now we all are slaves
+of our own ambitions...
+
+Gut, it's a science diary, not a school
+girl crying napkin. Back to business. The
+curator forced us to check what is
+Wahrsager time limit. We've taken a look
+at different ages, even before people
+appeared on Earth. Looks like the last
+machine version doesn't have a limit at
+all. The strange thing we all noticed -
+the more ancient times we're trying to
+look at the more color deformation we get.
+Everything becomes orange. No one have
+ideas what it actually is, we're working
+hard on understanding the phenomenon.
+
+Still, we probably are late on it. About
+a month ago those idiots asked us to try
+to open a passage into the past. Now I'm
+trying to imagine what another stupid
+thing they had on their minds, but back
+there we were thrilled to try! And we
+tried...
+
+Jeffrey Bowers, our assistant from US,
+accepted a risk to spend 10 seconds in
+8000 BCE and take a fistful of sand from
+there. At the very first moment since we
+opened the passage, he fallen into some
+kind of a seizure, lost consciousness for
+several minutes, then returned to the
+world of living, started to rave and to
+knock his teeth from time to time.
+Analysis shown he feeled cold for some
+time, which is strange - we were sending
+him into the Arabian desert. The
+experiments were paused until we'll
+understand everything.
+
+Several days later Jeffrey became well
+and soon returned to work, but we all
+noticed that from time to time he uppers
+his eyes to the ceiling, like he sees
+something there... Later we all saw it...
+""",
+    ),
 )
 
 
