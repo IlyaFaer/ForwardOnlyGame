@@ -431,4 +431,121 @@ All people in the crew getting -20 health""",
             },
         },
     },
+    {  # 5
+        "intro": """Seeing a couple of cars and a crowd, you're giving an order
+to stop the Adjutant and see what happened. Approaching, you
+understand that a fight just finished here - a big bus is full of
+bullet holes, and a black jeep lies on its side, also shot bad.
+
+A man walks to you and tells: "Some bandits were following a
+column of black jeeps. Good they didn't decide to stop for us,
+still, several gun bursts hit our bus." Looking at dense smoke
+rising from it, you get it's not gonna ride. The man notices
+your gaze and asks for help in repair. You start weighing,
+while your collocutor adds: "We searched the jeep for tools -
+poor bastards both caught bullets. Unfortunately, there is
+nothing useful, only tons of paper, some high science mumbo
+jumbo and gas masks." Listening to the guy more carefully,
+you start to suspect you already know who was in those
+cars... Helga Wagner! Looks like you're almost following her.
+Interesting. It's worth checking the jeep - last pieces of
+info about the Wahrsager project sounded intriguingly.
+
+The only thing left to decide is of helping these people.
+Throwing one more gaze at the bus, you see a lot of bags
+on the car top, german car number - they are refugees.
+If those bandits they met were skinheads, shooting at
+the bus wasn't occasional. The scum can return here
+when they'll deal with Helga's group...""",
+        "variants": {
+            "Help them to repair the bus": {
+                "desc": """Overthinking the situation carefully, you decide to
+help these people. Your crew brings tools from the
+Adjutant and starts to reanimate the car. Taking part in
+it, you're studying the refugees. Confused and nervous,
+they seem frustrated hard. Usually, refugees coming TO
+Europe, but the Stench seems to be turning everyone into
+the opposite direction. Europe! The place of comfort,
+order and civilization became the most dangerous place
+in the World. Where to go now? Who'll welcome us?
+Countries, which are not able to help themselves? Most
+of their citizens would like to live in Europe, but it's
+unlikely they want us to come to them and take their
+places. Of course, they don't want, especially now, when
+number of places reduces really fast, and no one know
+if it'll stop one day...
+
+A couple of hours passed, and the bus engine finally
+starts to roar, gathered from, literally, pieces. People
+give you sluggish thanks, you see they are still too
+shocked after getting under a machine gun fire. Anyway,
+they at least can now move forward.
+
+The Stench frontier came 20 miles closer to you.
+In the black jeep your people found a piece of Helga's
+diary. It's added to your journal, worth reading.""",
+                "effects": (("do_stench_moves_effect", [20]),),
+            },
+            "Give them tools from the Adjutant": {
+                "desc": """Seeing you doubt on your decision, the man proposes:
+"Maybe you can at least bring us some tools? Money is
+critically needed now, but we'll pay you!" Don't do a
+stop, help them and get some money - sounds good. You're
+commanding the crew to give the people stuff, which'll
+help to repair the shot bus, while the man gathers
+some money from his passengers. Approaching you back,
+he gives you $80 totally. "Not much actually, sorry."
+- he pronounces quietly. - "Those people are still
+shocked by the skirmish, that's not what we expected.
+Not in the second day of the road at least!" Nodding
+your head, you think that it's weakly said. Usually
+people go TO Europe, not out of it. But now the spot
+of comfort, civilization and order became the most
+dangerous place in the whole World. A lot of directions
+changed to opposite. Who'll welcome new refugees from
+Europe? People, who wanted to refuge to Europe? Looking
+at the bus covered with bullet holes, you think it's
+unlikely. What happens in Silewer is just a start,
+it'll become more worse, if the Stench will grow.
+
+You're getting $80.
+Soon you'll understand that you gave too many things to
+those people, so you're not able to fix problems on the
+locomotive. The Adjutant getting -70 Durability.
+
+In the black jeep your people found a piece of Helga's
+diary. It's added to your journal, worth reading.""",
+                "effects": (("do_locomotive_damage", [70]), ("do_get_money", [80])),
+            },
+            "Don't help them": {
+                "desc": """Overthinking the situation, you decide it's too risky to
+do another stop. The bus looks pretty bad - it'll take
+hours to reanimate it. You don't have hours.
+
+Saying goodbye to the man, you turn back to the Adjutant,
+by the way looking at the bus passengers. Refugees.
+Yeah, it's time people come out of Europe instead of
+moving into it, who'd knew. The spot of order,
+civilization and comfort became the most dangerous place
+in the World. An interesting question is: who will
+welcome new refugees? Looks like the answer to this
+is right in front of your eyes - the bus shotted from
+a machine gun. And this can be only a beginning! No one
+stopped the Stench yet, no one have any ideas about it
+actually. If it'll continue to grow, more people will
+left their homes and will go to the neighbour countries
+and even further. Some will not stop in face of any
+counteraction, because it's no longer about simply
+comfort and wealth, it's became about survival...
+
+Climbing on the Adjutant, you give an order for your
+crew to search the black jeep for anything useful and
+continue the road. Survival - so, let's not waste time!
+
+In the black jeep your people found a piece of Helga's
+diary. It's added to your journal, worth reading.""",
+                "effects": (("do_no_effect", []),),
+            },
+        },
+    },
 )
