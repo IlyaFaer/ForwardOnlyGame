@@ -149,7 +149,7 @@ worse - every road on the west of the city
 was clogged up in miles, MILES!
 Everybody was trying to leave the place.
 
-Here one of my friends, a machinist
+Here one of my friends, a machinist,
 called me. He was in search of people,
 who are brave or desperate enough to help
 him to hijack the locomotive he was
@@ -313,6 +313,71 @@ noticed that from time to time he uppers
 his eyes to the ceiling, like he sees
 something there... Later we all saw it...
 """,
+    ),
+    (
+        "diary",
+        """When we decided on who's going for
+the Adjutant, when and how, it appeared
+that only six of us are in the company.
+Daren said he'll try to find more people,
+but no one else responded to him.
+
+In such a collective, seeing that the
+situation becoming more and more hot, we
+decided not to waste time, took guns,
+supplies and one night went to the
+railway station, where Daren was working.
+
+When we got there, it appeared that we are
+not the only that smart people in the city.
+Looking at a bunch of thugs preparing the
+Adjutant for a road, I feeled like a good
+chance is eluding me. All of us...
+
+At some moment Daren stood up and loudly
+asked: "Ronnie?! That you?". A fat
+heavily breathing guy walked out of
+hangar shadows. "It's a strange
+coincidence you're here after rejecting
+my proposition." The fat guy finally
+identified Daren and smiled: "Ah, that's
+you, my honest friend! I decided I don't
+need your old ass and took other guys to
+release this metal beast. So, thank you
+for friendship, but we'll take it from here!"
+
+Thoughts flewed through my head faster
+than light. There is no way to bet a
+deal with such a bastard, the
+locomotive is not big enough to
+accommodate two of our groups, and
+this chance can be the last one in
+the whole city. The time to act has come
+much earlier than I expected... Still,
+it's time to act.
+
+I've draw my pistol and without any
+words stood up from my cover and shot
+the fat bastard. As I hoped within my
+soul, others understood what needs to
+be done without explicit instructions
+- everyone started to shoot. In closed
+hangar insides sounds of guns were
+thunder-like, but after several seconds
+it became obvious that our rivals are
+not as prepared as us. Forced them out
+of the building, we all jumped on the
+locomotive and pushed pedal to the
+metal before we lose the opportunity.
+
+That was our first skirmish on long road...
+As Daren promised, we were able to leave
+the city by a forsaken and overgrown with
+grass railway. He knew all the neighbour
+roads, so our pace was quite fast. We
+didn't meet a single train, like we were
+the last ones leaving the country on a
+train. Most likely we were.""",
     ),
 )
 
