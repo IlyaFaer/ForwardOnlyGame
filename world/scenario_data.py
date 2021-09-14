@@ -548,4 +548,122 @@ diary. It's added to your journal, worth reading.""",
             },
         },
     },
+    {  # 6
+        "intro": """Running a rag across the floor, you're working out your turn
+to cleanup the Adjutant. Tidiness is important - so many days
+in the same cold and coarse locomotive rises chances of
+sickness and pests emergence...
+
+At some moment Daren, the Adjutant machinist, approaches you.
+You see he has something to tell you, but he can't find the
+proper words. "Come on, Daren, birth it." - you say, trying to
+make things faster. "Well... We've a problem. It's big.
+Precisely, we don't have food." Stopping to run the rag, you
+straighten your back: "How so?!" "Well, everyone is waiting
+you." - he answers and disappears in the doorway. Thinking a
+couple of seconds what it should mean, you decide to hurry
+up to the crew - if EVERYONE is waiting, it's serious.
+
+Entering the back room, you see all of your people standing
+in a circle. Everyone seems to be concerned, but you don't
+find any aggression in the room, fortunately. "Well, Captain,
+here we are." - Kenneth starts the talk. - "Our food supplies
+are running out faster than we thought. We need to speak
+about limits, otherwise, we'll soon start to starve." Rubbing
+wet hands, you're trying to concentrate on the new problem.
+In current situation everybody should be energetic and
+healthy, as there are a lot of maintenance questions and
+the need to fight. But if it's impossible, maybe it's worth
+choosing who should have a priority in food questions?!""",
+        "variants": {
+            "Fighters will have food priority": {
+                "desc": """Keeping silence for about two minutes, you come to
+a decision that fighters, those who protect the Adjutant
+from skinheads and who search resources on outings,
+should eat enough. If they'll not be able to fight back,
+you all will become victims of savages people turning
+into. As for the Adjutant mechanic and machinist, well,
+their work is less nervous and doesn't require that
+big efforts and concentration.
+
+Pronouncing your decision to the crew, you see they are
+not very pleased with it. Most likely, they are ready to
+starve together, instead of choosing special ones...
+Still, these days require tough turns and tactical
+thinking. Fortunately, Kenneth and Daren doesn't seem to
+be offended that their ration was reduced. They are not
+young, both seen a lot in their lives, they understand
+and can handle it. Good. Not that good, of course, but
+at least you don't need to think about riot in the crew.
+
+Finishing the talk, you return back to your cleaning duty.
+
+Some time later you'll find out that reducing mechanic's
+ration was not the best solution, because malnutrition
+lowered his competence, and the locomotive suffered.
+The Adjutant getting -80 Durability.
+
+You're getting a new diary page. Check the Journal.""",
+                "effects": (("do_locomotive_damage", [80]),),
+            },
+            "Adjutant maintainers will have priority": {
+                "desc": """You're keeping silence for several minutes, weighing
+all the points. Fighters are needed, but you have enough
+ammunition - it's the main part of the defence. But if
+the locomotive engine will stop... In this case you all,
+without counter arguments, will die really soon. Keeping
+the pace is important, more important right now than
+killing those savages.
+
+With this in mind, you're pronouncing your thoughts to
+the crew. Kenneth and Daren seems to be not very
+pleasant with your solution - they both are not young,
+they've seen a lot and can handle some starvation. Your
+order little bit offends their pride. Still, order is
+yours, and you believe the mechanic and the machinist
+should been in the best condition that is possible in
+the current situation.
+
+Finishing the talk, you return to your cleaning duty.
+
+Some time later it'll become obvious that fighters
+tired much faster with this malnutrition, and their
+productivity significantly reduced.
+
+All the fighters getting -40 energy.
+
+You're getting one more diary page. Check the Journal.""",
+                "effects": (("do_characters_effect", [{"energy": -40}]),),
+            },
+            "Limit food for all": {
+                "desc": """Taking a couple of minutes to think about the situation,
+you decide it's not the best idea to make a part of the
+crew somewhat special. Everyone is important, everyone
+here do something for the whole company. If food supplies
+are not enough, it'll be better to reduce ration equally
+for all, no matter their duties.
+
+Sounding your solution, you see that everyone in the room
+is completely okay with it. Good, the team spirit is still
+here, and the food crisis will be dealt with by common
+and equal limitation.
+
+Calculating the new ration with others, you understand
+the limitation will be actually small - spreaded to every
+person, it became not very significant for separately
+taken member of the crew. With this, you all approve
+the decision and return to your duties.
+
+Ration limitation results:
+All the characters getting -10 energy and the Adjutant
+getting -20 Durability.
+
+You're getting one more diary page. Check the Journal.""",
+                "effects": (
+                    ("do_characters_effect", [{"energy": -10}]),
+                    ("do_locomotive_damage", [20]),
+                ),
+            },
+        },
+    },
 )
