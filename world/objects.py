@@ -113,7 +113,7 @@ class Rocket:
             LerpPosInterval(
                 self._model, 7, (x_coor, -0.627, 0.561), blendType="easeOut"
             ),
-            Wait(0.3),
+            Wait(0.5),
             Parallel(
                 SoundInterval(self._hiss_snd2),
                 MopathInterval(

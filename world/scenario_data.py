@@ -64,17 +64,19 @@ the order, promising to think who fits the task better.
 You're returning back to the deckhouse, and some time later
 see Kenneth taking one of the fighters with him to the
 lower level of the Adjutant. For several long hours they
-slip out of your radars... Exiting on the fresh air, you
-incline above the railings and see a blood spot on one of
-the wheels, blinking on every turnover. Without delays you
-go to find the mechanic. Kenneth, seeing you concerned,
-uppers his hands in the same moment: "It's okay, it's okay!
-Small wound, but the axle box is fine now. Nothing serious!"
-Making a deep breath, you nod your head, trying to calm
-down. You knew the risks from the beginning, but it's still
-about your people safety. It's good that the helper didn't
-get serious wounds. You better find him or her later to
-say your thanks.
+slip out of your radars...
+
+Exiting on the fresh air, you incline above the railings
+and see a blood spot on one of the wheels, blinking on
+every turnover. Without delays you go to find the
+mechanic. Kenneth, seeing you concerned, uppers his hands
+in the same moment: "It's okay, it's okay! Small wound,
+but the axle box is fine now. Nothing serious!" Making a
+deep breath, you nod your head, trying to calm down. You
+knew the risks from the beginning, but it's still about
+your people safety. It's good that the helper didn't get
+serious wounds. You better find him or her later to say
+your thanks.
 
 One of your fighters getting -20 health
 
@@ -121,11 +123,12 @@ children and decided to move to Silewer on foot. Looking at
 pale and tired kids, you silently think that it was really
 tough idea. But probably the decision saved their lives...
 Complaining about walking for six hours without a stop, the
-woman asks you to help them build a field camp. You understand
-that it'll take a lot of time, as there are about sixty
-children. On the other hand, it doesn't look right to just
-leave them here, in the foreign country, tired and
-shelterless. Maybe there is some time to help them a little?""",
+woman asks you to help them build a field camp. You
+understand that it'll take a lot of time, as there are
+about sixty children. On the other hand, it doesn't look
+right to just leave them here, in the foreign country,
+tired and shelterless. Maybe there is some time to help
+them a little?""",
         "variants": {
             "Help them to build a camp": {
                 "desc": """Feeling some qualm inside, you give your people order to help

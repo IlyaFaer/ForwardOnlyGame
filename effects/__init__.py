@@ -33,7 +33,7 @@ class EffectsManager:
         self.stench_effect = Stench()
 
         filters = CommonFilters(base.win, base.cam)  # noqa: F821
-        filters.setBloom(size="large", mintrigger=0.8, intensity=2)
+        filters.setBloom(size="large", mintrigger=0.8, intensity=2.1)
 
     def _set_explosion_lights(self):
         """Prepare three explosion lights.

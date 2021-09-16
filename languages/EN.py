@@ -11,10 +11,8 @@ MAIN_MENU = (
     "Options",
     "Exit",
     (
-        "This is a game alpha build. It's not finally balanced and some"
-        " features are in development yet."
-        "\nThus, it's mostly a conceptual release, to demonstrate you the main "
-        "game princips. Enjoy your play!\n"
+        "It's a beta release. The game is not finally balanced and some"
+        " features are in development yet. Enjoy your play!\n"
         """(c) Created by Ilya "Faer" Gurov. All rights reserved."""
     ),
     "Choose your crew",
@@ -143,6 +141,9 @@ Durability points free.""",
 
 NOTES = (
     # controls
+    """Don't forget to read notes
+in the Captain's Journal.
+They can tell you a lot.""",
     """Don't forget to save your
 game progress!""",
     """Choose a character and press

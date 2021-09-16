@@ -76,14 +76,15 @@ You nod your head and giving the command to warm up the engine.""",
                 "score": range(60, 80),
                 "desc": """You're sending {name1}, {name2} and {name3} for a short
 recon of the place. Your teammates are moving to the jeep column,
-while you track them from the Train; seeing how {name2} opens a car,
-and starts to rummage in the glove compartment. Suddenly, you hear
-cries, but not of your messengers. Still, they are reacting fast, and
-turning around back to the Train. Looks like there was someone there!
-Confirming this, several naked people appearing near the jeeps. But
-to the moment they grabbed their guns and started to shoot, {name1},
-{name2} and {name3} are jumping onto the Train. "No empty hands!"
-- {name2} proclaims and shows dollars on {hisher2} palm.
+while you track them from the Train; seeing how {name2} opens a
+car, and starts to rummage in the glove compartment. Suddenly,
+you hear cries, but not of your messengers. Still, they are
+reacting fast, and turning around back to the Train. Looks like
+there was someone there! Confirming this, several naked people
+appearing near the jeeps. But to the moment they grabbed their
+guns and started to shoot, {name1}, {name2} and {name3} are
+jumping onto the Train. "No empty hands!" - {name2} proclaims
+and shows dollars on {hisher2} palm.
 You're getting 90$""",
                 "effects": {"money": 90},
             },
@@ -301,15 +302,15 @@ You're getting 100$""",
         "class_weights": {"soldier": 20, "raider": 7, "anarchist": 12},
         "assignees": 2,
         "day_part_weights": {"night": 4, "morning": 5, "noon": 10, "evening": 2},
-        "desc": """For at least twenty minutes you've been watching a highway to the left
-of the railway. No cars, no light posts - road was completely empty.
-But, finally, you're seeing a white square advertisement sign of a
-small gas station. There is no vehicle nearby, nor people, otherwise
-the building looks well maintained. Hm-m. Fuel - is always good, but
-suspicious silence of the nearlands makes you little bit wary.
-Place should be checked for resources, and if to send someone, you
-should send two, so that messengers could deal with possible
-troubles together.""",
+        "desc": """For at least twenty minutes you've been watching a highway to the
+left of the railway. No cars, no light posts - road was completely
+empty. But, finally, you're seeing a white square advertisement
+sign of a small gas station. There is no vehicle nearby, nor
+people, otherwise the building looks well maintained. Hm-m. Fuel
+- is always good, but suspicious silence of the nearlands makes
+you little bit wary. Place should be checked for resources, and
+if to send someone, you should send two, so that messengers could
+deal with possible troubles together.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -648,15 +649,16 @@ closer and says: "Negative!". Well, time to continue the path.""",
             {
                 "score": range(60, 80),
                 "desc": """You're sending {name1} and {name2} for a short
-recon of the place. In fast pace they run to the cloth piece, and
-when the distance to it becomes less than twenty meters, several
-skinheads jumping out of the strained cloth. Not giving any chances,
-{name1} and {name2} with accurate shots dropping rivals one by one.
-Ensuring there are no more threats, they start to search through the
-wooden boxes, piled up behind the cloth. Most of them are already
-empty, but {name1} and {name2} find a bunch of personal first aid
-kits. Giving high five to each other, they take the catch and,
-satisfied, returning back to the team.
+recon of the place. In fast pace they run to the cloth piece,
+and when the distance to it becomes less than twenty meters,
+several skinheads jumping out of the strained cloth. Not
+giving any chances, {name1} and {name2} with accurate shots
+dropping rivals one by one. Ensuring there are no more
+threats, they start to search through the wooden boxes,
+piled up behind the cloth. Most of them are already empty,
+but {name1} and {name2} find a bunch of personal first aid
+kits. Giving high five to each other, they take the catch
+and, satisfied, returning back to the team.
 Your teammates getting +10 health""",
                 "effects": {"all": {"health": 10}},
             },
@@ -683,14 +685,15 @@ You're getting 170$""",
         "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 7, "noon": 0, "evening": 3},
-        "desc": """From a big distance you've noticed several dark green buildings. Got
-closer, you see that they are old, but still in a good shape. A bunch of
-colorful attractions makes you think that this is a summer camp for kids.
-There are no kids, however, but the place is definitely inhabited, most
-likely by skinheads - you see bodies lying here and there, smoke rising
-from a couple of buildings and a lot of fresh litter. It looks like
-the current owners of the camp didn't notice your arrival, so it makes
-sense to send just one scout for a quet place recon.""",
+        "desc": """From a big distance you've noticed several dark green buildings.
+Got closer, you see that they are old, but still in a good shape. A
+bunch of colorful attractions makes you think that this is a summer
+camp for kids. There are no kids, however, but the place is definitely
+inhabited, most likely by skinheads - you see bodies lying here and
+there, smoke rising from a couple of buildings and a lot of fresh
+litter. It looks like the current owners of the camp didn't notice
+your arrival, so it makes sense to send just one scout for a quet
+place recon.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -1146,13 +1149,14 @@ You're getting 1 medicine.""",
         "assignees": 3,
         "day_part_weights": {"night": 8, "morning": 2, "noon": 5, "evening": 10},
         "desc": """Called by one of your teammates, you're walking out of
-the cabin and in the same moment seeing an old hut not far from the
-railway. Putting binoculars to your eyes, you're looking at it with good
-feeling. The house seems to be very old, built with dark ancient
-logs. No smoke rises from the chimney. Taking a few second to assess
-the prospects, you're thinking about sending three people to search
-the place for anything that can help you on the road. And, who knows,
-maybe someone is still living in that ancient hut...""",
+the cabin and in the same moment seeing an old hut not far from
+the railway. Putting binoculars to your eyes, you're looking at
+it with good feeling. The house seems to be very old, built
+with dark ancient logs. No smoke rises from the chimney. Taking
+a few second to assess the prospects, you're thinking about
+sending three people to search the place for anything that can
+help you on the road. And, who knows, maybe someone is still
+living in that ancient hut...""",
         "results": (
             {
                 "score": range(0, 20),
@@ -1517,14 +1521,15 @@ Adjutant durability +100""",
         "class_weights": {"soldier": 6, "raider": 20, "anarchist": 13},
         "assignees": 2,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 5},
-        "desc": """When the Train started to move along sown fields, you've concentrated
-your gaze. Where fields, there are people and resources. And, yes,
-in some moment you see a big brown silo. While the Train is getting
-closer, you discerning a couple of small buildings near the metal
-reservoir as well. From that distance they look quiet and deserted,
-but they are definitely in a very good shape, so they are, probably,
-populated. It's worth to send a couple of your people to check if
-there is something useful for a road in there.""",
+        "desc": """When the Train started to move along sown fields, you've
+concentrated your gaze. Where fields, there are people and
+resources. And, yes, in some moment you see a big brown silo.
+While the Train is getting closer, you discerning a couple of
+small buildings near the metal reservoir as well. From that
+distance they look quiet and deserted, but they are definitely
+in a very good shape, so they are, probably, populated. It's
+worth to send a couple of your people to check if there is
+something useful for a road in there.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -1563,15 +1568,16 @@ came back!" - {name1} says, and they both fastly turning back.
             {
                 "score": range(40, 60),
                 "desc": """{name1} and {name2}, by your order, taking their gear
-and moving to the silo. Nothing promises any troubles, but when your
-people are getting closer to the buildings, four men with guns
-showing up. They all look like hereditary rednecks, but their M16 and
-Beretta's shines like it's a special forces property. "What do you
-want? You doesn't look like skinheads." - an old man steps forward.
-{name1} and {name2} exchange glances, but before they started to talk,
-the man continues: "We don't wanna hurt anyone, but you better go away".
-{name1} makes a step back: "No problem, we'll go". Not touching
-locals, your people making a slow turn around and heading back to you.""",
+and moving to the silo. Nothing promises any troubles, but when
+your people are getting closer to the buildings, four men with
+guns showing up. They all look like hereditary rednecks, but
+their M16 and Beretta's shine like it's a special forces
+property. "What do you want? You doesn't look like skinheads."
+- an old man steps forward. {name1} and {name2} exchange
+glances, but before they started to talk, the man continues:
+"We don't wanna hurt anyone, but you better go away". {name1}
+makes a step back: "No problem, we'll go". Not touching locals,
+your people making a slow turn around and heading back to you.""",
                 "effects": {},
             },
             {
