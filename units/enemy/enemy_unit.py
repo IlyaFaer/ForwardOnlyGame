@@ -663,9 +663,9 @@ class DodgeShooter(EnemyUnit):
         """Deal machine gun damage to the Train."""
         if self.current_part.is_covered:
             if chance(40):
-                base.train.get_damage(3)  # noqa: F821
+                base.train.get_damage(2)  # noqa: F821
         else:
-            base.train.get_damage(3)  # noqa: F821
+            base.train.get_damage(2)  # noqa: F821
 
         base.train.get_shot(self._y_pos > 0)  # noqa: F821
         return task.again

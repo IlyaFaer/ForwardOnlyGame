@@ -949,6 +949,7 @@ class World:
             and self._loaded_blocks[-2].id
             >= (21 if base.game_config.tutorial_enabled else 15)  # noqa: F821
             and not self._et_blocks
+            and not self._loaded_blocks[-1].is_station
             and self.enemy.going_to_attack(
                 self.sun.day_part, base.train.lights_on  # noqa: F821
             )

@@ -13,14 +13,15 @@ ENEMY_CAMP = [
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 8},
         "desc": """You're catching your eyes on four big black jeeps, standing in a row.
-They are covered with dust, but even from that big distance you can
-say they are in a good shape. No human around makes it tempting to
-send some folks to recon the place - is your first thought. But when
-the Train engine finally falls silent, you're hearing voices, flying
-from the car column side. Definitely, there are people somewhere
-there, still, it's not possible to see them from your spot. So, the
-initiative becomes little bit risky. It's worth it to send three of
-your fighters together to check the cars.""",
+They are covered with dust, but even from that big distance you
+can say they are in a good shape. No human around makes it
+tempting to send some folks to recon the place - is your first
+thought. But when the Train engine finally falls silent, you're
+hearing voices, flying from the car column side. Definitely,
+there are people somewhere there, still, it's not possible to
+see them from your spot. So, the initiative becomes little bit
+risky. It's worth it to send three of your fighters together
+to check the cars.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -171,15 +172,16 @@ place clean. In disappointed mood {name1} returns back to the Train.""",
             {
                 "score": range(60, 80),
                 "desc": """By your command, {name1} gears up and takes a direction to
-the square tent. First half of {hisher1} way {heshe1} runs fast, but then
-{name1} slows down hard, carefully looking under {hisher1} feet. You're
-staying sharp as it looks like there are traps there, and where traps
-- there people, who set them. Still, {name1} approaching the tent
-without any sign of a trouble. Taking an accurate look inside, {heshe1}
-disappears in the tent inners. You're feeling little bit nervous, but
-several minutes passes, and {name1} walks out on the meadow. Carefully
-choosing the steps, {heshe1} returns back to the Train and shakes a
-bunch of dollars in {hisher1} left hand, showing it to you.
+the square tent. First half of {hisher1} way {heshe1} runs fast,
+but then {name1} slows down hard, carefully looking under {hisher1}
+feet. You're staying sharp as it looks like there are traps there,
+and where traps - there people, who set them. Still, {name1}
+approaching the tent without any sign of a trouble. Taking an
+accurate look inside, {heshe1} disappears in the tent inners.
+You're feeling little bit nervous, but several minutes passes,
+and {name1} walks out on the meadow. Carefully choosing the steps,
+{heshe1} returns back to the Train and shakes a bunch of dollars
+in {hisher1} left hand, showing it to you.
 You're getting 70$""",
                 "effects": {"money": 70},
             },
@@ -492,15 +494,17 @@ You're getting 200$""",
         "class_weights": {"soldier": 13.3, "raider": 10, "anarchist": 5},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 2, "noon": 6, "evening": 10},
-        "desc": """Standing on a cool air, you're observing the horizon line. For the
-few last hours you saw twelve wooden houses, burned to the ground.
-Seems like someone is clearing these lands, probably skinheads. It's
-worth staying sharp... Once you're seeing a two-floored construction.
-Concrete, with metal rods, but definitely unfinished - there are no
-doors, window glasses, roof, only bare walls. "Let's make a short stop
-there!" - you're commanding. That's not very logical, but something
-makes you think there is somewhat useful in this building. Still,
-considering the burned houses nearby, it's better stay vigilant.""",
+        "desc": """Standing on a cool air, you're observing the horizon line. For
+the few last hours you saw twelve wooden houses, burned to
+the ground. Seems like someone is clearing these lands,
+probably skinheads. It's worth staying sharp... Once you're
+seeing a two-floored construction. Concrete, with metal
+rods, but definitely unfinished - there are no doors,
+window glasses, roof, only bare walls. "Let's make a short
+stop there!" - you're commanding. That's not very logical,
+but something makes you think there is somewhat useful in
+this building. Still, considering the burned houses
+nearby, it's better stay vigilant.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -552,9 +556,9 @@ time to start the engine.""",
             },
             {
                 "score": range(60, 80),
-                "desc": """Your team mates - {name1}, {name2} and {name3} are taking a
-direction to the construction site. Nothing promises troubles for some
-time, but when they getting down to the basement, the cry tears air.
+                "desc": """Your team mates - {name1}, {name2} and {name3} are taking a direction
+ to the construction site. Nothing promises troubles for some time,
+but when they getting down to the basement, the cry tears air.
 Fast uppering their guns, your messengers see a thin guy, holding
 his hands above his head. "Don't touch me!" - he shouts. As he
 doesn't have a weapon, {name1} takes {hisher1} gun aside. "He is
@@ -782,13 +786,15 @@ You're getting 130$""",
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
         "desc": """An old highway, stretched out to the left of the railway, has taken your
-attention, and your supervision at some moment pays off: you see an
-auto repair shop. It's small, just three car places without utility
-rooms, but it's still something. Roller shutters are all closed,
-window glasses are intact - everything says the place is over watched
-by someone. It makes sense to send a scout to take a closer look at
-the building. It's an auto repair shop after all, meaning there
-should be tools, which can be used for the locomotive maintenance.""",
+attention, and your supervision at some moment pays off:
+you see an auto repair shop. It's small, just three car
+places without utility rooms, but it's still something.
+Roller shutters are all closed, window glasses are intact
+- everything says the place is over watched by someone.
+It makes sense to send a scout to take a closer look
+at the building. It's an auto repair shop after all,
+meaning there should be tools, which can be used for
+the locomotive maintenance.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -1026,13 +1032,14 @@ That can help to regain 10 points of health of a single character.""",
             {
                 "score": range(60, 80),
                 "desc": """The car stands close enough to a railway to fear
-nothing, so you're sending {name1} alone for a looting. {name1} runs
-to the car, and disappears inside. From the train you're not able to
-see what's {heshe1} doing there, and it takes a half of hour to wait for
-the results. {name1} jumps out of the car and moves to you with a small
-box in {hisher1} hands. "That guy wasn't very thrifty, I've found only
-these tools." - {heshe1} says. Well, it's still better than nothing:
-we can repair the train a little.
+nothing, so you're sending {name1} alone for a looting. {name1}
+runs to the car, and disappears inside. From the train you're
+not able to see what's {heshe1} doing there, and it takes a
+half of hour to wait for the results. {name1} jumps out of the
+car and moves to you with a small box in {hisher1} hands.
+"That guy wasn't very thrifty, I've found only these tools."
+- {heshe1} says. Well, it's still better than nothing: we can
+repair the train a little.
 Adjutant durability +100""",
                 "effects": {"train": {"durability": 100}},
             },
@@ -1057,12 +1064,13 @@ You're getting a smoke filter in a good shape.""",
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 3},
         "desc": """The big dark green spot on the meadow attracted your
-attention in the same moment. What do we have here? Seems to be an
-abandoned tent. There are no any signs of a bonfire, smoke, or any
-human, so the camp is probably long forsaken. Still something useful
-can remain there, who knows. It's worth checking. The place seems to be
-open, quite and calm, but it's little bit distant. If something will
-go wrong it'll be a long way back for your teammates. So a couple
+attention in the same moment. What do we have here? Seems to
+be an abandoned tent. There are no any signs of a bonfire,
+smoke, or any human, so the camp is probably long forsaken.
+Still something useful can remain there, who knows. It's
+worth checking. The place seems to be open, quite and calm,
+but it's little bit distant. If something will go wrong
+it'll be a long way back for your teammates. So a couple
 of people should be sent for a surprise case.""",
         "results": (
             {
@@ -1711,12 +1719,13 @@ You're getting 2 stimulators""",
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 4},
         "desc": """From at least 500 meters you've caught your eyes
-on some kind of a rubbish pile. Dark cloth pieces, black heaps of
-bonfires and several colored plastic boxes... Getting closer to the
-place, you understand, that it was a temporary camp, most likely
-of foreigners, who came to Silewer in search of a shelter. Well,
-that makes sense to take a look at the place, maybe something
-useful left there. One messenger should be enough.""",
+on some kind of a rubbish pile. Dark cloth pieces, black heaps
+of bonfires and several colored plastic boxes... Getting
+closer to the place, you understand, that it was a temporary
+camp, most likely of foreigners, who came to Silewer in
+search of a shelter. Well, that makes sense to take a look
+at the place, maybe something useful left there. One
+messenger should be enough.""",
         "results": (
             {
                 "score": range(0, 20),
@@ -1845,14 +1854,16 @@ and there is nothing! To Hell the stuff!". They both turn back.
             {
                 "score": range(40, 60),
                 "desc": """You've decided to send {name1} and {name2} for a revision.
-Not pocking around, they run to the boat fast and start to examine
-it. The trans seems to be long forsaken, covered with dirt and in
-some parts even with rust. However, your messengers see three small
-metal containers with padlocks. Using the gun's butts, they open
-them one by one... and they all are empty! "That looks like a joke."
-- {name2} pronounces annoyed. - "A very stupid one." {name1} takes
-several seconds to think, but in the end agrees on that they were
-played. "Let's return to the Adjutant then." - {heshe1} adds.""",
+Not pocking around, they run to the boat fast and start to
+examine it. The trans seems to be long forsaken, covered
+with dirt and in some parts even with rust. However, your
+messengers see three small metal containers with padlocks.
+Using the gun's butts, they open them one by one... and
+they all are empty! "That looks like a joke." - {name2}
+pronounces annoyed. - "A very stupid one." {name1} takes
+several seconds to think, but in the end agrees on that
+they were played. "Let's return to the Adjutant then."
+- {heshe1} adds.""",
                 "effects": {},
             },
             {

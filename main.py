@@ -325,6 +325,8 @@ class ForwardOnly(ShowBase):
         self.plus_resource("stimulators", save["stimulators"])
 
         self.scenario = Scenario(save["chapter"])
+        for num in range(save["chapter"] + 1):
+            self.journal.add_page(num)
 
         save.close()
         self.main_menu.hide_loading_msg()

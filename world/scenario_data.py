@@ -10,7 +10,7 @@ SCENARIO = (
         "intro": """Kenneth - the Adjutant mechanic approaches your table and sits to
 the right of you. "Captain, we probably have a trouble." You're
 uppering a spoon full of dry porridge to your mouth: "Yeah?!"
-"Yeah. Come see me after you snack is over." He gets up and
+"Yeah. Come see me after your snack is over." He gets up and
 leaves the deckhouse. Finishing the awfully tasteless portion,
 you're walking to the lower level of the Adjutant. Before you
 pronounce the first word, Kenneth rises his finger up, asking
@@ -22,13 +22,13 @@ acting up." - Kenneth explains silently. - "We need to check
 it, and it'll take some time." You're trying to remember how far
 was the Stench frontier, when you last heard about it. "Our
 options?" Looking at you, Kenneth calculates something in his
-mind and then tells: "We need five hours long stop to deal with
-the axle box." It's much. "Other options?" The mechanic seems
-to be not very pleasant to say it, but he does: "We can try
-to do it on move. But that's dangerous, and will require two
-men - me here and someone on the other side of the locomotive.
-The second guy can get injured I warn you. Anyway I think not
-dealing with it can cause us troubles as well. Your call, Captain." """,
+mind: "We need five hours long stop to deal with the axle box."
+It's much. "Other options?" The mechanic seems to be not
+very pleasant to say it, but he does: "We can try to do it on
+move. But that's dangerous, and will require two men - me here
+and someone on the other side of the locomotive. The second
+guy can get injured I warn you. Anyway I think not dealing
+with it can cause us troubles as well. Your call, Captain." """,
         "variants": {
             "Stop the Adjutant for a revision": {
                 "desc": """You're making a decision to stop for, as planned, five hours. The
@@ -42,11 +42,13 @@ of the city several people already found dead, others leaving
 their homes, trying to get out of the city. Stay on this
 station, we'll keep you posted!" Stuttgart. Looks like the
 Stench frontier moves from south-east direction. It should
-be considered while planning the further route... Four hours
-passed, and the crew reports you that the axle box is good
-to go. Calling everyone back on board, you're commanding to
-continue the road in the same moment. Four hours is not five,
-but it's still long, very long. Better keep your pace high now.
+be considered while planning the further route...
+
+Four hours passed, and the crew reports you that the axle
+box is good to go. Calling everyone back on board, you're
+commanding to continue the road in the same moment. Four
+hours is not five, but it's still long, very long. Better
+keep your pace high now.
 
 The Stench frontier came 20 miles closer to you,
 but the Adjutant is in a good shape for now.
@@ -169,7 +171,7 @@ responsibility. "It's hard to admit, but those children are not
 going to make it. They are not fighters nor survivors. The first
 meet with skinheads, and..." The crew continue to keep silence,
 bit you feel them accepting the situation, so you're giving an
-order: "Build the camp hastily, and take useful stuff in case you
+order: "Build the camp hastily and take useful stuff in case you
 see it!" Your teammates, avoiding to look at each other, go out
 of the deckhouse... About an hour and half passed, and all of
 your people gather together on the Adjutant. They still doesn't
