@@ -515,7 +515,7 @@ CLASS_DESCS = {
         ),
         "preview": "brake_thrower",
         "but_text": "Understood!",
-        "title": "Skinheads rumoring about dare newbies!",
+        "title": "Skinheads rumor about dare newcomers!",
     },
     "Barrier": {
         "desc": (

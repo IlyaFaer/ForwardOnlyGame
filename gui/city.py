@@ -33,8 +33,8 @@ class ResourceChooser(ItemChooser):
     def __init__(self, buy_but, sell_but):
         ItemChooser.__init__(self, is_shadowed=False)
         self._costs = {
-            "medicine_boxes": 30,
-            "smoke_filters": 35,
+            "medicine_boxes": 25,
+            "smoke_filters": 30,
             "stimulators": 25,
         }
         self._buy_but = buy_but
@@ -280,7 +280,7 @@ class CityGUI:
                 parent=self._fr,
                 pos=(-0.05, 0, z_coor + 0.015),
                 text_fg=SILVER_COL,
-                text="+50\n15$",
+                text="+50\n10$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -293,7 +293,7 @@ class CityGUI:
                 parent=self._fr,
                 pos=(0.07, 0, z_coor + 0.015),
                 text_fg=SILVER_COL,
-                text="+200\n60$",
+                text="+200\n40$",
                 scale=(0.075, 0, 0.075),
                 relief=None,
                 text_scale=0.45,
@@ -687,7 +687,7 @@ class CityGUI:
             value (int):
                 Points of the Train durability to repair.
         """
-        spent = 15 if value == 50 else 60
+        spent = 10 if value == 50 else 40
         if not base.res_gui.check_enough_money(spent):  # noqa: F821
             return
 
