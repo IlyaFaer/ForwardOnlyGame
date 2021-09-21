@@ -63,14 +63,15 @@ returns back to the Train with just a couple of small wounds.
             {
                 "score": range(40, 60),
                 "desc": """{name1}, {name2} and {name3} jumping off the Train and moving
-to the jeeps column. You're seeing them silently approaching the cars.
-Hopes, there is no one around... Not even throwing a look inside the
-cars, your people are simultaneously turning around and running back
-to the Train with the full speed. You're taking your gun, preparing for
-the fight. But no one follows your messengers, so you only have to wait
-them. {name2} climbing the Train back first. "There are at least fifteen
-people, lower, near the river." - {heshe2} explains, breathing heavily.
-You nod your head and giving the command to warm up the engine.""",
+to the jeeps column. You're seeing them silently approaching the
+cars. Hopes, there is no one around... Not even throwing a look
+inside the cars, your people are simultaneously turning around
+and running back to the Train with the full speed. You're taking
+your gun, preparing for the fight. But no one follows your
+messengers, so you only have to wait them. {name2} climbing the
+Train back first. "There are at least fifteen people, lower,
+near the river." - {heshe2} explains, breathing heavily. You nod
+your head and giving the command to warm up the engine.""",
                 "effects": {},
             },
             {
@@ -785,10 +786,10 @@ You're getting 130$""",
         "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
-        "desc": """An old highway, stretched out to the left of the railway, has taken your
-attention, and your supervision at some moment pays off:
-you see an auto repair shop. It's small, just three car
-places without utility rooms, but it's still something.
+        "desc": """An old highway, stretched out to the left of the railway, has taken
+your attention, and your supervision at some moment pays
+off: you see an auto repair shop. It's small, just three
+car places without utility rooms, but it's still something.
 Roller shutters are all closed, window glasses are intact
 - everything says the place is over watched by someone.
 It makes sense to send a scout to take a closer look
@@ -1046,13 +1047,14 @@ Adjutant durability +100""",
             {
                 "score": range(80, 101),
                 "desc": """The car stand too close to the railway to fear
-anything, so you're sending {name1} alone for a search. {name1} closes
-to the car fast and starts to sort through it, throwing away useless stuff,
-like toys, tent, rubber boat... You're looking at all of these from the train
-starting to think this stop is pointless. But then {name1} moves to the
-trunk, opens it and screams victoriously. In the next second you see a big
-grey tool box in {hisher1} hands, and uppering your hand with a like-finger.
-You're getting a smoke filter in a good shape.""",
+anything, so you're sending {name1} alone for a search. {name1}
+closes to the car fast and starts to sort through it, throwing
+away useless stuff, like toys, tent, rubber boat... You're
+looking at all of these from the train starting to think this
+stop is pointless. But then {name1} moves to the trunk, opens
+it and screams victoriously. In the next second you see a big
+grey tool box in {hisher1} hands, and uppering your hand with
+a like-finger. You're getting a smoke filter in a good shape.""",
                 "effects": {"smoke_filters": 1},
             },
         ),
@@ -1495,14 +1497,15 @@ back to the Train.""",
             {
                 "score": range(60, 80),
                 "desc": """By your order, {name1}, {name2} and {name3} run to the grey
-smoke column. Getting closer, they see a lot of red spots between the
-trees - it's a forest conflagration, a big one! Throwing a gaze to others,
-{name2} suddenly proposes: "Let's go hunting! Animals will run chaotically
-away from flames and smoke, and food is something we always need."
-Thinking a couple of seconds, {name1} and {name3} agree on that, and they
-three are going to the forest... After twenty minutes of hunting they
-getting a deer. Not very big, but it's even better - not a problem to get
-it to the Train. "With this meat we can save some proviant money!" -
+smoke column. Getting closer, they see a lot of red spots between
+the trees - it's a forest conflagration, a big one! Throwing a
+gaze to others, {name2} suddenly proposes: "Let's go hunting!
+Animals will run chaotically away from flames and smoke, and food
+is something we always need." Thinking a couple of seconds,
+{name1} and {name3} agree on that, and they three are going to
+the forest... After twenty minutes of hunting they getting a deer.
+Not very big, but it's even better - not a problem to get it to
+the Train. "With this meat we can save some proviant money!" -
 {name2} declares. - "Good job!"
 You're getting +50$""",
                 "effects": {"money": 50},

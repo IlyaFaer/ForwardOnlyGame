@@ -16,7 +16,7 @@ p0.setSystemLifespan(0.0000)
 p0.setLocalVelocityFlag(1)
 p0.setSystemGrowsOlderFlag(0)
 # Factory parameters
-p0.factory.setLifespanBase(0.2000)
+p0.factory.setLifespanBase(0.25)
 p0.factory.setLifespanSpread(0.0000)
 p0.factory.setMassBase(1.0000)
 p0.factory.setMassSpread(0.5000)

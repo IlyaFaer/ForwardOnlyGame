@@ -253,7 +253,7 @@ the last time. Three month ago? More? Not
 in a mood to check now...
 
 Those bastards ruined our work today! Fat
-ugly politicians decided Wahrsager can
+ugly politicians decided Wahrsager should
 be used for espionage. Espionage! I
 suspected long ago that their interest
 is not that big, they don't want to pay
@@ -274,7 +274,7 @@ Gut, it's a science diary, not a school
 girl crying napkin. Back to business. The
 curator forced us to check what is
 Wahrsager time limit. We've taken a look
-at different ages, even before people
+at different ages, even before humans
 appeared on Earth. Looks like the last
 machine version doesn't have a limit at
 all. The strange thing we all noticed -
@@ -334,10 +334,11 @@ Looking at a bunch of thugs preparing the
 Adjutant for a road, I feeled like a good
 chance is eluding me. All of us...
 
-At some moment Daren stood up and loudly
-asked: "Ronnie?! That you?". A fat
-heavily breathing guy walked out of
-hangar shadows. "It's a strange
+We all frozen, trying to understand what to
+do next, but in some moment Daren stood
+up and loudly asked: "Ronnie?! That you?".
+A fat heavily breathing guy walked out
+of hangar shadows. "It's a strange
 coincidence you're here after rejecting
 my proposition." The fat guy finally
 identified Daren and smiled: "Ah, that's

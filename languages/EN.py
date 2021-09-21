@@ -313,7 +313,7 @@ COHESION = (
     "Not leaving ours",
     "Characters with health < 30 getting +25 health. Cooldown: 8 min.",
     "Common rage",
-    "Every character gets +30% to damage. Cooldown: 10 min.",
+    "Every character gets +30% strength. Cooldown: 10 min.",
     "Hold together",
     "No characters will die in next 1 min. Cooldown: 10 min.",
 )
@@ -399,11 +399,11 @@ MECHANIC_DESC = {
             ),
             (
                 "You need to find a way to survive the Stench. There\n"
-                "are several places of interest in Silewer - check\n"
-                "them for useful information. Use the railways scheme\n"
-                "(press M) to plan your route and visit as much places\n"
-                "as you can. You can also see outing abilities and\n"
-                "the Stench coverage on the railways scheme."
+                "are several places of interest in Silewer - visit at\n"
+                "least 8 of them for useful information. Use the\n"
+                "railways scheme (press M) to plan your route.\n"
+                "You can also see outing abilities and the Stench\n"
+                "coverage on the railways scheme."
             ),
         ),
         "previews": ("the_stench1", "map"),

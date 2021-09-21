@@ -118,6 +118,10 @@ class Enemy:
 
         self.active_units.clear()
         self._transport_mgr.stop()
+
+        for part in base.train.parts.values():  # noqa: F821
+            part.enemies = []
+
         return task.done
 
     def _load_enemy(self, train_mod, class_data, id_):
