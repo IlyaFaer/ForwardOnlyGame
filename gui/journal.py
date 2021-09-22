@@ -23,37 +23,51 @@ down on paper and try to look at what
 happened recently, see a bigger picture...
 
 About a month ago social networks gave
-birth to a new flow of videos. People were
+birth to a new flow of videos: people were
 filming streets, talking about some kind
-of orange mist. But there was no mist!
-What they were trying to film was only
-buildings, cars, sidewalks, and crystal
+of orange mist. Though there was no mist!
+What they were trying to film were only
+buildings, cars, sidewalks and crystal
 clear air. Like they were hallucinating.
 
-It all looked as a new stupid joke from
-those internet guys, but in some moment
-they started to find bodies... More and
-more: people were dying right on a street,
-but no one was able to say why! Here
-someone noticed: bodies appearing in
-regions where that orange mist was spotted.
+It all looked as a new stupid prank or a
+creapy tread we got used to, so no one
+took it serious first. Zoomers do have
+fun as usual. I thought the same, I must
+confess... But in some moment they
+started to find bodies, for real. Big
+news agencies picked up the story:
+people are dying right on a street,
+but no one able to say why! Here
+someone said out loud: they die because
+of the orange mist, spotted there.
 
 As it usually happens, government first
 tried to hide the adversities scale. They
-started to close city blocks, speak of
-stupid explanations, while in Germany,
-Switzerland, Netherlands more and more
-bodies were appearing, more and more
-orange mist reports were happening.
+started to speak of stupid explanations,
+ask citizens to stay at home if possible
+and use respirators; censor newspapers,
+websites and discredit rumors authors.
+They also closed several city blocks, but
+only those in dormitory areas. Recreation
+and business regions, which bring money,
+of course, were working in normal regime,
+so there you still could trip over a
+corpse not yet removed by the police.
+In the meantime, in Germany, Switzerland,
+Netherlands more and more people were
+getting that something serious is
+happening.
 
 Finally, several police officers, seeing
 that the disaster is gaining momentum,
-decided to whistleblow. Photos they
-posted publicly were showing tens of dead
-bodies on streets, and several documents,
-where chemical specialists were summaring
-up that the orange mist, called by them
-as "The Stench", selectively kills people,
+gathered all their conscience and decided
+to whistleblow. Photos they posted
+publicly were showing tens of dead bodies
+on streets, and several documents, where
+chemical specialists were summaring up
+that the orange mist, called by them as
+"The Stench", selectively kills people,
 no matter how good is their isolation
 or air filtering...
 

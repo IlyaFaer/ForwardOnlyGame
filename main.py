@@ -302,6 +302,8 @@ class ForwardOnly(ShowBase):
         self.world.load_location(
             num, save["enemy_score"], save["disease_threshold"], save["stench_step"],
         )
+        self.world.city_gui.visit_num = save["city_visit_num"]
+
         self.current_block = self.world.load_blocks(
             save["cur_blocks"], save["last_angle"]
         )
@@ -390,6 +392,7 @@ class ForwardOnly(ShowBase):
         }
         save["team"] = self.team.description
         save["chapter"] = self.scenario.current_chapter
+        save["city_visit_num"] = self.world.city_gui.visit_num
 
         save.close()
 

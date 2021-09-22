@@ -324,7 +324,7 @@ DISTINGUISHED = (
         "Here you can praise your people or scold them "
         "to change their traits.\nPointing to a person is "
         "usually harmful for collective relations,\nso every "
-        "praise/scold will reduce common team cohesion a bit.\n\n"
+        "praise/scold will reduce common crew cohesion a bit.\n\n"
         "Choose one of the current character's traits (positive "
         "or negative) and\nscold the character to erase the trait. "
         "It'll cost you 4 cohesion points.\n\n"
@@ -360,7 +360,7 @@ MECHANIC_DESC = {
             ),
             (
                 "The Adjutant includes three parts and a rest\n"
-                "zone, where you can arrange your teammates.\n"
+                "zone, where you can arrange your crewmates.\n"
                 "A wise units rotation is the key to success.\n\n"
                 "Train speed is reflected in the right bottom corner.\n"
                 "Hold W and S keys to accelerate and decelerate."

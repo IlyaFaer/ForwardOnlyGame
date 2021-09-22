@@ -150,8 +150,8 @@ class CityGUI:
     def __init__(self):
         self._temp_wids = []
         self._recruits = []
-        self._visit_num = 1
         self._reward_fr = None
+        self.visit_num = 1
 
         self._amb_snd = loader.loadSfx("sounds/hangar_ambient.ogg")  # noqa: F821
         self._amb_snd.setVolume(0)
@@ -354,7 +354,7 @@ class CityGUI:
         self._up_chooser.prepare(
             self._fr,
             (0, 0, z_coor),
-            base.train.possible_upgrades(self._visit_num),  # noqa: F821
+            base.train.possible_upgrades(self.visit_num),  # noqa: F821
         )
         self._temp_wids.append(self._up_chooser)
 
@@ -623,7 +623,7 @@ class CityGUI:
             turn_around (bool): True, if the Train should be turned around.
         """
         self._toot_snd.play()
-        self._visit_num += 1
+        self.visit_num += 1
         taskMgr.remove("increase_city_snd")  # noqa: F821
         base.train.clear_upgrade_preview()  # noqa: F821
 

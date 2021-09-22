@@ -11,13 +11,15 @@ SCENARIO = (
 the right of you. "Captain, we probably have a trouble." You're
 uppering a spoon full of dry porridge to your mouth: "Yeah?!"
 "Yeah. Come see me after your snack is over." He gets up and
-leaves the deckhouse. Finishing the awfully tasteless portion,
-you're walking to the lower level of the Adjutant. Before you
-pronounce the first word, Kenneth rises his finger up, asking
-you to stay silent and listen. You're concentrating on the noises...
-"Hear that?" - the mechanic points to the left side of the room,
-and you understand what he's trying to say. Some metal screeching
-can be heard from the wall. "That's an axle box, something's
+leaves the deckhouse.
+
+Finished the awfully tasteless portion, you're walking to the
+lower level of the Adjutant. Before you pronounce the first
+word, Kenneth rises his finger up, asking you to stay silent
+and listen. You're concentrating on the noises... "Hear that?"
+- the mechanic points to the left side of the room, and you
+understand what he's trying to say. Some metal screeching can
+be heard from the wall. "That's an axle box, something's
 acting up." - Kenneth explains silently. - "We need to check
 it, and it'll take some time." You're trying to remember how far
 was the Stench frontier, when you last heard about it. "Our
@@ -138,18 +140,20 @@ the children. Losing time is not okay... Still, twenty minutes
 later, seeing your people and children smiling while setting
 up big tents, igniting bonfires and boiling pottage in big
 cauldrons, you forget these heavy thoughts. This small break
-will be useful for the crew as well... It takes you about two
-hours to finish preparing the camp. Getting a lot of thanks
-from the children and their teachers, you gather again on the
-Adjutant. Everyone seems to be enlivened, still, the road calls.
-Giving an order to start engine, you approach a couple of your
-teammates, who are viewing some kind of an article on a
-smartphone. "Hey, Captain, you need to see this! Some of those
-children visited kinda scientist summit some time ago and took
-an interview there. The woman speaks about interesting things."
-Telling them that you're going to take a closer look at the
-article later, you go to the deckhouse to plan the route,
-considering the recent delay.
+will be useful for the crew as well...
+
+It takes you about two hours to finish preparing the camp.
+Getting a lot of thanks from the children and their teachers,
+you gather again on the Adjutant. Everyone seems to be
+enlivened, still, the road calls. Giving an order to start
+engine, you approach a couple of your teammates, who are
+viewing some kind of an article on a smartphone. "Hey,
+Captain, you need to see this! Some of those children visited
+kinda scientist summit some time ago and took an interview
+there. The woman speaks about interesting things." Telling
+them that you're going to take a closer look at the article
+later, you go to the deckhouse to plan the route, considering
+the recent delay.
 
 The Stench frontier came 20 miles closer to you
 
