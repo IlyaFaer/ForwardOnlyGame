@@ -7,11 +7,11 @@ The main game scenario structure.
 
 SCENARIO = (
     {  # 1
-        "intro": """Kenneth - the Adjutant mechanic approaches your table and sits to
-the right of you. "Captain, we probably have a trouble." You're
-uppering a spoon full of dry porridge to your mouth: "Yeah?!"
-"Yeah. Come see me after your snack is over." He gets up and
-leaves the deckhouse.
+        "intro": """Kenneth - the Adjutant mechanic approaches your table and
+sits to the right of you. "Captain, we probably have a
+trouble." You're uppering a spoon full of dry porridge
+to your mouth: "Yeah?!" "Yeah. Come see me after your
+snack is over." He gets up and leaves the deckhouse.
 
 Finished the awfully tasteless portion, you're walking to the
 lower level of the Adjutant. Before you pronounce the first
@@ -90,7 +90,7 @@ Press J to open/close Captain's journal.""",
                 "effects": (("do_characters_effect", [{"health": -20}, True]),),
             },
             "Ignore the problem": {
-                "desc": """It's better not to stop for such long period. Asking Kenneth
+                "desc": """It's worth not to stop for such long period. Asking Kenneth
 to wait for some time, you return back to the deckhouse. It
 is better to double check. The Stench frontier is far back
 for now, but three hours later... Looking at the map, you

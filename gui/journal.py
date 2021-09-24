@@ -64,7 +64,7 @@ that the disaster is gaining momentum,
 gathered all their conscience and decided
 to whistleblow. Photos they posted
 publicly were showing tens of dead bodies
-on streets, and several documents, where
+on streets and several documents, where
 chemical specialists were summaring up
 that the orange mist, called by them as
 "The Stench", selectively kills people,
