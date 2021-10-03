@@ -622,6 +622,18 @@ class MainMenu:
                 clickSound=self.click_snd,
             )
         )
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.31, 0, 0.31),
+            frameTexture="credits/discord.png",
+            frameSize=(-0.04, 0.04, -0.04, 0.04),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://discord.gg/8UgFJAWsFx"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
         self.cred_wids.append(
             DirectLabel(
                 parent=self._main_fr,
