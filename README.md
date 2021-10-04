@@ -9,7 +9,7 @@ The Europe is stroke by the terrible cataclysm called "the Stench". The only way
 
 The game represents a route-strategy with arcade fight blotches. Find an optimal way through the Silewer before the fast spreading poisonous clouds of the Stench outrun you. There are real-time fights with enemies, cities where you can upgrade your locomotive with active guns, tough decisions, recruiting, diseases, resources searches and even more.
 
-:cinema: See [alpha footage on YouTube](https://youtu.be/Ot2uFTCRRvs).
+:cinema: See [gameplay trailer on YouTube](https://youtu.be/AjvDuXsIizs).
 
 **The Project legal status**  
 The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).  
