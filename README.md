@@ -1,7 +1,7 @@
 # Forward Only
 [на русском](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/README%20(RUS).md)
 
-The Europe is stroke by the terrible cataclysm called "the Stench". The only way to survive it is to move and do it quickly, as death spreads irrepressibly. Fortunately, you have a locomotive that is still running, so gather your crew and travel through the Silewer - country full of skinheads, who struggle against the avalanche of refugees.
+The Europe is stroke by the terrible cataclysm called "the Stench". The only way to survive it is to flee and do it quickly, as death spreads irrepressibly. Fortunately, you have a locomotive that is still running, so gather your crew and travel through the Silewer - country full of skinheads, who struggle against the avalanche of refugees from Europe. 
 
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot1.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
@@ -16,7 +16,7 @@ The Game is an author product, its use is regulated by [the License](https://git
 It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
 
 **Current stage**  
-The Game is in active development stage (~80% finished) and is in a preparation for the first beta build.
+The Game is in active development stage yet (~80% finished) and is now in beta access.
 
 The major features the Game includes now:
 - 3 way of play determined by 3 unit classes
@@ -27,6 +27,7 @@ The major features the Game includes now:
 - 16 traits, making units stronger or weaker in different situations
 
 **Subscribe**  
+[Discord](https://discord.gg/8UgFJAWsFx)  
 [YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
 [IndieDB](https://www.indiedb.com/games/forward-only)
 
