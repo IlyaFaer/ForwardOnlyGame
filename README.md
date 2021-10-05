@@ -29,7 +29,8 @@ The major features the Game includes now:
 **Subscribe**  
 [Discord](https://discord.gg/8UgFJAWsFx)  
 [YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
-[IndieDB](https://www.indiedb.com/games/forward-only)
+[IndieDB](https://www.indiedb.com/games/forward-only)  
+[SourceForge](https://sourceforge.net/p/forwardonlygame/)
 
 **What's next**  
 [Download the last Game release](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
