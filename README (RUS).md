@@ -29,6 +29,7 @@
 [Discord](https://discord.gg/8UgFJAWsFx)  
 [YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
 [IndieDB](https://www.indiedb.com/games/forward-only)
+[SourceForge](https://sourceforge.net/p/forwardonlygame/)
 
 **Что дальше**  
 [Скачать последнюю сборку игры](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
