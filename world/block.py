@@ -176,6 +176,8 @@ class Block:
         model = random.choice(
             (
                 "arch1",
+                "sign1",
+                "sign2",
                 "light_post{}".format(random.randint(1, 2)),
                 "lamp_post1",
                 "transparant1",
