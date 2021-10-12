@@ -184,6 +184,7 @@ class RailsScheme:
         self._fill_branches()
 
         outs = None
+        cities = 0
         for block in self._world_map[:901]:
             if block.id % 100 == 0:
                 if outs:
@@ -214,6 +215,17 @@ class RailsScheme:
                         pos=(-0.967 + block.id * 0.00216, 0, 0),
                     )
                 )
+                self._temp_wids.append(
+                    DirectLabel(
+                        parent=self._scheme,
+                        text=("Sneeuwstad", "Naaldstad")[cities],
+                        text_scale=0.032,
+                        text_bg=(0, 0, 0, 0),
+                        frameColor=(0, 0, 0, 0),
+                        pos=(-0.967 + block.id * 0.00216, 0, 0.07),
+                    )
+                )
+                cities += 1
 
         self._temp_wids.append(
             DirectFrame(
