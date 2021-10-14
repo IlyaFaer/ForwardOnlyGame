@@ -343,6 +343,7 @@ class World:
                 and abs(pos.getY()) < 3.99
                 and not ("turn" in path and abs(pos.getZ()) < 0.0001)
                 and not ("fork" in path and abs(pos.getZ()) < 0.02)
+                and not ("surface4" in path and pos.getZ() > 0.08)
                 # don't remember vertices of station and city models
                 and not ("station" in path and abs(pos.getY()) < 2.1)
                 and not ("city" in path and abs(pos.getY()) < 2.1)
