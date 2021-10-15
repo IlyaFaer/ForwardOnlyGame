@@ -15,6 +15,7 @@ PLAINS_GRASS = (
     "sp_grass5",
     "sp_grass6",
     "sp_grass7",
+    "grass8",
 )
 
 LOCATION_CONF = {
