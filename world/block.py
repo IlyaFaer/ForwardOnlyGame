@@ -15,7 +15,7 @@ from .objects import BARRIER_THRESHOLD, ROCKET_THRESHOLD, Barrier, Rocket
 
 ANGLES = (0, 90, 180, 270)
 SURFACES = {
-    "direct": ("surface1", "surface2", "surface3", "surface4",),
+    "direct": ("surface1", "surface2", "surface3", "surface4", "surface5"),
     "l90_turn": ("l90_turn_surface1", "l90_turn_surface2"),
     "r90_turn": ("r90_turn_surface1", "r90_turn_surface2"),
     "ls": ("surface1", "surface2", "surface3"),
@@ -254,7 +254,7 @@ class Block:
         """
         # load terrain
         surf_mod = loader.loadModel(name)  # noqa: F821
-        if "surface4" in name:
+        if "surface4" in name or "surface5" in name:
             base.world.sun.ignore_shadows(surf_mod)  # noqa: F821
 
         surf_mod.reparentTo(self.rails_mod)
