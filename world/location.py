@@ -15,6 +15,7 @@ PLAINS_GRASS = (
     "sp_grass5",
     "sp_grass6",
     "sp_grass7",
+    "sp_grass8",
     "grass8",
 )
 
