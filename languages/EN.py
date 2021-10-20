@@ -385,7 +385,10 @@ MECHANIC_DESC = {
                 "Number of unit cells on every part is limited."
             ),
         ),
-        "previews": ("characters1", "characters2",),
+        "previews": (
+            "characters1",
+            "characters2",
+        ),
     },
     "the Stench": {
         "descs": (
@@ -757,7 +760,6 @@ NOTIFIERS = (
 OUTINGS = [
     {  # 0
         "name": "Car Column",
-        "type": "Enemy Camp",
         "desc": """You're catching your eyes on four big black jeeps, standing in a row.
 They are covered with dust, but even from that big distance you
 can say they are in a good shape. No human around makes it
@@ -832,7 +834,6 @@ You're getting 100$ and 1 stimulator
     },
     {  # 1
         "name": "Big Tent",
-        "type": "Enemy Camp",
         "desc": """It takes not less than ten seconds for you to understand is
 something there, or it's just a big bush. Yes, something is definitely
 there - a square dark green tent, very similar to a soldier's one.
@@ -904,7 +905,6 @@ You're getting 100$""",
     },
     {  # 2
         "name": "Bus",
-        "type": "Enemy Camp",
         "desc": """The big red two-storied bus standing at the middle of the meadow
 catches your attention from a very long distance. Bringing the
 binoculars to your eyes, you're seeing that it's little bit old
@@ -977,7 +977,6 @@ You're getting 100$""",
     },
     {  # 3
         "name": "Gas Station",
-        "type": "Enemy Camp",
         "desc": """For at least twenty minutes you've been watching a highway to the
 left of the railway. No cars, no light posts - road was completely
 empty. But, finally, you're seeing a white square advertisement
@@ -1050,7 +1049,6 @@ You're getting 90$ and +100 Adjutant durability""",
     },
     {  # 4
         "name": "Trailers",
-        "type": "Enemy Camp",
         "desc": """From a very long distance you're catching your eyes on several grey
 rectangles. Buses? That can promise troubles as well as a good place
 for looting. While the Adjutant getting closer to the vehicle, it
@@ -1121,7 +1119,6 @@ You're getting 200$""",
     },
     {  # 5
         "name": "Construction",
-        "type": "Enemy Camp",
         "desc": """Standing on a cool air, you're observing the horizon line. For
 the few last hours you saw twelve wooden houses, burned to
 the ground. Seems like someone is clearing these lands,
@@ -1197,7 +1194,6 @@ You're getting 130$""",
     },
     {  # 6
         "name": "Cloth Piece",
-        "type": "Enemy Camp",
         "desc": """The horizon line is lost behind trees for hours. The lands
 seems to be very wild, still, you've given an order to everyone
 to keep eyes open. And in voluntary minute you're hearing your
@@ -1270,7 +1266,6 @@ You're getting 170$""",
     },
     {  # 7
         "name": "Kid's camp",
-        "type": "Enemy Camp",
         "desc": """From a big distance you've noticed several dark green buildings.
 Got closer, you see that they are old, but still in a good shape. A
 bunch of colorful attractions makes you think that this is a summer
@@ -1343,7 +1338,6 @@ You're getting 130$""",
     },
     {  # 8
         "name": "Auto Repair",
-        "type": "Enemy Camp",
         "desc": """An old highway, stretched out to the left of the railway, has taken
 your attention, and your supervision at some moment pays
 off: you see an auto repair shop. It's small, just three
@@ -1416,7 +1410,6 @@ Adjutant durability +70""",
     },
     {  # 9
         "name": "Stone Circle",
-        "type": "Enemy Camp",
         "desc": """Three meters fencing, standing right in the center of the meadow,
 attracted your attention from a very big distance. Looking through
 binoculars, you see semicircle light grey parts of hollow cylinders,
@@ -1487,7 +1480,6 @@ You're getting 120$""",
     },
     {  # 10
         "name": "Abandoned Car",
-        "type": "Looting",
         "desc": """At the first look you didn't pay attention to a
 dark green spot in the middle of the meadow. But in the
 next second it becomes clear that it is not a part of the
@@ -1550,7 +1542,6 @@ a like-finger. You're getting a smoke filter in a good shape.""",
     },
     {  # 11
         "name": "Meadow Tent",
-        "type": "Looting",
         "desc": """The big dark green spot on the meadow attracted your
 attention in the same moment. What do we have here? Seems to
 be an abandoned tent. There are no any signs of a bonfire,
@@ -1617,7 +1608,6 @@ You're getting 1 medicine.""",
     },
     {  # 12
         "name": "Old Hut",
-        "type": "Looting",
         "desc": """Called by one of your teammates, you're walking out of
 the cabin and in the same moment seeing an old hut not far from
 the railway. Putting binoculars to your eyes, you're looking at
@@ -1683,7 +1673,6 @@ Adjutant durability +100""",
     },
     {  # 13
         "name": "Monastery",
-        "type": "Looting",
         "desc": """You've caught your eyes on some kind of a big dark spike
 from a very long distance. It was difficult to understand what it
 actually is, but when the Train went around a hill, and the building
@@ -1752,7 +1741,6 @@ You're getting +40$""",
     },
     {  # 14
         "name": "Wrecked Truck",
-        "type": "Looting",
         "desc": """You're looking at the horizon line trying to find a sign of
 a civilization. A couple of hours passed, and there were no single
 building, litter or any other sign of human. What are these wild
@@ -1819,7 +1807,6 @@ Every character getting +35 energy""",
     },
     {  # 15
         "name": "Grey Smoke",
-        "type": "Looting",
         "desc": """From a very long distance you are seeing a big, wide
 straight column of thick grey smoke, rising from the forest in a
 couple of kilometers from the railway. That seems questionably.
@@ -1887,7 +1874,6 @@ Adjutant durability +100""",
     },
     {  # 16
         "name": "Silo",
-        "type": "Looting",
         "desc": """When the Train started to move along sown fields, you've
 concentrated your gaze. Where fields, there are people and
 resources. And, yes, in some moment you see a big brown silo.
@@ -1965,7 +1951,6 @@ You're getting 1 smoke filter and 1 medicine""",
     },
     {  # 17
         "name": "Wooden Barn",
-        "type": "Looting",
         "desc": """Gazing at the horizon line, you've been overlooking corn fields
 for the last two hours. But suddenly you see a big dark wooden
 barn, standing on the edge of the green field, a little covered
@@ -2030,7 +2015,6 @@ You're getting 2 stimulators""",
     },
     {  # 18
         "name": "Refugees Camp",
-        "type": "Looting",
         "desc": """From at least 500 meters you've caught your eyes
 on some kind of a rubbish pile. Dark cloth pieces, black heaps
 of bonfires and several colored plastic boxes... Getting
@@ -2097,7 +2081,6 @@ Adjutant durability +100""",
     },
     {  # 19
         "name": "Motor Boat",
-        "type": "Looting",
         "desc": """In some moment you catch your eyes on a big white spot in the
 middle of the meadow. Your first thought is that it's a snow heap,
 but it's not enough snow failing from the skies to gather this
@@ -2167,7 +2150,6 @@ You're getting 1 stimulator and 1 medicine""",
     },
     {  # 20
         "name": "Tents",
-        "type": "Meet",
         "desc": """Gazing around, you're catching your eyes on a thick column of smoke
 rising right from the ground. A look through binoculars unveils
 that there is a tent camp at the bottom of the smoke pillar, and
@@ -2240,7 +2222,6 @@ Single character can get Immunity""",
     },
     {  # 21
         "name": "Lying Man",
-        "type": "Meet",
         "desc": """Thinking about the Stench nature, you're absently looking around the
 Train, when suddenly you find yourself gazing at a human body.
 It almost blended with withered grass and is covered with snow -
@@ -2313,7 +2294,6 @@ Single character can get Masochism""",
     },
     {  # 22
         "name": "Assassin",
-        "type": "Meet",
         "desc": """In the moment the Train stopped, you're finding your eyes on a dark
 silhouette of an armed man. He doesn't seem to be aggressive, so
 you're giving him some time to come closer. "Hey, guys!" - he says,
@@ -2384,7 +2364,6 @@ Single character can get Fast hands""",
     },
     {  # 23
         "name": "New Outpost",
-        "type": "Meet",
         "desc": """From a big distance you're catching your eyes on a small building,
 near which a lot of people silhouettes are looming. Getting closer, you
 see a lot of construction equipment, and the building itself looks like
@@ -2462,7 +2441,6 @@ Single character can get Bloodthirsty""",
     },
     {  # 24
         "name": "Cargo Column",
-        "type": "Meet",
         "desc": """For the last ten minutes you've been observing a road, which turned
 to the railway and has been following it in a straight parallel. A lot of
 pits and cracks showing that the road isn't very well maintained, most
@@ -2538,7 +2516,6 @@ One person can be recruited""",
     },
     {  # 25
         "name": "Ill Deer",
-        "type": "Meet",
         "desc": """For a long time you've been observing only light snowflakes, calmly
 moving in the air, bringing thoughtfulness. But in some moment a
 strange low distant sound attracts your attention. First you think
@@ -2621,7 +2598,6 @@ Single character can get Deep Breath""",
     },
     {  # 26
         "name": "Injured",
-        "type": "Meet",
         "desc": """You've noticed a big grey truck long ago. It has been riding in
 parallel with you for about twenty miles, and now it started to
 approach - the highway probably turned to the railways. The truck
@@ -2696,7 +2672,6 @@ You're getting 1 stimulator""",
     },
     {  # 27
         "name": "Old Church",
-        "type": "Meet",
         "desc": """The tall wooden spear that attracted your attention and made you
 stop here appears to be a part of an old church. Its dark wooden
 walls are ancient, white paint on the windows became grey, but you
@@ -2771,7 +2746,6 @@ You're getting +1 medicine""",
     },
     {  # 28
         "name": "Old Carriage",
-        "type": "Meet",
         "desc": """On the east departure of Salzburg, on highway 158, big skirmish
 happened today about 10:25 a.m.! Refugees, who got stuck in traffic,
 started to threaten the people around to make them clear the road,
@@ -2848,7 +2822,6 @@ giving an order to start the Adjutant's engine.
     },
     {  # 29
         "name": "Romani Truck",
-        "type": "Meet",
         "desc": """Getting closer to a dark green spot you've noticed earlier, you see
 that it's some kind of a romani truck. Old and battered by a
 long travelling, it stands right in the middle of the meadow,
@@ -2919,3 +2892,5 @@ One person can be recruited""",
         ),
     },
 ]
+
+OUTING_TYPES = {"Looting": "Looting", "Meet": "Meet", "Enemy Camp": "Enemy Camp"}

@@ -8,6 +8,7 @@ Outings scenarios and effects.
 ENEMY_CAMP = [
     {
         "index": 0,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 13.3, "raider": 4, "anarchist": 6},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 8},
@@ -31,6 +32,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 1,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 6, "evening": 4},
@@ -44,6 +46,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 2,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 20, "raider": 6, "anarchist": 12},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
@@ -60,6 +63,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 3,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 20, "raider": 7, "anarchist": 12},
         "assignees": 2,
         "day_part_weights": {"night": 4, "morning": 5, "noon": 10, "evening": 2},
@@ -79,6 +83,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 4,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 13.3, "raider": 4, "anarchist": 9},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
@@ -92,6 +97,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 5,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 13.3, "raider": 10, "anarchist": 5},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 2, "noon": 6, "evening": 10},
@@ -105,6 +111,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 6,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 20, "raider": 12, "anarchist": 5},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 7},
@@ -118,6 +125,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 7,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 7, "noon": 0, "evening": 3},
@@ -131,6 +139,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 8,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 40, "raider": 20, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 4, "evening": 7},
@@ -144,6 +153,7 @@ ENEMY_CAMP = [
     },
     {
         "index": 9,
+        "type": "Enemy Camp",
         "class_weights": {"soldier": 13.3, "raider": 8, "anarchist": 5},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 7, "noon": 0, "evening": 3},
@@ -160,6 +170,7 @@ ENEMY_CAMP = [
 LOOTING = [
     {
         "index": 10,
+        "type": "Looting",
         "class_weights": {"soldier": 20, "raider": 40, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 5},
@@ -173,6 +184,7 @@ LOOTING = [
     },
     {
         "index": 11,
+        "type": "Looting",
         "class_weights": {"soldier": 6, "raider": 20, "anarchist": 13},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 3},
@@ -195,6 +207,7 @@ LOOTING = [
     },
     {
         "index": 12,
+        "type": "Looting",
         "class_weights": {"soldier": 9, "raider": 13.3, "anarchist": 3},
         "assignees": 3,
         "day_part_weights": {"night": 8, "morning": 2, "noon": 5, "evening": 10},
@@ -215,6 +228,7 @@ LOOTING = [
     },
     {
         "index": 13,
+        "type": "Looting",
         "class_weights": {"soldier": 9, "raider": 13.3, "anarchist": 4},
         "assignees": 3,
         "day_part_weights": {"night": 10, "morning": 2, "noon": 5, "evening": 8},
@@ -242,6 +256,7 @@ LOOTING = [
     },
     {
         "index": 14,
+        "type": "Looting",
         "class_weights": {"soldier": 7, "raider": 20, "anarchist": 14},
         "assignees": 2,
         "day_part_weights": {"night": 2, "morning": 4, "noon": 10, "evening": 8},
@@ -255,6 +270,7 @@ LOOTING = [
     },
     {
         "index": 15,
+        "type": "Looting",
         "class_weights": {"soldier": 4, "raider": 13.3, "anarchist": 10},
         "assignees": 3,
         "day_part_weights": {"night": 5, "morning": 7, "noon": 10, "evening": 2},
@@ -268,6 +284,7 @@ LOOTING = [
     },
     {
         "index": 16,
+        "type": "Looting",
         "class_weights": {"soldier": 6, "raider": 20, "anarchist": 13},
         "assignees": 2,
         "day_part_weights": {"night": 10, "morning": 0, "noon": 3, "evening": 5},
@@ -281,6 +298,7 @@ LOOTING = [
     },
     {
         "index": 17,
+        "type": "Looting",
         "class_weights": {"soldier": 20, "raider": 40, "anarchist": 9},
         "assignees": 1,
         "day_part_weights": {"night": 7, "morning": 0, "noon": 3, "evening": 10},
@@ -294,6 +312,7 @@ LOOTING = [
     },
     {
         "index": 18,
+        "type": "Looting",
         "class_weights": {"soldier": 9, "raider": 40, "anarchist": 19},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 7, "noon": 10, "evening": 4},
@@ -310,6 +329,7 @@ LOOTING = [
     },
     {
         "index": 19,
+        "type": "Looting",
         "class_weights": {"soldier": 12, "raider": 20, "anarchist": 7},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 5, "noon": 10, "evening": 3},
@@ -326,6 +346,7 @@ LOOTING = [
 MEET = [
     {
         "index": 20,
+        "type": "Meet",
         "class_weights": {"soldier": 5, "anarchist": 20, "raider": 13},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 4},
@@ -345,6 +366,7 @@ MEET = [
     },
     {
         "index": 21,
+        "type": "Meet",
         "class_weights": {"soldier": 10, "anarchist": 40, "raider": 22},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 4, "noon": 8, "evening": 10},
@@ -358,6 +380,7 @@ MEET = [
     },
     {
         "index": 22,
+        "type": "Meet",
         "class_weights": {"soldier": 8, "anarchist": 13.3, "raider": 4},
         "assignees": 3,
         "day_part_weights": {"night": 8, "morning": 10, "noon": 4, "evening": 0},
@@ -380,6 +403,7 @@ MEET = [
     },
     {
         "index": 23,
+        "type": "Meet",
         "class_weights": {"soldier": 10, "anarchist": 40, "raider": 21},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 7, "evening": 10},
@@ -393,6 +417,7 @@ MEET = [
     },
     {
         "index": 24,
+        "type": "Meet",
         "class_weights": {"soldier": 5, "anarchist": 20, "raider": 12.5},
         "assignees": 2,
         "day_part_weights": {"night": 0, "morning": 10, "noon": 7, "evening": 3},
@@ -412,6 +437,7 @@ MEET = [
     },
     {
         "index": 25,
+        "type": "Meet",
         "class_weights": {"soldier": 3, "anarchist": 13.3, "raider": 7},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 6},
@@ -425,6 +451,7 @@ MEET = [
     },
     {
         "index": 26,
+        "type": "Meet",
         "class_weights": {"soldier": 11, "anarchist": 20, "raider": 5},
         "assignees": 2,
         "day_part_weights": {"night": 3, "morning": 10, "noon": 7, "evening": 0},
@@ -438,6 +465,7 @@ MEET = [
     },
     {
         "index": 27,
+        "type": "Meet",
         "class_weights": {"soldier": 7, "anarchist": 13.3, "raider": 3},
         "assignees": 3,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},
@@ -460,6 +488,7 @@ MEET = [
     },
     {
         "index": 28,
+        "type": "Meet",
         "class_weights": {"soldier": 20, "anarchist": 40, "raider": 9},
         "assignees": 1,
         "day_part_weights": {"night": 3, "morning": 0, "noon": 10, "evening": 7},
@@ -473,6 +502,7 @@ MEET = [
     },
     {
         "index": 29,
+        "type": "Meet",
         "class_weights": {"soldier": 9, "anarchist": 40, "raider": 19},
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 7},

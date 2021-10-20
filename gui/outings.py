@@ -69,22 +69,25 @@ class OutingsGUI:
         self._name = DirectLabel(
             parent=self._list,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.4, 0.4, 0.4, 0.4),
-            text_scale=0.05,
+            text_scale=0.047,
             pos=(-0.4, 0, 0.7),
         )
         self._type = DirectLabel(
             parent=self._list,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.4, 0.4, 0.4, 0.4),
-            text_scale=0.035,
+            text_scale=0.032,
             pos=(-0.13, 0, 0.699),
         )
         self._desc = DirectLabel(
             parent=self._list,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.6, 0.6, 0.6, 0.6),
-            text_scale=0.04,
+            text_scale=0.037,
             pos=(0, 0, 0.55),
         )
 
@@ -366,19 +369,21 @@ class OutingsGUI:
     def show_place_of_interest(self):
         """Show icon for a place of interest."""
         self.show_upcoming(
-            base.labels.NOTIFIERS[0], OUTINGS_ICONS["Place Of Interest"],  # noqa: F821
+            base.labels.NOTIFIERS[0],  # noqa: F821
+            OUTINGS_ICONS["Place Of Interest"],
         )
 
-    def show_upcoming_outing(self, type_):
+    def show_upcoming_outing(self, type_orig, type_):
         """Show upcoming outing notification.
 
         Args:
-            type_ (str): Outing type.
+            type_orig (str): Original outing type.
+            type_ (str): Translated outing type.
         """
         self._outing_snd.play()
         self.show_upcoming(
             base.labels.NOTIFIERS[1].format(type_.capitalize()),  # noqa: F821
-            OUTINGS_ICONS[type_],
+            OUTINGS_ICONS[type_orig],
         )
 
     def show_city(self):
@@ -388,7 +393,8 @@ class OutingsGUI:
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""
         self._upcome_text["text"] = self._upcome_text["text"].replace(
-            base.labels.NOTIFIERS[2], base.labels.NOTIFIERS[3],  # noqa: F821
+            base.labels.NOTIFIERS[2],  # noqa: F821
+            base.labels.NOTIFIERS[3],  # noqa: F821
         )
 
     def show_can_start(self):
@@ -422,7 +428,7 @@ class OutingsGUI:
 
         out_labels = base.labels.OUTINGS[outing["index"]]  # noqa: F821
         self._name["text"] = out_labels["name"]
-        self._type["text"] = out_labels["type"]
+        self._type["text"] = base.labels.OUTING_TYPES[outing["type"]]  # noqa: F821
         self._desc["text"] = out_labels["desc"]
 
         self._outing_widgets.append(

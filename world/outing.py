@@ -105,7 +105,9 @@ class OutingsManager:
         Args:
             type(str): Outing type.
         """
-        self._gui.show_upcoming_outing(type_)
+        self._gui.show_upcoming_outing(
+            type_, base.labels.OUTING_TYPES[type_]  # noqa: F821
+        )
 
     def show_upcoming_closer(self):
         """Show that 1 mile left until available outing."""
@@ -190,7 +192,7 @@ class OutingsManager:
             selected_effect,
             recruit_effect,
         )
-        self._snds[base.labels.OUTINGS[outing["index"]]["type"]].play()  # noqa: F821
+        self._snds[outing["type"]].play()  # noqa: F821
 
         if "train" in effects:
             base.train.do_effects(effects["train"])  # noqa: F821
