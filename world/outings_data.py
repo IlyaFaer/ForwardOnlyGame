@@ -164,10 +164,7 @@ LOOTING = [
         "assignees": 1,
         "day_part_weights": {"night": 0, "morning": 3, "noon": 10, "evening": 5},
         "results": (
-            {
-                "score": (0, 20),
-                "effects": {"char_1": {"energy": -50, "health": -15}},
-            },
+            {"score": (0, 20), "effects": {"char_1": {"energy": -50, "health": -15}}},
             {"score": (20, 40), "effects": {"char_1": {"energy": -15}}},
             {"score": (40, 60), "effects": {"select_char": {"health": 10}}},
             {"score": (60, 80), "effects": {"train": {"durability": 100}}},
@@ -202,7 +199,7 @@ LOOTING = [
         "assignees": 3,
         "day_part_weights": {"night": 8, "morning": 2, "noon": 5, "evening": 10},
         "results": (
-            {"score": (0, 20), "effects": {"all": {"energy": -40}},},
+            {"score": (0, 20), "effects": {"all": {"energy": -40}}},
             {
                 "score": (20, 40),
                 "effects": {
@@ -279,10 +276,7 @@ LOOTING = [
             {"score": (20, 40), "effects": {"assignees": {"energy": -15}}},
             {"score": (40, 60), "effects": {}},
             {"score": (60, 80), "effects": {"money": 50}},
-            {
-                "score": (80, 101),
-                "effects": {"medicine_boxes": 1, "smoke_filters": 1},
-            },
+            {"score": (80, 101), "effects": {"medicine_boxes": 1, "smoke_filters": 1}},
         ),
     },
     {
@@ -324,10 +318,7 @@ LOOTING = [
             {"score": (20, 40), "effects": {"assignees": {"energy": -20}}},
             {"score": (40, 60), "effects": {}},
             {"score": (60, 80), "effects": {"money": 70}},
-            {
-                "score": (80, 101),
-                "effects": {"stimulators": 1, "medicine_boxes": 1},
-            },
+            {"score": (80, 101), "effects": {"stimulators": 1, "medicine_boxes": 1}},
         ),
     },
 ]
@@ -349,10 +340,7 @@ MEET = [
             {"score": (20, 40), "effects": {"assignees": {"energy": -15}}},
             {"score": (40, 60), "effects": {}},
             {"score": (60, 80), "effects": {"recruit": 80}},
-            {
-                "score": (80, 101),
-                "effects": {"select_char": {"add_trait": (3, 0)}},
-            },
+            {"score": (80, 101), "effects": {"select_char": {"add_trait": (3, 0)}}},
         ),
     },
     {
@@ -365,10 +353,7 @@ MEET = [
             {"score": (20, 40), "effects": {"char_1": {"health": -10}}},
             {"score": (40, 60), "effects": {}},
             {"score": (60, 80), "effects": {"cohesion_gain": 6}},
-            {
-                "score": (80, 101),
-                "effects": {"select_char": {"add_trait": (2, 0)}},
-            },
+            {"score": (80, 101), "effects": {"select_char": {"add_trait": (2, 0)}}},
         ),
     },
     {
@@ -403,10 +388,7 @@ MEET = [
             {"score": (20, 40), "effects": {"money": -40}},
             {"score": (40, 60), "effects": {}},
             {"score": (60, 80), "effects": {"cohesion_gain": 6}},
-            {
-                "score": (80, 101),
-                "effects": {"select_char": {"add_trait": (5, 0)}},
-            },
+            {"score": (80, 101), "effects": {"select_char": {"add_trait": (5, 0)}}},
         ),
     },
     {
@@ -438,10 +420,7 @@ MEET = [
             {"score": (20, 40), "effects": {"money": -40}},
             {"score": (40, 60), "effects": {"medicine_boxes": -1}},
             {"score": (60, 80), "effects": {"money": 70}},
-            {
-                "score": (80, 101),
-                "effects": {"select_char": {"add_trait": (6, 0)}},
-            },
+            {"score": (80, 101), "effects": {"select_char": {"add_trait": (6, 0)}}},
         ),
     },
     {
