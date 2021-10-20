@@ -420,9 +420,10 @@ class OutingsGUI:
         self.is_shown = True
         self._list.show()
 
-        self._name["text"] = outing["name"]
-        self._type["text"] = outing["type"]
-        self._desc["text"] = outing["desc"]
+        out_labels = base.labels.OUTINGS[outing["index"]]  # noqa: F821
+        self._name["text"] = out_labels["name"]
+        self._type["text"] = out_labels["type"]
+        self._desc["text"] = out_labels["desc"]
 
         self._outing_widgets.append(
             DirectLabel(  # Crew:

@@ -48,19 +48,24 @@ class OutingsManager:
         """
         return self._gui.is_shown
 
-    def _get_result(self, score, results):
+    def _get_result(self, score, outing):
         """Get outing results for the given score.
 
         Args:
             score (int): Outing score.
-            results (list): All the outing results.
+            outing (dict): Outing description.
 
         Returns:
             str, dict: Result description and effects.
         """
-        for result in results:
-            if score in result["score"]:
-                return result["desc"], result["effects"]
+        for index, result in enumerate(outing["results"]):
+            if score in range(*result["score"]):
+                return (
+                    base.labels.OUTINGS[outing["index"]]["results"][  # noqa: F821
+                        index
+                    ],
+                    result["effects"],
+                )
 
     def hide_outing(self):
         """Hide outing icon."""
@@ -156,7 +161,7 @@ class OutingsManager:
         score = round(score)
 
         # do the outing result effects
-        desc, effects = self._get_result(score, outing["results"])
+        desc, effects = self._get_result(score, outing)
         format_dict = {}
         for index, char in enumerate(chars, start=1):
             format_dict.update(
@@ -185,7 +190,7 @@ class OutingsManager:
             selected_effect,
             recruit_effect,
         )
-        self._snds[outing["type"]].play()
+        self._snds[base.labels.OUTINGS[outing["index"]]["type"]].play()  # noqa: F821
 
         if "train" in effects:
             base.train.do_effects(effects["train"])  # noqa: F821
