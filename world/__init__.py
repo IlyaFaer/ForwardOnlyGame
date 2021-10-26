@@ -142,11 +142,15 @@ class World:
             bool: True if the Train is near a fork.
         """
         if len(self._loaded_blocks) > 2:
-            return self._loaded_blocks[1].name in (
-                "r_fork",
-                "l_fork",
-                "exit_from_fork",
-            ) or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
+            return (
+                self._loaded_blocks[1].name
+                in (
+                    "r_fork",
+                    "l_fork",
+                    "exit_from_fork",
+                )
+                or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
+            )
 
     @property
     def is_on_et(self):
@@ -193,6 +197,7 @@ class World:
         all_surf_vertices = {}
         for path in glob.glob(MOD_DIR + "*.bam"):
             dont_load = False
+            path = path.replace("\\", "/")
             for name in (
                 "locomotive",
                 "train_part_arrow",
@@ -213,9 +218,6 @@ class World:
                 continue
 
             mod = loader.loadModel(path)  # noqa: F821
-            mod.setZ(-20)
-            mod.reparentTo(render)  # noqa: F821
-
             # remember surface model's vertices coordinates,
             # later they will be used to positionate
             # environment models
