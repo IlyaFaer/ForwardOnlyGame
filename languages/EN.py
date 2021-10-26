@@ -761,7 +761,7 @@ OUTINGS = [
     {  # 0
         "name": "Car Column",
         "desc": """You're catching your eyes on four big black jeeps, standing in a row.
-They are covered with dust, but even from that big distance you
+They are covered with dirt, but even from that big distance you
 can say they are in a good shape. No human around makes it
 tempting to send some folks to recon the place - is your first
 thought. But when the Train engine finally falls silent, you're
@@ -782,7 +782,7 @@ crawling back to the Train, as the enemy seems to be full of ammo.
 You're trying to help others with your fire, and the rival shots are
 starting to fly to the Train. Taking cover, you're waiting for {name1},
 {name2} and {name3} to return and giving the order to start the engine.
-Adjutant getting -80 durability""",
+Adjutant getting -80 Durability""",
             """{name1}, {name2} and {name3} are taking the direction to the jeeps
 by your command. They are moving across the meadow silently for
 some time, but suddenly a sturdy with a machine gun appears near one of
@@ -798,7 +798,7 @@ returns back to the Train with just a couple of small wounds.
 {name1} and {name2} getting -15 health""",
             """{name1}, {name2} and {name3} jumping off the Train and moving
 to the jeeps column. You're seeing them silently approaching the
-cars. Hopes, there is no one around... Not even throwing a look
+cars. Hopes, there is no one inside... Not even throwing a look
 inside the cars, your people are simultaneously turning around
 and running back to the Train with the full speed. You're taking
 your gun, preparing for the fight. But no one follows your
@@ -807,12 +807,12 @@ Train back first. "There are at least fifteen people, lower,
 near the river." - {heshe2} explains, breathing heavily. You nod
 your head and giving the command to warm up the engine.""",
             """You're sending {name1}, {name2} and {name3} for a short
-recon of the place. Your teammates are moving to the jeep column,
+recon of the place. Your crewmates are moving to the jeep column,
 while you track them from the Train; seeing how {name2} opens a
-car, and starts to rummage in the glove compartment. Suddenly,
+car and starts to rummage in the glove compartment. Suddenly,
 you hear cries, but not of your messengers. Still, they are
 reacting fast, and turning around back to the Train. Looks like
-there was someone there! Confirming this, several naked people
+someone detected them! Confirming this, several naked people
 appearing near the jeeps. But to the moment they grabbed their
 guns and started to shoot, {name1}, {name2} and {name3} are
 jumping onto the Train. "No empty hands!" - {name2} proclaims
@@ -870,7 +870,7 @@ The old man continue to hold his gun up, but he don't shoot any more.
 {hisher1} bloody shoulder. {name1} getting -10 health""",
             """You're sending {name1} to take a closer look at the tent. {name1}
 takes {hisher1} gun and fastly moves to the place. The meadow smells
-with flowers and dust, grasshoppers are jumping all around, and there
+with flowers and cool, sleepy birds are chirping around, and there
 is no any single sign of a human. No garbage, no crumpled grass, no
 defensive traps. Getting closer to the tent, {name1} sees that it's full
 of shot holes. No doubts, someone crept up to it and shoot away all who
@@ -916,7 +916,7 @@ That makes sense to send a couple of people to check if there
 is something valuable in there.""",
         "results": (
             """You're sending {name1} and {name2} to take a look at the bus.
-Moving to the car they are looking around carefully. The meadow is
+Moving to the car, they are looking around carefully. The meadow is
 visible for three hundreds meters around, and nothing promises troubles,
 so after a couple of minutes of walk they relax. In that moment a shot
 thunders in the air. Sniper! You're seeing his long gun barrel protruding
@@ -963,8 +963,8 @@ returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.
 You're getting 80$""",
             """While you were deciding who to send for a search, several
-skinhead scums are jumped out of the bus. Your whole team seeing
-them starts to shoot, and after six-eight seconds all of the rivals are
+skinhead scums are jumped out of the bus. Your whole crew, seeing
+them, starts to shoot, and after six-eight seconds all of the rivals are
 falling down on the ground. Taking a quick look at the vehicle through
 binoculars you're commanding {name1} and {name2} to go to it. They
 both energetically jumping off the Train and moving to the bus. You're
@@ -1065,9 +1065,9 @@ entering this trailer camp.""",
 move towards the grey cars. Nothing promises troubles for several
 minutes, but at some moment car engines tearing the air apart. You
 all uppering your guns to fight back the enemy. Trailers are starting
-to skid, throwing grey dust all around, and your messengers making
+to skid, throwing grey dirt all around, and your messengers making
 few steps back to the Train side not to get lost in these clouds. Red
-and white trailers lights are floating in the grey shroud, but you're
+and white trailer lights are floating in hazy distance, but you're
 hearing no shots. They are just leaving. Taking few more seconds to
 think, you're commanding your people to return back to the crew.""",
             """You're deciding to send {name1}, {name2} and {name3} for a recon
@@ -1095,7 +1095,7 @@ old and most likely little bit mad was living in the truck, but at least
 You're getting 40$""",
             """By your command, {name1}, {name2} and {name3} taking their gear
 and jumping to the ground. Right in this second all the trailers, except
-one, spurt away. In the remaining trailer your people hear some fuss.
+one, spurt away. In the remaining car your people hear some fuss.
 While they are getting closer to the vehicle, the window of it opens,
 and a gun barrel leans out, starting to shoot all around without aiming.
 Making a circle movement around the trailer, your people open it and do
@@ -1157,17 +1157,17 @@ lavage ourselves, it can be very poisonous." - {name3} finalizes.
 {name1}, {name2} and {name3} getting -20 health""",
             """You're sending {name1}, {name2} and {name3} to check the place.
 While they are on their way, you're staying on a watch to prevent any
-surprises. The Stench have taken near 10% of the Earth, but people already
+surprises. The Stench have taken near 5% of the Earth, but people already
 became non compos. Or maybe they always were, the Stench only released
 their atrocity, revealed it? While they were afraid of laws, they were
 quiet, proving their true selves only inside. And now, when no one
 knows what to do and what will happen next, when no one controls the
-situations, when no one will come to help, they decided to do what
+situation, when no one will come to help, they decided to do what
 their nature whispers... You're seeing your people walking out of
 the construction. Looking disappointed, {name2} from that far shows
 that there was nothing useful there, nor interesting. Well, it's
 time to start the engine.""",
-            """Your team mates - {name1}, {name2} and {name3} are taking a direction
+            """Your crew mates - {name1}, {name2} and {name3} are taking a direction
  to the construction site. Nothing promises troubles for some time,
 but when they getting down to the basement, the cry tears air.
 Fast uppering their guns, your messengers see a thin guy, holding
@@ -1196,8 +1196,8 @@ You're getting 130$""",
         "name": "Cloth Piece",
         "desc": """The horizon line is lost behind trees for hours. The lands
 seems to be very wild, still, you've given an order to everyone
-to keep eyes open. And in voluntary minute you're hearing your
-teammates calling you outside the cabin. Exiting the locomotive
+to keep eyes open... And at some minute you're hearing your
+crewmates calling you outside the cabin. Exiting the locomotive
 deckhouse, you're taking a binocular and gazing into the pointed
 direction. First you don't see anything except trees. But after
 few seconds a big piece of dark green cloth reveals, strained
@@ -1249,8 +1249,8 @@ threats, they start to search through the wooden boxes,
 piled up behind the cloth. Most of them are already empty,
 but {name1} and {name2} find a bunch of personal first aid
 kits. Giving high five to each other, they take the catch
-and, satisfied, returning back to the team.
-Your teammates getting +10 health""",
+and, satisfied, returning back to the crew.
+Your crewmates getting +10 health""",
             """After little overthinking you're decided to send
 {name1} and {name2} to take a look at the place. Fastly moving to
 the spot, they hide behing the strained cloth, and after few seconds
@@ -1279,7 +1279,7 @@ place recon.""",
             """You're sending {name1} for a scouting. Without delays {heshe1} takes
 the direction to the camp and silently approaches it. The place seems
 quiet for some time, but suddenly several doors are opening, and shots
-are tearing the air. Felling to the ground, {name1} start to shoot
+are tearing the air. Falling to the ground, {name1} start to shoot
 all around, and you're trying to help {himher1} from the Train. It takes
 about three minutes for your messenger to get back to you, but the
 skinheads doesn't want to leave you be - they run to the locomotive
@@ -1287,7 +1287,7 @@ with loud shouts. Lucky for you, they didn't think about getting into
 open place until it became too late. Your coordinated fire drops them
 one by one. Making a quick roll call, you understand that you all,
 however, got some wounds during this skirmish.
-All of your teammates are getting -30 health""",
+All of your crewmates are getting -30 health""",
             """You're choosing {name1} as a scout. Jumping to the ground, {heshe1}
 puts on a hood against the cold wind and walks to the spot. It takes
 a couple of minutes for your messenger to understand that the camp is
@@ -1320,7 +1320,7 @@ Several syringes, paper boxes of tablets, white bandages - {name1}
 takes the whole kit and moves out of the building. Carefully walking
 out of the camp aside of the watch, {heshe1} runs to the locomotive
 and proudly enters the deck house with {hisher1} rich catch.
-All of your teammates getting +20 health""",
+All of your crewmates getting +20 health""",
             """{name1} becomes your messenger on this operation. Grabbing
 {hisher1} stuff, {heshe1} silently jumps down to the ground and moves
 into the camp. Only a couple of skinhead sentries lazily walk
@@ -1377,7 +1377,7 @@ themselves, or it is just an occasional catastrophe?
             """{name1} takes a direction to the auto repair shop. You're tracking
 {himher1} from the locomotive. Silently your messenger gets closer and
 opens a roller shutter. Nothing happens, no shooting, no people
-appearing, looks like the building is abandoned already. {name1}
+appearing, looks like the building is abandoned recently. {name1}
 carefully enters inside and disappears from your gaze for at least
 ten minutes. You're becoming nervous little by little, but finally
 {heshe1} exits the shop. You see nothing in {hisher1} hands, and,
@@ -1432,7 +1432,7 @@ rifle?! Can't be! You shout to your scouts to get back to the train,
 and giving a command to start engine. No more shots rattle - looks
 like the camp beholders are satisfied with your retreat. Still, the
 big hole in the hull has to be repaired now. Not good!
-Adjutant getting -60 durability""",
+Adjutant getting -60 Durability""",
             """{name1}, {name2} and {name3} take their gear and go to the camp.
 Nothing promises troubles, your messengers enter the concrete circle.
 Several minutes passes, and you see them exiting back. There is nothing
@@ -1465,7 +1465,7 @@ So, we've taken some of them, those medically useful chemicals of
 course." - {name3} explains. Well, better us than addicts.
 You're getting 1 medicine""",
             """You choose {name1}, {name2} and {name3} to be a recon party this
-time. Your people organizedly  move to the camp, and, getting to the
+time. Your people organizedly move to the camp, and, getting to the
 entrance, start to shoot. You take your gun to be prepared to cover
 them, but your scouts just sit near the entrance and shoot, shoot,
 shoot. Several minutes passed, and the fight finally silences. Your
