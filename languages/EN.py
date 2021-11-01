@@ -385,10 +385,7 @@ MECHANIC_DESC = {
                 "Number of unit cells on every part is limited."
             ),
         ),
-        "previews": (
-            "characters1",
-            "characters2",
-        ),
+        "previews": ("characters1", "characters2",),
     },
     "the Stench": {
         "descs": (
@@ -1492,7 +1489,7 @@ something remain within.""",
 railway, you're sending {name1} alone to search it for supplies.
 {name1} approaches to the car thinking: where to look first?
 Glove compartment! Of course, {heshe1}'s opening the door, taking
-a sit, and starts to feel the contain of the glove compartment.
+a sit and starts to feel the contain of the glove compartment.
 "It's too hot in this car." - {name1} thinking, but in the next
 moment {heshe1} feels something crawls on {hisher1} legs.
 Turning {hisher1} look down {heshe1} sees hundreds of big red
@@ -1500,7 +1497,7 @@ ants creeping on {hisher1} knees and chest. Trying to drop them off,
 {heshe1} only makes them crawl on hands. With screems {heshe1}
 jumps out of the car and starts to roll on the grass trying
 to deal with agressive insects.
-{name1} getting -50 energy and -15 health.""",
+{name1} getting -50 energy and -15 health""",
             """As the car stands not very far from
 railway, you're sending {name1} alone to search it for supplies.
 {name1} energetically moves to the car and starts a find. The
@@ -1518,7 +1515,7 @@ moves to the car, opens it and gets inside. It's hot and dusty within
 the car, every movement raises the dense fug, but {hisher1} search
 doesn't end with nothing. It appeared that a first aid kit is still there,
 and, opening it, {name1} sees that it contains several not overdue meds!
-That can help to regain 10 points of health of a single character.""",
+That can regain 10 health of a single character.""",
             """The car stands close enough to a railway to fear
 nothing, so you're sending {name1} alone for a looting. {name1}
 runs to the car, and disappears inside. From the train you're
@@ -1537,7 +1534,8 @@ looking at all of these from the train starting to think this
 stop is pointless. But then {name1} moves to the trunk, opens
 it and screams victoriously. In the next second you see a big
 grey tool box in {hisher1} hands, and uppering your hand with
-a like-finger. You're getting a smoke filter in a good shape.""",
+a like-finger.
+You're getting a Smoke Filter""",
         ),
     },
     {  # 11
@@ -1549,7 +1547,7 @@ smoke, or any human, so the camp is probably long forsaken.
 Still something useful can remain there, who knows. It's
 worth checking. The place seems to be open, quite and calm,
 but it's little bit distant. If something will go wrong
-it'll be a long way back for your teammates. So a couple
+it'll be a long way back for your crewmates. So a couple
 of people should be sent for a surprise case.""",
         "results": (
             """You're sending {name1} and {name2} as a loot party.
@@ -1559,21 +1557,21 @@ it. {name2} takes {hisher2} hands on backpacks. One by one {heshe2}
 opens them and sees ropes, climber equipment, fishing stuff, but there
 is definitely no anything we can use. Suddenly {heshe2} hears {name1}
 shouting from the tent. {name2} takes {hisher2} gun and jumps to the
-teammate. "Snake! A God damn snake!" - {heshe1} shouts and shows a bloody
+crewmate. "Snake! A God damn snake!" - {heshe1} shouts and shows a bloody
 hand. With a short gaze {name2} sees that there is no supplies in the
 tent, so {heshe2} takes {name1} and pulls {himher1} back to Train.
 {name1} getting -50 energy and -30 health
 {name2} getting -20 energy""",
             """{name1} and {name2} are moving to the tent by your
 command. The vibrations of the train still tremble at their feet, but the
-still ground feels good. Air smells with grass and flowers, and warm
+still ground feels good. Air smells with withered grass, and cool
 soft wind complements the place. But in the next moment {name1} feels
 something else. Rotten meat. {name2} glances at {himher1} as {heshe2}
-smells the same. Closing to the tent they are starting to understand
+smells the same. Closing to the tent, they are starting to understand
 what is the source of that stink. {name2} moves forward. "Let me do
 this!" - {heshe2} pulls the zipper, and directs a lantern into the tent. Bodies!
 Two rotten bodies, with bones sticking out, maggots, and nothing more.
-Both characters are getting -30 energy.""",
+Both characters are getting -30 energy""",
             """You've decided to send {name1} and {name2} to check the place.
 They are taking their guns and moving to the tent, while you're looking
 for possible threats. The meadow seems to be still and quiet though.
@@ -1585,8 +1583,8 @@ changes. Finally, {name1} and {name2} are opening the tent, taking a
 quick look inside, and turning back to the Train. Obviously, there
 was nothing useful in there. At all.""",
             """{name1} and {name2} are taking their things and moving to the
-camp place. The meadow looks still, smells with grass and flowers,
-warm wind makes the way pleasant. Closing to the tent {name1} and
+camp place. The meadow looks still, smells with withered grass,
+warm wind makes the way pleasant. Closing to the tent, {name1} and
 {name2} are starting to search for supplies through the things left
 in the camp. Ropes, empty cans, some climber stuff, even an album with
 old photos. Finding nothing, {name1} decides to take a look at the tent
@@ -1603,12 +1601,12 @@ there, but nothing gives a sign of lucky find. Done with backpacks
 for {himher2} to deal with the inner stuff, but to everyone's joy
 {heshe2} shows up with a white aid kit. Smiling both {name1} and {name2}
 are returning to Train with this burden.
-You're getting 1 medicine.""",
+You're getting 1 Medicine""",
         ),
     },
     {  # 12
         "name": "Old Hut",
-        "desc": """Called by one of your teammates, you're walking out of
+        "desc": """Called by one of your crewmates, you're walking out of
 the cabin and in the same moment seeing an old hut not far from
 the railway. Putting binoculars to your eyes, you're looking at
 it with good feeling. The house seems to be very old, built
@@ -1626,7 +1624,7 @@ one room. Finding nothing, but dust, within half of hour, almost without
 hope they open a floor basement entrance, and hooray! They see
 several tens of cans! With such a catch, you decided to throw a feast!
 But after several hours it comes clear that food expired.
-All of your teammates are getting -40 energy""",
+All of your crewmates are getting -40 energy""",
             """{name1}, {name2} and {name3} are gearing up for
 a walk. It takes few minutes for them to reach the hut. They see an
 opened door, broken windows and wild weeds right before the entrance -
@@ -1636,7 +1634,7 @@ and in the next moment {name2}, who went upfront, falls on the ground
 under a dog attack. {name1} and {name3} are raising their guns, but
 they can't shoot, as it's a big risk to shot {name2} instead of the
 big brute. Removing weapons they are getting to {himher2} to fight
-the animal with their hands.
+the animal with their hands and handy items.
 {name2} getting -20 health and -40 energy
 {name1} and {name3} getting -25 energy""",
             """You're sending {name1}, {name2} and {name3} for a search.
@@ -1645,7 +1643,7 @@ looking for them from Train. Time passing, but nothing happens, so
 you're starting to get nervous. Suddenly, you hear cries and two shots.
 That doesn't sound good! Two minutes passes, and finally you're seeing
 your people. They are moving fast to the Train, keeping their backside
-on sights. But no one follows them. Coming closer {name1} explains to
+on sights, though no one follows them. Coming closer {name1} explains to
 you what happened back there: "Big dog, looks like it lives there.
 And we found nothing". Your people are getting on the Train in
 disappointed mood, and you're commanding to move.""",
@@ -1684,7 +1682,7 @@ probably didn't take everything when they were leaving.""",
         "results": (
             """You're sending {name1}, {name2} and {name3} to
 the monastery. {name1} and {name3} are entering the old building,
-while {name2} stays outside to cover team mates retreat in case of
+while {name2} stays outside to cover crew mates retreat in case of
 problems. For some time {heshe2} doesn't hear anything, so {heshe2}
 relaxes a little. But in the next minute eerie noise comes from
 the monastery. Taking a look inside {name2} sees that part of the
@@ -1734,8 +1732,8 @@ careful search. {name3} chooses the basement and goes down into it.
 Walls looking wet, spider web is everywhere, but {heshe3} sees a big chest
 in the first second. The rusty lock doesn't want to broke, so {name3}
 calls others. {name1} and {name2} are coming into the basement and with
-strength of the three they manage to open the chest. What's the pleasure
-when they see gold dishes in it! These can be sold for a good money!
+strength of the three they manage to open the chest. With pleasure they
+see gold dishes in it! Most likely not very pricy today, still something.
 You're getting +40$""",
         ),
     },
@@ -1762,7 +1760,7 @@ and {name2} are returning back to the Train. "Someone outstripped
 us." - {name2} explains. - "And didn't left a tiny bit of the cargo." """,
             """You're commanding {name1} and {name2} to go to the
 truck and do a search through its last resting place. They are running to
-the spot energetically and starting to rummage in the broken plastic boxes
+the spot wearily and starting to rummage in the broken plastic boxes
 lying near the car. Most part of them are already emptied by someone
 else, but {name1} and {name2} not losing hope. And after rummaging not
 less than twenty containers they finally see one untouched. Opening it
@@ -1794,13 +1792,13 @@ didn't find anything, but broken containers, your people returning
 back to the Train with this only find.
 You're getting +1 medicine""",
             """By your command {name1} and {name2} are gearing up and
-taking a walk to the truck. Coming closer to it they see that a big fight
+taking a walk to the truck. Coming closer to it, they see that a big fight
 was here. Looks like a gang attacked the transport to rob it or something
 like that. {name1} and {name2} starting to rummage through the boxes
 scattered all around. The fight site appears to be looted several times
 by different people, hopes to find something useful are fading with every
 second, but suddenly {name2} sees an untouched container with energy
-drinks. "Hey, {name1}, come here!" - {heshe2} shouts They are taking
+drinks. "Hey, {name1}, come here!" - {heshe2} shouts. They are taking
 the box together to bring it back to the Train.
 Every character getting +35 energy""",
         ),
@@ -1833,7 +1831,7 @@ You're tracking their progress from the Train through binoculars. Your
 people are running to the forest spot fast and disappear between dark
 green trees. Thick grey smoke rises and rises, getting more wide with
 every minute. No, it's not a bonfire, it's definitely a conflagration.
-Time passes, and you're becoming nervous, as three of your team
+Time passes, and you're becoming nervous, as three of your crew
 mates are not showing up. Maybe it's worth to walk to the place by
 yourself... Finally, you see them! Slow and tired, they return back
 to the Train, inhaled a lot of smoke and probably intoxicated.
@@ -1907,7 +1905,7 @@ and {name2} doesn't see anything useful, anything at all, like somebody
 cleared the house without remainder. Deciding to take a look at the silo
 itself, your people are getting to it and opening the metal door. All of
 a sudden, black swarm of flies breaks out of the silo, and your
-teammates see tens of dead bodies in there. "Let's go, before the author
+crewmates see tens of dead bodies in there. "Let's go, before the author
 came back!" - {name1} says, and they both fastly turning back.
 {name1} and {name2} getting -15 energy""",
             """{name1} and {name2}, by your order, taking their gear
@@ -1922,7 +1920,7 @@ glances, but before they started to talk, the man continues:
 makes a step back: "No problem, we'll go". Not touching locals,
 your people making a slow turn around and heading back to you.""",
             """You're commanding {name1} and {name2} to go for a recon.
-Your teammates are closing to the place, but four hulk rednecks with
+Your crewmates are closing to the place, but four hulk rednecks with
 guns appearing towards them. {name1} and {name2} stopping, trying to show
 they are not going to attack. An old man makes a step forward: "Aren't
 you folks, who came from abroad, and now killing skinheads all around?"
@@ -2049,13 +2047,13 @@ Recounting {hisher1} money, {name1} pronounces sadly: "Thirty dollars!
 It's about thirty dollars just got lost in wind."
 You're losing 30$""",
             """You're sending {name1} for a fast overview of the camp
-remnants. Taking the gun, {heshe1} jumps off the locomotive, and runs
+remnants. Taking the gun, {heshe1} jumps off the locomotive and runs
 to the place. It looks like someone attacked the refugees, as there
 are several dark red blood spots on the grass, and bullet liners are
 shining here and there. There are no bodies, but if there was something
 useful in this place, it's already taken. Making a couple of circles
 around and carefully looking at what's left, just for sure, {name1}
-takes direction back to the locomotive. Nothing interesting.""",
+takes direction back to the locomotive. Nothing.""",
             """After a short overthinking you decide to send {name1} to
 take a closer look at the refugees camp remnants. Carefully watching
 around, {heshe1} walks to the place. It appears there was a skirmish in
@@ -2100,7 +2098,7 @@ boat slides right to {name2} and pushes {hisher2} leg to the back wall
 of the carriage. Trying to hold a cry, {name2} drops {hisher2} gun
 and by two hands pushes the boat back. Understanding, that it can
 turn into a serious trauma, {name1} also throws {hisher1} gun and
-makes an attempt to help the team mate. In several seconds of efforts
+makes an attempt to help the crew mate. In several seconds of efforts
 they push the boat back enough to release {name2}'s leg. Looking
 at the bloody spot on trousers, they hurry up back to you.
 {name2} getting -25 health""",

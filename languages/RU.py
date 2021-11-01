@@ -383,10 +383,7 @@ MECHANIC_DESC = {
                 "Кол-во мест в каждой части локомотива ограничено."
             ),
         ),
-        "previews": (
-            "characters1",
-            "characters2",
-        ),
+        "previews": ("characters1", "characters2",),
     },
     "Смрад": {
         "descs": (
@@ -1481,672 +1478,697 @@ Adjutant получает 70 прочности""",
     },
     {  # 10
         "name": "Забытый авто",
-        "desc": """At the first look you didn't pay attention to a
-dark green spot in the middle of the meadow. But in the
-next second it becomes clear that it is not a part of the
-landscape, it's a car! It looks abandoned and old, standing
-there for a long time. Still, glass seems to be unbroken,
-and doors are closed, so it may make sense to check if
-something remain within.""",
+        "desc": """С первого взгляда Вы не обращаете внимание на
+тёмно-зелёное пятно посреди чуть заснеженного луга. Но
+в следующую секунду становится ясно, что это не просто
+часть ландшафта, это машина! Она выглядит старой и уже
+давно заброшенной. Тем не менее стекла не разбиты,
+двери закрыты, так что есть смысл проверить, нет
+осталось ли что полезное внутри.""",
         "results": (
-            """As the car stands in 50 meters far from
-railway, you're sending {name1} alone to search it for supplies.
-{name1} approaches to the car thinking: where to look first?
-Glove compartment! Of course, {heshe1}'s opening the door, taking
-a sit, and starts to feel the contain of the glove compartment.
-"It's too hot in this car." - {name1} thinking, but in the next
-moment {heshe1} feels something crawls on {hisher1} legs.
-Turning {hisher1} look down {heshe1} sees hundreds of big red
-ants creeping on {hisher1} knees and chest. Trying to drop them off,
-{heshe1} only makes them crawl on hands. With screems {heshe1}
-jumps out of the car and starts to roll on the grass trying
-to deal with agressive insects.
-{name1} getting -50 energy and -15 health.""",
-            """As the car stands not very far from
-railway, you're sending {name1} alone to search it for supplies.
-{name1} energetically moves to the car and starts a find. The
-car looks old, and feels hot inside, but seems like no one looted it
-yet. Still, vehicle insides doesn't contain anything interesting. {name1}
-gets out and makes a circle around the car. Trunk - here is the place
-to search! Opening the trunk {heshe1} sees a shovel and a big sack.
-Fermer staff? Taking out {hisher1} knife, {heshe1} flogs the sack. The
-first thing that falls from it is a human skull with two small holes
-on the occiput. Looks like someone just tried to cover his tracks...
-{name1} getting -15 energy.""",
-            """As the car stands close to a railway, you've
-sent {name1} alone to look for supplies in the vehicle. {name1}
-moves to the car, opens it and gets inside. It's hot and dusty within
-the car, every movement raises the dense fug, but {hisher1} search
-doesn't end with nothing. It appeared that a first aid kit is still there,
-and, opening it, {name1} sees that it contains several not overdue meds!
-That can help to regain 10 points of health of a single character.""",
-            """The car stands close enough to a railway to fear
-nothing, so you're sending {name1} alone for a looting. {name1}
-runs to the car, and disappears inside. From the train you're
-not able to see what's {heshe1} doing there, and it takes a
-half of hour to wait for the results. {name1} jumps out of the
-car and moves to you with a small box in {hisher1} hands.
-"That guy wasn't very thrifty, I've found only these tools."
-- {heshe1} says. Well, it's still better than nothing: we can
-repair the train a little.
-Adjutant durability +100""",
-            """The car stand too close to the railway to fear
-anything, so you're sending {name1} alone for a search. {name1}
-closes to the car fast and starts to sort through it, throwing
-away useless stuff, like toys, tent, rubber boat... You're
-looking at all of these from the train starting to think this
-stop is pointless. But then {name1} moves to the trunk, opens
-it and screams victoriously. In the next second you see a big
-grey tool box in {hisher1} hands, and uppering your hand with
-a like-finger. You're getting a smoke filter in a good shape.""",
+            """Так как автомобиль стоит всего в пятидесяти метрах от
+железной дороги, Вы отправляет {name1} в одиночку поискать
+припасы. {name1} приближается к машине, размышляя, с чего
+начать. Бардачок! Разумеется, {heshe1} открывает дверь,
+садится в машину и начинает рыться в бардачке. "В этой
+машине слишком душно." - думает {name1}, однако в следующий
+момент чувствует, как что-то ползёт по ногам. Опуская глаза,
+{heshe1} видит сотни больших красных муравьёв, поднимающихся
+по ногам и груди. Пытаясь скинуть их, {heshe1} цепляет их и
+на руки. С криками {name1} выпрыгивает из машины и начинает
+кататься по траве в попытках сбросить агрессивных насекомых.
+{name1} теряет 50 энергии и 15 здоровья""",
+            """Так как машина стоит совсем рядом с железнодорожным путём,
+Вы отправляете {name1} на поиски ресурсов в одиночку. {name1}
+энергично движется к машине и начинает её осматривать.
+Машина стара, очень душна и затхла внутри, но выглядит
+так, будто её никто не разграбил. Тем не менее, внутри неё
+ничего полезного не обнаруживается, и Ваш посланник выходит
+и обходит машину вокруг. Багажник - вот что нужно проверить!
+Открыв его, {name1} видит лопату и большой мешок грубой выделки.
+Фермерское барахло? Достав нож, {heshe1} разрезает мешок, и
+первое, что выпадает из него - человеческий череп с двумя
+дырами в затылке. Похоже, кто-то хотел замести следы...
+{name1} теряет 15 энергии""",
+            """Так как автомобиль располагается совсем рядом с железной
+дорогой, Вы отправляете {name1} в одиночку на поиски ресурсов.
+{name1} движется к машине, открывает её и забирается внутрь,
+в пыльное, жаркое и затхлое пространство, где буквально
+каждое движение поднимает клубы пыли. Оказывается, аптечка
+всё ещё на месте и, открывая её, {name1} видит в ней несколько
+ещё не просроченных препаратов. Отличный улов!
+Можно восстановить 10 здоровья одного человека""",
+            """Автомобиль стоит достаточно близко к железнодорожному пути,
+чтобы не беспокоиться о безопасности, поэтому Вы отправляете
+{name1} в одиночку. Уверенно подбегая к машине, {heshe1} забирается
+в неё. С локомотива Вы не можете рассмотреть, что делает Ваш
+посланник, и Вам приходится ждать результатов около получаса.
+Наконец, {name1} выпрыгивает из машины с маленькой коробкой
+в руках. "Хозяин был не особо запасливым, удалось найти только
+эти инструменты." - поясняет {heshe1}. Ну, что ж, это всё же
+лучше, чем ничего, по крайней мере удастся поддерживать
+Адъютанта в рабочем состоянии.
+Адъютант получает 100 Прочности""",
+            """Автомобиль стоит слишком близко в железной дороге, чтобы
+беспокоиться о безопасности посланника, поэтому Вы отправляете
+на разведку всего одного человека - {name1}. Быстро приближаясь
+к машине, {heshe1} начинает рыться в её содержимом, выбрасывая
+наружу бесполезное барахло вроде игрушек, палатки, резиновой
+лодки... Вы наблюдаете за происходящим с поезда, начиная думать,
+что эта остановка окажется бесполезной. Однако {name1} движется
+к багажнику, открывает его и издаёт победный вопль. В следующую
+секунду Вы видите большую серую коробку в руках своего посланца
+и показываете ему большой палец в знак одобрения.
+Вы получаете Фильтр Дыма""",
         ),
     },
     {  # 11
         "name": "Палатка",
-        "desc": """The big dark green spot on the meadow attracted your
-attention in the same moment. What do we have here? Seems to
-be an abandoned tent. There are no any signs of a bonfire,
-smoke, or any human, so the camp is probably long forsaken.
-Still something useful can remain there, who knows. It's
-worth checking. The place seems to be open, quite and calm,
-but it's little bit distant. If something will go wrong
-it'll be a long way back for your teammates. So a couple
-of people should be sent for a surprise case.""",
+        "desc": """Большое тёмно-зелёное пятно на лугу привлекает Ваше
+внимание в первый же момент. Что это у нас? Похоже на
+брошенную палатку. Поблизости нет признаков костра, дыма
+или людей - лагерь, видимо, оставлен довольно давно. Тем
+не менее, что-то полезное могло остаться в нём, кто знает.
+Следует проверить. Место весьма открытое, тихое и спокойное,
+но расстояние от локомотива несколько велико. Если что-то
+пойдёт нет так, для Ваших бойцов это будет длинный путь.
+Так что следует отправить двух людей, на всякий случай.""",
         "results": (
-            """You're sending {name1} and {name2} as a loot party.
-Closing to the place they see several backpacks lying around
-the tent. "I'll check the tent" - {name1} says and moves towards
-it. {name2} takes {hisher2} hands on backpacks. One by one {heshe2}
-opens them and sees ropes, climber equipment, fishing stuff, but there
-is definitely no anything we can use. Suddenly {heshe2} hears {name1}
-shouting from the tent. {name2} takes {hisher2} gun and jumps to the
-teammate. "Snake! A God damn snake!" - {heshe1} shouts and shows a bloody
-hand. With a short gaze {name2} sees that there is no supplies in the
-tent, so {heshe2} takes {name1} and pulls {himher1} back to Train.
-{name1} getting -50 energy and -30 health
-{name2} getting -20 energy""",
-            """{name1} and {name2} are moving to the tent by your
-command. The vibrations of the train still tremble at their feet, but the
-still ground feels good. Air smells with grass and flowers, and warm
-soft wind complements the place. But in the next moment {name1} feels
-something else. Rotten meat. {name2} glances at {himher1} as {heshe2}
-smells the same. Closing to the tent they are starting to understand
-what is the source of that stink. {name2} moves forward. "Let me do
-this!" - {heshe2} pulls the zipper, and directs a lantern into the tent. Bodies!
-Two rotten bodies, with bones sticking out, maggots, and nothing more.
-Both characters are getting -30 energy.""",
-            """You've decided to send {name1} and {name2} to check the place.
-They are taking their guns and moving to the tent, while you're looking
-for possible threats. The meadow seems to be still and quiet though.
-Your people are closing to the tent and starting to walk around it and
-prowl. It appears there are several backpacks at the forsaken camp place,
-but {name1} and {name2} doesn't take anything with them. Nothing
-interesting? You're waiting for several more minutes, but nothing
-changes. Finally, {name1} and {name2} are opening the tent, taking a
-quick look inside, and turning back to the Train. Obviously, there
-was nothing useful in there. At all.""",
-            """{name1} and {name2} are taking their things and moving to the
-camp place. The meadow looks still, smells with grass and flowers,
-warm wind makes the way pleasant. Closing to the tent {name1} and
-{name2} are starting to search for supplies through the things left
-in the camp. Ropes, empty cans, some climber stuff, even an album with
-old photos. Finding nothing, {name1} decides to take a look at the tent
-- {heshe1} pulls the zipper and stick {hisher1} head into the stifling inners.
-The tent looks empty at the first gaze, but suddenly {name1} caughts
-{hisher1} eyes on a bottle of an energy drink. "Well, it's something!"
- - {heshe1} pronounces and takes the bottle.
-Single character can get +40 energy""",
-            """You're sending {name1} and {name2} to search the camp for
-anything useful. Your people are getting to the forsaken tent in two
-minutes and starting a find. You're seeing them rummaging in bags left
-there, but nothing gives a sign of lucky find. Done with backpacks
-{name2} opens the tent zipper and moves inside. It takes a few minutes
-for {himher2} to deal with the inner stuff, but to everyone's joy
-{heshe2} shows up with a white aid kit. Smiling both {name1} and {name2}
-are returning to Train with this burden.
-You're getting 1 medicine.""",
+            """Вы выбираете {name1} и {name2} в качестве разведывательной группы.
+Приближаясь к месту, они видят несколько рюкзаков, лежащих
+вокруг палаток. "Проверю палатку" - говорит {name1} и идёт
+к ней. {name2} начинает перебирать рюкзаки. Один за другим,
+{heshe1} открывает их и видит верёвки, инструменты скалолазов,
+рыболовные снасти, но ничего полезного для экипажа. Вдруг
+{name2} слышит, как {name1} кричит из палатки. {name2} берёт
+своё оружие и прыгает к компаньону. "Змея! Долбаная змея!" -
+{heshe1} показывает окровавленную руку. Беглым взглядом {name2}
+осматривает пустынную палатку и тянет {name1} к Адъютанту.
+{name1} теряет 50 энергии и 30 здоровья
+{name2} теряет 20 энергии""",
+            """{name1} и {name2} движутся к палатке, следуя Вашему приказу.
+Их ноги всё ещё дребезжат от вибраций паровоза, но твёрдая
+неподвижная земля ощущается приятно. Воздух пахнет пожухлой
+травой, дополняемой лёгким прохладным ветерком. Однако
+в следующую секунду {name1} чувствует что-то ещё. Тухлое
+мясо. {name2} косится на {name1}, потому что ощущает то
+же самое. Приближаясь к палатке, они начинают понимать, что
+является источником вони. {name2} выходит вперёд: "Давай я!" -
+{heshe1} открывает бегунок и направляет луч фонаря внутрь.
+Тела! Два гниющих человеческих тела с костями торчащими
+наружу, черви и больше ничего.
+Оба посланника теряют 30 энергии""",
+            """Вы решаете отправить {name1} и {name2} на внимательный осмотр
+места. Они берут своё оружие и двигаются к палатке, пока Вы
+высматриваете потенциальные угрозы вокруг. Луг, однако,
+тих и спокоен. Ваши люди приближаются к палатке и начинают
+рыскать вокруг неё. Похоже, там несколько брошенных рюкзаков,
+вот только {name1} и {name2} ничего полезного в них не находят.
+Вы ждёте ещё несколько минут, но ничего не меняется. Наконец,
+{name1} и {name2} открывают палатку, быстро заглядывают
+внутрь и поворачивают обратно к локомотиву. Очевидно, ничего
+полезного в этом забытом богом лагере нет.""",
+            """{name1} и {name2} берут свои вещи и движутся к замеченной Вами
+палатке. Луг выглядит спокойным, пахнет пожухлой травой,
+тёплый ветер делает путь приятнее. Приближаясь к палатке,
+{name1} и {name2} начинают искать припасы среди того, что
+осталось в лагере. Верёвки, пустые консервные банки,
+инструменты скалолазов, даже альбом с очень старыми фото.
+Ничего не найдя, {name1} решает заглянуть напоследок в саму
+палатку - {heshe1} тянет бегунок и засовывает голову в
+душное нутро. Палатка кажется пустой на первый взгляд, но
+вдруг {name1} останавливает взгляд на бутылке с энергетиком.
+"Ну, хотя бы и так!" - произносит {heshe1} и берёт бутылку.
+Один человек может получить +40 энергии""",
+            """Вы отправляете {name1} и {name2} проверить лагерь на предмет
+полезных припасов. Ваши люди подходят в забытой палатке за
+пару минут и начинают поиски. Вы видите, как они перерывают
+оставленные там сумки, но никаких признаков удачных находок
+Вы не замечаете. Разобравшись с сумками, {name2} открывает
+бегунок палатки и заглядывает в неё. Требуется несколько
+минут, прежде чем {heshe1} разбирается с барахлом внутри,
+но, к всеобщему удовольствию, там обнаруживается аптечка.
+Улыбаясь, {name1} и {name2} возвращаются к поезду.
+Вы получаете 1 лекарство""",
         ),
     },
     {  # 12
         "name": "Старая хата",
-        "desc": """Called by one of your teammates, you're walking out of
-the cabin and in the same moment seeing an old hut not far from
-the railway. Putting binoculars to your eyes, you're looking at
-it with good feeling. The house seems to be very old, built
-with dark ancient logs. No smoke rises from the chimney. Taking
-a few second to assess the prospects, you're thinking about
-sending three people to search the place for anything that can
-help you on the road. And, who knows, maybe someone is still
-living in that ancient hut...""",
+        "desc": """По зову одного из членов экипажа Вы выходите из кабины
+и в тот же миг видите старую хату неподалёку от железной
+дороги. Прикладывая бинокль к глазам, Вы осматриваете её
+с немалыми ожиданиями. Дом выглядит невероятно старым,
+построенным из древних тёмных брёвен. Дым из трубы не идёт.
+Размышляя пару секунд над выгодами, Вы думаете, что трёх
+разведчиков будет достаточно, чтобы исследовать здание
+вдоль и поперёк на предмет полезных в дороге вещей. Да и,
+возможно, кто-то всё ещё живёт в этой хате...""",
         "results": (
-            """You're commanding {name1}, {name2} and {name3}
-to gear up. People are taking their stuff and moving to the hut.
-Approaching to it they see that the house is long abandoned, but they
-moving into it for a lookup anyway. They splitting up: one person for
-one room. Finding nothing, but dust, within half of hour, almost without
-hope they open a floor basement entrance, and hooray! They see
-several tens of cans! With such a catch, you decided to throw a feast!
-But after several hours it comes clear that food expired.
-All of your teammates are getting -40 energy""",
-            """{name1}, {name2} and {name3} are gearing up for
-a walk. It takes few minutes for them to reach the hut. They see an
-opened door, broken windows and wild weeds right before the entrance -
-looks like this place is long forsaken. "Well, we're already here,
-let's take a look!" - {name2} proposes. People are entering the house,
-and in the next moment {name2}, who went upfront, falls on the ground
-under a dog attack. {name1} and {name3} are raising their guns, but
-they can't shoot, as it's a big risk to shot {name2} instead of the
-big brute. Removing weapons they are getting to {himher2} to fight
-the animal with their hands.
-{name2} getting -20 health and -40 energy
-{name1} and {name3} getting -25 energy""",
-            """You're sending {name1}, {name2} and {name3} for a search.
-People are easy running to the hut and disappearing in it. You're
-looking for them from Train. Time passing, but nothing happens, so
-you're starting to get nervous. Suddenly, you hear cries and two shots.
-That doesn't sound good! Two minutes passes, and finally you're seeing
-your people. They are moving fast to the Train, keeping their backside
-on sights. But no one follows them. Coming closer {name1} explains to
-you what happened back there: "Big dog, looks like it lives there.
-And we found nothing". Your people are getting on the Train in
-disappointed mood, and you're commanding to move.""",
-            """{name1}, {name2} and {name3} are gearing up and taking direction
-to the hut. Approaching to it, they see that wood building is long
-abandoned: weeds are crossing the door, windows are broken, and
-stillness fills the air. {name2} and {name3} are moving into the house, while
-{name1} is standing outside on a watch. It takes a lot of time for {name3}
-to check all the broken furniture in the first room, but {heshe3} finds
-nothing. {name2} appears to become more lucky: {heshe2} managed to
-find 50$ within a lady's old bag. With such a results {name2} and
-{name3} are leaving the silent and dusty house, and joining {name1}
-to get back to Train and others.""",
-            """You're asking {name1}, {name2} and {name3} to go for a
-search. They're taking their things and fastly moving to the hut.
-Splitting up - one person to one room - they are rummaging through old
-broken furniture, clothes that is covering the floor with a thick layer
-of dust, metal dishes and other stuff. Nothing useful comes to your
-messengers for some time. "Oh, I got something!" - {name2} shouts loudly.
-{name1} and {name3} moving to the room {heshe2} was checking, and seeing a
-big tool kit. {name1} and {name2} are taking it together and moving
-back to Train, while {name3} is watching around for possible threats.
-Adjutant durability +100""",
+            """Вы командуете {name1}, {name2} и {name3} собираться в путь.
+Ваши люди берут свои вещи и движутся к хате. Приближаясь,
+они понимают, что она давным-давно заброшена, однако они
+всё же разделяются для поисков - по человеку в каждую
+комнату. За пол часа не найдя ничего, кроме пыли, почти
+без всяких надежд они спускаются в подвал, и ура! Там они
+видят десятки консервных банок. Нагрузившись доверха, они
+возвращаются, и Вы решаете устроить небольшой пир. Однако
+через несколько часов становится ясно, что еда была просрочена.
+Все члены экипажа теряют 40 энергии""",
+            """{name1}, {name2} и {name3} берут своё оружие и снаряжение и
+выступают в путь. За несколько минут они добираются до хаты.
+Они видят открытую дверь, разбитые окна, и дикую траву, что
+растёт прямо перед входом - похоже это место давно заброшено.
+"Ну, мы всё равно уже здесь, давайте посмотрим!" - предлагает
+{name2}. Ваши люди входят в дом, и в следующий момент {name2}
+падает на пол под атакой собаки. {name1} и {name3} поднимают
+оружие, но не могут выстрелить, потому что велик риск попасть
+в {name2}, а не в зверя. Убирая оружие, они помогают товарищу
+справиться с животных при помощи рук и подручных предметов.
+{name2} теряет 20 здоровья и 40 энергии
+{name1} и {name3} теряют 25 энергии""",
+            """Вы отправляете на поиски ресурсов {name1}, {name2} и {name3}.
+Ваши люди лёгким бегом добираются до хаты и исчезают в ней.
+Вы наблюдаете с паровоза. Время идёт, ничего не происходит,
+и Вы понемногу начинаете беспокоиться. Вдруг Вы слышите
+крики и два выстрела. Звучит не очень! Проходит пара минут,
+и Вы, наконец, видите своих людей. Они быстро движутся к
+паровозу, прикрывая тылы, хотя никто не преследует их.
+Подойдя ближе, {name1} поясняет: "Огромная собака, похоже,
+она живёт там. Полезного ничего не нашли." Остальные
+разведчики поднимаются на Адъютанта в разочарованном
+настроении, и Вы приказываете запускать двигатель.""",
+            """{name1}, {name2} и {name3} быстро собираются и берут направление
+на старую хату. Приближаясь к ней, они видят, что древнее
+строение уже давно заброшено: трава выросла даже у самой
+двери, стёкла разбиты, и полная тишина висит в воздухе.
+{name2} и {name3} движутся в дом, пока {name1} остаётся
+снаружи на страже. У {name3} проверка разбитой мебели в
+одной из комнат занимает довольно много времени, но {heshe3}
+ничего не находит. {name2} везёт больше: не без труда
+удаётся найти 50$ в старой женской сумочке. С такими
+результатами {name2} и {name3} оставляют пустой пыльный
+дом, присоединяются к {name1} и движутся к паровозу.""",
+            """Вы отправляете {name1}, {name2} и {name3} на прогулку до старой хаты.
+Они берут свои вещи и быстрым шагом идут к месту. Разделившись
+- один человек в одну комнату - они начинают рыться в старой
+сломанной мебели, одежде, разбросанной по полу в толстом
+слое пыли, металлической посуде и прочем барахле. Ничего
+полезного не попадается им в течении долгого времени. "О,
+у меня что-то есть!" - громко выкрикивает {name2}. {name1}
+и {name3} идут в в комнату, которую {heshe2} проверяет, и
+там видят большой ящик с инструментами. {name1} и {name2}
+берут его вместе и движутся к поезду, в то время, как
+{name3} прикрывает их на случай неожиданностей.
+Адъютант получает 100 Прочности""",
         ),
     },
     {  # 13
         "name": "Монастырь",
-        "desc": """You've caught your eyes on some kind of a big dark spike
-from a very long distance. It was difficult to understand what it
-actually is, but when the Train went around a hill, and the building
-appeared before you in its best, you're seeing an old monastery. Its
-black wood looks rotten, and the big hole on roof makes it clear that
-this building was left years ago. Still the monastery in such a
-wilderness place should have had a big supplies storage. Monks
-probably didn't take everything when they were leaving.""",
+        "desc": """Вы останавливаете свой взгляд на некоем большом тёмном
+шпиле, видном издалека. Поначалу было нелегко понять, что же
+это такое, но когда локомотив объехал холм, и здание
+предстало перед Вами во всей красе, Вы видите старый
+монастырь. Его чёрная деревянная крыша заметно прогнила,
+большая дыра в ней недвусмысленно говорит о том, что здание
+заброшено годы назад. Тем не менее монастырь в таком диком
+месте должен был иметь большой склад припасов. Вряд ли
+монахи, покидая свой дом, забрали всё с собой.""",
         "results": (
-            """You're sending {name1}, {name2} and {name3} to
-the monastery. {name1} and {name3} are entering the old building,
-while {name2} stays outside to cover team mates retreat in case of
-problems. For some time {heshe2} doesn't hear anything, so {heshe2}
-relaxes a little. But in the next minute eerie noise comes from
-the monastery. Taking a look inside {name2} sees that part of the
-roof collapsed! Jumping inside {heshe2} start to call for {name1}
-and {name3}: fortunately both are alive, though it takes some
-time to dig them out of the wreck.
-{name1} and {name3} getting -30 health
-{name2} getting -30 energy""",
-            """{name1}, {name2} and {name3} are moving to the
-monastery. Entering it they see dust, web and a lot of wood wreck.
-Looks like this building is looted long ago. Still {name1}, {name2}
-and {name3} are splitting to search through the place faster.
-Everything goes okay, until {name2} and {name3} hear an awful noise
-and {name1} cry. They run to the sounds source, and find {name1}
-felt through the old wood floor. Putting the guns down they are
-getting to the hole to lift {himher1} from it. Its luck that {heshe1}
-didn't get any injury, only a couple of big scratches.
-{name1} getting -10 health and -15 energy
-{name2} and {name3} getting -10 energy""",
-            """You're letting {name1}, {name2} and {name3} to go for a find.
-They are closing to the monastery fast, but in some moment hear
-strange sounds and shouts. Moving closer to the building, they decide
-to take a look through the window. {name2} sets a knee to give a lift
-to {name3}, while {name1} stands near on a watch for troubles, as in
-this noise they hear human voices, and they are many. Lifting up, {name3}
-takes a look inside the monastery, and sees at least forty people
-in there. Dirty, unkempt and completely crazy, they are ripping to shreds
-several animals and eating them raw, all covered in blood. Seems like kind
-of cultists are celebrating the End of the World. {name3} moves down and
-silently explains what {heshe3} saw. Deciding not to disturb this mad
-gathering, your people returning back to the Train.""",
-            """On your command {name1}, {name2} and {name3} are moving
-to the monastery. First they are approaching the building quietly, but
-soon they see it's completely forsaken long time ago. Entering inside,
-they find a lot of wood wreck. Air smells mold and dust, strong silence
-soar in the old monastery. Walking along the building, your people
-discover a huge wall icon, which seems untouched by time. Colors are
-saturated, lack of any cracks or dirt - it looks surprisingly well
-for this place. {name1}, {name2} and {name3} spending a couple of
-minutes staring at the art object, and its beauty in the midst of
-the old monastery devastation inspires them to survive anything.
-{name1}, {name2} and {name3} getting +20 health""",
-            """By your command {name1}, {name2} and {name3} going to the
-monastery. Entering the old building they see a lot of wood and metal
-wreck. Nothing valuable though, so they are splitting for a more
-careful search. {name3} chooses the basement and goes down into it.
-Walls looking wet, spider web is everywhere, but {heshe3} sees a big chest
-in the first second. The rusty lock doesn't want to broke, so {name3}
-calls others. {name1} and {name2} are coming into the basement and with
-strength of the three they manage to open the chest. What's the pleasure
-when they see gold dishes in it! These can be sold for a good money!
-You're getting +40$""",
+            """Вы отправляете {name1}, {name2} и {name3} на разведку в старый
+монастырь. {name1} и {name3} входят в сырое холодное здание,
+а {name2} остаётся снаружи на случай если придётся прикрывать
+огнём отступающих товарищей. Некоторое время {heshe2} не
+слышит ничего особенного, поэтому расслабляется. Однако в
+следующую минуту жуткий шум исходит из монастыря. Заглянув
+внутрь, {name2} видит, что часть крыши обрушилась! Войдя
+в здание, {heshe2} начинает звать {name1} и {name3}: к счастью
+оба живы, хотя на то чтобы раскопать их уходит время.
+{name1} и {name3} теряют 30 здоровья
+{name2} теряет 30 энергии""",
+            """{name1}, {name2} и {name3} берут направление на заброшенный
+монастырь. Входя в него, они видят пыль, паутину и множество
+деревянного лома. Похоже, здание давно разграблено. Всё же
+{name1}, {name2} и {name3} разделяются, чтобы обыскать
+место быстрее. Всё идёт хорошо, пока {name2} и {name3} не
+слышат жуткий шум и крик {name1}. Они бегут к источнику звука
+и обнаруживают {name1} по пояс в деревянном полу. Убирая
+оружие, они подходят ближе и вытаскивают {name1} из провала.
+К всеобщей удаче, {heshe1} не получает серьёзных ран, только
+несколько болезненных царапин.
+{name1} теряет 10 здоровья и 15 энергии
+{name2} и {name3} теряют 10 энергии""",
+            """Вы разрешаете {name1}, {name2} и {name3} отправиться на небольшую
+разведку. Они быстро приближаются к монастырю, но в некоторый
+момент слышат странные звуки вперемешку с выкриками. Подходя
+ближе, они решают сначала заглянуть через окно. {name2}
+подставляет колено, чтобы {name3} удалось дотянуться до проёма
+в стене, а {name1} прикрывает их, ведь в шуме звучат голоса
+и их много. Поднявшись, {name3} заглядывает внутрь и видит не
+менее сорока людей. Грязные, заросшие, безумные, они рвут туши
+нескольких животных и едят их сырыми, все покрытые кровью.
+Видимо, культисты празднуют Конец Света. {name3} спускается на
+землю и тихо объясняет остальным ситуацию. Решив не беспокоить
+это безумное скопище, Ваши люди возвращаются на паровоз.""",
+            """По Вашей команде {name1}, {name2} и {name3} собираются и движутся
+к монастырю. Они приближаются к зданию тихо, но вскоре понимают,
+что оно пусто уже очень и очень давно. Войдя внутрь, они видят
+много деревянного лома. Воздух пахнет пылью и плесенью, густая
+тишина висит в старом монастыре. Пройдя по зданию, Ваши люди
+находят на стене огромную икону, ни чуть не тронутую временем.
+Яркие цвета, отсутствие трещин и грязи - она выглядит просто
+удивительно хорошо для этого места. {name1}, {name2} и {name3}
+пару минут смотрят на объект искусства, и эта красота посреди
+полной разрухи старого монастыря вдохновляет их.
+{name1}, {name2} и {name3} получает 20 здоровья""",
+            """По Вашей команде, {name1}, {name2} и {name3} движутся в направлении
+монастыря. Входя в старое здание, они видят горы деревянного
+и металлического лома. Ничего ценного на первый взгляд, но они
+разделяются для более тщательного поиска. {name3} выбирает
+подвал. Его стены выглядят влажными, повсюду висит паутина,
+но {heshe1} в первую же секунду замечает большой сундук.
+Ржавый замок не хочет ломаться, поэтому {name3} зовёт остальных.
+{name1} и {name2} спускаются в подвал, и общими усилиями они
+вскрывают сундук. К их удовольствию, внутри обнаруживается
+золотая посуда. Вряд ли очень ценна сегодня, но продать можно!
+Вы получаете 40$""",
         ),
     },
     {  # 14
         "name": "Грузовик",
-        "desc": """You're looking at the horizon line trying to find a sign of
-a civilization. A couple of hours passed, and there were no single
-building, litter or any other sign of human. What are these wild
-plains? But once a distant grey spot attracts your eyes. You're
-taking a look at it through your binocular. Truck! Even from that
-big distance you can say it is damaged bad: at least one wheel is
-ripped off and the metal cargo hold is dented. Still, you can
-afford a short stop and fast recon of the transport crash site.
-It's not accurate to say from that distance, but looks like there
-are a lot of things scattered around it.""",
+        "desc": """Вы всматриваетесь в линию горизонта, пытаясь найти хоть один
+признак цивилизации. Пара часов прошла, а Вы не видели ни одного
+здания, какого-нибудь мусора или других следов человека. Что это
+за дикий регион? Однако серая точка вдали привлекает Ваше
+внимание. Вы смотрите на неё в бинокль. Грузовик! Даже с такой
+дистанции можно сказать, что он серьёзно повреждён: как минимум,
+одно колесо оторвано, а металлический кузов сильно помят. Что ж,
+можно позволить себе небольшую разведку места аварии. Трудно
+утверждать это с такой большой дистанции, но, похоже, вокруг
+машины разбросано весьма много всякой всячины.""",
         "results": (
-            """{name1} and {name2} are going to the distant truck in
-hope to find something valuable there. It takes at least a half of hour
-for them to get to the transport. Looking through a binocular you see
-them walking around the car, squatting, touching some stuff lying
-all around the truck... Time passes and passes, but you don't detect
-any signs of a lucky find. Spending few more minutes there {name1}
-and {name2} are returning back to the Train. "Someone outstripped
-us." - {name2} explains. - "And didn't left a tiny bit of the cargo." """,
-            """You're commanding {name1} and {name2} to go to the
-truck and do a search through its last resting place. They are running to
-the spot energetically and starting to rummage in the broken plastic boxes
-lying near the car. Most part of them are already emptied by someone
-else, but {name1} and {name2} not losing hope. And after rummaging not
-less than twenty containers they finally see one untouched. Opening it
-they are staring at a bunch of metal details. And tools! "With this stuff
-we can repair our Train a little!" - {name2} whopping. They are taking
-the box together and returning back to you with it.
-Adjutant durability +50""",
-            """You're sending {name1} with {name2} to take a look
-at the crash site. {name2} takes a big backpack in hope there will be
-something to bring back. Both they are moving to the damaged truck
-and starting to search through the plastic boxes scattered around the
-place. At the first minute they understand that someone already emptied
-every container at the place, probably, the same one who attacked the
-truck - they see a lot of sleeves, shot holes and some blood spots.
-Taking a look inside the car cabin, {name2} finds that it wasn't looted
-somewhy, and there is a small black plastic box with several syringes
-inside. Gazing at the label carefully, {name2} understands that it's
-some kind of a not very legal doping. Well, it's still something!
-You're getting 1 stimulator""",
-            """{name1} and {name2} are taking their guns and going
-to the damaged truck. Fastly closing to it, they see a lot of sleeves and
-shot holes - it's not just a crash, someone attacked the transport! There
-are no bodies around, but your people notice several big and dark blood
-spots. They are exchanging their glances and starting to open plastic
-containers left right on the road one by one. Mostly they are empty, but
-in one of them {name1} finds a couple of aid kits. The first one seems
-damaged bad, but the second looks okay, so {name1} grabs it. As {name2}
-didn't find anything, but broken containers, your people returning
-back to the Train with this only find.
-You're getting +1 medicine""",
-            """By your command {name1} and {name2} are gearing up and
-taking a walk to the truck. Coming closer to it they see that a big fight
-was here. Looks like a gang attacked the transport to rob it or something
-like that. {name1} and {name2} starting to rummage through the boxes
-scattered all around. The fight site appears to be looted several times
-by different people, hopes to find something useful are fading with every
-second, but suddenly {name2} sees an untouched container with energy
-drinks. "Hey, {name1}, come here!" - {heshe2} shouts They are taking
-the box together to bring it back to the Train.
-Every character getting +35 energy""",
+            """{name1} и {name2} движутся к стоящему вдали грузовику в
+надежде найти что-нибудь полезное в дороге. Путь до места
+занимает у них около получаса. Наблюдая за ними в бинокль,
+Вы видите, как они ходят вокруг грузовика, роются,
+осматривают вещи, разбросанные вокруг... Время идёт и идёт,
+но Вы не замечаете никаких признаков удачи. Проведя ещё
+немного времени там, {name1} и {name2} возвращаются обратно
+на локомотив. "Кто-то нас опередил." - поясняет {name2}.
+- "И не оставил ни единой частицы ценного." """,
+            """Вы даёте команду {name1} и {name2} пойти к грузовику и основательно
+его обыскать. Они устало бегут к месту и начинают рыться
+в разбитых пластиковых коробках, лежащих у машины. Большая
+их часть уже кем-то опустошена, но {name1} и {name2} не
+теряют надежды. И после осмотра не менее двенадцати
+контейнеров они, наконец-таки, видят один нетронутый.
+Открывая его они видят кучу металлических деталей. И
+инструменты! "Это борохло поможет нам держать Адъютанта
+на ходу." - объявляет {name2}. Они вместе берут тяжёлую
+коробку и тянут её обратно к локомотиву.
+Адъютант получает 50 Прочности""",
+            """Вы отправляете {name1} с {name2} на осмотр места крушения. {name2}
+берёт целый рюкзак в надежде на то, что будет что принести
+назад. Оба они движутся к разбитой машине и начинают поиски
+среди пластиковых коробок, разбросанных повсюду. В первую же
+минуту они понимают, что кто-то уже опустошил большинство
+контейнеров, вероятно, тот же, кто атаковал машину - они
+видят множество гильз, дыр от пуль и пятен крови. Заглянув
+в кабину грузовика, {name2} видит, что её таки не разграбили,
+и находит в ней чёрную пластиковую коробку со шприцами.
+Внимательно рассматривая этикетки, {name2} понимает, что
+это некий не особенно легальный допинг. И то ладно!
+Вы получаете 1 Стимулятор""",
+            """{name1} и {name2} берут своё оружие и, перекинувшись парой слов,
+идут к грузовику. Быстро приближаясь к нему, они видят
+множество гильз и дыр от пуль - это не просто авария, кто-то
+напал на транспорт. Тел поблизости нет, но Ваши люди
+замечают несколько больших тёмных кровавых пятен. Они
+переглядываются и начинают открывать разбросанные вокруг
+контейнеры один за другим. Большинство из них уже пусты, но
+в одном {name1} видит аптечку. {name2} не находит ничего
+полезного, только сломанные пластиковые коробки, так что
+с одной аптечкой Ваши люди и возращаются на паровоз.
+Вы получаете 1 Лекарство""",
+            """По Вашему приказу, {name1} и {name2} собираются и берут направление
+на грузовик. Подходя ближе, они видят, что здесь была
+большая перестрелка. Похоже, целая банда атаковала машину
+в надежде ограбить её или что-то в этом роде. {name1} и
+{name2} начинают рыть в коробках, разбросанных вокруг. Судя
+по всему, место боя несколько раз обчистили разные люди,
+надежда найти что-нибудь полезное угасает с каждой секундой,
+но вдруг {name2} видит нетронутую коробку с энергетиками. "Эй,
+{name1}, давай сюда!" - выкрикивает {heshe2} напарнику. Вместе
+они берут коробку и тянут её к локомотиву.
+Каждый член экипажа получает 35 энергии""",
         ),
     },
     {  # 15
         "name": "Дым",
-        "desc": """From a very long distance you are seeing a big, wide
-straight column of thick grey smoke, rising from the forest in a
-couple of kilometers from the railway. That seems questionably.
-It can be either a big bonfire in a large human camp, or a forest
-conflagration. In both cases the situation can turn very dangerous
-for your messengers, so it makes sense to send several tough
-fighters to see what's going on there.""",
+        "desc": """С очень большого расстояния Вы замечаете огромный толстый
+прямой столб густого серого дыма, поднимающийся из леса в
+паре километров от железной дороги. Несколько сомнительно.
+Это может быть как большой костёр в крупном лагере, так и
+лесной пожар. В обоих случаях ситуация может обернуться
+весьма серьёзными опасностями для Ваших посланников, так
+что стоит отправлять только самых опытных бойцов.""",
         "results": (
-            """You're sending {name1}, {name2} and {name3} for a recon,
-admonishing them to be careful and cautious. Your people taking
-a direction to the wide smoke column. It takes fifteen minutes for
-them to come to the place, where they see a lot of fire sources. That's
-definitely a forest conflagration! Not thinking too long, your people
-turning around and moving back to the Train. The dense smoke doesn't
-give an opportunity to navigate the way, so your messengers are
-moving astray along the forest, consumed by flames, trying to find
-the right direction for not less than half of hour. Finally, they
-see the Train main lighter you're turned on to help them to get out.
-Covered with soot and small scorches, inhaled smoke they are
-getting back on the machine.
-{name1}, {name2} and {name3} getting -20 health""",
-            """Your recon party is moving to the pillar of grey smoke.
-You're tracking their progress from the Train through binoculars. Your
-people are running to the forest spot fast and disappear between dark
-green trees. Thick grey smoke rises and rises, getting more wide with
-every minute. No, it's not a bonfire, it's definitely a conflagration.
-Time passes, and you're becoming nervous, as three of your team
-mates are not showing up. Maybe it's worth to walk to the place by
-yourself... Finally, you see them! Slow and tired, they return back
-to the Train, inhaled a lot of smoke and probably intoxicated.
-{name1}, {name2} and {name3} getting -25 energy.""",
-            """{name1}, {name2} and {name3} are taking a direction to the smoke
-column, by your command. Running fast, they come to the place in
-twelve minutes and see a small wood hut, engulfed in flames. As there
-are no screams or any movement, they could say there is no people
-inside, at least, alive. The hut itself looks really ancient, it's most
-likely was long forsaken. {name1}, rubbing {hisher1} forehead, warmed up by
-the fire, makes a step back: "Let's go until it's grown into the forest
-conflagration, and locked us inside a ring of flames!". Without any
-arguments {name2} and {name3} turning around and taking a direction
-back to the Train.""",
-            """By your order, {name1}, {name2} and {name3} run to the grey
-smoke column. Getting closer, they see a lot of red spots between
-the trees - it's a forest conflagration, a big one! Throwing a
-gaze to others, {name2} suddenly proposes: "Let's go hunting!
-Animals will run chaotically away from flames and smoke, and food
-is something we always need." Thinking a couple of seconds,
-{name1} and {name3} agree on that, and they three are going to
-the forest... After twenty minutes of hunting they getting a deer.
-Not very big, but it's even better - not a problem to get it to
-the Train. "With this meat we can save some proviant money!" -
-{name2} declares. - "Good job!"
-You're getting +50$""",
-            """Leaded by your order, {name1}, {name2} and {name3} moving
-in the smoke column direction. Quickly getting to the place, they see a
-big military truck, exploded with rocket launcher a couple of hours ago.
-Blood, glass, metal and body parts of several soldiers are scattered all
-around. Getting closer to the truck cargo hold, your people see big boxes
-traces on the ground - somebody already looted the place. Still, {name3}
-jumps onto the truck to take a closer look at the inner part of the
-cargo hold. To everyone's joy, {heshe3} moves outside the car with a
-big plastic box of tools. Seems like assaulters have only taken weapons.
-Adjutant durability +100""",
+            """Вы отправляете {name1}, {name2} и {name3} на разведку места, прося
+их быть осторожными. Ваши люди берут направление на колонну
+дыма. Путь до источника огня у них занимает пятнадцать минут.
+Определённо, это лесной пожар! Не размышляя слишком долго,
+Ваши люди разворачиваются и идут обратно к локомотиву.
+Густой дым не даёт возможности сориентироваться на местности,
+так что Ваши посланники долго блуждают по лесу, поглощаемому
+пламенем, пытаясь найти верное направление. Проходит не
+менее получаса, прежде чем они, наконец, видят прожектор
+локомотива, который Вы включили, чтобы помочь им. С ожогами
+и надышавшиеся дымом, они забираются на паровоз.
+{name1}, {name2} и {name3} теряют 20 здоровья""",
+            """Ваша разведывательная группа движется к колонне серого
+дыма. Вы следите за их прогрессом через бинокль с локомотива.
+Ваши люди бегут к лесному массиву быстро и исчезают между
+тёмными стволами деревьев. Густой дым всё идёт и идёт,
+становясь шире с каждой минутой. Нет, это не костёр, это
+точно пожар. Время идёт, Вы начинаете нервничать, потому
+как три члена Вашего экипажа никак не появляются. Может,
+стоит отправиться туда самому... Наконец, Вы видите их!
+Медленные, уставшие, надышавшиеся дыма, они
+забираются обратно на локомотив.
+{name1}, {name2} и {name3} теряют 25 энергии""",
+            """{name1}, {name2} и {name3} берут направление на колонну дыма, по
+Вашей команде. Быстрым бегом они добираются до места за
+двенадцать минут и видят небольшую деревянную хату,
+охваченную огнём. Так как не раздаётся никаких криков, и
+незаметно движения внутри, надо думать, что никого там
+нет, по крайней мере, живого. Сама хата выглядит древней,
+вероятно, её давно уже бросили. {name1} потирает лоб,
+нагретый огнём, и делает шаг назад: "Давайте возвращаться,
+пока не начался лесной пожар, и мы не оказались внутри
+кольца пламени." Без возражений {name2} и {name3}
+поворачиваются на месте, и вместе они движутся к поезду.""",
+            """По Вашему приказу, {name1}, {name2} и {name3} бегут к серой колонне
+дыма. Приближаясь к ней, они видят множество огненных
+пятен между деревьями - это лесной пожар, весьма большой!
+Бросив взгляд на остальных, {name2} вдруг предлагает:
+"Давайте поохотимся! Животные будут хаотично бежать как
+можно дальше от огня и дыма, а еда нам всегда пригодится."
+Поразмыслив несколько секунд, {name1} и {name3} соглашаются,
+и втроём они углубляются в лес... Через двадцать минут охоты
+им удаётся добыть оленя. Небольшого, но оно и к лучшему - не
+проблема дотащить его до паровоза. "С этим мясом мы
+сэкономим на провианте!" - объявляет {name2}. - "Удачно!"
+Вы получаете 50$""",
+            """Ведомые Вашим приказом, {name1}, {name2} и {name3} движутся в
+сторону колонны дыма. Быстро добравшись до места, они видят
+большой военный грузовик, разорванный гранатомётом с пару
+часов назад. Кровь, стекло, металл, части тел нескольких
+солдат разбросаны по земле. Подходя ближе к грузовому отсеку,
+Ваши люди видят следы больших коробок на земле - кто-то уже
+ограбил это место. Тем не менее, {name3} запрыгивает в
+авто, чтобы внимательно осмотреться внутри грузового
+отсека. К общей радости, {heshe3} выпрыгивает из машины с
+большим пластиковым ящиком инструментов. Похоже,
+нападавшие забрали из грузовика только оружие.
+Адъютант получает 100 Прочности""",
         ),
     },
     {  # 16
         "name": "Силос",
-        "desc": """When the Train started to move along sown fields, you've
-concentrated your gaze. Where fields, there are people and
-resources. And, yes, in some moment you see a big brown silo.
-While the Train is getting closer, you discerning a couple of
-small buildings near the metal reservoir as well. From that
-distance they look quiet and deserted, but they are definitely
-in a very good shape, so they are, probably, populated. It's
-worth to send a couple of your people to check if there is
-something useful for a road in there.""",
+        "desc": """Когда поезд начал двигаться вдоль скошенных полей, Вы
+сконцентрировали свой взгляд. Где поля, там и люди, и ресурсы.
+И, да, в какой-то момент Вы видите большой коричневый силос.
+Пока паровоз приближается к нему, Вы различаете пару небольших
+строений рядом с металлическим резервуаром. С такой дистации
+они выглядят пустынными, брошенными, но они, определённо, в
+весьма хорошем состоянии, а значит, вероятно, населены. Стоит
+отправить пару человек, чтобы проверить, нет ли там чего
+полезного в дороге.""",
         "results": (
-            """{name1} and {name2} becomes your messengers this time.
-They cross the silent wheat field without any sign of trouble, but,
-getting closer to the buildings, both rising their weapons. {name1}
-points to the small hut first, and they take the direction to it.
-Suddenly, they hear some kind of a stomp, and in the next moment
-giant bull pushes {name1} with his brown head, knocking {himher1}
-down to the ground. {name2} lighting rapid turns around and shots
-near the bull's legs, but the animal doesn't pay any attention and
-prepares to kick {name1} again. Turning {hisher2} gun into its head,
-{name2} kills the brute. In the next second {heshe2} sees two more
-bulls moving out of the barn, and that is enough for {himher2} to help
-{name1} get up and spurt back to the Train.
-{name1} getting -35 health""",
-            """{name1} and {name2}, chosen by you as a recon party,
-are heading to the brown metal cylinder of the silo. Field and the
-buildings looking quiet, only wooden creak sometime sounds in air.
-Still, getting closer to the place, your people start to suspect something
-wrong, as there are bullet holes on the walls, window glass, and smell of
-death flyes in the air. Silently moving through the buildings, {name1}
-and {name2} doesn't see anything useful, anything at all, like somebody
-cleared the house without remainder. Deciding to take a look at the silo
-itself, your people are getting to it and opening the metal door. All of
-a sudden, black swarm of flies breaks out of the silo, and your
-teammates see tens of dead bodies in there. "Let's go, before the author
-came back!" - {name1} says, and they both fastly turning back.
-{name1} and {name2} getting -15 energy""",
-            """{name1} and {name2}, by your order, taking their gear
-and moving to the silo. Nothing promises any troubles, but when
-your people are getting closer to the buildings, four men with
-guns showing up. They all look like hereditary rednecks, but
-their M16 and Beretta's shine like it's a special forces
-property. "What do you want? You doesn't look like skinheads."
-- an old man steps forward. {name1} and {name2} exchange
-glances, but before they started to talk, the man continues:
-"We don't wanna hurt anyone, but you better go away". {name1}
-makes a step back: "No problem, we'll go". Not touching locals,
-your people making a slow turn around and heading back to you.""",
-            """You're commanding {name1} and {name2} to go for a recon.
-Your teammates are closing to the place, but four hulk rednecks with
-guns appearing towards them. {name1} and {name2} stopping, trying to show
-they are not going to attack. An old man makes a step forward: "Aren't
-you folks, who came from abroad, and now killing skinheads all around?"
-{name1} and {name2} exchange their gazes. "Sounds like us" - {name2} answers.
-"Benny, give them some paper!" - old man shouts. Tall redneck makes
-several long steps towards your people and holds out a 50$ banknote.
-"Those bastards killed a lot of good folks around here." - the old man
-pronounces loudly. - "Thanks for clearing this filth. Keep up the good
-work!" - he uppers his hand, and all of the rednecks are turning back
-to their place. In good mood your people returning to you.
-You're getting +50$""",
-            """You're sending {name1} and {name2} to take a closer look
-at the place. Your messengers closing to the silo; silence meets them,
-so they entering inside the buildings. The lack of any furniture
-or sign of people - seems like the place was forsaken some time ago,
-and hosts have taken everything with them. Walking outside the last
-of three buildings, {name1} points to the metal cylinder of silo
-with {hisher1} head. {name2} agrees on that, and they both getting
-closer to it. Opening the steel door, they see that there is no
-even a gram of grain. But pointing a flashlight inside the structure,
-they catch their eyes on two metal boxes. {name2} jumps inside
-and opens the first one: medicines! "Whoh!" - {heshe2} shouts and
-opens the second one: a smoke filter! Now, that's a find!
-You're getting 1 smoke filter and 1 medicine""",
+            """{name1} и {name2} становятся Вашими посланниками. Они
+без проблем пересекают скошенное поле, подходят к строениям
+и поднимают оружие. {name1} указывает на хату, и они идут к
+ней. Вдруг они слышат какой-то топот, и в следующий момент
+огромный бык толкает {name1} своей коричневой головой,
+сбивая с ног. {name2} разворачивается и стреляет у копыт
+быка, но животное не обращает на это внимания и берёт разгон
+снова. Прицелившись ему в голову, {name2} убивает зверя. В
+следующую секунду {heshe2} видит ещё двух быков, выходящих
+из сарая, и этого уже достаточно, чтобы {name2} и {name1}
+рванули обратно к паровозу.
+{name1} теряет 35 здоровья""",
+            """{name1} и {name2}, выбранные Вами в качестве развед группы,
+направляются к коричневому цилиндру. Поле и здания тихи, лишь
+периодически звучит деревянный скрип. Подходя ближе, однако,
+Ваши люди начинают подозревать неладное - всюду дыры от пуль,
+стекло, и запах смерти витает в воздухе. Тихо двигаясь к
+зданиями, {name1} и {name2} не видят ничего полезного, будто
+некто зачистил место без остатка. Решив осмотреть сам силос,
+Ваши люди подходят к нему и открывают металлическую дверь.
+Изнутри вырывается рой чёрных мух, и Ваши посланники видят в
+силосе десятки трупов. "Пошли, пока автор не вернулся!" -
+говорит {name1}, и они оба поворачивают назад.
+{name1} и {name2} теряют 15 энергии""",
+            """{name1} и {name2}, по Вашему приказу, собирают своё снаряжение
+и движутся к силосу. Ничего не сулит неприятностей, но когда
+Ваши бойцы подходят ближе к зданиями, из ниоткуда возникает
+четыре вооружённых человека. Они выглядят потомственными
+фермерами, но их М16 и беретты блестят так, будто это
+собственность ЦРУ. "Что Вам нужно? Вы не похожи на
+скинхедов." - вперёд выступает старик. {name1} и {name2}
+переглядываются, но до первого их слова старик добавляет:
+"Мы никому не желаем вреда, но Вам лучше уйти." {name1}
+делает шаг назад: "Без проблемы, мы уйдём." Ваши люди
+медленно разворачиваются и возвращаются к Вам.""",
+            """Вы отправляете {name1} и {name2} разведать место. Они приближаются
+к строениям, но навстречу им выходят вооружённые фермеры. {name1}
+и {name2} останавливаются, показывая, что не собираются
+атаковать. Старик выходит вперёд: "Это Вы из-за границы
+и стреляете скинхедов повсюду?". {name1} и {name2}
+переглядываются: "Звучит похоже." - отвечает {name2}. "Бенни,
+дай им бумаги!" выкрикивает старик. Высокий детина подходит к
+Вашим людям и протягивает 50$. "Эти скоты подлючие убили много
+хороших людей в округе." - громко произносит старик. -
+"Спасибо, что бьёте падаль. Продолжайте!" - он поднимает
+руку, и все они разворачиваются обратно к дому.
+Вы получаете 50$""",
+            """Вы отправляете {name1} и {name2} взглянуть на место поближе.
+Они приближаются к силосу, тишина встречает их, так что они
+спокойно входят в здания. Мебель и, вообще, следы человека
+отсутствуют - похоже, место заброшено, хозяева забрали всё
+ценное. Обойдя ещё три здания, {name1} кивает на железный
+силос. {name2} соглашается, и они вдвоём приближаются к
+нему. Открывая стальную дверь, они видят, что внутри нет ни
+грамма зерна, однако, осветив фонарём строение, они
+обнаруживают два металлических ящика. {name2} запрыгивает
+внутрь и открывает первый: медикаменты! "Вух!" - выкрикивает
+{heshe2} и открывает второй: фильтр! Находка так находка!
+Вы получаете Фильтр дыма и Лекарство""",
         ),
     },
     {  # 17
         "name": "Сарай",
-        "desc": """Gazing at the horizon line, you've been overlooking corn fields
-for the last two hours. But suddenly you see a big dark wooden
-barn, standing on the edge of the green field, a little covered
-with snow. Large entrance gates are opened, but lack of chains and
-locks makes you think it was never actually closed. So, it can be
-a good place for looting as well as just an empty building. Who
-should be sent to clarify the situation?""",
+        "desc": """Наблюдая за линией горизонта, Вы видите лишь кукурузные поля
+в течении двух часов. Но вдруг большой сарай из тёмного
+дерева, стоящий прямо посреди зелёного луга, немного
+покрытого снегом, привлекает Ваше внимание. Огромные
+входные ворота открыты, но отсутствие цепей и замков
+заставляет Вас думать, что их никто и не закрывал.
+Значит, это может быть неплохим местом для поиска
+ресурсов. Кого следует отправить на осмотр?""",
         "results": (
-            """{name1}, chosen as your messenger, takes {hisher1} gear
-and runs to the barn fast. You're staying sharp, looking at the
-nearlands very careful, but nothing promises any troubles. Entering
-the barn in the meantime, {name1} sees several old naked bodies,
-hanged from the ceiling. Big numbers of bruises and dry blood
-saying that these people were tortured. Moving {hisher1} eyes out
-of the terrible sight, {name1} walks to the table, covered with
-different stuff. Passports. Opening them one by one, {name1} sees
-that all of them are foreign. Looks like this place belonged to
-skinheads, and here they were killing those, who came from abroad.
-Throwing the last gaze at the hanged, {name1} exits the barn.
-{name1} getting -35 energy""",
-            """You're sending {name1} to recon the old building.
-Jumping off the locomotive, {heshe1} takes a direction to the barn,
-but in the next moment you see a fire flash in the gates opening.
-A big rocket with a loud hiss flies in the direction of the train
-and explodes just in a couple of meters aside of its wheels. {name1}
-makes several shots, and in the next second a man in a brown coat
-falls from behind the gates. You're nodding to {name1}, permitting
-{himher1} to take a look at the barn. Jumping off the locomotive,
-you're observing the wheels: damage doesn't seem very serious, still,
-it's damage. {name1} in the meantime exits back, showing that
-there was nothing interesting inside the wooden barn.
-Adjutant getting -60 durability""",
-            """As the barn doesn't seem to be very inhabited
-and it stands very close to the railway, you're deciding to send
-{name1} just alone. Not poking around too long, {heshe1} runs to
-the building, enters it and observes emptiness. It's clear that
-owner took everything useful and flew away. The only strange
-detail is several horse skeletons. They were left here, on leashes,
-and now seem to be dead for a very long time. Not the most humane
-decision! Still, we don't know what actually happened here, maybe
-it's not what it looks like. Anyway {name1} returns back empty.""",
-            """{name1}, chosen as your messenger, takes {hisher1}
-gear and moves to the old barn. Quetly entering the building, {heshe1}
-sees several horse skeletons on a leashes; the place seems to be not
-looted, so it can be said the owner leaved the barn in a hurry.
-Walking around, {name1} catches {hisher1} eyes on an aid kit. It looks to be
-intended for animals, but inside {name1} finds several syringes that
-can be also useful for humans. Nothing more attracts your messenger
-attention, so {heshe1} takes medicines and returns back to the Train.
-Single character can get +30 health""",
-            """{name1}, driven by your command, jumps to the ground and
-moves to the wooden barn. Nothing promises troubles, so {heshe1} enters
-inside and starts to rummage through the old stuff. The place doesn't
-seem looted, but all the things are really ancient - horse leashes, rusty
-tools, dark blue cloth pieces... The owner probably was a jockey - {name1}
-see several saddles and a blue jockey suit. Almost without hope your
-envoy opens a first aid kit and finds a horse doping there. Hm-m, it
-can be diluted and used for people as well. {name1} decides to take
-the syringe and go back to the train, as there is nothing more in here.
-You're getting 2 stimulators""",
+            """{name1}, выбранный Вами для операции, берёт своё снаряжение
+и быстро бежит к сараю. Вы остаётесь наготове, внимательно
+осматриваете округу, но ничего не обещает неприятностей.
+Входя в сарай, {name1} видит несколько старых тел без
+одежды свисающих с потолка. Большое количество ссадин и
+сухой крови показывают, что этих людей пытали. Отведя глаза
+от жуткого зрелища, {name1} подходит к столу, покрытому
+различным барахлом. Паспорта. Открывая их, {name1} видит,
+что все они зарубежные. Похоже, место принадлежит скинхедам,
+здесь они убивают тех, кто приехал в их страну. Бросив
+последний взгляд на повешенных, {name1} выходит наружу.
+{name1} теряет 35 энергии""",
+            """Вы отправляете {name1} на разведку этого старого строения.
+Спрыгивая с локомотива, {heshe1} берёт направление на сарай,
+но в следующий момент Вы видите вспышку огня в открывающихся
+воротах. Большая ракета с шипением летит в направлении паровоза
+и взрывает всего в паре метров от его колёс. {name1} делает
+несколько выстелов, и в следующую секунду человек в коричневом
+плаще у ворот падает. Вы киваете {name1}, разрешая осмотреть
+сарай, и спрыгиваете с локомотива, чтобы осмотреть колёса:
+урон не то чтобы большой, но это всё же урон. {name1} тем
+временем выходит наружу, показывая, что ничего
+интересного в старом деревянном сарае не нашлось.
+Адъютант теряет 60 Прочности""",
+            """Так как сарай выглядит довольно заброшенным и стоит близко
+к железной дороге, Вы решаете отправить {name1} в одиночку.
+Не копошась, {heshe1} бежит к старому строению, входит и
+видит полную пустоту. Очевидно, хозяин собрал всё, что мог,
+и покинул это место. Странно только видеть несколько лошадиных
+скелетов... Животные были оставлены здесь, на привязи, и,
+похоже, умерли уже очень давно. Не самый гуманный поступок!
+Что ж, мы не знаем, что здесь на самом деле произошло, может,
+всё не то, чем кажется. В любом случае {name1} уходит ни с чем.""",
+            """{name1}, выбранный Вами разведчиком, собирается в путь и
+движется к старому сараю. Тихо входя внутрь, {heshe1} видит
+несколько лошадиных скелетов на привязи; место выглядит
+не особо зачищенным, вероятно, хозяин уходил в спешке.
+Обходя место, {name1} останавливает взгляд на аптечке. Похоже,
+она предназначена для животных, но внутри {name1} находит
+несколько шприцев и лекарства, применимые к людям. Ничего
+более не привлекает внимание Вашего посланника, так что
+{heshe1} берёт медикаменты и возвращается к поезду.
+Один человек может получить 30 здоровья""",
+            """{name1}, по Вашему приказу, спрыгивает с поезда на землю и
+движется к деревянному сараю. Ничто не обещает проблем, так
+что {heshe1} входит и начинает перебирать старый хлам. Место,
+похоже, не разграблено, но всё, что здесь есть, выглядит
+древним - лошадиные привязи, инструменты, тёмно-синие куски
+ткани... Владелец, видимо, был жокеем - {name1} видит
+несколько седел и синий жокейский костюм. Почти без надежды
+Ваш посланец открывает одну из аптечек и находит лошадиный
+допинг. Хм-м, можно разделить на несколько человек. {name1}
+решает взять хотя бы его, так как ничего другого здесь нет.
+Вы получаете 2 Стимулятора""",
         ),
     },
     {  # 18
         "name": "Стоянка",
-        "desc": """From at least 500 meters you've caught your eyes
-on some kind of a rubbish pile. Dark cloth pieces, black heaps
-of bonfires and several colored plastic boxes... Getting
-closer to the place, you understand, that it was a temporary
-camp, most likely of foreigners, who came to Silewer in
-search of a shelter. Well, that makes sense to take a look
-at the place, maybe something useful left there. One
-messenger should be enough.""",
+        "desc": """Примерно с пятиста метров Вы останавливаете свои глаза
+на какой-то куче мусора. Тёмные куски одежды, чёрные остатки
+костров и несколько цветных пластиковых коробок... Подъезжая
+ближе, Вы понимаете, что это был временный лагерь, скорее
+всего, иностранцев, тех, кто приехал в Сайлевер в поисках
+убежища. Что ж, есть смысл осмотреть место, наверняка, эти
+люди забыли что-нибудь, что может помочь Вам в дороге.
+Одного разведчика здесь должно быть достаточно.""",
         "results": (
-            """You decide to send {name1} into the camp for a recon of
-the place. As the nearlands are very open, only several trees
-obstruct the gaze, you don't expect any troubles. {name1} gets
-closer to the camp remnants, inclines and starts to rummage through
-the things scattered around. Nothing attracts {hisher1} attention
-for a very long time: empty cans, plastic bottles, cling film, and
-nothing interesting. But in some moment {heshe1} sees a big cauldron,
-covered with metal cap. Unlikely it's worth checking, but {name1}
-opens it, and recoils in the same second - a vile cloud of rotten
-food flyes from under it. Coughing wildly, {name1} turns back to
-you. It appears, the things left in the cauldron was so ancient
-that became even little bit poisonous.
-{name1} getting -25 health.""",
-            """You're choosing {name1} as a messengers for this recon.
-Without delays, {heshe1} takes {hisher1} gun and jumps down to the ground.
-The pale grass, covered with water because of the cold air and the
-locomotive warmth faced with each other, appears to be very slippery.
-{name1}, touching it with {hisher1} legs, loses balance, and falls to
-the ground. You see several papers flying out of {hisher1} pocket, and
-by wind blowing raise up really fast. {name1} gets up, and you try to
-find the loss with your eyes, but looks like the papers flew away.
-Recounting {hisher1} money, {name1} pronounces sadly: "Thirty dollars!
-It's about thirty dollars just got lost in wind."
-You're losing 30$""",
-            """You're sending {name1} for a fast overview of the camp
-remnants. Taking the gun, {heshe1} jumps off the locomotive, and runs
-to the place. It looks like someone attacked the refugees, as there
-are several dark red blood spots on the grass, and bullet liners are
-shining here and there. There are no bodies, but if there was something
-useful in this place, it's already taken. Making a couple of circles
-around and carefully looking at what's left, just for sure, {name1}
-takes direction back to the locomotive. Nothing interesting.""",
-            """After a short overthinking you decide to send {name1} to
-take a closer look at the refugees camp remnants. Carefully watching
-around, {heshe1} walks to the place. It appears there was a skirmish in
-here: {heshe1} sees bullet liners and even a round of a scorched grass.
-A grenade explosion, ha? There are also several bodies, skinheads and
-others. The camp was left in a hurry, so {name1} starts to rummage
-through the stuff scattered around. After several minutes of a search
-{heshe1} finally see a personal pocket aid kit. Opening it, {name1}
-finds a tiny syringe of a painkiller, water clearing tablets and
-even more. That's actually a good catch!
-Single character can get +25 health and +20 energy""",
-            """You make a decision to send {name1} for the place recon.
-Without long preparations {heshe1} moves to the camp. Getting closer,
-{heshe1} finds a lot of bullet liners, blood spots, but no bodies. It seems
-like there was a skirmish, but refugees successfully left. {name1} starts
-to observe things remaining at the place. Just a couple of seconds
-makes it clear that the camp dwellers left all the heavy equipment and
-tools. Inspired, {name1} takes the most valuable things and returns
-to the locomotive to ask others to join. In three runs you and your
-people take almost everything useful from the camp.
-Adjutant durability +100""",
+            """Вы отправляете на разведку {name1}. Так как район открыт,
+лишь пара деревьев мешает обзору, Вы не ждёте бед. {name1}
+приближается к лагерю, наклоняется и начинает рыться в
+оставленных вещах. Ничто не привлекает внимание Вашего
+посланника: пустые консервные банки, пластиковые бутылки,
+упоковочная плёнка... Однако в какой-то момент {heshe1} видит
+большой казан, накрытый металлической крышкой. Вряд ли есть
+смысл, но {name1} решает открыть его и сразу же отшатывается
+- облако мерзкой вони от прогнившей еды вырывается из-под
+неё. Остатки пищи настолько стары, что уже стали ядовитыми.
+Яростно кашляя, {name1} поворачивает к поезду.
+{name1} теряет 25 здоровья""",
+            """Вы выбираете {name1} в качестве посланника на данную операцию.
+Без задержек {heshe1} берёт своё оружие и спрыгивает на землю.
+Бледная трава, покрытая росой из-за столкновения прохладного
+воздуха с жаром, исходящим от локомотива, оказывается очень
+скользкой. {name1}, едва коснувшись её ногами, теряет
+равновесие и падает на землю. Вы видите несколько бумажек,
+вылетевших из {hisher1} кармана. Ветер подхватывает купюры, и
+{name1}, подскочив, пытается поймать их, но они уносятся
+прочь весьма стремительно. Пересчитывая оставшиеся деньги,
+{name1} громко произносит: "Тридцать баксов! Около тридцати
+баксов буквально пущено на ветер!"
+Вы теряете 30$""",
+            """Вы решаете отправить {name1} на быстрый осмотр остатков
+лагеря. Взяв оружие, {heshe1} спрыгивает с локомотива и
+бежит к месту. Похоже, кто-то атаковал беженцев, так как
+видны тёмно-красные пятна крови на траве, и повсюду
+блестят стрелянные гильзы. Тел нет, но если что-то
+полезное в этом лагере и было, его уже давно унесли.
+Сделав пару кругов и внимательно осмотрев то, что
+осталось, просто на всякий случай, {name1} берёт
+направление на локомотив. Ничего.""",
+            """После краткого размышления Вы решаете отправить {name1}, чтобы
+осмотреть остатки лагеря беженцев поближе. Внимательно
+осматриваяь, {heshe1} движется к месту. Похоже, здесь была
+перестрелка: {heshe1} видит гильзы и даже круг обгоревшей
+травы. Граната, а? Так же в лагере лежат тела, скинхедов
+и просто людей. Стоянку оставили в спешке, поэтому
+{name1} начинает осматривать барахло, разбросанное вокруг.
+После нескольких минут поиска, {heshe1}, наконец, находит
+персональную аптечку. Открыв её, {name1} видит маленький
+шприц с обезболивающим, таблетки для очистки воды и даже
+больше. Что ж, это неплохая находка!
+Один человек может получить 25 здоровья и 20 энергии""",
+            """Вы принимаете решение отправить {name1} к месту для
+разведки. Без долгих приготовлений {heshe1} движется к
+лагерю. Подходя ближе, {heshe1} обнаруживает множество
+гильз, кровавые пятна, но ни одного тела. Судя по всему,
+здесь случилась перестрелка, но беженцы успешно ушли.
+{name1} начинает осматривать вещи, оставшиеся в лагере.
+Буквально сразу становится очевидно, что беженцы оставили
+все тяжёлые предметы и инструменты. Вдохновлённо, {name1}
+берёт несколько наиболее полезных вещей и движется к
+локомотиву, чтобы позвать остальных. В три захода Вы
+экипажем забираете буквально всё полезное из лагеря.
+Адъютант получает 100 Прочности""",
         ),
     },
     {  # 19
         "name": "Лодка",
-        "desc": """In some moment you catch your eyes on a big white spot in the
-middle of the meadow. Your first thought is that it's a snow heap,
-but it's not enough snow failing from the skies to gather this
-big pile. Getting closer to the place, you understand this is a
-motor boat, lying on a hindcarriage forsaken near the dark grey
-stone of an old road. Looks like someone decided to get rid of an
-excess cargo right in the middle of the way. Chances are low to
-find something useful there, but it still worth sending a couple
-of people to take a closer look at the boat.""",
+        "desc": """В какой-то момент Вы останавливаете взгляд на большом белом
+пятне посреди луга. Сперва Вы решили, что это куча нерастявшего
+снега, но с неба сыпет не так уж сильно, чтобы образовалось
+такое скопление. Приближаясь, Вы понимаете, что это моторная
+лодка, оставленная прямо на прицепе у большого камня рядом со
+старой дорогой. Похоже, кто-то решил избавиться от лишнего
+груза на середине пути. Шансы найти что-нибудь полезное
+весьма низки, но всё же стоит отправить пару человек
+посмотреть на лодку поближе.""",
         "results": (
-            """You're sending {name1} and {name2} for a better recon of
-the loss. They move to the white boat fast. It appears it stands
-on a very-very old hindcarriage, rusty and shabby. Without any word
-{name2} climbs on it to be able to see the boat inners, and in the
-next moment the hindcarriage bends over with a loud creak. The
-boat slides right to {name2} and pushes {hisher2} leg to the back wall
-of the carriage. Trying to hold a cry, {name2} drops {hisher2} gun
-and by two hands pushes the boat back. Understanding, that it can
-turn into a serious trauma, {name1} also throws {hisher1} gun and
-makes an attempt to help the team mate. In several seconds of efforts
-they push the boat back enough to release {name2}'s leg. Looking
-at the bloody spot on trousers, they hurry up back to you.
-{name2} getting -25 health""",
-            """You decide to choose {name1} and {name2} for this outing.
-Not delaying the fulfillment, they run to the boat and examine
-it carefully. It seems like the loss owners didn't left anything,
-except the boat itself, still {name1} notices a small metal box,
-pinned down by the wherry to the hildcarriage bottom. "Let's get
-it up a little, I'll kick the box with my leg." - {heshe1} proposes. With
-no arguments {name2} gets on the carriage, and they make efforts
-hard to get the boat up. Successfully releasing the box, they drop
-the trans and, heavy breathing, open the conitainer. Nothing! "For
-God's sake!" - {name2} whoops. - "The damn thing was overweighting,
-and there is nothing! To Hell the stuff!". They both turn back.
-{name1} and {name2} getting -20 energy""",
-            """You've decided to send {name1} and {name2} for a revision.
-Not pocking around, they run to the boat fast and start to
-examine it. The trans seems to be long forsaken, covered
-with dirt and in some parts even with rust. However, your
-messengers see three small metal containers with padlocks.
-Using the gun's butts, they open them one by one... and
-they all are empty! "That looks like a joke." - {name2}
-pronounces annoyed. - "A very stupid one." {name1} takes
-several seconds to think, but in the end agrees on that
-they were played. "Let's return to the Adjutant then."
-- {heshe1} adds.""",
-            """{name1} and {name2}, chosen for the task, running to the
-boat fast. The white trans seems to be ancient, dirty and even rusty
-in some parts. Its owners most likely have taken all the things
-except the boat itself. Still, after a careful examination, {name2}
-sees an old skin wallet, lying in few meters from the hildcarriage.
-Getting to it, {heshe2} opens the thing and see several old soaked
-dollar papers. Well, if to dry them carefully, the recon can even
-turn successful. With such a catch you messengers go back to you.
-You're getting 70$""",
-            """By your command, {name1} and {name2} take a direction to
-the white boat. While getting closer to it, they see that it's really
-ancient. Doesn't look like its owners left something behind, but your
-scouts still getting on to the hindcarriage and take a look inside
-the transport inners. And, luck, it appears that a kind of an aid
-kit is still there. "A suite for a survival on water." - it says.
-Opening the kit, your people check shelf life of the inners, and
-yeah! Some things are still intact and okay to use. Closing the box,
-{name1} and {name2} clap a high-five and run back to the locomotive.
-You're getting 1 stimulator and 1 medicine""",
+            """Вы отправляете {name1} и {name2} для осмотра прицепа. Они
+добираются быстро и обнаруживают, что прицеп, стар, ржав и
+даже помят. {name2} с ходу забирается на него, чтобы
+осмотреть лодку, и вдруг прицеп с громким скрипом
+наклоняется. Лодка скользит прямо на {name2} и прижимает
+{hisher2} ногу к задней стенке прицепа. Сдерживая крик, {name2}
+роняет оружие и двумя руками толкает лодку назад. Понимая,
+что это может обернуться серьёзной травмой, {name1} так же
+бросает оружие и помогает товарищу. Несколько секунд усилий,
+и они отталкивают лодку достаточно, что освободить ногу
+{name2}. Увидев кровавое пятно на брюках, они спешат к поезду.
+{name2} теряет 25 здоровья""",
+            """Вы выбираете {name1} и {name2} посланниками на эту вылазку.
+Не откладывая выполнение, они бегут к лодке и внимательно
+её осматривают. Вероятно, её хозяева не оставили ничего,
+кроме самой лодки... Всё же {name1} замечает маленькую
+металлическую коробку, придавленную дном лодки к прицепу.
+"Давай приподнимем, я выбью коробку ногой." - предлагает
+{heshe1}. Без возражений {name2} забирается на прицеп, и
+вместе они приподнимают моторку. Высвободив коробку, они
+роняют лодку и, тяжело дыша, открывают контейнер. Ничего!
+"Да Вы серьёзно?!" - выкрикивает {name2}. "Эта фиговина
+просто неподъёмна, и ничего? К хренам собачьим!"
+{name1} и {name2} теряют 20 энергии""",
+            """Вы решаете, что разведчиками на этот раз станут {name1} и {name2}.
+Без долгих сборов они быстро бегут к лодке и принимаются
+за осмотр. Транспорт выглядит брошенным давным-давно,
+покрыт грязью, а кое-где даже ржавчиной. Тем не менее,
+Ваши посланники видят три маленькие контейнера с замками.
+Открыв их прикладами один за другим, они обнаруживают...
+что все пусты! "Выглядит как шутка." - раздражённо
+произносит {name2} - "Весьма глупая." {name1} размышляет
+несколько секунд, соглашается с тем, что их надули, и
+предлагает вернуться к Адъютанту.""",
+            """{name1} и {name2}, выбранные для выполнения задачи, легко бегут к
+лодке. Белый транспорт выглядит древним, грязым, кое-где
+даже ржавым. Его хозяева, судя по всему, забрали всё,
+кроме самой лодки. Всё же после тщательного осмотра
+{name2} видит старый кожаный кошелёк, лежащий в нескольких
+метрах от прицепа. Поднимая его, {heshe2} открывает его и
+видит несколько промокших долларовых купюр. Что ж,
+просушить их как следует, и вылазку можно считать удачной.
+С такой находкой Ваши люди возвращаются на поезд.
+Вы получаете 70$""",
+            """По Вашей команде, {name1} и {name2} берут направление на белую
+лодку. Приближаясь к ней, они видят, что она по-настоящему
+древняя. Не похоже, чтобы её хозяева оставили что-нибудь,
+но Ваши разведчики всё же забираются на прицеп и осматривают
+транспорт поближе. И, к удаче, оказывается, что в нём лежит
+старая аптечка. "Набор для выживания на воде." - гласит
+надпись. Открывая коробочку, Ваши люди проверяют сроки
+годности, и да! Кое-что из содержимого ещё можно
+использовать! Закрывая коробку, {name1} и {name2} улыбаются
+друг другу и бегут к локомотиву.
+Вы получаете 1 Стимулятор и 1 Лекарство""",
         ),
     },
     {  # 20
