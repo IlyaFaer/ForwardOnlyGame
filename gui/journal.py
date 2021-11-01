@@ -31,7 +31,7 @@ buildings, cars, sidewalks and crystal
 clear air. Like they were hallucinating.
 
 It all looked as a new stupid prank or a
-creapy tread we got used to, so no one
+creepy thread we got used to, so no one
 took it serious first. Zoomers do have
 fun as usual. I thought the same, I must
 confess... But in some moment they

@@ -136,7 +136,7 @@ class CameraController:
                 self._np.setR(r + 1.5)
         elif new_z - z >= 0.125:
             r = self._np.getR()
-            if r > -60:
+            if r > -30:
                 self._np.setR(r - 1.5)
 
         return task.again

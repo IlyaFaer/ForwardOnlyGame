@@ -1288,8 +1288,8 @@ All of your crewmates are getting -30 health""",
             """You're choosing {name1} as a scout. Jumping to the ground, {heshe1}
 puts on a hood against the cold wind and walks to the spot. It takes
 a couple of minutes for your messenger to understand that the camp is
-forsaken, not long ago though. Walking around, {heshe1} tries to find
-something useful, but nothing except empty backpacks and clothes
+empty, at least right now. Walking around, {heshe1} tries to find
+something useful, but nothing except empty paper boxes and clothes
 shows up. In some moment a strong wind gust swepts in the air, and
 {name1} hear a metal creak. Uppering {hisher1} head, {heshe1} see that big
 metal water storage, standing in the middle of the camp, leans
@@ -1573,14 +1573,15 @@ this!" - {heshe2} pulls the zipper, and directs a lantern into the tent. Bodies!
 Two rotten bodies, with bones sticking out, maggots, and nothing more.
 Both characters are getting -30 energy""",
             """You've decided to send {name1} and {name2} to check the place.
-They are taking their guns and moving to the tent, while you're looking
-for possible threats. The meadow seems to be still and quiet though.
-Your people are closing to the tent and starting to walk around it and
-prowl. It appears there are several backpacks at the forsaken camp place,
-but {name1} and {name2} doesn't take anything with them. Nothing
-interesting? You're waiting for several more minutes, but nothing
-changes. Finally, {name1} and {name2} are opening the tent, taking a
-quick look inside, and turning back to the Train. Obviously, there
+They are taking their guns and moving to the tent, while you're
+looking for possible threats. The meadow seems to be still and
+quiet though. Your people are closing to the tent and starting
+to walk around it and prowl. It appears there are several
+backpacks at the forsaken camp place, but {name1} and {name2}
+doesn't take anything with them. Nothing interesting? You're
+waiting for several more minutes, but nothing changes. Finally,
+{name1} and {name2} are opening the tent, taking a quick look
+inside, and turning back to the Train. Obviously, there
 was nothing useful in there. At all.""",
             """{name1} and {name2} are taking their things and moving to the
 camp place. The meadow looks still, smells with withered grass,
@@ -1658,14 +1659,16 @@ find 50$ within a lady's old bag. With such a results {name2} and
 {name3} are leaving the silent and dusty house, and joining {name1}
 to get back to Train and others.""",
             """You're asking {name1}, {name2} and {name3} to go for a
-search. They're taking their things and fastly moving to the hut.
-Splitting up - one person to one room - they are rummaging through old
-broken furniture, clothes that is covering the floor with a thick layer
-of dust, metal dishes and other stuff. Nothing useful comes to your
-messengers for some time. "Oh, I got something!" - {name2} shouts loudly.
-{name1} and {name3} moving to the room {heshe2} was checking, and seeing a
-big tool kit. {name1} and {name2} are taking it together and moving
-back to Train, while {name3} is watching around for possible threats.
+search. They're taking their things and fastly moving to the
+hut. Splitting up - one person to one room - they are
+rummaging through old broken furniture, clothes that is
+covering the floor with a thick layer of dust, metal dishes
+and other stuff. Nothing useful comes to your messengers for
+some time. "Oh, I got something!" - {name2} shouts loudly.
+{name1} and {name3} moving to the room {heshe2} was checking,
+and seeing a big tool kit. {name1} and {name2} are taking it
+together and moving back to Train, while {name3} is
+watching around for possible threats.
 Adjutant durability +100""",
         ),
     },
@@ -1715,15 +1718,16 @@ of cultists are celebrating the End of the World. {name3} moves down and
 silently explains what {heshe3} saw. Deciding not to disturb this mad
 gathering, your people returning back to the Train.""",
             """On your command {name1}, {name2} and {name3} are moving
-to the monastery. First they are approaching the building quietly, but
-soon they see it's completely forsaken long time ago. Entering inside,
-they find a lot of wood wreck. Air smells mold and dust, strong silence
-soar in the old monastery. Walking along the building, your people
-discover a huge wall icon, which seems untouched by time. Colors are
-saturated, lack of any cracks or dirt - it looks surprisingly well
-for this place. {name1}, {name2} and {name3} spending a couple of
-minutes staring at the art object, and its beauty in the midst of
-the old monastery devastation inspires them to survive anything.
+to the monastery. First they are approaching the building
+quietly, but soon they see it's forsaken long time ago.
+Entering inside, they find a lot of wood wreck. Air
+smells mold and dust, silence soar in the old monastery.
+Walking along the building, they discover a huge wall
+icon, which seems untouched by time. Colors are
+saturated, lack of any cracks or dirt - it looks
+surprisingly well for this place. {name1}, {name2} and
+{name3} spending a couple of minutes staring at it, and
+its beauty in the midst of devastation inspires them.
 {name1}, {name2} and {name3} getting +20 health""",
             """By your command {name1}, {name2} and {name3} going to the
 monastery. Entering the old building they see a lot of wood and metal
@@ -1780,16 +1784,17 @@ somewhy, and there is a small black plastic box with several syringes
 inside. Gazing at the label carefully, {name2} understands that it's
 some kind of a not very legal doping. Well, it's still something!
 You're getting 1 stimulator""",
-            """{name1} and {name2} are taking their guns and going
-to the damaged truck. Fastly closing to it, they see a lot of sleeves and
-shot holes - it's not just a crash, someone attacked the transport! There
-are no bodies around, but your people notice several big and dark blood
-spots. They are exchanging their glances and starting to open plastic
-containers left right on the road one by one. Mostly they are empty, but
-in one of them {name1} finds a couple of aid kits. The first one seems
-damaged bad, but the second looks okay, so {name1} grabs it. As {name2}
-didn't find anything, but broken containers, your people returning
-back to the Train with this only find.
+            """{name1} and {name2} are taking their guns and going to the damaged
+truck. Fastly closing to it, they see a lot of sleeves and shot
+holes - it's not just a crash, someone attacked the transport!
+There are no bodies around, but your people notice several big
+and dark blood spots. They are exchanging their glances and
+starting to open plastic containers left right on the road one
+by one. Mostly they are empty, but in one of them {name1}
+finds a couple of aid kits. The first one seems damaged bad,
+but the second looks okay, so {name1} grabs it. As {name2}
+didn't find anything, but broken containers, your people
+returning back to the Train with this only find.
 You're getting +1 medicine""",
             """By your command {name1} and {name2} are gearing up and
 taking a walk to the truck. Coming closer to it, they see that a big fight
@@ -1806,12 +1811,13 @@ Every character getting +35 energy""",
     {  # 15
         "name": "Grey Smoke",
         "desc": """From a very long distance you are seeing a big, wide
-straight column of thick grey smoke, rising from the forest in a
-couple of kilometers from the railway. That seems questionably.
-It can be either a big bonfire in a large human camp, or a forest
-conflagration. In both cases the situation can turn very dangerous
-for your messengers, so it makes sense to send several tough
-fighters to see what's going on there.""",
+straight column of thick grey smoke, rising from the forest
+in a couple of kilometers from the railway. That seems
+questionably. It can be either a big bonfire in a large
+human camp, or a forest conflagration. In both cases the
+situation can turn very dangerous for your messengers, so
+it makes sense to send several tough fighters to see
+what's going on there.""",
         "results": (
             """You're sending {name1}, {name2} and {name3} for a recon,
 admonishing them to be careful and cautious. Your people taking
@@ -1952,10 +1958,10 @@ You're getting 1 smoke filter and 1 medicine""",
         "desc": """Gazing at the horizon line, you've been overlooking corn fields
 for the last two hours. But suddenly you see a big dark wooden
 barn, standing on the edge of the green field, a little covered
-with snow. Large entrance gates are opened, but lack of chains and
-locks makes you think it was never actually closed. So, it can be
-a good place for looting as well as just an empty building. Who
-should be sent to clarify the situation?""",
+with snow. Large entrance gates are opened, but lack of chains
+and locks makes you think it was never actually closed. So, it
+can be a good place for looting as well as just an empty
+building. Who should be sent to clarify the situation?""",
         "results": (
             """{name1}, chosen as your messenger, takes {hisher1} gear
 and runs to the barn fast. You're staying sharp, looking at the
@@ -1992,8 +1998,8 @@ decision! Still, we don't know what actually happened here, maybe
 it's not what it looks like. Anyway {name1} returns back empty.""",
             """{name1}, chosen as your messenger, takes {hisher1}
 gear and moves to the old barn. Quetly entering the building, {heshe1}
-sees several horse skeletons on a leashes; the place seems to be not
-looted, so it can be said the owner leaved the barn in a hurry.
+sees horse skeletons on leashes with bugs crawling on them; the place
+seems to be not looted, so it can be said the owner leaved in a hurry.
 Walking around, {name1} catches {hisher1} eyes on an aid kit. It looks to be
 intended for animals, but inside {name1} finds several syringes that
 can be also useful for humans. Nothing more attracts your messenger
@@ -2148,15 +2154,16 @@ You're getting 1 stimulator and 1 medicine""",
     },
     {  # 20
         "name": "Tents",
-        "desc": """Gazing around, you're catching your eyes on a thick column of smoke
-rising right from the ground. A look through binoculars unveils
-that there is a tent camp at the bottom of the smoke pillar, and
-you're giving your people an order to prepare for a fight. At the
-next few seconds you understand that there are mostly women and
-children in the camp. Looks strange - during our days it's not very
-sensibly to travel without several protectors. Still, they may had
-not be planning so, and it's worth checking these people out. Maybe
-they need assistance or something. Two messengers should be enough.""",
+        "desc": """Gazing around, you're catching your eyes on a thick column of
+smoke rising right from the ground. A look through binoculars
+unveils that there is a tent camp at the bottom of the smoke
+pillar, and you're giving your people an order to prepare for
+a fight. At the next few seconds you understand that there
+are mostly women and children in the camp. Looks strange -
+during our days it's not very sensibly to travel without
+several protectors. Still, they may had not be planning so,
+and it's worth checking these people out. Maybe they need
+assistance or something. Two messengers should be enough.""",
         "results": (
             """You're ordering {name1} and {name2} to gently approach the
 tent camp not to scare inhabitants, and see what's going on in
@@ -2363,15 +2370,16 @@ Single character can get Fast hands""",
     {  # 23
         "name": "New Outpost",
         "desc": """From a big distance you're catching your eyes on a small building,
-near which a lot of people silhouettes are looming. Getting closer, you
-see a lot of construction equipment, and the building itself looks like
-a small outpost, still in construction progress. Concrete walls, a couple
-of bases for towers, big metal gates... Workers, hearing the Train
-engine, directing their gazes at you, without any sign of aggression.
-Definitely, they are not skinheads, but their uniform and equipment
-seems to be in a very good shape - aren't they came here by government
-request? It's worth sending a messenger to have a word with them at
-least. Maybe they have some valuable info about the situation in the
+near which a lot of people silhouettes are looming. Getting closer,
+you see a lot of construction equipment, and the building itself
+looks like a small outpost, still in construction progress.
+Concrete walls, a couple of bases for towers, big metal gates...
+Workers, hearing the Train engine, directing their gazes at you,
+without any sign of aggression. Definitely, they are not
+skinheads, but their uniform and equipment seems to be in a
+very good shape - aren't they came here by government request?
+It's worth sending a messenger to have a word with them at least.
+Maybe they have some valuable info about the situation in the
 country, or just nearby lands!?""",
         "results": (
             """You're listing the team within mind, and decide to send {name1}.
