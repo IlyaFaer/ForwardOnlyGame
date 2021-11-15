@@ -2209,7 +2209,7 @@ relaxing a bit... After several minutes of talk, your people turn
 back to the Train, but you also see one more person with them. They
 getting closer to you, and {name1} explains: "Looks like we've found
 a recruit. Do we have a free place?" Taking a quick gaze at the
-newbie, you're starting to think if the team needs one more head.
+newbie, you're starting to think if the crew needs one more head.
 One person can be recruited""",
             """{name1} and {name2} taking a direction to the tent camp
 by your command. You're seeing them approaching the place and
@@ -2278,7 +2278,7 @@ you and takes a knee sit near the man. "Dead, definitely." - {heshe1}
 pronounces. - "It looks like he was travelling somewhere distant.
 No supplies, no money, he doesn't even have warm clothes. Died here
 alone." You're making a step towards {name1}: "These times no
-one should be alone." {name1} stands up: "Good we have our own team"
+one should be alone." {name1} stands up: "Good we have our own crew"
 - {heshe1} smiles to you. - "Thanks, you've brought us together."
 Silently nodding, you point to the Train with your head.
 Crew cohesion +6""",
@@ -2319,7 +2319,7 @@ and {name2} reporting: "We've entered the mine and started to shoot
 skinheads one by one. But something went wrong, and we've been
 littered with stones. It took us an eternity to dig out." "An
 eternity!" - {name3} repeats, inclining {hisher3} head. {name2}
-continues: "The hitman is dead we suppose." Ordering your people
+adds: "The hitman is dead we suppose." Ordering your people
 to get clean and rest, you're commanding the machinist to take off.
 {name2} and {name3} getting Fear of dark""",
             """{name1}, {name2} and {name3} following the hitman and go dark
@@ -2349,7 +2349,7 @@ through binoculars, you see that everyone is okay. The hitman
 is not with your people. "We've finished them all." - {name1}
 says, getting closer to the Train. - "The man gave us some
 money and vanished, like he never been there." Climbing up to
-the Train, your messengers moving each to his/her place. Well,
+the Train, your messengers moving each to their places. Well,
 the job is done, bad people were stopped, and some money
 earned. Sounds like a lucky outing!
 You're getting 100$""",
@@ -2382,7 +2382,7 @@ It's worth sending a messenger to have a word with them at least.
 Maybe they have some valuable info about the situation in the
 country, or just nearby lands!?""",
         "results": (
-            """You're listing the team within mind, and decide to send {name1}.
+            """You're listing the crew within mind, and decide to send {name1}.
 Without delays, {heshe1} grabs {hisher1} gun and walks to the construction
 sight. You take your binoculars and point it to your fighter. Nothing
 wrong seems to be happening, {name1} simply speaks with two workers,
@@ -2494,7 +2494,7 @@ they transporting people away from the Stench clouds." - {name2}
 tells, entering the deck house. - "They kindly gave us some of their
 medicine." - {heshe2} puts a small white box on the table. Well,
 that's actually very kind of them!
-Single character can get +30 health,""",
+Single character can get +30 health""",
             """You make a decision to send {name1} and {name2} for a speak. They
 take their guns and carefully go to the machines, while a couple of men
 move towards them from their side. After several seconds of talk
@@ -2684,7 +2684,7 @@ walls are ancient, white paint on the windows became grey, but you
 see several people in black cassocks near it. They all are also old
 - you can notice their long hoary beards. The people doesn't look
 dangerous or even able to fight back in case of troubles, so you're
-thinking about sending several of your teammates to speak with
+thinking about sending several of your crewmates to speak with
 locals. As an old dwellers they probably can tell you something
 useful about the region you travelled into.""",
         "results": (
@@ -2709,7 +2709,7 @@ the next moment a bunch of big rocks fly to your messengers.
 Making several shots into the sky, {name1} commands others to get
 back to the Train. Monks, seeing guns, run in different directions.
 Retreating to you, your scouts climb to the Train fastly. It appears
-{name3} got a rock right into {hisher1} head. The wound doesn't
+{name3} got a rock right into {hisher3} head. The wound doesn't
 seem to be very serious, but it's still very unpleasant.
 {name3} getting -7 health and Motion Sickness""",
             """{name1}, {name2} and {name3}, chosen as a talk group, jump
@@ -2745,14 +2745,14 @@ Giving your people blesses and promising to pray for you, they
 spend your messengers to the very Train. After all the goodbyes
 said you open the basket and see cheese, wine, bread, flowers,
 and, plus to this, a bunch of medicines and bandages! Exchanging
-smiles, you and your teammates start to prepare a feast.
-All of your teammates getting +30 energy
+smiles, you and your crewmates start to prepare a feast.
+All of your crewmates getting +30 energy
 You're getting +1 medicine""",
         ),
     },
     {  # 28
         "name": "Old Carriage",
-        "desc": """On the east departure of Salzburg, on highway 158, big skirmish
+        "desc": """ "On the east departure of Salzburg, on highway 158, big skirmish
 happened today about 10:25 a.m.! Refugees, who got stuck in traffic,
 started to threaten the people around to make them clear the road,
 which caused a real fight..." Turning off the radio, you walk
@@ -2769,7 +2769,7 @@ eyes, {heshe1} nodds {hisher1} head and gears up for an outing. It
 takes just several minutes for {himher1} to get to the carriage, and
 you see how your messenger enters inside. In the next moment a din
 thunders in the air. You're moving binoculars to your eyes, but
-can't get what happened. Taking one more team mate, you run to
+can't get what happened. Taking one more crew mate, you run to
 the carriage and, getting closer, see the problem. Heavy metal
 door of the carriage slammed, prisoning {name1} inside. With common
 efforts for about five minutes you finally release your trapped
@@ -2812,7 +2812,7 @@ them. Thus, we have some income." - {heshe1} puts a dollar paper on
 the metal table. You give a command to warm up the engine.
 You're getting 50$""",
             """You're sending {name1} to take a closer look at the lying carriage.
-Your teammate gears up and runs to the place, and then disappears
+Your crewmate gears up and runs to the place, and then disappears
 inside. After several seconds {heshe1} shows up and uppers {hisher1}
 hand, making it clear that everything is alright. You take a seat and
 start waiting. Not less than a half of hour passes, before {name1}
@@ -2828,7 +2828,7 @@ giving an order to start the Adjutant's engine.
     },
     {  # 29
         "name": "Romani Truck",
-        "desc": """Getting closer to a dark green spot you've noticed earlier, you see
+        "desc": """Getting closer to a dark green spot, you've noticed earlier, you see
 that it's some kind of a romani truck. Old and battered by a
 long travelling, it stands right in the middle of the meadow,
 opened to the right side like a showcase. A lot of colorful
@@ -2856,7 +2856,7 @@ approaches the trader truck and starts negotiations. Several minutes
 passed, and you see that your messenger buys something, looking like
 a grenade launcher. With this burden and a box of ammo {name1} returns
 back to the locomotive. "The man was already going to continue his way."
-- he says. As an approval you see that the truck starts its engine and
+- {heshe1} says. As an approval you see that the truck starts its engine and
 moves away. "Let's try one shot!" - {name1} proposes. Opening the ammo
 box, {heshe1} puts a grenade into the gun and, aiming to a tree in a
 thirty meters, does a shot... Zilch. Gazing at you, {name1} changes the
