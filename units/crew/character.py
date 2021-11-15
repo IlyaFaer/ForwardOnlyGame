@@ -75,13 +75,13 @@ class Character(Shooter, Unit):
         self.name = name
         self.sex = sex
         if sex == "male":
-            self.heshe = "he"
-            self.hisher = "his"
-            self.himher = "him"
+            self.heshe = base.labels.PRONOUNS[0]  # noqa: F821
+            self.hisher = base.labels.PRONOUNS[1]  # noqa: F821
+            self.himher = base.labels.PRONOUNS[2]  # noqa: F821
         else:
-            self.heshe = "she"
-            self.hisher = "her"
-            self.himher = "her"
+            self.heshe = base.labels.PRONOUNS[3]  # noqa: F821
+            self.hisher = base.labels.PRONOUNS[4]  # noqa: F821
+            self.himher = base.labels.PRONOUNS[5]  # noqa: F821
 
         if desc:
             self._energy = desc["energy"]

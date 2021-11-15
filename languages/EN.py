@@ -2900,3 +2900,5 @@ One person can be recruited""",
 ]
 
 OUTING_TYPES = {"Looting": "Looting", "Meet": "Meet", "Enemy Camp": "Enemy Camp"}
+
+PRONOUNS = ("he", "his", "him", "she", "her", "her")
