@@ -1301,7 +1301,7 @@ to the engine to get warm faster.
             """You're deciding to send {name1} alone to take a look at the camp.
 Grabbing {hisher1} gun, {heshe1} runs to the spot and starts to quetly
 walk through the green buildings. It seems like the camp is forsaken
-not very long ago - empty backpacks, clothes, some photos - the usual
+several hours ago - empty backpacks, clothes, some photos - the usual
 stuff for a kid's camp, but nothing really useful while you're on a
 road. Having examined three buildings, {name1} walks to the street
 and feels a cold wind blowing. Not wanting to stay longer in such a
@@ -1997,13 +1997,15 @@ and now seem to be dead for a very long time. Not the most humane
 decision! Still, we don't know what actually happened here, maybe
 it's not what it looks like. Anyway {name1} returns back empty.""",
             """{name1}, chosen as your messenger, takes {hisher1}
-gear and moves to the old barn. Quetly entering the building, {heshe1}
-sees horse skeletons on leashes with bugs crawling on them; the place
-seems to be not looted, so it can be said the owner leaved in a hurry.
-Walking around, {name1} catches {hisher1} eyes on an aid kit. It looks to be
-intended for animals, but inside {name1} finds several syringes that
-can be also useful for humans. Nothing more attracts your messenger
-attention, so {heshe1} takes medicines and returns back to the Train.
+gear and moves to the old barn. Quetly entering the building,
+{heshe1} sees horse skeletons on leashes with bugs crawling
+on them; the place seems to be not looted, so it can be said
+the owner leaved in a hurry. Walking around, {name1} catches
+{hisher1} eyes on an aid kit. It looks to be intended for
+animals, but inside {name1} finds several syringes that
+can be also useful for humans. Nothing more attracts your
+messenger attention, so {heshe1} takes medicines and
+returns back to the Train.
 Single character can get +30 health""",
             """{name1}, driven by your command, jumps to the ground and
 moves to the wooden barn. Nothing promises troubles, so {heshe1} enters
@@ -2132,13 +2134,14 @@ several seconds to think, but in the end agrees on that
 they were played. "Let's return to the Adjutant then."
 - {heshe1} adds.""",
             """{name1} and {name2}, chosen for the task, running to the
-boat fast. The white trans seems to be ancient, dirty and even rusty
-in some parts. Its owners most likely have taken all the things
-except the boat itself. Still, after a careful examination, {name2}
-sees an old skin wallet, lying in few meters from the hildcarriage.
-Getting to it, {heshe2} opens the thing and see several old soaked
-dollar papers. Well, if to dry them carefully, the recon can even
-turn successful. With such a catch you messengers go back to you.
+boat fast. The white trans seems to be ancient, dirty and
+even rusty in some parts. Its owners most likely have taken
+all the things except the boat itself. Still, after a
+careful examination, {name2} sees an old skin wallet, lying
+in few meters from the hildcarriage. Getting to it, {heshe2}
+opens the thing and see several old soaked dollar papers.
+Well, if to dry them carefully, the recon can even turn
+successful. With such a catch you messengers go back to you.
 You're getting 70$""",
             """By your command, {name1} and {name2} take a direction to
 the white boat. While getting closer to it, they see that it's really

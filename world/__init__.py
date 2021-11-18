@@ -142,15 +142,11 @@ class World:
             bool: True if the Train is near a fork.
         """
         if len(self._loaded_blocks) > 2:
-            return (
-                self._loaded_blocks[1].name
-                in (
-                    "r_fork",
-                    "l_fork",
-                    "exit_from_fork",
-                )
-                or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
-            )
+            return self._loaded_blocks[1].name in (
+                "r_fork",
+                "l_fork",
+                "exit_from_fork",
+            ) or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
 
     @property
     def is_on_et(self):

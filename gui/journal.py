@@ -168,7 +168,7 @@ called me. He was in search of people,
 who are brave or desperate enough to help
 him to hijack the locomotive he was
 working on during the last several years.
-He know me as a daredevil, and decided
+He know me as a daredevil and decided
 to call me first. I liked his idea and
 made a proposition to my workers. Some
 of them have families, so they refused

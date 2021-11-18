@@ -61,7 +61,7 @@ Press J to open/close Captain's journal.""",
                 "effects": (("do_stench_moves_effect", [20]),),
             },
             "Try to deal with the axle box on move": {
-                "desc": """You're giving Kenneth command to choose one of your team mates
+                "desc": """You're giving Kenneth command to choose one of your crew mates
 and try to deal with the axle box on move. You see that the
 mechanic doesn't like your decision, but he still accepts
 the order, promising to think who fits the task better.
@@ -117,7 +117,7 @@ Press J to open/close Captain's journal.""",
     {  # 2
         "intro": """Taking a closer look at the bunch of people walking through the
 meadow, you understand that there are mostly children. Weird!
-Asking a couple of teammates to follow you, you get closer
+Asking a couple of crewmates to follow you, you get closer
 to the crowd, seeing a woman moving towards your party. In
 a few words she tells that they are workers and children
 from an orphan shelter. Understanding that the Stench moves
@@ -146,7 +146,7 @@ It takes you about two hours to finish preparing the camp.
 Getting a lot of thanks from the children and their teachers,
 you gather again on the Adjutant. Everyone seems to be
 enlivened, still, the road calls. Giving an order to start
-engine, you approach a couple of your teammates, who are
+engine, you approach a couple of your crewmates, who are
 viewing some kind of an article on a smartphone. "Hey,
 Captain, you need to see this! Some of those children visited
 kinda scientist summit some time ago and took an interview
@@ -169,14 +169,14 @@ distance from the Stench frontier.""",
                 "desc": """Calling the crew to speak aside, you're trying to convince
 them to use an ability to replenish resources. "The situation
 is getting tougher day after day, it's becoming about us or
-them." Your teammates lower their eyes. Everybody know that
+them." Your crewmates lower their eyes. Everybody know that
 sooner or later it'll come to this, still, no one wants to take
 responsibility. "It's hard to admit, but those children are not
 going to make it. They are not fighters nor survivors. The first
 meet with skinheads, and..." The crew continue to keep silence,
 bit you feel them accepting the situation, so you're giving an
 order: "Build the camp hastily and take useful stuff in case you
-see it!" Your teammates, avoiding to look at each other, go out
+see it!" Your crewmates, avoiding to look at each other, go out
 of the deckhouse... About an hour and half passed, and all of
 your people gather together on the Adjutant. They still doesn't
 want to look at each other, but they put an aid kit and an energy
@@ -214,7 +214,7 @@ like the decision very much, but everyone mind the situation.
 A hard silence forms in the air. No one wants to go there and
 say those orphans that you're going to leave. "So, what?" - you
 ask quietly. - "Should we continue the road without the last
-word? What's the point in it?" Your teammates lower their
+word? What's the point in it?" Your crewmates lower their
 eyes and nod their heads. Taking this as an answer, you give
 a command to go...
 
@@ -239,7 +239,7 @@ really old, the walls are crumbled here and there, the old
 dark wooden roof holds on a promise, but through small windows
 you can discern several people moving actively inside. You
 also hear some noise, even screams sometimes. That's worth
-checking the place... You take a couple of your teammates and
+checking the place... You take a couple of your crewmates and
 get closer to the building. It appears a police jeep is standing
 from the other side of the hut. Entering the house, you see a
 couple of men in uniform, threatening an old pair and a young
@@ -366,7 +366,7 @@ tears in her eyes. Seeing your people returning back from
 the motel, you say her goodbye and join the crew. According
 their words, the place is filled to the very top, some
 unfamiliar people even rent rooms together. Plus to the
-things you already understood by yourself, your team mates
+things you already understood by yourself, your crew mates
 give you a log paper - one of them heard how the motel
 dwellers were conversing about the same scientist those
 orphans were interviewing. She was here not long ago!
@@ -419,7 +419,7 @@ and my crew will take the room." Your visavis stagger back,
 surprised greatly by the turn. Several seconds they look
 at each other, and then simultaneously turn around and go
 away. You join your crew and rent the room... The short rest
-goes okay, one of your team mates even give you a paper, on
+goes okay, one of your crew mates even give you a paper, on
 which he noted a conversation between two motel dwellers,
 who were speaking about that scientist woman, interviewed
 by orphans you met earlier, blaming her in cataclysms like
