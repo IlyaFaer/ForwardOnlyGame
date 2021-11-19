@@ -381,7 +381,8 @@ is okay on the locomotive, and it appears the man ignited
 it! You deal with fire fast, but still the Adjutant gets
 some damage.
 
-The Adjutant loses 70 Durability""",
+The Adjutant loses 70 Durability
+You've got one more note in the Captain's journal.""",
                 "effects": (("do_locomotive_damage", [70]),),
             },
             "The man with the sick son should rest": {
@@ -407,7 +408,9 @@ then start the engine to continue the road.
 Soon all the Silewer will know that armed foreigners forced
 a pregnant woman to leave the motel, where she was going to
 rest after long road. This will bring more people into the
-skinhead bands.""",
+skinhead bands.
+You've got one more note in the Captain's journal.
+""",
                 "effects": (("do_enemy_inc_effect", []),),
             },
             "Force them both out and take their place": {
@@ -435,7 +438,8 @@ you return back to the Adjutant. No one got serious
 wounds, still, there are several small injuries. Not
 the best stop!
 
-All people in the crew getting -20 health""",
+All people in the crew getting -20 health
+You've got one more note in the Captain's journal.""",
                 "effects": (("do_characters_effect", [{"health": -20}]),),
             },
         },

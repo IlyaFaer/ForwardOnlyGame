@@ -288,18 +288,19 @@ class Train:
             shot_sparks,
         )
 
-    def _set_lamps_material(self, mat):
+    def _set_lamps_material(self, mat, floodlights_mat=None):
         """Set the Train lamps emission parameter.
 
         Used when toggling the lights.
 
         Args:
             mat (tuple): New lamps material.
+            floodlights_mat (tuple): Optional. Floodlights lamps material.
         """
         self.model.findMaterial("lamp_glass").setEmission(mat)
 
         if self._floodlights_mat is not None:
-            self._floodlights_mat.setEmission(mat)
+            self._floodlights_mat.setEmission(floodlights_mat or mat)
 
     def attack_started(self):
         """Enemy started an attack.
@@ -693,7 +694,7 @@ class Train:
             for light in self._lights[1:]:
                 light.setZ(0.245)
 
-            self._set_lamps_material((0.85, 0.85, 0.85, 1))
+            self._set_lamps_material((0.85, 0.85, 0.85, 1), (0.4, 0.4, 0.4, 1))
 
         self.lights_on = not self.lights_on
 

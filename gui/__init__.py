@@ -384,7 +384,7 @@ class MainMenu:
         return saves
 
     def _save_conf_and_restart(
-        self, res_chooser, tutorial_check, lang_chooser, fps_chooser
+        self, res_chooser, tutorial_check, lang_chooser, fps_chooser, fps_meter
     ):
         """Save configurations and restart the game program.
 
@@ -397,12 +397,15 @@ class MainMenu:
                 Widget to choose GUI language.
             fps_chooser (GUI.widgets.ListChooser):
                 Framerate chooser.
+            fps_meter (direct.gui.DirectCheckButton):
+                FPS meter enabling check button.
         """
         base.game_config.update(  # noqa: F821
             res_chooser.chosen_item,
             lang_chooser.chosen_item,
             str(bool(tutorial_check["indicatorValue"])),
             fps_chooser.chosen_item,
+            str(bool(fps_meter["indicatorValue"])),
         )
         base.restart_game()  # noqa: F821
 
@@ -475,7 +478,7 @@ class MainMenu:
             indicatorValue=base.game_config.tutorial_enabled,  # noqa: F821
             clickSound=self.click_snd,
             scale=0.02,
-            pos=(0.12, 0, 0.4),
+            pos=(0.12, 0, 0.41),
             boxBorder=0,
             boxImage=(GUI_PIC + "no_check.png", GUI_PIC + "check.png", None),
             boxRelief=None,
@@ -527,6 +530,33 @@ class MainMenu:
         )
         self.conf_wids.append(fps_chooser)
 
+        self.conf_wids.append(
+            DirectLabel(  # FPS meter:
+                parent=self._main_fr,
+                text=base.labels.MAIN_MENU[36],  # noqa: F821,
+                text_fg=RUST_COL,
+                text_scale=0.04,
+                text_font=base.main_font,  # noqa: F821
+                pos=(-0.3, 0, 0.11),
+                frameColor=(0, 0, 0, 0),
+            )
+        )
+
+        fps_meter = DirectCheckButton(
+            parent=self._main_fr,
+            indicatorValue=base.game_config.fps_meter,  # noqa: F821
+            clickSound=self.click_snd,
+            scale=0.02,
+            pos=(0.12, 0, 0.12),
+            boxBorder=0,
+            boxImage=(GUI_PIC + "no_check.png", GUI_PIC + "check.png", None),
+            boxRelief=None,
+            relief="flat",
+            frameColor=RUST_COL,
+        )
+        fps_meter.setTransparency(TransparencyAttrib.MAlpha)
+        self.conf_wids.append(fps_meter)
+
         but = DirectButton(  # Save and restart
             parent=self._main_fr,
             text_scale=0.045,
@@ -535,8 +565,14 @@ class MainMenu:
             text_font=base.main_font,  # noqa: F821
             relief=None,
             command=self._save_conf_and_restart,
-            extraArgs=[res_chooser, tutorial_check, lang_chooser, fps_chooser],
-            pos=(0.1, 0, 0),
+            extraArgs=[
+                res_chooser,
+                tutorial_check,
+                lang_chooser,
+                fps_chooser,
+                fps_meter,
+            ],
+            pos=(0.1, 0, -0.1),
             clickSound=self.click_snd,
         )
         self.bind_button(but)

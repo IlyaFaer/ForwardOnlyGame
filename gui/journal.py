@@ -47,7 +47,7 @@ tried to hide the adversities scale. They
 started to speak of stupid explanations,
 ask citizens to stay at home if possible
 and use respirators; censor newspapers,
-websites and discredit rumors authors.
+websites and discredit rumor authors.
 They also closed several city blocks, but
 only those in dormitory areas. Recreation
 and business regions, which bring money,

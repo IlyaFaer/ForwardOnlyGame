@@ -82,7 +82,7 @@ class OutingsManager:
         if self._threshold <= 0:
             self._threshold = random.randint(25, 36)
 
-            if self._prefered and chance(9):
+            if self._prefered and chance(10):
                 return self._prefered
 
             return random.choice(("Meet", "Enemy Camp", "Looting"))

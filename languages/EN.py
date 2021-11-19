@@ -72,6 +72,7 @@ MAIN_MENU = (
     "Subscribe:",
     "Stack:",
     "Tools:",
+    "FPS meter:",
 )
 
 KEYS_INFO = u"""
@@ -1927,16 +1928,15 @@ makes a step back: "No problem, we'll go". Not touching locals,
 your people making a slow turn around and heading back to you.""",
             """You're commanding {name1} and {name2} to go for a recon.
 Your crewmates are closing to the place, but four hulk rednecks with
-guns appearing towards them. {name1} and {name2} stopping, trying to show
-they are not going to attack. An old man makes a step forward: "Aren't
-you folks, who came from abroad, and now killing skinheads all around?"
-{name1} and {name2} exchange their gazes. "Sounds like us" - {name2} answers.
-"Benny, give them some paper!" - old man shouts. Tall redneck makes
-several long steps towards your people and holds out a 50$ banknote.
-"Those bastards killed a lot of good folks around here." - the old man
-pronounces loudly. - "Thanks for clearing this filth. Keep up the good
-work!" - he uppers his hand, and all of the rednecks are turning back
-to their place. In good mood your people returning to you.
+guns appearing towards them. {name1} and {name2} stopping, showing they
+are not attacking. An old man steps forward: "Aren't you folks, who
+came from abroad, and now killing skinheads all around?" {name1} and
+{name2} exchange gazes. "Sounds like us" - {name2} answers. "Benny,
+give'em paper!" - old man shouts. Tall guy approaches your people and
+holds out a 50$ banknote. "Those bastards killed a lot of good folks
+here." - the old man pronounces loudly. - "Thanks for clearing the
+filth. Keep up the good work!" - he uppers his hand, and all the
+rednecks turn back to their place. In good mood your people return.
 You're getting +50$""",
             """You're sending {name1} and {name2} to take a closer look
 at the place. Your messengers closing to the silo; silence meets them,
@@ -2498,17 +2498,16 @@ tells, entering the deck house. - "They kindly gave us some of their
 medicine." - {heshe2} puts a small white box on the table. Well,
 that's actually very kind of them!
 Single character can get +30 health""",
-            """You make a decision to send {name1} and {name2} for a speak. They
-take their guns and carefully go to the machines, while a couple of men
-move towards them from their side. After several seconds of talk
-{name1} and {name2} taking their guns away and follow the men. Trying
-to get what's happening, you see your messengers helping column
-guys to pull up a big metal object, probably fallen out of the truck.
-Is it why they stopped? Looking at smiling fighters, telling goodbye
-to your people, you see that yes, it is. While their cars start to
-move, {name1} and {name2} come closer to you, telling: "Positive guys!
-Transporting people away from the Stench. Asked to help them a
-little and gave us this" - {name2} puts some dollars to the table.
+            """You decide to send {name1} and {name2} for a speak. They take
+guns and go to the cars, while two men move towards them
+from their side. After few seconds of talk {name1} and {name2}
+take guns away and follow the men. You see they're helping
+to pull up a big object, probably fallen out of the truck.
+Is it why they stopped? Looking at smiling fighters, telling
+goodbye to your people, you see that yes. While their cars
+start to move, {name1} and {name2} come closer to you, telling:
+"Positive guys! Transporting people away from the Stench.
+Asked for help and gave us this" - {name2} shows dollars.
 You're getting +90$
 One character can get Liberal""",
             """You're sending {name1} and {name2} to negotiate with the column
@@ -2578,17 +2577,16 @@ What was that? {name2} opens the aid kit: "I have an idea." Empty
 syringe of painkillers lies inside with a blood drop on it. Addict!
 You're losing -1 medicine""",
             """You're ordering {name1}, {name2} and {name3} to stay, while
-you'll deal with the deer. For some time nothing promises issues, but
-suddnely all three sentinels hear someone rummaging in the deckhouse.
-Not poking around, they jump to the locomotive and fastly open the
-door. A big armed thug is already waiting them, directing his pistol
-to the entrance, but not shooting. Still, your fighters doesn't consider
-this as an appropriate performance, so they lighting fast do
-several shots at the man. With a wondering face he falls down on
-the floor. {name1} silently moves closer to him and raises a bunch of
-dollar banknotes. "Stealer!" - {heshe1} finalizes. Slapping the man's
-pockets, {heshe1} raises even more money. "Well, who came with a
-sword to us..." - {name2} says, getting closer to get rid of the body.
+you deal with the deer. In some moment all three sentinels hear
+fuss in the deckhouse. Not poking around, they jump to the
+train and open the door. An armed thug is waiting them, aiming
+his pistol to the entrance, but not shooting. Your fighters
+doesn't accept this act, so they do several shots at the man.
+With a wondering face he falls down on the floor. {name1}
+silently moves closer to him and raises a bunch of dollars.
+"Stealer!" - {heshe1} finalizes. Slapping the man's pockets,
+{heshe1} raises even more money. "Well, who came with a sword
+to us..." - {name2} says, getting closer to get rid of the body.
 You're getting 70$""",
             """You're taking your guns, but suddenly a kind of a grenade flies
 into the open window. Grey tear gas starts to spread around fast with

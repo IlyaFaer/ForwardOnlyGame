@@ -148,6 +148,9 @@ class ForwardOnly(ShowBase):
         globalClock.setFrameRate(self.game_config.fps_limit)  # noqa: F82
 
         self.openDefaultWindow(props=props)
+        if self.game_config.fps_meter:
+            self.setFrameRateMeter(True)
+
         return props
 
     def _move_along_block(self):
@@ -234,8 +237,13 @@ class ForwardOnly(ShowBase):
         """Clear all the records about previously destroyed enemies."""
         self._heads.clear()
 
-    def start_game(self, task=None):
-        """Actually start the game process."""
+    def start_game(self, task=None, loaded_game=False):
+        """Actually start the game process.
+
+        Args:
+            loaded_game (bool): True if the game started after loading
+                                a previously saved session.
+        """
         self.notes = TeachingNotes()
         self.traits_gui = TraitsGUI()
 
@@ -254,7 +262,7 @@ class ForwardOnly(ShowBase):
 
         if task is not None:
             return task.done
-        elif self.game_config.tutorial_enabled:
+        elif self.game_config.tutorial_enabled and not loaded_game:
             self.doMethodLater(
                 0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
             )
@@ -313,9 +321,9 @@ class ForwardOnly(ShowBase):
         self.char_gui = CharacterGUI()
         self.team.load(save["team"], self.train.parts, save["cohesion"])
 
-        self.doMethodLater(3, self.start_game, "start_game")
+        self.doMethodLater(3, self.start_game, "start_game", extraArgs=[None, True])
         self.doMethodLater(
-            3.01,
+            3.15,
             self.train.ctrl.load_speed,
             "load_speed",
             extraArgs=[save["train"]["speed"]],
