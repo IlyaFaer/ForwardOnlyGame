@@ -247,10 +247,11 @@ class RailsScheme:
         if blocks and blocks[0] != -1:
 
             z_shift = 0
-            if base.world.current_block.branch == "l":  # noqa: F821
-                z_shift = 0.155
-            elif base.world.current_block.branch == "r":  # noqa: F821
-                z_shift = -0.295
+            if not base.world.is_near_fork:  # noqa: F821
+                if base.world.current_block.branch == "l":  # noqa: F821
+                    z_shift = 0.155
+                elif base.world.current_block.branch == "r":  # noqa: F821
+                    z_shift = -0.295
 
             if blocks[0] < 900:
                 x = -0.967 + blocks[0] * 0.00216

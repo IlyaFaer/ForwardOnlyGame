@@ -798,7 +798,7 @@ class Kamikaze(EnemyMotorcyclist):
 
         self._fire_ring.start(self.model, render)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            0.99,
+            0.95,
             self._fire_ring.softStop,
             self.id + "_cleanup_ring_of_fire",
             extraArgs=[],
