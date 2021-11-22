@@ -16,7 +16,7 @@ The Game is an author product, its use is regulated by [the License](https://git
 It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
 
 **Current stage**  
-The Game is in active development stage yet (~80% finished) and is now in beta access.
+The Game is in development yet (~85% finished) and is now in beta access.
 
 The major features the Game includes now:
 - 3 way of play determined by 3 unit classes
