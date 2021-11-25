@@ -6,6 +6,7 @@ API to control the locomotive and its movement.
 """
 from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import AudioSound
 
 from utils import address, drown_snd
@@ -35,6 +36,9 @@ class TrainController:
         self._outing_available = None
         self._move_snd_volume = 1
         self._garland = None
+        self._confetti = None
+        self._confetti_cooldown = False
+        self._confetti_snd = None
 
         self.on_et = False
         self.critical_damage = False
@@ -135,6 +139,27 @@ class TrainController:
         base.sound_mgr.attachSoundToObject(brake_snd, model)  # noqa: F821
         return move_snd, stop_snd, brake_snd
 
+    def _shot_flapper(self):
+        """Play an effect and sound of a flapper."""
+        if not self._confetti_cooldown and self._confetti is not None:
+            for effect in self._confetti:
+                effect.start(self._model, render)  # noqa: F821
+                effect.softStart()
+
+            taskMgr.doMethodLater(  # noqa: F821
+                1.97, self._stop_flapper, "stop_flapper"
+            )
+            self._confetti_cooldown = True
+            self._confetti_snd.play()
+
+    def _stop_flapper(self, task):
+        """Stop all the flapper effects."""
+        for effect in self._confetti or []:
+            effect.softStop()
+
+        self._confetti_cooldown = False
+        return task.done
+
     def _stop_move(self):
         """Stop the Train movement."""
         taskMgr.doMethodLater(  # noqa: F821
@@ -162,14 +187,38 @@ class TrainController:
     def _switch_garland(self):
         """Christmas related method.
 
-        Enables or removes the locomotive garland.
+        Enables or removes the locomotive garland
+        and an ability to shot a flapper.
         """
         if self._garland is None:
             self._garland = loader.loadModel(address("garland"))  # noqa: F821
             self._garland.reparentTo(self._model)
+
+            self._confetti = []
+
+            for color in ("red", "blue", "green"):
+                confetti = ParticleEffect()
+                confetti.loadConfig("effects/confetti_{}.ptf".format(color))
+                confetti.setPos(0, 0.32, 0.29)
+                self._confetti.append(confetti)
+
+            self._confetti_snd = base.sound_mgr.loadSfx(  # noqa: F821
+                "sounds/train/flapper.ogg"
+            )
+            base.sound_mgr.attachSoundToObject(  # noqa: F821
+                self._confetti_snd, self._model
+            )
         else:
             self._garland.removeNode()
             self._garland = None
+
+            for effect in self._confetti:
+                effect.softStop()
+                effect.cleanup()
+
+            self._confetti = None
+            base.sound_mgr.detach_sound(self._confetti_snd)  # noqa: F821
+            self._confetti_snd = None
 
     def brake_down_to(self, target):
         """Slow down the Train to the given speed.
@@ -266,6 +315,7 @@ class TrainController:
         base.accept("w-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
         base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
         base.accept("7", self._switch_garland)  # noqa: F821
+        base.accept("8", self._shot_flapper)  # noqa: F821
 
         base.accept("f", train.toggle_lights)  # noqa: F821
 
