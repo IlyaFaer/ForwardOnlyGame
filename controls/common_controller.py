@@ -172,7 +172,7 @@ class CommonController:
                 text=base.labels.KEYS_INFO,  # noqa: F821
                 align=TextNode.ACenter,
                 font=base.main_font,  # noqa: F821
-                scale=0.07,
+                scale=0.055,
                 pos=(0, 0.7),
                 fg=(0.7, 0.7, 0.7, 1),
             )

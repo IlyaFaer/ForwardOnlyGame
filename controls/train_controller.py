@@ -8,7 +8,7 @@ from direct.interval.IntervalGlobal import Parallel
 from direct.interval.MopathInterval import MopathInterval
 from panda3d.core import AudioSound
 
-from utils import drown_snd
+from utils import address, drown_snd
 
 MIN_SPEED = 0.5  # minimum speed on enemy territory
 
@@ -34,6 +34,7 @@ class TrainController:
         self._is_stopped = False
         self._outing_available = None
         self._move_snd_volume = 1
+        self._garland = None
 
         self.on_et = False
         self.critical_damage = False
@@ -158,6 +159,18 @@ class TrainController:
             base.world.start_outing(self._outing_available)  # noqa: F821
             self._outing_available = None
 
+    def _switch_garland(self):
+        """Christmas related method.
+
+        Enables or removes the locomotive garland.
+        """
+        if self._garland is None:
+            self._garland = loader.loadModel(address("garland"))  # noqa: F821
+            self._garland.reparentTo(self._model)
+        else:
+            self._garland.removeNode()
+            self._garland = None
+
     def brake_down_to(self, target):
         """Slow down the Train to the given speed.
 
@@ -252,6 +265,7 @@ class TrainController:
         base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
         base.accept("w-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
         base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
+        base.accept("7", self._switch_garland)  # noqa: F821
 
         base.accept("f", train.toggle_lights)  # noqa: F821
 

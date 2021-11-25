@@ -77,7 +77,6 @@ MAIN_MENU = (
 
 KEYS_INFO = u"""
 Game controls:
-
 Mouse Left Button - choose character/rest zone
 Mouse Right Button - move character/set target
 R - show the character's cohesion with others
@@ -93,6 +92,9 @@ Camera:
 Alt + \u2190\u2191\u2193\u2192 or hold mouse wheel - rotate
 "+", "-" or scroll mouse wheel - zoom
 C - toggle centered view
+
+New Year spirit:
+7 - toggle garland
 """
 
 RESOURCES = (
