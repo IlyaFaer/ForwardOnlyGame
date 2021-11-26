@@ -38,7 +38,6 @@ from utils import clear_wids
 # delete the module later not to keep both languages in game
 del languages
 
-loadPrcFileData("", "threading-model Cull/Draw")
 loadPrcFileData(
     "",
     "audio-library-name "
@@ -437,7 +436,20 @@ class ForwardOnly(ShowBase):
         self.scenario = Scenario()
 
 
+def configure_cull_draw():
+    """
+    Check the game configurations and enable multithreading if
+    needed. Must be done before ShowBase__init__(), otherwise
+    the configuration will not be applied.
+    """
+    if not os.path.exists(Config.opts_file) or open(Config.opts_file).read().endswith(
+        "True"
+    ):
+        loadPrcFileData("", "threading-model Cull/Draw")
+
+
 try:
+    configure_cull_draw()
     ForwardOnly().run()
 except Exception:
     logging.exception("Exception occured:")

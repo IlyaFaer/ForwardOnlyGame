@@ -384,7 +384,13 @@ class MainMenu:
         return saves
 
     def _save_conf_and_restart(
-        self, res_chooser, tutorial_check, lang_chooser, fps_chooser, fps_meter
+        self,
+        res_chooser,
+        tutorial_check,
+        lang_chooser,
+        fps_chooser,
+        fps_meter,
+        multi_threading,
     ):
         """Save configurations and restart the game program.
 
@@ -399,6 +405,8 @@ class MainMenu:
                 Framerate chooser.
             fps_meter (direct.gui.DirectCheckButton):
                 FPS meter enabling check button.
+            multi_threading (direct.gui.DirectCheckButton):
+                Multi threading mode enabling check button.
         """
         base.game_config.update(  # noqa: F821
             res_chooser.chosen_item,
@@ -406,6 +414,7 @@ class MainMenu:
             str(bool(tutorial_check["indicatorValue"])),
             fps_chooser.chosen_item,
             str(bool(fps_meter["indicatorValue"])),
+            str(bool(multi_threading["indicatorValue"])),
         )
         base.restart_game()  # noqa: F821
 
@@ -557,6 +566,45 @@ class MainMenu:
         fps_meter.setTransparency(TransparencyAttrib.MAlpha)
         self.conf_wids.append(fps_meter)
 
+        self.conf_wids.append(
+            DirectLabel(  # Multi threading:
+                parent=self._main_fr,
+                text=base.labels.MAIN_MENU[37],  # noqa: F821,
+                text_fg=RUST_COL,
+                text_scale=0.04,
+                text_font=base.main_font,  # noqa: F821
+                pos=(-0.3, 0, 0.01),
+                frameColor=(0, 0, 0, 0),
+            )
+        )
+
+        multi_threading = DirectCheckButton(
+            parent=self._main_fr,
+            indicatorValue=base.game_config.multi_threading,  # noqa: F821
+            clickSound=self.click_snd,
+            scale=0.02,
+            pos=(0.12, 0, 0.02),
+            boxBorder=0,
+            boxImage=(GUI_PIC + "no_check.png", GUI_PIC + "check.png", None),
+            boxRelief=None,
+            relief="flat",
+            frameColor=RUST_COL,
+        )
+        multi_threading.setTransparency(TransparencyAttrib.MAlpha)
+        self.conf_wids.append(multi_threading)
+
+        self.conf_wids.append(
+            DirectLabel(  # Multi threading:
+                parent=self._main_fr,
+                text=base.labels.MAIN_MENU[38],  # noqa: F821,
+                text_fg=SILVER_COL,
+                text_scale=0.025,
+                text_font=base.main_font,  # noqa: F821
+                pos=(-0.3, 0, -0.03),
+                frameColor=(0, 0, 0, 0),
+            )
+        )
+
         but = DirectButton(  # Save and restart
             parent=self._main_fr,
             text_scale=0.045,
@@ -571,8 +619,9 @@ class MainMenu:
                 lang_chooser,
                 fps_chooser,
                 fps_meter,
+                multi_threading,
             ],
-            pos=(0.1, 0, -0.1),
+            pos=(0.1, 0, -0.2),
             clickSound=self.click_snd,
         )
         self.bind_button(but)

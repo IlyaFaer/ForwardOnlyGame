@@ -73,6 +73,10 @@ MAIN_MENU = (
     "Stack:",
     "Tools:",
     "FPS meter:",
+    "Multi threading:",
+    """(boosts FPS, but on some systems
+can cause flaky failures on
+new game start or loading)""",
 )
 
 KEYS_INFO = u"""
