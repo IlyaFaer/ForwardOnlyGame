@@ -52,3 +52,10 @@ p0.emitter.setRadiateOrigin(Point3(0.0000, 0.0000, 0.0000))
 # Point parameters
 p0.emitter.setLocation(Point3(0.0000, 0.0000, 0.0000))
 self.addParticles(p0)
+f0 = ForceGroup.ForceGroup('noise')
+# Force parameters
+force0 = LinearJitterForce(0.8000, 0)
+force0.setVectorMasks(1, 1, 1)
+force0.setActive(1)
+f0.addForce(force0)
+self.addForceGroup(f0)
