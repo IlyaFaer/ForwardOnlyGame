@@ -121,6 +121,9 @@ class Scenario:
 
         base.journal.add_page(self.current_chapter)  # noqa: F821
         self._done_but.show()
+        base.res_gui.update_resource(  # noqa: F821
+            "places_of_interest", str(self.current_chapter + 1) + "/10"
+        )
 
     def do_build_camp_effect(self):
         """Do effects for building a camp for orphans choice."""

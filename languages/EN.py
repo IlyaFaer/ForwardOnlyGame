@@ -103,14 +103,16 @@ New Year spirit:
 """
 
 RESOURCES = (
-    "Expendable resources:",
+    "Resources:",
     "Medicine",
-    "Cure sick/wounded character",
+    "Cure disease and wounds of a character",
     "Smoke filter",
-    "Reduce attack chance (5 min)",
+    "Reduce skinhead attack chance (5 min)",
     "Stimulator",
-    "Disable negative traits (5 min)",
+    "Disable negative traits and deafening (5 min)",
     " mi",
+    "Place of interest",
+    "Visit at least 8 of 10 to win the game",
 )
 
 CHARACTERS = ("Name:", "Class:", "Health", "Energy", "Status", "Traits")

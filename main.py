@@ -333,6 +333,10 @@ class ForwardOnly(ShowBase):
         self.plus_resource("smoke_filters", save["smoke_filters"])
         self.plus_resource("stimulators", save["stimulators"])
 
+        self.res_gui.update_resource(
+            "places_of_interest", str(save["chapter"] + 1) + "/10"
+        )
+
         self.scenario = Scenario(save["chapter"])
         for num in range(save["chapter"] + 1):
             self.journal.add_page(num)
