@@ -15,7 +15,6 @@ from direct.gui.DirectGui import (
 from panda3d.core import TransparencyAttrib
 
 from gui.widgets import GUI_PIC, RUST_COL
-from .scenario_data import SCENARIO
 
 
 class Scenario:
@@ -55,13 +54,15 @@ class Scenario:
         self._name = DirectLabel(
             parent=self._list,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.4, 0.4, 0.4, 0.4),
             text_scale=0.05,
             pos=(-0.4, 0, 0.7),
         )
         self._type = DirectLabel(
             parent=self._list,
-            text="Scenario",
+            text=base.labels.SCENARIO_LABELS[1],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.4, 0.4, 0.4, 0.4),
             text_scale=0.035,
             pos=(-0.13, 0, 0.699),
@@ -69,32 +70,35 @@ class Scenario:
         self._desc = DirectLabel(
             parent=self._list,
             text="",
+            text_font=base.main_font,  # noqa: F821
             frameSize=(0.6, 0.6, 0.6, 0.6),
-            text_scale=0.04,
+            text_scale=0.037,
             pos=(0, 0, 0.55),
         )
 
         self._buts = []
-        z_coor = -0.5
+        z_coor = -0.6
         for _ in range(3):
             self._buts.append(
                 DirectButton(
                     parent=self._list,
                     text="Text",
+                    text_font=base.main_font,  # noqa: F821
                     text_fg=RUST_COL,
                     text_shadow=(0, 0, 0, 1),
                     frameColor=(0, 0, 0, 0),
                     frameSize=(-9, 9, -0.3, 0.7),
-                    scale=(0.05, 0, 0.05),
+                    scale=(0.047, 0, 0.047),
                     clickSound=base.main_menu.click_snd,  # noqa: F821
                     pos=(0, 0, z_coor),
                 )
             )
-            z_coor -= 0.1
+            z_coor -= 0.08
 
         self._done_but = DirectButton(
             parent=self._list,
-            text="Done",
+            text=base.labels.DISTINGUISHED[6],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
             text_fg=RUST_COL,
             text_shadow=(0, 0, 0, 1),
             frameColor=(0, 0, 0, 0),
@@ -111,7 +115,9 @@ class Scenario:
         Args:
             var (str): Variant id.
         """
-        consequences = SCENARIO[self.current_chapter]["variants"][var]
+        consequences = base.labels.SCENARIO[self.current_chapter][  # noqa: F821
+            "variants"
+        ][var]
         for but in self._buts:
             but.hide()
 
@@ -222,10 +228,16 @@ class Scenario:
     def show_chapter_situation(self):
         """Show the situation description and the possible variants."""
         self._done_but.hide()
-        self._name["text"] = "Chapter " + str(self.current_chapter + 1)
-        self._desc["text"] = SCENARIO[self.current_chapter]["intro"]
+        self._name["text"] = base.labels.SCENARIO_LABELS[0] + str(  # noqa: F821
+            self.current_chapter + 1
+        )
+        self._desc["text"] = base.labels.SCENARIO[self.current_chapter][  # noqa: F821
+            "intro"
+        ]
 
-        for index, var in enumerate(SCENARIO[self.current_chapter]["variants"]):
+        for index, var in enumerate(
+            base.labels.SCENARIO[self.current_chapter]["variants"]  # noqa: F821
+        ):
             self._buts[index]["text"] = var
             self._buts[index]["extraArgs"] = [var]
             self._buts[index]["command"] = self._choose_variant
