@@ -3037,119 +3037,118 @@ SCENARIO = (
         },
     },
     {  # 2
-        "intro": """Taking a closer look at the bunch of people walking through the
-meadow, you understand that there are mostly children. Weird!
-Asking a couple of crewmates to follow you, you get closer
-to the crowd, seeing a woman moving towards your party. In
-a few words she tells that they are workers and children
-from an orphan shelter. Understanding that the Stench moves
-fast to the place, and the governors are too busy saving
-themselves, adults, who worked there, gathered all the
-children and decided to move to Silewer on foot. Looking at
-pale and tired kids, you silently think that it was really
-tough idea. But probably the decision saved their lives...
-Complaining about walking for six hours without a stop, the
-woman asks you to help them build a field camp. You
-understand that it'll take a lot of time, as there are
-about sixty children. On the other hand, it doesn't look
-right to just leave them here, in the foreign country,
-tired and shelterless. Maybe there is some time to help
-them a little?""",
+        "intro": """Внимательно присмотревшись к группе людей, идущих через луг,
+Вы понимаете, что там в основном дети. Весьма странно!
+Взяв с собой пару членов экипажа, Вы подходите поближе
+к ним и видите, как навстречу Вам выходит женщина. В
+нескольких словах она рассказывает Вам, что они работники
+детского приюта. Понимая, что Смрад быстро движется к
+ним, а местные власти слишком заняты спасением самих
+себя, взрослые, которые работали в этом приюте, решили
+собрать всех детей и двигаться в Сайлевер пешком. Глядя
+на бледных и уставших детей, Вы думаете про себя, что это
+было весьма суровое решение. Хотя, вероятно, оно спасло
+их жизни...
+
+Жалуясь на шесть часов ходьбы без остановки, женщина
+просит Вас помочь им построить лагерь. Вы понимаете,
+что это займёт много времени, потому что здесь около
+шестидесяти детей. С другой стороны, как-то неправильно
+просто оставить их в чужой стране, уставших и не
+имеющих нормальной стоянки. Может, стоит помочь?""",
         "variants": {
-            "Help them to build a camp": {
-                "desc": """Feeling some qualm inside, you give your people order to help
-the children. Losing time is not okay... Still, twenty minutes
-later, seeing your people and children smiling while setting
-up big tents, igniting bonfires and boiling pottage in big
-cauldrons, you forget these heavy thoughts. This small break
-will be useful for the crew as well...
+            "Помочь им устроить стоянку": {
+                "desc": """Ощущая внутреннее беспокойство, Вы приказываете своим людям
+помочь детям. Потеря времени - всё же плохо... Однако
+уже минут через двадцать, видя, как Ваши люди, улыбаясь,
+помогают детям ставить большие палатки, разжигать костры
+и варить похлёбку в массивных казанах, Вы забываете об
+этих тяжёлых мыслях. Небольшой перерыв и общение с
+людьми пойдёт на пользу всему Вашему экипажу...
 
-It takes you about two hours to finish preparing the camp.
-Getting a lot of thanks from the children and their teachers,
-you gather again on the Adjutant. Everyone seems to be
-enlivened, still, the road calls. Giving an order to start
-engine, you approach a couple of your crewmates, who are
-viewing some kind of an article on a smartphone. "Hey,
-Captain, you need to see this! Some of those children visited
-kinda scientist summit some time ago and took an interview
-there. The woman speaks about interesting things." Telling
-them that you're going to take a closer look at the article
-later, you go to the deckhouse to plan the route, considering
-the recent delay.
+Подготовка стоянки занимает около двух часов. Наслушавшись
+благодарностей от детей и их учителей, Вы все собираетесь
+на Адъютанте. Все выглядят воодушевлёнными, но дорога
+всё же зовёт вперёд. Отдав приказ запускать двигатель, Вы
+приближаетесь к паре своих компаньонов, которые читают
+на смартфоне некую статью. "Эй, капитан, Вам стоит видеть
+это! Кое-кто из тех детей посетил некий саммит учёных, там
+они взяли интервью. Женщина говорит интересные вещи."
+Пообещав им, что прочтёте статью позже, Вы двигаетесь в
+рубку, чтобы спланировать маршрут с учётом задержки.
 
-The Stench frontier came 20 miles closer to you
+Фронт Смрада приблизился к Вам на 20 км
 
-A note added into Captain's journal. You can read it
-on move not to stay long at the same place, losing
-distance from the Stench frontier.""",
+Записка добавлена в журнал капитана. Лучше прочтите
+её на ходу, чтобы не дать Смраду догнать Вас.""",
                 "effects": (
                     ("do_build_camp_effect", []),
                     ("do_stench_moves_effect", [20]),
                 ),
             },
-            "Agree in words, but steal from them": {
-                "desc": """Calling the crew to speak aside, you're trying to convince
-them to use an ability to replenish resources. "The situation
-is getting tougher day after day, it's becoming about us or
-them." Your crewmates lower their eyes. Everybody know that
-sooner or later it'll come to this, still, no one wants to take
-responsibility. "It's hard to admit, but those children are not
-going to make it. They are not fighters nor survivors. The first
-meet with skinheads, and..." The crew continue to keep silence,
-bit you feel them accepting the situation, so you're giving an
-order: "Build the camp hastily and take useful stuff in case you
-see it!" Your crewmates, avoiding to look at each other, go out
-of the deckhouse... About an hour and half passed, and all of
-your people gather together on the Adjutant. They still doesn't
-want to look at each other, but they put an aid kit and an energy
-drink on the table. "Okay, let's move on!" - you command.
+            "Согласиться помочь, но обокрасть их": {
+                "desc": """Отведя экипаж в сторону для разговора, Вы стараетесь
+убедить их использовать возможность восполнить ресурсы.
+"Ситуация становится жёстче с каждым днём, речь идёт на
+уровне либо они, либо мы." Ваши компаньоны опускают глаза.
+Все знали, что рано или поздно придёт к этому, но никто
+не хочет брать на себя ответственность. "Тяжело признавать,
+но этим детям не выжить. Они не бойцы, не выживальщики.
+Первая встреча со скинхедами, и..." Ваш экипаж продолжает
+молчать, но Вы чувствуете, что они принимают положение, так
+что даёте команду: "Обустраивайте стоянку наспех и, если
+видите что-то полезно, берите!" Ваши люди, стараясь не
+смотреть друг на друга, покидают рубку... Проходит около
+получаса, и все Вы снова собираетесь на Адъютанте. Так же
+все стараются не смотреть в глаза друг другу, но на столе
+появляются энергетик и небольшая аптечка. "Хорошо.
+продолжим путь!" - подытоживаете Вы.
 
-Some time later you find a paper on your table, which looks like
-an interview log. It appears those children visited a kind of a
-scientist summit recently and had a word with one of scientists.
-No ideas why someone left the paper for you, but it worth reading.
+Спустя некоторое время Вы находите лист бумаги на своём
+столе, он выглядит, как запись диалога или интервью.
+Похоже, кто-то из тех детей посетил саммит учёных и
+побеседовал с одним из светлых умов. Не ясно, зачем
+оставлять лист на Вашем столе, но стоит прочитать его.
 
-You're getting 1 medicine and 1 stimulator
-Soon people of Silewer will know that you've stolen from kids.
-This will be a bad example of what foreigners are like and will
-bring more people under the skinhead banners.
+Вы получаете 1 стимулятор и 1 лекарство
+Скоро люди Сайлевера узнают, что Вы обокрали сирот. Это
+послужит плохим примером поведения приезжих, так что
+ряды скинхедов пополнятся новыми добровольцами.
 
-A note added into Captain's journal. You can read it
-on move not to stay long at the same place, losing
-distance from the Stench frontier.""",
+Записка добавлена в журнал капитана. Лучше прочтите
+её на ходу, чтобы не дать Смраду догнать Вас.""",
                 "effects": (
                     ("do_enemy_inc_effect", []),
                     ("do_plus_resource", ["medicine_boxes", 1]),
                     ("do_plus_resource", ["stimulators", 1]),
                 ),
             },
-            "Don't help them and continue the road": {
-                "desc": """You go back to the deckhouse and negotiate with the crew. It
-appears most of them would like to stop and help orphans, but
-all understand that it'll take at least several hours. Clouds
-of the Stench will not let you wait, so it makes sense to move
-faster. People know nothing about the cataclysm behavior, in
-theory it can accelerate or appear somewhere far from the
-supposed source in Germany. Overthinking it again, again and
-again, you decide to ignore the teachers plea. The crew don't
-like the decision very much, but everyone mind the situation.
-A hard silence forms in the air. No one wants to go there and
-say those orphans that you're going to leave. "So, what?" - you
-ask quietly. - "Should we continue the road without the last
-word? What's the point in it?" Your crewmates lower their
-eyes and nod their heads. Taking this as an answer, you give
-a command to go...
+            "Не помогать им, а двигаться дальше": {
+                "desc": """Вы возвращаетесь в рубку и говорите с экипажем. По итогам
+получается, что большинство хотело бы сделать остановку и
+помочь сиротам, однако все понимают, что это займёт не
+меньше, чем несколько часов. Так как Смрад себя ждать не
+заставит, есть смысл шевелиться побыстрее. Людям ничего
+не известно о катаклизме, теоретически он может ускориться
+или возникнуть далеко от источника в Германии. Обдумав всё
+снова, и снова, и снова, Вы решаете проигнорировать просьбу
+учителя. Экипажу не сильно это нравится, но все понимают
+ситуацию. Тяжёлая тишина повисает в воздухе. Никто не хочет
+пойти туда и сказать детям, что Вы не поможете им. "Так
+что?" - тихо спрашиваете Вы. - "Может, стоит молча
+продолжить путь? К чему лишние слова?" Ваши люди
+опускают глаза и кивают головами. Принимая это как
+ответ, Вы даёте команду трогаться...
 
-Some time later you see a paper on your table. Running through
-it with your eyes, you find out it's an interview log. Those
-orphans visited kind of a scientist summit some time ago and
-took an interview from one of the scientists. Most likely one
-of your people got it from the children somehow. No thoughts
-why it was left on your table, but it should be read.
+Чуть позже Вы обнаруживаете на своём столе бумагу. Пробежав
+по ней глазами, Вы понимаете, что это запись интервью. Те
+сироты посетили некий саммит учёных и побеседовали с кем-то
+из светлых умов. Вероятно, один из Ваших людей получил
+этот лист от детей. Непонятно, зачем его оставили на Вашем
+столе, но, видимо, стоит прочесть.
 
-A note added into Captain's journal. You can read it
-on move not to stay long at the same place, losing
-distance from the Stench frontier.""",
+Записка добавлена в журнал капитана. Лучше прочтите
+её на ходу, чтобы не дать Смраду догнать Вас.""",
                 "effects": (("do_no_effect", []),),
             },
         },
