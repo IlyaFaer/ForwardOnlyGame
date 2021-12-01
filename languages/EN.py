@@ -3141,9 +3141,9 @@ distance from the Stench frontier.""",
         },
     },
     {  # 3
-        "intro": """Looking at an old house, standing in about 300 meters aside of
+        "intro": """Looking at an aged house, standing in about 200 meters aside of
 the railway, you see some kind of a fuss there. The hut is
-really old, the walls are crumbled here and there, the old
+really old, the walls are crumbled here and there, the junk
 dark wooden roof holds on a promise, but through small windows
 you can discern several people moving actively inside. You
 also hear some noise, even screams sometimes. That's worth
@@ -3223,8 +3223,8 @@ any counter arguments... Well..." - you move the gun again.
 one follows his gesture in the next second. "We'll go. Let's
 just... Just forget about what happened here." - the officer
 seems to be even ashamed, and this fact makes you think they'll
-not return here - maybe they even understood what they were
-just doing... When the men left, and their car engine silenced
+not return here - maybe they even understood the filth of their
+doings... When the men left, and their car engine silenced
 somewhere in distance, the young girl stands up: "Thank you!
 Thank you!" - she seems to be too touched, and you all hear
 her gratitude for several minutes. In return she proposes your

@@ -3154,101 +3154,104 @@ SCENARIO = (
         },
     },
     {  # 3
-        "intro": """Looking at an old house, standing in about 300 meters aside of
-the railway, you see some kind of a fuss there. The hut is
-really old, the walls are crumbled here and there, the old
-dark wooden roof holds on a promise, but through small windows
-you can discern several people moving actively inside. You
-also hear some noise, even screams sometimes. That's worth
-checking the place... You take a couple of your crewmates and
-get closer to the building. It appears a police jeep is standing
-from the other side of the hut. Entering the house, you see a
-couple of men in uniform, threatening an old pair and a young
-girl, most likely their daughter. Interrupted and surprised, the
-police officers look at you, trying to understand who are you.
-Seeing your guns, they become very friendly: "Hey, folks!
-Nothing interesting here, we're just helping this family with
-something." Throwing a gaze at the scared people, you realise
-it's a lie. "Maybe we can bet a deal and live on happy?" - one
-of the officers does a step to you, lingering a wallet from his
-pocket. No doubts, they are caught doing something bad, two
-officers threatening people in backcountry - witnesses can turn
-it dangerous for them. The law didn't collapse completely yet.""",
+        "intro": """Глядя на дом, стоящий примерно в 200 метрах от ж/д путей,
+Вы замечаете какое-то движение в нём. Хата невероятно стара,
+стены потрескались, ветхая деревянная крыша держится на
+добром слове, но через маленькие окна Вы можете различить
+несколько активно двигающихся внутри людей. Вы так же
+слышите шум и даже крики. Стоит проверить это место...
+Вы берёте с собой пару членов экипажа и подходите ближе к
+строению. С другой стороны хаты обнаруживается полицейский
+джип. Войдя в дом, Вы видите, что двое людей в форме
+запугивают немолодую уже пару и некую девушку, вероятно, их
+дочь. Удивлённые тем, что их прервали, полицейские смотрят
+на Вас, пытаясь понять, кто Вы такие. Разглядев Ваше
+оружие, они становятся весьма вежливыми: "Ребята, мы
+помогаем этой семье кое-с-чем, ничего интересного."
+Глядя на напуганных людей, Вы понимаете, что это ложь.
+"Может, мы договоримся и будем счастливо жить дальше?" -
+один из полицейских достаёт кошелёк. Несомненно, они
+попались на весьма нехороших делах, двое полицейских
+терроризируют людей в глуши - свидетели могут им сильно
+навредить. Закон пока ещё не развалился окончательно.""",
         "variants": {
-            "Take the bribe and go away": {
-                "desc": """Nodding your head to the door, you're commanding your people
-to leave the house. It's not your fight, not your people, not
-your business. The threatened family keeps silence, but you
-can feel with your skin that, seeing your gesture, they've
-lost the last hope for a better end. As if emptiness filled
-the part of the room, where they're sitting. Taking money
-from the officer, you exit the hut without a word... While
-walking back to the Adjutant, you're all trying to hear anything
-from the house side, but nothing happens. Turning your head
-back, you see one of the men standing near the door, looking
-at your crew. Seems like they are scared by themselves and
-doesn't believe you'll just leave. Still, you're leaving.
-Soon this will be happening everywhere - those, who has
-power and strength, will be using it to survive, destroying
-others if needed. And it will be needed. You can't save
-all the others anyway, but you can take care about your crew.
+            "Принять взятку и уйти": {
+                "desc": """Кивая головой на дверь, Вы приказываете своим бойцам покинуть
+дом. Это не Ваш бой, не Ваши люди и не Ваше дело. Пожилая
+пара хранит молчание, но Вы всем существом ощущаете, как,
+увидев Ваш жест, они потеряли последнюю надежду на
+положительный исход ситуации. Как будто пустота
+наполнила ту часть комнаты, где они сидят.
 
-You're getting $100
+Взяв деньги у полицейского, Вы выходите из хаты, не произнеся
+ни одного слова... Пока движетесь обратно к Адъютанту, Вы
+все прислушиваетесь к тому, что происходит в стороне дома,
+но ничего не слышите. Повернув голову назад, Вы видите,
+что один из полицейских стоит у дверей и смотрит в след
+Вашему экипажу. Видимо, они сами порядочно испугались и
+всё ещё не верят, что Вы просто уйдёте. Всё же Вы уходите.
+Скоро это будет происходить везде - те, у кого есть власть
+и сила, будут использовать её для выживания, уничтожая
+окружающих, если понадобится. А оно понадобится. Всех
+Вам, разумеется, не спасти, но Вы можете хотя бы
+позаботиться об экипаже Адъютанта.
 
-You've got one more diary page in Captain's
-journal. Better read it on move.""",
+Вы получаете $100
+
+Вы получаете страницу дневника капитана. Лучше
+прочтите её на ходу.""",
                 "effects": (("do_get_money", [100]),),
             },
-            "Kill the bastards and free the family": {
-                "desc": """Lighting fast overthinking the situation, you upper your gun
-and shoot both policemen. With the same surprised faces they
-loudly fall to the floor. Taking away the gun, you do a step
-towards the threatened people, but they all upper their hands
-in the same moment. "Please, just leave us!" - the old man says
-with a trembling voice. Seeing they became even more frightened
-than before you killed the intruders, you realise that it
-wasn't a good idea to do it all in front of them... Everyone
-in the room seems to be little bit lost. It probably will be
-better to just leave. Still, you decide to give an order to
-your people to pull both bodies out of the hut and drop them
-in some distance. Without arguments, they take both dead
-policemen and exit the house. After a few seconds long pause
-you throwing the last gaze at the frightened family: "Sorry...
-Sorry for the mess." Not getting any sound from them, you're
-leaving the hut.
+            "Убить ублюдков и освободить семью": {
+                "desc": """Моментально оценив всю ситуацию, Вы поднимаете своё оружие
+и стреляете в обоих полицейских. С по-прежнему удивлёнными
+лицами они громко падают на пол. Убрав оружие, Вы делаете
+шаг в сторону напуганных людей, но они все разом поднимают
+руки. "Пожалуйста, просто оставьте нас!" - произносит
+мужчина дрожащим голосом. Видя, что теперь они напуганы ещё
+больше прежнего, Вы понимаете, что идея убить полицейских
+у них на глазах была не лучшей... Все в комнате выглядят
+несколько растерянными. Вероятно, будет лучше просто уйти.
+Всё же Вы решаете дать своим людям команду вынести оба тела
+и бросить их где-нибудь подальше от дома. Без возражений
+они поднимают полицейских и выходят наружу. После
+некоторой паузы Вы бросаете последний взгляд на напуганных
+людей: "Извините... За этот бардак." Не услышав в ответ
+ни звука, Вы покидаете старую хату.
 
-You've got one more diary page in Captain's
-journal. Better read it on move.""",
+Вы получаете страницу дневника капитана. Лучше
+прочтите её на ходу.""",
                 "effects": (("do_no_effect", []),),
             },
-            "Use your superiority and intimidate them": {
-                "desc": """You see clearly that all the points are on your side. These
-two men are weekly armed, they are policemen, and they were
-caught on very bad dids. Every part of the situation is
-against them. Tinkering the gun in your hands, you say
-overbearingly: "You two better leave this family and forget
-the way to this house!" Smiles disappear from their faces
-in the same moment. Throwing gazes to each other, they seem
-to be confused greatly. "We all will forget what happened
-here, you only need to leave" - you add. - "But if you have
-any counter arguments... Well..." - you move the gun again.
-"Okay!" - one of the policemen uppers his hands. The second
-one follows his gesture in the next second. "We'll go. Let's
-just... Just forget about what happened here." - the officer
-seems to be even ashamed, and this fact makes you think they'll
-not return here - maybe they even understood what they were
-just doing... When the men left, and their car engine silenced
-somewhere in distance, the young girl stands up: "Thank you!
-Thank you!" - she seems to be too touched, and you all hear
-her gratitude for several minutes. In return she proposes your
-crew a medical examination. Yeah, she's a doctor! Feeling the
-very lucky coincidence here, you command your people to use
-the opportunity.
+            "Используя своё превосходство, запугать их": {
+                "desc": """Вы ясно видите, что все преимущества на Вашей стороне.
+Эти двое слабо вооружены, они полицейские и они пойманы
+на весьма непорядочных делах. Каждая часть ситуации
+против них. Покачав оружие в руках, Вы уверенно говорите:
+"Вам двоим лучше оставить эту семью в покое и забыть
+дорогу сюда!" Улыбки исчезают с их лиц моментально.
+Покосившись друг на друга, они демонстрируют полную
+растерянность. "Мы все забудем, что здесь произошло, Вам
+только найдо уйти" - добавляете Вы. - "Но если у Вас есть
+возражения... Что ж..." - Вы снова покачиваете оружием.
+"Ладно!" - один из них поднимает руки. Второй тут же
+повторяет его движение. "Мы уйдём. Давайте просто...
+Просто забудем, что здесь произошло." - полицейский
+выглядит даже пристыженным, и этот факт заставляет Вас
+верить, что они не вернутся сюда - возможно, они поняли
+мерзость своих действий... Когда они уходят, и двигатель
+их машины затихает вдали, девушка встаёт: "Спасибо!
+Спасибо!" - она выглядит тронутой Вашими действиями, и
+все Вы слушаете её благодарности в течении нескольких
+минут. В качестве ответной услуги она предлагает Вашему
+экипажу медицинский осмотр. Да, она врач! Чувствуя
+крайне удачное стечение обстоятельств, Вы говорите
+своим людям использовать возможность.
 
-All people in the crew getting +20 Health
+Все члены экипажа получают 20 здоровья
 
-You've got one more diary page in Captain's
-journal. Better read it on move.""",
+Вы получаете страницу дневника капитана. Лучше
+прочтите её на ходу.""",
                 "effects": (("do_characters_effect", [{"health": 20}, False]),),
             },
         },
