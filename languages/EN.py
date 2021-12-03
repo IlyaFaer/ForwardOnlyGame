@@ -3280,17 +3280,17 @@ dwellers were conversing about the same scientist those
 orphans were interviewing. She was here not long ago!
 That's something should be read.
 
-Some time passed, you're going to give a command to start
-an engine, but suddenly you see the man, who was trying to
-get the last place in the motel. The one you forced to go
-- he walks from the Adjutant back in the motel direction.
-What does it mean? You ask the crew to check if everything
-is okay on the locomotive, and it appears the man ignited
-it! You deal with fire fast, but still the Adjutant gets
+You're going to give a command to start an engine, but
+suddenly you see the man, who was trying to get the last
+place in the motel. The one you forced to go - he walks
+from the Adjutant back in the motel direction. What does
+it mean? You ask the crew to check if everything is okay
+on the locomotive, and it appears the man ignited it!
+You deal with fire fast, but still the Adjutant gets
 some damage.
 
 The Adjutant loses 70 Durability
-You've got one more note in the Captain's journal.""",
+You've got one more note in the Captain's journal""",
                 "effects": (("do_locomotive_damage", [70]),),
             },
             "The man with the sick son should rest": {
@@ -3307,8 +3307,7 @@ yourself. In addition, they give you a note - they heard
 a conversation between two motel dwellers, who saw the same
 scientist woman those orphans were interviewing. And they
 said that she's one of those who responsible for cataclysms
-like the Stench. Interesting! The note made by your people
-definitely should be read.
+like the Stench. Interesting! Should be read.
 
 You're doing a short technical review of the Adjutant and
 then start the engine to continue the road.
@@ -3317,8 +3316,7 @@ Soon all the Silewer will know that armed foreigners forced
 a pregnant woman to leave the motel, where she was going to
 rest after long road. This will bring more people into the
 skinhead bands.
-You've got one more note in the Captain's journal.
-""",
+You've got one more note in the Captain's journal.""",
                 "effects": (("do_enemy_inc_effect", []),),
             },
             "Force them both out and take their place": {
@@ -3329,12 +3327,12 @@ man and the pregnant woman, you say in a cold voice: "Me
 and my crew will take the room." Your visavis stagger back,
 surprised greatly by the turn. Several seconds they look
 at each other, and then simultaneously turn around and go
-away. You join your crew and rent the room... The short rest
-goes okay, one of your crew mates even give you a paper, on
-which he noted a conversation between two motel dwellers,
-who were speaking about that scientist woman, interviewed
-by orphans you met earlier, blaming her in cataclysms like
-the Stench. Interesting!
+away. You join your crew, stand in line and then rent the
+room... The short rest goes okay, one of your crew mates
+even give you a paper, on which he noted a conversation
+between two motel dwellers, who were speaking about that
+scientist woman, interviewed by orphans you met earlier,
+blaming her in cataclysms like the Stench. Interesting!
 
 In some moment you understand that a kind of a noise
 increases fast in the motel. Taking your guns, you all
@@ -3347,7 +3345,7 @@ wounds, still, there are several small injuries. Not
 the best stop!
 
 All people in the crew getting -20 health
-You've got one more note in the Captain's journal.""",
+You've got one more note in the Captain's journal""",
                 "effects": (("do_characters_effect", [{"health": -20}]),),
             },
         },
