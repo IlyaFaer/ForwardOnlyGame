@@ -3479,116 +3479,112 @@ SCENARIO = (
         },
     },
     {  # 6
-        "intro": """Running a rag across the floor, you're working out your turn
-to cleanup the Adjutant. Tidiness is important - so many days
-in the same cold and coarse locomotive rises chances of
-sickness and pests emergence...
+        "intro": """Двигая тряпкой по полу, Вы отрабатываете свою очередь проводить
+уборку на Адъютанте. Чистота важна - столько дней в одном и
+том же прохладном и грубом помещении повышает шансы на
+появление болезней и паразитов...
 
-At some moment Daren, the Adjutant machinist, approaches you.
-You see he has something to tell you, but he can't find the
-proper words. "Come on, Daren, birth it." - you say, trying to
-make things faster. "Well... We've a problem. It's big.
-Precisely, we don't have food." Stopping to run the rag, you
-straighten your back: "How so?!" "Well, everyone is waiting
-you." - he answers and disappears in the doorway. Thinking a
-couple of seconds what it should mean, you decide to hurry
-up to the crew - if EVERYONE is waiting, it's serious.
+В какой-то момент Дарен, машинист Адъютанта, приближается к
+Вам. Вы видите, что он хочет сказать что-то, но никак не
+может подобрать слова. "Давай, Дарен, рожай!" - говорите Вы,
+пытаясь ускорить его. "Ну, есть проблема. Большая. Конкретно,
+у нас заканчивается провиант." Прекратив возить тряпкой, Вы
+выпрямляете спину: "Как это?!" "Ну, все ждут Вас." - отвечает
+он и исчезает в дверном проёме. Обдумав пару секунд, что это
+значит, Вы решаете поторопиться - если уж ВСЕ ждут Вас, это
+нечто серьёзное.
 
-Entering the back room, you see all of your people standing
-in a circle. Everyone seems to be concerned, but you don't
-find any aggression in the room, fortunately. "Well, Captain,
-here we are." - Kenneth starts the talk. - "Our food supplies
-are running out faster than we thought. We need to speak
-about limits, otherwise, we'll soon start to starve." Rubbing
-wet hands, you're trying to concentrate on the new problem.
-In current situation everybody should be energetic and
-healthy, as there are a lot of maintenance questions and
-the need to fight. But if it's impossible, maybe it's worth
-choosing who should have a priority in food questions?!""",
+Войдя в заднее помещение, Вы видите, что весь экипаж собрался
+в круг. Все выглядят озадаченными, но, к счастью, Вы не
+видите никакой враждебности в комнате. "Что ж, капитан, мы
+все здесь." - начинает Кеннет. - "Наши запасы еды убывают
+быстрее, чем мы думали. Нужно поговорить об ограничениях,
+иначе мы вскоре начнём голодать." Потирая влажные руки, Вы
+пытаетесь сконцентрироваться на новой проблеме. В текущей
+ситуации все должны быть в форме и здоровы, потому что
+требуется решать множество вопросов обслуживания локомотива,
+а также сражаться. Но, если это невозможно, стоит подумать
+над тем, кому присвоить приоритет в вопросах питания.""",
         "variants": {
-            "Fighters will have food priority": {
-                "desc": """Keeping silence for about two minutes, you come to
-a decision that fighters, those who protect the Adjutant
-from skinheads and who search resources on outings,
-should eat enough. If they'll not be able to fight back,
-you all will become victims of savages people turning
-into. As for the Adjutant mechanic and machinist, well,
-their work is less nervous and doesn't require that
-big efforts and concentration.
+            "Бойцы в приоритете": {
+                "desc": """Помолчав пару минут, Вы приходите к решению, что
+бойцы, те, кто защищает Адъютант от скинхедов и ищет
+ресурсы на вылазках, должны питаться хорошо. Если они
+будут не в состоянии отбивать атаки, Вы все падёте жертвами
+дикарства, к которому скатываются люди. Что до механика
+и машиниста Адъютанта, что ж, у них работа не такая нервная
+и не требует больших усилий или концентрации.
 
-Pronouncing your decision to the crew, you see they are
-not very pleased with it. Most likely, they are ready to
-starve together, instead of choosing special ones...
-Still, these days require tough turns and tactical
-thinking. Fortunately, Kenneth and Daren doesn't seem to
-be offended that their ration was reduced. They are not
-young, both seen a lot in their lives, they understand
-and can handle it. Good. Not that good, of course, but
-at least you don't need to think about riot in the crew.
+Озвучив своё решение экипажу, Вы видите, что им оно не
+особо-то нравится. Вероятно, они готовы голодать вместе,
+но на равных, без избранных... Тем не менее, сейчас
+необходимы суровые решения и тактическое мышление. К
+счастью, Дарен и Кеннет не выглядят обиженными тем, что
+их рацион урезали. Они уже не молоды, многое повидали,
+понимают ситуацию и справятся с этим. Хорошо. Не то
+чтоб действительно хорошо, но по крайней мере Вам не
+приходится думать о бунте в экипаже.
 
-Finishing the talk, you return back to your cleaning duty.
+Закончив совещание, Вы возвращаетесь к уборке локомотива.
 
-Some time later you'll find out that reducing mechanic's
-ration was not the best solution, because malnutrition
-lowered his competence, and the locomotive suffered.
-The Adjutant getting -80 Durability.
+Некоторое время спустя Вы обнаружите, что урезать рацион
+механика - это не самое лучшее решение, так как недоедание
+снизит его производительность, и Адъютант пострадает.
 
-You're getting a new diary page. Check the Journal.""",
+Адъютант теряет 80 Прочности
+Вы получаете страницу дневника. Проверьте журнал капитана!""",
                 "effects": (("do_locomotive_damage", [80]),),
             },
-            "Adjutant maintainers will have priority": {
-                "desc": """You're keeping silence for several minutes, weighing
-all the points. Fighters are needed, but you have enough
-ammunition - it's the main part of the defence. But if
-the locomotive engine will stop... In this case you all,
-without counter arguments, will die really soon. Keeping
-the pace is important, more important right now than
-killing those savages.
+            "Специалисты Адъютанта в приоритете": {
+                "desc": """Несколько минут Вы молчите, взвешивая все за и против.
+Бойцы нужны, но у Вас достаточно аммуниции - это главный
+пункт в защите. Но если двигатель локомотива заглохнет...
+В этом случае все Вы, без контраргументов, умрёте весьма
+быстро. Важно сохранять скорость движения - даже важнее,
+чем убивать дикарей.
 
-With this in mind, you're pronouncing your thoughts to
-the crew. Kenneth and Daren seems to be not very
-pleasant with your solution - they both are not young,
-they've seen a lot and can handle some starvation. Your
-order little bit offends their pride. Still, order is
-yours, and you believe the mechanic and the machinist
-should been in the best condition that is possible in
-the current situation.
+С такими мыслями Вы озвучиваете своё решение экипажу.
+Кеннет и Дарен, похоже, не очень довольны Вашим приказом
+- они уже немолоды, повидали многое и вполне справились
+бы с небольшим голоданием. Ваше решение несколько
+задевает их гордость. Всё же приказ отдан, и Вы верите,
+что машинист и механик должны быть в наилучшем состоянии,
+дозволенном текущей ситуацией.
 
-Finishing the talk, you return to your cleaning duty.
+Закончив совещание, Вы возвращаетесь к уборке локомотива.
 
-Some time later it'll become obvious that fighters
-tired much faster with this malnutrition, and their
-productivity significantly reduced.
+Спустя некоторое время становится заметно, что бойцы
+устают гораздо быстрее из-за недоедания, и их
+производительность заметно снизилась.
 
-All the fighters getting -40 energy.
+Все бойцы теряют 40 энергии
 
-You're getting one more diary page. Check the Journal.""",
+Вы получаете страницу дневника. Проверьте журнал капитана!""",
                 "effects": (("do_characters_effect", [{"energy": -40}]),),
             },
-            "Limit food for all": {
-                "desc": """Taking a couple of minutes to think about the situation,
-you decide it's not the best idea to make a part of the
-crew somewhat special. Everyone is important, everyone
-here do something for the whole company. If food supplies
-are not enough, it'll be better to reduce ration equally
-for all, no matter their duties.
+            "Урезать рацион всем": {
+                "desc": """Взяв пару минут на размышление над ситуацией, Вы решаете,
+что выделять кого-то в экипаже - это не очень хорошо.
+Все важны, все вносят вклад в общее дело коллектива.
+Если провианта недостаточно, будет лучше урезать
+рацион всем и одинакого, независимо от обязанностей.
 
-Sounding your solution, you see that everyone in the room
-is completely okay with it. Good, the team spirit is still
-here, and the food crisis will be dealt with by common
-and equal limitation.
+Озвучивая своё решение, Вы видите, что все в помещении
+вполне довольны им. Хорошо, командный дух всё ещё с
+Вами, и пищевой кризис будет решён совместными усилиями.
 
-Calculating the new ration with others, you understand
-the limitation will be actually small - spreaded to every
-person, it became not very significant for separately
-taken member of the crew. With this, you all approve
-the decision and return to your duties.
+Подсчитав новый рацион с другими, Вы обнаруживаете, что
+снижение его будет совсем малым - распространённое на
+каждого члена экипажа, оно становится незначительным
+с точки зрения одного человека. С такими результатами,
+Вы закрепляете своё решение и возвращаетесь к своим
+обязанностям.
 
-Ration limitation results:
-All the characters getting -10 energy and the Adjutant
-getting -20 Durability.
+Результаты снижения рациона:
+Все члены экипажа теряют 10 энергии, и Адъютант теряет
+20 Прочности.
 
-You're getting one more diary page. Check the Journal.""",
+Вы получаете страницу дневника. Проверьте журнал капитана!""",
                 "effects": (
                     ("do_characters_effect", [{"energy": -10}]),
                     ("do_locomotive_damage", [20]),
