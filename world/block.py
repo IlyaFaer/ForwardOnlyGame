@@ -170,7 +170,12 @@ class Block:
         Returns:
             list: Railways model name, x and y coords, angle.
         """
-        if self.name != "direct" or chance(83) or self.enemy_territory:
+        if (
+            self.name != "direct"
+            or chance(83)
+            or self.enemy_territory
+            or self.is_station
+        ):
             return
 
         model = random.choice(
@@ -225,6 +230,7 @@ class Block:
                         "surface_with_station3",
                         "surface_with_station4",
                         "surface_with_station5",
+                        "surface_with_station6",
                     )
                 )
             )
