@@ -4,6 +4,7 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 The Game world systems.
 """
+import copy
 import glob
 import random
 import shelve
@@ -23,6 +24,15 @@ from .outing import OutingsManager
 from .railway_generator import RailwayGenerator
 from .scenario import Scenario  # noqa: F401
 from .sun import Sun
+
+STATIONS = [
+    "surface_with_station1",
+    "surface_with_station2",
+    "surface_with_station3",
+    "surface_with_station4",
+    "surface_with_station5",
+    "surface_with_station6",
+]
 
 
 class World:
@@ -44,6 +54,7 @@ class World:
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
         self._map = []  # all the world blocks
+        self._stations = []
         self._branches = []
         self._block_coor = 0
         self._block_coor_step = 0
@@ -171,6 +182,20 @@ class World:
             int: The block angle.
         """
         return self._last_angle
+
+    @property
+    def stations_pool(self):
+        """Station blocks pool.
+
+        Used to make station models less repetative.
+
+        Returns:
+            list: List of block names.
+        """
+        if not self._stations:
+            self._stations = copy.copy(STATIONS)
+
+        return self._stations
 
     @property
     def stench_step(self):

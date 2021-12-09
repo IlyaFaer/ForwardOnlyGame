@@ -222,18 +222,7 @@ class Block:
             return address("surface_with_" + side + "_city"), 180 if side == "r" else 0
 
         if side == self._station_side:
-            surface = address(
-                random.choice(
-                    (
-                        "surface_with_station1",
-                        "surface_with_station2",
-                        "surface_with_station3",
-                        "surface_with_station4",
-                        "surface_with_station5",
-                        "surface_with_station6",
-                    )
-                )
-            )
+            surface = address(take_random(base.world.stations_pool))  # noqa: F821
             return surface, (180 if side == "r" else 0)
 
         surface = address(random.choice(SURFACES[self.name]))
