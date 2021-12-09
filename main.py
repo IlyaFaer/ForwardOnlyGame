@@ -43,6 +43,7 @@ loadPrcFileData(
     "audio-library-name "
     + ("p3openal_audio" if sys.platform == "linux" else "p3fmod_audio"),
 )
+loadPrcFileData("", "notify-level error")
 
 logging.basicConfig(
     filename="logs.txt",
@@ -204,10 +205,10 @@ class ForwardOnly(ShowBase):
             1: self.labels.MECHANIC_NAMES[0],
             3: self.labels.MECHANIC_NAMES[1],
             6: self.labels.MECHANIC_NAMES[2],
-            9: self.labels.MECHANIC_NAMES[3],
-            12: self.labels.MECHANIC_NAMES[4],
-            15: self.labels.MECHANIC_NAMES[5],
-            18: self.labels.MECHANIC_NAMES[6],
+            10: self.labels.MECHANIC_NAMES[3],
+            13: self.labels.MECHANIC_NAMES[4],
+            16: self.labels.MECHANIC_NAMES[5],
+            19: self.labels.MECHANIC_NAMES[6],
         }.get(block_id)
 
         if not tutorial_name:

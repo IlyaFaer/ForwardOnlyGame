@@ -218,8 +218,9 @@ class RailsScheme:
                 self._temp_wids.append(
                     DirectLabel(
                         parent=self._scheme,
-                        text=("Sneeuwstad", "Naaldstad")[cities],
-                        text_scale=0.033,
+                        text=base.labels.CITY_NAMES[cities],  # noqa: F821
+                        text_font=base.main_font,  # noqa: F821
+                        text_scale=0.032,
                         text_bg=(0, 0, 0, 0),
                         frameColor=(0, 0, 0, 0),
                         pos=(-0.967 + block.id * 0.00216, 0, 0.1),

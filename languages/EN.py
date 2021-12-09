@@ -3588,3 +3588,4 @@ You're getting one more diary page. Check the Journal.""",
 )
 
 SCENARIO_LABELS = ("Chapter ", "Scenario")
+CITY_NAMES = ("Sneeuwstad", "Naaldstad")

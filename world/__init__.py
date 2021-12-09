@@ -972,7 +972,7 @@ class World:
         if (
             len(self._loaded_blocks) > 2
             and self._loaded_blocks[-2].id
-            >= (21 if base.game_config.tutorial_enabled else 15)  # noqa: F821
+            >= (22 if base.game_config.tutorial_enabled else 15)  # noqa: F821
             and not self._et_blocks
             and not self._loaded_blocks[-1].is_station
             and self.enemy.going_to_attack(

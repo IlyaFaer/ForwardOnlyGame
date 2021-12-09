@@ -3595,3 +3595,4 @@ SCENARIO = (
 )
 
 SCENARIO_LABELS = ("Глава ", "Сценарий")
+CITY_NAMES = ("Снюустад", "Наальстад")
