@@ -23,6 +23,7 @@ SURFACES = {
         "surface5",
         "surface6",
         "surface7",
+        "surface8",
     ),
     "l90_turn": ("l90_turn_surface1", "l90_turn_surface2"),
     "r90_turn": ("r90_turn_surface1", "r90_turn_surface2"),

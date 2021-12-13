@@ -33,6 +33,7 @@ class CameraController:
         self._is_centered = False
 
         base.camLens.setNear(0.25)  # noqa: F821
+        base.camLens.setFar(8)  # noqa: F821
 
     def _disable_ctrl_keys(self):
         """Ignore all the camera control keys."""

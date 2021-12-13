@@ -370,6 +370,13 @@ class World:
                 and not ("surface5" in path and (pos.getZ() > 0.03 or pos.getZ() < 0))
                 # don't remember vertices of station and city models
                 and not ("station" in path and abs(pos.getY()) < 2.1)
+                and not (
+                    "surface8" in path
+                    and pos.getX() > -1.5
+                    and pos.getX() < 0.25
+                    and pos.getY() > -3.5
+                    and pos.getY() < -1.75
+                )
                 and not ("city" in path and abs(pos.getY()) < 2.1)
             ):
                 surf_vertices["wide"].append(pos)
