@@ -186,7 +186,7 @@ will reward you with
 money for destroying
 skinheads nearby""",
     # cohesion
-    """Increasing team cohesion unlocks
+    """Increasing crew cohesion unlocks
 crew skills. These are powerful
 temporary effects, which can
 help you to survive.""",
@@ -784,7 +784,7 @@ are silently moving from one tree to another, smoothly approaching
 to the cars. In some moment you understand that voices, which were
 flying to you from the column, vanished. Something is wrong! You're
 finding your people by your gaze, and in this moment a machine gun
-shots tearing the air. Your whole team starts to shoot back, slowly
+shots tearing the air. Your whole crew starts to shoot back, slowly
 crawling back to the Train, as the enemy seems to be full of ammo.
 You're trying to help others with your fire, and the rival shots are
 starting to fly to the Train. Taking cover, you're waiting for {name1},
@@ -2929,7 +2929,7 @@ and listen. You're concentrating on the noises... "Hear that?"
 understand what he's trying to say. Some metal screeching can
 be heard from the wall. "That's an axle box, something's
 acting up." - Kenneth explains silently. - "We need to check
-it, and it'll take some time." You're trying to remember how far
+it, it'll take some time." You're trying to remember how far
 was the Stench frontier, when you last heard about it. "Our
 options?" Looking at you, Kenneth calculates something in his
 mind: "We need five hours long stop to deal with the axle box."
@@ -3258,11 +3258,11 @@ lad doesn't look good, his face is pale, dark rounds mark
 his eyes and skin is covered with sweat. But on the other
 side of the conflict you see a pregnant woman, skinny and
 tired. Both the father and the woman expect your judgment
-somewhy, probably because others are too busy by
-themselves to think about people around... Or maybe it's
-just because of guns... Anyway the decision is yours -
-there is only one place left in the motel and someone will
-have to sleep in the car here.""",
+somewhy, probably because others are too busy to think
+about people around... Or maybe it's just because of
+guns... Anyway the decision is yours - there is only one
+place left in the motel and someone will have to sleep
+in the car here.""",
         "variants": {
             "The pregnant woman should rest": {
                 "desc": """Thinking about the situation, you tend to think that

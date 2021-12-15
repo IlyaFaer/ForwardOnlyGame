@@ -56,6 +56,8 @@ class CameraController:
             "--up",
             "wheel_up",
             "wheel_down",
+            "mouse2",
+            "mouse2-up",
         ):
             base.ignore(key)  # noqa: F821
 

@@ -497,7 +497,7 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
                 frameTexture=GUI_PIC + "medicine.png",
-                pos=(-0.29, 0, -0.16),
+                pos=(-0.29, 0, -0.15),
                 relief="flat",
             )
         )
@@ -510,7 +510,7 @@ class ResourcesGUI:
                 text_scale=0.03,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.147),
+                pos=(-0.235, 0, -0.137),
             )
         )
         self._res_desc_wids.append(
@@ -522,7 +522,7 @@ class ResourcesGUI:
                 text_scale=0.029,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.185),
+                pos=(-0.235, 0, -0.175),
             )
         )
         self._res_desc_wids.append(
@@ -530,7 +530,7 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
                 frameTexture=GUI_PIC + "smoke_filter.png",
-                pos=(-0.29, 0, -0.25),
+                pos=(-0.29, 0, -0.24),
                 relief="flat",
             )
         )
@@ -543,7 +543,7 @@ class ResourcesGUI:
                 text_scale=0.03,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.243),
+                pos=(-0.235, 0, -0.233),
             )
         )
         self._res_desc_wids.append(
@@ -555,7 +555,7 @@ class ResourcesGUI:
                 text_scale=0.029,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.28),
+                pos=(-0.235, 0, -0.27),
             )
         )
         self._res_desc_wids.append(
@@ -563,7 +563,7 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.018, 0.018, -0.028, 0.028),
                 frameTexture=GUI_PIC + "stimulator.png",
-                pos=(-0.29, 0, -0.349),
+                pos=(-0.29, 0, -0.339),
                 relief="flat",
             )
         )
@@ -576,7 +576,7 @@ class ResourcesGUI:
                 text_scale=0.03,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.337),
+                pos=(-0.235, 0, -0.327),
             )
         )
         self._res_desc_wids.append(
@@ -588,7 +588,7 @@ class ResourcesGUI:
                 text_scale=0.029,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.375),
+                pos=(-0.235, 0, -0.365),
             )
         )
         self._res_desc_wids.append(
@@ -596,7 +596,7 @@ class ResourcesGUI:
                 parent=self._res_frame,
                 frameSize=(-0.03, 0.03, -0.03, 0.03),
                 frameTexture=GUI_PIC + "places_of_interest.png",
-                pos=(-0.29, 0, -0.448),
+                pos=(-0.29, 0, -0.438),
                 relief="flat",
             )
         )
@@ -609,7 +609,7 @@ class ResourcesGUI:
                 text_scale=0.03,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.436),
+                pos=(-0.235, 0, -0.426),
             )
         )
         self._res_desc_wids.append(
@@ -621,7 +621,7 @@ class ResourcesGUI:
                 text_scale=0.029,
                 text_align=TextNode.ALeft,
                 text_fg=SILVER_COL,
-                pos=(-0.235, 0, -0.474),
+                pos=(-0.235, 0, -0.464),
             )
         )
 
