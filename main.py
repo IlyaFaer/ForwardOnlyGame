@@ -218,7 +218,7 @@ class ForwardOnly(ShowBase):
 
         # start showing teaching notes and the Stench
         # spreading only when the tutorial ended
-        if block_id == 18 and self.game_config.tutorial_enabled:
+        if block_id == 19 and self.game_config.tutorial_enabled:
             self.notes.start()
             self.doMethodLater(24, self.world.make_stench_step, "stench_step")
 
