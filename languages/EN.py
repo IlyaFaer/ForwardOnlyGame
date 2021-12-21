@@ -385,13 +385,13 @@ MECHANIC_DESC = {
                 "unit has energy, which should be kept at a high\n"
                 "level, as it influences character's shooting accuracy\n"
                 "and efficiency on outings. The simplest way to\n"
-                "restore unit's energy and health is to make him rest."
+                "restore unit's energy and health is to make them rest."
             ),
             (
-                "Click LMB on a character to choose him; control\n"
+                "Click LMB on a character to choose them; control\n"
                 "arrows will appear - click RMB on one to move\n"
                 "the character to the related locomotive part,\n"
-                "or click RMB on the rest zone to make him rest.\n"
+                "or click RMB on the rest zone to make them rest.\n"
                 "Number of unit cells on every part is limited."
             ),
         ),
