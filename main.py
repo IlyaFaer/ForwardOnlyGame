@@ -241,8 +241,9 @@ class ForwardOnly(ShowBase):
         """Actually start the game process.
 
         Args:
-            loaded_game (bool): True if the game started after loading
-                                a previously saved session.
+            loaded_game (bool):
+                True if the game started after loading
+                a previously saved session.
         """
         self.notes = TeachingNotes()
         self.traits_gui = TraitsGUI()

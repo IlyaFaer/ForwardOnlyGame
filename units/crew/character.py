@@ -308,6 +308,10 @@ class Character(Shooter, Unit):
             "sounds/{sex}_cough.ogg".format(sex=self.sex)
         )
         base.sound_mgr.attachSoundToObject(self._cough_snd, self.model)  # noqa: F821
+        self._die_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/combat/{sex}_death.ogg".format(sex=self.sex)
+        )
+        base.sound_mgr.attachSoundToObject(self._die_snd, self.model)  # noqa: F821
 
         if self.class_ == "soldier":
             z = 0.064 if self.sex == "male" else 0.062
@@ -788,8 +792,10 @@ class Character(Shooter, Unit):
         self._team.delete_relations(self.id)
 
         LerpAnimInterval(self.model, 0.3, "stand_and_aim", "die").start()
+        LerpAnimInterval(self.model, 0.3, self._current_anim, "die").start()
         self.model.hprInterval(1, (self.current_part.angle, 0, 0)).start()
         self.model.play("die")
+        self._die_snd.play()
 
         taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
 
