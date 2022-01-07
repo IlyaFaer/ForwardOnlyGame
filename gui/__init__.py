@@ -1003,8 +1003,9 @@ class MainMenu:
             )
             DirectLabel(
                 parent=self._load_screen,
-                text="Seepage",
-                text_scale=0.06,
+                text=base.labels.SCENARIO_LABELS[2],  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
+                text_scale=0.056,
                 text_fg=RUST_COL,
                 frameColor=(0, 0, 0, 0),
                 text_align=TextNode.ALeft,
@@ -1012,20 +1013,9 @@ class MainMenu:
             )
             DirectLabel(
                 parent=self._load_screen,
-                text="""Good morning, Captain!
-
-We've crossed Silewer border at 11:45 pm, the checkpoint was abandoned. Soon we've made
-a stop near an improvised refugees camp. Criminals, looking pretty much like skinheads,
-were humiliating the camp dwellers in the meantime. We've shown them our guns, and they
-let those people be, but also promised to find us later. Still, we've decided not to
-wake you up and let you rest till the morning...
-
-The Adjutant, our good locomotive, is in acceptable shape, and crew is ready for duty.
-Munich just went dark, which means the Stench frontier is in a couple of hours behind.
-We should keep the speed high not to let those poisonous orange clouds overtake us.
-
-That's all, Captain, handing command over to you!""",
-                text_scale=0.035,
+                text=base.labels.PREAMBULA,  # noqa: F821
+                text_font=base.main_font,  # noqa: F821
+                text_scale=0.033,
                 text_fg=SILVER_COL,
                 frameColor=(0, 0, 0, 0),
                 text_align=TextNode.ALeft,
