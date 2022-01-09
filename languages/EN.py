@@ -3720,9 +3720,9 @@ presentation.
 - H: Right now we proceeded further than
 that, but the first presentation included
 only a chamber with a chemical substance
-and equipment, which was able to show the
-state of this substance 48 hours back in
-the past...
+and equipment, which was able to show
+the state of this substance 48 hours
+back in the past...
 
 On this question our interview came to
 its end, as doctor Wagner was called by

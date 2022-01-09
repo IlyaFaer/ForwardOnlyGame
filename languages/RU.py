@@ -3677,66 +3677,70 @@ JOURNAL_PAGES = (
     ),
     (
         "note",
-        """Interview protocol from 2021-06-23, Zurich,
-56th World Scientist Summit.
-Interviewer: Emily Schlosser
-Interviewee: doctor Helga Wagner,
-leading system engineer of Wahrsager
-project team.
+        """Запись интервью от 2021-06-23, Цюрих,
+56-ой Международный Саммит Учёных.
+Интервьюер: Эмили Шлёссер,
+Собеседник: доктор Хельга Вагнер,
+ведущий системный инженер
+проекта Прорицатель.
 
-- E: Helga, could you explain our
-subscribers in simple words what the
-Wahrsager project actually is?
-- H: Before talking about the project
-itself we should remember determinism:
-the methodology which proclaims that
-every event in the world has particular
-causes. This idea actually means that
-our past directs our future. With this
-in mind our group of scientist tried to
-find a way to take a look at our past,
-see what was actually happening there,
-measure previous events and, probably,
-we hope, use this information to predict
-our future! That's how the Wahrsager
-project idea was created.
+- Э: Хельга, не могли бы Вы простыми
+словами объяснить нашим подписчикам,
+что такое проект Прорицатель?
+- Х: Перед тем, как говорить о самом
+проекте, нужно понять детерменизм:
+методологию, которая утверждает, что
+у каждого события в мире есть
+конкретные причины. Фактически, она
+говорит, что прошлое направляет
+будущее. С этими мыслями, наша группа
+учёных вознамерилась найти способ
+заглянуть в прошлое, узнать, что
+именно там произошло, измерить
+предыдущие события и, возможно, мы
+надеемся, использовать эти данные,
+чтобы предсказать будущее! Такова
+цель проекта Прорицатель.
 
-- E: What you're talking about sounds
-pretty much like a time machine!
-- H: Ya! But let's mention this machine
-doesn't make passages into another time,
-it only gives us an ability to take a
-look at it, do a detailed snapshot, which
-can be analyzed. Like a photo (smiles).
-The main point here is accuracy - our
-world consists of immeasurably number
-of events, which influence each other.
-We need Laplace's Demon to get results,
-as without high accuracy our data will
-be giving pretty unreliable predictions.
+- Э: Вы говорите о чём-то очень
+похожем на машину времени!
+- Х: Да! Но давайте заметим, что она
+не открывает проходов в другое время,
+она только даёт нам возможность
+взглянуть на него, сделать детальный
+снимок, который можно
+проанализировать. Как фото
+(улыбается). Основной пункт здесь
+- это точность, ведь наш мир состоит
+из неизмеримого числа событий,
+влияющих друг на друга. Нам нужен
+Демон Лапласа, чтобы получить
+результаты - без высокой точности
+наши предсказания будут ненадёжны.
 
-- E: Sounds incredible! But it seems you
-need the best equipment and experts.
-- H: Sure, our team consists of the
-highest level professionals, and it's
-a great honor for me to work with these
-brilliant people! As for equipment, our
-government provides us everything we
-needed since we've run the very first
-presentation.
+- Э: Звучит грандиозно! Но, похоже,
+Вам необходимы высококлассное
+оборудование и специалисты.
+- Х: Разумеется. Наша команда состоит
+из лучших умов мира, это большая
+честь для меня работать с ними.
+Оборудование, что ж, правительство
+предоставляет нам всё необходимое
+со дня первой презентации.
 
-- E: Could you tell us how it was?
-- H: Right now we proceeded further than
-that, but the first presentation included
-only a chamber with a chemical substance
-and equipment, which was able to show the
-state of this substance 48 hours back in
-the past...
+- Э: Расскажете, как это было?
+- Х: Сейчас мы продвинулись много
+дальше, но на первой презентации
+у нас была лишь камера с
+химическим веществом и приборы,
+чтобы замерить состояние этого
+вещества на 48 часов назад во
+времени...
 
-On this question our interview came to
-its end, as doctor Wagner was called by
-her colleagues to take part in some kind
-of an urgent online meeting.""",
+На этом вопросе наше интервью
+завершилось, так как доктора
+Вагнер вызвали на онлайн
+совещание с коллегами.""",
     ),
     (
         "diary",
