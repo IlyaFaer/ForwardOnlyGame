@@ -3750,7 +3750,7 @@ stuck! Airplanes, which've taken some
 people, flew away and refused to return.
 No single airplane left in the whole
 country! As for the cars, well, it was even
-worse - every road on the west of the city
+worse - every road on the east of the city
 was clogged up in miles, MILES!
 Everybody was trying to leave the place.
 

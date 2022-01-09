@@ -3744,51 +3744,58 @@ JOURNAL_PAGES = (
     ),
     (
         "diary",
-        """When it became obvious that the Stench
-adversity is real, and it's not going to
-stop in the near future, I decided to close
-my company. Those who worked for me -
-we were always like a family. I don't have
-another, so it was hard to say goodbye to
-everyone... Still, we all made a decision
-to leave the city as soon as possible.
-The first Stench reports were made in
-Germany and Switzerland, most likely on
-the west, so we had an approximate
-direction - considering that the mist is
-going to spread in circle.
+        """Когда стало очевидно, что Смрад
+реален, и бедствие не собирается
+останавливаться в ближайшее время,
+я решил закрыть свою компанию. Те,
+кто работал на меня - мы всегда
+были, как семья. Другой у меня
+нет, так что прощаться со всеми
+было... Но мы приняли решение
+покинуть город как можно скорее.
+Первые упоминания Смрада пришли
+из Германии и Швейцарии,
+приблизительно, с запада, так
+что у нас было направление - при
+условии, конечно, что туман будет
+расходиться по кругу.
 
-As we were little bit slowly, we really got
-stuck! Airplanes, which've taken some
-people, flew away and refused to return.
-No single airplane left in the whole
-country! As for the cars, well, it was even
-worse - every road on the west of the city
-was clogged up in miles, MILES!
-Everybody was trying to leave the place.
+Собирались мы долго, отчего
+наглухо и застряли! Самолёты,
+забравшие часть людей, улетели и
+отказались возвращаться. Ни
+одного воздушного судна во всей
+стране! Что до машин, ну, тут
+ещё хуже - каждая дорога на
+востоке города была наглухо
+забита пробками на мили, МИЛИ!
+Все ринулись прочь из региона.
 
-Here one of my friends, a machinist,
-called me. He was in search of people,
-who are brave or desperate enough to help
-him to hijack the locomotive he was
-working on during the last several years.
-He know me as a daredevil and decided
-to call me first. I liked his idea and
-made a proposition to my workers. Some
-of them have families, so they refused
-to take part in this risky operation,
-but three of them and Kenneth, my old
-friend mechanic, agreed.
+Тут-то мне и позвонил один мой
+друг, машинист. Он искал людей,
+храбрых или отчаявшихся
+достаточно, чтобы помочь ему
+угнать локомотив, на котором он
+работал последние несколько лет.
+Он знал, что я сорвиголова, и
+позвонил мне первому. Мне
+понравилась его идея, и я
+предложил её своим работникам.
+У некоторых из них семьи, так
+что они отказались от рискованной
+операции, но трое и Кеннет, мой
+старый товарищ механик,
+согласились.
 
-Daren, the machinist, who proposed all
-of it, told us about the Adjutant -
-tough locomotive he was driving, the
-fast and powerful machine, which is old,
-but very reliable transport. He said he
-knows a forsaken closed railway, which
-condition is still quite good and which
-can lead us out of the city. On that we
-all made a decision.""",
+Дарен, машинист, предложивший
+всё это, рассказал нам об
+Адъютанте - быстром и мощном
+локомотиве, старом, но очень
+надёжном транспорте. Он сказал,
+что знает заброшенный Ж/Д путь
+из города, состояние которого
+всё ещё приемлемо для одного
+проезда. На этом мы и порешили.""",
     ),
     (
         "note",
