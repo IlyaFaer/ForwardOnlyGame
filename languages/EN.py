@@ -3829,21 +3829,22 @@ from the very start to the last second.
 
 An interesting thing is that on images
 scientists noticed color deformation of
-some fluids. They said that it has too
-much of red and green. Which means they
-were more ORANGE than they should. (I
-think here the guy gave free rein to his
-imagination, and there was nothing about
-it in the scientist's conversation).
+some fluids (blood?!). They said that
+it has too much of red and green.
+Which means they were more ORANGE
+than they should. (I think here the guy
+gave free rein to his imagination,
+and there was nothing about it in
+the scientist's conversation).
 
 To the end of the story the man cursed
 scientists, saying that it's they who
 start adversities like the Stench,
 Bhopal Disaster, Fukushima-1 Nuclear
-Power Plant Accident, Minamata Disease
-and others, and one day they will kill
-us all. On that the interesting part
-of the conversation ends.""",
+Accident, Minamata Disease and others,
+and one day they will kill us all.
+On that the interesting part of the
+conversation ends.""",
     ),
     (
         "note",

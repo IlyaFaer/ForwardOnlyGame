@@ -3279,7 +3279,7 @@ SCENARIO = (
 осталось только одно место, и кому-то из этих людей
 придётся спать в машине.""",
         "variants": {
-            "Беременная женщина займёт место в мотеле": {
+            "Беременная женщина займёт место": {
                 "desc": """Рассуждая о ситуации, Вы склоняетесь к мысли, что женщина
 должна занять это последнее место в мотеле. Мужчина в
 ярости бросает что-то на землю и, схватив за руку своего
@@ -3306,7 +3306,7 @@ SCENARIO = (
 Вы получили новую записку в дневнике капитана""",
                 "effects": (("do_locomotive_damage", [70]),),
             },
-            "Мужчина с больным сыном займёт место в мотеле": {
+            "Мужчина с больным сыном займёт место": {
                 "desc": """Обдумывая конфликт, Вы решаете, что мужчина с больным
 сыном должен отдохнуть. Женщина выглядит уставшей, но не
 тяжело больной. Говоря что-то себе под нос, вероятно,
@@ -3331,7 +3331,7 @@ SCENARIO = (
 Вы получили новую записку в дневнике капитана""",
                 "effects": (("do_enemy_inc_effect", []),),
             },
-            "Прогнать их обоих и занять место в мотеле": {
+            "Прогнать их обоих и занять место": {
                 "desc": """Последнее место в мотеле... Может, оставить его для
 своего экипажа? Пара часов на неподвижной земле и душ
 будут очень кстати. Глядя прямо на беременную женщину
@@ -3799,71 +3799,75 @@ JOURNAL_PAGES = (
     ),
     (
         "note",
-        """Following is what I've heard from one of
-the motel dwellers, who was in a very
-dissatisfied manner telling a story about
-a strange woman to his friend.
+        """Следующее ниже я услышал от одного
+обитателя мотеля, который с
+недовольным видом рассказывал
+товарищу о встреченной им женщине.
 
-According to the source of information,
-yesterday in the morning he met a woman
-with a very strange thing on her neck,
-looking pretty much like a high-tech gas
-mask. She had several metal boxes and
-a bunch of helpers, all seem to be a part
-of university or a science group.
+Согласно источнику информации, вчера
+утром он заметил особу со странной
+штуковиной на шее, похожей на
+высокотехнологичный противогаз.
+У неё было несколько металлических
+контейнеров и толпа помощников, все
+выглядели университетской группой.
 
-The woman have been talking a lot with
-someone on the other end of the phone.
-He said she was reporting. According to
-what our man heard, they were working on
-some kind of a machine, which attracted
-government attention pretty strong.
+Женщина много говорила с кем-то
+по телефону, докладывала. "Наш
+человек" услышал, что она работала
+над устройством, которое приковало
+внимание правительства - машина,
+способная открывать окна в прошлое
+(очевидно, проект Прорицатель). Её
+хотели использовать для проверки
+не врёт ли человек о вещах,
+которые произошли совсем недавно,
+а так же шпионажа - получения
+данных о событиях прошлого, ещё
+не приведших к последствиям. Так
+как устройство показывает, как
+всё было на самом деле, без
+обмана и сокрытия, лишь
+объективную правду, звучит это
+очень умно. Пусть, в Вашу
+организацию внедрили шпиона пару
+дней назад; благодаря устройству
+можно увидеть прошлое, период,
+когда этого человека инструктировали.
+Вы заметите опасность ещё до того,
+как он доберётся до чего-то ценного.
+Можно следить вообще за всеми!
+С небольшой задержкой, конечно, но...
 
-It's able to make a window into the past
-(Wahrsager project, no doubts). They
-wanted to use it to check if people are
-lying about things already happened, and
-for espionage - getting info about what
-happened some time ago, but didn't yet
-caused any consequences. As the machine
-shows how it was actually been, without
-embellishing, hiding or concealing, just an
-objectively truth, it all sound really smart.
-Let's say, a spy was rooted a couple of
-days ago into your organization; with this
-machine you can see the past, the period
-when he was recruited and instructed.
-You'll detect danger before the guy will
-actually get hands on something valuable.
-You can actually track anyone! With some
-delay, yes, but still...
+Женщина рассказала и о ранних стадиях
+экспериментов. Они создали
+портативную версию устройства и
+заглянули в 1928 год, чтобы
+расследовать убийство 10-летней
+девочки по имени Грейс. Результаты
+впечатляющие - им удалось
+проследить все ужасы преступления
+от первой и до последней секунды.
 
-The woman also told about some of their
-early experiments. They created portable
-version of the machine and tried to
-look into 1928 to investigate a murder
-of a 10 years old girl named Grace.
-They've got good results and were able
-to track the whole horrors of the crime
-from the very start to the last second.
+Интересно, что на изображениях
+учёные обнаружили деформацию
+цветов жидкостей (крови?!). В них
+якобы слишком много красного и
+зелёного. Это означает, что они
+были ОРАНЖЕВЕЕ, чем должны (я
+думаю, здесь наш парень дал волю
+воображению, и женщина ничего
+подобного не говорила).
 
-An interesting thing is that on images
-scientists noticed color deformation of
-some fluids. They said that it has too
-much of red and green. Which means they
-were more ORANGE than they should. (I
-think here the guy gave free rein to his
-imagination, and there was nothing about
-it in the scientist's conversation).
-
-To the end of the story the man cursed
-scientists, saying that it's they who
-start adversities like the Stench,
-Bhopal Disaster, Fukushima-1 Nuclear
-Power Plant Accident, Minamata Disease
-and others, and one day they will kill
-us all. On that the interesting part
-of the conversation ends.""",
+В заключение рассказчик проклял
+всех учёных, утверждая, что это
+они начинают бедствия, вроде
+Смрада, Бхопальской катастрофы,
+Инцидента Фукусима-1, болезни
+Минаматы и т.д., а так же заявил,
+что однажды они уничтожат нас
+всех. На этом интересная часть
+его истории заканчивается.""",
     ),
     (
         "note",
