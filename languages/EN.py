@@ -3858,15 +3858,16 @@ on a paper. Can't remember when I wrote
 the last time. Three month ago? More? Not
 in a mood to check now...
 
-Those bastards ruined our work today! Fat
-ugly politicians decided Wahrsager should
-be used for espionage. Espionage! I
-suspected long ago that their interest
-is not that big, they don't want to pay
-tons of money to make it really great.
-They don't need to see future, they just
-want a damn spying machine to catch video
-of another fat ugly politician shagging
+Those bastards, bastards ruined our work
+today! Fat ugly politicians decided
+Wahrsager should be used for espionage.
+Espionage! I suspected long ago that
+their interest is not that big, they
+don't want to pay tons of money to
+make it really great. They don't need
+to see future, they just want a damn
+spying machine to catch video of
+another fat ugly politician shagging
 with his student boyfriend. Blackmail! So
 stupid that I want to puke!!! A machine
 which can PREDICT FUTURE will be used
@@ -3917,8 +3918,7 @@ Several days later Jeffrey became well
 and soon returned to work, but we all
 noticed that from time to time he uppers
 his eyes to the ceiling, like he sees
-something there... Later we all saw it...
-""",
+something there... Later we all saw it...""",
     ),
     (
         "diary",

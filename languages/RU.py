@@ -3871,77 +3871,76 @@ JOURNAL_PAGES = (
     ),
     (
         "note",
-        """Helga Wagner science diary.
-A record made on 2021-07-06. Several
-dark spots on the paper hints the
-author was crying while writing it.
+        """Научный дневник Хельги Вагнер.
+Запись от 2021-07-06. Тёмные пятна
+на листе подсказывают, что автор
+плакала, когда писала это.
 
-Finally, I have time to put my thoughts
-on a paper. Can't remember when I wrote
-the last time. Three month ago? More? Not
-in a mood to check now...
+Наконец-то, у меня есть время предать
+мысли бумаге. Не могу вспомнить,
+когда писала последний раз. Три месяца?
+Больше? Не в настроении выяснять...
 
-Those bastards ruined our work today! Fat
-ugly politicians decided Wahrsager should
-be used for espionage. Espionage! I
-suspected long ago that their interest
-is not that big, they don't want to pay
-tons of money to make it really great.
-They don't need to see future, they just
-want a damn spying machine to catch video
-of another fat ugly politician shagging
-with his student boyfriend. Blackmail! So
-stupid that I want to puke!!! A machine
-which can PREDICT FUTURE will be used
-for prying at deeds of the last days!
+Эти ублюдки, ублюдки, разрушили всё!
+Жирные уродливые политиканы решили,
+что Прорицатель нужно использовать
+для шпионажа. Я подозревала, что
+их интерес не так грандиозен, они
+не хотят тратить тонны денег. Им
+нужно не будущее, а шпионский
+гаджет, чтобы заснять, как другой
+жирный уродливый политикан трахается
+со своим мальчиком. Шантаж! Такой
+идиотизм, что меня выворачивает!!!
+Машину, способную ПРЕДСКАЗЫВАТЬ
+БУДУЩЕЕ, применять для слежки!
 
-Of course, now I can't leave. They've
-thrown hooks, and now we all are slaves
-of our own ambitions...
+Разумеется, мне уже не уйти. Они
+забросили крючки, и теперь все
+мы заложники своих амбиций...
 
-Gut, it's a science diary, not a school
-girl crying napkin. Back to business. The
-curator forced us to check what is
-Wahrsager time limit. We've taken a look
-at different ages, even before humans
-appeared on Earth. Looks like the last
-machine version doesn't have a limit at
-all. The strange thing we all noticed -
-the more ancient times we're trying to
-look at the more color deformation we get.
-Everything becomes orange. No one have
-ideas what it actually is, we're working
-hard on understanding the phenomenon.
+Ладно, это научный дневник, а не
+салфетка для плачущей школьницы. К
+делу. Куратор заставил нас проверить,
+каков лимит Прорицателя. Мы
+опробовали разные эпохи, даже до
+появления людей на Земле. Похоже,
+у последней версии предела нет
+вообще. Странно, но чем дальше в
+прошлое мы уходим, тем больше
+цветовых деформаций обнаруживаем.
+Всё становится оранжевым. Никто
+не знает, что это, мы вкладываем
+все силы в понимание феномена.
 
-Still, we probably are late on it. About
-a month ago those idiots asked us to try
-to open a passage into the past. Now I'm
-trying to imagine what another stupid
-thing they had on their minds, but back
-there we were thrilled to try! And we
-tried...
+Но, боюсь, мы опоздали. С месяц
+назад эти ублюдки попросили нас
+попробовать открыть проход в
+прошлое. Пытаюсь представить, какая
+ещё тупая идея у них была, но
+тогда мы жаждали попробовать!
+И попробовали.
 
-Jeffrey Bowers, our assistant from US,
-accepted a risk to spend 10 seconds in
-8000 BCE and take a fistful of sand from
-there. At the very first moment since we
-opened the passage, he fallen into some
-kind of a seizure, lost consciousness for
-several minutes, then returned to the
-world of living, started to rave and to
-knock his teeth from time to time.
-Analysis shown he feeled cold for some
-time, which is strange - we were sending
-him into the Arabian desert. The
-experiments were paused until we'll
-understand everything.
+Джеффри Бауерс, наш ассистент из
+Штатов, рискнул провести десять
+секунд в 8000-ом году до н.э. и
+взять с собой пригоршень песка.
+В момент, когда мы открыли проход,
+у него случился припадок, он потерял
+сознание на несколько минут, придя
+в себя, начал бредить и периодически
+стучать зубами. Анализ показал, что
+ему было очень холодно, что странно,
+ведь мы отправляли его в Аравийскую
+пустыню. Эксперименты приостановили
+до выяснения деталей произошедшего.
 
-Several days later Jeffrey became well
-and soon returned to work, but we all
-noticed that from time to time he uppers
-his eyes to the ceiling, like he sees
-something there... Later we all saw it...
-""",
+Несколько дней спустя Джеффри
+поправился и вернулся к работе,
+но все мы заметили, что временами
+он поднимает глаза к потолку, как
+будто видит там что-то... Вскоре
+увидели и мы...""",
     ),
     (
         "diary",
