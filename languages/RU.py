@@ -3944,68 +3944,72 @@ JOURNAL_PAGES = (
     ),
     (
         "diary",
-        """When we decided on who's going for
-the Adjutant, when and how, it appeared
-that only six of us are in the company.
-Daren said he'll try to find more people,
-but no one else responded to him.
+        """Когда мы определились, кто пойдёт
+за Адъютантом и как, оказалось,
+что нас всего шесть человек. Дарен
+сказал, что попробует найти ещё,
+но никто ему не ответил.
 
-In such a collective, seeing that the
-situation becoming more and more hot, we
-decided not to waste time, took guns,
-supplies and one night went to the
-railway station, where Daren was working.
+Таким коллективом, видя, что ситуация
+выходит из-под контроля, мы решили
+торопиться, взяли оружие, припасы и
+одной ночью пришли на станцию, где
+работал Дарен.
 
-When we got there, it appeared that we are
-not the only that smart people in the city.
-Looking at a bunch of thugs preparing the
-Adjutant for a road, I feeled like a good
-chance is eluding me. All of us...
+Когда мы оказались на месте,
+выяснилось, что мы не одни такие
+умные. Глядя на группу громил,
+подготавливающих Адъютанта к
+дороге, я чувствовал, как наши
+шансы улетучиваются.
 
-We all frozen, trying to understand what to
-do next, but in some moment Daren stood
-up and loudly asked: "Ronnie?! That you?".
-A fat heavily breathing guy walked out
-of hangar shadows. "It's a strange
-coincidence you're here after rejecting
-my proposition." The fat guy finally
-identified Daren and smiled: "Ah, that's
-you, my honest friend! I decided I don't
-need your old ass and took other guys to
-release this metal beast. So, thank you
-for friendship, but we'll take it from here!"
+Все мы замерли, пытаясь понять, что
+же теперь делать, но в какой-то
+момент Дарен поднялся и громко
+спросил: "Ронни?! Это ты?". Тяжело
+дышащий толстяк вышел из теней
+ангара. "Странное совпадение -
+видеть тебя здесь после того, как
+ты отказался от моего предложения."
+Ронни, наконец, узнал Дарена и
+улыбнулся: "А-а, мой честный друг!
+Я решил, что нам ни к чему твоя
+старая задница, и взял других ребят,
+чтобы выпустить этого зверя. Спасибо
+за дружбу, но дальше мы сами!"
 
-Thoughts flewed through my head faster
-than light. There is no way to bet a
-deal with such a bastard, the
-locomotive is not big enough to
-accommodate two of our groups, and
-this chance can be the last one in
-the whole city. The time to act has come
-much earlier than I expected... Still,
-it's time to act.
+Мысли понеслись в моей голове
+быстрее молнии. С таким ублюдком
+не договориться, локомотив не
+настолько велик, чтобы вместить
+обе наши группы, и это может быть
+последним транспортом, способным
+покинуть город. Время действовать
+пришло куда раньше, чем я
+рассчитывал... Уже пришло.
 
-I've draw my pistol and without any
-words stood up from my cover and shot
-the fat bastard. As I hoped within my
-soul, others understood what needs to
-be done without explicit instructions
-- everyone started to shoot. In closed
-hangar insides sounds of guns were
-thunder-like, but after several seconds
-it became obvious that our rivals are
-not as prepared as us. Forced them out
-of the building, we all jumped on the
-locomotive and pushed pedal to the
-metal before we lose the opportunity.
+Я выхватил пистолет из кобуры, без
+единого слова вышел из укрытия и
+пристрелил жирного козла. Как я и
+надеялся, другие поняли, что делать,
+без особых инструкций - все начали
+палить. В закрытом помещении ангара
+стрельба звучала оглушающе, но спустя
+несколько секунд стало ясно, что
+противник не так подготовлен, как мы.
+Вытеснив их из здания, мы запрыгнули
+в локомотив и выжали скорость, чтобы
+не упустить преимущества.
 
-That was our first skirmish on long road...
-As Daren promised, we were able to leave
-the city by a forsaken and overgrown with
-grass railway. He knew all the neighbour
-roads, so our pace was quite fast. We
-didn't meet a single train, like we were
-the last ones leaving the country on a
-train. Most likely we were.""",
+Это была первая стычка на длинном
+пути... Как и обещал Дарен, мы без
+труда покинули город по заброшенной,
+поросшей травой ветке. Он знал
+все дороги в районе, так что мы
+двигались быстро. Нам не
+встретилось ни одного поезда,
+как будто мы последние, кто
+оставляет город по железной дороге.
+Вероятно, так оно и было.""",
     ),
 )

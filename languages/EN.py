@@ -3982,7 +3982,7 @@ As Daren promised, we were able to leave
 the city by a forsaken and overgrown with
 grass railway. He knew all the neighbour
 roads, so our pace was quite fast. We
-didn't meet a single train, like we were
+didn't meet anyone at all, like we were
 the last ones leaving the country on a
 train. Most likely we were.""",
     ),
