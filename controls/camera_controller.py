@@ -4,6 +4,9 @@ License: https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md
 
 The main camera configuring and controls.
 """
+import random
+
+from direct.interval.IntervalGlobal import Parallel, Sequence
 from direct.interval.LerpInterval import LerpHprInterval, LerpPosInterval
 from panda3d.core import Vec3
 
@@ -317,6 +320,59 @@ class CameraController:
         taskMgr.doMethodLater(  # noqa: F821
             0.1, self._move_with_mouse, "move_camera_with_mouse", appendTask=True
         )
+
+    def push(self):
+        """Camera push caused by a kick/explosion."""
+        if self._move_int is not None:
+            self._move_int.pause()
+
+        if self._turn_int is not None:
+            self._turn_int.pause()
+
+        self._move_int = Sequence()
+
+        self._target.setZ(base.cam.getZ() - random.uniform(-0.02, 0.02))  # noqa: F821
+        self._target.setX(base.cam.getX() + random.uniform(-0.03, 0.03))  # noqa: F821
+        self._target.setY(base.cam.getY() + random.uniform(-0.03, 0.03))  # noqa: F821
+
+        self._move_int.append(
+            Parallel(
+                LerpPosInterval(
+                    base.cam, 0.15, self._target, bakeInStart=False,  # noqa: F821
+                ),
+                LerpHprInterval(
+                    self._np,
+                    0.15,
+                    (
+                        self._np.getH() + random.uniform(-1, 1),
+                        self._np.getP() + random.uniform(-2, 2),
+                        self._np.getR() + random.uniform(-3, 3),
+                    ),
+                ),
+            )
+        )
+        self._target.setX(base.cam.getX())  # noqa: F821
+        self._target.setY(base.cam.getY())  # noqa: F821
+        self._target.setZ(base.cam.getZ())  # noqa: F821
+
+        self._move_int.append(
+            Parallel(
+                LerpPosInterval(
+                    base.cam,  # noqa: F821
+                    0.5,
+                    self._target,
+                    bakeInStart=False,
+                    blendType="easeOut",
+                ),
+                LerpHprInterval(
+                    self._np,
+                    0.5,
+                    (self._np.getH(), 0, self._np.getR()),
+                    blendType="easeOut",
+                ),
+            )
+        )
+        self._move_int.start()
 
     def set_controls(self, train):
         """Configure the main camera and its controls.

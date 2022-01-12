@@ -671,6 +671,7 @@ class Train:
         for contact in contacts:
             if contact.getNode1().getName().startswith("barrier_"):
                 self._barrier_hit_snd.play()
+                base.camera_ctrl.push()  # noqa: F821
                 if "Ram" not in self._upgrades:
                     self.get_damage(80)
 
@@ -727,6 +728,7 @@ class Train:
         rocket_explosion.softStart()
 
         self._rocket_explosions_snd.play()
+        base.camera_ctrl.push()  # noqa: F821
 
         taskMgr.doMethodLater(  # noqa: F821
             0.8,
