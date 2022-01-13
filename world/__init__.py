@@ -32,6 +32,7 @@ STATIONS = [
     "surface_with_station4",
     "surface_with_station5",
     "surface_with_station6",
+    "surface_with_station7",
 ]
 
 
