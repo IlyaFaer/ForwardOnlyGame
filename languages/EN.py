@@ -3585,6 +3585,120 @@ You're getting one more diary page. Check the Journal.""",
             },
         },
     },
+    {  # 7
+        "intro": """The traffic jam stretched to the left of the railway lasts
+for about 15 miles, and it's only the part you've seen,
+there are even more cars around the highway turn.
+Massive! And at some moment you see the start of this
+serpent - a road blockpost.
+
+You order to make a stop, take several people and go
+to the place. From the very far distance you can
+discern shouts - refugees are arguing with the police
+hard. You order others to stay in distance, and
+give them your gun not to provoke anyone. Getting
+closer to the officers, you see that they completely
+closed the way, they're not even checking, just hold
+this huge column of refugees. You can't understand
+if they have a government order, or it's something
+they've decided to do on their own.
+
+The blockpost doesn't seem to be strong, and people,
+most likely, understand this. Probably, one more news
+report about the Stench came closer will billow these
+people to do something agressive.
+
+Should you care about it? Maybe it's worth to speak
+with someone and try to regulate the situation. Not
+much of hopes, still, it can work...""",
+        "variants": {
+            "Ask officers to let people ride": {
+                "desc": """Seeing that officers are on the alert and can start
+to shoot at any moment, you approach them slowly and
+quietly. The one standing in front seem to be getting
+that you're not a threat, so he nods you. You come
+closer, saying: "Hey! Quite a mess here." The officer
+takes a look at the people: "Weakly said! But we have
+an order not to let them get deeper into the country.
+There is already disorder everywhere."
+
+You incline your head and calmly silently say: "Just
+try to understand them. The Stench is coming, they're
+trying to survive, save their families... No one yet
+said it'll stop - chances we all will soon become
+refugees." The officer seems to be overthinking your
+words. "The Stench is in just several hours from here.
+You'll have to leave the blockpost eventually, if you
+want to survive." The officer throws a glance at others,
+it looks like they understood what we're talking about.
+"Okay... We actually got it that we need to leave, it's
+just..." You nod your head in agreement gesture.
+
+The officer gives a command to open the gates, and the
+refugees feverishly return to their cars to continue
+the way.
+
+More refugees in the Silewer will soon make skinheads
+much more active.
+
+You're getting a new diary page. Check the Journal.""",
+                "effects": (("do_enemy_inc_effect", []),),
+            },
+            "Instigate a refugees assault": {
+                "desc": """You are silently approaching the refugees, and,
+seeing that you're a fighter, they move closer towards
+you. You feel they are ready, there are several active
+guys, and others are going to support them, they only
+need a small push. Thinking that they have a right to
+do this, as the Stench is getting closer, and it's not
+fair for so many people to just die here, you're
+starting to say something, but in the next moment
+you see they don't even listen. Your appearance is
+enough for them to start the assault, without words.
+
+Everything around you comes to move, the crowd turns
+to an avalanche. You're retreating to safe distance,
+as riot becomes chaotic and uncontrollable from the
+very start. Police officers are smashed in just
+several seconds, and the long serpent of cars starts
+to feverishly crawl through the demolished gates.
+
+When the situation became little bit more calm,
+your people get closer to the blockpost and take
+some stuff from it: tools and guns.
+
+Knowing about the assault, skinheads will become
+much more aggressive. The Adjutant gets 90 Durability.
+
+You're getting one more diary page. Check the Journal.""",
+                "effects": (
+                    ("do_locomotive_damage", [90]),
+                    ("do_enemy_inc_effect", []),
+                ),
+            },
+            "Don't do anything": {
+                "desc": """Slowly and silently getting closer to the blockpost, you
+try not to attract attention - the situation smells
+gasoline, it's better to stay quiet.
+
+Several refugees, males, are actively arguing with
+the officers, and you see that everyone here
+understand that policemen have very weak positions.
+People in behind seems to be ready to rush forward
+in case of a one wrong move. It's just six officers,
+armed, but there are hundreds of refugees against
+them. And some of them may be armed as well...
+
+Still, for some time the tension here will hold.
+Not willing to be the rock which starts the avalanche,
+you're silently turning around and go to your crew
+mates. It's better just to leave.
+
+You're getting one more diary page. Check the Journal.""",
+                "effects": (("do_no_effect", []),),
+            },
+        },
+    },
 )
 
 SCENARIO_LABELS = ("Chapter ", "Scenario", "Seepage")
@@ -3986,4 +4100,5 @@ didn't meet anyone at all, like we were
 the last ones leaving the country on a
 train. Most likely we were.""",
     ),
+    ("diary", ""),
 )

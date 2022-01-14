@@ -218,7 +218,7 @@ class Scenario:
         base.world.outings_mgr.hide_outing()  # noqa: F821
         base.traits_gui.hide()  # noqa: F821
 
-        if self.current_chapter <= 5:
+        if self.current_chapter <= 6:
             self.show_chapter_situation()  # noqa: F821
 
             base.world.drop_place_of_interest()  # noqa: F821
