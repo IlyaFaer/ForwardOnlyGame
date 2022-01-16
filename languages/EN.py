@@ -3699,6 +3699,119 @@ You're getting one more diary page. Check the Journal.""",
             },
         },
     },
+    {  # 8
+        "intro": """While you're looking at the map, trying to plan the further
+route, Daren approaches you silently. "Captain, we
+need to talk." - he observes the room. - "Privately,
+I mean." His lowered voice makes you feel it's
+somehow related to other crew members, and this is
+pretty strange to hear from Daren, who doesn't
+gossip about others at all.
+
+You showing that you'll follow him, and he leads
+you out on a fresh air. "Captain, we... I think
+we've a stealer on our ship." "What?!" - you're
+trying to make sure that he's really saying it.
+"Our supplies, they're running out fast. And after
+we've reduced ration it didn't change, at
+all. Someone is stealing food, constantly."
+
+This is an accusation you didn't expect. The crew
+seems to be honest and patient, all of them, who
+could do this? And, more than this, what to do
+with it? Find the stealer first or just talk
+with everyone? The situation can harm cohesion
+bad in unpredictable way.""",
+        "variants": {
+            "Ask Daren to investigate deeper": {
+                "desc": """Overthinking it again and again, you understand that
+speaking about it with the whole crew is a bad
+idea. They'll start to suspect each other, think
+about it, maybe even blame... No, it should be
+solved quietly, perfectly, with only the one who's
+doing it. It's not clear for now how to regulate
+this behaviour, but let's be solving one problem
+at a time.
+
+You're quietly saying Daren to observe the storage,
+try to figure out who's the stealer, but not to stop
+them yet. He likes your idea to deal with it without
+making noise and he promises to find the stealer.
+
+After several days of observing Daren will still
+don't know who's stealing the supplies. No one
+seems to be doing anything wrong, but food
+disappears as it would be stolen by a ghost.
+
+Forced to buy more food in cities, you're losing
+money - about $60.
+
+One of your crew mates intercepts a radio
+transmission on which Helga Wagner is instructed
+about a place safe from the Stench. Check
+the Journal for the transmission log.""",
+                "effects": (("do_get_money", [-60]),),
+            },
+            "Speak with the crew": {
+                "desc": """After some overthinking you're coming to the
+idea to speak with the whole crew. The problem should
+be solved fast, and the stealer should be ashamed in
+front of their crew mates. It seems fair.
+
+You're gathering the whole collective and describe
+them the situation. People seems to be surprised
+and confused, but, looking at them, you don't see
+the stealer among them. No one reacts like a
+delinquent. And several days later Daren will
+tell you that supplies are still disappearing.
+The suspicions you brought into the crew,
+however, make the collective atmosphere a bit
+colder and even wary.
+
+Daren's attempts to hunt down the stealer are also
+resultless - no one seems to be taking more than
+they should, but supplies are still missing, like
+a kind of a ghost stealing them right through
+the walls.
+
+Crew cohesion is decreased by 5 points.
+
+One of your crew mates intercepts a radio
+transmission on which Helga Wagner is instructed
+about a place safe from the Stench. Check
+the Journal for the transmission log.""",
+                "effects": (("do_spend_cohesion", [5]),),
+            },
+            "Speak with everyone separately": {
+                "desc": """The idea of making noise of this situation looks pretty
+bad to you. It's not easy to stay optimistic during
+the days of late, no need to make people suspect
+or even blame each other. It's better to speak with
+them one by one, and try to find the stealer quietly.
+
+You're spending several hours in talks, trying to
+understand your every crew mate mood. It doesn't
+look like any of them is desperate enough to steal
+from the common storage. You're still cautiously
+alluding that there can be problems, but no one
+reacts in an unusual way.
+
+Several days later Daren will tell you that food
+is still missing, though he didn't notice anyone
+taking more that they should. Like a ghost is
+stealing supplies.
+
+However, heart-to-heart conversations you've done
+with every crew member increases the cohesion.
+
+One of your crew mates intercepts a radio
+transmission on which Helga Wagner is instructed
+about a place safe from the Stench. Check
+the Journal for the transmission log.""",
+                "effects": (("do_spend_cohesion", [-5]),),
+            },
+        },
+    },
 )
 
 SCENARIO_LABELS = ("Chapter ", "Scenario", "Seepage")
@@ -4101,4 +4214,5 @@ the last ones leaving the country on a
 train. Most likely we were.""",
     ),
     ("diary", ""),
+    ("note", ""),
 )

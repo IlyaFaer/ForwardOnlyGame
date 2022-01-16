@@ -135,6 +135,14 @@ class Scenario:
         """Do effects for building a camp for orphans choice."""
         base.helped_children = True  # noqa: F821
 
+    def do_spend_cohesion(self, value):
+        """Do effect of decreasing the crew cohesion.
+
+        Args:
+            value (int): The amount of the cohesion change.
+        """
+        base.team.spend_cohesion(value)  # noqa: F821
+
     def do_get_money(self, money):
         """Get or lose the given amount of money.
 
@@ -218,7 +226,7 @@ class Scenario:
         base.world.outings_mgr.hide_outing()  # noqa: F821
         base.traits_gui.hide()  # noqa: F821
 
-        if self.current_chapter <= 6:
+        if self.current_chapter <= 7:
             self.show_chapter_situation()  # noqa: F821
 
             base.world.drop_place_of_interest()  # noqa: F821
