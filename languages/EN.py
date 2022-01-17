@@ -4213,6 +4213,74 @@ didn't meet anyone at all, like we were
 the last ones leaving the country on a
 train. Most likely we were.""",
     ),
-    ("diary", ""),
+    (
+        "diary",
+        """The Stench, the Stench, the Stench...
+What is it? Despite of everything that we
+saw, I still don't even have a strong
+opinion on it. It's not just a mist, no,
+it's a state. You can't see it from
+distance, but when you get into a cloud...
+It's like standing under a waterfall,
+like something is pressuring you with
+vibrations. They are not low or high,
+just... the middle, but they are very
+heavy, rough.
+
+Yes, vibrations pressure on you, it all
+starts to shake in front of your eyes.
+Skin covers with sticky cold sweat in
+the same moment. You're freezing, so,
+in addition to air vibrations, you
+start to shiver by yourself and knock
+your teeth.
+
+It feels like you're a weakly balanced
+machine working on high frequencies, too
+high, so high that your organism starts
+to worn in minutes. You're losing all
+of your energy and can disctinctly feel,
+like parts of your body stopping in a
+completely exhausted condition.
+
+After you spent about a minute in the
+Stench, you need at least 10 minutes
+just to return to reality and stop
+shivering.
+
+And the smell. They called it "The Stench",
+but it should better be called "The Hell".
+Because it smells like a very strong
+burnt plastic mixed with moisture and
+mold. You breath it, and it scorches your
+lungs, fills it with fat cinter from inside.
+
+With all of this, it's pretty hard to
+keep your consciousness within a cloud.
+All you want is to leave it as soon as
+possible, but you can never see where it
+ends. From inside the Stench looks
+endless, a veil, which goes into infinity
+in all directions. Only when you got
+out, you can see that it was... a
+comparatively small cloud.
+
+The thing I fear is that one day there
+will be nowhere to get out, and that
+this day will come real soon. The
+Stench is spreading, every hour it
+covers more and more of Europe.
+Governments and scientists are useless,
+it feels like no one really working on
+it, everyone is just trying to hype
+and earn on the disaster.
+
+In the meantime Silewer is already
+full of refugees, and what we'll see
+in the next country? How fast hordes
+of people will stuck without an
+ability to make a step further in
+the queue to survival?""",
+    ),
     ("note", ""),
 )
