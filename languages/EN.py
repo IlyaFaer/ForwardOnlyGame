@@ -4282,5 +4282,72 @@ of people will stuck without an
 ability to make a step further in
 the queue to survival?""",
     ),
-    ("note", ""),
+    (
+        "note",
+        """Following is the log of an encrypted
+radio transmission we've intercepted.
+It contains a conversation between
+Helga Wagner (H) and her bosses (B).
+
+- B: Helga Wagner group, Helga Wagner
+group, come in.
+- H: Hearing you loud and clear.
+- B: Glad to hear from you, Helga,
+are you alright? We heard you've
+been attacked several times on
+your way through Silewer.
+- H: Yes, we've lost a couple of men
+and some science documentation. It
+doesn't contain any sensitive
+information, so we decided not to
+waste time for retrieving the
+documents back.
+- B: Helga, the situation in Silewer is
+getting out of control, and we don't
+have jurisdiction to regulate it. We
+recommend you not to do unnecessary
+stops there.
+- H: Oh, I assure you, we don't.
+- B: Good. Helga, our people are waiting
+you in the location, which coordinates
+we've sent you just a minute ago. Come
+there, they'll take you to Unterriff,
+it's safe here.
+- H: Sorry, you said "Unterriff"? I thought
+it's a fable!
+- B: No, Helga, it's real, the city is
+under the Black Sea, so it's going
+to be a short way for you. We're
+waiting for you.
+- H: Oh, but... How? I mean... How???
+- B: Just get here soon, it's safe
+down here.
+- H: How do you know the Stench
+can't get there?
+- B: Helga, we pretty sure we know
+how to protect the city from the
+Stench. It was designed for exactly
+such occasions, there is everything
+that's needed for a comfort life.
+Just get here, the Stench adversity
+is spreading in an unpredictable
+way, it doesn't fit wind or
+atmosphere masses movements. We
+can't analyze it and we're not
+sure how much time you have to
+get to Unterriff, so we advise
+you to hurry.
+- H: Yes, I got you, sorry, I just...
+I guess I need some time to
+process what you said.
+- B: Process it, Helga, and make
+your way to Unterriff. Reach us
+on this frequency in case you
+need anything. The situation
+is complicated, but we'll do
+our best to help you.
+- H: Yes, sir, thanks. We're on our
+way. Helga Wagner group out.
+""",
+    ),
 )
