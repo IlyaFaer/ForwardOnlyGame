@@ -334,6 +334,7 @@ class ForwardOnly(ShowBase):
         self.plus_resource("medicine_boxes", save["medicine_boxes"])
         self.plus_resource("smoke_filters", save["smoke_filters"])
         self.plus_resource("stimulators", save["stimulators"])
+        self.helped_children = save["helped_children"]
 
         self.res_gui.update_resource(
             "places_of_interest", str(save["chapter"] + 1) + "/10"
@@ -407,6 +408,7 @@ class ForwardOnly(ShowBase):
         save["chapter"] = self.scenario.current_chapter
         save["city_visit_num"] = self.world.city_gui.visit_num
         save["winned"] = self.journal.winned
+        save["helped_children"] = self.helped_children
 
         save.close()
 

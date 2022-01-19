@@ -1039,6 +1039,9 @@ class MainMenu:
             is_game_over (bool):
                 True, if the main menu is shown on game over.
         """
+        if not getattr(base, "traits_gui", None):  # noqa: F821
+            return
+
         if base.world.rails_scheme.is_shown:  # noqa: F821
             base.world.rails_scheme.show()  # noqa: F821
 
