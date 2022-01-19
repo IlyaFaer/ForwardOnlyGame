@@ -16,10 +16,18 @@ from gui.widgets import RUST_COL, SILVER_COL
 
 
 class Journal:
-    """Captain's journal GUI object."""
+    """Captain's journal GUI object.
 
-    def __init__(self):
+    Args:
+        winned (bool):
+            Flag, saying if the player already won the game.
+    """
+
+    def __init__(self, winned=False):
         self._is_shown = False
+        self._read_coordinates = False
+        self._winned = winned
+
         self._main_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
             frameSize=(-0.37, 0.38, -0.6, 0.6),
@@ -93,6 +101,15 @@ class Journal:
         self._page_snd = loader.loadSfx("sounds/GUI/journal_page.ogg")  # noqa: F821
         self._close_snd = loader.loadSfx("sounds/GUI/journal_close.ogg")  # noqa: F821
 
+    @property
+    def winned(self):
+        """The flag indicating if the player already won.
+
+        Returns:
+            bool: True if the player already won, False otherwise.
+        """
+        return self._winned
+
     def _open_page(self, type_, num):
         """Open the given page of the journal.
 
@@ -107,6 +124,9 @@ class Journal:
 
         self._pages[type_][num]["but"]["text_fg"] = SILVER_COL
         self._page_snd.play()
+
+        if type_ == "note" and num == 3:
+            self._read_coordinates = True
 
     def add_page(self, num):
         """Add a page into the journal.
@@ -138,6 +158,51 @@ class Journal:
         if self._is_shown:
             self._main_fr.hide()
             self._close_snd.play()
+            if not self._winned and self._read_coordinates:
+                self._winned = True
+
+                page = DirectFrame(
+                    frameSize=(-0.73, 0.73, -0.9, 0.9),
+                    frameTexture="gui/tex/paper1.png",
+                    state=DGG.NORMAL,
+                )
+                page.setDepthTest(False)
+                page.setTransparency(TransparencyAttrib.MAlpha)
+                page.show()
+
+                DirectLabel(
+                    parent=page,
+                    text=base.labels.UNTERRIFF_DISCOVERED_TITLE,  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
+                    frameSize=(0.6, 0.6, 0.6, 0.6),
+                    text_scale=0.043,
+                    pos=(0, 0, 0.65),
+                )
+
+                DirectLabel(
+                    parent=page,
+                    text=base.labels.UNTERRIFF_DISCOVERED,  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
+                    frameSize=(0.6, 0.6, 0.6, 0.6),
+                    text_scale=0.037,
+                    pos=(0, 0, 0.55),
+                )
+
+                DirectButton(  # Done
+                    parent=page,
+                    pos=(0, 0, -0.77),
+                    text=base.labels.DISTINGUISHED[6],  # noqa: F821
+                    text_font=base.main_font,  # noqa: F821
+                    text_fg=RUST_COL,
+                    text_shadow=(0, 0, 0, 1),
+                    frameColor=(0, 0, 0, 0),
+                    command=page.destroy,
+                    extraArgs=[],
+                    scale=(0.05, 0, 0.05),
+                    clickSound=base.main_menu.click_snd,  # noqa: F821
+                )
+
+            self._read_coordinates = False
         else:
             self._main_fr.show()
             self._open_snd.play()

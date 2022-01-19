@@ -93,7 +93,6 @@ class ForwardOnly(ShowBase):
         self.helped_children = False
 
         self.main_menu = MainMenu()
-        self.journal = Journal()
 
     @property
     def dollars(self):
@@ -304,6 +303,7 @@ class ForwardOnly(ShowBase):
         self.team = Crew()
         self.res_gui = ResourcesGUI()
 
+        self.journal = Journal(save["winned"])
         self.common_ctrl = CommonController(self.train.parts, self.team.chars)
 
         # build game world
@@ -406,6 +406,7 @@ class ForwardOnly(ShowBase):
         save["team"] = self.team.description
         save["chapter"] = self.scenario.current_chapter
         save["city_visit_num"] = self.world.city_gui.visit_num
+        save["winned"] = self.journal.winned
 
         save.close()
 
@@ -421,6 +422,8 @@ class ForwardOnly(ShowBase):
 
         self.camera_ctrl = CameraController()
         self.camera_ctrl.set_controls(self.train)
+
+        self.journal = Journal()
 
         self.team = Crew()
         self.team.gen_default(chosen_crew)

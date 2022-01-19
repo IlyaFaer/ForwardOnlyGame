@@ -4351,3 +4351,31 @@ way. Helga Wagner group out.
 """,
     ),
 )
+
+UNTERRIFF_DISCOVERED_TITLE = "Hope"
+UNTERRIFF_DISCOVERED = """
+When read the log, you're walking into the deckhouse
+and asking everyone to gather. Pacing from wall to
+wall, waiting for all to take their places, you're
+trying to find the right words.
+
+"Attention, everyone! We've got information, which
+gives us hope. A hope that we can get to safety.
+There is... an underwater city called Unterriff."
+- you can see how your crew mates start to exchange
+glances. - "It seems this place is built by government
+or other powerful structure, so chances are high
+that it's a real deal. We have coordinates, which
+lead us close to the Black Sea. I think... and I
+hope you agree with me, we must check this clue. No
+one can guarantee it'll save us from the Stench...
+but, at least, we have a clear direction now."
+
+Everyone's keeping silence for several seconds.
+"I guess we've to try!" - Daren shouts finally,
+and others start to happily nod their heads and
+smile. The crew agree!
+
+Then let's leave this cold inimical country and
+search for Unterriff! Turn up the heat!
+"""
