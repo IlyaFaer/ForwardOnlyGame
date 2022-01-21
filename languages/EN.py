@@ -919,7 +919,7 @@ and shabby, but sand bags and logs placed around the car in
 defensive positions tells it's still inhabited. You also see
 that second floor doesn't have any glass in windows - probably
 a sniper point, but, except this fact, the bus seems to be safe.
-That makes sense to send a couple of people to check if there
+It makes sense to send a couple of people to check if there
 is something valuable in there.""",
         "results": (
             """You're sending {name1} and {name2} to take a look at the bus.
@@ -964,8 +964,8 @@ car, your people start to rummage through it, swinging the old metal
 carcass. While it all happening, you're seeing a big jeep on a horizon.
 Whistling loudly to your people, you're preparing for a fight. It takes
 two more minutes for {name1} and {name2} to jump outside the bus. The
-gang in the jeep, approaching fast, are starting to shoot, and you're
-opening fire back. {name1} and {name2}, using your cover shooting, are
+gang in the jeep, approaching fast, start to shoot, and you're opening
+fire back. {name1} and {name2}, using your cover shooting, are
 returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.
 You're getting 80$""",
@@ -984,15 +984,16 @@ You're getting 100$""",
     },
     {  # 3
         "name": "Gas Station",
-        "desc": """For at least twenty minutes you've been watching a highway to the
-left of the railway. No cars, no light posts - road was completely
-empty. But, finally, you're seeing a white square advertisement
-sign of a small gas station. There is no vehicle nearby, nor
-people, otherwise the building looks well maintained. Hm-m. Fuel
-- is always good, but suspicious silence of the nearlands makes
-you little bit wary. Place should be checked for resources, and
-if to send someone, you should send two, so that messengers could
-deal with possible troubles together.""",
+        "desc": """For at least twenty minutes you've been watching a highway to
+the left of the railway. No cars, no light posts - road was
+completely empty. But, finally, you're seeing a white square
+advertisement sign of a small gas station. There is no vehicle
+nearby, nor people, otherwise the building looks well
+maintained. Hm-m. Fuel - is always good, but suspicious
+silence of the nearlands makes you little bit wary. Place
+should be checked for resources, and if to send someone, you
+should send two, so that messengers could deal with possible
+troubles together.""",
         "results": (
             """{name1} and {name2} are closing to the gas station, seeing a lot
 of bullet shells scattered all around. They throw gazes at each other
@@ -1033,8 +1034,8 @@ to leave them as they were and move along.""",
             """{name1} and {name2} moving to the gas station by your order.
 Getting closer to the building, they hear music and see three people
 within. In the next moment from the other side of the station four
-skinheads with guns are appearing, with clear intent to attack the
-gas point. {name1} and {name2}, not yet detected by robbers, upper their
+skinheads with guns appear, with clear intent to attack the gas
+point. {name1} and {name2}, not yet detected by robbers, upper their
 guns and shooting off all of these cruds. The station dwellers moving
 outside the building to see what's happening, and understand that your
 people saved them from skinheads. They applaud {name1} and {name2},
@@ -1063,7 +1064,7 @@ becomes clearer that it's not just a bunch of cars, it's a small
 auto camp. Five big trailers with clotheslines stretched between
 them, soccer balls and bonfires looking quiet, but definitely
 inhabited. You're not able to find any human by your eyes, and
-that fact makes the situation even harder: there can be dozens
+this fact makes the situation even harder: there can be dozens
 of fighters there. It makes sense to prepare well before
 entering this trailer camp.""",
         "results": (
@@ -1273,15 +1274,15 @@ You're getting 170$""",
     },
     {  # 7
         "name": "Kid's camp",
-        "desc": """From a big distance you've noticed several dark green buildings.
-Got closer, you see that they are old, but still in a good shape. A
-bunch of colorful attractions makes you think that this is a summer
-camp for kids. There are no kids, however, but the place is definitely
-inhabited, most likely by skinheads - you see bodies lying here and
-there, smoke rising from a couple of buildings and a lot of fresh
-litter. It looks like the current owners of the camp didn't notice
-your arrival, so it makes sense to send just one scout for a quet
-place recon.""",
+        "desc": """From a big distance you've noticed several dark green
+buildings. Got closer, you see that they are old, but still in a
+good shape. A bunch of colorful attractions makes you think that
+this is a summer camp for kids. There are no kids, however, but
+the place is definitely inhabited, most likely by skinheads -
+you see bodies lying here and there, smoke rising from a couple
+of buildings and a lot of fresh litter. It looks like the
+current owners of the camp didn't notice your arrival, so it
+makes sense to send just one scout for a quet place recon.""",
         "results": (
             """You're sending {name1} for a scouting. Without delays {heshe1} takes
 the direction to the camp and silently approaches it. The place seems
@@ -1328,18 +1329,18 @@ takes the whole kit and moves out of the building. Carefully walking
 out of the camp aside of the watch, {heshe1} runs to the locomotive
 and proudly enters the deck house with {hisher1} rich catch.
 All of your crewmates getting +20 health""",
-            """{name1} becomes your messenger on this operation. Grabbing
-{hisher1} stuff, {heshe1} silently jumps down to the ground and moves
-into the camp. Only a couple of skinhead sentries lazily walk
-around the buildings, talking loudly. Without a single effort
-{name1} sneaks into the camp and penetrates into the wooden building,
-which looks pretty much like a storage. Inside {heshe1} sees so many
-different things that it becomes really hard to tell, what is actually
-stored in here. Jewelry, money, paintings, sculptures - it looks like
+            """{name1} becomes your messenger. Grabbing {hisher1} stuff,
+{heshe1} silently jumps down to the ground and moves into the camp.
+Only a couple of skinhead sentries lazily walk around the
+buildings, talking loudly. Without an effort {name1} sneaks
+into the camp and penetrates the wooden building, which looks
+pretty much like a storage. Inside {heshe1} sees so many different
+things that it becomes hard to tell, what is actually stored
+in here. Jewelry, money, paintings, sculptures - it looks like
 skinheads are robbing everyone around and store the catch here. It's
-a pirate treasure really! Hearing some kind of a fuss on the street,
-{name1} grabs several small things, lying closely, and silently exits
-the building to take a direction to the locomotive.
+a pirate treasure! Hearing some kind of a fuss on the street,
+{name1} grabs several small things, lying closely, and silently
+exits the building to take a direction to the locomotive.
 You're getting 130$""",
         ),
     },
@@ -1393,8 +1394,8 @@ thoughts - there was nothing. Someone already looted the
 building, taking every-single-thing useful.""",
             """{name1} takes {hisher1} gun and, following your command, walks
 towards the auto repair shop. It's clear that someone is in there:
-through the window you see shadows moving inside. {name1} see them
-as well, so {heshe1} makes a circle around the shop and climbs to
+through the window you see shadows moving. {name1} see them as
+well, so {heshe1} makes a circle around the shop and climbs to
 its roof. Ceiling windows make it possible for {himher1} to drop
 the ambushing skinheads even before they understood who's firing.
 Climbing down and entering the shop, {name1} walks out with someone
@@ -1552,7 +1553,7 @@ You're getting a Smoke Filter""",
         "name": "Meadow Tent",
         "desc": """The big dark green spot on the meadow attracted your
 attention in the same moment. What do we have here? Seems to
-be an abandoned tent. There are no any signs of a bonfire,
+be an abandoned tent. There are no signs of a bonfire,
 smoke, or any human, so the camp is probably long forsaken.
 Still something useful can remain there, who knows. It's
 worth checking. The place seems to be open, quite and calm,
@@ -1797,12 +1798,12 @@ You're getting 1 stimulator""",
             """{name1} and {name2} are taking their guns and going to the damaged
 truck. Fastly closing to it, they see a lot of sleeves and shot
 holes - it's not just a crash, someone attacked the transport!
-There are no bodies around, but your people notice several big
-and dark blood spots. They are exchanging their glances and
-starting to open plastic containers left right on the road one
-by one. Mostly they are empty, but in one of them {name1}
-finds a couple of aid kits. The first one seems damaged bad,
-but the second looks okay, so {name1} grabs it. As {name2}
+No bodies around, but your people notice several big and dark
+blood spots. They are exchanging their glances and starting
+to open plastic containers left right on the road one by
+one. Mostly they are empty, but in one of them {name1} finds
+a couple of aid kits. The first one seems damaged bad, but
+the second looks okay, so {name1} grabs it. As {name2}
 didn't find anything, but broken containers, your people
 returning back to the Train with this only find.
 You're getting +1 medicine""",
@@ -2150,7 +2151,7 @@ careful examination, {name2} sees an old skin wallet, lying
 in few meters from the hildcarriage. Getting to it, {heshe2}
 opens the thing and see several old soaked dollar papers.
 Well, if to dry them carefully, the recon can even turn
-successful. With such a catch you messengers go back to you.
+successful. With such a catch you messengers go back.
 You're getting 70$""",
             """By your command, {name1} and {name2} take a direction to
 the white boat. While getting closer to it, they see that it's really
@@ -2932,11 +2933,11 @@ acting up." - Kenneth explains silently. - "We need to check
 it, it'll take some time." You're trying to remember how far
 was the Stench frontier, when you last heard about it. "Our
 options?" Looking at you, Kenneth calculates something in his
-mind: "We need five hours long stop to deal with the axle box."
-It's much. "Other options?" The mechanic seems to be not
-very pleasant to say it, but he does: "We can try to do it on
-move. But that's dangerous, complex and will require two men -
-me here and someone on the other side of the locomotive. The
+mind: "We need five hours long stop to deal with it." It's
+much. "Other options?" The mechanic seems to be not very
+pleasant to say it, but he does: "We can try to do it on move.
+But it's dangerous, complex and will require two men - me
+here and someone on the other side of the locomotive. The
 second guy can get injured I warn you. Anyway not dealing with
 it can cause significant pace lose. Your call, Cap." """,
         "variants": {
@@ -2957,8 +2958,8 @@ be considered while planning the further route...
 Four hours passed, and the crew reports you that the axle
 box is good to go. Calling everyone back on board, you're
 commanding to continue the road in the same moment. Four
-hours is not five, but it's still long, very long. Better
-keep your pace high now.
+hours is not five, but it's still long. Better keep your
+pace high now.
 
 The Stench frontier came 20 miles closer to you,
 but the Adjutant is in a good shape for now.
@@ -3034,6 +3035,7 @@ themselves, adults, who worked there, gathered all the
 children and decided to move to Silewer on foot. Looking at
 pale and tired kids, you silently think that it was really
 tough idea. But probably the decision saved their lives...
+
 Complaining about walking for six hours without a stop, the
 woman asks you to help them build a field camp. You
 understand that it'll take a lot of time, as there are
@@ -3143,12 +3145,12 @@ distance from the Stench frontier.""",
     {  # 3
         "intro": """Looking at an aged house, standing in about 200 meters aside of
 the railway, you see some kind of a fuss there. The hut is
-really old, the walls are crumbled here and there, the junk
-dark wooden roof holds on a promise, but through small windows
-you can discern several people moving actively inside. You
-also hear some noise, even screams sometimes. That's worth
-checking the place... You take a couple of your crewmates and
-get closer to the building. It appears a police jeep is standing
+really old, the walls are crumbled, the junk dark wooden
+roof holds on a promise, but through small windows you can
+discern several people moving actively inside. You also
+hear some noise, even screams sometimes. It's worth checking
+the place... You take a couple of your crewmates and get
+closer to the building. It appears a police jeep is standing
 from the other side of the hut. Entering the house, you see a
 couple of men in uniform, threatening an old pair and a young
 girl, most likely their daughter. Interrupted and surprised, the
@@ -3218,7 +3220,7 @@ the way to this house!" Smiles disappear from their faces
 in the same moment. Throwing gazes to each other, they seem
 to be confused greatly. "We all will forget what happened
 here, you only need to leave" - you add. - "But if you have
-any counter arguments... Well..." - you move the gun again.
+counter arguments... Well..." - you move the gun again.
 "Okay!" - one of the policemen uppers his hands. The second
 one follows his gesture in the next second. "We'll go. Let's
 just... Just forget about what happened here." - the officer
@@ -3242,7 +3244,7 @@ journal. Better read it on move.""",
     },
     {  # 4
         "intro": """From a very far distance you can discern that near the small
-motel a long line of cars jamms. You can even see a long
+motel a long line of cars jamms. You can even see a
 string of people standing in front of the entrance. Looks
 like a lot of Silewer newcomers want to rent a room here.
 Sending your people to try to get inside the building, you
@@ -3266,15 +3268,15 @@ in the car here.""",
         "variants": {
             "The pregnant woman should rest": {
                 "desc": """Thinking about the situation, you tend to think that
-the woman is the one to take the last place in the motel.
-The man with the sick boy throws something on the ground
-and, grabbing his son, goes away. The woman, who still
-seem to be scared, thanks you greatly - you can even see
-tears in her eyes. Seeing your people returning back from
-the motel, you say her goodbye and join the crew. According
+the woman is the one to take the last place. The man
+with the sick boy throws something on the ground and,
+grabbing his son, goes away. The woman, who still seem
+to be scared, thanks you greatly - you can even see tears
+in her eyes. Seeing your people returning back from the
+motel, you say her goodbye and join the crew. According
 their words, the place is filled to the very top, some
-unfamiliar people even rent rooms together. Plus to the
-things you already understood by yourself, your crew mates
+unfamiliar people even rent rooms together. Plus to what
+you already understood by yourself, your crew mates
 give you a log paper - one of them heard how the motel
 dwellers were conversing about the same scientist those
 orphans were interviewing. She was here not long ago!
@@ -3373,9 +3375,9 @@ info about the Wahrsager project sounded intriguingly.
 The only thing left to decide is of helping these people.
 Throwing one more gaze at the bus, you see a lot of bags
 on the car top, german car number - they are refugees.
-If those bandits they met were skinheads, shooting at
-the bus wasn't occasional. The scum can return here
-when they'll deal with Helga's group...""",
+If bandits they met were skinheads, shooting at the
+bus wasn't occasional. The scum can return here when
+they'll deal with Helga's group...""",
         "variants": {
             "Help them to repair the bus": {
                 "desc": """Overthinking the situation carefully, you decide to
@@ -3390,9 +3392,8 @@ in the World. Where to go now? Who'll welcome us?
 Countries, which are not able to help themselves? Most
 of their citizens would like to live in Europe, but it's
 unlikely they want us to come to them and take their
-places. Of course, they don't want, especially now, when
-number of places reduces really fast, and no one know
-if it'll stop one day...
+places. Especially now, when number of places reduces
+really fast, and no one know if it'll stop one day...
 
 A couple of hours passed, and the bus engine finally
 starts to roar, gathered from, literally, pieces. People
@@ -4045,14 +4046,14 @@ actually get hands on something valuable.
 You can actually track anyone! With some
 delay, yes, but still...
 
-The woman also told about some of their
-early experiments. They created portable
-version of the machine and tried to
-look into 1928 to investigate a murder
-of a 10 years old girl named Grace.
-They've got good results and were able
-to track the whole horrors of the crime
-from the very start to the last second.
+The woman also told about their early
+experiments. They created portable version
+of the machine and tried to look into
+1928 to investigate a murder of a 10
+years old girl named Grace. They've got
+good results and were able to track the
+whole horrors of the crime from the
+very start to the last second.
 
 An interesting thing is that on images
 scientists noticed color deformation of
