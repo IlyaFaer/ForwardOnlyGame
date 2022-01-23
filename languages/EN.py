@@ -1606,13 +1606,14 @@ The tent looks empty at the first gaze, but suddenly {name1} caughts
  - {heshe1} pronounces and takes the bottle.
 Single character can get +40 energy""",
             """You're sending {name1} and {name2} to search the camp for
-anything useful. Your people are getting to the forsaken tent in two
-minutes and starting a find. You're seeing them rummaging in bags left
-there, but nothing gives a sign of lucky find. Done with backpacks
-{name2} opens the tent zipper and moves inside. It takes a few minutes
-for {himher2} to deal with the inner stuff, but to everyone's joy
-{heshe2} shows up with a white aid kit. Smiling both {name1} and {name2}
-are returning to Train with this burden.
+anything useful. Your people are getting to the forsaken tent
+in two minutes and starting a find. You're seeing them
+rummaging in bags left there, but nothing gives a sign of
+lucky find. Done with backpacks {name2} opens the tent zipper
+and moves inside. It takes a few minutes for {himher2} to deal
+with the inner stuff, but to everyone's joy {heshe2} shows up
+with a white aid kit. Smiling both {name1} and {name2} are
+returning to Train with this burden.
 You're getting 1 Medicine""",
         ),
     },
@@ -1662,13 +1663,13 @@ disappointed mood, and you're commanding to move.""",
             """{name1}, {name2} and {name3} are gearing up and taking direction
 to the hut. Approaching to it, they see that wood building is long
 abandoned: weeds are crossing the door, windows are broken, and
-stillness fills the air. {name2} and {name3} are moving into the house, while
-{name1} is standing outside on a watch. It takes a lot of time for {name3}
-to check all the broken furniture in the first room, but {heshe3} finds
-nothing. {name2} appears to become more lucky: {heshe2} managed to
-find 50$ within a lady's old bag. With such a results {name2} and
-{name3} are leaving the silent and dusty house, and joining {name1}
-to get back to Train and others.""",
+stillness fills the air. {name2} and {name3} are moving into the house,
+while {name1} is standing outside on a watch. It takes a lot of time
+for {name3} to check all the broken furniture in the first room, but
+{heshe3} finds nothing. {name2} appears to become more lucky: {heshe2}
+managed to find 50$ within a lady's old bag. With such a results
+{name2} and {name3} are leaving the silent and dusty house, and
+joining {name1} to get back to Train and others.""",
             """You're asking {name1}, {name2} and {name3} to go for a
 search. They're taking their things and fastly moving to the
 hut. Splitting up - one person to one room - they are
@@ -1952,14 +1953,14 @@ You're getting +50$""",
 at the place. Your messengers closing to the silo; silence meets them,
 so they entering inside the buildings. The lack of any furniture
 or sign of people - seems like the place was forsaken some time ago,
-and hosts have taken everything with them. Walking outside the last
-of three buildings, {name1} points to the metal cylinder of silo
-with {hisher1} head. {name2} agrees on that, and they both getting
-closer to it. Opening the steel door, they see that there is no
-even a gram of grain. But pointing a flashlight inside the structure,
-they catch their eyes on two metal boxes. {name2} jumps inside
-and opens the first one: medicines! "Whoh!" - {heshe2} shouts and
-opens the second one: a smoke filter! Now, that's a find!
+and hosts took everything. Walking outside the last of three
+buildings, {name1} points to the metal cylinder of silo with {hisher1}
+head. {name2} agrees on that, and they both getting closer to it.
+Opening the steel door, they see that there is no even a gram of
+grain. But pointing a flashlight inside the structure, they catch
+their eyes on two metal boxes. {name2} jumps inside and opens the
+first one: medicines! "Whoh!" - {heshe2} shouts and opens the
+second one: a smoke filter! Now, that's a find!
 You're getting 1 smoke filter and 1 medicine""",
         ),
     },
@@ -2215,14 +2216,16 @@ shrugs {hisher2} shoulders, showing {heshe2} don't understand what
 made those people to think that way. "Okay, let's continue!" - you're
 commanding... Understandable, trust is not often that days.""",
             """You're giving an order to {name1} and {name2} to move
-to the tent camp and see if everything is alright there. Your people
-getting to the place in minute, and you see them starting to speak
-with the inhabitants. The campers looks calm and positive, so you're
-relaxing a bit... After several minutes of talk, your people turn
-back to the Train, but you also see one more person with them. They
-getting closer to you, and {name1} explains: "Looks like we've found
-a recruit. Do we have a free place?" Taking a quick gaze at the
-newbie, you're starting to think if the crew needs one more head.
+to the tent camp and see if everything is alright there. Your
+people getting to the place in minute, and you see them
+starting to speak with the inhabitants. The campers looks
+calm and positive, so you're relaxing a bit... After several
+minutes of talk, your people turn back to the Train, but you
+also see one more person with them. They getting closer to
+you, and {name1} explains: "Looks like we've found a
+recruit. Do we have a free place?" Taking a quick gaze at
+the newbie, you're starting to think if the crew needs one
+more head.
 One person can be recruited""",
             """{name1} and {name2} taking a direction to the tent camp
 by your command. You're seeing them approaching the place and
@@ -2240,14 +2243,15 @@ Single character can get Immunity""",
     },
     {  # 21
         "name": "Lying Man",
-        "desc": """Thinking about the Stench nature, you're absently looking around the
-Train, when suddenly you find yourself gazing at a human body.
-It almost blended with withered grass and is covered with snow -
-seems, the man is dead. There is nothing around: no buildings,
-signs of human, even trails... Probably, he died by himself...
-It makes sense to take a look at him, who knows what can be found.
-Deciding to make a walk, you're thinking who should you take as a
-companion. Nothing promises troubles, so anyone should fit.""",
+        "desc": """Thinking about the Stench nature, you're absently looking around
+the Train, when suddenly you find yourself gazing at a human
+body. It almost blended with withered grass and is covered
+with snow - seems, the man is dead. There is nothing around:
+no buildings, signs of human, even trails... Probably, he
+died by himself... It makes sense to take a look at him,
+who knows what can be found. Deciding to make a walk, you're
+thinking who should you take as a companion. Nothing
+promises troubles, so anyone should fit.""",
         "results": (
             """You're deciding to take {name1} as a companion for this small
 walk. You both jump off the Train and take a direction to the body.
@@ -2435,13 +2439,13 @@ for negotiations. Energetically {heshe1} takes {hisher1} gun and directs
 to the construction sight, but in the next minute a couple of
 workers are moving out of the outpost, towards {name1}. Getting
 closer to each other, {name1} and workers exchange handshakes, and
-all three going to the locomotive. You see that builders' faces become
-more interested with every step. "Wow, what a beautiful machine you
-have!" - one of them pronounces. - "That's actually a stronghold on
-wheels!" Both workers get closer and view the locomotive. "That's
-incredible!" - the same man proclaims. - "You're very lucky to get
-your hands on it!"... After several minutes of talk the workers turn
-back to their outpost, but the jealous words still make you proud.
+all three going to the locomotive. You see that builders' faces
+become more interested with every step. "Wow, what a beautiful
+machine you have!" - one of them pronounces. - "That's actually
+a stronghold on wheels! That's incredible!" - the same man
+proclaims. - "You're very lucky to get your hands on it!"...
+After several minutes of talk the workers turn back to their
+outpost, but the jealous words still make you proud.
 Crew cohesion +6""",
             """You're deciding to send {name1} to negotiate with workers.
 Jumping to the ground, {heshe1} moves to the spot, and sees that one
@@ -2496,17 +2500,17 @@ between several cities. Trying to do whatever they can to help folks
 in the country." Okay then, it's not a bad piece of news. Good to see
 that rulers are still in a strive, together with people.""",
             """{name1} and {name2} taking a direction to the cars column by your
-order. While they are getting closer to the big man walking to meet
-them, you're analyzing the cortege: a lot of cargo, a lot of guns,
-and... a lot of refugees!? You didn't see them at the first minute,
-they probably were hiding, but now started to peek out. Dirty, ragged,
-different aged... You patiently wait for your people to figure out
-the details. You see them taking something from the big man, and
-turning back to the locomotive. "This is a help from a local city -
-they transporting people away from the Stench clouds." - {name2}
-tells, entering the deck house. - "They kindly gave us some of their
-medicine." - {heshe2} puts a small white box on the table. Well,
-that's actually very kind of them!
+order. While they're approaching the big man meeting them, you're
+analyzing the cortege: a lot of cargo, a lot of guns, and...
+refugees!? You didn't see them at the first minute, they probably
+were hiding, but now started to peek out. Dirty, ragged, different
+aged... You patiently wait for your people to figure out the
+details. They take something from the big man and turn back
+to the locomotive. "This is a help from a local city - they
+transporting people away from the Stench." - {name2} tells,
+entering the deck house. - "They kindly gave us some medicine."
+- {heshe2} puts a small white box on the table. Well, that's
+actually very kind of them!
 Single character can get +30 health""",
             """You decide to send {name1} and {name2} for a speak. They take
 guns and go to the cars, while two men move towards them
@@ -2973,11 +2977,10 @@ Press J to open/close Captain's journal.""",
                 "desc": """You're giving Kenneth command to choose one of your crew mates
 and try to deal with the axle box on move. You see that the
 mechanic doesn't like your decision, but he still accepts
-the order, promising to think who fits the task better.
-You're returning back to the deckhouse, and some time later
-see Kenneth taking one of the fighters with him to the
-lower level of the Adjutant. For several long hours they
-slip out of your radars...
+the order. You're returning back to the deckhouse, and
+some time later see Kenneth taking one of the fighters
+with him to the lower level of the Adjutant. For several
+long hours they slip out of your radars...
 
 Exiting on the fresh air, you incline above the railings
 and see a blood spot on one of the wheels, blinking on
@@ -2988,8 +2991,7 @@ but the axle box is fine now. Nothing serious!" Making a
 deep breath, you nod your head, trying to calm down. You
 knew the risks from the beginning, but it's still about
 your people safety. It's good that the helper didn't get
-serious wounds. You better find them or her later to say
-your thanks.
+serious wounds. You better find them later to say thanks.
 
 One of your fighters getting -20 health
 
@@ -3034,7 +3036,7 @@ fast to the place, and the governors are too busy saving
 themselves, adults, who worked there, gathered all the
 children and decided to move to Silewer on foot. Looking at
 pale and tired kids, you silently think that it was really
-tough idea. But probably the decision saved their lives...
+tough idea. But probably it saved their lives...
 
 Complaining about walking for six hours without a stop, the
 woman asks you to help them build a field camp. You
@@ -3113,15 +3115,15 @@ distance from the Stench frontier.""",
             },
             "Don't help them and continue the road": {
                 "desc": """You go back to the deckhouse and negotiate with the crew. It
-appears most of them would like to stop and help orphans, but
-all understand that it'll take at least several hours. Clouds
-of the Stench will not let you wait, so it makes sense to move
-faster. People know nothing about the cataclysm behavior, in
-theory it can accelerate or appear somewhere far from the
-supposed source in Germany. Overthinking it again, again and
-again, you decide to ignore the teachers plea. The crew don't
-like the decision very much, but everyone mind the situation.
-A hard silence forms in the air. No one wants to go there and
+appears most of them would like to help orphans, but all
+understand that it'll take at least several hours. The Stench
+will not let you wait, so it makes sense to move faster.
+People know nothing about the cataclysm behavior, in theory
+it can accelerate or appear somewhere far from the supposed
+source in Germany. Overthinking it again, again and again,
+you decide to ignore the teachers plea. The crew don't like
+the decision very much, but everyone mind the situation. A
+hard silence forms in the air. No one wants to go there and
 say those orphans that you're going to leave. "So, what?" - you
 ask quietly. - "Should we continue the road without the last
 word? What's the point in it?" Your crewmates lower their
@@ -3407,10 +3409,10 @@ diary. It's added to your journal, worth reading.""",
                 "effects": (("do_stench_moves_effect", [20]),),
             },
             "Give them tools from the Adjutant": {
-                "desc": """Seeing you doubt on your decision, the man proposes:
-"Maybe you can at least bring us some tools? Money is
-critically needed now, but we'll pay you!" Don't do a
-stop, help them and get some money - sounds good. You're
+                "desc": """Seeing you doubt, the man proposes: "Maybe you can
+at least bring us some tools? Money is critically
+needed now, but we'll pay you!" Don't do a stop,
+help them and get some money - sounds good. You're
 commanding the crew to give the people stuff, which'll
 help to repair the shot bus, while the man gathers
 some money from his passengers. Approaching you back,
@@ -4116,8 +4118,8 @@ all. The strange thing we all noticed -
 the more ancient times we're trying to
 look at the more color deformation we get.
 Everything becomes orange. No one have
-ideas what it actually is, we're working
-hard on understanding the phenomenon.
+ideas what it is, we're working hard
+on understanding the phenomenon.
 
 Still, we probably are late on it. About
 a month ago those idiots asked us to try
