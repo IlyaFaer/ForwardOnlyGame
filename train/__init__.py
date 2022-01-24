@@ -877,7 +877,7 @@ class Train:
         for char in self.parts["part_left" if x_coor < 0 else "part_right"].chars:
             if abs(char.model.getY() - y_coor) < 0.11:
                 char.get_damage(4)
-                char.get_stunned(5)
+                char.get_stunned()
 
     def use_smoke_filter(self):
         """Use smoke filter to hide from enemies.

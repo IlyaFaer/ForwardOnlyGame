@@ -907,13 +907,10 @@ class Character(Shooter, Unit):
 
         return chance(miss_chance)
 
-    def get_stunned(self, duration):
+    def get_stunned(self):
         """Make this character stunned for some time.
 
         Stunned unit can't shoot.
-
-        Args:
-            duration (float): Stun duration in seconds.
         """
         if self._is_stunned or self._is_stimulated:
             return
@@ -926,7 +923,7 @@ class Character(Shooter, Unit):
         LerpAnimInterval(self.model, 0.05, "stand_and_aim", "stunned").start()
 
         taskMgr.doMethodLater(  # noqa: F821
-            duration, self._stop_stunning, self.id + "_stop_stunning"
+            6, self._stop_stunning, self.id + "_stop_stunning"
         )
 
     def get_sick(self, is_infect=False):

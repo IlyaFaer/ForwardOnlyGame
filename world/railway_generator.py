@@ -253,7 +253,7 @@ class RailwayGenerator:
 
                 try:
                     end = self.find_straight(
-                        world_map, branches, start + random.randint(75, 95)
+                        world_map, branches, start + random.randint(75, 90)
                     )
                 except IndexError:
                     break
