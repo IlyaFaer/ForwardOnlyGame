@@ -31,6 +31,7 @@ class EffectsManager:
         self._transition.setFadeColor(0, 0, 0)
 
         self.stench_effect = Stench()
+        self.love_fog = LoveFog()
 
         filters = CommonFilters(base.win, base.cam)  # noqa: F821
         filters.setBloom(size="large", mintrigger=0.8, intensity=2.1)
@@ -331,6 +332,16 @@ class Stench:
         self._fcard.setScale(1.08)
         self._fcard.hide()
 
+    @property
+    def is_playing(self):
+        """Flag indicating if the Stench effect is playing.
+
+        Returns:
+            bool:
+                True, if the Stench effect is playing, False otherwise.
+        """
+        return self._is_playing
+
     def _snapshot(self, task):
         """Make snapshot of the screen."""
         if task.time > self._nextclick:
@@ -340,6 +351,10 @@ class Stench:
             base.win.triggerCopy()  # noqa: F821
 
         return task.cont
+
+    def set_fog(self):
+        """Turn on fog."""
+        render.setFog(self._fog)  # noqa: F821
 
     def play(self):
         """Start playing the Stench visual effects and sounds."""
@@ -356,6 +371,8 @@ class Stench:
         self._snd2.play()
         self._snd3.play()
         self._snd4.play()
+        base.effects_mgr.love_fog.switch()  # noqa: F821
+        base.effects_mgr.love_fog.switch()  # noqa: F821
 
     def play_clouds(self):
         """Start playing the Stench particle effect."""
@@ -390,3 +407,30 @@ class Stench:
         self._bcard.hide()
 
         render.clearFog()  # noqa: F821
+
+        if base.effects_mgr.love_fog.is_on:  # noqa: F821
+            base.effects_mgr.love_fog.is_on = False  # noqa: F821
+            base.effects_mgr.love_fog.switch()  # noqa: F821
+
+
+class LoveFog:
+    """St. Valentines Day mode effect."""
+
+    def __init__(self):
+        self.is_on = False
+        self._love_fog = Fog("Love")
+        self._love_fog.setColor(0.7, 0.42, 0.49)
+        self._love_fog.setExpDensity(0.24)
+
+    def switch(self):
+        """Switch on/off the effect."""
+        if self.is_on:
+            render.clearFog()  # noqa: F821
+            base.train.love_particles(False)  # noqa: F821
+            if base.effects_mgr.stench_effect.is_playing:  # noqa: F821
+                base.effects_mgr.stench_effect.set_fog()  # noqa: F821
+        else:
+            render.setFog(self._love_fog)  # noqa: F821
+            base.train.love_particles(True)  # noqa: F821
+
+        self.is_on = not self.is_on

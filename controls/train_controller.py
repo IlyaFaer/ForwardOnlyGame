@@ -316,6 +316,7 @@ class TrainController:
         base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
         base.accept("7", self._switch_garland)  # noqa: F821
         base.accept("8", self._shot_flapper)  # noqa: F821
+        base.accept("9", base.effects_mgr.love_fog.switch)  # noqa: F821
 
         base.accept("f", train.toggle_lights)  # noqa: F821
 

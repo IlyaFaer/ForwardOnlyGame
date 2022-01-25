@@ -141,6 +141,7 @@ class Train:
             self._rocket_explosions,
             self._stop_steam,
             self._shot_sparks,
+            self._love_particle,
         ) = self._prepare_particles()
 
         self.smoke_filtered = False
@@ -237,6 +238,10 @@ class Train:
         smoke.setPos(0, 0.32, 0.29)
         smoke.start(self.model, render)  # noqa: F821
 
+        love = ParticleEffect()
+        love.loadConfig("effects/love_particles.ptf")
+        love.setPos(0, 0, 0.05)
+
         l_brake_sparks = ParticleEffect()
         l_brake_sparks.loadConfig("effects/brake_sparks2.ptf")
         l_brake_sparks.setPos(-0.058, 0.38, 0.025)
@@ -286,6 +291,7 @@ class Train:
             explosions,
             stop_steam,
             shot_sparks,
+            love,
         )
 
     def _set_lamps_material(self, mat, floodlights_mat=None):
@@ -378,6 +384,19 @@ class Train:
         """
         for up in upgrades:
             self.install_upgrade(base.labels.UPGRADES_DESC[up])  # noqa: F821
+
+    def love_particles(self, turn_on):
+        """Switch love particles.
+
+        Args:
+            turn_on (bool):
+                True to switch on particles, False to switch off.
+        """
+        if turn_on:
+            self._love_particle.start(self.model, self.model)
+            self._love_particle.softStart()
+        else:
+            self._love_particle.softStop()
 
     def move_to_hangar(self):
         """Move the Train into a city hangar."""

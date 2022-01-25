@@ -100,6 +100,9 @@ C - toggle centered view
 New Year spirit:
 7 - toggle the mode
 8 - flapper shot
+
+St. Valentine's Day:
+9 - toggle the mode
 """
 
 RESOURCES = (
