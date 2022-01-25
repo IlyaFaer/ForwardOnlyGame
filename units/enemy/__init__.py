@@ -54,7 +54,7 @@ CLASSES = {
         {
             "class": DodgeShooter,
             "model": "dodge_gun",
-            "score": 6,
+            "score": 5,
             "threshold": 13,
             "part": "side",
             "health": 100,

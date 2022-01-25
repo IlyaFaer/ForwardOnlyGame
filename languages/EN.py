@@ -669,7 +669,7 @@ in case of a big damage""",
         "desc": """Active gun, which can do a
 lot of damage on a small area.
 Press 1 key to aim and shoot.""",
-        "cost": "180$",
+        "cost": "170$",
         "model": "grenade_launcher",
         "threshold": 1,
     },
@@ -696,7 +696,7 @@ protected from the Stench""",
 splits to four grenades, doing
 damage on several circles.
 Press 3 to aim and shoot.""",
-        "cost": "200$",
+        "cost": "180$",
         "model": "cluster_bomb_launcher",
         "threshold": 2,
     },
@@ -705,7 +705,7 @@ Press 3 to aim and shoot.""",
         "desc": """Fires aiming burst. Better be
 used for a single target.
 Press 2 to aim and shoot.""",
-        "cost": "160$",
+        "cost": "150$",
         "model": "machine_gun",
         "threshold": 2,
     },
