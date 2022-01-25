@@ -84,8 +84,8 @@ class RailwayGenerator:
         self._prev = 0
         self._step = random.uniform(0.025, 0.05) * random.choice((1, -1))
         self._current = self._step
-        self._station_threshold = 130
-        self._city_threshold = 330
+        self._station_threshold = 105
+        self._city_threshold = 290
 
         self._bounds = (
             Bound(-1, (0.08, 0.12), "r90_turn"),
@@ -127,11 +127,11 @@ class RailwayGenerator:
                     return model
 
         if self._station_threshold <= 0 and chance(30):
-            self._station_threshold = 130
+            self._station_threshold = 108
             return "station"
 
         if self._city_threshold <= 0 and chance(50):
-            self._city_threshold = 320
+            self._city_threshold = 270
             return "city"
 
         return random.choice(("rs", "ls")) if chance(10) else "direct"
@@ -144,7 +144,7 @@ class RailwayGenerator:
         self._station_threshold -= 1
 
         if self._station_threshold <= 0 and chance(30):
-            self._station_threshold = 170
+            self._station_threshold = 140
             return "station"
 
         return random.choice(("rs", "ls")) if chance(10) else "direct"
@@ -243,7 +243,7 @@ class RailwayGenerator:
         for side in ("l", "r"):
             cursor = 0
             while cursor < len(world_map):
-                range_ = (170, 210) if cursor == 0 else (310, 350)
+                range_ = (150, 190) if cursor == 0 else (250, 300)
                 try:
                     start = self.find_straight(
                         world_map, branches, cursor + random.randint(*range_),

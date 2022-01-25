@@ -434,7 +434,7 @@ class ForwardOnly(ShowBase):
 
         # build game world
         self.world = World()
-        self.world.generate_location(900, chosen_crew)
+        self.world.generate_location(800, chosen_crew)
         self.current_block = self.world.prepare_next_block()
 
         self.common_ctrl.set_controls()
