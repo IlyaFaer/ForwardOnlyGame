@@ -181,6 +181,9 @@ class OutingsManager:
         selected_effect = effects.get("select_char")
         recruit_effect = effects.get("recruit")
 
+        prev_coh = base.team.current_cohesion[0]  # noqa: F821
+        base.team.increase_cohesion_for_chars(chars, score)  # noqa: F821
+
         # show the outing result on the GUI
         self._gui.show_result(
             desc,
@@ -191,6 +194,7 @@ class OutingsManager:
             outing["day_part_weights"][base.world.sun.day_part],  # noqa: F821)
             selected_effect,
             recruit_effect,
+            base.team.current_cohesion[0] - prev_coh,  # noqa: F821
         )
         self._snds[outing["type"]].play()  # noqa: F821
 
@@ -219,8 +223,6 @@ class OutingsManager:
         if "assignees" in effects:
             for char in chars:  # noqa: F821
                 char.do_effects(effects["assignees"])
-
-        base.team.increase_cohesion_for_chars(chars, score)  # noqa: F821
 
 
 def calc_condition_score(cond_max, char):

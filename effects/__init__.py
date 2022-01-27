@@ -420,7 +420,7 @@ class LoveFog:
         self.is_on = False
         self._love_fog = Fog("Love")
         self._love_fog.setColor(0.7, 0.42, 0.49)
-        self._love_fog.setExpDensity(0.24)
+        self._love_fog.setExpDensity(0.25)
 
     def switch(self):
         """Switch on/off the effect."""

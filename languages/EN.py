@@ -757,6 +757,7 @@ OUTINGS_GUI = (
     "You can recruit {name} for {cost}$",
     "Get {trait} trait\n ({desc})",
     "Select one character as a target for the effect:",
+    "Cohesion increased: +{value} points",
 )
 
 NOTIFIERS = (

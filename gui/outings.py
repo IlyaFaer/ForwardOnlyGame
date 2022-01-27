@@ -143,7 +143,9 @@ class OutingsGUI:
         self._upcome_ico.hide()
         return task.again
 
-    def _animate_bars(self, bars, score, selected_effect, recruit_effect, task):
+    def _animate_bars(
+        self, bars, score, selected_effect, recruit_effect, cohesion_inc, task
+    ):
         """Animate filling the bars.
 
         Args:
@@ -152,6 +154,7 @@ class OutingsGUI:
             selected_effect (dict):
                 Effect which requires to choose a target.
             recruit_effect (int): Cost of a possible recruit
+            cohesion_inc (float): Cohesion increase value.
         """
         all_filled = True
         for bar in bars:
@@ -184,9 +187,22 @@ class OutingsGUI:
                     text_font=base.main_font,  # noqa: F821
                     frameSize=(0.6, 0.6, 0.6, 0.6),
                     text_scale=0.042,
-                    pos=(0, 0, -0.58),
+                    pos=(0, 0, -0.57),
                 )
             )
+            if round(cohesion_inc, 2) > 0.05:
+                self._outing_widgets.append(
+                    DirectLabel(  # Cohesion increased:
+                        parent=self._list,
+                        text=base.labels.OUTINGS_GUI[15].format(  # noqa: F821
+                            value=round(cohesion_inc, 2)
+                        ),
+                        text_font=base.main_font,  # noqa: F821
+                        frameSize=(0.6, 0.6, 0.6, 0.6),
+                        text_scale=0.035,
+                        pos=(0, 0, -0.69),
+                    )
+                )
             self._outing_widgets.append(
                 DirectButton(  # Done
                     pos=(0, 0, -0.77),
@@ -369,8 +385,7 @@ class OutingsGUI:
     def show_place_of_interest(self):
         """Show icon for a place of interest."""
         self.show_upcoming(
-            base.labels.NOTIFIERS[0],  # noqa: F821
-            OUTINGS_ICONS["Place Of Interest"],
+            base.labels.NOTIFIERS[0], OUTINGS_ICONS["Place Of Interest"],  # noqa: F821
         )
 
     def show_upcoming_outing(self, type_orig, type_):
@@ -529,24 +544,20 @@ class OutingsGUI:
         day_part_score,
         selected_effect,
         recruit_effect,
+        cohesion_inc,
     ):
         """Show outing results GUI.
 
         Args:
             desc (str): Result description.
             score (int): Total outing score.
-            cond_score (float):
-                Score from characters condition.
-            class_score (int):
-                Score from characters classes.
-            cohesion_score (float):
-                Characters cohesion score.
-            day_part_score (int):
-                Day part bonus and special skills score.
-            selected_effect (dict):
-                Effect which requires to choose a target.
-            recruit_effect (int):
-                Cost of a possible recruit.
+            cond_score (float): Score from characters condition.
+            class_score (int): Score from characters classes.
+            cohesion_score (float): Characters cohesion score.
+            day_part_score (int): Day part bonus and special skills score.
+            selected_effect (dict): Effect which requires to choose a target.
+            recruit_effect (int): Cost of a possible recruit.
+            cohesion_inc (float): Cohesion increase value.
         """
         clear_wids(self._outing_widgets)
 
@@ -618,6 +629,6 @@ class OutingsGUI:
             0.035,
             self._animate_bars,
             "animate_outing_bars",
-            extraArgs=[bars, score, selected_effect, recruit_effect],
+            extraArgs=[bars, score, selected_effect, recruit_effect, cohesion_inc],
             appendTask=True,
         )
