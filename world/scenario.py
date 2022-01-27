@@ -15,6 +15,7 @@ from direct.gui.DirectGui import (
 from panda3d.core import TransparencyAttrib
 
 from gui.widgets import GUI_PIC, RUST_COL
+from utils import take_random
 
 
 class Scenario:
@@ -212,6 +213,29 @@ class Scenario:
         for _ in range(steps):
             base.world.make_stench_step()  # noqa: F821
 
+    def do_transfusion_effect(self):
+        """Do blood transfusion effect of Chapter 9."""
+        char = None
+        chars = list(base.team.chars.values())  # noqa: F821
+
+        if chars:
+            char = take_random(chars)
+            char.health -= 30
+
+        if chars:
+            take_random(chars).health -= 30
+        elif char:
+            char.health -= 30
+
+    def do_medicine_save(self):
+        """Do save with medicines effect of Chapter 9."""
+        if base.resource("medicine_boxes"):  # noqa: F821
+            base.plus_resource("medicine_boxes", -1)  # noqa: F821
+        else:
+            chars = list(base.team.chars.values())  # noqa: F821
+            if chars:
+                take_random(chars).energy -= 40
+
     def hide_chapter(self):
         """Hide the scenario GUI."""
         self._list.hide()
@@ -226,7 +250,7 @@ class Scenario:
         base.world.outings_mgr.hide_outing()  # noqa: F821
         base.traits_gui.hide()  # noqa: F821
 
-        if self.current_chapter <= 7:
+        if self.current_chapter <= 8:
             self.show_chapter_situation()  # noqa: F821
 
             base.world.drop_place_of_interest()  # noqa: F821

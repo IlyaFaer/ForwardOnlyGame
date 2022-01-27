@@ -3818,6 +3818,122 @@ the Journal for the transmission log.""",
             },
         },
     },
+    {  # 9
+        "intro": """Hearing cries and a lot of noise inside the machinery section,
+you hurry up there to figure out what's happening. You
+see that your crew mates are trying to pull out a boy
+about nine years old out of the dark of the locomotive
+mechanisms. The lad's left leg is grinded, he seems to
+be losing consciousness, there is blood everywhere.
+Seeing you, Daren shouts: "Cap, it's our food thief I
+bet! Been hiding in the mechanisms. I've decided to
+clean up things today, and he probably got scared,
+tried to get deeper, got too close to the moving parts,
+and then..."
+
+Kenneth, who's also here, moves closer to you. You can
+feel he's shaking. He silently asks: "What should we
+do, Captain? We're no medics here, and the kid is hurt
+bad. We can try to transfuse blood, probably from two
+people, as he lost really a lot. Or we can use
+medicaments to stabilize him. We need to act quickly,
+he's leaving, and we're not good enough for such an
+operation I'm afraid. Every second counts!"
+
+Assessing your crew state and the medicines supply,
+you're trying to find the right solution to this
+unexpected distress.""",
+        "variants": {
+            "Save the kid with transfusion": {
+                "desc": """You're giving an order to figure out the lad's blood type
+and start transfusion as soon as possible. The child
+didn't deserve this! If he would just... just tell
+you, that he's here. Probably was too afraid you'll
+get him off somewhere in the wild lands, alone. Or
+even worse... Deft enough to hide under your noses
+for such a long period! Most likely one of those
+orphans you met earlier...
+
+It appears two of your crew mates has the same blood
+type that the kid does, so with common efforts
+you're all trying to organize a blood transfusion
+system of improvised means.
+
+Several hours passed, and you understand that it's
+working! The child's hands stop trembling, his skin
+gets a bit of colors. Yes, the kid is stabilized,
+though his leg and stress he transferred are going
+to keep him in the bed for a long time.
+
+Two of your crew mates losing 30 health.
+While you've been saving the child, one of your
+sentries recorded a new encrypted message from
+Unterriff. Check the Journal to read it.""",
+                "effects": (("do_transfusion_effect", []),),
+            },
+            "Save the kid with medicines": {
+                "desc": """Lighting fast overthinking the situation, you decide
+that the child should be saved, still, it's better
+not to involve your crew too much. You have your
+own route, you promised your people that you'll
+lead them through this in one piece. And the
+blood transfusion is a risk, which calls your
+promise into question.
+
+Your people start to gather all the medicines and
+stuff needed to stabilize the child. It appears
+you don't really have enough for such an
+operation, but you don't lose hope.
+
+After several hours full of stress and hard work
+you understand that you saved the boy. It cost
+a lot of energy and supplies, but his limbs stop
+trembling, skin gets some color and blood
+pressure becomes more acceptable. He'll be okay,
+though full recovery will take a lot of time.
+
+You're losing 2 medicines. In case of lack of
+medicines your fighters lose 40 energy.
+
+While you've been saving the child, one of your
+sentries recorded a new encrypted message from
+Unterriff. Check the Journal to read it.""",
+                "effects": (("do_medicine_save", []), ("do_medicine_save", []),),
+            },
+            "Don't save the kid": {
+                "desc": """Fastly overthinking the situation, you're coming to the conclusion
+that you can't help the child. You have your own way,
+you need to save your crew. And blood transfusion or
+spending extremely valuable medicines in such a
+critical situation? No.
+
+You're ordering not to waste anything to save the
+kid. A long tense pause fills the air in the
+locomotive. Everybody seems to be so shocked by your
+decision that can't even say anything, they are just
+looking at you.
+
+Daren becomes the first who voices: "Cap... but...
+child. We can't just... No!" You're repeating your
+order, and several people exit the machinery in the
+same second, overreacting hard. Others still stay
+in hopeless attempts to help.
+
+You're returning to your desk, and several hours
+later Kenneth, walking near you, shakes his head,
+showing that the kid died.
+
+Your ruthless decision becomes a heavy hit to the
+crew spirit. People seem to be crushed, and they
+blame you in this darkest of the days. Leader's fate.
+
+Crew cohesion is decreased by 30 points.
+One of your sentries recorded a new encrypted
+message from Unterriff. Check the Journal to read it.""",
+                "effects": (("do_spend_cohesion", [30]),),
+            },
+        },
+    },
 )
 
 SCENARIO_LABELS = ("Chapter ", "Scenario", "Seepage")
@@ -4356,6 +4472,7 @@ our best to help you.
 way. Helga Wagner group out.
 """,
     ),
+    ("note", ""),
 )
 
 UNTERRIFF_DISCOVERED_TITLE = "Hope"
