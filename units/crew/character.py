@@ -71,6 +71,7 @@ class Character(Shooter, Unit):
         self.damage_range = [6, 8]
         self.clear_damage = [6, 8]
         self.effects = {}
+        self._yeah_snds = []
 
         self.name = name
         self.sex = sex
@@ -313,6 +314,14 @@ class Character(Shooter, Unit):
         )
         base.sound_mgr.attachSoundToObject(self._die_snd, self.model)  # noqa: F821
 
+        for i in range(1, 4):
+            yeah_snd1 = base.sound_mgr.loadSfx(  # noqa: F821
+                "sounds/{sex}_yes{num}.ogg".format(sex=self.sex, num=str(i))
+            )
+            base.sound_mgr.attachSoundToObject(yeah_snd1, self.model)  # noqa: F821
+
+            self._yeah_snds.append(yeah_snd1)
+
         if self.class_ == "soldier":
             z = 0.064 if self.sex == "male" else 0.062
         elif self.class_ == "raider":
@@ -413,6 +422,10 @@ class Character(Shooter, Unit):
         """
         self.effects[name]["model"].show()
         self.effects[name]["seq"].loop()
+
+    def play_yes(self):
+        """Play a voice sound, when the character is chosen."""
+        random.choice(self._yeah_snds).play()
 
     def stop_aura_effect(self, name):
         """Stop the given aura effect.

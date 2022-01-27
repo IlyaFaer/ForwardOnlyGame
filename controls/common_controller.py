@@ -96,6 +96,7 @@ class CommonController:
             if self._is_relations_shown:
                 base.team.show_relations(self._chosen_char)  # noqa: F821
 
+            self._chosen_char.play_yes()
             return
 
         if self._pointed_obj == "part_rest":
