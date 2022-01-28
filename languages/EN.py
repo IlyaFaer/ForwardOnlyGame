@@ -3935,6 +3935,66 @@ message from Unterriff. Check the Journal to read it.""",
             },
         },
     },
+    {  # 10
+        "intro": """Observing flakes of snow calmly getting down from the skies,
+you hear someone's approaching you. Kenneth. "Captain,
+we've caught one more transmission from Unterriff."
+You're nodding your head, showing that you're
+following him. Together you enter the deckhouse,
+where the crew is gathered around the radio.
+"Starts!" - Daren shouts, making everyone go silent.
+
+"Code 773-L, I repeat, code 773-L. Message for all the
+Unterriff-8 program members. The Stench cataclysm
+is designated as the highest level menace. All the
+members with code 773-L and higher are recommended
+to immediately move to the designated rendezvous point.
+Reception party will be revoked in 173 hours. If
+you're not able to get to them in time, you'll have
+to follow the road 804 and proceed to the path
+described in the item 26.3.1 of your project
+Unterriff agreement by yourself, I repeat, by
+yourself. At the Unterriff gates you'll have to
+identify yourself by the microchip attached to your
+agreement. Persons without a chip or below code
+773-L will not be allowed to Unterriff-8 facility."
+
+The message suddenly breaks up. Everyone seem to be
+concerned - a whole system is built around Unterriff.
+Chips, agreements, hierarchy of codes... But you had
+no idea! No one had! Seems there are a lot of...
+chosen ones, who are welcome in the underwater
+shelter, but not all. Someone selected those, who
+must survive, and those who not.""",
+        "variants": {
+            "Plan the route": {
+                "desc": """Kenneth moves to the center of the deckhouse, holding
+hand on his forehead. "Road 804, road 804... I
+know the place! I've been there a couple of times.
+It's a railway path stretched along the Black Sea
+coast. There are several small forsaken branches
+forked from it in the direction of the sea..."
+
+"I suppose, not forsaken. Just not for everyone."
+- you say silently.
+
+Kenneth uppers his eyes to you: "Then, I assume...
+let's go! Though, we still need an access chip to
+get inside the facility..."
+
+You're nodding your head confidently. You already
+have ideas about what to do next. They started
+a great gathering - there will be a lot of fuss
+in the region. It can help you.
+
+Looking out everyone inside the deckhouse, you're
+surely saying: "Seems like they forgot to send us
+an invitation card. Well, we'll get it by
+ourselves. Let's go see this Unterriff!" """,
+                "effects": (("do_no_effect", []),),
+            },
+        },
+    },
 )
 
 SCENARIO_LABELS = ("Chapter ", "Scenario", "Seepage")
@@ -4473,6 +4533,7 @@ our best to help you.
 way. Helga Wagner group out.
 """,
     ),
+    ("note", ""),
     ("note", ""),
 )
 

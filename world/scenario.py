@@ -250,7 +250,7 @@ class Scenario:
         base.world.outings_mgr.hide_outing()  # noqa: F821
         base.traits_gui.hide()  # noqa: F821
 
-        if self.current_chapter <= 8:
+        if self.current_chapter <= 9:
             self.show_chapter_situation()  # noqa: F821
 
             base.world.drop_place_of_interest()  # noqa: F821
@@ -267,12 +267,27 @@ class Scenario:
             "intro"
         ]
 
-        for index, var in enumerate(
-            base.labels.SCENARIO[self.current_chapter]["variants"]  # noqa: F821
+        if (
+            len(base.labels.SCENARIO[self.current_chapter]["variants"])  # noqa: F821
+            == 3
         ):
-            self._buts[index]["text"] = var
-            self._buts[index]["extraArgs"] = [var]
-            self._buts[index]["command"] = self._choose_variant
-            self._buts[index].show()
+            for index, var in enumerate(
+                base.labels.SCENARIO[self.current_chapter]["variants"]  # noqa: F821
+            ):
+                self._buts[index]["text"] = var
+                self._buts[index]["extraArgs"] = [var]
+                self._buts[index]["command"] = self._choose_variant
+                self._buts[index].show()
+        else:
+            self._buts[0].hide()
+            self._buts[1].hide()
+
+            for var in base.labels.SCENARIO[self.current_chapter][  # noqa: F821
+                "variants"
+            ]:
+                self._buts[2]["text"] = var
+                self._buts[2]["extraArgs"] = [var]
+                self._buts[2]["command"] = self._choose_variant
+                self._buts[2].show()
 
         self._list.show()
