@@ -4533,7 +4533,76 @@ our best to help you.
 way. Helga Wagner group out.
 """,
     ),
-    ("note", ""),
+    (
+        "note",
+        """The following is a log of another radio
+transmission we've intercepted from
+Unterriff.
+
+- B: Helga Wagner group, Helga Wagner
+group, come in.
+- H: Helga Wagner group on the line,
+hearing you loud and clear.
+- B: Helga, where are you now? Are you
+getting closer to the rendezvous point?
+- H: Yes, we're almost out of Silewer.
+- B: Good! We're reaching you, because
+there are two more groups of our
+people, who're following your path
+through the country. They're meeting
+heavy resistance from the local bands.
+Can you advise a safe route?
+- H: Oh, sir! I'm afraid it'll be hard!
+We think about 30% of the country is
+already covered with the Stench - all
+of it on South-West. North, however,
+is under skinheads control.
+- B: Helga, you keep saying "skinheads".
+What does it mean?
+- H: It means it's an alt-right band
+of criminals, who've been harassing
+foreigners in Silewer for years. Because
+of the Stench and a wave of refugees
+they've got huge support from locals
+recently. People say they have a new
+leader, who ordered to rob everyone, not
+just foreigners, and prepare for a big
+war for survival! They have supplies,
+ammunition, people, and they're
+getting more every day!
+- B: What do you advise, Helga?
+- H: We've crossed the country by
+Checkpoint 46 - Sneeuwstad - Naaldstad
+route, but this path is no more safe.
+We've heard someone purposefully rides
+along the railway, giving hell to
+skinheads. They've gathered significant
+forces to stop those people and get
+their locomotive for themselves, so I
+think it's safer to stay away of
+railways. Say them to take to the
+South, about 80 miles.
+- B: Thank you, Helga! We'll tell
+them! What else can you say?
+- H: The situation is bad. Police
+almost disappeared or joined skinheads,
+and everyone feels it. Shooting, robbery,
+killing is already everywhere. A lot of
+people are trying to loot as much
+supplies as they can and get under
+the ground. Stashes and bunkers.
+For others transport became the main
+value, as it can get you away from the
+Stench - tell your people not to leave
+their cars without guard, not even for a
+second. And let them ready for fight!
+- B: Thanks, Helga, we'll pass on
+your words to them! We all appreciate
+your help. Looking forward to see
+you in Unterriff. If you don't have
+anything else, then Unterriff out.
+- H: Helga Wagner group out.""",
+    ),
     ("note", ""),
 )
 
