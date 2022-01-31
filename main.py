@@ -91,6 +91,7 @@ class ForwardOnly(ShowBase):
         self._heads = {}
         self._cur_mouse_pointer = "normal"
         self.helped_children = False
+        self.decisions = {}
 
         self.main_menu = MainMenu()
 
@@ -335,6 +336,7 @@ class ForwardOnly(ShowBase):
         self.plus_resource("smoke_filters", save["smoke_filters"])
         self.plus_resource("stimulators", save["stimulators"])
         self.helped_children = save["helped_children"]
+        self.decisions = save["decisions"]
 
         self.res_gui.update_resource(
             "places_of_interest", str(save["chapter"] + 1) + "/10"
@@ -409,6 +411,7 @@ class ForwardOnly(ShowBase):
         save["city_visit_num"] = self.world.city_gui.visit_num
         save["winned"] = self.journal.winned
         save["helped_children"] = self.helped_children
+        save["decisions"] = self.decisions
 
         save.close()
 

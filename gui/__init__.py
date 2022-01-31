@@ -9,6 +9,7 @@ import shelve
 import sys
 import webbrowser
 
+from direct.interval.LerpInterval import LerpPosInterval
 from direct.gui.DirectGui import (
     DGG,
     DirectButton,
@@ -986,6 +987,40 @@ class MainMenu:
     def hide_loading_msg(self):
         """Hide the "Loading..." message widget."""
         self._load_msg.destroy()
+
+    def show_credits(self, task):
+        """Show the game end credits."""
+        goodness = 0
+
+        inserts = {}
+        for key, value in base.decisions.items():  # noqa: F821
+            inserts[key] = value["decision"]
+            goodness += value["goodness"]
+
+        if goodness <= 15:
+            inserts["leader_desc"] = base.labels.ROUGH_LEADER  # noqa: F821
+        elif goodness <= 30:
+            inserts["leader_desc"] = base.labels.OPPORTUNIST_LEADER  # noqa: F821
+        else:
+            inserts["leader_desc"] = base.labels.EMPATHIC_LEADER  # noqa: F821
+
+        frame = DirectFrame(
+            frameSize=(-2, 2, -1, 1),
+            frameColor=(0.15, 0.15, 0.15, 1),
+            state=DGG.NORMAL,
+        )
+        lab = DirectLabel(
+            parent=frame,
+            text=base.labels.CREDITS.format(**inserts),  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            text_scale=0.042,
+            text_fg=SILVER_COL,
+            frameColor=(0, 0, 0, 0),
+            text_align=TextNode.ACenter,
+            pos=(0, 0, -1.5),
+        )
+        LerpPosInterval(lab, 100, (0, 0, 10)).start()
+        return task.done
 
     def show_loading(self, is_game_start=False):
         """Show game loading screen.

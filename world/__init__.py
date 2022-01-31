@@ -16,7 +16,7 @@ from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotligh
 from const import MOD_DIR
 from gui import CityGUI, RailsScheme
 from units.enemy import Enemy
-from utils import address, chance
+from utils import address, chance, drown_snd
 
 from .block import Block
 from .location import LOCATION_CONF
@@ -467,6 +467,23 @@ class World:
                 appendTask=True,
             )
         return task.again
+
+    def drown_ambient_snds(self):
+        """Drown ambient sounds."""
+        taskMgr.doMethodLater(  # noqa: F821
+            0.5,
+            drown_snd,
+            "drown_snd",
+            extraArgs=[self._noon_ambient_snd],
+            appendTask=True,
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            0.5,
+            drown_snd,
+            "drown_snd",
+            extraArgs=[self._night_ambient_snd],
+            appendTask=True,  # noqa: F821
+        )
 
     def _change_amb_snd(self, from_snd, to_snd, task):
         """Make smooth change between two ambient sounds.
@@ -997,6 +1014,9 @@ class World:
 
         if self._loaded_blocks:
             current_block = self._loaded_blocks[-1]
+
+            if current_block.id in (790, 791, 792, 793):
+                base.scenario.finish_game()  # noqa: F821
 
         if self._et_blocks:
             self._exiting_et = False

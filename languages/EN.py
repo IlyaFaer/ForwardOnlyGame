@@ -2976,6 +2976,7 @@ You're getting a Captain's diary page. Better read it while
 on move not to lose distance from the Stench frontier.
 Press J to open/close Captain's journal.""",
                 "effects": (("do_stench_moves_effect", [20]),),
+                "goodness": 5,
             },
             "Try to deal with the axle box on move": {
                 "desc": """You're giving Kenneth command to choose one of your crew mates
@@ -3003,6 +3004,7 @@ You're getting a Captain's diary page. Better read it while
 on move not to lose distance from the Stench frontier.
 Press J to open/close Captain's journal.""",
                 "effects": (("do_characters_effect", [{"health": -20}, True]),),
+                "goodness": 1,
             },
             "Ignore the problem": {
                 "desc": """It's worth not to stop for such long period. Asking Kenneth
@@ -3026,6 +3028,7 @@ You're getting a Captain's diary page. Better read it while
 on move not to lose distance from the Stench frontier.
 Press J to open/close Captain's journal.""",
                 "effects": (("do_locomotive_damage", [50]),),
+                "goodness": 3,
             },
         },
     },
@@ -3080,6 +3083,7 @@ distance from the Stench frontier.""",
                     ("do_build_camp_effect", []),
                     ("do_stench_moves_effect", [20]),
                 ),
+                "goodness": 5,
             },
             "Agree in words, but steal from them": {
                 "desc": """Calling the crew to speak aside, you're trying to convince
@@ -3116,6 +3120,7 @@ distance from the Stench frontier.""",
                     ("do_plus_resource", ["medicine_boxes", 1]),
                     ("do_plus_resource", ["stimulators", 1]),
                 ),
+                "goodness": 1,
             },
             "Don't help them and continue the road": {
                 "desc": """You go back to the deckhouse and negotiate with the crew. It
@@ -3145,6 +3150,7 @@ A note added into Captain's journal. You can read it
 on move not to stay long at the same place, losing
 distance from the Stench frontier.""",
                 "effects": (("do_no_effect", []),),
+                "goodness": 3,
             },
         },
     },
@@ -3193,6 +3199,7 @@ You're getting $100
 You've got one more diary page in Captain's
 journal. Better read it on move.""",
                 "effects": (("do_get_money", [100]),),
+                "goodness": 3,
             },
             "Kill the bastards and free the family": {
                 "desc": """Lighting fast overthinking the situation, you upper your gun
@@ -3215,6 +3222,7 @@ leaving the hut.
 You've got one more diary page in Captain's
 journal. Better read it on move.""",
                 "effects": (("do_no_effect", []),),
+                "goodness": 1,
             },
             "Use your superiority and intimidate them": {
                 "desc": """You see clearly that all the points are on your side. These
@@ -3245,6 +3253,7 @@ All people in the crew getting +20 Health
 You've got one more diary page in Captain's
 journal. Better read it on move.""",
                 "effects": (("do_characters_effect", [{"health": 20}, False]),),
+                "goodness": 5,
             },
         },
     },
@@ -3300,6 +3309,7 @@ some damage.
 The Adjutant loses 70 Durability
 You've got one more note in the Captain's journal""",
                 "effects": (("do_locomotive_damage", [70]),),
+                "goodness": 5,
             },
             "The man with the sick son should rest": {
                 "desc": """Overthinking the conflict, you decide that the man with
@@ -3326,6 +3336,7 @@ rest after long road. This will bring more people into the
 skinhead bands.
 You've got one more note in the Captain's journal.""",
                 "effects": (("do_enemy_inc_effect", []),),
+                "goodness": 3,
             },
             "Force them both out and take their place": {
                 "desc": """The last room in the motel... Maybe it's better to keep
@@ -3355,6 +3366,7 @@ the best stop!
 All people in the crew getting -20 health
 You've got one more note in the Captain's journal""",
                 "effects": (("do_characters_effect", [{"health": -20}]),),
+                "goodness": 1,
             },
         },
     },
@@ -3411,6 +3423,7 @@ The Stench frontier came 20 miles closer to you.
 In the black jeep your people found a piece of Helga's
 diary. It's added to your journal, worth reading.""",
                 "effects": (("do_stench_moves_effect", [20]),),
+                "goodness": 5,
             },
             "Give them tools from the Adjutant": {
                 "desc": """Seeing you doubt, the man proposes: "Maybe you can
@@ -3442,6 +3455,7 @@ locomotive. The Adjutant getting -70 Durability.
 In the black jeep your people found a piece of Helga's
 diary. It's added to your journal, worth reading.""",
                 "effects": (("do_locomotive_damage", [70]), ("do_get_money", [80])),
+                "goodness": 3,
             },
             "Don't help them": {
                 "desc": """Overthinking the situation, you decide it's too risky to
@@ -3471,6 +3485,7 @@ continue the road. Survival - so, let's not waste time!
 In the black jeep your people found a piece of Helga's
 diary. It's added to your journal, worth reading.""",
                 "effects": (("do_no_effect", []),),
+                "goodness": 1,
             },
         },
     },
@@ -3531,6 +3546,7 @@ The Adjutant getting -80 Durability.
 
 You're getting a new diary page. Check the Journal.""",
                 "effects": (("do_locomotive_damage", [80]),),
+                "goodness": 1,
             },
             "Adjutant maintainers will have priority": {
                 "desc": """You're keeping silence for several minutes, weighing
@@ -3560,6 +3576,7 @@ All the fighters getting -40 energy.
 
 You're getting one more diary page. Check the Journal.""",
                 "effects": (("do_characters_effect", [{"energy": -40}]),),
+                "goodness": 3,
             },
             "Limit food for all": {
                 "desc": """Taking a couple of minutes to think about the situation,
@@ -3589,6 +3606,7 @@ You're getting one more diary page. Check the Journal.""",
                     ("do_characters_effect", [{"energy": -10}]),
                     ("do_locomotive_damage", [20]),
                 ),
+                "goodness": 5,
             },
         },
     },
@@ -3650,6 +3668,7 @@ much more active.
 
 You're getting a new diary page. Check the Journal.""",
                 "effects": (("do_enemy_inc_effect", []),),
+                "goodness": 5,
             },
             "Instigate a refugees assault": {
                 "desc": """You are silently approaching the refugees, and,
@@ -3682,6 +3701,7 @@ You're getting one more diary page. Check the Journal.""",
                     ("do_locomotive_damage", [90]),
                     ("do_enemy_inc_effect", []),
                 ),
+                "goodness": 1,
             },
             "Don't do anything": {
                 "desc": """Slowly and silently getting closer to the blockpost, you
@@ -3703,6 +3723,7 @@ mates. It's better just to leave.
 
 You're getting one more diary page. Check the Journal.""",
                 "effects": (("do_no_effect", []),),
+                "goodness": 3,
             },
         },
     },
@@ -3758,6 +3779,7 @@ transmission on which Helga Wagner is instructed
 about a place safe from the Stench. Check
 the Journal for the transmission log.""",
                 "effects": (("do_get_money", [-60]),),
+                "goodness": 3,
             },
             "Speak with the crew": {
                 "desc": """After some overthinking you're coming to the
@@ -3788,6 +3810,7 @@ transmission on which Helga Wagner is instructed
 about a place safe from the Stench. Check
 the Journal for the transmission log.""",
                 "effects": (("do_spend_cohesion", [5]),),
+                "goodness": 1,
             },
             "Speak with everyone separately": {
                 "desc": """The idea of making noise of this situation looks pretty
@@ -3816,6 +3839,7 @@ transmission on which Helga Wagner is instructed
 about a place safe from the Stench. Check
 the Journal for the transmission log.""",
                 "effects": (("do_spend_cohesion", [-5]),),
+                "goodness": 5,
             },
         },
     },
@@ -3871,6 +3895,7 @@ While you've been saving the child, one of your
 sentries recorded a new encrypted message from
 Unterriff. Check the Journal to read it.""",
                 "effects": (("do_transfusion_effect", []),),
+                "goodness": 5,
             },
             "Save the kid with medicines": {
                 "desc": """Lighting fast overthinking the situation, you decide
@@ -3900,6 +3925,7 @@ While you've been saving the child, one of your
 sentries recorded a new encrypted message from
 Unterriff. Check the Journal to read it.""",
                 "effects": (("do_medicine_save", []), ("do_medicine_save", []),),
+                "goodness": 3,
             },
             "Don't save the kid": {
                 "desc": """Fastly overthinking the situation, you're coming to the conclusion
@@ -3932,6 +3958,7 @@ Crew cohesion is decreased by 30 points.
 One of your sentries recorded a new encrypted
 message from Unterriff. Check the Journal to read it.""",
                 "effects": (("do_spend_cohesion", [30]),),
+                "goodness": 1,
             },
         },
     },
@@ -3992,6 +4019,7 @@ surely saying: "Seems like they forgot to send us
 an invitation card. Well, we'll get it by
 ourselves. Let's go see this Unterriff!" """,
                 "effects": (("do_no_effect", []),),
+                "goodness": 0,
             },
         },
     },
@@ -4632,4 +4660,86 @@ smile. The crew agree!
 
 Then let's leave this cold inimical country and
 search for Unterriff! Turn up the heat!
+"""
+
+CREDITS = """
+Great job, Captain! You've found your way through
+this rough and inimical country of Silewer. It's
+not over yet, and there will be more to sacrifice,
+but until now you survived the adversity. Let's
+summarize the decisions you've made.
+\n\n
+Chapter 1
+"Something's acting up"
+- {decision_0}
+
+Chapter 2
+"Orphans"
+- {decision_1}
+
+Chapter 3
+"Bad cops"
+- {decision_2}
+
+Chapter 4
+"The last place"
+- {decision_3}
+
+Chapter 5
+"Refugees not welcome"
+- {decision_4}
+
+Chapter 6
+"Low on food"
+- {decision_5}
+
+Chapter 7
+"Blockpost"
+- {decision_6}
+
+Chapter 8
+"Supplies stealer"
+- {decision_7}
+
+Chapter 9
+"Little one"
+- {decision_8}
+\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+These decisions characterize you {leader_desc}
+\n\n\n\n\n\n\n\n\n\n\n\n\n
+Forward Only
+Episode 1
+Seepage
+\n\n
+Developed by
+Ilya Faer
+\n\n\n\n\n\n\n\n
+To be continued...
+"""
+
+ROUGH_LEADER = """
+as a cold blooded and harsh leader. You see
+your purpose and you achieve it no matter
+the cost. The real life is cruel and unjust,
+you accept it and bring sacrifices when
+necessary. To make the machine move, you
+have to burn fuel after all.
+"""
+
+OPPORTUNIST_LEADER = """
+as an opportunist. It's hard to say
+whether you're good or cruel, you're
+mostly a selective one. You're making
+decisions that better fit the situation
+itself, than morals. And it brings good
+as well as pain to those around you.
+"""
+
+EMPATHIC_LEADER = """
+as an empathetic leader. You're doing
+your best for your people, but you also
+make sure not to hurt others without
+a good strong reason. Even the End Of
+Days doesn't destroy your compassion
+and human decency. Hold this!
 """

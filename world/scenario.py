@@ -132,6 +132,48 @@ class Scenario:
             "places_of_interest", str(self.current_chapter + 1) + "/10"
         )
 
+        base.decisions["decision_" + str(self.current_chapter)] = {  # noqa: F821
+            "decision": var,
+            "goodness": consequences["goodness"],
+        }
+
+    def finish_game(self):
+        """Completely finish the game."""
+        self.hide_chapter()
+        taskMgr.doMethodLater(  # noqa: F821
+            1, base.effects_mgr.fade_out_screen, "fade_out"  # noqa: F821
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            4, base.main_menu.show_credits, "show_credits",  # noqa: F821
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            4.5, base.effects_mgr.fade_in_screen, "fade_in"  # noqa: F821
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            72, base.restart_game, "restart_game",  # noqa: F821
+        )
+        base.train.ctrl.unset_controls()  # noqa: F821
+        base.effects_mgr.stench_effect.stop()  # noqa: F821
+
+        for task in (
+            "update_physics",
+            "sun_look_at_train",
+            "collide_mouse",
+            "move_camera_with_mouse",
+            "update_speed_indicator",
+            "disease",
+            "show_teaching_note",
+            "calc_cohesion",
+            "track_ambient_sounds",
+            "stench_step",
+            "check_train_contacts",
+            "change_sun_color",
+        ):
+            base.taskMgr.remove(task)  # noqa: F821
+
+        base.sound_mgr.disable()  # noqa: F821
+        base.world.drown_ambient_snds()  # noqa: F821
+
     def do_build_camp_effect(self):
         """Do effects for building a camp for orphans choice."""
         base.helped_children = True  # noqa: F821
@@ -289,5 +331,7 @@ class Scenario:
                 self._buts[2]["extraArgs"] = [var]
                 self._buts[2]["command"] = self._choose_variant
                 self._buts[2].show()
+
+            self._done_but["command"] = self.finish_game
 
         self._list.show()
