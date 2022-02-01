@@ -836,6 +836,9 @@ class Character(Shooter, Unit):
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
         base.sound_mgr.detach_sound(self._cough_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self._die_snd)  # noqa: F821
+        for snd in self._yeah_snds:
+            base.sound_mgr.detach_sound(snd)  # noqa: F821
 
         self._team.chars.pop(self.id)
         base.res_gui.update_chars()  # noqa: F821

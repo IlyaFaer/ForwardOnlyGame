@@ -48,6 +48,17 @@ class EnemyMotorcyclist(EnemyUnit):
         EnemyUnit.__init__(
             self, id_, class_, class_data, model, y_positions, enemy_handler
         )
+        if chance(50):
+            taskMgr.doMethodLater(  # noqa: F821
+                random.randint(26, 28), self._play_idle_anim, self.id + "_idle"
+            )
+            self._cry_snd = base.sound_mgr.loadSfx(  # noqa: F821
+                "sounds/combat/enemy_cry{num}.ogg".format(num=random.randint(1, 3))
+            )
+            self._cry_snd.setVolume(0.4)
+            base.sound_mgr.attachSoundToObject(self._cry_snd, self.model)  # noqa: F821
+        else:
+            self._cry_snd = None
 
         self._col_node = self._init_col_node(
             SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
@@ -98,6 +109,9 @@ class EnemyMotorcyclist(EnemyUnit):
     def _play_idle_anim(self, task):
         """Play enemy unit idle animation."""
         self.model.play(random.choice(("idle1", "idle2")))
+        if self._cry_snd is not None:
+            self._cry_snd.play()
+
         return task.done
 
 

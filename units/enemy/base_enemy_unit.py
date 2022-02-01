@@ -48,9 +48,6 @@ class EnemyUnit(Unit):
         # organize movement and aiming tasks
         time_to_overtake = random.randint(33, 50)
 
-        taskMgr.doMethodLater(  # noqa: F821
-            random.randint(26, 28), self._play_idle_anim, self.id + "_idle"
-        )
         self._move(time_to_overtake, (self._y_pos, random.uniform(*self._x_range), 0))
         taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake + 2, self._float_move, self.id + "_float_move"
@@ -162,6 +159,8 @@ class EnemyUnit(Unit):
     def clear(self, task=None):
         """Clear all the graphical, physical and sound data of this unit."""
         base.sound_mgr.detach_sound(self.transport_snd)  # noqa: F821
+        if getattr(self, "_cry_snd", None):
+            base.sound_mgr.detach_sound(self._cry_snd)  # noqa: F821
 
         self._move_int.finish()
         self.model.cleanup()
