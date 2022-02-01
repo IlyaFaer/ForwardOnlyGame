@@ -48,6 +48,9 @@ class EnemyUnit(Unit):
         # organize movement and aiming tasks
         time_to_overtake = random.randint(33, 50)
 
+        taskMgr.doMethodLater(  # noqa: F821
+            random.randint(26, 28), self._play_idle_anim, self.id + "_idle"
+        )
         self._move(time_to_overtake, (self._y_pos, random.uniform(*self._x_range), 0))
         taskMgr.doMethodLater(  # noqa: F821
             time_to_overtake + 2, self._float_move, self.id + "_float_move"

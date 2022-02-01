@@ -266,7 +266,7 @@ class RailsScheme:
             else:
                 self._arrow["frameTexture"] = "gui/tex/train_dir_op.png"
 
-        task.delayTime = 6
+        task.delayTime = 5
         return task.again
 
     def show(self):

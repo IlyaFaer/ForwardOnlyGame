@@ -95,6 +95,11 @@ class EnemyMotorcyclist(EnemyUnit):
             )
         )
 
+    def _play_idle_anim(self, task):
+        """Play enemy unit idle animation."""
+        self.model.play(random.choice(("idle1", "idle2")))
+        return task.done
+
 
 class MotoShooter(EnemyMotorcyclist, Shooter):
     """A shooter-motorcyclist unit.
@@ -742,7 +747,7 @@ class Kamikaze(EnemyMotorcyclist):
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
         EnemyMotorcyclist.__init__(
-            self, id_, "Moto Shooter", class_data, model, y_positions, enemy_handler
+            self, id_, "Kamikaze", class_data, model, y_positions, enemy_handler
         )
 
         self._train_captured = False
