@@ -36,7 +36,7 @@ CLASSES = {
         {
             "class": BrakeThrower,
             "model": "skinhead_shooter1",
-            "score": 4,
+            "score": 3,
             "threshold": 6,
             "part": "front",
             "health": 55,
@@ -63,7 +63,7 @@ CLASSES = {
         {
             "class": Kamikaze,
             "model": "skinhead_kamikaze",
-            "score": 7,
+            "score": 6,
             "threshold": 19,
             "part": "side",
             "health": 50,

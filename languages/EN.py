@@ -287,8 +287,8 @@ life has brought them.""",
     # accuracy
     """Shooting accuracy is affected
 by lighting, distance,
-character class and his
-energy level""",
+character class and
+their energy level""",
     """Send your character into a Train
 rest zone. Rest helps to regain
 energy and heal wounds.""",
@@ -822,7 +822,7 @@ recon of the place. Your crewmates are moving to the jeep column,
 while you track them from the Train; seeing how {name2} opens a
 car and starts to rummage in the glove compartment. Suddenly,
 you hear cries, but not of your messengers. Still, they are
-reacting fast, and turning around back to the Train. Looks like
+reacting fast, and turning back to the Train. Looks like
 someone detected them! Confirming this, several naked people
 appearing near the jeeps. But to the moment they grabbed their
 guns and started to shoot, {name1}, {name2} and {name3} are
@@ -965,7 +965,7 @@ It's better to move along before they changed their mind.""",
 direction to the old vehicle. As the meadow looks too open, they are
 running fast to cross it as soon as possible. Disappearing within the
 car, your people start to rummage through it, swinging the old metal
-carcass. While it all happening, you're seeing a big jeep on a horizon.
+carcass. While it all happening, you see a big jeep on a horizon.
 Whistling loudly to your people, you're preparing for a fight. It takes
 two more minutes for {name1} and {name2} to jump outside the bus. The
 gang in the jeep, approaching fast, start to shoot, and you're opening
@@ -1263,16 +1263,16 @@ but {name1} and {name2} find a bunch of personal first aid
 kits. Giving high five to each other, they take the catch
 and, satisfied, returning back to the crew.
 Your crewmates getting +10 health""",
-            """After little overthinking you're decided to send
-{name1} and {name2} to take a look at the place. Fastly moving to
-the spot, they hide behing the strained cloth, and after few seconds
-show up again with a big metal ammo box. Seeing this, you're jumping
-off the Train and moving towards them to cover, as their hands are
-busy. When you're getting closer, {name1} explains: "No one at home!
-We decided to take that stuff, as there is a couple of gnawed bodies
-in the camp. Doesn't look like a good campers." Uppering the heavy
-ammo box on to the Train together, you're giving an order to start the
-engine. With this catch you'll save some money on the next stop.
+            """After little overthinking you decide to send {name1}
+and {name2} to take a look at the place. Fastly moving to the
+spot, they hide behind the strained cloth, and few seconds later
+show up again with a big ammo box. Seeing this, you jump off
+the Train and move towards them to cover, as their hands are
+busy. When you got closer, {name1} explains: "No one at home!
+We decided to take it, as there is a couple of gnawed bodies
+there. Doesn't look like a good campers." Uppering the heavy
+box on to the Train, you're giving an order to start engine.
+With this catch you'll save some money on the next stop.
 You're getting 170$""",
         ),
     },
@@ -1322,10 +1322,10 @@ road. Having examined three buildings, {name1} walks to the street
 and feels a cold wind blowing. Not wanting to stay longer in such a
 weather, {heshe1} takes a direction back to the locomotive: there is
 nothing valuable in this place anyway.""",
-            """By your command, {name1} prepares for a walk and jumps to
-the ground. Getting closer to the camp, {heshe1} sees several skinhead
-sentries. That, however, doesn't scare your messenger and {heshe1} sneaks
-into the building with a red cross. It appears to be not just a medical
+            """By your command, {name1} jumps down to the ground. Getting
+closer to the camp, {heshe1} sees several skinhead sentries. That,
+however, doesn't scare your messenger and {heshe1} sneaks into the
+building with a red cross. It appears to be not just a medical
 structure, but also a weapon storage. Throwing a gaze at the
 containments, {name1} notices a big first aid kit and moves to it.
 Several syringes, paper boxes of tablets, white bandages - {name1}
@@ -1467,14 +1467,16 @@ when your messengers get on the locomotive, and command to start
 the engine. Maybe it's not as bad that you didn't meet the camp
 owners. They seem to be serious people not to be crossed.""",
             """You decide that {name1}, {name2} and {name3} will be a good
-recon party. Without delays they take direction to the camp. Nothing
-promises troubles, you don't see any movement in the camp and its
-tower, so your people entering the concrete circle calmly. About
-fifteen minutes passed, and you see them again, carrying something in
-their hands. "There was a drug cache there. Really a lot of chemicals
-are carefully buried within these walls, but {name1} have a sharp eye.
-So, we've taken some of them, those medically useful chemicals of
-course." - {name3} explains. Well, better us than addicts.
+recon party. Without delays they take direction to the camp.
+Nothing promises troubles, you don't see any movement in the
+camp and its tower, so your people entering the concrete
+circle calmly. About fifteen minutes passed, and you see
+them again, carrying something in their hands. "There was a
+drug cache there. Really a lot of chemicals are carefully
+buried within these walls, but {name1} have a sharp eye.
+So, we've taken some of them, those medically useful
+chemicals of course." - {name3} explains. Well, better
+us than addicts.
 You're getting 1 medicine""",
             """You choose {name1}, {name2} and {name3} to be a recon party this
 time. Your people organizedly move to the camp, and, getting to the
@@ -1932,8 +1934,8 @@ came back!" - {name1} says, and they both fastly turning back.
 {name1} and {name2} getting -15 energy""",
             """{name1} and {name2}, by your order, taking their gear
 and moving to the silo. Nothing promises any troubles, but when
-your people are getting closer to the buildings, four men with
-guns showing up. They all look like hereditary rednecks, but
+your people got closer to the buildings, four men with guns
+showing up. They all look like hereditary rednecks, but
 their M16 and Beretta's shine like it's a special forces
 property. "What do you want? You doesn't look like skinheads."
 - an old man steps forward. {name1} and {name2} exchange
@@ -2078,8 +2080,8 @@ useful in this place, it's already taken. Making a couple of circles
 around and carefully looking at what's left, just for sure, {name1}
 takes direction back to the locomotive. Nothing.""",
             """After a short overthinking you decide to send {name1} to
-take a closer look at the refugees camp remnants. Carefully watching
-around, {heshe1} walks to the place. It appears there was a skirmish in
+take a closer look at the camp remnants. Carefully watching around,
+{heshe1} walks to the place. It appears there was a skirmish in
 here: {heshe1} sees bullet liners and even a round of a scorched grass.
 A grenade explosion, ha? There are also several bodies, skinheads and
 others. The camp was left in a hurry, so {name1} starts to rummage
@@ -3061,7 +3063,7 @@ up big tents, igniting bonfires and boiling pottage in big
 cauldrons, you forget these heavy thoughts. This small break
 will be useful for the crew as well...
 
-It takes you about two hours to finish preparing the camp.
+It takes about two hours to finish preparing the camp.
 Getting a lot of thanks from the children and their teachers,
 you gather again on the Adjutant. Everyone seems to be
 enlivened, still, the road calls. Giving an order to start
@@ -3161,12 +3163,14 @@ really old, the walls are crumbled, the junk dark wooden
 roof holds on a promise, but through small windows you can
 discern several people moving actively inside. You also
 hear some noise, even screams sometimes. It's worth checking
-the place... You take a couple of your crewmates and get
-closer to the building. It appears a police jeep is standing
-from the other side of the hut. Entering the house, you see a
-couple of men in uniform, threatening an old pair and a young
-girl, most likely their daughter. Interrupted and surprised, the
-police officers look at you, trying to understand who are you.
+the place...
+
+You take a couple of your crewmates and get closer to the
+building. It appears a police jeep is standing from the other
+side of the hut. Entering the house, you see a couple of men
+in uniform, threatening an old pair and a young girl, most
+likely their daughter. Interrupted and surprised, the police
+officers look at you, trying to understand who are you.
 Seeing your guns, they become very friendly: "Hey, folks!
 Nothing interesting here, we're just helping this family with
 something." Throwing a gaze at the scared people, you realise
@@ -3292,10 +3296,10 @@ motel, you say her goodbye and join the crew. According
 their words, the place is filled to the very top, some
 unfamiliar people even rent rooms together. Plus to what
 you already understood by yourself, your crew mates
-give you a log paper - one of them heard how the motel
-dwellers were conversing about the same scientist those
-orphans were interviewing. She was here not long ago!
-That's something should be read.
+give you a log paper - one of them heard motel dwellers
+conversing about the same scientist those orphans were
+interviewing. She was here not long ago! That's
+something should be read.
 
 You're going to give a command to start an engine, but
 suddenly you see the man, who was trying to get the last
@@ -3432,9 +3436,9 @@ needed now, but we'll pay you!" Don't do a stop,
 help them and get some money - sounds good. You're
 commanding the crew to give the people stuff, which'll
 help to repair the shot bus, while the man gathers
-some money from his passengers. Approaching you back,
-he gives you $80 totally. "Not much actually, sorry."
-- he pronounces quietly. - "Those people are still
+money from his passengers. Approaching you back, he
+gives you $80 totally. "Not much actually, sorry." -
+he pronounces quietly. - "Those people are still
 shocked by the skirmish, that's not what we expected.
 Not in the second day of the road at least!" Nodding
 your head, you think that it's weakly said. Usually
@@ -3503,7 +3507,7 @@ Precisely, we don't have food." Stopping to run the rag, you
 straighten your back: "How so?!" "Well, everyone is waiting
 you." - he answers and disappears in the doorway. Thinking a
 couple of seconds what it should mean, you decide to hurry
-up to the crew - if EVERYONE is waiting, it's serious.
+up - if EVERYONE is waiting, it's serious.
 
 Entering the back room, you see all of your people standing
 in a circle. Everyone seems to be concerned, but you don't
@@ -3623,7 +3627,7 @@ discern shouts - refugees are arguing with the police
 hard. You order others to stay in distance, and
 give them your gun not to provoke anyone. Getting
 closer to the officers, you see that they completely
-closed the way, they're not even checking, just hold
+closed the way, they're not even checking, just holding
 this huge column of refugees. You can't understand
 if they have a government order, or it's something
 they've decided to do on their own.

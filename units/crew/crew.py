@@ -377,7 +377,7 @@ class Crew:
                     )
 
         self._calc_total_cohesion()
-        task.delayTime = 170
+        task.delayTime = 160
         return task.again
 
     def init_relations(self, new_char):

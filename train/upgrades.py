@@ -373,7 +373,7 @@ class GrenadeLauncher:
             1.45, self._stop_smoke, "stop_launcher_smoke"
         )
         taskMgr.doMethodLater(  # noqa: F82
-            15,
+            13,
             base.accept,  # noqa: F82
             "unblock_launcher",
             extraArgs=["1", self.change_state],
@@ -522,7 +522,7 @@ class ClusterHowitzer:
         ).start()
 
         taskMgr.doMethodLater(  # noqa: F82
-            50,
+            45,
             base.accept,  # noqa: F82
             "unblock_cluster_launcher",
             extraArgs=["3", self.change_state],
@@ -852,8 +852,9 @@ class MachineGun:
         taskMgr.remove("stop_machine_gun_shooting")  # noqa: F82
         taskMgr.remove("machine_gun_shoot")  # noqa: F82
 
-        self._col_np.removeNode()
-        self._col_np = None
+        if self._col_np is not None:
+            self._col_np.removeNode()
+            self._col_np = None
 
         base.train.make_shot("Machine Gun")  # noqa: F82
         taskMgr.doMethodLater(  # noqa: F82
@@ -862,7 +863,7 @@ class MachineGun:
 
         base.ignore("2")  # noqa: F82
         taskMgr.doMethodLater(  # noqa: F82
-            25,
+            22,
             base.accept,  # noqa: F82
             "unblock_machine_gun",
             extraArgs=["2", self.change_state],
