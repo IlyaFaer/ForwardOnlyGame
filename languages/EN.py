@@ -1064,7 +1064,7 @@ You're getting 90$ and +100 Adjutant durability""",
         "desc": """From a very long distance you're catching your eyes on several grey
 rectangles. Buses? That can promise troubles as well as a good place
 for looting. While the Adjutant getting closer to the vehicle, it
-becomes clearer that it's not just a bunch of cars, it's a small
+becomes clear that it's not just a bunch of cars, it's a small
 auto camp. Five big trailers with clotheslines stretched between
 them, soccer balls and bonfires looking quiet, but definitely
 inhabited. You're not able to find any human by your eyes, and
@@ -1094,15 +1094,15 @@ dust settles to the ground, unveiling some stuff left by those people.
 "Let's take a look at it!" - {name2} pronounces and jumps off the Train.
 You're finding a cure that can heal 15 health of one character""",
             """{name1}, {name2} and {name3} jumping off the Train to do a recon
-of the trailer camp. In the same moment grey cars are starting their
-engines and making a spurt to leave the place. Your people are holding
+of the trailer camp. In the same moment grey cars start their engines
+and making a spurt to leave the place. Your people are holding
 several seconds pause to see what will happen next... All the trailers
 except one are moving away fast. {name3} throws a gaze to {name1} and
 {name2} and points to the car with {hisher3} head. Closing to the vehicle,
-they open it, and {name1} with {name3} are entering inside. It takes some
-time for them to search through the car. It doesn't give a lot of
-lucky finds, mostly there is just an old useless stuff, like someone very
-old and most likely little bit mad was living in the truck, but at least
+they open it, and {name1} with {name3} are entering inside. It takes
+time for them to search through the car. Not much of lucky finds,
+mostly there is just an old useless stuff, like someone very old
+and most likely little bit mad was living in the truck, but at least
 {name3} finds 40$ in there. With this find your messengers return back.
 You're getting 40$""",
             """By your command, {name1}, {name2} and {name3} taking their gear
@@ -1873,24 +1873,26 @@ back to the Train.""",
             """By your order, {name1}, {name2} and {name3} run to the grey
 smoke column. Getting closer, they see a lot of red spots between
 the trees - it's a forest conflagration, a big one! Throwing a
-gaze to others, {name2} suddenly proposes: "Let's go hunting!
-Animals will run chaotically away from flames and smoke, and food
-is something we always need." Thinking a couple of seconds,
-{name1} and {name3} agree on that, and they three are going to
-the forest... After twenty minutes of hunting they getting a deer.
+gaze to others, {name2} suddenly proposes: "Let's hunt! Animals
+will run chaotically away from flames and smoke, and food is
+something we always need." Thinking a couple of seconds, {name1}
+and {name3} agree on that, and they three are going to the
+forest... After twenty minutes of hunting they getting a deer.
 Not very big, but it's even better - not a problem to get it to
 the Train. "With this meat we can save some proviant money!" -
 {name2} declares. - "Good job!"
 You're getting +50$""",
             """Leaded by your order, {name1}, {name2} and {name3} moving
-in the smoke column direction. Quickly getting to the place, they see a
-big military truck, exploded with rocket launcher a couple of hours ago.
-Blood, glass, metal and body parts of several soldiers are scattered all
-around. Getting closer to the truck cargo hold, your people see big boxes
-traces on the ground - somebody already looted the place. Still, {name3}
-jumps onto the truck to take a closer look at the inner part of the
-cargo hold. To everyone's joy, {heshe3} moves outside the car with a
-big plastic box of tools. Seems like assaulters have only taken weapons.
+in the smoke column direction. Quickly getting to the place, they
+see a big military truck, exploded with rocket launcher a couple
+of hours ago. Blood, glass, metal and body parts of several
+soldiers are scattered all around. Getting closer to the truck
+cargo hold, your people see big boxes traces on the ground -
+somebody already looted the place. Still, {name3} jumps onto
+the truck to take a closer look at the inner part of the cargo
+hold. To everyone's joy, {heshe3} moves outside the car with a
+big plastic box of tools. Seems like assaulters have only
+taken weapons.
 Adjutant durability +100""",
         ),
     },
@@ -1957,28 +1959,29 @@ rednecks turn back to their place. In good mood your people return.
 You're getting +50$""",
             """You're sending {name1} and {name2} to take a closer look
 at the place. Your messengers closing to the silo; silence meets them,
-so they entering inside the buildings. The lack of any furniture
-or sign of people - seems like the place was forsaken some time ago,
-and hosts took everything. Walking outside the last of three
-buildings, {name1} points to the metal cylinder of silo with {hisher1}
-head. {name2} agrees on that, and they both getting closer to it.
-Opening the steel door, they see that there is no even a gram of
-grain. But pointing a flashlight inside the structure, they catch
-their eyes on two metal boxes. {name2} jumps inside and opens the
-first one: medicines! "Whoh!" - {heshe2} shouts and opens the
-second one: a smoke filter! Now, that's a find!
+so they entering inside the buildings. The lack of furniture or
+sign of people - seems like the place is forsaken, and hosts took
+everything. Walking outside the last of three buildings, {name1}
+points to the metal cylinder of silo with {hisher1} head.
+{name2} agrees, and they both get closer to it. Opening the
+steel door, they see that there is no even a gram of grain.
+But pointing a flashlight inside the structure, they catch
+their eyes on two metal boxes. {name2} jumps inside and opens
+the first one: medicines! "Whoh!" - {heshe2} shouts and opens
+the second one: a smoke filter! Now, that's a find!
 You're getting 1 smoke filter and 1 medicine""",
         ),
     },
     {  # 17
         "name": "Wooden Barn",
-        "desc": """Gazing at the horizon line, you've been overlooking corn fields
-for the last two hours. But suddenly you see a big dark wooden
-barn, standing on the edge of the green field, a little covered
-with snow. Large entrance gates are opened, but lack of chains
-and locks makes you think it was never actually closed. So, it
-can be a good place for looting as well as just an empty
-building. Who should be sent to clarify the situation?""",
+        "desc": """Gazing at the horizon line, you've been overlooking corn
+fields for the last two hours. But suddenly you see a big
+dark wooden barn, standing on the edge of the green field,
+a little covered with snow. Large entrance gates are opened,
+but lack of chains and locks makes you think it was never
+actually closed. So, it can be a good place for looting as
+well as just an empty building. Who should be sent to
+clarify the situation?""",
         "results": (
             """{name1}, chosen as your messenger, takes {hisher1} gear
 and runs to the barn fast. You're staying sharp, looking at the
@@ -2470,15 +2473,16 @@ Single character can get Bloodthirsty""",
     },
     {  # 24
         "name": "Cargo Column",
-        "desc": """For the last ten minutes you've been observing a road, which turned
-to the railway and has been following it in a straight parallel. A lot of
-pits and cracks showing that the road isn't very well maintained, most
-likely it's really old. Still, in the next minute you see a big column,
-staying on the grey concrete: bus, several big trucks, filled with
-different stuff, such as furniture, metal and garden inventar, and a
-couple of smaller cars. Several heavy machine guns and at least ten
-weaponized men are complementing the picture. The beholders doesn't
-look like thugs, so it's probably makes sense to speak with them.
+        "desc": """For the last ten minutes you've been observing a road, which
+turned to the railway and has been following it in a straight
+parallel. A lot of pits and cracks showing that the road isn't
+very well maintained, most likely it's really old. Still, in the
+next minute you see a big column, staying on the grey concrete:
+bus, several big trucks, filled with different stuff, such as
+furniture, metal and garden inventar, and a couple of smaller
+cars. Several heavy machine guns and at least ten weaponized
+men are complementing the picture. The beholders doesn't look
+like thugs, so it's probably makes sense to speak with them.
 Maybe they have something to trade or exchange.""",
         "results": (
             """You decide that {name1} and {name2} will be a party - those
@@ -2548,7 +2552,7 @@ One person can be recruited""",
 moving in the air, bringing thoughtfulness. But in some moment a
 strange low distant sound attracts your attention. First you think
 of an old airplane engine, still, after several seconds you understand
-that it's an animal. In the same moment you see something dark on
+it's an animal. In the same moment you see something dark on
 the rails ahead, something blocking your path. Fastly taking the
 binoculars to your eyes, you point it to the dark thing... And it
 appears to be a deer! Huge, old and weak, most likely very ill,
@@ -2825,12 +2829,12 @@ lying carriage. Carefully opening it, your messenger enters inside.
 Time passes, three minutes, five, ten. At some moment you're going
 to send more people to the carriage, to check if everythings is okay
 with {name1}, but finally {heshe1} exits from the carriage. Getting
-closer and climbing back on the Adjutant, {heshe1} explains: "There
-are kids there! Not very young, but still kids. Asked me for some
-ammo and gave me money. I've tried to reject, but they said they have
-a lot of money. Not sure if it is true, still, I wasn't able to convince
-them. Thus, we have some income." - {heshe1} puts a dollar paper on
-the metal table. You give a command to warm up the engine.
+closer to the Adjutant, {heshe1} explains: "There are kids there!
+Not very young, but still kids. Asked me for some ammo and gave
+me money. I've tried to reject, but they said they have a lot of
+money. Not sure if it is true, still, I wasn't able to convince
+them. Thus, we have some income." - {heshe1} puts a dollar paper
+on the metal table. You give a command to warm up the engine.
 You're getting 50$""",
             """You're sending {name1} to take a closer look at the lying carriage.
 Your crewmate gears up and runs to the place, and then disappears
@@ -2940,8 +2944,8 @@ and listen. You're concentrating on the noises... "Hear that?"
 understand what he's trying to say. Some metal screeching can
 be heard from the wall. "That's an axle box, something's
 acting up." - Kenneth explains silently. - "We need to check
-it, it'll take some time." You're trying to remember how far
-was the Stench frontier, when you last heard about it. "Our
+it, it'll take time." You're trying to remember how far was
+the Stench frontier, when you last heard about it. "Our
 options?" Looking at you, Kenneth calculates something in his
 mind: "We need five hours long stop to deal with it." It's
 much. "Other options?" The mechanic seems to be not very
@@ -3035,20 +3039,21 @@ Press J to open/close Captain's journal.""",
         },
     },
     {  # 2
-        "intro": """Taking a closer look at the bunch of people walking through the
-meadow, you understand that there are mostly children. Weird!
-Asking a couple of crewmates to follow you, you get closer
-to the crowd, seeing a woman moving towards your party. In
-a few words she tells that they are workers and children
-from an orphan shelter. Understanding that the Stench moves
-fast to the place, and the governors are too busy saving
-themselves, adults, who worked there, gathered all the
-children and decided to move to Silewer on foot. Looking at
-pale and tired kids, you silently think that it was really
-tough idea. But probably it saved their lives...
+        "intro": """Taking a closer look at the bunch of people walking through
+the meadow, you understand that there are mostly children.
+Weird! Asking a couple of crewmates to follow you, you
+get closer to the crowd, seeing a woman moving towards
+your party. In a few words she tells that they are
+workers and children from an orphan shelter.
+Understanding that the Stench moves fast to the place,
+and the governors are too busy saving themselves,
+adults, who worked there, gathered all the children
+and decided to move to Silewer on foot. Looking at
+pale and tired kids, you silently think that it was
+really tough idea. But probably it saved their lives...
 
-Complaining about walking for six hours without a stop, the
-woman asks you to help them build a field camp. You
+Complaining about walking for six hours without a stop,
+the woman asks you to help them build a field camp. You
 understand that it'll take a lot of time, as there are
 about sixty children. On the other hand, it doesn't look
 right to just leave them here, in the foreign country,
@@ -3480,7 +3485,7 @@ actually. If it'll continue to grow, more people will
 left their homes and will go to the neighbour countries
 and even further. Some will not stop in face of any
 counteraction, because it's no longer about simply
-comfort and wealth, it's became about survival...
+comfort and wealth, it became about survival...
 
 Climbing on the Adjutant, you give an order for your
 crew to search the black jeep for anything useful and

@@ -854,7 +854,7 @@ class Kamikaze(EnemyMotorcyclist):
         """
         base.world.enemy.active_units[  # noqa: F821
             event.getFromNodePath().getName()
-        ].get_damage(40)
+        ].get_damage(35)
 
     def _jump_and_explode(self, task):
         """Jump to the Adjutant and self-explode."""

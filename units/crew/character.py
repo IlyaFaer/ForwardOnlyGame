@@ -68,8 +68,8 @@ class Character(Shooter, Unit):
         self._health_bar = None
 
         self.inhale = 15
-        self.damage_range = [6, 8]
-        self.clear_damage = [6, 8]
+        self.damage_range = [5, 8]
+        self.clear_damage = [5, 8]
         self.effects = {}
         self._yeah_snds = []
 
