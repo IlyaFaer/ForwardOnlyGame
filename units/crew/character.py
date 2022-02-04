@@ -510,7 +510,7 @@ class Character(Shooter, Unit):
         effects = copy.deepcopy(effects)
         self.get_damage(-effects.pop("health", 0))
 
-        if "add_trait" in effects:
+        if "add_trait" in effects and len(self.traits + self.disabled_traits) < 3:
             ind1, ind2 = effects["add_trait"]
             trait = base.labels.TRAITS[ind1][ind2]  # noqa: F821
 

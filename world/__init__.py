@@ -1017,6 +1017,10 @@ class World:
 
             if current_block.id in (790, 791, 792, 793):
                 base.scenario.finish_game()  # noqa: F821
+                taskMgr.doMethodLater(  # noqa: F821
+                    1, base.train.ctrl.stop, "stop_train"  # noqa: F821
+                )
+                base.train.ctrl.silence_move_snd()  # noqa: F821
 
         if self._et_blocks:
             self._exiting_et = False

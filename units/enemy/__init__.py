@@ -225,7 +225,7 @@ class Enemy:
 
             if unit_class["class"] == Kamikaze:
                 kamikazes += 1
-                if kamikazes == 3:
+                if kamikazes == 2:
                     available.remove(unit_class)
 
             self._unit_id += 1

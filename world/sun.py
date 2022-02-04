@@ -67,7 +67,7 @@ class Sun:
         # day duration = 90 steps * 10 sec/step = 15 min/part
         # 15 min/part * 4 parts = 1 hour/day
         self._day_part_duration = 90
-        self._step_duration = 10
+        self._step_duration = 9
 
         self._arch_int = None
 

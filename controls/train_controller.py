@@ -430,6 +430,13 @@ class TrainController:
             self._move_snd.setVolume(1)
             self._move_snd_volume = 1
 
+    def silence_move_snd(self):
+        """Silence the movement sound."""
+        self._stop_snd.setVolume(0)
+        taskMgr.doMethodLater(  # noqa: F821
+            0.1, drown_snd, "stop_snd", extraArgs=[self._move_snd], appendTask=True
+        )
+
     def unset_controls(self):
         """Disable all the locomotive controls."""
         for key in ("w", "s", "w-up", "s-up", "f"):

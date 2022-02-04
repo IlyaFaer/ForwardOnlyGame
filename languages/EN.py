@@ -169,6 +169,10 @@ to three different traits""",
     """Characters with strong cohesion
 can randomly adopt traits
 from each other""",
+    """You can exchange the crew
+cohesion for character
+traits in the List Of
+Distinguished""",
     # enemy
     """Skinheads activity is at
 maximum during evening""",
