@@ -70,7 +70,7 @@ CLASSES = {
             "transport_model": "moto3",
         },
     ),
-    "attack_chances": {"morning": 6, "noon": 20, "evening": 35, "night": 20},
+    "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
 }
 
 # enemy objects
@@ -179,7 +179,7 @@ class Enemy:
         if chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0)):
             self._is_cooldown = True
             taskMgr.doMethodLater(  # noqa: F821
-                340, self._stop_cooldown, "stop_attack_cooldown"
+                290, self._stop_cooldown, "stop_attack_cooldown"
             )
             return True
 

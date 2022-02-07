@@ -23,7 +23,7 @@ class OutingsManager:
     """
 
     def __init__(self, prefered_type=None):
-        self._threshold = random.randint(25, 36)
+        self._threshold = random.randint(25, 33)
         self._outings = {
             "Enemy Camp": copy.deepcopy(ENEMY_CAMP),
             "Looting": copy.deepcopy(LOOTING),
@@ -80,7 +80,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(23, 33)
+            self._threshold = random.randint(21, 30)
 
             if self._prefered and chance(10):
                 return self._prefered

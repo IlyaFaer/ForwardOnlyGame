@@ -3171,8 +3171,8 @@ the railway, you see some kind of a fuss there. The hut is
 really old, the walls are crumbled, the junk dark wooden
 roof holds on a promise, but through small windows you can
 discern several people moving actively inside. You also
-hear some noise, even screams sometimes. It's worth checking
-the place...
+hear some noise, even screams sometimes. It's worth
+checking the place...
 
 You take a couple of your crewmates and get closer to the
 building. It appears a police jeep is standing from the other
@@ -3253,12 +3253,12 @@ one follows his gesture in the next second. "We'll go. Let's
 just... Just forget about what happened here." - the officer
 seems to be even ashamed, and this fact makes you think they'll
 not return here - maybe they even understood the filth of their
-doings... When the men left, and their car engine silenced
-somewhere in distance, the young girl stands up: "Thank you!
-Thank you!" - she seems to be too touched, and you all hear
-her gratitude for several minutes. In return she proposes your
-crew a medical examination. Yeah, she's a doctor! Feeling the
-very lucky coincidence here, you command your people to use
+doings... When the men left, and their car silenced somewhere
+in distance, the young girl stands up: "Thank you! Thank you!"
+- she seems to be too touched, and you all hear her gratitude
+for several minutes. In return she proposes your crew a
+medical examination. Yeah, she's a doctor! Feeling the very
+lucky coincidence here, you command your people to use
 the opportunity.
 
 All people in the crew getting +20 Health
@@ -3509,7 +3509,7 @@ in the same cold and coarse locomotive rises chances of
 sickness and pests emergence...
 
 At some moment Daren, the Adjutant machinist, approaches you.
-You see he has something to tell you, but he can't find the
+You see he has something to tell you, but he can't find
 proper words. "Come on, Daren, birth it." - you say, trying to
 make things faster. "Well... We've a problem. It's big.
 Precisely, we don't have food." Stopping to run the rag, you
@@ -3633,7 +3633,7 @@ serpent - a road blockpost.
 You order to make a stop, take several people and go
 to the place. From the very far distance you can
 discern shouts - refugees are arguing with the police
-hard. You order others to stay in distance, and
+hard. You order others to stay in distance and
 give them your gun not to provoke anyone. Getting
 closer to the officers, you see that they completely
 closed the way, they're not even checking, just holding
@@ -4377,7 +4377,7 @@ something there... Later we all saw it...""",
 the Adjutant, when and how, it appeared
 that only six of us are in the company.
 Daren said he'll try to find more people,
-but no one else responded to him.
+but no one responded to him.
 
 In such a collective, seeing that the
 situation becoming more and more hot, we
