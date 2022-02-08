@@ -692,7 +692,7 @@ class Train:
                 self._barrier_hit_snd.play()
                 base.camera_ctrl.push()  # noqa: F821
                 if "Ram" not in self._upgrades:
-                    self.get_damage(80)
+                    self.get_damage(65)
 
                 task.delayTime = 0.3
                 return task.again

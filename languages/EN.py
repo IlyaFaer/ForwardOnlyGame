@@ -346,7 +346,7 @@ DISTINGUISHED = (
         "or negative) and\nscold the character to erase the trait. "
         "It'll cost you 4 cohesion points.\n\n"
         "If the character has less than 3 traits, you can praise "
-        "him/her to\ngenerate 3 new traits and add one of them "
+        "them to\ngenerate 3 new traits and add one of them "
         "to the character's\ntraits list. It'll cost you 4 "
         "cohesion points."
     ),
@@ -1030,15 +1030,16 @@ Breaking through the fire, they see no one, no ambush or something.
 Strange. With a couple of scorches they return to the Train.
 {name1} and {name2} getting -10 health""",
             """You're choosing {name1} and {name2} as messengers for this walk.
-They grab their stuff and take the direction to the gas station. Getting
-closer to the building, they hear music. More than that, entering the
-station they see several people: cashier, security guard guy and waiter.
-Not to scare anyone they move their guns down, and doing a try
-to talk with the gas station inhabitants, but all of them are speaking
-at some weird language, which {name1} and {name2} doesn't know. As
-dwellers doesn't seem to be dangerous, just several people, who still
-lives here despite the End of Days, {name1} and {name2} deciding
-to leave them as they were and move along.""",
+They grab their stuff and take the direction to the gas station.
+Getting closer to the building, they hear music. More than that,
+entering the station they see several people: cashier, security
+guard guy and waiter. Not to scare anyone they move their guns
+down, and doing a try to talk with the gas station inhabitants,
+but all of them are speaking at some weird language, which
+{name1} and {name2} doesn't know. As dwellers doesn't seem to
+be dangerous, just several people, who still lives here
+despite the End of Days, {name1} and {name2} deciding to
+leave them as they were and move along.""",
             """{name1} and {name2} moving to the gas station by your order.
 Getting closer to the building, they hear music and see three people
 within. In the next moment from the other side of the station four
@@ -1608,7 +1609,7 @@ was nothing useful in there. At all.""",
 camp place. The meadow looks still, smells with withered grass,
 warm wind makes the way pleasant. Closing to the tent, {name1} and
 {name2} are starting to search for supplies through the things left
-in the camp. Ropes, empty cans, some climber stuff, even an album with
+in the camp. Ropes, empty cans, climber stuff, even an album with
 old photos. Finding nothing, {name1} decides to take a look at the tent
 - {heshe1} pulls the zipper and stick {hisher1} head into the stifling inners.
 The tent looks empty at the first gaze, but suddenly {name1} caughts
@@ -2331,7 +2332,7 @@ Single character can get Masochism""",
         "name": "Assassin",
         "desc": """In the moment the Train stopped, you're finding your eyes on a dark
 silhouette of an armed man. He doesn't seem to be aggressive, so
-you're giving him some time to come closer. "Hey, guys!" - he says,
+you're giving him time to come closer. "Hey, guys!" - he says,
 smiling. - "Nice to meet you, I may need some help." "We're listening" -
 you answer. "Locals paid me to convince to deal with skinheads,
 who camped in the nearby mine. There are a lot of those imbitsils,
@@ -2380,8 +2381,8 @@ is not with your people. "We've finished them all." - {name1}
 says, getting closer to the Train. - "The man gave us some
 money and vanished, like he never been there." Climbing up to
 the Train, your messengers moving each to their places. Well,
-the job is done, bad people were stopped, and some money
-earned. Sounds like a lucky outing!
+the job is done, bad people stopped, and some money earned.
+Sounds like a lucky outing!
 You're getting 100$""",
             """{name1}, {name2} and {name3} following the hitman as a
 support. A couple of hours passes before you see your people again.
@@ -2407,8 +2408,8 @@ Concrete walls, a couple of bases for towers, big metal gates...
 Workers, hearing the Train engine, directing their gazes at you,
 without any sign of aggression. Definitely, they are not
 skinheads, but their uniform and equipment seems to be in a
-very good shape - aren't they came here by government request?
-It's worth sending a messenger to have a word with them at least.
+good shape - aren't they came here by government request? It's
+worth sending a messenger to have a word with them at least.
 Maybe they have some valuable info about the situation in the
 country, or just nearby lands!?""",
         "results": (
@@ -2554,8 +2555,8 @@ One person can be recruited""",
         "name": "Ill Deer",
         "desc": """For a long time you've been observing only light snowflakes, calmly
 moving in the air, bringing thoughtfulness. But in some moment a
-strange low distant sound attracts your attention. First you think
-of an old airplane engine, still, after several seconds you understand
+strange low sound attracts your attention. First you think of
+an old airplane engine, still, after several seconds you understand
 it's an animal. In the same moment you see something dark on
 the rails ahead, something blocking your path. Fastly taking the
 binoculars to your eyes, you point it to the dark thing... And it
@@ -2997,7 +2998,7 @@ some time later see Kenneth taking one of the fighters
 with him to the lower level of the Adjutant. For several
 long hours they slip out of your radars...
 
-Exiting on the fresh air, you incline above the railings
+Exiting on the fresh cool air, you incline above the railings
 and see a blood spot on one of the wheels, blinking on
 every turnover. Without delays you go to find the
 mechanic. Kenneth, seeing you concerned, uppers his hands
@@ -3045,8 +3046,8 @@ Press J to open/close Captain's journal.""",
     {  # 2
         "intro": """Taking a closer look at the bunch of people walking through
 the meadow, you understand that there are mostly children.
-Weird! Asking a couple of crewmates to follow you, you
-get closer to the crowd, seeing a woman moving towards
+Weird! Asking a couple of crewmates to follow, you get
+closer to the crowd, seeing a woman moving towards
 your party. In a few words she tells that they are
 workers and children from an orphan shelter.
 Understanding that the Stench moves fast to the place,
@@ -3082,8 +3083,8 @@ Captain, you need to see this! Some of those children visited
 kinda scientist summit some time ago and took an interview
 there. The woman speaks about interesting things." Telling
 them that you're going to take a closer look at the article
-later, you go to the deckhouse to plan the route, considering
-the recent delay.
+later, you go to the deckhouse to plan the route,
+considering the recent delay.
 
 The Stench frontier came 20 miles closer to you
 
@@ -3166,13 +3167,13 @@ distance from the Stench frontier.""",
         },
     },
     {  # 3
-        "intro": """Looking at an aged house, standing in about 200 meters aside of
-the railway, you see some kind of a fuss there. The hut is
-really old, the walls are crumbled, the junk dark wooden
-roof holds on a promise, but through small windows you can
-discern several people moving actively inside. You also
-hear some noise, even screams sometimes. It's worth
-checking the place...
+        "intro": """Looking at an aged house, standing in about 200 meters aside
+of the railway, you see some kind of a fuss there. The hut
+is really old, the walls are crumbled, the junk dark
+wooden roof holds on a promise, but through small windows
+you can discern several people moving actively inside.
+You also hear some noise, even screams sometimes. It's
+worth checking the place...
 
 You take a couple of your crewmates and get closer to the
 building. It appears a police jeep is standing from the other
@@ -3280,8 +3281,8 @@ caught your eyes on two banches of refugees arguing hard.
 Getting closer to them, you can hear that they are brawling
 because of the last place in the building. When they see
 you, however, they become silent, gazing at your guns. In
-a couple of moments you take a place of judge here, you
-see both sides looking at you with hopes to get your help.
+a couple of moments you take a place of judge, you see
+both sides looking at you with hopes to get your help.
 Observing them, you get it that one of them is a man with
 sick boy, about eight years old, most likely his son. The
 lad doesn't look good, his face is pale, dark rounds mark
@@ -3295,12 +3296,12 @@ place left in the motel and someone will have to sleep
 in the car here.""",
         "variants": {
             "The pregnant woman should rest": {
-                "desc": """Thinking about the situation, you tend to think that
-the woman is the one to take the last place. The man
-with the sick boy throws something on the ground and,
-grabbing his son, goes away. The woman, who still seem
-to be scared, thanks you greatly - you can even see tears
-in her eyes. Seeing your people returning back from the
+                "desc": """Pondering the situation, you tend to think that the
+woman is the one to take the last place. The man with
+the sick boy throws something on the ground and, grabbing
+his son, goes away. The woman, who still seem to be
+scared, thanks you greatly - you can even see tears in
+her eyes. Seeing your people returning back from the
 motel, you say her goodbye and join the crew. According
 their words, the place is filled to the very top, some
 unfamiliar people even rent rooms together. Plus to what
