@@ -549,7 +549,7 @@ class Crew:
         char = base.common_ctrl.chosen_char  # noqa: F821
         if char:
             char.get_well_score = 20
-            char.health += 35
+            char.health += 40
             base.plus_resource("medicine_boxes", -1)  # noqa: F821
             self._medicine_snd.play()
 

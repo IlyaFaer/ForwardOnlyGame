@@ -70,7 +70,7 @@ CLASSES = {
             "transport_model": "moto3",
         },
     ),
-    "attack_chances": {"morning": 7, "noon": 20, "evening": 35, "night": 20},
+    "attack_chances": {"morning": 8, "noon": 20, "evening": 35, "night": 20},
 }
 
 # enemy objects

@@ -134,7 +134,7 @@ class MotoShooter(EnemyMotorcyclist, Shooter):
         )
         Shooter.__init__(self)
 
-        self.damage_range = (2, 4)
+        self.damage_range = (2, 3)
 
         self.model.setPlayRate(0.6, "aim_left")
         self.model.setPlayRate(0.6, "aim_right")

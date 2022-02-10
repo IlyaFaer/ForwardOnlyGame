@@ -220,7 +220,7 @@ class ForwardOnly(ShowBase):
         # spreading only when the tutorial ended
         if block_id == 19 and self.game_config.tutorial_enabled:
             self.notes.start()
-            self.doMethodLater(25, self.world.make_stench_step, "stench_step")
+            self.doMethodLater(26, self.world.make_stench_step, "stench_step")
 
     def add_head(self, enemy):
         """Make a record about the destroyed enemy.
@@ -255,7 +255,7 @@ class ForwardOnly(ShowBase):
             self.game_config.tutorial_enabled and self.current_block.id > 18
         ):
             self.notes.start()
-            self.doMethodLater(25, self.world.make_stench_step, "stench_step")
+            self.doMethodLater(26, self.world.make_stench_step, "stench_step")
 
         self.doMethodLater(60, self.world.disease_activity, "disease")
         self.accept("block_finished", self._move_along_block)

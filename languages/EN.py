@@ -822,8 +822,8 @@ Train back first. "There are at least fifteen people, lower,
 near the river." - {heshe2} explains, breathing heavily. You nod
 your head and giving the command to warm up the engine.""",
             """You're sending {name1}, {name2} and {name3} for a short
-recon of the place. Your crewmates are moving to the jeep column,
-while you track them from the Train; seeing how {name2} opens a
+recon. Your crewmates are moving to the jeep column, while
+you track them from the Train; seeing how {name2} opens a
 car and starts to rummage in the glove compartment. Suddenly,
 you hear cries, but not of your messengers. Still, they are
 reacting fast, and turning back to the Train. Looks like
@@ -1066,16 +1066,16 @@ You're getting 90$ and +100 Adjutant durability""",
     },
     {  # 4
         "name": "Trailers",
-        "desc": """From a very long distance you're catching your eyes on several grey
-rectangles. Buses? That can promise troubles as well as a good place
-for looting. While the Adjutant getting closer to the vehicle, it
-becomes clear that it's not just a bunch of cars, it's a small
-auto camp. Five big trailers with clotheslines stretched between
-them, soccer balls and bonfires looking quiet, but definitely
-inhabited. You're not able to find any human by your eyes, and
-this fact makes the situation even harder: there can be dozens
-of fighters there. It makes sense to prepare well before
-entering this trailer camp.""",
+        "desc": """From a very long distance you're catching your eyes on several
+grey rectangles. Buses? That can promise troubles as well as a
+good place for looting. While the Adjutant getting closer to the
+vehicle, it becomes clear that it's not just a bunch of cars,
+it's a small auto camp. Five big trailers with clotheslines
+stretched between them, soccer balls and bonfires looking quiet,
+but definitely inhabited. You're not able to find any human by
+your eyes, and this fact makes the situation even harder:
+there can be dozens of fighters there. It makes sense to
+prepare well before entering this trailer camp.""",
         "results": (
             """You're making a decision to send {name1}, {name2} and
 {name3} to investigate the trailer camp. They're taking their gear and
@@ -1099,7 +1099,7 @@ dust settles to the ground, unveiling some stuff left by those people.
 "Let's take a look at it!" - {name2} pronounces and jumps off the Train.
 You're finding a cure that can heal 15 health of one character""",
             """{name1}, {name2} and {name3} jumping off the Train to do a recon
-of the trailer camp. In the same moment grey cars start their engines
+of the trailer camp. In the same moment grey cars start engines
 and making a spurt to leave the place. Your people are holding
 several seconds pause to see what will happen next... All the trailers
 except one are moving away fast. {name3} throws a gaze to {name1} and
@@ -1107,14 +1107,14 @@ except one are moving away fast. {name3} throws a gaze to {name1} and
 they open it, and {name1} with {name3} are entering inside. It takes
 time for them to search through the car. Not much of lucky finds,
 mostly there is just an old useless stuff, like someone very old
-and most likely little bit mad was living in the truck, but at least
-{name3} finds 40$ in there. With this find your messengers return back.
+and a little bit mad was living in the truck, but at least {name3}
+finds 40$ in there. With this find your messengers return back.
 You're getting 40$""",
             """By your command, {name1}, {name2} and {name3} taking their gear
 and jumping to the ground. Right in this second all the trailers, except
 one, spurt away. In the remaining car your people hear some fuss.
 While they are getting closer to the vehicle, the window of it opens,
-and a gun barrel leans out, starting to shoot all around without aiming.
+and a gun barrel leans out, starting to shoot around without aiming.
 Making a circle movement around the trailer, your people open it and do
 several shots inside. The rival gun silences. {name1} and {name2} enter
 the car for several seconds and walk out together, holding a big tool
@@ -1185,9 +1185,9 @@ the construction. Looking disappointed, {name2} from that far shows
 that there was nothing useful there, nor interesting. Well, it's
 time to start the engine.""",
             """Your crew mates - {name1}, {name2} and {name3} are taking a direction
- to the construction site. Nothing promises troubles for some time,
-but when they getting down to the basement, the cry tears air.
-Fast uppering their guns, your messengers see a thin guy, holding
+ to the construction site. Nothing promises troubles, but when
+ they getting down to the basement, the cry tears air. Fast
+ uppering their guns, your messengers see a thin guy, holding
 his hands above his head. "Don't touch me!" - he shouts. As he
 doesn't have a weapon, {name1} takes {hisher1} gun aside. "He is
 skinhead." - {heshe1} pronounces surely. "Yes, yes!" - the guy answers. -
@@ -1212,7 +1212,7 @@ You're getting 130$""",
     {  # 6
         "name": "Cloth Piece",
         "desc": """The horizon line is lost behind trees for hours. The lands
-seems to be very wild, still, you've given an order to everyone
+seem to be very wild, still, you've given an order to everyone
 to keep eyes open... And at some minute you're hearing your
 crewmates calling you outside the cabin. Exiting the locomotive
 deckhouse, you're taking a binocular and gazing into the pointed
@@ -1406,7 +1406,7 @@ towards the auto repair shop. It's clear that someone is in there:
 through the window you see shadows moving. {name1} see them as
 well, so {heshe1} makes a circle around the shop and climbs to
 its roof. Ceiling windows make it possible for {himher1} to drop
-the ambushing skinheads even before they understood who's firing.
+the ambushing skinheads before they understood who's firing.
 Climbing down and entering the shop, {name1} walks out with someone
 else. When close enough to the locomotive, {heshe1} explains:
 "There was a hostage there. Thought maybe we can give a ride."
@@ -2331,9 +2331,9 @@ Single character can get Masochism""",
     {  # 22
         "name": "Assassin",
         "desc": """In the moment the Train stopped, you're finding your eyes on a dark
-silhouette of an armed man. He doesn't seem to be aggressive, so
-you're giving him time to come closer. "Hey, guys!" - he says,
-smiling. - "Nice to meet you, I may need some help." "We're listening" -
+silhouette of an armed man. He doesn't seem aggressive, so you're
+giving him time to come closer. "Hey, guys!" - he says, smiling.
+- "Nice to meet you, I may need some help." "We're listening" -
 you answer. "Locals paid me to convince to deal with skinheads,
 who camped in the nearby mine. There are a lot of those imbitsils,
 so I'm gonna ask you to join me. I'll give you half of my lucre."
@@ -2365,14 +2365,16 @@ nothing serous." Well, at least everyone is in one piece; the
 locomotive engine starts to warm up.
 {name1}, {name2} and {name3} getting -10 health""",
             """You're sending {name1}, {name2} and {name3} with the smiling
-assassin. After all, skinheads are the disease to be cured, no matter
-if it is an end the world. A couple of hours passes, when you finally
-see your people. They look neutral, and there are no the hitman
-with them. Getting closer to the Train, {name3} explains what's
-happened: "Those bastards were waiting for us. Our friend didn't
-make it, and we barely made it out there ourselves." They all climb
-up to the Train. "We better hurry up" - {name2} adds. - "Who knows,
-they could have decide to follows us." Well, on that you all agree.""",
+assassin. After all, skinheads are the disease to be cured, no
+matter if it is an end the world. A couple of hours passes,
+when you finally see your people. They look neutral, and
+there are no the hitman with them. Getting closer to the
+Train, {name3} explains what's happened: "Those bastards
+were waiting for us. Our friend didn't make it, and we
+barely made it out there ourselves." They all climb up to
+the Train. "We better hurry up" - {name2} adds. - "Who
+knows, they could have decide to follows us." Well, on
+that you all agree.""",
             """You're sending {name1}, {name2} and {name3} with the hitman
 as a support. They fastly disappear behind the hill, and two
 hours passed, before they get on sight again. Throwing a gaze
@@ -2514,11 +2516,11 @@ you: "So, they are government people, transporting cargoes and people
 between several cities. Trying to do whatever they can to help folks
 in the country." Okay then, it's not a bad piece of news. Good to see
 that rulers are still in a strive, together with people.""",
-            """{name1} and {name2} taking a direction to the cars column by your
-order. While they're approaching the big man meeting them, you're
+            """{name1} and {name2} taking a direction to the column by your order.
+While they're approaching the big man meeting them, you're
 analyzing the cortege: a lot of cargo, a lot of guns, and...
-refugees!? You didn't see them at the first minute, they probably
-were hiding, but now started to peek out. Dirty, ragged, different
+refugees!? You didn't see them first, they probably were
+hiding, but now started to peek out. Dirty, ragged, different
 aged... You patiently wait for your people to figure out the
 details. They take something from the big man and turn back
 to the locomotive. "This is a help from a local city - they
@@ -2594,10 +2596,10 @@ much of money was stolen, 40$ probably. Anyway, it's no good!
 You're losing 40$""",
             """You're leaving {name1}, {name2} and {name3} to keep the
 locomotive safe, and take a direction to the deer. Just several seconds
-passed, and your sentinels hear some kind of a fuss in the deckhouse.
-Opening the door inside, they see a girl about 18 years old, who
-rummage through the things left on the table. She doesn't look thin,
-or dirty, or anything like this. Good clothes, well face, clean hairs.
+passed, and your sentinels hear some fuss in the deckhouse. Opening
+the door inside, they see a girl about 18 years old, who rummage
+through the things left on the table. She doesn't look thin, or
+dirty, or anything like this. Good clothes, well face, clean hairs.
 "Go away!" - {name3} uppers {hisher3} gun. Seeing that it's better not
 to try tricking, the girl silently moves her hands up and takes a
 direction to the exit. {name3} follows her outside to ensure she won't
@@ -2942,14 +2944,14 @@ to your mouth: "Yeah?!" "Yeah. Come see me after your
 snack is over." He gets up and leaves the deckhouse.
 
 Finished the awfully tasteless portion, you're walking to the
-lower level of the Adjutant. Before you pronounce the first
-word, Kenneth rises his finger up, asking you to stay silent
-and listen. You're concentrating on the noises... "Hear that?"
+lower level of the Adjutant. Before you pronounce a word,
+Kenneth rises his finger up, asking you to stay silent and
+listen. You're concentrating on the noises... "Hear that?"
 - the mechanic points to the left side of the room, and you
 understand what he's trying to say. Some metal screeching can
 be heard from the wall. "That's an axle box, something's
-acting up." - Kenneth explains silently. - "We need to check
-it, it'll take time." You're trying to remember how far was
+acting up." - Kenneth explains silently. - "We need to check,
+it'll take time." You're trying to remember how far was
 the Stench frontier, when you last heard about it. "Our
 options?" Looking at you, Kenneth calculates something in his
 mind: "We need five hours long stop to deal with it." It's
@@ -2957,7 +2959,7 @@ much. "Other options?" The mechanic seems to be not very
 pleasant to say it, but he does: "We can try to do it on move.
 But it's dangerous, complex and will require two men - me
 here and someone on the other side of the locomotive. The
-second guy can get injured I warn you. Anyway not dealing with
+second guy can get injured, I warn you. Anyway not dealing with
 it can cause significant pace lose. Your call, Cap." """,
         "variants": {
             "Stop the Adjutant for a revision": {
@@ -3058,12 +3060,12 @@ pale and tired kids, you silently think that it was
 really tough idea. But probably it saved their lives...
 
 Complaining about walking for six hours without a stop,
-the woman asks you to help them build a field camp. You
-understand that it'll take a lot of time, as there are
-about sixty children. On the other hand, it doesn't look
-right to just leave them here, in the foreign country,
-tired and shelterless. Maybe there is some time to help
-them a little?""",
+the woman asks you to help them build a field camp.
+You understand that it'll take a lot of time, as there
+are about sixty children. On the other hand, it
+doesn't look right to just leave them here, in the
+foreign country, tired and shelterless. Maybe there
+is some time to help them a little?""",
         "variants": {
             "Help them to build a camp": {
                 "desc": """Feeling some qualm inside, you give your people order to help
@@ -3141,11 +3143,11 @@ understand that it'll take at least several hours. The Stench
 will not let you wait, so it makes sense to move faster.
 People know nothing about the cataclysm behavior, in theory
 it can accelerate or appear somewhere far from the supposed
-source in Germany. Overthinking it again, again and again,
-you decide to ignore the teachers plea. The crew don't like
-the decision very much, but everyone mind the situation. A
-hard silence forms in the air. No one wants to go there and
-say those orphans that you're going to leave. "So, what?" - you
+source in Germany. Overthinking it again, and again, you
+decide to ignore the teachers plea. The crew don't like the
+decision very much, but everyone mind the situation. A hard
+silence forms in the air. No one wants to go there and say
+those orphans that you're going to leave. "So, what?" - you
 ask quietly. - "Should we continue the road without the last
 word? What's the point in it?" Your crewmates lower their
 eyes and nod their heads. Taking this as an answer, you give
@@ -3167,13 +3169,13 @@ distance from the Stench frontier.""",
         },
     },
     {  # 3
-        "intro": """Looking at an aged house, standing in about 200 meters aside
-of the railway, you see some kind of a fuss there. The hut
-is really old, the walls are crumbled, the junk dark
-wooden roof holds on a promise, but through small windows
-you can discern several people moving actively inside.
-You also hear some noise, even screams sometimes. It's
-worth checking the place...
+        "intro": """Looking at an aged house, standing in about 200 meters
+aside of the railway, you see some kind of a fuss there.
+The hut is really old, the walls are crumbled, the junk
+dark wooden roof holds on a promise, but through small
+windows you can discern several people moving actively
+inside. You also hear some noise, even screams
+sometimes. It's worth checking the place...
 
 You take a couple of your crewmates and get closer to the
 building. It appears a police jeep is standing from the other
@@ -3240,7 +3242,7 @@ journal. Better read it on move.""",
             },
             "Use your superiority and intimidate them": {
                 "desc": """You see clearly that all the points are on your side. These
-two men are weekly armed, they are policemen, and they were
+men are weekly armed, they are policemen, and they were
 caught on very bad dids. Every part of the situation is
 against them. Tinkering the gun in your hands, you say
 overbearingly: "You two better leave this family and forget
@@ -3258,9 +3260,8 @@ doings... When the men left, and their car silenced somewhere
 in distance, the young girl stands up: "Thank you! Thank you!"
 - she seems to be too touched, and you all hear her gratitude
 for several minutes. In return she proposes your crew a
-medical examination. Yeah, she's a doctor! Feeling the very
-lucky coincidence here, you command your people to use
-the opportunity.
+medical examination. Yeah, she's a doctor! Feeling a lucky
+coincidence, you command your people to use the opportunity.
 
 All people in the crew getting +20 Health
 
@@ -3278,7 +3279,7 @@ string of people standing in front of the entrance. Looks
 like a lot of Silewer newcomers want to rent a room here.
 Sending your people to try to get inside the building, you
 caught your eyes on two banches of refugees arguing hard.
-Getting closer to them, you can hear that they are brawling
+Getting closer to them, you can hear they are brawling
 because of the last place in the building. When they see
 you, however, they become silent, gazing at your guns. In
 a couple of moments you take a place of judge, you see
@@ -3401,8 +3402,8 @@ nothing useful, only tons of paper, some high science mumbo
 jumbo and gas masks." Listening to the guy more carefully,
 you start to suspect you already know who was in those
 cars... Helga Wagner! Looks like you're almost following her.
-Interesting. It's worth checking the jeep - last pieces of
-info about the Wahrsager project sounded intriguingly.
+It's worth checking the jeep - last pieces of info about
+the Wahrsager project sounded intriguingly.
 
 The only thing left to decide is of helping these people.
 Throwing one more gaze at the bus, you see a lot of bags
@@ -4152,7 +4153,7 @@ it only gives us an ability to take a
 look at it, do a detailed snapshot, which
 can be analyzed. Like a photo (smiles).
 The main point here is accuracy - our
-world consists of immeasurably number
+world consists of immeasurable number
 of events, which influence each other.
 We need Laplace's Demon to get results,
 as without high accuracy our data will
