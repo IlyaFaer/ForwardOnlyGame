@@ -7,7 +7,7 @@ The Europe is stroke by the terrible cataclysm called "the Stench". The only way
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
-The game represents a route-strategy with arcade fight blotches. Find an optimal way through the Silewer before the fast spreading poisonous clouds of the Stench outrun you. There are real-time fights with enemies, cities where you can upgrade your locomotive with active guns, tough decisions, recruiting, diseases, resources searches and even more.
+The game represents a route-strategy with arcade fight blotches. Find an optimal way through the inimical Silewer before the fast spreading poisonous clouds of the Stench outrun you. Fights on move, locomotive upgrades, tough decisions, recruiting, diseases, resources searches and even more await you in the game.
 
 :cinema: See [gameplay trailer on YouTube](https://youtu.be/AjvDuXsIizs).
 
@@ -16,14 +16,15 @@ The Game is an author product, its use is regulated by [the License](https://git
 It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
 
 **Current stage**  
-The Game is in development yet (~85% finished) and is now in beta access.
+The Game active development is over, and it's now in the middle of a polishing stage.
 
-The major features the Game includes now:
-- 3 way of play determined by 3 unit classes
-- cohesion system which makes units tougher together and unlocks powerful crew skills
-- cities, where you can use money to restore your crew and upgrade the locomotive
+The major features:
 - real-time on-move fights with enemies of 7 classes
-- randomly built world with several ways to travel through
+- 3 active locomotive weapons and an active shield
+- cohesion system which makes units tougher together and unlocks powerful crew skills
+- cities, where you can restore your crew and upgrade the locomotive
+- 3 ways of play determined by 3 unit classes
+- generated world with several ways to travel through
 - 16 traits, making units stronger or weaker in different situations
 
 **Subscribe**  
@@ -35,4 +36,3 @@ The major features the Game includes now:
 **What's next**  
 [Download the last Game release](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
 [See Wiki for useful info](https://github.com/IlyaFaer/ForwardOnlyGame/wiki)  
-[Explore the development plan](https://github.com/IlyaFaer/ForwardOnlyGame/projects)
