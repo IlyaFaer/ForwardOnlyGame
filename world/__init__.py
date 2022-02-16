@@ -1015,7 +1015,7 @@ class World:
         if self._loaded_blocks:
             current_block = self._loaded_blocks[-1]
 
-            if current_block.id in (690, 691, 692, 693):
+            if current_block.id in (590, 591, 592, 593):
                 base.scenario.finish_game()  # noqa: F821
                 taskMgr.doMethodLater(  # noqa: F821
                     1, base.train.ctrl.stop, "stop_train"  # noqa: F821

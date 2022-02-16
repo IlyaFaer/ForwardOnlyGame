@@ -80,7 +80,7 @@ class OutingsManager:
         self._threshold -= 1
 
         if self._threshold <= 0:
-            self._threshold = random.randint(21, 30)
+            self._threshold = random.randint(18, 26)
 
             if self._prefered and chance(11):
                 return self._prefered
