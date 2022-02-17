@@ -249,7 +249,9 @@ class ForwardOnly(ShowBase):
         self.traits_gui = TraitsGUI()
 
         self.main_menu.hide()
-        self.enableAllAudio()
+        self.main_menu.stop_music()
+        self.train.ctrl.start_move_sound()
+        self.world.start_ambient_sound()
 
         if not self.game_config.tutorial_enabled or (
             self.game_config.tutorial_enabled and self.current_block.id > 18
@@ -293,8 +295,6 @@ class ForwardOnly(ShowBase):
         """
         clear_wids(self.main_menu.save_wids)
         save = shelve.open("saves/save{}".format(num))
-
-        self.disableAllAudio()
 
         self.train = Train(save["train"])
 
@@ -421,8 +421,6 @@ class ForwardOnly(ShowBase):
         Args:
             chosen_crew (str): The chosen initial crew.
         """
-        self.disableAllAudio()
-
         self.train = Train()
 
         self.camera_ctrl = CameraController()

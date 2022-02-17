@@ -819,7 +819,7 @@ class World:
             "sounds/{name}.ogg".format(name=LOCATION_CONF["ambient_sounds"][0])
         )
         self._noon_ambient_snd.setLoop(True)
-        self._noon_ambient_snd.setVolume(1)
+        self._noon_ambient_snd.setVolume(0)
         self._noon_ambient_snd.play()
 
         self._night_ambient_snd = loader.loadSfx(  # noqa: F821
@@ -1177,6 +1177,10 @@ class World:
             if block_to_clear.id == -1:
                 self._map.remove(block_to_clear)
                 self._block_num -= 1
+
+    def start_ambient_sound(self):
+        """Start playing the world ambient sound."""
+        self._noon_ambient_snd.setVolume(1)
 
     def disease_activity(self, task):
         """Run a disease activity iteration.

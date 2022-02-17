@@ -129,6 +129,7 @@ class TrainController:
         move_snd = base.sound_mgr.loadSfx("sounds/train/ride.ogg")  # noqa: F821
         base.sound_mgr.attachSoundToObject(move_snd, model)  # noqa: F821
         move_snd.setLoop(True)
+        move_snd.setVolume(0)
         move_snd.play()
 
         stop_snd = base.sound_mgr.loadSfx("sounds/train/stop.ogg")  # noqa: F821
@@ -138,6 +139,10 @@ class TrainController:
         brake_snd.setLoop(True)
         base.sound_mgr.attachSoundToObject(brake_snd, model)  # noqa: F821
         return move_snd, stop_snd, brake_snd
+
+    def start_move_sound(self):
+        """Start playing the move sound."""
+        self._move_snd.setVolume(1)
 
     def _shot_flapper(self):
         """Play an effect and sound of a flapper."""

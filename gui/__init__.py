@@ -19,7 +19,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TextNode, TransparencyAttrib
 
-from utils import clear_wids, save_exists
+from utils import clear_wids, drown_snd, save_exists
 from .character import CharacterGUI  # noqa: F401
 from .city import CityGUI  # noqa: F401
 from .journal import Journal  # noqa: F401
@@ -65,6 +65,11 @@ class MainMenu:
         self._load_screen = None
         self._is_first_pause = True
         self._save_blocked_lab = None
+        self._menu_music = loader.loadSfx(  # noqa: F821
+            "sounds/music/Among Madness - Fever.mp3"
+        )
+        self._menu_music.setVolume(0.3)
+
         self.tactics_wids = []
         self.save_wids = []
         self.conf_wids = []
@@ -321,6 +326,7 @@ class MainMenu:
         for wid in wids:
             wid.destroy()
 
+        self._menu_music.play()
         self._build()
 
     def _highlight_but(self, button, _):
@@ -1170,3 +1176,20 @@ class MainMenu:
             command=base.start_game,  # noqa: F821
         )
         self.bind_button(self._load_msg)
+
+    def stop_music(self):
+        """Stop the main menu music."""
+        taskMgr.doMethodLater(  # noqa: F821
+            0.3,
+            drown_snd,
+            "drown_menu_music",
+            extraArgs=[self._menu_music],
+            appendTask=True,
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            3,
+            loader.unloadSfx,  # noqa: F821
+            "unload_menu_music",
+            extraArgs=[self._menu_music],
+            appendTask=False,
+        )

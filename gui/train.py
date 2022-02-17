@@ -96,7 +96,7 @@ class TrainGUI:
             "but": but,
             "reload_step": 0,
             "dis_command": None,
-            "reloading_len": 20,
+            "reloading_len": 13,
             "frame": DirectFrame(
                 parent=frame_miles,
                 frameColor=(0, 0, 0, 0.25),
@@ -120,7 +120,7 @@ class TrainGUI:
             "but": but,
             "reload_step": 0,
             "dis_command": None,
-            "reloading_len": 30,
+            "reloading_len": 22,
             "frame": DirectFrame(
                 parent=frame_miles,
                 frameColor=(0, 0, 0, 0.25),
@@ -144,7 +144,7 @@ class TrainGUI:
             "but": but,
             "reload_step": 0,
             "dis_command": None,
-            "reloading_len": 60,
+            "reloading_len": 45,
             "frame": DirectFrame(
                 parent=frame_miles,
                 frameColor=(0, 0, 0, 0.25),
