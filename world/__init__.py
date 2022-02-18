@@ -74,6 +74,7 @@ class World:
         self._prev_block = None
         self._cur_block = None
         self._exiting_et = False
+        self._cur_music = None
 
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
@@ -82,6 +83,14 @@ class World:
         self.sun = Sun(day_part_desc)
         self.city_gui = CityGUI()
         self.rails_scheme = RailsScheme(self._map)
+
+        self._fight_music = []
+        for name in ("Aggression", "Rage", "Panic", "Anger"):
+            fight_snd = loader.loadSfx(  # noqa: F821
+                "sounds/music/Among Madness - {}.mp3".format(name)
+            )
+            fight_snd.set_volume(0.2)
+            self._fight_music.append(fight_snd)
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
@@ -1181,6 +1190,25 @@ class World:
     def start_ambient_sound(self):
         """Start playing the world ambient sound."""
         self._noon_ambient_snd.setVolume(1)
+
+    def play_fight_music(self, task):
+        """Start to play fighting music."""
+        if self._cur_music is None:
+            self._cur_music = random.choice(self._fight_music)
+            self._cur_music.play()
+
+        return task.done
+
+    def stop_fight_music(self):
+        """Stop playing fighting music."""
+        taskMgr.doMethodLater(  # noqa: F821
+            0.7,
+            drown_snd,
+            "drown_fight_music",
+            extraArgs=[self._cur_music],
+            appendTask=True,
+        )
+        self._cur_music = None
 
     def disease_activity(self, task):
         """Run a disease activity iteration.

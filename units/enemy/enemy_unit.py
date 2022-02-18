@@ -112,6 +112,9 @@ class EnemyMotorcyclist(EnemyUnit):
         if self._cry_snd is not None:
             self._cry_snd.play()
 
+        taskMgr.doMethodLater(  # noqa: F821
+            0.7, base.world.play_fight_music, "play_music"  # noqa: F821
+        )
         return task.done
 
 

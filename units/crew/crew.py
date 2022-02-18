@@ -311,6 +311,8 @@ class Crew:
                     random.uniform(0.1, 0.5), char.celebrate, "celebrate_victory"
                 )
 
+        base.world.stop_fight_music()  # noqa: F821
+
     def prepare_to_fight(self):
         """Prepare every character for a fight."""
         for char in self.chars.values():

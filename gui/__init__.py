@@ -68,7 +68,7 @@ class MainMenu:
         self._menu_music = loader.loadSfx(  # noqa: F821
             "sounds/music/Among Madness - Fever.mp3"
         )
-        self._menu_music.setVolume(0.3)
+        self._menu_music.setVolume(0.19)
 
         self.tactics_wids = []
         self.save_wids = []
