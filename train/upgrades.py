@@ -718,6 +718,9 @@ class MachineGun:
         self._sight.reparentTo(loc_model)
         self._sight.hide()
 
+        self._shot_dirt = ParticleEffect()
+        self._shot_dirt.loadConfig("effects/machine_gun_shot.ptf")
+
         self._shot_snd = base.sound_mgr.loadSfx(  # noqa: F82
             "sounds/combat/loc_machine_gun.ogg"
         )
@@ -845,6 +848,9 @@ class MachineGun:
         col_node.addSolid(CollisionSphere(0, 0, 0, 0.005))
         self._col_np = self._sight.attachNewNode(col_node)
 
+        self._shot_dirt.start(self._sight, render)  # noqa: F82
+        self._shot_dirt.softStart()
+
         base.accept("into-machine_gun_bullet", self._do_damage)  # noqa: F82
 
     def _stop_shooting(self, task=None):
@@ -855,6 +861,8 @@ class MachineGun:
         if self._col_np is not None:
             self._col_np.removeNode()
             self._col_np = None
+
+        self._shot_dirt.softStop()
 
         base.train.make_shot("Machine Gun")  # noqa: F82
         taskMgr.doMethodLater(  # noqa: F82
