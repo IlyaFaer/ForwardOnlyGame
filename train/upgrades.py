@@ -538,10 +538,14 @@ class ClusterHowitzer:
             bomb.setPos(*self._coors[num], 2)
             bomb.setScale(2)
 
-            self._bombs.append(bomb)
+            smoke = ParticleEffect()
+            smoke.loadConfig("effects/smoke_tail.ptf")
+            smoke.start(bomb, render)  # noqa: F821
+
+            self._bombs.append((bomb, smoke))
             move_par.append(
                 LerpPosInterval(
-                    bomb, random.uniform(0.5, 0.65), (*self._coors[num], 0)
+                    bomb, random.uniform(0.45, 0.7), (*self._coors[num], 0)
                 ),
             )
 
@@ -551,10 +555,31 @@ class ClusterHowitzer:
 
     def _clear_grenades(self):
         """Delete bomb models."""
-        for bomb in self._bombs:
+        smokes = []
+        for bomb, smoke in self._bombs:
             bomb.removeNode()
+            smoke.softStop()
+            smokes.append(smoke)
 
         self._bombs.clear()
+        taskMgr.doMethodLater(  # noqa: F821
+            2,
+            self._clear_bomb_trails,
+            "clear_bomb_trails",
+            extraArgs=[smokes],
+            appendTask=True,
+        )
+
+    def _clear_bomb_trails(self, smokes, task):
+        """Clear bomb smoke trail effects.
+
+        Args:
+            smokes (list): List of smoke effects.
+        """
+        for smoke in smokes:
+            smoke.disable()
+
+        return task.done
 
     def _do_grenade_damage(self, event):
         """Event which is called by a grenade explosion.

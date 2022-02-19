@@ -1201,14 +1201,15 @@ class World:
 
     def stop_fight_music(self):
         """Stop playing fighting music."""
-        taskMgr.doMethodLater(  # noqa: F821
-            0.7,
-            drown_snd,
-            "drown_fight_music",
-            extraArgs=[self._cur_music],
-            appendTask=True,
-        )
-        self._cur_music = None
+        if self._cur_music is not None:
+            taskMgr.doMethodLater(  # noqa: F821
+                0.7,
+                drown_snd,
+                "drown_fight_music",
+                extraArgs=[self._cur_music],
+                appendTask=True,
+            )
+            self._cur_music = None
 
     def disease_activity(self, task):
         """Run a disease activity iteration.
