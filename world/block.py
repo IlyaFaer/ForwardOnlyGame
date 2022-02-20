@@ -7,6 +7,7 @@ World blocks API.
 import copy
 import random
 
+from direct.interval.IntervalGlobal import LerpPosHprScaleInterval
 from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
@@ -443,6 +444,13 @@ class Block:
             rails_mod = loader.loadModel(address("direct_rails"))  # noqa: F821
             rails_mod.reparentTo(self.rails_mod)
             rails_mod.setPos(0, -8, 0)
+
+        if chance(2):
+            mist = loader.loadModel(address("mist"))  # noqa: F821
+            mist.reparentTo(self.rails_mod)
+            mist.setPos(random.randint(-3, 3), 0, 0.07)
+            mist.setBin("transparent", 30)
+            LerpPosHprScaleInterval(mist, 70, (0, -5, 0), 0, (1.3, 1.1, 1.3)).start()
 
         return self
 

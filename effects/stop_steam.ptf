@@ -29,6 +29,7 @@ p0.renderer.setUserAlpha(1.00)
 # Geom parameters
 geomRef = loader.loadModel("effects/smoke2.bam")
 geomRef.setBillboardPointWorld()
+geomRef.setBin("transparent", 30)
 base.world.sun.ignore_shadows(geomRef)
 p0.renderer.setGeomNode(geomRef.node())
 p0.geomReference = "effects/smoke2.bam"
