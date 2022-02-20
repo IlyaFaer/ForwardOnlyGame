@@ -98,8 +98,8 @@ Alt + \u2190\u2191\u2193\u2192 or hold mouse wheel - rotate
 C - toggle centered view
 
 New Year spirit:
-7 - toggle the mode
-8 - flapper shot
+7 - toggle the garland
+8 - flapper shot (if the garland is on)
 
 St. Valentine's Day:
 9 - toggle the mode

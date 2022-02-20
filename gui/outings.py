@@ -294,6 +294,7 @@ class OutingsGUI:
                     command=self._hire_unit,
                     extraArgs=[char, recruit_effect],
                     scale=(0.05, 0, 0.05),
+                    clickSound=base.main_menu.click_snd,  # noqa: F821
                 )
             )
             self._outing_widgets.append(
@@ -306,6 +307,7 @@ class OutingsGUI:
                     frameColor=(0, 0, 0, 0),
                     command=self._dont_hire_unit,
                     scale=(0.05, 0, 0.05),
+                    clickSound=base.main_menu.click_snd,  # noqa: F821
                 )
             )
             return

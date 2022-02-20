@@ -291,5 +291,6 @@ class RailsScheme:
             )
             self._fill_scheme()
             self._list.show()
+            base.char_gui.clear_char_info(True)  # noqa: F821
 
         self.is_shown = not self.is_shown
