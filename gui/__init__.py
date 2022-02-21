@@ -34,7 +34,7 @@ from .widgets import GUI_PIC, RUST_COL, SILVER_COL, ListChooser  # noqa: F401
 
 LANGUAGES = ("EN", "RU")
 FPS = ("30", "60", "120")
-RESOLUTIONS = (
+RESOLUTIONS = [
     "800x600",
     "1024x768",
     "1176x664",
@@ -49,7 +49,8 @@ RESOLUTIONS = (
     "1600x900",
     "1768x992",
     "1920x1080",
-)
+    "2560x1440",
+]
 
 
 class MainMenu:
@@ -469,13 +470,14 @@ class MainMenu:
             )
         )
 
+        if base.game_config.resolution in RESOLUTIONS:  # noqa: F821
+            res_ind = RESOLUTIONS.index(base.game_config.resolution)  # noqa: F821
+        else:
+            res_ind = len(RESOLUTIONS)
+            RESOLUTIONS.append(base.game_config.resolution)  # noqa: F821
+
         res_chooser = ListChooser()
-        res_chooser.prepare(
-            self._main_fr,
-            (0.1, 0, 0.51),
-            RESOLUTIONS,
-            RESOLUTIONS.index(base.game_config.resolution),  # noqa: F821,
-        )
+        res_chooser.prepare(self._main_fr, (0.1, 0, 0.51), RESOLUTIONS, res_ind)
         self.conf_wids.append(res_chooser)
 
         self.conf_wids.append(
