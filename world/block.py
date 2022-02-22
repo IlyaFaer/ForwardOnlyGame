@@ -445,12 +445,19 @@ class Block:
             rails_mod.reparentTo(self.rails_mod)
             rails_mod.setPos(0, -8, 0)
 
-        if chance(2):
+        if chance(5):
             mist = loader.loadModel(address("mist"))  # noqa: F821
             mist.reparentTo(self.rails_mod)
             mist.setPos(random.randint(-3, 3), 0, 0.07)
             mist.setBin("transparent", 30)
             LerpPosHprScaleInterval(mist, 70, (0, -5, 0), 0, (1.3, 1.1, 1.3)).start()
+
+        if chance(10):
+            light_rays = loader.loadModel(address("light_rays"))  # noqa: F821
+            light_rays.reparentTo(self.rails_mod)
+            light_rays.setPos(random.uniform(-1, 1), 0, 0.2)
+            light_rays.setBillboardPointWorld()
+            light_rays.setDepthWrite(False)
 
         return self
 
