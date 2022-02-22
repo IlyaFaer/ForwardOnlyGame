@@ -134,6 +134,11 @@ class Train:
         self._cluster_howitzer = None
         self._machine_gun = None
 
+        self._bean = loader.loadModel(address("light_bean"))  # noqa: F821
+        self._bean.reparentTo(self.model)
+        self._bean.setPos(0, 1.25, 0.12)
+        self._bean.hide()
+
         (
             self._smoke,
             self._l_brake_sparks,
@@ -709,12 +714,14 @@ class Train:
                 light.setZ(50)
 
             self._set_lamps_material((0, 0, 0, 1))
+            self._bean.hide()
         else:
             self._lights[0].setZ(0.3)
             for light in self._lights[1:]:
                 light.setZ(0.245)
 
             self._set_lamps_material((0.85, 0.85, 0.85, 1), (0.4, 0.4, 0.4, 1))
+            self._bean.show()
 
         self.lights_on = not self.lights_on
 
