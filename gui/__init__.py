@@ -857,6 +857,43 @@ class MainMenu:
         but.setTransparency(TransparencyAttrib.MAlpha)
         self.cred_wids.append(but)
 
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(0.2, 0, -0.05),
+                text_scale=0.04,
+                text_fg=RUST_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text=base.labels.MAIN_MENU[39],  # noqa: F821
+            )
+        )
+        self.cred_wids.append(
+            DirectButton(
+                parent=self._main_fr,
+                pos=(0.05, 0, -0.17),
+                frameTexture="credits/among_madness_logo.png",
+                frameSize=(-0.1, 0.1, -0.07, 0.07),
+                relief="flat",
+                command=webbrowser.open,
+                extraArgs=["https://open.spotify.com/artist/3uy4tvaLvBAsKdV52Kc2TI"],
+                clickSound=self.click_snd,
+            )
+        )
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(-0.08, 0, -0.28),
+                text_scale=0.033,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                text_align=TextNode.ALeft,
+                frameColor=(0, 0, 0, 0),
+                text="Among Madness",
+            )
+        )
+
     def _show_crew(self, crew):
         """Show the description of the chosen tactics.
 

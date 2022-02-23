@@ -77,6 +77,7 @@ MAIN_MENU = (
     """(boosts FPS, but on some systems
 can cause flaky failures on
 new game start or loading)""",
+    "Music",
 )
 
 KEYS_INFO = u"""
