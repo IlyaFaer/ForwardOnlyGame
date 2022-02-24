@@ -10,8 +10,16 @@ import random
 import shelve
 
 from direct.directutil import Mopath
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode, BulletWorld
-from panda3d.core import AudioSound, GeomVertexReader, PerspectiveLens, Spotlight, Vec3
+from panda3d.core import (
+    AudioSound,
+    GeomVertexReader,
+    PerspectiveLens,
+    PointLight,
+    Spotlight,
+    Vec3,
+)
 
 from const import MOD_DIR
 from gui import CityGUI, RailsScheme
@@ -1302,6 +1310,24 @@ class Hangar:
 
         render.setLight(self._lighter_np)  # noqa: F821
 
+        flies = ParticleEffect()
+        flies.loadConfig("effects/flies.ptf")
+        flies.setPos(-0.465, 0.11, 0.17)
+        flies.start(self._mod, render)  # noqa: F821
+
+        lens = PerspectiveLens()
+        lens.setNearFar(0, 50)
+        lens.setFov(80, 80)
+
+        lamp = Spotlight("hangar_light")
+        lamp.setColor((0.7, 0.7, 0.7, 1))
+        lamp.setLens(lens)
+        lamp.setExponent(0.002)
+        self._lamp_np = self._mod.attachNewNode(lamp)
+        self._lamp_np.setPos(-0.47, 0.11, 0.195)
+        self._lamp_np.setHpr(-180, -60, 0)
+        render.setLight(self._lamp_np)  # noqa: F821
+
     def clear(self, turn_around):
         """Clear this hangar.
 
@@ -1314,6 +1340,10 @@ class Hangar:
         base.camera_ctrl.unset_hangar_pos()  # noqa: F821
         render.clearLight(self._lighter_np)  # noqa: F821
         self._lighter_np.removeNode()
+
+        render.clearLight(self._lamp_np)  # noqa: F821
+        self._lamp_np.removeNode()
+
         self._mod.removeNode()
 
         base.train.root_node.setPos(self._train_pos)  # noqa: F821
