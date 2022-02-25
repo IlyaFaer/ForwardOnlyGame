@@ -42,7 +42,7 @@ class Journal:
             parent=self._main_fr,
             frameSize=(-0.35, 0.3, -0.46, 0.5),
             frameColor=(0, 0, 0, 0),
-            canvasSize=(-0.31, 0.3, -1, 1.5),
+            canvasSize=(-0.31, 0.3, -3, 1.5),
             state=DGG.NORMAL,
             pos=(0, 0, -0.1),
             verticalScroll_frameSize=(-0.003, 0.003, -0.5, 0.5),
@@ -58,9 +58,10 @@ class Journal:
         DirectLabel(  # Journal
             parent=self._main_fr,
             text=base.labels.JOURNAL[0],  # noqa: F821
-            text_font=base.main_font,  # noqa: F821
-            text_scale=0.045,
+            text_font=base.cursive_font,  # noqa: F821
+            text_scale=0.053,
             text_bg=(0, 0, 0, 0),
+            text_fg=(0, 0, 0.25, 1),
             frameSize=(0.1, 0.1, 0.1, 0.1),
             pos=(-0.34, 0, 0.52),
             text_align=TextNode.ALeft,
@@ -68,8 +69,9 @@ class Journal:
         DirectLabel(
             parent=self._main_fr,
             text=base.labels.JOURNAL[1],  # noqa: F821
-            text_font=base.main_font,  # noqa: F821
-            text_scale=0.03,
+            text_font=base.cursive_font,  # noqa: F821
+            text_scale=0.038,
+            text_fg=(0, 0, 0.25, 1),
             text_bg=(0, 0, 0, 0),
             frameSize=(0.1, 0.1, 0.1, 0.1),
             pos=(-0.34, 0, 0.47),
@@ -78,8 +80,9 @@ class Journal:
         DirectLabel(
             parent=self._main_fr,
             text=base.labels.JOURNAL[2],  # noqa: F821
-            text_font=base.main_font,  # noqa: F821
-            text_scale=0.03,
+            text_font=base.cursive_font,  # noqa: F821
+            text_scale=0.038,
+            text_fg=(0, 0, 0.25, 1),
             text_bg=(0, 0, 0, 0),
             frameSize=(0.1, 0.1, 0.1, 0.1),
             pos=(-0.34, 0, 0.44),
@@ -88,10 +91,11 @@ class Journal:
         self._page_text = DirectLabel(
             parent=self._fr.getCanvas(),
             text="",
-            text_scale=0.03,
-            text_font=base.main_font,  # noqa: F821
+            text_scale=0.045,
+            text_font=base.cursive_font,  # noqa: F821
             text_align=TextNode.ALeft,
-            frameSize=(-0.02, 0.02, -2, 0.5),
+            text_fg=(0, 0, 0.25, 1),
+            frameSize=(-0.02, 0.02, -3.5, 0.5),
             frameColor=(0, 0, 0, 0),
             pos=(-0.27, 0, 1.45),
         )

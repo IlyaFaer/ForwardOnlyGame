@@ -16,7 +16,6 @@ from panda3d.core import (
     AudioSound,
     GeomVertexReader,
     PerspectiveLens,
-    PointLight,
     Spotlight,
     Vec3,
 )

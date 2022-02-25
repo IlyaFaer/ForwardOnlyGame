@@ -21,6 +21,9 @@ class TrainGUI:
 
     def __init__(self):
         self._weapon_buts = {}
+        self._turn_snd = loader.loadSfx(  # noqa: F821
+            "sounds/train/railroad_switch.ogg"
+        )
 
         frame = DirectFrame(
             parent=base.a2dBottomRight,  # noqa: F821
@@ -224,6 +227,7 @@ class TrainGUI:
         Args:
             fork (world.block.Block): Fork block to turn on.
         """
+        self._turn_snd.play()
         base.train.do_turn = 1  # noqa: F821
         base.ignore("t")  # noqa: F821
         fork.load_additional_surface()
@@ -295,16 +299,19 @@ class TrainGUI:
         base.train.do_turn = 0  # noqa: F821
         text = ""
 
-        if fork.name == "l_fork":
-            if invert or branch == "l":
-                text = base.labels.FORKS[0]  # noqa: F821
-            else:
-                text = base.labels.FORKS[1]  # noqa: F821
-        elif fork.name == "r_fork":
-            if invert or branch == "r":
-                text = base.labels.FORKS[1]  # noqa: F821
-            else:
-                text = base.labels.FORKS[0]  # noqa: F821
+        if branch is None:
+            text = base.labels.FORKS[2]  # noqa: F821
+        else:
+            if fork.name == "l_fork":
+                if invert or branch == "l":
+                    text = base.labels.FORKS[0]  # noqa: F821
+                else:
+                    text = base.labels.FORKS[1]  # noqa: F821
+            elif fork.name == "r_fork":
+                if invert or branch == "r":
+                    text = base.labels.FORKS[1]  # noqa: F821
+                else:
+                    text = base.labels.FORKS[0]  # noqa: F821
 
         base.accept("t", self._turn_on_fork, [fork])  # noqa: F821
 

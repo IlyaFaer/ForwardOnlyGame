@@ -75,6 +75,7 @@ class ForwardOnly(ShowBase):
             os.mkdir("saves")
 
         self.main_font = self.loader.loadFont("arial.ttf")
+        self.cursive_font = self.loader.loadFont("caveat.ttf")
         self.setBackgroundColor(0.1, 0.17, 0.1)
 
         self.sound_mgr = Audio3DManager.Audio3DManager(self.sfxManagerList[0], self.cam)
