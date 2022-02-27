@@ -33,6 +33,12 @@ The major features:
 [IndieDB](https://www.indiedb.com/games/forward-only)  
 [SourceForge](https://sourceforge.net/p/forwardonlygame/)
 
+
+**Music**  
+The game music tracks were generously provided by Moloken, Among Madness and Квалиа artists. You can hear all of them in the [game playlist on Spotify](https://open.spotify.com/playlist/2DiGeOVQfOirdGzTTwPmlC).  
+  
+:triangular_flag_on_post: *Permission to use the tracks in the game was directly granted to the project author by the artists and related labels. All the author rights for the music tracks are owned by the artists and related labels. The music tracks MUST NOT be considered as a part of the Forward Only project, or free-to-use resources.*
+
 **What's next**  
 [Download the last Game release](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
 [See Wiki for useful info](https://github.com/IlyaFaer/ForwardOnlyGame/wiki)  
