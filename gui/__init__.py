@@ -642,26 +642,26 @@ class MainMenu:
         clear_wids(self.conf_wids)
         clear_wids(self.tactics_wids)
 
+        center = 0.25
+
         self.cred_wids.append(
             DirectLabel(
                 parent=self._main_fr,
-                pos=(-0.2, 0, 0.5),
+                pos=(center, 0, 0.6),
                 text_scale=0.04,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text=base.labels.MAIN_MENU[31],  # noqa: F821
             )
         )
         self.cred_wids.append(
-            DirectLabel(
+            DirectLabel(  # Project source code
                 parent=self._main_fr,
-                pos=(-0.2, 0, 0.4),
+                pos=(center, 0, 0.5),
                 text_scale=0.04,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text=base.labels.MAIN_MENU[32],  # noqa: F821
             )
@@ -669,7 +669,7 @@ class MainMenu:
         self.cred_wids.append(
             DirectButton(
                 parent=self._main_fr,
-                pos=(0.54, 0, 0.4),
+                pos=(center, 0, 0.45),
                 frameColor=(0, 0, 0, 0),
                 text_scale=0.04,
                 text_fg=RUST_COL,
@@ -682,13 +682,12 @@ class MainMenu:
             )
         )
         self.cred_wids.append(
-            DirectLabel(
+            DirectLabel(  # Subscribe
                 parent=self._main_fr,
-                pos=(-0.2, 0, 0.3),
+                pos=(center, 0, 0.35),
                 text_scale=0.04,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text=base.labels.MAIN_MENU[33],  # noqa: F821
             )
@@ -696,9 +695,9 @@ class MainMenu:
         self.cred_wids.append(
             DirectButton(
                 parent=self._main_fr,
-                pos=(0.07, 0, 0.31),
+                pos=(0.11, 0, 0.29),
                 frameTexture="credits/youtube.png",
-                frameSize=(-0.053, 0.053, -0.029, 0.029),
+                frameSize=(-0.056, 0.056, -0.029, 0.029),
                 relief="flat",
                 command=webbrowser.open,
                 extraArgs=["https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w"],
@@ -708,9 +707,9 @@ class MainMenu:
         self.cred_wids.append(
             DirectButton(
                 parent=self._main_fr,
-                pos=(0.2, 0, 0.31),
+                pos=(center, 0, 0.29),
                 frameTexture="credits/indie_db.png",
-                frameSize=(-0.053, 0.053, -0.029, 0.029),
+                frameSize=(-0.058, 0.058, -0.029, 0.029),
                 relief="flat",
                 command=webbrowser.open,
                 extraArgs=["https://www.indiedb.com/games/forward-only"],
@@ -719,9 +718,9 @@ class MainMenu:
         )
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.31, 0, 0.31),
+            pos=(0.38, 0, 0.29),
             frameTexture="credits/discord.png",
-            frameSize=(-0.04, 0.04, -0.04, 0.04),
+            frameSize=(-0.045, 0.045, -0.045, 0.045),
             relief="flat",
             command=webbrowser.open,
             extraArgs=["https://discord.gg/8UgFJAWsFx"],
@@ -730,22 +729,21 @@ class MainMenu:
         but.setTransparency(TransparencyAttrib.MAlpha)
         self.cred_wids.append(but)
         self.cred_wids.append(
-            DirectLabel(
+            DirectLabel(  # Stack
                 parent=self._main_fr,
-                pos=(-0.2, 0, 0.2),
+                pos=(center, 0, 0.18),
                 text_scale=0.04,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text=base.labels.MAIN_MENU[34],  # noqa: F821
             )
         )
         but = DirectButton(
             parent=self._main_fr,
-            pos=(-0.03, 0, 0.21),
+            pos=(0.05, 0, 0.11),
             frameTexture="credits/python.png",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            frameSize=(-0.05, 0.05, -0.05, 0.05),
             relief="flat",
             command=webbrowser.open,
             extraArgs=["https://www.python.org/"],
@@ -756,9 +754,9 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.04, 0, 0.21),
+            pos=(0.185, 0, 0.11),
             frameTexture="credits/panda3d.png",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            frameSize=(-0.05, 0.05, -0.05, 0.05),
             relief="flat",
             command=webbrowser.open,
             extraArgs=["https://www.panda3d.org/"],
@@ -769,9 +767,9 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.11, 0, 0.21),
+            pos=(0.315, 0, 0.11),
             frameTexture="credits/blender.png",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            frameSize=(-0.05, 0.05, -0.05, 0.05),
             relief="flat",
             command=webbrowser.open,
             extraArgs=["https://www.blender.org/"],
@@ -782,9 +780,9 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.18, 0, 0.21),
+            pos=(0.45, 0, 0.11),
             frameTexture="credits/make_human.png",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
+            frameSize=(-0.05, 0.05, -0.05, 0.05),
             relief="flat",
             command=webbrowser.open,
             extraArgs=["http://www.makehumancommunity.org/"],
@@ -794,20 +792,19 @@ class MainMenu:
         self.cred_wids.append(but)
 
         self.cred_wids.append(
-            DirectLabel(
+            DirectLabel(  # Tools
                 parent=self._main_fr,
-                pos=(-0.2, 0, 0.1),
+                pos=(center, 0, -0.02),
                 text_scale=0.04,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text=base.labels.MAIN_MENU[35],  # noqa: F821
             )
         )
         but = DirectButton(
             parent=self._main_fr,
-            pos=(-0.01, 0, 0.11),
+            pos=(center - 0.12, 0, -0.09),
             frameTexture="credits/free_sound.png",
             frameSize=(-0.057, 0.057, -0.029, 0.029),
             relief="flat",
@@ -820,7 +817,7 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.1, 0, 0.11),
+            pos=(center, 0, -0.09),
             frameTexture="credits/photopea.png",
             frameSize=(-0.03, 0.03, -0.03, 0.03),
             relief="flat",
@@ -833,20 +830,7 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.1, 0, 0.11),
-            frameTexture="credits/photopea.png",
-            frameSize=(-0.03, 0.03, -0.03, 0.03),
-            relief="flat",
-            command=webbrowser.open,
-            extraArgs=["https://www.photopea.com/"],
-            clickSound=self.click_snd,
-        )
-        but.setTransparency(TransparencyAttrib.MAlpha)
-        self.cred_wids.append(but)
-
-        but = DirectButton(
-            parent=self._main_fr,
-            pos=(0.18, 0, 0.11),
+            pos=(center + 0.09, 0, -0.09),
             frameTexture="credits/online_convert.png",
             frameSize=(-0.03, 0.03, -0.03, 0.03),
             relief="flat",
@@ -858,39 +842,88 @@ class MainMenu:
         self.cred_wids.append(but)
 
         self.cred_wids.append(
-            DirectLabel(
+            DirectLabel(  # Music
                 parent=self._main_fr,
-                pos=(0.2, 0, -0.05),
-                text_scale=0.04,
-                text_fg=RUST_COL,
+                pos=(center, 0, -0.24),
+                text_scale=0.042,
+                text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text=base.labels.MAIN_MENU[39],  # noqa: F821
             )
         )
-        self.cred_wids.append(
-            DirectButton(
-                parent=self._main_fr,
-                pos=(0.05, 0, -0.17),
-                frameTexture="credits/among_madness_logo.png",
-                frameSize=(-0.1, 0.1, -0.07, 0.07),
-                relief="flat",
-                command=webbrowser.open,
-                extraArgs=["https://open.spotify.com/artist/3uy4tvaLvBAsKdV52Kc2TI"],
-                clickSound=self.click_snd,
-            )
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(-0.15, 0, -0.45),
+            frameTexture="credits/among_madness_logo.png",
+            frameSize=(-0.15, 0.15, -0.15, 0.15),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://open.spotify.com/artist/3uy4tvaLvBAsKdV52Kc2TI"],
+            clickSound=self.click_snd,
         )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
         self.cred_wids.append(
             DirectLabel(
                 parent=self._main_fr,
-                pos=(-0.08, 0, -0.28),
+                pos=(-0.15, 0, -0.65),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
-                text_align=TextNode.ALeft,
                 frameColor=(0, 0, 0, 0),
                 text="Among Madness",
+            )
+        )
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.25, 0, -0.45),
+            frameTexture="credits/qualia_logo.png",
+            frameSize=(-0.15, 0.15, -0.15, 0.15),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://open.spotify.com/artist/1LAJZmgQeOryYUV8qoF9tF"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(0.25, 0, -0.65),
+                text_scale=0.033,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                frameColor=(0, 0, 0, 0),
+                text="Квалиа",
+            )
+        )
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(0.65, 0, -0.45),
+            frameTexture="credits/moloken_logo.png",
+            frameSize=(-0.15, 0.15, -0.15, 0.15),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://open.spotify.com/artist/3LZzdqKCEcBwhh6vd6y6Q5"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(0.65, 0, -0.65),
+                text_scale=0.033,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                frameColor=(0, 0, 0, 0),
+                text="Moloken",
             )
         )
 
@@ -1035,6 +1068,11 @@ class MainMenu:
 
     def show_credits(self, task):
         """Show the game end credits."""
+
+        mus = loader.loadSfx("sounds/music/Moloken - 11''12.mp3")  # noqa: F821
+        mus.setVolume(0.2)
+        mus.play()
+
         goodness = 0
 
         inserts = {}

@@ -60,6 +60,11 @@ class EnemyMotorcyclist(EnemyUnit):
         else:
             self._cry_snd = None
 
+        taskMgr.doMethodLater(  # noqa: F821
+            random.randint(27, 29),
+            base.world.play_fight_music,  # noqa: F821
+            "play_music",
+        )
         self._col_node = self._init_col_node(
             SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
         )
@@ -112,9 +117,6 @@ class EnemyMotorcyclist(EnemyUnit):
         if self._cry_snd is not None:
             self._cry_snd.play()
 
-        taskMgr.doMethodLater(  # noqa: F821
-            0.7, base.world.play_fight_music, "play_music"  # noqa: F821
-        )
         return task.done
 
 

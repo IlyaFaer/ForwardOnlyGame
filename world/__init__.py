@@ -93,11 +93,22 @@ class World:
 
         self._fight_music = []
         for name in ("Aggression", "Rage", "Panic", "Anger"):
-            fight_snd = loader.loadSfx(  # noqa: F821
+            fight_music = loader.loadSfx(  # noqa: F821
                 "sounds/music/Among Madness - {}.mp3".format(name)
             )
-            fight_snd.set_volume(0.2)
-            self._fight_music.append(fight_snd)
+            fight_music.set_volume(0.2)
+            self._fight_music.append(fight_music)
+
+        self._idle_music = []
+        for name in (
+            "Qualia - Neprotivlenie.mp3",
+            "Moloken - One Last Breath.mp3",
+            "Moloken - Repressed.mp3",
+            "Moloken - The Titan Above Us.mp3",
+        ):
+            idle_music = loader.loadSfx("sounds/music/" + name)  # noqa: F821
+            idle_music.set_volume(0.2)
+            self._idle_music.append(idle_music)
 
         self.phys_mgr = self._set_physics()
         taskMgr.add(  # noqa: F821
@@ -1217,6 +1228,15 @@ class World:
                 appendTask=True,
             )
             self._cur_music = None
+
+            taskMgr.doMethodLater(  # noqa: F821
+                random.randint(45, 55), self._play_idle_music, "play_idle_music"
+            )
+
+    def _play_idle_music(self, task):
+        """Play IDLE game music."""
+        random.choice(self._idle_music).play()
+        return task.done
 
     def disease_activity(self, task):
         """Run a disease activity iteration.

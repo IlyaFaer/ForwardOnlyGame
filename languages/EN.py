@@ -68,10 +68,10 @@ MAIN_MENU = (
     "Framerate limit:",
     "Credits",  # 30
     """Created by Ilya "Faer" Gurov""",
-    "Project source code:",
-    "Subscribe:",
-    "Stack:",
-    "Tools:",
+    "Project source code",
+    "Subscribe",
+    "Stack",
+    "Tools",
     "FPS meter:",
     "Multi threading:",
     """(boosts FPS, but on some systems
@@ -4743,7 +4743,7 @@ search for Unterriff! Turn up the heat!
 CREDITS = """
 Great job, Captain! You've found your way through
 this rough and inimical country of Silewer. It's
-not over yet, and there will be more to sacrifice,
+not over yet, there will be more to sacrifice,
 but until now you survived the adversity. Let's
 summarize the decisions you've made.
 \n\n
@@ -4791,6 +4791,12 @@ Seepage
 \n\n
 Developed by
 Ilya Faer
+
+Music by
+Moloken
+Among Madness
+Квалиа
+
 \n\n\n\n\n\n\n\n
 To be continued...
 """

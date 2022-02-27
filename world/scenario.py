@@ -150,7 +150,7 @@ class Scenario:
             4.5, base.effects_mgr.fade_in_screen, "fade_in"  # noqa: F821
         )
         taskMgr.doMethodLater(  # noqa: F821
-            72, base.restart_game, "restart_game",  # noqa: F821
+            76, base.restart_game, "restart_game", extraArgs=[]  # noqa: F821
         )
         base.train.ctrl.unset_controls()  # noqa: F821
         base.effects_mgr.stench_effect.stop()  # noqa: F821
