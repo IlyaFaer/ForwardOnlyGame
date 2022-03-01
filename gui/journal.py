@@ -12,7 +12,7 @@ from direct.gui.DirectGui import (
     DirectScrolledFrame,
 )
 from panda3d.core import TextNode, TransparencyAttrib
-from gui.widgets import RUST_COL, SILVER_COL
+from gui.widgets import RUST_COL
 
 
 class Journal:
@@ -27,6 +27,7 @@ class Journal:
         self._is_shown = False
         self._read_coordinates = False
         self._winned = winned
+        self._opened_num = None
 
         self._main_fr = DirectFrame(
             parent=base.a2dTopLeft,  # noqa: F821
@@ -66,27 +67,39 @@ class Journal:
             pos=(-0.34, 0, 0.52),
             text_align=TextNode.ALeft,
         )
-        DirectLabel(
+        DirectButton(
             parent=self._main_fr,
-            text=base.labels.JOURNAL[1],  # noqa: F821
-            text_font=base.cursive_font,  # noqa: F821
-            text_scale=0.038,
-            text_fg=(0, 0, 0.25, 1),
+            text="<",
+            text_scale=0.06,
             text_bg=(0, 0, 0, 0),
-            frameSize=(0.1, 0.1, 0.1, 0.1),
-            pos=(-0.34, 0, 0.47),
-            text_align=TextNode.ALeft,
+            text_fg=(0, 0, 0.25, 1),
+            pos=(-0.15, 0, 0.45),
+            frameSize=(-0.2, 0.2, -0.2, 0.2),
+            relief=None,
+            command=self._open_page,
+            extraArgs=[-1],
         )
-        DirectLabel(
+        DirectButton(
             parent=self._main_fr,
-            text=base.labels.JOURNAL[2],  # noqa: F821
-            text_font=base.cursive_font,  # noqa: F821
-            text_scale=0.038,
-            text_fg=(0, 0, 0.25, 1),
+            text=">",
+            text_scale=0.06,
             text_bg=(0, 0, 0, 0),
-            frameSize=(0.1, 0.1, 0.1, 0.1),
-            pos=(-0.34, 0, 0.44),
-            text_align=TextNode.ALeft,
+            text_fg=(0, 0, 0.25, 1),
+            pos=(0.15, 0, 0.45),
+            frameSize=(-0.2, 0.2, -0.2, 0.2),
+            relief=None,
+            command=self._open_page,
+            extraArgs=[1],
+        )
+        self._page_title = DirectLabel(
+            parent=self._main_fr,
+            text="",
+            text_scale=0.043,
+            text_font=base.cursive_font,  # noqa: F821
+            text_fg=(0, 0, 0.25, 1),
+            frameSize=(-0.02, 0.02, -3.5, 0.5),
+            frameColor=(0, 0, 0, 0),
+            pos=(0, 0, 0.45),
         )
         self._page_text = DirectLabel(
             parent=self._fr.getCanvas(),
@@ -99,7 +112,7 @@ class Journal:
             frameColor=(0, 0, 0, 0),
             pos=(-0.27, 0, 1.45),
         )
-        self._pages = {"diary": [], "note": []}
+        self._pages = []
 
         self._open_snd = loader.loadSfx("sounds/GUI/journal.ogg")  # noqa: F821
         self._page_snd = loader.loadSfx("sounds/GUI/journal_page.ogg")  # noqa: F821
@@ -114,22 +127,27 @@ class Journal:
         """
         return self._winned
 
-    def _open_page(self, type_, num):
+    def _open_page(self, shift):
         """Open the given page of the journal.
 
         Args:
-            type_ (str): Page type: diary or note.
-            num (int): Number of the page.
+            shift (int): Page number shift.
         """
-        self._page_text["text"] = self._pages[type_][num]["page"]
-        for page_type in ("diary", "note"):
-            for page in self._pages[page_type]:
-                page["but"]["text_fg"] = RUST_COL
+        if self._opened_num is None:
+            return
 
-        self._pages[type_][num]["but"]["text_fg"] = SILVER_COL
+        if (
+            self._opened_num + shift > len(self._pages) - 1
+            or self._opened_num + shift < 0
+        ):
+            return
+
+        self._opened_num += shift
+        self._page_text["text"] = self._pages[self._opened_num]["page"]
+        self._page_title["text"] = self._pages[self._opened_num]["title"]
         self._page_snd.play()
 
-        if type_ == "note" and num == 3:
+        if self._opened_num == 7:
             self._read_coordinates = True
 
     def add_page(self, num):
@@ -138,24 +156,15 @@ class Journal:
         Args:
             num (int): The page number.
         """
-        type_, page_text = base.labels.JOURNAL_PAGES[num]  # noqa: F821
-        number = len(self._pages[type_]) + 1
-        page_rec = {
-            "page": page_text,
-            "but": DirectButton(
-                parent=self._main_fr,
-                text="№" + str(number),
-                text_font=base.main_font,  # noqa: F821
-                text_fg=RUST_COL,
-                text_shadow=(0, 0, 0, 1),
-                frameColor=(0, 0, 0, 0),
-                scale=(0.029, 0, 0.029),
-                command=self._open_page,
-                extraArgs=[type_, number - 1],
-                pos=(-0.32 + number * 0.1, 0, 0.47 if type_ == "note" else 0.44,),
-            ),
-        }
-        self._pages[type_].append(page_rec)
+        type_, title, page_text = base.labels.JOURNAL_PAGES[num]  # noqa: F821
+        page_rec = {"page": page_text, "type": type_, "title": title}
+
+        self._pages.append(page_rec)
+
+        if self._opened_num is None:
+            self._opened_num = 0
+            self._page_text["text"] = self._pages[self._opened_num]["page"]
+            self._page_title["text"] = self._pages[self._opened_num]["title"]
 
     def show(self):
         """Show/hide the journal GUI."""

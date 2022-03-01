@@ -4062,6 +4062,7 @@ That's all, Captain, handing command over to you!"""
 JOURNAL_PAGES = (
     (
         "diary",
+        "Panic",
         """Never wrote diaries earlier, but now I
 feel that I need to put all of my
 thoughts down on paper and try to
@@ -4132,6 +4133,7 @@ do something.""",
     ),
     (
         "note",
+        "Wahrsager",
         """Interview protocol from 2021-06-23,
 Zurich, 56th World Scientist Summit.
 Interviewer: Emily Schlosser
@@ -4199,6 +4201,7 @@ online meeting.""",
     ),
     (
         "diary",
+        "Proposal",
         """When it became obvious that the
 Stench adversity is real, and it's
 not going to stop in the near future,
@@ -4252,6 +4255,7 @@ made a decision.""",
     ),
     (
         "note",
+        "Scientist",
         """Following is what I've heard from one
 of the motel dwellers, who was in
 a very dissatisfied manner telling
@@ -4333,6 +4337,7 @@ conversation ends.""",
     ),
     (
         "note",
+        "Bastards",
         """Helga Wagner science diary.
 A record made on 2021-07-06.
 Several dark spots on the paper
@@ -4415,6 +4420,7 @@ there... Later we all saw it...""",
     ),
     (
         "diary",
+        "Time To Act",
         """When we decided on who's going for
 the Adjutant, when and how, it
 appeared that only six of us are
@@ -4490,6 +4496,7 @@ Most likely we were.""",
     ),
     (
         "diary",
+        "Stench",
         """The Stench, the Stench, the Stench...
 What is it? Despite of everything
 that we saw, I still don't even have
@@ -4567,6 +4574,7 @@ in the queue to survival?""",
     ),
     (
         "note",
+        "Unterriff",
         """Following is the log of an encrypted
 radio transmission we've intercepted.
 It contains a conversation between
@@ -4636,6 +4644,7 @@ way. Helga Wagner group out.
     ),
     (
         "note",
+        "Advice",
         """The following is a log of another
 radio transmission we've
 intercepted from Unterriff.

@@ -884,7 +884,7 @@ class MainMenu:
             frameSize=(-0.15, 0.15, -0.15, 0.15),
             relief="flat",
             command=webbrowser.open,
-            extraArgs=["https://open.spotify.com/artist/1LAJZmgQeOryYUV8qoF9tF"],
+            extraArgs=["https://kvalia.net/"],
             clickSound=self.click_snd,
         )
         but.setTransparency(TransparencyAttrib.MAlpha)
