@@ -8,6 +8,7 @@ import copy
 import random
 
 from direct.interval.IntervalGlobal import LerpPosHprScaleInterval
+from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.core import TextureStage, Texture, TransparencyAttrib
 
 from utils import address, chance, take_random
@@ -115,6 +116,7 @@ class Block:
         self.directions = directions
         self.branch = branch
         self.is_station = is_station
+        self._fireflies = None
 
         if desc:  # loading block
             self._station_side = desc["station_side"]
@@ -452,6 +454,12 @@ class Block:
             mist.setBin("transparent", 30)
             LerpPosHprScaleInterval(mist, 70, (0, -5, 0), 0, (1.3, 1.1, 1.3)).start()
 
+        if base.world.sun.day_part == "night" and chance(70):  # noqa: F821
+            self._fireflies = ParticleEffect()
+            self._fireflies.loadConfig("effects/fireflies.ptf")
+            self._fireflies.setPos(random.randint(-1, 1), 0, 0.2)
+            self._fireflies.start(self.rails_mod, render)  # noqa: F821
+
         if chance(10):
             light_rays = loader.loadModel(address("light_rays"))  # noqa: F821
             light_rays.reparentTo(self.rails_mod)
@@ -543,3 +551,7 @@ class Block:
         self._surfs.clear()
         self.rails_mod.removeNode()
         self.rails_mod = None
+
+        if self._fireflies is not None:
+            self._fireflies.disable()
+            self._fireflies = None
