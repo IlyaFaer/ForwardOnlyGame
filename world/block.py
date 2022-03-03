@@ -459,9 +459,9 @@ class Block:
             self._fireflies.loadConfig("effects/fireflies.ptf")
 
             if chance(50):
-                self._fireflies.setPos(random.uniform(-0.1, -1), 0, 0.2)
+                self._fireflies.setPos(random.uniform(-0.15, -1), 0, 0.2)
             else:
-                self._fireflies.setPos(random.uniform(0.1, 1), 0, 0.2)
+                self._fireflies.setPos(random.uniform(0.15, 1), 0, 0.2)
 
             self._fireflies.start(self.rails_mod, render)  # noqa: F821
 

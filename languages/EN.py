@@ -383,7 +383,7 @@ MECHANIC_DESC = {
             (
                 "The Adjutant includes three parts and a rest\n"
                 "zone, where you can arrange your crewmates.\n"
-                "A wise units rotation is the key to success.\n\n"
+                "Wise units rotation is the key to success.\n\n"
                 "Train speed is reflected in the right bottom corner.\n"
                 "Hold W and S keys to accelerate and decelerate."
             ),
@@ -987,7 +987,7 @@ You're getting 80$""",
 skinhead scums are jumped out of the bus. Your whole crew, seeing
 them, starts to shoot, and after six-eight seconds all of the rivals are
 falling down on the ground. Taking a quick look at the vehicle through
-binoculars you're commanding {name1} and {name2} to go to it. They
+binoculars, you're commanding {name1} and {name2} to go to it. They
 both energetically jumping off the Train and moving to the bus. You're
 staying on the watch for case if more skinheads will come. Your
 people entering inside the car, and returning back into a field of
@@ -1129,13 +1129,13 @@ gets out a bunch of dollar papers. "Plus to the filter" - {heshe2} smiles.
 You're getting 1 smoke filter and 60$""",
             """{name1}, {name2} and {name3} energetically jump off the Train
 and take the direction to the trailers camp. After few seconds of
-silence they hear some movement near the cars. Uppering their guns,
+silence they hear movement near the cars. Uppering their guns,
 they see several skinheads with pistols, swingingly moving to them.
 Not giving a chance, your people shoot out them and start to move
 from one trailer to another. In every one of them they see injectors,
 white powder, stinky vomit and one-three stoned to nearly death
 skinheads. "A drug party, ha?" - {name2} says. - "Let's take what
-is useful for us and leave them where they are." {name1} and {name3}
+is useful and leave them where they are." {name1} and {name3}
 agreeing on that, and they three start to collect things.
 You're getting 200$""",
         ),
@@ -1150,9 +1150,9 @@ seeing a two-floored construction. Concrete, with metal
 rods, but definitely unfinished - there are no doors,
 window glasses, roof, only bare walls. "Let's make a short
 stop there!" - you're commanding. That's not very logical,
-but something makes you think there is somewhat useful in
-this building. Still, considering the burned houses
-nearby, it's better stay vigilant.""",
+but it makes you think there is somewhat useful in this
+building. Still, considering the burned houses nearby,
+it's better stay vigilant.""",
         "results": (
             """You're deciding to send {name1}, {name2} and {name3}
 to recon the construction site. Your people are preparing for a walk,
@@ -1803,8 +1803,8 @@ the box together and returning back to you with it.
 Adjutant durability +50""",
             """You're sending {name1} with {name2} to take a look
 at the crash site. {name2} takes a big backpack in hope there will be
-something to bring back. Both they are moving to the damaged truck
-and starting to search through the plastic boxes scattered around the
+something to bring back. They are moving to the damaged truck and
+starting to search through the plastic boxes scattered around the
 place. At the first minute they understand that someone already emptied
 every container at the place, probably, the same one who attacked the
 truck - they see a lot of sleeves, shot holes and some blood spots.
@@ -2094,7 +2094,7 @@ useful in this place, it's already taken. Making a couple of circles
 around and carefully looking at what's left, just for sure, {name1}
 takes direction back to the locomotive. Nothing.""",
             """After a short overthinking you decide to send {name1} to
-take a closer look at the camp remnants. Carefully watching around,
+take a look at the camp remnants. Carefully watching around,
 {heshe1} walks to the place. It appears there was a skirmish in
 here: {heshe1} sees bullet liners and even a round of a scorched grass.
 A grenade explosion, ha? There are also several bodies, skinheads and
@@ -2523,17 +2523,16 @@ between several cities. Trying to do whatever they can to help folks
 in the country." Okay then, it's not a bad piece of news. Good to see
 that rulers are still in a strive, together with people.""",
             """{name1} and {name2} taking a direction to the column by your order.
-While they're approaching the big man meeting them, you're
-analyzing the cortege: a lot of cargo, a lot of guns, and...
-refugees!? You didn't see them first, they probably were
-hiding, but now started to peek out. Dirty, ragged, different
-aged... You patiently wait for your people to figure out the
-details. They take something from the big man and turn back
-to the locomotive. "This is a help from a local city - they
-transporting people away from the Stench." - {name2} tells,
-entering the deck house. - "They kindly gave us some medicine."
-- {heshe2} puts a small white box on the table. Well, that's
-actually very kind of them!
+While they approach the big man meeting them, you're analyzing
+the cortege: a lot of cargo, guns, and... refugees!? You
+didn't see them first, they probably were hiding, but now
+started to peek out. Dirty, ragged, different aged... You
+patiently wait for your people to figure out the details. They
+take something from the big man and turn back to the locomotive.
+"This is a help from a local city - they transporting people
+away from the Stench." - {name2} tells, entering the deck
+house. - "They kindly gave us medicine." - {heshe2} puts a
+white box on the table. Well, that's indeed kind!
 Single character can get +30 health""",
             """You decide to send {name1} and {name2} for a speak. They take
 guns and go to the cars, while two men move towards them
@@ -3284,7 +3283,7 @@ motel a long line of cars jamms. You can even see a
 string of people standing in front of the entrance. Looks
 like a lot of Silewer newcomers want to rent a room here.
 Sending your people to try to get inside the building, you
-caught your eyes on two banches of refugees arguing hard.
+caught eyes on two banches of refugees arguing hard.
 Getting closer to them, you can hear they are brawling
 because of the last place in the building. When they see
 you, however, they become silent, gazing at your guns. In
@@ -3516,8 +3515,8 @@ to cleanup the Adjutant. Tidiness is important - so many days
 in the same cold and coarse locomotive rises chances of
 sickness and pests emergence...
 
-At some moment Daren, the Adjutant machinist, approaches you.
-You see he has something to tell you, but he can't find
+At some moment Daren, the Adjutant machinist, approaches
+you. You see he has something to tell, but he can't find
 proper words. "Come on, Daren, birth it." - you say, trying to
 make things faster. "Well... We've a problem. It's big.
 Precisely, we don't have food." Stopping to run the rag, you
@@ -4291,12 +4290,12 @@ They wanted to use it to check if
 people are lying about things
 already happened, and for espionage
 - getting info about what happened
-some time ago, but didn't yet caused
+some time ago, but didn't yet cause
 any consequences. As the machine
 shows how it was actually been,
 without embellishing, hiding or
 concealing, just an objectively
-truth, it all sound really smart.
+truth, it sound really smart.
 Let's say, a spy was rooted a
 couple of days ago into your
 organization; with this machine
@@ -4723,7 +4722,7 @@ you in Unterriff. If you don't have
 anything else, then Unterriff out.
 - H: Helga Wagner group out.""",
     ),
-    ("note", ""),
+    ("note", "", ""),
 )
 
 UNTERRIFF_DISCOVERED_TITLE = "Hope"

@@ -4755,7 +4755,7 @@ JOURNAL_PAGES = (
 - Х: Группа Хельги Вагнер, конец
 связи.""",
     ),
-    ("note", ""),
+    ("note", "", ""),
 )
 
 UNTERRIFF_DISCOVERED_TITLE = "Надежда"
