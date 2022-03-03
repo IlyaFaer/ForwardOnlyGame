@@ -138,6 +138,7 @@ class Train:
         self._bean.reparentTo(self.model)
         self._bean.setPos(0, 1.25, 0.12)
         self._bean.hide()
+        self._bean.setDepthWrite(False)
 
         (
             self._smoke,
@@ -448,7 +449,9 @@ class Train:
 
     def resume_smoke(self, task):
         """Resume the stopped smoke particle effect."""
-        self._smoke.softStart()
+        if not self.smoke_filtered:
+            self._smoke.softStart()
+
         return task.done
 
     def set_physics(self, phys_mgr):

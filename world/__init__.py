@@ -1213,6 +1213,7 @@ class World:
         """Start to play fighting music."""
         if self._cur_music is None:
             self._cur_music = random.choice(self._fight_music)
+            self._cur_music.setVolume(0.2)
             self._cur_music.play()
 
         return task.done

@@ -223,6 +223,10 @@ to send.""",
     """Some outings can turn very
 dangerous, while other are
 sure case. Take your risks!""",
+    """When planning a route on a
+railways scheme, don't
+forget to consider
+outings""",
     """Press M to see the railways
 scheme and choose an
 optimal route""",
@@ -1188,7 +1192,7 @@ that there was nothing useful there, nor interesting. Well, it's
 time to start the engine.""",
             """Your crew mates - {name1}, {name2} and {name3} are taking a direction
  to the construction site. Nothing promises troubles, but when
- they getting down to the basement, the cry tears air. Fast
+ they getting down to the basement, a cry tears air. Fast
  uppering their guns, your messengers see a thin guy, holding
 his hands above his head. "Don't touch me!" - he shouts. As he
 doesn't have a weapon, {name1} takes {hisher1} gun aside. "He is
@@ -4062,9 +4066,9 @@ That's all, Captain, handing command over to you!"""
 JOURNAL_PAGES = (
     (
         "diary",
-        "Panic",
-        """Never wrote diaries earlier, but now I
-feel that I need to put all of my
+        "1. Panic",
+        """Never wrote diaries earlier, but now
+I feel that I need to put all of my
 thoughts down on paper and try to
 look at what happened recently,
 see a bigger picture...
@@ -4133,7 +4137,7 @@ do something.""",
     ),
     (
         "note",
-        "Wahrsager",
+        "2. Wahrsager",
         """Interview protocol from 2021-06-23,
 Zurich, 56th World Scientist Summit.
 Interviewer: Emily Schlosser
@@ -4176,7 +4180,8 @@ predictions.
 
 - E: Sounds incredible! But it seems
 you need the best equipment and
-experts. - H: Sure, our team consists
+experts.
+- H: Sure, our team consists
 of the highest level professionals,
 and it's a great honor for me to work
 with these brilliant people! As for
@@ -4201,7 +4206,7 @@ online meeting.""",
     ),
     (
         "diary",
-        "Proposal",
+        "3. Proposal",
         """When it became obvious that the
 Stench adversity is real, and it's
 not going to stop in the near future,
@@ -4255,7 +4260,7 @@ made a decision.""",
     ),
     (
         "note",
-        "Scientist",
+        "4. Scientist",
         """Following is what I've heard from one
 of the motel dwellers, who was in
 a very dissatisfied manner telling
@@ -4337,7 +4342,7 @@ conversation ends.""",
     ),
     (
         "note",
-        "Bastards",
+        "5. Bastards",
         """Helga Wagner science diary.
 A record made on 2021-07-06.
 Several dark spots on the paper
@@ -4420,7 +4425,7 @@ there... Later we all saw it...""",
     ),
     (
         "diary",
-        "Time To Act",
+        "6. Time To Act",
         """When we decided on who's going for
 the Adjutant, when and how, it
 appeared that only six of us are
@@ -4496,7 +4501,7 @@ Most likely we were.""",
     ),
     (
         "diary",
-        "Stench",
+        "7. Stench",
         """The Stench, the Stench, the Stench...
 What is it? Despite of everything
 that we saw, I still don't even have
@@ -4574,7 +4579,7 @@ in the queue to survival?""",
     ),
     (
         "note",
-        "Unterriff",
+        "8. Unterriff",
         """Following is the log of an encrypted
 radio transmission we've intercepted.
 It contains a conversation between
@@ -4644,7 +4649,7 @@ way. Helga Wagner group out.
     ),
     (
         "note",
-        "Advice",
+        "9. Advice",
         """The following is a log of another
 radio transmission we've
 intercepted from Unterriff.
