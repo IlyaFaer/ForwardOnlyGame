@@ -173,6 +173,7 @@ class Enemy:
             self._is_cooldown
             or base.world.is_in_city  # noqa: F821
             or base.train.smoke_filtered  # noqa: F821
+            or base.world.is_near_fork  # noqa: F821
         ):
             return False
 

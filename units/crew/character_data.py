@@ -9,7 +9,7 @@ CLASSES = {
     "male_soldier": {
         "health": 100,
         "energy_gain": 50,
-        "energy_spend": 27,
+        "energy_spend": 26,
         "healing": 22,
         "shots_num": 2,
         "shot_snd": "rifle_shot1",
@@ -17,7 +17,7 @@ CLASSES = {
     "female_soldier": {
         "health": 80,
         "energy_gain": 40,
-        "energy_spend": 27,
+        "energy_spend": 26,
         "healing": 22,
         "shots_num": 2,
         "shot_snd": "rifle_shot1",
@@ -25,7 +25,7 @@ CLASSES = {
     "male_raider": {
         "health": 100,
         "energy_gain": 35,
-        "energy_spend": 21,
+        "energy_spend": 20,
         "healing": 14,
         "shots_num": 1,
         "shot_snd": "shotgun_shot1",
@@ -33,7 +33,7 @@ CLASSES = {
     "female_raider": {
         "health": 80,
         "energy_gain": 30,
-        "energy_spend": 21,
+        "energy_spend": 20,
         "healing": 14,
         "shots_num": 1,
         "shot_snd": "shotgun_shot1",
@@ -41,7 +41,7 @@ CLASSES = {
     "male_anarchist": {
         "health": 100,
         "energy_gain": 50,
-        "energy_spend": 27,
+        "energy_spend": 26,
         "healing": 22,
         "shots_num": 3,
         "shot_snd": "pistol_shot1",
@@ -49,7 +49,7 @@ CLASSES = {
     "female_anarchist": {
         "health": 80,
         "energy_gain": 40,
-        "energy_spend": 27,
+        "energy_spend": 26,
         "healing": 22,
         "shots_num": 2,
         "shot_snd": "pistol_shot1",

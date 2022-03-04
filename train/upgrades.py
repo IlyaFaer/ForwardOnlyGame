@@ -789,9 +789,11 @@ class MachineGun:
 
     def _do_damage(self, event):
         """Do the machine gun damage."""
-        base.world.enemy.active_units[  # noqa: F821
+        enemy = base.world.enemy.active_units.get(  # noqa: F821
             event.getFromNodePath().getName()
-        ].get_damage(7)
+        )
+        if enemy:
+            enemy.get_damage(7)
 
     def _end_aiming(self):
         """Stop aiming and disable aiming GUI."""

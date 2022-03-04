@@ -257,6 +257,9 @@ metal creak.""",
     """Locomotive active weapons
 can only be used
 on enemy territory""",
+    """Want to increase fire power?
+Purchase active weapons
+in a city.""",
     # characters and classes
     """Women are nice and social, they
 reduce stress at any collective""",
@@ -1703,14 +1706,15 @@ Adjutant durability +100""",
     },
     {  # 13
         "name": "Monastery",
-        "desc": """You've caught your eyes on some kind of a big dark spike
-from a very long distance. It was difficult to understand what it
-actually is, but when the Train went around a hill, and the building
-appeared before you in its best, you're seeing an old monastery. Its
-black wood looks rotten, and the big hole on roof makes it clear that
-this building was left years ago. Still the monastery in such a
-wilderness place should have had a big supplies storage. Monks
-probably didn't take everything when they were leaving.""",
+        "desc": """You've caught your eyes on some kind of a big dark
+spike from a very long distance. It was difficult to understand
+what it actually is, but when the Train went around a hill, and
+the building appeared before you in its best, you're seeing an
+old monastery. Its black wood looks rotten, and the big hole
+on roof makes it clear that this building was left years ago.
+Still the monastery in such a wilderness place should have
+had a big supplies storage. Monks probably didn't take
+everything when they were leaving.""",
         "results": (
             """You're sending {name1}, {name2} and {name3} to
 the monastery. {name1} and {name3} are entering the old building,
@@ -1758,15 +1762,17 @@ surprisingly well for this place. {name1}, {name2} and
 {name3} spending a couple of minutes staring at it, and
 its beauty in the midst of devastation inspires them.
 {name1}, {name2} and {name3} getting +20 health""",
-            """By your command {name1}, {name2} and {name3} going to the
-monastery. Entering the old building they see a lot of wood and metal
-wreck. Nothing valuable though, so they are splitting for a more
-careful search. {name3} chooses the basement and goes down into it.
-Walls looking wet, spider web is everywhere, but {heshe3} sees a big chest
-in the first second. The rusty lock doesn't want to broke, so {name3}
-calls others. {name1} and {name2} are coming into the basement and with
-strength of the three they manage to open the chest. With pleasure they
-see gold dishes in it! Most likely not very pricy today, still something.
+            """By your command {name1}, {name2} and {name3} going to
+the monastery. Entering the old building they see a lot of wood
+and metal wreck. Nothing valuable though, so they are splitting
+for a more careful search. {name3} chooses the basement and goes
+down into it. Walls looking wet, spider web is everywhere, but
+{heshe3} sees a big chest in the first second. The rusty lock
+doesn't want to broke, so {name3} calls others. {name1} and
+{name2} are coming into the basement and with strength of the
+three they manage to open the chest. With pleasure they see
+gold dishes in it! Most likely not very pricy today, still
+something.
 You're getting +40$""",
         ),
     },
@@ -1813,7 +1819,7 @@ somewhy, and there is a small black plastic box with several syringes
 inside. Gazing at the label carefully, {name2} understands that it's
 some kind of a not very legal doping. Well, it's still something!
 You're getting 1 stimulator""",
-            """{name1} and {name2} are taking their guns and going to the damaged
+            """{name1} and {name2} take their guns and going to the damaged
 truck. Fastly closing to it, they see a lot of sleeves and shot
 holes - it's not just a crash, someone attacked the transport!
 No bodies around, but your people notice several big and dark
@@ -1826,14 +1832,15 @@ didn't find anything, but broken containers, your people
 returning back to the Train with this only find.
 You're getting +1 medicine""",
             """By your command {name1} and {name2} are gearing up and
-taking a walk to the truck. Coming closer to it, they see that a big fight
-was here. Looks like a gang attacked the transport to rob it or something
-like that. {name1} and {name2} starting to rummage through the boxes
-scattered all around. The fight site appears to be looted several times
-by different people, hopes to find something useful are fading with every
-second, but suddenly {name2} sees an untouched container with energy
-drinks. "Hey, {name1}, come here!" - {heshe2} shouts. They are taking
-the box together to bring it back to the Train.
+taking a walk to the truck. Coming closer to it, they see that a big
+fight was here. Looks like a gang attacked the transport to rob it
+or something like that. {name1} and {name2} starting to rummage
+through the boxes scattered all around. The fight site appears to
+be looted several times by different people, hopes to find
+something useful are fading with every second, but suddenly
+{name2} sees an untouched container with energy drinks. "Hey,
+{name1}, come here!" - {heshe2} shouts. They are taking the box
+together to bring it back to the Train.
 Every character getting +35 energy""",
         ),
     },
@@ -1972,14 +1979,14 @@ You're getting +50$""",
 at the place. Your messengers closing to the silo; silence meets them,
 so they entering inside the buildings. The lack of furniture or
 sign of people - seems like the place is forsaken, and hosts took
-everything. Walking outside the last of three buildings, {name1}
-points to the metal cylinder of silo with {hisher1} head.
-{name2} agrees, and they both get closer to it. Opening the
-steel door, they see that there is no even a gram of grain.
-But pointing a flashlight inside the structure, they catch
-their eyes on two metal boxes. {name2} jumps inside and opens
-the first one: medicines! "Whoh!" - {heshe2} shouts and opens
-the second one: a smoke filter! Now, that's a find!
+everything. Walking outside buildings, {name1} points to the
+metal cylinder of silo with {hisher1} head. {name2} agrees,
+and they both get closer to it. Opening the steel door, they
+see that there is no even a gram of grain. But pointing a
+flashlight inside the structure, they catch their eyes on
+two metal boxes. {name2} jumps inside and opens the first
+one: medicines! "Whoh!" - {heshe2} shouts and opens the
+second one: a smoke filter! Now, that's a find!
 You're getting 1 smoke filter and 1 medicine""",
         ),
     },
@@ -2337,8 +2344,8 @@ Single character can get Masochism""",
     {  # 22
         "name": "Assassin",
         "desc": """In the moment the Train stopped, you're finding your eyes on a dark
-silhouette of an armed man. He doesn't seem aggressive, so you're
-giving him time to come closer. "Hey, guys!" - he says, smiling.
+silhouette of an armed man. He doesn't seem aggressive, so you
+give him time to come closer. "Hey, guys!" - he says, smiling.
 - "Nice to meet you, I may need some help." "We're listening" -
 you answer. "Locals paid me to convince to deal with skinheads,
 who camped in the nearby mine. There are a lot of those imbitsils,
@@ -2456,8 +2463,8 @@ building a new outpost to hold skinheads in this region. The nearby
 city supports this project, so I suppose they are in better condition
 than we are." Nodding your head, you're giving an order to start engine.
 At least that means the next city is a good place for a stop.""",
-            """Running through the crew list, you're deciding to send {name1}
-for negotiations. Energetically {heshe1} takes {hisher1} gun and directs
+            """Running through the crew, you decide to send {name1} for
+negotiations. Energetically {heshe1} takes {hisher1} gun and directs
 to the construction sight, but in the next minute a couple of
 workers are moving out of the outpost, towards {name1}. Getting
 closer to each other, {name1} and workers exchange handshakes, and
@@ -2695,8 +2702,8 @@ seconds. "Well, we're okay, I guess." - {name1} answers to the
 man. "That's great news!" - he almost shouts. - "Maybe you need
 one more gun? We have a potential recruit for you." - he whistles
 to the truck, and someone in baggy clothes jumps down to the ground
-and takes a direction to your people. "The wounds are healed, and
-the element is eager to go to war! We're little bit tired already!"
+and take direction to your people. "The wounds are healed, and
+the element is eager for war! We're little bit tired already!"
 "Well, that's something for our captain to decide" - {name1} answers.
 One person can be recruited""",
             """Your messengers, {name1} and {name2}, take direction to
@@ -2751,16 +2758,16 @@ seem to be very serious, but it's still very unpleasant.
 {name3} getting -7 health and Motion Sickness""",
             """{name1}, {name2} and {name3}, chosen as a talk group, jump
 off the Train and go to the monks. The priests gather together,
-looking at your people with a great attention. {name1} moves forward
+looking at your people with great attention. {name1} moves forward
 and starts to speak with the Lord's people. The dwellers talk with
 meek phrases, looking confused and embarrassed. It seems like they
 don't have a lot of guests here... A couple of minutes of talking
 ends with an invitation for a meal in the church. Exchanging gazes,
 your people politely reject the proposition. Something not right with
 these monks. They speak shy and meek, but their eyes are energetically
-moving on your scouts, making small stops on the guns, knives
-and sometimes on the Train standing in distance. It's better
-not to trust these guys. Thus, your people return empty.""",
+moving on your scouts, making stops on the guns, knives and
+sometimes on the Train standing in distance. It's better not
+to trust these guys. Thus, your people return empty.""",
             """You choose {name1}, {name2} and {name3} as a negotiation
 group. Your people take their guns and move to the monks. After
 several minutes of talking one of the church inhabitants, a
@@ -3025,7 +3032,7 @@ Press J to open/close Captain's journal.""",
                 "goodness": 1,
             },
             "Ignore the problem": {
-                "desc": """It's worth not to stop for such long period. Asking Kenneth
+                "desc": """It's worth not to stop for such a long period. Asking Kenneth
 to wait for some time, you return back to the deckhouse. It
 is better to double check. The Stench frontier is far back
 for now, but three hours later... Looking at the map, you
@@ -3034,8 +3041,8 @@ in these days it's better to keep some spare time. Returning
 back to Kenneth, you tell him to ignore the noises for now.
 He doesn't like your decision very much, you can see it on
 his face, but your common past outweighs everything. You
-helped him and his family more times than you both can count,
-so he's not going to argue with you...
+helped him and his family more times than you both can
+count, so he's not going to argue with you...
 
 Some time later you'll understand that the problem was not
 one of those to be ignored. The axle box will be damaged.
@@ -3073,8 +3080,8 @@ foreign country, tired and shelterless. Maybe there
 is some time to help them a little?""",
         "variants": {
             "Help them to build a camp": {
-                "desc": """Feeling some qualm inside, you give your people order to help
-the children. Losing time is not okay... Still, twenty minutes
+                "desc": """Feeling some qualm inside, you give an order to help the
+children. Losing time is not okay... Still, twenty minutes
 later, seeing your people and children smiling while setting
 up big tents, igniting bonfires and boiling pottage in big
 cauldrons, you forget these heavy thoughts. This small break
@@ -3230,13 +3237,13 @@ towards the threatened people, but they all upper their hands
 in the same moment. "Please, just leave us!" - the old man says
 with a trembling voice. Seeing they became even more frightened
 than before you killed the intruders, you realise that it
-wasn't a good idea to do it all in front of them... Everyone
+wasn't a good idea to do it in front of them... Everyone
 in the room seems to be little bit lost. It probably will be
 better to just leave. Still, you decide to give an order to
 your people to pull both bodies out of the hut and drop them
 in some distance. Without arguments, they take both dead
 policemen and exit the house. After a few seconds long pause
-you throwing the last gaze at the frightened family: "Sorry...
+you throw the last gaze at the frightened family: "Sorry...
 Sorry for the mess." Not getting any sound from them, you're
 leaving the hut.
 
@@ -3397,8 +3404,8 @@ understand that a fight just finished here - a big bus is full of
 bullet holes, and a black jeep lies on its side, also shot bad.
 
 A man walks to you and tells: "Some bandits were following a
-column of black jeeps. Good they didn't decide to stop for us,
-still, several gun bursts hit our bus." Looking at dense smoke
+column of black jeeps. Good they didn't stop for us, still,
+several gun bursts hit our bus." Looking at dense smoke
 rising from it, you get it's not gonna ride. The man notices
 your gaze and asks for help in repair. You start weighing,
 while your collocutor adds: "We searched the jeep for tools -
@@ -3658,8 +3665,8 @@ with someone and try to regulate the situation. Not
 much of hopes, still, it can work...""",
         "variants": {
             "Ask officers to let people ride": {
-                "desc": """Seeing that officers are on the alert and can start
-to shoot at any moment, you approach them slowly and
+                "desc": """Seeing that officers are on alert and can start to
+shoot at any moment, you approach them slowly and
 quietly. The one standing in front seem to be getting
 that you're not a threat, so he nods you. You come
 closer, saying: "Hey! Quite a mess here." The officer
@@ -4185,7 +4192,7 @@ of the highest level professionals,
 and it's a great honor for me to work
 with these brilliant people! As for
 equipment, our government provides
-us everything we needed since we've
+us everything we need since we've
 run the very first presentation.
 
 - E: Could you tell us how it was?
