@@ -472,7 +472,7 @@ class Crew:
         except KeyError:
             # character was killed during calculations
             cohesion = 0
-        return 1 + cohesion * 0.5 * (2 if for_char.class_ == "anarchist" else 1)
+        return 1 + cohesion * 0.5 * (1.9 if for_char.class_ == "anarchist" else 1)
 
     def delete_relations(self, char_id):
         """Delete all the relations of the given character.
