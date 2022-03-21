@@ -695,7 +695,7 @@ class MainMenu:
         self.cred_wids.append(
             DirectButton(
                 parent=self._main_fr,
-                pos=(0.11, 0, 0.29),
+                pos=(center - 0.18, 0, 0.29),
                 frameTexture="credits/youtube.png",
                 frameSize=(-0.056, 0.056, -0.029, 0.029),
                 relief="flat",
@@ -707,7 +707,7 @@ class MainMenu:
         self.cred_wids.append(
             DirectButton(
                 parent=self._main_fr,
-                pos=(center, 0, 0.29),
+                pos=(center - 0.04, 0, 0.29),
                 frameTexture="credits/indie_db.png",
                 frameSize=(-0.058, 0.058, -0.029, 0.029),
                 relief="flat",
@@ -718,7 +718,7 @@ class MainMenu:
         )
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.38, 0, 0.29),
+            pos=(center + 0.09, 0, 0.29),
             frameTexture="credits/discord.png",
             frameSize=(-0.045, 0.045, -0.045, 0.045),
             relief="flat",
@@ -728,6 +728,20 @@ class MainMenu:
         )
         but.setTransparency(TransparencyAttrib.MAlpha)
         self.cred_wids.append(but)
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(center + 0.2, 0, 0.29),
+            frameTexture="credits/twitter.png",
+            frameSize=(-0.045, 0.045, -0.045, 0.045),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://twitter.com/IlyaFaer"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
         self.cred_wids.append(
             DirectLabel(  # Stack
                 parent=self._main_fr,
