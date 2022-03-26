@@ -91,6 +91,7 @@ class ForwardOnly(ShowBase):
         }
         self._heads = {}
         self._cur_mouse_pointer = "normal"
+        self.scp_pages = []
         self.helped_children = False
         self.decisions = {}
 
@@ -234,6 +235,11 @@ class ForwardOnly(ShowBase):
 
         self._heads[enemy] += 1
 
+    def add_scp_page(self):
+        """Add a new SCP dossier page."""
+        if len(self.scp_pages) < 3:
+            self.scp_pages.append(self.labels.SCP_PAGES[len(self.scp_pages)])
+
     def clear_heads(self):
         """Clear all the records about previously destroyed enemies."""
         self._heads.clear()
@@ -338,6 +344,7 @@ class ForwardOnly(ShowBase):
         self.plus_resource("stimulators", save["stimulators"])
         self.helped_children = save["helped_children"]
         self.decisions = save["decisions"]
+        self.scp_pages = save["scp_pages"]
 
         self.res_gui.update_resource(
             "places_of_interest", str(save["chapter"] + 1) + "/10"
@@ -413,6 +420,7 @@ class ForwardOnly(ShowBase):
         save["winned"] = self.journal.winned
         save["helped_children"] = self.helped_children
         save["decisions"] = self.decisions
+        save["scp_pages"] = self.scp_pages
 
         save.close()
 

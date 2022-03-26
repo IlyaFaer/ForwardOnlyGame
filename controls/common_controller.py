@@ -174,7 +174,7 @@ class CommonController:
                 align=TextNode.ACenter,
                 font=base.main_font,  # noqa: F821
                 scale=0.055,
-                pos=(0, 0.7),
+                pos=(0, 0.8),
                 fg=(0.7, 0.7, 0.7, 1),
             )
 
@@ -232,6 +232,7 @@ class CommonController:
         base.accept("r", self._show_char_relations)  # noqa: F821
         base.accept("m", base.world.rails_scheme.show)  # noqa: F821
         base.accept("j", base.journal.show)  # noqa: F821
+        base.accept("0", base.main_menu.show_scp)  # noqa: F821
 
         # configure mouse collisions
         col_node = CollisionNode("mouse_ray")

@@ -43,7 +43,7 @@ class Journal:
             parent=self._main_fr,
             frameSize=(-0.35, 0.3, -0.46, 0.5),
             frameColor=(0, 0, 0, 0),
-            canvasSize=(-0.31, 0.3, -3, 1.5),
+            canvasSize=(-0.31, 0.3, -3.3, 1.5),
             state=DGG.NORMAL,
             pos=(0, 0, -0.1),
             verticalScroll_frameSize=(-0.003, 0.003, -0.5, 0.5),
@@ -108,7 +108,7 @@ class Journal:
             text_font=base.cursive_font,  # noqa: F821
             text_align=TextNode.ALeft,
             text_fg=(0, 0, 0.25, 1),
-            frameSize=(-0.02, 0.02, -3.5, 0.5),
+            frameSize=(-0.02, 0.02, -3.8, 0.5),
             frameColor=(0, 0, 0, 0),
             pos=(-0.27, 0, 1.45),
         )

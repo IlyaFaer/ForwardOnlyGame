@@ -71,6 +71,12 @@ class MainMenu:
         )
         self._menu_music.setVolume(0.19)
 
+        self._scp_num = 0
+        self._scp_frame = DirectFrame(
+            frameSize=(-0.57, 0.57, -0.775, 0.775), state=DGG.NORMAL,
+        )
+        self._scp_frame.hide()
+
         self.tactics_wids = []
         self.save_wids = []
         self.conf_wids = []
@@ -1284,3 +1290,22 @@ class MainMenu:
             extraArgs=[self._menu_music],
             appendTask=False,
         )
+
+    def show_scp(self):
+        """Show/hide SCP dossier pages."""
+        if self._scp_num == 0:
+            self._scp_frame.show()
+
+        if self._scp_num == 3:
+            self._scp_frame.hide()
+            self._scp_num = 0
+            return
+
+        try:
+            self._scp_frame["frameTexture"] = (
+                "gui/tex/" + base.scp_pages[self._scp_num]  # noqa: F821
+            )
+            self._scp_num += 1
+        except IndexError:
+            self._scp_frame.hide()
+            self._scp_num = 0

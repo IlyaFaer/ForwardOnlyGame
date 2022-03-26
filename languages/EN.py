@@ -104,6 +104,9 @@ New Year spirit:
 
 St. Valentine's Day:
 9 - toggle the mode
+
+SCP Crossover:
+0 - toggle dossiers
 """
 
 RESOURCES = (
@@ -3104,7 +3107,9 @@ The Stench frontier came 20 miles closer to you
 
 A note added into Captain's journal. You can read it
 on move not to stay long at the same place, losing
-distance from the Stench frontier.""",
+distance from the Stench frontier.
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (
                     ("do_build_camp_effect", []),
                     ("do_stench_moves_effect", [20]),
@@ -3140,7 +3145,9 @@ bring more people under the skinhead banners.
 
 A note added into Captain's journal. You can read it
 on move not to stay long at the same place, losing
-distance from the Stench frontier.""",
+distance from the Stench frontier.
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (
                     ("do_enemy_inc_effect", []),
                     ("do_plus_resource", ["medicine_boxes", 1]),
@@ -3174,7 +3181,9 @@ why it was left on your table, but it should be read.
 
 A note added into Captain's journal. You can read it
 on move not to stay long at the same place, losing
-distance from the Stench frontier.""",
+distance from the Stench frontier.
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (("do_no_effect", []),),
                 "goodness": 3,
             },
@@ -3334,7 +3343,9 @@ You deal with fire fast, but still the Adjutant gets
 some damage.
 
 The Adjutant loses 70 Durability
-You've got one more note in the Captain's journal""",
+You've got one more note in the Captain's journal
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (("do_locomotive_damage", [70]),),
                 "goodness": 5,
             },
@@ -3361,7 +3372,10 @@ Soon all the Silewer will know that armed foreigners forced
 a pregnant woman to leave the motel, where she was going to
 rest after long road. This will bring more people into the
 skinhead bands.
-You've got one more note in the Captain's journal.""",
+
+You've got one more note in the Captain's journal.
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (("do_enemy_inc_effect", []),),
                 "goodness": 3,
             },
@@ -3391,7 +3405,9 @@ wounds, still, there are several small injuries. Not
 the best stop!
 
 All people in the crew getting -20 health
-You've got one more note in the Captain's journal""",
+You've got one more note in the Captain's journal
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (("do_characters_effect", [{"health": -20}]),),
                 "goodness": 1,
             },
@@ -3448,7 +3464,10 @@ they at least can now move forward.
 
 The Stench frontier came 20 miles closer to you.
 In the black jeep your people found a piece of Helga's
-diary. It's added to your journal, worth reading.""",
+diary. It's added to your journal, worth reading.
+
+An SCP dossier page acquired. Press 0 to toggle.
+""",
                 "effects": (("do_stench_moves_effect", [20]),),
                 "goodness": 5,
             },
@@ -3480,7 +3499,9 @@ those people, so you're not able to fix problems on the
 locomotive. The Adjutant getting -70 Durability.
 
 In the black jeep your people found a piece of Helga's
-diary. It's added to your journal, worth reading.""",
+diary. It's added to your journal, worth reading.
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (("do_locomotive_damage", [70]), ("do_get_money", [80])),
                 "goodness": 3,
             },
@@ -3510,7 +3531,9 @@ crew to search the black jeep for anything useful and
 continue the road. Survival - so, let's not waste time!
 
 In the black jeep your people found a piece of Helga's
-diary. It's added to your journal, worth reading.""",
+diary. It's added to your journal, worth reading.
+
+An SCP dossier page acquired. Press 0 to toggle.""",
                 "effects": (("do_no_effect", []),),
                 "goodness": 1,
             },
@@ -4189,10 +4212,12 @@ you need the best equipment and
 experts.
 - H: Sure, our team consists
 of the highest level professionals,
-and it's a great honor for me to work
-with these brilliant people! As for
-equipment, our government provides
-us everything we need since we've
+some of them even came from SCP
+Foundation itself! It's a great
+honor for me to work with these
+brilliant people! As for equipment,
+our government provides us
+everything we need since we've
 run the very first presentation.
 
 - E: Could you tell us how it was?
@@ -4289,7 +4314,8 @@ the phone. He said she was reporting.
 According to what our man heard,
 they were working on some kind of a
 machine, which attracted government
-attention pretty strong.
+and SCP Foundation attention
+pretty strong.
 
 It's able to make a window into the
 past (Wahrsager project, no doubts).
@@ -4300,11 +4326,10 @@ already happened, and for espionage
 some time ago, but didn't yet cause
 any consequences. As the machine
 shows how it was actually been,
-without embellishing, hiding or
-concealing, just an objectively
-truth, it sound really smart.
-Let's say, a spy was rooted a
-couple of days ago into your
+without hiding or concealing,
+just an objective truth, it sounds
+smart. Let's say, a spy was rooted
+a couple of days ago into your
 organization; with this machine
 you can see the past, the period
 when he was recruited and
@@ -4376,6 +4401,10 @@ boyfriend. Blackmail! So stupid that
 I want to puke!!! A machine which
 can PREDICT FUTURE will be used
 for prying at deeds of the last days!
+I hoped that at least SCP will say
+something... But they are too busy
+with their own organization to
+argue with our government.
 
 Of course, now I can't leave. They've
 thrown hooks, and now we all are
@@ -4847,3 +4876,9 @@ a good strong reason. Even the End Of
 Days doesn't destroy your compassion
 and human decency. Hold this!
 """
+
+SCP_PAGES = [
+    "scp_1_eng.png",
+    "scp_2_eng.png",
+    "scp_3_eng.png",
+]

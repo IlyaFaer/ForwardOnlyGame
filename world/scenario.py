@@ -297,6 +297,9 @@ class Scenario:
 
             base.world.drop_place_of_interest()  # noqa: F821
 
+        if self.current_chapter in (1, 3, 4):
+            base.add_scp_page()  # noqa: F821
+
         return task.done
 
     def show_chapter_situation(self):
