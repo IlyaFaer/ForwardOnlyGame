@@ -90,6 +90,7 @@ class World:
         self.sun = Sun(day_part_desc)
         self.city_gui = CityGUI()
         self.rails_scheme = RailsScheme(self._map)
+        self.meet_scp = False
 
         self._fight_music = []
         for name in ("Aggression", "Rage", "Panic", "Anger"):
@@ -1051,6 +1052,11 @@ class World:
                     1, base.train.ctrl.stop, "stop_train"  # noqa: F821
                 )
                 base.train.ctrl.silence_move_snd()  # noqa: F821
+
+        if self.meet_scp:
+            self.sun.switch_to_night()
+            self.meet_scp = False
+            loader.loadSfx("sounds/thunder.ogg").play()  # noqa: F821
 
         if self._et_blocks:
             self._exiting_et = False

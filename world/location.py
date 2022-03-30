@@ -22,8 +22,8 @@ PLAINS_GRASS = (
 LOCATION_CONF = {
     "ambient_sounds": ("meadow_noon", "meadow_night"),
     "with_quantity": (
-        {"models": PLAINS_TREES, "quantity": (17, 25), "square": "wide"},
-        {"models": ("small_tree1",), "quantity": (1, 3), "square": "wide"},
+        {"models": PLAINS_TREES, "quantity": (22, 30), "square": "wide"},
+        {"models": ("small_tree1",), "quantity": (2, 4), "square": "wide"},
         {"models": ("stump1",), "quantity": (1, 4), "square": "wide"},
         {"models": PLAINS_GRASS, "quantity": (20, 35), "square": "wide"},
         {"models": ("stone1",), "quantity": (2, 8), "square": "wide"},

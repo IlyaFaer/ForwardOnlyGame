@@ -75,10 +75,10 @@ class Sun:
             self._color, self._next_color, self._day_part_duration
         )
 
-        self._amb_light, self._dir_light, sun_np = self._set_general_lights(
+        self._amb_light, self._dir_light, self.sun_np = self._set_general_lights(
             base.train.node  # noqa: F821
         )
-        self._set_day_night_cycle(sun_np, day_part_desc)
+        self._set_day_night_cycle(self.sun_np, day_part_desc)
 
     @property
     def day_part(self):
@@ -215,6 +215,30 @@ class Sun:
         self._amb_light.setColor(self._color["amb"])
         self._color_step += 1
         return task.again
+
+    def switch_to_night(self):
+        """Switch day time to night in one moment."""
+        self._color = {
+            "name": "night",
+            "dir": Vec4(0.05, 0.05, 0.05, 1),
+            "amb": Vec4(0.14, 0.14, 0.14, 1),
+        }
+        self._next_color = {
+            "name": "morning",
+            "dir": Vec4(0.34, 0.45, 0.5, 1),
+            "amb": Vec4(0.4, 0.4, 0.4, 1),
+        }
+        self._dir_light.setColor(self._color["dir"])
+        self._amb_light.setColor(self._color["amb"])
+
+        self._arch_int.finish()
+        self._arch_int = MopathInterval(
+            self._path,
+            self.sun_np,
+            duration=self._day_part_duration * self._step_duration * 3,
+            name="sun_interval",
+        )
+        self._arch_int.start()
 
     def _calc_color_vec(self, color, next_color, steps):
         """Calculate vector to change color in given steps number.
