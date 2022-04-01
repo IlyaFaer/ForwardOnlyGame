@@ -829,7 +829,7 @@ class Character(Shooter, Unit):
         """Clear this character.
 
         Release models and sounds memory, release the part
-        cell and delete the character from the team list.
+        cell and delete the character from the crew list.
         """
         self.model.cleanup()
         self._health_bar.removeNode()

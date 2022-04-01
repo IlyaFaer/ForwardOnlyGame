@@ -19,9 +19,13 @@ from direct.interval.IntervalGlobal import (
 from direct.interval.MopathInterval import MopathInterval
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
-from panda3d.core import Vec3
+from panda3d.core import CollisionNode, CollisionSphere, PointLight, Vec3
 
-from utils import address
+from direct.interval.IntervalGlobal import LerpAnimInterval
+
+from const import MOUSE_MASK, SHOT_RANGE_MASK
+from units.shooter import Shooter
+from utils import address, chance, take_random
 
 BARRIER_THRESHOLD = 8
 ROCKET_THRESHOLD = 16
@@ -143,3 +147,303 @@ class Rocket:
         taskMgr.doMethodLater(  # noqa: F821
             2, self._smoke.disable, "disable_rocket_smoke", extraArgs=[],
         )
+
+
+class SCPTrain:
+    """SCP rival train object."""
+
+    def __init__(self):
+        self._positions = [-0.25, -0.07, 0.06, 0.22]
+        self._side = random.choice((0.7, -0.7))
+        self._glow_step = 0.05
+        self._glow_strength = 0.2
+
+        self.wave = 1
+        self.model = loader.loadModel(address("SCP"))  # noqa: F821
+        self.model.reparentTo(base.train.model)  # noqa: F821
+        self.model.setX(self._side)
+
+        self._lamp = PointLight("scp_glow")
+        self._lamp.setColor((0.39, 0, 0.59, 1))
+        self._lamp.setAttenuation(self._glow_strength)
+        lamp_np = self.model.attachNewNode(self._lamp)
+        lamp_np.setZ(0.2)
+        render.setLight(lamp_np)  # noqa: F821
+
+        taskMgr.doMethodLater(0.06, self._glowing_pulse, "scp_glowing")  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            1, self._gen_instances, "generate_instances"
+        )
+
+    @property
+    def side(self):
+        """Side, where the SCP train is located.
+
+        Returns:
+            str: The current side letter.
+        """
+        return "l" if self._side < 0 else "r"
+
+    def _gen_instances(self, task):
+        """Generate enemy instances.
+
+        Enemy instances are copies of the Adjutant crew members.
+        """
+        num_insts = 0
+        delay = 0.5
+        for num, char in enumerate(base.team.chars.values()):  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
+                delay,
+                base.world.enemy.prepare_scp_instance,  # noqa: F821
+                str(num) + "_scp_instance",
+                extraArgs=[self, self._positions, char, num],
+            )
+            delay += random.uniform(0.5, 1.2)
+            num_insts += 1
+            if num_insts == 4:
+                break
+
+        return task.done
+
+    def _glowing_pulse(self, task):
+        """Play SCP train glow pulsating effect."""
+        self._glow_strength += self._glow_step
+        self._glow_strength = round(self._glow_strength, 2)
+
+        self._lamp.setAttenuation(self._glow_strength)
+
+        if self._glow_strength in (0.2, 1.3):
+            self._glow_step *= -1
+
+        return task.again
+
+    def next_wave(self):
+        """Start the next wave of SCP train and instances attack."""
+        self.wave += 1
+        self._positions = [-0.25, -0.07, 0.06, 0.22]
+        self._side *= -1
+
+        self.model.setX(self._side)
+
+        taskMgr.doMethodLater(  # noqa: F821
+            1, self._gen_instances, "generate_instances"
+        )
+
+
+class SCPInstance(Shooter):
+    """An SCP instance.
+
+    An enemy unit appearing on SCP train. Represents
+    a copy of one of the Adjutant crew members.
+
+    Args:
+        class_data (dict):
+            Description of a class of the unit, whose copy this
+            SCP instance must be.
+        class_ (str): The original unit class name.
+        sex (str): The original unit sex.
+        scp_train (world.objects.SCPTrain): The SCP train object.
+        index (int): The instance number.
+        enemy_handler (panda3d.core.CollisionHandlerEvent):
+            Enemy units collisions handler.
+    """
+
+    def __init__(
+        self, class_data, class_, sex, positions, scp_train, index, enemy_handler
+    ):
+        self._scp_train = scp_train
+        self.id = "scp_instance_" + str(index)
+        self.is_dead = False
+        self.health = class_data["health"]
+
+        Shooter.__init__(self)
+
+        animations = {
+            name: address(class_ + "-" + name) for name in ("die", "stand_and_aim")
+        }
+
+        self.model = Actor(address(sex + "_" + class_), animations)
+        self.model.reparentTo(scp_train.model)
+        self.model.enableBlend()
+        self.model.setControlEffect("stand_and_aim", 1)
+        self.model.loop("stand_and_aim")
+
+        self._particles = ParticleEffect()
+        self._particles.loadConfig(
+            "effects/instance_appear_{}.ptf".format(self._scp_train.side)
+        )
+        self._particles.start(self.model, render)  # noqa: F821
+        taskMgr.doMethodLater(  # noqa: F821
+            1.7, self._particles.disable, self.id + "_stop_appearing", extraArgs=[]
+        )
+
+        self._target = None
+        self.node = self.model.attachNewNode("np_" + self.id)
+        self.shot_snd = self._set_shoot_snd(class_data["shot_snd"])
+
+        self._col_node = self._init_col_node(
+            SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
+        )
+        base.common_ctrl.traverser.addCollider(  # noqa: F821
+            self._col_node, enemy_handler
+        )
+
+        if class_ == "soldier":
+            z = 0.064 if sex == "male" else 0.062
+        elif class_ == "raider":
+            z = 0.047
+        elif class_ == "anarchist":
+            z = 0.06 if sex == "male" else 0.057
+
+        self._shoot_anim = self._set_shoot_anim(
+            (0.004, 0.045, z), 97, class_data["shots_num"]
+        )
+
+        y_pos = take_random(positions)
+        self.model.setPos(
+            -0.065 if scp_train.side == "r" else 0.065, y_pos, 0.09,  # noqa: F821
+        )
+        if scp_train.side == "r":
+            self.model.setH(90)
+            self.current_part = base.train.parts["part_right"]  # noqa: F821
+        else:
+            self.model.setH(-90)
+            self.current_part = base.train.parts["part_left"]  # noqa: F821
+
+        self.current_part.enemies.append(self)
+
+        taskMgr.doMethodLater(  # noqa: F821
+            1.5, self._choose_target, self.id + "_choose_target"
+        )
+
+    @property
+    def damage(self):
+        """Damage amount for one shot."""
+        return random.choice((2, 3))
+
+    @property
+    def shooting_speed(self):
+        """Pause between shots."""
+        return 1.7 + random.uniform(0.1, 0.9)
+
+    def _choose_target(self, task):
+        """Choose a target to shoot."""
+        if self.current_part.is_covered:
+            if self._target != base.train:  # noqa: F821
+                self._target = base.train  # noqa: F821
+
+                # (re-)start shooting
+                self._stop_tasks("_shoot")
+                taskMgr.doMethodLater(  # noqa: F821
+                    0.5, self._shoot, self.id + "_shoot"
+                )
+        else:
+            targets = self.current_part.chars + [base.train]  # noqa: F821
+
+            if self._target not in targets or chance(5):
+                self._target = random.choice(targets)
+
+                # (re-)start shooting
+                self._stop_tasks("_shoot")
+                taskMgr.doMethodLater(  # noqa: F821
+                    0.5, self._shoot, self.id + "_shoot"
+                )
+
+        task.delayTime = 0.5
+        return task.again
+
+    def _die(self):
+        """Instance death sequence.
+
+        Stop all the character's tasks, play death animation
+        and plan the character object clearing.
+        """
+        if not Shooter._die(self):
+            return False
+
+        self.is_dead = True
+        base.common_ctrl.traverser.removeCollider(self._col_node)  # noqa: F821
+        self._col_node.removeNode()
+
+        taskMgr.doMethodLater(  # noqa: F821
+            self.clear_delay, self.clear, self.id + "_clear"
+        )
+
+        LerpAnimInterval(self.model, 0.1, "stand_and_aim", "die").start()
+        self.model.play("die")
+
+        taskMgr.doMethodLater(3, self._hide, self.id + "_hide")  # noqa: F821
+
+    def _hide(self, task):
+        """Hide the main model."""
+        self.model.hide()
+        return task.done
+
+    def _init_col_node(self, from_mask, into_mask, solid):
+        """Initialize this instance collision node.
+
+        Args:
+            from_mask (panda3d.core.BitMask_uint32_t_32):
+                FROM collision mask.
+            into_mask (panda3d.core.BitMask_uint32_t_32):
+                INTO collision mask.
+            solid (panda3d.core.CollisionSolid):
+                Collision solid for this unit.
+        """
+        col_node = CollisionNode(self.id)
+        col_node.setFromCollideMask(from_mask)
+        col_node.setIntoCollideMask(into_mask)
+        col_node.addSolid(solid)
+        return self.model.attachNewNode(col_node)
+
+    def _missed_shot(self):
+        """Chance of the instance shot missed."""
+        return chance(20)
+
+    def _stop_tasks(self, *names):
+        """Stop this instance related tasks.
+
+        Args:
+            names (tuple): Tasks' names to stop.
+        """
+        for name in names:
+            taskMgr.remove(self.id + name)  # noqa: F821
+
+    def get_damage(self, damage):
+        """Getting damage.
+
+        Start dying if needed.
+
+        Args:
+            damage (int): Damage points to get.
+        """
+        self.health -= damage
+        if self.health <= 0:
+            self._die()
+
+    @property
+    def clear_delay(self):
+        """
+        Delay between this instance death and clearing the
+        instance object.
+
+        Returns:
+            float: Seconds to wait before clearing.
+        """
+        return 3.5
+
+    def clear(self, task):
+        """Clear this instance.
+
+        Release models and sounds memory, release the part
+        cell and delete the instance from the instances list.
+        """
+        self.model.cleanup()
+        self.model.removeNode()
+        base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
+        self.current_part.enemies.remove(self)
+
+        if not self.current_part.enemies:
+            self._scp_train.next_wave()
+
+        return task.done
