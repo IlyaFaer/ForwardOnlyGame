@@ -19,7 +19,14 @@ from direct.interval.IntervalGlobal import (
 from direct.interval.MopathInterval import MopathInterval
 from direct.particles.ParticleEffect import ParticleEffect
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
-from panda3d.core import CollisionNode, CollisionSphere, PointLight, Vec3
+from panda3d.core import (
+    CollisionNode,
+    CollisionSphere,
+    PerspectiveLens,
+    PointLight,
+    Spotlight,
+    Vec3,
+)
 
 from direct.interval.IntervalGlobal import LerpAnimInterval
 
@@ -157,6 +164,11 @@ class SCPTrain:
         self._side = random.choice((0.7, -0.7))
         self._glow_step = 0.05
         self._glow_strength = 0.2
+        self._ray_strength = 70
+        self._move_int = None
+        self._ray = None
+        self._ray_step = 0.9
+        self._ray_np = None
 
         self.wave = 1
         self.model = loader.loadModel(address("SCP"))  # noqa: F821
@@ -175,6 +187,23 @@ class SCPTrain:
             1, self._gen_instances, "generate_instances"
         )
 
+        lens = PerspectiveLens()
+        lens.setNearFar(0, 30)
+        lens.setFov(30, 30)
+
+        self._ray = Spotlight("scp_ray")
+        self._ray.setColor((0.39, 0, 0.59, 1))
+        self._ray.setLens(lens)
+        self._ray.setExponent(70)
+
+        self._ray_np = base.train.model.attachNewNode(self._ray)  # noqa: F821
+        self._ray_np.setPos(0, 0, -50)
+        self._ray_np.setP(-90)
+        render.setLight(self._ray_np)  # noqa: F821
+
+        taskMgr.doMethodLater(10, self._ray_charge, "scp_ray_charge")  # noqa: F821
+        taskMgr.doMethodLater(7, self._float_move, "float_move")  # noqa: F821
+
     @property
     def side(self):
         """Side, where the SCP train is located.
@@ -183,6 +212,33 @@ class SCPTrain:
             str: The current side letter.
         """
         return "l" if self._side < 0 else "r"
+
+    def _ray_charge(self, task):
+        """Do a light ray attack.
+
+        Represents a scorching ray of light, coming
+        from the skies to the Adjutant.
+        """
+        task.delayTime = 0.07
+
+        if self._ray_np.getZ() == -50:
+            self._ray_np.setZ(0.7)
+            self._ray_np.setY(random.uniform(-0.4, 0.4))
+
+        if self._ray_strength < 0.03:
+            self._ray_step = 1.1
+
+        self._ray_strength *= self._ray_step
+
+        if self._ray_strength > 70:
+            self._ray_np.setZ(-50)
+            self._ray_step = 0.9
+            self._ray_strength = 70
+            taskMgr.doMethodLater(10, self._ray_charge, "scp_ray_inc")  # noqa: F821
+            return task.done
+
+        self._ray.setExponent(self._ray_strength)
+        return task.again
 
     def _gen_instances(self, task):
         """Generate enemy instances.
@@ -205,6 +261,27 @@ class SCPTrain:
 
         return task.done
 
+    def _float_move(self, task):
+        """Make enemy floatly move along the Train."""
+        self._move(random.randint(2, 4), (self._side, random.uniform(-0.2, 0.2), 0))
+        task.delayTime = random.randint(4, 5)
+        return task.again
+
+    def _move(self, period, new_pos):
+        """Run a new movement interval with the given parameters.
+
+        Args:
+            period (tuple): Interval duration bounds.
+            new_pos (tuple): New enemy position.
+        """
+        if self._move_int is not None:
+            self._move_int.pause()
+
+        self._move_int = LerpPosInterval(
+            self.model, period, new_pos, blendType="easeInOut"
+        )
+        self._move_int.start()
+
     def _glowing_pulse(self, task):
         """Play SCP train glow pulsating effect."""
         self._glow_strength += self._glow_step
@@ -222,6 +299,9 @@ class SCPTrain:
         self.wave += 1
         self._positions = [-0.25, -0.07, 0.06, 0.22]
         self._side *= -1
+
+        if self._move_int is not None:
+            self._move_int.pause()
 
         self.model.setX(self._side)
 
