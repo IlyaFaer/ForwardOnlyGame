@@ -91,6 +91,7 @@ class World:
         self.city_gui = CityGUI()
         self.rails_scheme = RailsScheme(self._map)
         self.meet_scp = False
+        self.scp_train = None
 
         self._fight_music = []
         for name in ("Aggression", "Rage", "Panic", "Anger"):

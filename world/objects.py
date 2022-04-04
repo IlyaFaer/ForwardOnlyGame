@@ -164,11 +164,11 @@ class SCPTrain:
         self._side = random.choice((0.7, -0.7))
         self._glow_step = 0.05
         self._glow_strength = 0.2
-        self._ray_strength = 70
         self._move_int = None
-        self._ray = None
         self._ray_step = 0.9
+        self._ray_strength = 70
         self._ray_np = None
+        self._ray_alpha = 1
 
         self.wave = 1
         self.model = loader.loadModel(address("SCP"))  # noqa: F821
@@ -187,6 +187,21 @@ class SCPTrain:
             1, self._gen_instances, "generate_instances"
         )
 
+        self._prepare_light_ray()
+
+        taskMgr.doMethodLater(7, self._float_move, "float_move")  # noqa: F821
+
+    @property
+    def side(self):
+        """Side, where the SCP train is located.
+
+        Returns:
+            str: The current side letter.
+        """
+        return "l" if self._side < 0 else "r"
+
+    def _prepare_light_ray(self):
+        """Prepare the light ray SCP weapon and its effects."""
         lens = PerspectiveLens()
         lens.setNearFar(0, 30)
         lens.setFov(30, 30)
@@ -201,17 +216,20 @@ class SCPTrain:
         self._ray_np.setP(-90)
         render.setLight(self._ray_np)  # noqa: F821
 
+        self._volume_ray = loader.loadModel(address("violet_ray"))  # noqa: F821
+        self._volume_ray.reparentTo(base.train.model)  # noqa: F821
+        self._volume_ray.setBillboardPointWorld()
+        self._volume_ray.setDepthWrite(False)
+        self._volume_ray.setZ(0.5)
+        self._volume_ray.setAlphaScale(0)
+        self._volume_ray.hide()
+
+        self._scorch_parts = ParticleEffect()
+        self._scorch_parts.loadConfig("effects/scorch.ptf")
+        self._scorch_parts.reparentTo(self._ray_np)
+        self._scorch_parts.setY(0.6)
+
         taskMgr.doMethodLater(10, self._ray_charge, "scp_ray_charge")  # noqa: F821
-        taskMgr.doMethodLater(7, self._float_move, "float_move")  # noqa: F821
-
-    @property
-    def side(self):
-        """Side, where the SCP train is located.
-
-        Returns:
-            str: The current side letter.
-        """
-        return "l" if self._side < 0 else "r"
 
     def _ray_charge(self, task):
         """Do a light ray attack.
@@ -222,15 +240,29 @@ class SCPTrain:
         task.delayTime = 0.07
 
         if self._ray_np.getZ() == -50:
+            y_pos = random.uniform(-0.4, 0.4)
             self._ray_np.setZ(0.7)
-            self._ray_np.setY(random.uniform(-0.4, 0.4))
+            self._ray_np.setY(y_pos)
+
+            self._volume_ray.show()
+            self._volume_ray.setY(y_pos)
 
         if self._ray_strength < 0.03:
             self._ray_step = 1.1
 
+        if self._ray_strength < 20:
+            self._scorch_parts.start(self._ray_np, render)  # noqa: F821
+            self._scorch_parts.softStart()
+
+        if self._ray_strength > 20 and self._ray_step > 1:
+            self._scorch_parts.softStop()
+
         self._ray_strength *= self._ray_step
+        self._ray_alpha *= self._ray_step
+        self._volume_ray.setAlphaScale(1 - self._ray_alpha)
 
         if self._ray_strength > 70:
+            self._volume_ray.hide()
             self._ray_np.setZ(-50)
             self._ray_step = 0.9
             self._ray_strength = 70
@@ -308,6 +340,19 @@ class SCPTrain:
         taskMgr.doMethodLater(  # noqa: F821
             1, self._gen_instances, "generate_instances"
         )
+
+    def move_ray(self, diff, task):
+        """Move the light ray along the Adjutant.
+
+        Args:
+            diff (float): Direction where to move the light ray.
+        """
+        if self._ray_np.getZ() != -50:
+            y_pos = self._ray_np.getY() + diff
+            self._ray_np.setY(y_pos)
+            self._volume_ray.setY(y_pos)
+
+        return task.again
 
 
 class SCPInstance(Shooter):

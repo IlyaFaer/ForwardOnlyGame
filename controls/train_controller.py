@@ -71,9 +71,15 @@ class TrainController:
             and not self.critical_damage
             and new_rate < MIN_SPEED
         ):
+            if base.world.scp_train is not None:  # noqa: F821
+                taskMgr.remove("move_scp_light_ray")  # noqa: F821
+
             return task.again
 
         if new_rate > self.max_speed and diff > 0:
+            if base.world.scp_train is not None:  # noqa: F821
+                taskMgr.remove("move_scp_light_ray")  # noqa: F821
+
             return task.again
 
         # change speed
@@ -107,6 +113,14 @@ class TrainController:
             extraArgs=[diff],
             appendTask=True,
         )
+        if base.world.scp_train is not None:  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
+                0.03,
+                base.world.scp_train.move_ray,  # noqa: F821
+                "move_scp_light_ray",
+                extraArgs=[-diff / 4],
+                appendTask=True,
+            )
 
     def _finish_stopping(self, task):
         """Finish stopping the damaged Train."""
@@ -317,13 +331,19 @@ class TrainController:
         # speed smoothly changes while holding w/s keys
         base.accept("w", self._change_speed_delayed, [0.05])  # noqa: F821
         base.accept("s", self._change_speed_delayed, [-0.05])  # noqa: F821
-        base.accept("w-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
-        base.accept("s-up", taskMgr.remove, ["change_train_speed"])  # noqa: F821
+        base.accept("w-up", self._stop_changing_speed)  # noqa: F821
+        base.accept("s-up", self._stop_changing_speed)  # noqa: F821
         base.accept("7", self._switch_garland)  # noqa: F821
         base.accept("8", self._shot_flapper)  # noqa: F821
         base.accept("9", base.effects_mgr.love_fog.switch)  # noqa: F821
 
         base.accept("f", train.toggle_lights)  # noqa: F821
+
+    def _stop_changing_speed(self):
+        """Stop changing the Train speed."""
+        taskMgr.remove("change_train_speed")  # noqa: F821
+        if base.world.scp_train is not None:  # noqa: F821
+            taskMgr.remove("move_scp_light_ray")  # noqa: F821
 
     def start_move(self):
         """Start the Train movement."""
