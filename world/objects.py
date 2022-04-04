@@ -30,7 +30,7 @@ from panda3d.core import (
 
 from direct.interval.IntervalGlobal import LerpAnimInterval
 
-from const import MOUSE_MASK, SHOT_RANGE_MASK
+from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from units.shooter import Shooter
 from utils import address, chance, take_random
 
@@ -229,7 +229,34 @@ class SCPTrain:
         self._scorch_parts.reparentTo(self._ray_np)
         self._scorch_parts.setY(0.6)
 
+        col_node = CollisionNode("light_ray_cn")
+        col_node.setIntoCollideMask(NO_MASK)
+        col_node.setFromCollideMask(MOUSE_MASK)
+        col_node.addSolid(CollisionSphere(0, 0, 0, 0.17))
+
+        base.common_ctrl.traverser.addCollider(  # noqa: F821
+            self._scorch_parts.attachNewNode(col_node),
+            base.common_ctrl.handler,  # noqa: F821
+        )
+
+        base.accept("light_ray_cn-into", self._scorch)  # noqa: F821
+        base.accept("light_ray_cn-out", self._stop_scorch)  # noqa: F821
         taskMgr.doMethodLater(10, self._ray_charge, "scp_ray_charge")  # noqa: F821
+
+    def _scorch(self, event):
+        """Scorch the Adjutant crew members with the light ray."""
+        name = event.getIntoNodePath().getName()
+        if name.startswith("character_"):
+            char = base.team.chars[name]  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
+                0.25, char.get_scorch_damage, char.id + "_scorch_damage"
+            )
+
+    def _stop_scorch(self, event):
+        """Stop scorching process."""
+        name = event.getIntoNodePath().getName()
+        if name.startswith("character_"):
+            taskMgr.remove(base.team.chars[name].id + "_scorch_damage")  # noqa: F821
 
     def _ray_charge(self, task):
         """Do a light ray attack.
@@ -240,9 +267,8 @@ class SCPTrain:
         task.delayTime = 0.07
 
         if self._ray_np.getZ() == -50:
-            y_pos = random.uniform(-0.4, 0.4)
-            self._ray_np.setZ(0.7)
-            self._ray_np.setY(y_pos)
+            y_pos = random.uniform(-0.17, 0.27)
+            self._ray_np.setPos(random.uniform(-0.13, 0.13), y_pos, 0.7)
 
             self._volume_ray.show()
             self._volume_ray.setY(y_pos)

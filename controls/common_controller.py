@@ -37,6 +37,7 @@ class CommonController:
         self._keys_info = None  # on screen text object
         self._pointed_obj = ""
         self._chosen_char = None
+        self.handler = None
 
         self._move_char_snd = loader.loadSfx("sounds/move_char.ogg")  # noqa: F821
         self._char_pointer = loader.loadModel(  # noqa: F821
@@ -242,14 +243,14 @@ class CommonController:
         col_node.addSolid(self._mouse_ray)
 
         # set common collisions handler
-        handler = CollisionHandlerEvent()
-        handler.addInPattern("%fn-into")
-        handler.addAgainPattern("%fn-again")
-        handler.addOutPattern("%fn-out")
+        self.handler = CollisionHandlerEvent()
+        self.handler.addInPattern("%fn-into")
+        self.handler.addAgainPattern("%fn-again")
+        self.handler.addOutPattern("%fn-out")
 
         self.traverser = CollisionTraverser("traverser")
         self.traverser.addCollider(
-            base.cam.attachNewNode(col_node), handler  # noqa: F821
+            base.cam.attachNewNode(col_node), self.handler  # noqa: F821
         )
         self.set_mouse_events()
 

@@ -1075,6 +1075,11 @@ class Character(Shooter, Unit):
 
         Unit.get_damage(self, damage)
 
+    def get_scorch_damage(self, task):
+        """Get timed damage from the SCP light ray."""
+        self.get_damage(0.3)
+        return task.again
+
     def get_stench_damage(self):
         """Get damage from the Stench."""
         if base.labels.TRAITS[6][0] in self.traits and self.inhale > 0:  # noqa: F821

@@ -11,7 +11,13 @@ from panda3d.core import CollisionHandlerEvent
 
 from gui.teaching import EnemyDesc
 from utils import address, chance
-from world.objects import BARRIER_THRESHOLD, ROCKET_THRESHOLD, Barrier, Rocket
+from world.objects import (
+    BARRIER_THRESHOLD,
+    ROCKET_THRESHOLD,
+    Barrier,
+    Rocket,
+    SCPInstance,
+)
 from .enemy_unit import (
     BrakeThrower,
     DodgeShooter,
@@ -185,6 +191,32 @@ class Enemy:
             return True
 
         return False
+
+    def prepare_scp_instance(self, scp_train, positions, char, id_):
+        """Prepare an SCP enemy instance.
+
+        Args:
+            scp_train (world.objects.SCPTrain): SCP train object.
+            positions (dict):
+                A list of currently free unit position on SCP train.
+            char (crew.character):
+                An Adjutant crew member, whose copy the new
+                instance must be.
+            id_ (ind): Instance id.
+
+        Returns:
+            SCPInstance: An SCP enemy instance.
+        """
+        instance = SCPInstance(
+            char.class_data,
+            char.class_,
+            char.sex,
+            positions,
+            scp_train,
+            id_,
+            self._handler,
+        )
+        self.active_units[instance.id] = instance
 
     def prepare(self, train_mod):
         """Load enemy units and make them follow the Train.
