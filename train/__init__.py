@@ -751,20 +751,21 @@ class Train:
         else:
             x_coor = 0.11
 
-        rocket_explosion = take_random(self._rocket_explosions)
-        rocket_explosion.setPos(x_coor, 0.11, 0.33 if side == "top" else 0.22)
-        rocket_explosion.start(self.model, render)  # noqa: F821
-        rocket_explosion.softStart()
+        if self._rocket_explosions:
+            rocket_explosion = take_random(self._rocket_explosions)
+            rocket_explosion.setPos(x_coor, 0.11, 0.33 if side == "top" else 0.22)
+            rocket_explosion.start(self.model, render)  # noqa: F821
+            rocket_explosion.softStart()
+
+            taskMgr.doMethodLater(  # noqa: F821
+                0.8,
+                self._stop_rocket_explosion,
+                "disable_rocket_smoke",
+                extraArgs=[rocket_explosion],
+            )
 
         self._rocket_explosions_snd.play()
         base.camera_ctrl.push()  # noqa: F821
-
-        taskMgr.doMethodLater(  # noqa: F821
-            0.8,
-            self._stop_rocket_explosion,
-            "disable_rocket_smoke",
-            extraArgs=[rocket_explosion],
-        )
 
         if self._armor_plate is None:
             self.get_damage(80)

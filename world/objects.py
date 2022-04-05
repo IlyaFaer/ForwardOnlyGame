@@ -10,7 +10,10 @@ from direct.actor.Actor import Actor
 from direct.directutil import Mopath
 from direct.interval.IntervalGlobal import (
     Func,
+    LerpAnimInterval,
+    LerpHprInterval,
     LerpPosInterval,
+    LerpScaleInterval,
     Parallel,
     Sequence,
     SoundInterval,
@@ -18,6 +21,7 @@ from direct.interval.IntervalGlobal import (
 )
 from direct.interval.MopathInterval import MopathInterval
 from direct.particles.ParticleEffect import ParticleEffect
+from direct.showbase.Transitions import Transitions
 from panda3d.bullet import BulletBoxShape, BulletRigidBodyNode
 from panda3d.core import (
     CollisionNode,
@@ -27,8 +31,6 @@ from panda3d.core import (
     Spotlight,
     Vec3,
 )
-
-from direct.interval.IntervalGlobal import LerpAnimInterval
 
 from const import MOUSE_MASK, NO_MASK, SHOT_RANGE_MASK
 from units.shooter import Shooter
@@ -169,6 +171,7 @@ class SCPTrain:
         self._ray_strength = 70
         self._ray_np = None
         self._ray_alpha = 1
+        self._suns = []
 
         self.wave = 1
         self.model = loader.loadModel(address("SCP"))  # noqa: F821
@@ -190,6 +193,15 @@ class SCPTrain:
         self._prepare_light_ray()
 
         taskMgr.doMethodLater(7, self._float_move, "float_move")  # noqa: F821
+        for delay, num in (
+            (3, 1),
+            (3.7, 2),
+            (4.1, 3),
+            (4.7, 4),
+        ):
+            taskMgr.doMethodLater(  # noqa: F821
+                delay, self._move_suns, "start_suns", extraArgs=[num]
+            )
 
     @property
     def side(self):
@@ -199,6 +211,53 @@ class SCPTrain:
             str: The current side letter.
         """
         return "l" if self._side < 0 else "r"
+
+    def _move_suns(self, num):
+        """Make the suns move step.
+
+        Args:
+            num (int): Num of the step.
+        """
+        transition = Transitions(loader)  # noqa: F821
+        transition.setFadeColor(1, 1, 1)
+        transition.fadeOut(0.06)
+
+        factor = -1 if self._side > 0 else 1
+
+        if num == 1:
+            for i in range(4):
+                self._suns.append(VioletSun(self))
+        elif num == 2:
+            y_offset = -0.1
+            for sun in self._suns:
+                sun.model.setPos(
+                    random.uniform(0.4, 0.6) * factor,
+                    y_offset + random.uniform(-0.1, 0.1),
+                    0.4,
+                )
+                y_offset += 0.1
+        elif num == 3:
+            y_offset = -0.15
+            for sun in self._suns:
+                sun.model.setPos(
+                    sun.model.getX() + 0.45 * factor,
+                    y_offset + random.uniform(-0.1, 0.1),
+                    0.4,
+                )
+                y_offset += 0.15
+        elif num == 4:
+            y_offset = -0.35
+            for sun in self._suns:
+                sun.model.setPos(
+                    sun.model.getX() + 0.55 * factor,
+                    y_offset + random.uniform(-0.1, 0.1),
+                    0.05,
+                )
+                y_offset += 0.22
+                sun.model.wrtReparentTo(base.train.model)  # noqa: F821
+                sun.approach_train(factor)
+
+        transition.fadeIn(0.03)
 
     def _prepare_light_ray(self):
         """Prepare the light ray SCP weapon and its effects."""
@@ -598,3 +657,56 @@ class SCPInstance(Shooter):
             self._scp_train.next_wave()
 
         return task.done
+
+
+class VioletSun:
+    """A single violet sun, coming from the SCP train.
+
+    Args:
+        scp_train (world.object.SCPTrain): The SCP train object.
+    """
+
+    def __init__(self, scp_train):
+        self._scp_train = scp_train
+        self._sides = {"l": "left", "r": "right"}
+
+        self.model = loader.loadModel(address("violet_sun"))  # noqa: F821
+        self.model.reparentTo(scp_train.model)  # noqa: F821
+        self.model.setZ(0.3)
+
+    def _explode(self):
+        """Explode the sun, doing damage to the Adjutant."""
+        base.train.explode_rocket(self._sides[self._scp_train.side])  # noqa: F821
+        Sequence(
+            LerpScaleInterval(self.model, 0.05, (0, 0, 0)), Func(self.model.removeNode),
+        ).start()
+
+    def approach_train(self, factor):
+        """Make the sun approach the Adjutant.
+
+        Args:
+            factor (int):
+                X-coordinate factor to set the sun on the
+                correct side of the Adjutant.
+        """
+        length = random.randint(18, 25)
+        Sequence(
+            Parallel(
+                LerpHprInterval(
+                    self.model,
+                    length,
+                    (
+                        random.randint(0, 360),
+                        random.randint(0, 360),
+                        random.randint(0, 360),
+                    ),
+                    blendType="easeInOut",
+                ),
+                LerpPosInterval(
+                    self.model,
+                    length,
+                    (0.09 * factor, random.uniform(-0.05, 0.15), 0.17),
+                ),
+            ),
+            Func(self._explode),
+        ).start()
