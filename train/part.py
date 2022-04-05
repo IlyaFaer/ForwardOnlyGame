@@ -46,7 +46,7 @@ class TrainPart:
         col_node = CollisionNode("shoot_zone_" + name)
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(SHOT_RANGE_MASK)
-        col_node.addSolid(CollisionBox(Point3(-0.4, -0.06, 0), Point3(0.4, 1, 0.08)))
+        col_node.addSolid(CollisionBox(Point3(-0.4, -0.06, 0), Point3(0.4, 1, 0.2)))
         col_np = self.parent.attachNewNode(col_node)
         col_np.setPos(arrow_pos[0], arrow_pos[1], 0)
         col_np.setH(angle)

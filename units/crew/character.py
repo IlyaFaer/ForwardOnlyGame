@@ -702,8 +702,9 @@ class Character(Shooter, Unit):
             self.health += 7
 
         if self.current_part and self._target in self.current_part.enemies:
-            self.model.headsUp(self._target.model)
-            return task.again
+            if self._target.model:
+                self.model.headsUp(self._target.model)
+                return task.again
 
         self._stop_tasks("_shoot")
         self._target = None

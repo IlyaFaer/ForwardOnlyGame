@@ -113,9 +113,9 @@ class Enemy:
         self._transport_mgr = TransportManager()
 
         # set enemy collisions handler
-        self._handler = CollisionHandlerEvent()
-        self._handler.addInPattern("into-%in")
-        self._handler.addOutPattern("out-%in")
+        self.handler = CollisionHandlerEvent()
+        self.handler.addInPattern("into-%in")
+        self.handler.addOutPattern("out-%in")
 
     def _clear_enemies(self, task):
         """Delete all enemy units to release memory."""
@@ -144,7 +144,7 @@ class Enemy:
             else self._front_y_positions
         )
         enemy = class_data["class"](
-            Actor(address(class_data["model"])), id_, y_poss, self._handler, class_data
+            Actor(address(class_data["model"])), id_, y_poss, self.handler, class_data
         )
         self._transport_mgr.load_transport(enemy)
 
@@ -214,7 +214,7 @@ class Enemy:
             positions,
             scp_train,
             id_,
-            self._handler,
+            self.handler,
         )
         self.active_units[instance.id] = instance
 

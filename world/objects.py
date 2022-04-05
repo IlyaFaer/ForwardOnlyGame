@@ -226,7 +226,7 @@ class SCPTrain:
 
         if num == 1:
             for i in range(4):
-                self._suns.append(VioletSun(self))
+                self._suns.append(VioletSun(self, i))
         elif num == 2:
             y_offset = -0.1
             for sun in self._suns:
@@ -240,18 +240,18 @@ class SCPTrain:
             y_offset = -0.15
             for sun in self._suns:
                 sun.model.setPos(
-                    sun.model.getX() + 0.45 * factor,
+                    sun.model.getX() + 0.65 * factor,
                     y_offset + random.uniform(-0.1, 0.1),
-                    0.4,
+                    0.38,
                 )
                 y_offset += 0.15
         elif num == 4:
             y_offset = -0.35
             for sun in self._suns:
                 sun.model.setPos(
-                    sun.model.getX() + 0.55 * factor,
+                    sun.model.getX() + 0.9 * factor,
                     y_offset + random.uniform(-0.1, 0.1),
-                    0.05,
+                    0.01,
                 )
                 y_offset += 0.22
                 sun.model.wrtReparentTo(base.train.model)  # noqa: F821
@@ -465,6 +465,7 @@ class SCPInstance(Shooter):
         self.id = "scp_instance_" + str(index)
         self.is_dead = False
         self.health = class_data["health"]
+        self.current_part = None
 
         Shooter.__init__(self)
 
@@ -619,6 +620,14 @@ class SCPInstance(Shooter):
         for name in names:
             taskMgr.remove(self.id + name)  # noqa: F821
 
+    def enter_the_part(self, _):
+        """Enter the train part."""
+        pass
+
+    def leave_the_part(self, _):
+        """Leave the train part."""
+        pass
+
     def get_damage(self, damage):
         """Getting damage.
 
@@ -664,21 +673,63 @@ class VioletSun:
 
     Args:
         scp_train (world.object.SCPTrain): The SCP train object.
+        num (int): The sun id.
     """
 
-    def __init__(self, scp_train):
+    def __init__(self, scp_train, num):
         self._scp_train = scp_train
         self._sides = {"l": "left", "r": "right"}
+        self._app_seq = None
+        self._first_time = True
+        self.id = "enemy_sun_" + str(num)
+        self.is_dead = False
+        self.health = 60
+        self.current_part = None
+        base.world.enemy.active_units[self.id] = self  # noqa: F821
 
         self.model = loader.loadModel(address("violet_sun"))  # noqa: F821
         self.model.reparentTo(scp_train.model)  # noqa: F821
         self.model.setZ(0.3)
+        self.node = self.model.attachNewNode(self.id)
+
+        self._col_node = self._init_col_node(
+            SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0, 0.02)
+        )
+        base.common_ctrl.traverser.addCollider(  # noqa: F821
+            self._col_node, base.world.enemy.handler  # noqa: F821
+        )
+
+    @property
+    def tooltip(self):
+        """The sun tooltip.
+
+        Returns:
+            str: The sun tooltip.
+        """
+        return "Sun"
+
+    def _init_col_node(self, from_mask, into_mask, solid):
+        """Initialize this unit collision node.
+
+        Args:
+            from_mask (panda3d.core.BitMask_uint32_t_32):
+                FROM collision mask.
+            into_mask (panda3d.core.BitMask_uint32_t_32):
+                INTO collision mask.
+            solid (panda3d.core.CollisionSolid):
+                Collision solid for this unit.
+        """
+        col_node = CollisionNode(self.id)
+        col_node.setFromCollideMask(from_mask)
+        col_node.setIntoCollideMask(into_mask)
+        col_node.addSolid(solid)
+        return self.model.attachNewNode(col_node)
 
     def _explode(self):
         """Explode the sun, doing damage to the Adjutant."""
         base.train.explode_rocket(self._sides[self._scp_train.side])  # noqa: F821
         Sequence(
-            LerpScaleInterval(self.model, 0.05, (0, 0, 0)), Func(self.model.removeNode),
+            LerpScaleInterval(self.model, 0.07, (0, 0, 0)), Func(self._die),
         ).start()
 
     def approach_train(self, factor):
@@ -689,8 +740,8 @@ class VioletSun:
                 X-coordinate factor to set the sun on the
                 correct side of the Adjutant.
         """
-        length = random.randint(18, 25)
-        Sequence(
+        length = random.randint(17, 27)
+        self._app_seq = Sequence(
             Parallel(
                 LerpHprInterval(
                     self.model,
@@ -705,8 +756,51 @@ class VioletSun:
                 LerpPosInterval(
                     self.model,
                     length,
-                    (0.09 * factor, random.uniform(-0.05, 0.15), 0.17),
+                    (0.1 * factor, random.uniform(-0.05, 0.15), 0.01),
                 ),
             ),
             Func(self._explode),
-        ).start()
+        )
+        self._app_seq.start()
+
+    def enter_the_part(self, part):
+        """Enter the train part.
+
+        Args:
+            part (train.part.TrainPart):
+                The train part, where the sun entered.
+        """
+        if self._first_time:
+            part.enemies.append(self)
+            self.current_part = part
+            self._first_time = False
+
+    def leave_the_part(self, _):
+        """Leave the train part."""
+        pass
+
+    def get_damage(self, points):
+        """Get damage.
+
+        Args:
+            point (int): Damage amount to get.
+        """
+        self.health -= points
+        if self.health <= 0:
+            self._die()
+
+    def _die(self):
+        """The sun dying and cleanup sequence."""
+        self.is_dead = True
+        if self._app_seq is not None:
+            self._app_seq.pause()
+
+        base.common_ctrl.traverser.removeCollider(self._col_node)  # noqa: F821
+        self._col_node.removeNode()
+
+        if self.id in base.world.enemy.active_units:  # noqa: F821
+            base.world.enemy.active_units.pop(self.id)  # noqa: F821
+            if self.current_part:
+                self.current_part.enemies.remove(self)
+
+        self.model.removeNode()
