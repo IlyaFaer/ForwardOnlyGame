@@ -327,8 +327,10 @@ class Crew:
         if base.world.enemy.active_units:  # noqa: F821
             return task.again
 
-        self.celebrate()
-        return task.done
+        if base.world.scp_train is None:  # noqa: F821
+            self.celebrate()
+
+            return task.done
 
     def surrender(self):
         """Make the whole crew surrender."""

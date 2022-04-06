@@ -386,12 +386,21 @@ class GrenadeLauncher:
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(MOUSE_MASK)
 
+        # don't allow shooting at the SCP train
+        if (
+            base.world.scp_train is not None  # noqa: F82
+            and base.world.scp_train.side == "l"  # noqa: F82
+        ):
+            x1, x2 = 0, 1.2
+        else:
+            x1, x2 = -1.2, 0
+
         col_node.addSolid(
             CollisionPolygon(
-                Point3(-1.2, -0.3, 0),
-                Point3(-1.2, 1.5, 0),
-                Point3(1.2, 1.5, 0),
-                Point3(1.2, -0.3, 0),
+                Point3(x1, -0.3, 0),
+                Point3(x1, 1.5, 0),
+                Point3(x2, 1.5, 0),
+                Point3(x2, -0.3, 0),
             )
         )
         self._range_col_np = base.train.model.attachNewNode(col_node)  # noqa: F821
@@ -842,12 +851,22 @@ class MachineGun:
         col_node = CollisionNode("machine_gun_range")
         col_node.setFromCollideMask(NO_MASK)
         col_node.setIntoCollideMask(MOUSE_MASK)
+
+        # don't allow shooting at the SCP train
+        if (
+            base.world.scp_train is not None  # noqa: F82
+            and base.world.scp_train.side == "l"  # noqa: F82
+        ):
+            x1, x2 = 0, 1.2
+        else:
+            x1, x2 = -1.2, 0
+
         col_node.addSolid(
             CollisionPolygon(
-                Point3(-1.2, -0.3, 0),
-                Point3(-1.2, 1.5, 0),
-                Point3(1.2, 1.5, 0),
-                Point3(1.2, -0.3, 0),
+                Point3(x1, -0.3, 0),
+                Point3(x1, 1.5, 0),
+                Point3(x2, 1.5, 0),
+                Point3(x2, -0.3, 0),
             )
         )
         self._range_col_np = base.train.model.attachNewNode(col_node)  # noqa: F821

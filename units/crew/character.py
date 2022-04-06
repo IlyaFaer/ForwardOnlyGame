@@ -683,7 +683,10 @@ class Character(Shooter, Unit):
             return task.done
 
         # enemies retreated - return to passive state
-        if not base.world.enemy.active_units:  # noqa: F821
+        if (
+            not base.world.enemy.active_units  # noqa: F821
+            and base.world.scp_train is None  # noqa: F821
+        ):
             taskMgr.doMethodLater(  # noqa: F821
                 7, self._calm_down, self.id + "_calm_down", extraArgs=[False],
             )
@@ -714,6 +717,9 @@ class Character(Shooter, Unit):
                 0.5, self._choose_target, self.id + "_choose_target"
             )
             return task.done
+
+        if base.world.scp_train is not None:  # noqa: F821
+            return task.again
 
         taskMgr.doMethodLater(  # noqa: F821
             7, self._calm_down, self.id + "_calm_down", extraArgs=[False]

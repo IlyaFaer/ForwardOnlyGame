@@ -101,6 +101,7 @@ class Block:
         self.rails_mod = None
         self._add_surface = False
         self._old_values = None
+        self._fireflies = None
 
         self.name = name
         self.path = path
@@ -116,7 +117,7 @@ class Block:
         self.directions = directions
         self.branch = branch
         self.is_station = is_station
-        self._fireflies = None
+        self.scp_rails = None
 
         if desc:  # loading block
             self._station_side = desc["station_side"]
@@ -406,6 +407,15 @@ class Block:
         self.rails_mod = loader.loadModel(  # noqa: F821
             address(self.name + "_rails" + ("_rusty" if self.is_rusty else ""))
         )
+
+        if base.world.scp_train:  # noqa: F821
+            self.scp_rails = loader.loadModel(  # noqa: F821
+                address(self.name + "_rails")
+            )
+            self.scp_rails.reparentTo(self.rails_mod)
+            self.scp_rails.setX(
+                -0.7 if base.world.scp_train.side == "l" else 0.7  # noqa: F821
+            )
 
         self._load_surface_block(
             self._l_surface, -4, 4, self._l_angle, "l", invert=invert

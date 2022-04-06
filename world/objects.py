@@ -171,8 +171,9 @@ class SCPTrain:
         self._ray_strength = 70
         self._ray_np = None
         self._ray_alpha = 1
-        self._suns = []
+        self._cur_id = 0
 
+        self.suns = []
         self.wave = 1
         self.model = loader.loadModel(address("SCP"))  # noqa: F821
         self.model.reparentTo(base.train.model)  # noqa: F821
@@ -193,15 +194,6 @@ class SCPTrain:
         self._prepare_light_ray()
 
         taskMgr.doMethodLater(7, self._float_move, "float_move")  # noqa: F821
-        for delay, num in (
-            (3, 1),
-            (3.7, 2),
-            (4.1, 3),
-            (4.7, 4),
-        ):
-            taskMgr.doMethodLater(  # noqa: F821
-                delay, self._move_suns, "start_suns", extraArgs=[num]
-            )
 
     @property
     def side(self):
@@ -226,10 +218,10 @@ class SCPTrain:
 
         if num == 1:
             for i in range(4):
-                self._suns.append(VioletSun(self, i))
+                self.suns.append(VioletSun(self, i))
         elif num == 2:
             y_offset = -0.1
-            for sun in self._suns:
+            for sun in self.suns:
                 sun.model.setPos(
                     random.uniform(0.4, 0.6) * factor,
                     y_offset + random.uniform(-0.1, 0.1),
@@ -238,7 +230,7 @@ class SCPTrain:
                 y_offset += 0.1
         elif num == 3:
             y_offset = -0.15
-            for sun in self._suns:
+            for sun in self.suns:
                 sun.model.setPos(
                     sun.model.getX() + 0.65 * factor,
                     y_offset + random.uniform(-0.1, 0.1),
@@ -247,7 +239,7 @@ class SCPTrain:
                 y_offset += 0.15
         elif num == 4:
             y_offset = -0.35
-            for sun in self._suns:
+            for sun in self.suns:
                 sun.model.setPos(
                     sun.model.getX() + 0.9 * factor,
                     y_offset + random.uniform(-0.1, 0.1),
@@ -364,12 +356,13 @@ class SCPTrain:
         """
         num_insts = 0
         delay = 0.5
-        for num, char in enumerate(base.team.chars.values()):  # noqa: F821
+        for char in base.team.chars.values():  # noqa: F821
+            self._cur_id += 1
             taskMgr.doMethodLater(  # noqa: F821
                 delay,
                 base.world.enemy.prepare_scp_instance,  # noqa: F821
-                str(num) + "_scp_instance",
-                extraArgs=[self, self._positions, char, num],
+                str(self._cur_id) + "_scp_instance",
+                extraArgs=[self, self._positions, char, self._cur_id],
             )
             delay += random.uniform(0.5, 1.2)
             num_insts += 1
@@ -421,10 +414,21 @@ class SCPTrain:
             self._move_int.pause()
 
         self.model.setX(self._side)
+        base.world._loaded_blocks[-2].scp_rails.setX(self._side)  # noqa: F821
+        base.world._loaded_blocks[-1].scp_rails.setX(self._side)  # noqa: F821
 
         taskMgr.doMethodLater(  # noqa: F821
             1, self._gen_instances, "generate_instances"
         )
+        for delay, num in (
+            (3, 1),
+            (3.7, 2),
+            (4.1, 3),
+            (4.7, 4),
+        ):
+            taskMgr.doMethodLater(  # noqa: F821
+                delay, self._move_suns, "start_suns", extraArgs=[num]
+            )
 
     def move_ray(self, diff, task):
         """Move the light ray along the Adjutant.
@@ -464,7 +468,7 @@ class SCPInstance(Shooter):
         self._scp_train = scp_train
         self.id = "scp_instance_" + str(index)
         self.is_dead = False
-        self.health = class_data["health"]
+        self.health = class_data["health"] * 0.55
         self.current_part = None
 
         Shooter.__init__(self)
@@ -660,9 +664,10 @@ class SCPInstance(Shooter):
         self.model.cleanup()
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
-        self.current_part.enemies.remove(self)
 
-        if not self.current_part.enemies:
+        self.current_part.enemies.remove(self)
+        base.world.enemy.active_units.pop(self.id)  # noqa: F821
+        if not base.world.enemy.active_units:  # noqa: F821
             self._scp_train.next_wave()
 
         return task.done
@@ -791,12 +796,16 @@ class VioletSun:
 
     def _die(self):
         """The sun dying and cleanup sequence."""
+        if self.is_dead:
+            return
+
         self.is_dead = True
         if self._app_seq is not None:
             self._app_seq.pause()
 
         base.common_ctrl.traverser.removeCollider(self._col_node)  # noqa: F821
         self._col_node.removeNode()
+        self._scp_train.suns.remove(self)
 
         if self.id in base.world.enemy.active_units:  # noqa: F821
             base.world.enemy.active_units.pop(self.id)  # noqa: F821
