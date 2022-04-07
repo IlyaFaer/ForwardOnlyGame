@@ -186,12 +186,27 @@ class SCPTrain:
         lamp_np.setZ(0.2)
         render.setLight(lamp_np)  # noqa: F821
 
+        self._move_snd = base.sound_mgr.loadSfx(  # noqa: F821
+            "sounds/scp_train_move.ogg"
+        )
+        base.sound_mgr.attachSoundToObject(self._move_snd, self.model)  # noqa: F821
+        self._move_snd.setLoop(True)
+        self._move_snd.play()
+
+        self._thunder_snd = loader.loadSfx("sounds/thunder.ogg")  # noqa: F821
+        self._thunder_snd.play()
+
+        self._inst_app_snd = loader.loadSfx(  # noqa: F821
+            "sounds/instance_appearing.ogg"
+        )
+        self._suns_move_snd = loader.loadSfx("sounds/suns_move.ogg")  # noqa: F821
+
         taskMgr.doMethodLater(0.06, self._glowing_pulse, "scp_glowing")  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
             1, self._gen_instances, "generate_instances"
         )
 
-        self._prepare_light_ray()
+        self._sizzle_snd, self._ray_start_snd = self._prepare_light_ray()
 
         taskMgr.doMethodLater(7, self._float_move, "float_move")  # noqa: F821
 
@@ -210,6 +225,8 @@ class SCPTrain:
         Args:
             num (int): Num of the step.
         """
+        self._suns_move_snd.play()
+
         transition = Transitions(loader)  # noqa: F821
         transition.setFadeColor(1, 1, 1)
         transition.fadeOut(0.06)
@@ -290,9 +307,14 @@ class SCPTrain:
             base.common_ctrl.handler,  # noqa: F821
         )
 
+        sizzle_snd = base.sound_mgr.loadSfx("sounds/sizzle.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(sizzle_snd, self._ray_np)  # noqa: F821
+        ray_start_snd = loader.loadSfx("sounds/ray_start.ogg")  # noqa: F821
+
         base.accept("light_ray_cn-into", self._scorch)  # noqa: F821
         base.accept("light_ray_cn-out", self._stop_scorch)  # noqa: F821
         taskMgr.doMethodLater(10, self._ray_charge, "scp_ray_charge")  # noqa: F821
+        return sizzle_snd, ray_start_snd
 
     def _scorch(self, event):
         """Scorch the Adjutant crew members with the light ray."""
@@ -318,13 +340,18 @@ class SCPTrain:
         task.delayTime = 0.07
 
         if self._ray_np.getZ() == -50:
+            self._ray_start_snd.play()
+            self._sizzle_snd.play()
+
+            x_pos = random.uniform(-0.13, 0.13)
             y_pos = random.uniform(-0.17, 0.27)
-            self._ray_np.setPos(random.uniform(-0.13, 0.13), y_pos, 0.7)
+            self._ray_np.setPos(x_pos, y_pos, 0.7)
 
             self._volume_ray.show()
+            self._volume_ray.setX(x_pos)
             self._volume_ray.setY(y_pos)
 
-        if self._ray_strength < 0.03:
+        if self._ray_strength < 0.06:
             self._ray_step = 1.1
 
         if self._ray_strength < 20:
@@ -343,7 +370,9 @@ class SCPTrain:
             self._ray_np.setZ(-50)
             self._ray_step = 0.9
             self._ray_strength = 70
-            taskMgr.doMethodLater(10, self._ray_charge, "scp_ray_inc")  # noqa: F821
+            taskMgr.doMethodLater(  # noqa: F821
+                random.randint(7, 10), self._ray_charge, "scp_ray_inc"
+            )
             return task.done
 
         self._ray.setExponent(self._ray_strength)
@@ -362,7 +391,13 @@ class SCPTrain:
                 delay,
                 base.world.enemy.prepare_scp_instance,  # noqa: F821
                 str(self._cur_id) + "_scp_instance",
-                extraArgs=[self, self._positions, char, self._cur_id],
+                extraArgs=[
+                    self,
+                    self._positions,
+                    char,
+                    self._cur_id,
+                    self._inst_app_snd,
+                ],
             )
             delay += random.uniform(0.5, 1.2)
             num_insts += 1
@@ -409,11 +444,18 @@ class SCPTrain:
         self.wave += 1
         self._positions = [-0.25, -0.07, 0.06, 0.22]
         self._side *= -1
+        self._thunder_snd.play()
 
         if self._move_int is not None:
             self._move_int.pause()
 
+        transition = Transitions(loader)  # noqa: F821
+        transition.setFadeColor(1, 1, 1)
+        transition.fadeOut(0.06)
+
         self.model.setX(self._side)
+        transition.fadeIn(0.06)
+
         base.world._loaded_blocks[-2].scp_rails.setX(self._side)  # noqa: F821
         base.world._loaded_blocks[-1].scp_rails.setX(self._side)  # noqa: F821
 
@@ -468,7 +510,7 @@ class SCPInstance(Shooter):
         self._scp_train = scp_train
         self.id = "scp_instance_" + str(index)
         self.is_dead = False
-        self.health = class_data["health"] * 0.55
+        self.health = class_data["health"] * 0.5
         self.current_part = None
 
         Shooter.__init__(self)

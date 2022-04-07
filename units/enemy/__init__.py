@@ -193,7 +193,7 @@ class Enemy:
 
         return False
 
-    def prepare_scp_instance(self, scp_train, positions, char, id_):
+    def prepare_scp_instance(self, scp_train, positions, char, id_, app_snd):
         """Prepare an SCP enemy instance.
 
         Args:
@@ -204,10 +204,12 @@ class Enemy:
                 An Adjutant crew member, whose copy the new
                 instance must be.
             id_ (ind): Instance id.
+            app_snd (panda3d.core.AudioSound): Instance appearance sound.
 
         Returns:
             SCPInstance: An SCP enemy instance.
         """
+        app_snd.play()
         instance = SCPInstance(
             char.class_data,
             char.class_,
