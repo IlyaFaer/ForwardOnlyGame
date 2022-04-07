@@ -199,7 +199,7 @@ class SCPTrain:
         self._inst_app_snd = loader.loadSfx(  # noqa: F821
             "sounds/instance_appearing.ogg"
         )
-        self._suns_move_snd = loader.loadSfx("sounds/suns_move.ogg")  # noqa: F821
+        self.suns_move_snd = loader.loadSfx("sounds/suns_move.ogg")  # noqa: F821
 
         taskMgr.doMethodLater(0.06, self._glowing_pulse, "scp_glowing")  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
@@ -225,7 +225,7 @@ class SCPTrain:
         Args:
             num (int): Num of the step.
         """
-        self._suns_move_snd.play()
+        self.suns_move_snd.play()
 
         transition = Transitions(loader)  # noqa: F821
         transition.setFadeColor(1, 1, 1)
@@ -399,7 +399,7 @@ class SCPTrain:
                     self._inst_app_snd,
                 ],
             )
-            delay += random.uniform(0.5, 1.2)
+            delay += random.uniform(0.4, 1)
             num_insts += 1
             if num_insts == 4:
                 break
@@ -531,12 +531,14 @@ class SCPInstance(Shooter):
         )
         self._particles.start(self.model, render)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            1.7, self._particles.disable, self.id + "_stop_appearing", extraArgs=[]
+            1.7, self._particles.softStop, self.id + "_stop_appearing", extraArgs=[]
         )
 
         self._target = None
         self.node = self.model.attachNewNode("np_" + self.id)
         self.shot_snd = self._set_shoot_snd(class_data["shot_snd"])
+        self._die_snd = base.sound_mgr.loadSfx("sounds/instance_die.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._die_snd, self.model)  # noqa: F821
 
         self._col_node = self._init_col_node(
             SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0.05, 0.05)
@@ -617,6 +619,13 @@ class SCPInstance(Shooter):
         """
         if not Shooter._die(self):
             return False
+
+        self._die_snd.play()
+
+        self._particles.softStart()
+        taskMgr.doMethodLater(  # noqa: F821
+            1.7, self._particles.disable, self.id + "_stop_appearing", extraArgs=[]
+        )
 
         self.is_dead = True
         base.common_ctrl.traverser.removeCollider(self._col_node)  # noqa: F821
@@ -706,6 +715,7 @@ class SCPInstance(Shooter):
         self.model.cleanup()
         self.model.removeNode()
         base.sound_mgr.detach_sound(self.shot_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self._die_snd)  # noqa: F821
 
         self.current_part.enemies.remove(self)
         base.world.enemy.active_units.pop(self.id)  # noqa: F821
@@ -728,9 +738,10 @@ class VioletSun:
         self._sides = {"l": "left", "r": "right"}
         self._app_seq = None
         self._first_time = True
+
         self.id = "enemy_sun_" + str(num)
         self.is_dead = False
-        self.health = 60
+        self.health = 50
         self.current_part = None
         base.world.enemy.active_units[self.id] = self  # noqa: F821
 
@@ -738,6 +749,11 @@ class VioletSun:
         self.model.reparentTo(scp_train.model)  # noqa: F821
         self.model.setZ(0.3)
         self.node = self.model.attachNewNode(self.id)
+
+        self._snd = base.sound_mgr.loadSfx("sounds/sun_idle.ogg")  # noqa: F821
+        base.sound_mgr.attachSoundToObject(self._snd, self.model)  # noqa: F821
+        self._snd.setVolume(1.7)
+        self._snd.setLoop(True)
 
         self._col_node = self._init_col_node(
             SHOT_RANGE_MASK, MOUSE_MASK, CollisionSphere(0, 0, 0, 0.02)
@@ -787,6 +803,7 @@ class VioletSun:
                 X-coordinate factor to set the sun on the
                 correct side of the Adjutant.
         """
+        self._snd.play()
         length = random.randint(17, 27)
         self._app_seq = Sequence(
             Parallel(
@@ -841,6 +858,10 @@ class VioletSun:
         if self.is_dead:
             return
 
+        self._snd.stop()
+        base.sound_mgr.detach_sound(self._snd)  # noqa: F821
+
+        self._scp_train.suns_move_snd.play()
         self.is_dead = True
         if self._app_seq is not None:
             self._app_seq.pause()
