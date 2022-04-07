@@ -179,12 +179,12 @@ class SCPTrain:
         self.model.reparentTo(base.train.model)  # noqa: F821
         self.model.setX(self._side)
 
-        self._lamp = PointLight("scp_glow")
-        self._lamp.setColor((0.39, 0, 0.59, 1))
-        self._lamp.setAttenuation(self._glow_strength)
-        lamp_np = self.model.attachNewNode(self._lamp)
-        lamp_np.setZ(0.2)
-        render.setLight(lamp_np)  # noqa: F821
+        self._glow_plight = PointLight("scp_glow")
+        self._glow_plight.setColor((0.39, 0, 0.59, 1))
+        self._glow_plight.setAttenuation(self._glow_strength)
+        self._glow_pl_np = self.model.attachNewNode(self._glow_plight)
+        self._glow_pl_np.setZ(0.2)
+        render.setLight(self._glow_pl_np)  # noqa: F821
 
         self._move_snd = base.sound_mgr.loadSfx(  # noqa: F821
             "sounds/scp_train_move.ogg"
@@ -371,7 +371,7 @@ class SCPTrain:
             self._ray_step = 0.9
             self._ray_strength = 70
             taskMgr.doMethodLater(  # noqa: F821
-                random.randint(7, 10), self._ray_charge, "scp_ray_inc"
+                random.randint(7, 10), self._ray_charge, "scp_ray_charge"
             )
             return task.done
 
@@ -399,7 +399,7 @@ class SCPTrain:
                     self._inst_app_snd,
                 ],
             )
-            delay += random.uniform(0.4, 1)
+            delay += random.uniform(0.4, 0.8)
             num_insts += 1
             if num_insts == 4:
                 break
@@ -432,7 +432,7 @@ class SCPTrain:
         self._glow_strength += self._glow_step
         self._glow_strength = round(self._glow_strength, 2)
 
-        self._lamp.setAttenuation(self._glow_strength)
+        self._glow_plight.setAttenuation(self._glow_strength)
 
         if self._glow_strength in (0.2, 1.3):
             self._glow_step *= -1
@@ -453,24 +453,51 @@ class SCPTrain:
         transition.setFadeColor(1, 1, 1)
         transition.fadeOut(0.06)
 
-        self.model.setX(self._side)
+        if self.wave == 4:
+            self.clear()
+        else:
+            self.model.setX(self._side)
+
+            base.world._loaded_blocks[-2].scp_rails.setX(self._side)  # noqa: F821
+            base.world._loaded_blocks[-1].scp_rails.setX(self._side)  # noqa: F821
+
+            taskMgr.doMethodLater(  # noqa: F821
+                1, self._gen_instances, "generate_instances"
+            )
+            for delay, num in (
+                (3, 1),
+                (3.7, 2),
+                (4.1, 3),
+                (4.7, 4),
+            ):
+                taskMgr.doMethodLater(  # noqa: F821
+                    delay, self._move_suns, "start_suns", extraArgs=[num]
+                )
+
         transition.fadeIn(0.06)
 
-        base.world._loaded_blocks[-2].scp_rails.setX(self._side)  # noqa: F821
-        base.world._loaded_blocks[-1].scp_rails.setX(self._side)  # noqa: F821
+    def clear(self):
+        """Clear the SCP train object."""
+        taskMgr.remove("move_scp_light_ray")  # noqa: F821
+        taskMgr.remove("scp_ray_charge")  # noqa: F821
+        taskMgr.remove("float_move")  # noqa: F821
+        taskMgr.remove("scp_glowing")  # noqa: F821
+        render.clearLight(self._glow_pl_np)  # noqa: F821
+        self._volume_ray.removeNode()
+        self.model.removeNode()
+        self._ray_np.removeNode()
+        self._scorch_parts.disable()
 
-        taskMgr.doMethodLater(  # noqa: F821
-            1, self._gen_instances, "generate_instances"
-        )
-        for delay, num in (
-            (3, 1),
-            (3.7, 2),
-            (4.1, 3),
-            (4.7, 4),
-        ):
-            taskMgr.doMethodLater(  # noqa: F821
-                delay, self._move_suns, "start_suns", extraArgs=[num]
-            )
+        self._move_snd.stop()
+        base.sound_mgr.detach_sound(self._sizzle_snd)  # noqa: F821
+        base.sound_mgr.detach_sound(self._move_snd)  # noqa: F821
+
+        base.world.meet_scp = False  # noqa: F821
+        base.world.scp_train = None  # noqa: F821
+
+        base.world.enemy.active_units = {}  # noqa: F821
+        for part in base.train.parts.values():  # noqa: F821
+            part.enemies = []
 
     def move_ray(self, diff, task):
         """Move the light ray along the Adjutant.

@@ -874,7 +874,11 @@ class World:
             self.outings_mgr.hide_outing()
             return
 
-        new_block = self._loaded_blocks[-1].directions[current_block.id]
+        directions = self._loaded_blocks[-1].directions
+        if not directions:
+            return
+
+        new_block = directions[current_block.id]
         if isinstance(new_block, tuple):
             return
 
@@ -951,7 +955,11 @@ class World:
         if current_block.enemy_territory:
             return
 
-        new_block = self._loaded_blocks[-1].directions[current_block.id]
+        directions = self._loaded_blocks[-1].directions
+        if not directions:
+            return
+
+        new_block = directions[current_block.id]
 
         if isinstance(new_block, tuple):
             return
