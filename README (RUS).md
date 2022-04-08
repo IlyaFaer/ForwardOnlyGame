@@ -38,6 +38,13 @@
   
 :triangular_flag_on_post: *Разрешение на использование треков в игре было напрямую получено автором от артистов и соответствующих лейблов. Все авторские права на треки принадлежат артистам и соответствующим лейблам. Треки НЕЛЬЗЯ рассматривать как часть проекта Forward Only или свободно распространяемые ресурсы.*
 
+**Кроссовер SCP**  
+Эпизод-кроссовер с SCP Foundation включает в себя:
+- три страницы досье SCP Foundation о SCP-4945, за авторством Swineapple, расположенные на [сайте SCP Foundation](https://scp-wiki.wikidot.com/fragment:scp-4945-2)
+- два сражения с SCP-4945-B  
+  
+Некоторые детали игровой версии SCP-4945 могут отличаться от оригинала в целях большего соответствия игре. Эпизод-кроссовер выполнен под лицензией [Creative Commons Attribution-ShareAlike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
+
 **Что дальше**  
 [Скачать последнюю сборку игры](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
 [Доп. информация в Wiki](https://github.com/IlyaFaer/ForwardOnlyGame/wiki)  
