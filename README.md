@@ -40,6 +40,13 @@ The game music tracks were generously provided by Moloken, Among Madness and –ö–
   
 :triangular_flag_on_post: *Permission to use the tracks in the game was directly granted to the project author by the artists and related labels. All the author rights for the music tracks are owned by the artists and related labels. The music tracks MUST NOT be considered as a part of the Forward Only project, or free-to-use resources.*
 
+**SCP crossover**  
+The SCP crossover episode of the game includes:
+- three pages of SCP Foundation dossier of the SCP-4945, originally written by Swineapple and located on [the SCP Foundation website](https://scp-wiki.wikidot.com/fragment:scp-4945-2)
+- two fights with SCP-4945-B  
+  
+Some details of the game SCP-4945 version may diverge from the original one in terms of better fitting the game. The crossover episode is implemented under the [Creative Commons Attribution-ShareAlike 3.0 License](https://creativecommons.org/licenses/by-sa/3.0/).
+
 **What's next**  
 [Download the last Game release](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
 [See Wiki for useful info](https://github.com/IlyaFaer/ForwardOnlyGame/wiki)  
