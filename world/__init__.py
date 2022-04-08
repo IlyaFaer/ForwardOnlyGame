@@ -459,7 +459,7 @@ class World:
             if not self._et_rusty_blocks and chance(3):
                 self._et_rusty_blocks = random.randint(4, 8)
 
-            if not self._et_stench_blocks and chance(2):
+            if not self._et_stench_blocks and chance(2) and not self.scp_train:
                 self._et_stench_blocks = random.randint(4, 7)
 
         block = Block(

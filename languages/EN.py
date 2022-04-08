@@ -509,9 +509,9 @@ MECHANIC_DESC = {
     "SCP": {
         "descs": (
             (
-                "You're about to meet SCP-4945-B. Kill instances\n"
+                "You're about to meet SCP-4945-B! Kill instances\n"
                 "on its board, but don't use heavy weapons against\n"
-                "the train not to hurt the D-child. Avoid the\n"
+                "the train not to hurt the D. child. Avoid the\n"
                 "violet light, it can scorch your people. Speed\n"
                 "up or slow down to dodge the light ray."
             ),
@@ -4901,3 +4901,28 @@ SCP_PAGES = [
     "scp_2_eng.png",
     "scp_3_eng.png",
 ]
+
+
+SCP_END = (
+    "Doppelganger",
+    """Finding your people by gaze, you're trying to understand
+what did just happen. Was it really SCP-4945-B, the
+train? No, no, no, impossible! But the model of the
+machine... more than this... you saw yourself among
+the people shooting from it! Cold needles run on your
+neck because of these thoughts.
+
+And this scorching violet light...  The Stench is
+not enough, now this! What does the D. child was
+thinking about? Observing nearlands with concerns
+to see the violet light again, you answer the
+question by yourself: he thought about you. Most
+likely he learnt somehow about your crew, maybe
+a news report or kinda video in internet.
+Imagining you, he materialized your copies in
+the train, mixed with something... supernatural.
+You close your eyes - no, better not to think
+about it, or you gonna lose your mind completely.
+Let's just... move forward and hope it's not
+gonna happen again.""",
+)

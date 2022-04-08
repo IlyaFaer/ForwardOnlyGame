@@ -1309,3 +1309,45 @@ class MainMenu:
         except IndexError:
             self._scp_frame.hide()
             self._scp_num = 0
+
+    def show_scp_end(self, task):
+        """Show the SCP crossover end situation."""
+        page = DirectFrame(
+            frameSize=(-0.73, 0.73, -0.9, 0.9),
+            frameTexture="gui/tex/paper1.png",
+            state=DGG.NORMAL,
+        )
+        page.setDepthTest(False)
+        page.setTransparency(TransparencyAttrib.MAlpha)
+        page.show()
+
+        DirectLabel(
+            parent=page,
+            text=base.labels.SCP_END[0],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            frameSize=(0.6, 0.6, 0.6, 0.6),
+            text_scale=0.043,
+            pos=(0, 0, 0.65),
+        )
+        DirectLabel(
+            parent=page,
+            text=base.labels.SCP_END[1],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            frameSize=(0.6, 0.6, 0.6, 0.6),
+            text_scale=0.037,
+            pos=(0, 0, 0.55),
+        )
+        DirectButton(  # Done
+            parent=page,
+            pos=(0, 0, -0.77),
+            text=base.labels.DISTINGUISHED[6],  # noqa: F821
+            text_font=base.main_font,  # noqa: F821
+            text_fg=RUST_COL,
+            text_shadow=(0, 0, 0, 1),
+            frameColor=(0, 0, 0, 0),
+            command=page.destroy,
+            extraArgs=[],
+            scale=(0.05, 0, 0.05),
+            clickSound=base.main_menu.click_snd,  # noqa: F821
+        )
+        return task.done

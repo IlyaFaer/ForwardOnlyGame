@@ -322,7 +322,7 @@ class SCPTrain:
         if name.startswith("character_"):
             char = base.team.chars[name]  # noqa: F821
             taskMgr.doMethodLater(  # noqa: F821
-                0.25, char.get_scorch_damage, char.id + "_scorch_damage"
+                0.3, char.get_scorch_damage, char.id + "_scorch_damage"
             )
 
     def _stop_scorch(self, event):
@@ -455,6 +455,10 @@ class SCPTrain:
 
         if self.wave == 4:
             self.clear()
+            if base.scenario.current_chapter == 4:  # noqa: F821
+                taskMgr.doMethodLater(  # noqa: F821
+                    4, base.main_menu.show_scp_end, "show_scp_end"  # noqa: F821
+                )
         else:
             self.model.setX(self._side)
 
@@ -537,7 +541,7 @@ class SCPInstance(Shooter):
         self._scp_train = scp_train
         self.id = "scp_instance_" + str(index)
         self.is_dead = False
-        self.health = class_data["health"] * 0.5
+        self.health = class_data["health"] * 0.45
         self.current_part = None
 
         Shooter.__init__(self)
