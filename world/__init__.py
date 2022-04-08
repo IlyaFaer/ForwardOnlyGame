@@ -27,6 +27,7 @@ from utils import address, chance, drown_snd
 
 from .block import Block
 from .location import LOCATION_CONF
+from .objects import SCPTrain
 from .outing import OutingsManager
 from .railway_generator import RailwayGenerator
 from .scenario import Scenario  # noqa: F401
@@ -1062,10 +1063,28 @@ class World:
                 )
                 base.train.ctrl.silence_move_snd()  # noqa: F821
 
-        if self.meet_scp:
+        if self.meet_scp and self._et_blocks:
             self.sun.switch_to_night()
+
             self.meet_scp = False
-            loader.loadSfx("sounds/thunder.ogg").play()  # noqa: F821
+            self.scp_train = SCPTrain()
+
+            mod = loader.loadModel(address("direct_rails"))  # noqa: F821
+            mod.reparentTo(self._loaded_blocks[-1].rails_mod)
+            mod.setX(-0.7 if self.scp_train.side == "l" else 0.7)
+
+            taskMgr.doMethodLater(  # noqa: F821
+                2,
+                base.team.prepare_to_fight,  # noqa: F821
+                "prepare_to_fight",
+                extraArgs=[],
+            )
+
+        if self.meet_scp:
+            self._prev_block = self._loaded_blocks[-2].id
+            self._cur_block = self._loaded_blocks[-1].id
+
+            self._et_blocks = 60
 
         if self._et_blocks:
             self._exiting_et = False
