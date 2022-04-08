@@ -14,6 +14,7 @@ from direct.gui.DirectGui import (
 )
 from panda3d.core import TransparencyAttrib
 
+from gui import MechanicDesc
 from gui.widgets import GUI_PIC, RUST_COL
 from utils import take_random
 
@@ -280,6 +281,9 @@ class Scenario:
 
     def hide_chapter(self):
         """Hide the scenario GUI."""
+        if self.current_chapter == 4:
+            MechanicDesc("SCP")
+
         self._list.hide()
 
     def start_chapter(self, task):

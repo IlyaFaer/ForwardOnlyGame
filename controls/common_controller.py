@@ -141,9 +141,14 @@ class CommonController:
             return
 
         if self._pointed_obj.startswith("enemy_"):
-            base.char_gui.show_tooltip(  # noqa: F821
-                base.world.enemy.active_units[self._pointed_obj].tooltip  # noqa: F821
-            )
+            try:
+                base.char_gui.show_tooltip(  # noqa: F821
+                    base.world.enemy.active_units[  # noqa: F821
+                        self._pointed_obj
+                    ].tooltip
+                )
+            except KeyError:
+                pass
             if self.chosen_char is not None:
                 base.change_mouse_pointer("attack")  # noqa: F821
             return

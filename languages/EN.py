@@ -506,6 +506,25 @@ MECHANIC_DESC = {
         ),
         "previews": ("character_status1", "character_status2"),
     },
+    "SCP": {
+        "descs": (
+            (
+                "You're about to meet SCP-4945-B. Kill instances\n"
+                "on its board, but don't use heavy weapons against\n"
+                "the train not to hurt the D-child. Avoid the\n"
+                "violet light, it can scorch your people. Speed\n"
+                "up or slow down to dodge the light ray."
+            ),
+            (
+                "Violet suns are very harmful - try to shot them,\n"
+                "including with the locomotive active weapons,\n"
+                "before they'll touch the Adjutant. Also you can\n"
+                "use the Armor Plate upgrade for protection\n"
+                "against their touch."
+            ),
+        ),
+        "previews": ("light", "suns"),
+    },
 }
 
 MECHANIC_NAMES = (
