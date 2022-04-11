@@ -4,9 +4,6 @@ __pycache__/
 build/
 dev_utils/
 dist/
-models/blender/title_scene.blend
 saves/
 logs.txt
 options.cfg
-setup.py
-test_environment.py
