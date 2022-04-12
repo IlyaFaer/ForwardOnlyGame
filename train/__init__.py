@@ -148,6 +148,7 @@ class Train:
             self._stop_steam,
             self._shot_sparks,
             self._love_particle,
+            self._dust,
         ) = self._prepare_particles()
 
         self.smoke_filtered = False
@@ -290,6 +291,10 @@ class Train:
             shot_spark.loadConfig("effects/shot_spark.ptf")
             shot_sparks.append(shot_spark)
 
+        dust = ParticleEffect()
+        dust.loadConfig("effects/dust.ptf")
+        dust.setPos(0, 0.5, 0.17)
+
         return (
             smoke,
             l_brake_sparks,
@@ -298,6 +303,7 @@ class Train:
             stop_steam,
             shot_sparks,
             love,
+            dust,
         )
 
     def _set_lamps_material(self, mat, floodlights_mat=None):
@@ -701,6 +707,12 @@ class Train:
                 base.camera_ctrl.push()  # noqa: F821
                 if "Ram" not in self._upgrades:
                     self.get_damage(65)
+
+                self._dust.start(self.model, render)  # noqa: F821
+                self._dust.softStart()
+                taskMgr.doMethodLater(  # noqa: F821
+                    2.29, self._dust.disable, "stop_dust", extraArgs=[]
+                )
 
                 task.delayTime = 0.3
                 return task.again

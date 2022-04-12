@@ -392,8 +392,13 @@ class GrenadeLauncher:
             and base.world.scp_train.side == "l"  # noqa: F82
         ):
             x1, x2 = 0, 1.2
-        else:
+        elif (
+            base.world.scp_train is not None  # noqa: F82
+            and base.world.scp_train.side == "r"  # noqa: F82
+        ):
             x1, x2 = -1.2, 0
+        else:
+            x1, x2 = -1.2, 1.2
 
         col_node.addSolid(
             CollisionPolygon(
@@ -858,8 +863,13 @@ class MachineGun:
             and base.world.scp_train.side == "l"  # noqa: F82
         ):
             x1, x2 = 0, 1.2
-        else:
+        elif (
+            base.world.scp_train is not None  # noqa: F82
+            and base.world.scp_train.side == "r"  # noqa: F82
+        ):
             x1, x2 = -1.2, 0
+        else:
+            x1, x2 = -1.2, 1.2
 
         col_node.addSolid(
             CollisionPolygon(
