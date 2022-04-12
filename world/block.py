@@ -98,11 +98,12 @@ class Block:
 
         self._surfs = []
         self._phys_objs = []
-        self.rails_mod = None
         self._add_surface = False
         self._old_values = None
         self._fireflies = None
+        self._bonfire = None
 
+        self.rails_mod = None
         self.name = name
         self.path = path
         self.cam_path = cam_path
@@ -332,6 +333,12 @@ class Block:
         if "grass" in env_mod[0]:
             mod.setTransparency(TransparencyAttrib.M_binary)
             mod.setShaderOff()
+
+        if "fireplace1" == env_mod[0]:
+            self._bonfire = ParticleEffect()
+            self._bonfire.loadConfig("effects/bonfire.ptf")
+            self._bonfire.reparentTo(mod)
+            self._bonfire.start(mod, render)  # noqa: F821
 
         mod.reparentTo(surf_mod)
         mod.setPos(env_mod[1])
@@ -570,3 +577,7 @@ class Block:
         if self._fireflies is not None:
             self._fireflies.disable()
             self._fireflies = None
+
+        if self._bonfire is not None:
+            self._bonfire.disable()
+            self._bonfire = None
