@@ -72,7 +72,7 @@ class Sun:
         self._arch_int = None
 
         self._color_vec = self._calc_color_vec(
-            self._color, self._next_color, self._day_part_duration
+            self._color, self._next_color, self._day_part_duration - self._color_step
         )
 
         self._amb_light, self._dir_light, self.sun_np = self._set_general_lights(

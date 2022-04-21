@@ -36,7 +36,9 @@ class EnemyUnit(Unit):
         self._y_positions = y_positions
         self._y_pos = take_random(self._y_positions)
 
-        self._x_range = (-0.3, 0.4) if self.class_data["part"] == "side" else (0.6, 1.3)
+        self._x_range = (
+            (-0.3, 0.38) if self.class_data["part"] == "side" else (0.6, 1.3)
+        )
 
         self.node = render.attachNewNode(self.id + "_node")  # noqa: F821
         self.node.setPos(self._io_dist, -7, 0)
