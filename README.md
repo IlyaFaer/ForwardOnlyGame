@@ -36,7 +36,7 @@ The major features:
 
 
 **Music**  
-The game music tracks were generously provided by Moloken, Among Madness and Квалиа artists. You can hear all of them in the [game playlist on Spotify](https://open.spotify.com/playlist/2DiGeOVQfOirdGzTTwPmlC).  
+The game music tracks were generously provided by Moloken, Among Madness, Yeruselem and Квалиа artists. You can hear all of them in the [game playlist on Spotify](https://open.spotify.com/playlist/2DiGeOVQfOirdGzTTwPmlC).  
   
 :triangular_flag_on_post: *Permission to use the tracks in the game was directly granted to the project author by the artists and related labels. All the author rights for the music tracks are owned by the artists and related labels. The music tracks MUST NOT be considered as a part of the Forward Only project, or free-to-use resources.*
 
