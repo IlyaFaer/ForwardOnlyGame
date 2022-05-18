@@ -274,7 +274,10 @@ class ForwardOnly(ShowBase):
             return task.done
         elif self.game_config.tutorial_enabled and not loaded_game:
             self.doMethodLater(
-                0.1, self.train.ctrl.load_speed, "load_speed", extraArgs=[0.5],
+                0.1,
+                self.train.ctrl.load_speed,
+                "load_speed",
+                extraArgs=[0.5],
             )
 
     def change_mouse_pointer(self, state):
@@ -317,7 +320,10 @@ class ForwardOnly(ShowBase):
         # build game world
         self.world = World(save["day_part"])
         self.world.load_location(
-            num, save["enemy_score"], save["disease_threshold"], save["stench_step"],
+            num,
+            save["enemy_score"],
+            save["disease_threshold"],
+            save["stench_step"],
         )
         self.world.city_gui.visit_num = save["city_visit_num"]
 

@@ -62,6 +62,7 @@ class World:
         self._disease_threshold = 25
         self._noon_ambient_snd = None
         self._night_ambient_snd = None
+        self._scp_music = None
         self._map = []  # all the world blocks
         self._stations = []
         self._branches = []
@@ -1080,7 +1081,13 @@ class World:
                 extraArgs=[],
             )
 
-        if self.meet_scp:
+            self._scp_music = loader.loadSfx(  # noqa: F821
+                "sounds/music/Yeruselem - Autoimmunity.mp3"
+            )
+            self._scp_music.play()
+
+        if self.meet_scp or self._block_num == 3:
+            self.meet_scp = True
             self._prev_block = self._loaded_blocks[-2].id
             self._cur_block = self._loaded_blocks[-1].id
 
@@ -1221,6 +1228,20 @@ class World:
             self._track_places_of_interest()
 
         return block
+
+    def drown_scp_music(self, task):
+        """Gradually drown SCP episode music."""
+        taskMgr.doMethodLater(  # noqa: F821
+            0.1,
+            drown_snd,
+            "drown_scp_music",
+            extraArgs=[self._scp_music],
+            appendTask=True,
+        )
+        taskMgr.doMethodLater(  # noqa: F821
+            2, self._scp_music.stop, "stop_scp_music", extraArgs=[]
+        )
+        return task.done
 
     def clear_prev_block(self):
         """Clear the block to release memory."""

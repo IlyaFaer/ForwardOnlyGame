@@ -73,7 +73,8 @@ class MainMenu:
 
         self._scp_num = 0
         self._scp_frame = DirectFrame(
-            frameSize=(-0.57, 0.57, -0.775, 0.775), state=DGG.NORMAL,
+            frameSize=(-0.57, 0.57, -0.775, 0.775),
+            state=DGG.NORMAL,
         )
         self._scp_frame.hide()
 
@@ -874,7 +875,7 @@ class MainMenu:
         )
         but = DirectButton(
             parent=self._main_fr,
-            pos=(-0.15, 0, -0.45),
+            pos=(center - 0.6, 0, -0.45),
             frameTexture="credits/among_madness_logo.png",
             frameSize=(-0.15, 0.15, -0.15, 0.15),
             relief="flat",
@@ -888,7 +889,7 @@ class MainMenu:
         self.cred_wids.append(
             DirectLabel(
                 parent=self._main_fr,
-                pos=(-0.15, 0, -0.65),
+                pos=(center - 0.6, 0, -0.65),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
@@ -899,7 +900,7 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.25, 0, -0.45),
+            pos=(center - 0.2, 0, -0.45),
             frameTexture="credits/qualia_logo.png",
             frameSize=(-0.15, 0.15, -0.15, 0.15),
             relief="flat",
@@ -913,7 +914,7 @@ class MainMenu:
         self.cred_wids.append(
             DirectLabel(
                 parent=self._main_fr,
-                pos=(0.25, 0, -0.65),
+                pos=(center - 0.2, 0, -0.65),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821
@@ -924,7 +925,32 @@ class MainMenu:
 
         but = DirectButton(
             parent=self._main_fr,
-            pos=(0.65, 0, -0.45),
+            pos=(center + 0.2, 0, -0.45),
+            frameTexture="credits/yeruselem_logo.png",
+            frameSize=(-0.15, 0.15, -0.15, 0.15),
+            relief="flat",
+            command=webbrowser.open,
+            extraArgs=["https://open.spotify.com/artist/20ZapscIoXsQzSFIy7We2y"],
+            clickSound=self.click_snd,
+        )
+        but.setTransparency(TransparencyAttrib.MAlpha)
+        self.cred_wids.append(but)
+
+        self.cred_wids.append(
+            DirectLabel(
+                parent=self._main_fr,
+                pos=(center + 0.2, 0, -0.65),
+                text_scale=0.033,
+                text_fg=SILVER_COL,
+                text_font=base.main_font,  # noqa: F821
+                frameColor=(0, 0, 0, 0),
+                text="Yeruselem",
+            )
+        )
+
+        but = DirectButton(
+            parent=self._main_fr,
+            pos=(center + 0.6, 0, -0.45),
             frameTexture="credits/moloken_logo.png",
             frameSize=(-0.15, 0.15, -0.15, 0.15),
             relief="flat",
@@ -938,7 +964,7 @@ class MainMenu:
         self.cred_wids.append(
             DirectLabel(
                 parent=self._main_fr,
-                pos=(0.65, 0, -0.65),
+                pos=(center + 0.6, 0, -0.65),
                 text_scale=0.033,
                 text_fg=SILVER_COL,
                 text_font=base.main_font,  # noqa: F821

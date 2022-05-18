@@ -80,7 +80,7 @@ MAIN_MENU = (
     "Музыка",
 )
 
-KEYS_INFO = u"""
+KEYS_INFO = """
 Управление:
 Левая кнопка мыши - выбрать юнита/зону отдыха
 Правая кнопка мыши - переместить юнита/указать цель
@@ -411,7 +411,10 @@ MECHANIC_DESC = {
                 "Кол-во мест в каждой части локомотива ограничено."
             ),
         ),
-        "previews": ("characters1", "characters2",),
+        "previews": (
+            "characters1",
+            "characters2",
+        ),
     },
     "Смрад": {
         "descs": (
@@ -4003,7 +4006,10 @@ SCENARIO = (
 Пока Вы спасали мальчика, один из Ваших дозорных
 записал новое шифрованное сообщение из Унтеррифа.
 Ищите его в Журнале Капитана.""",
-                "effects": (("do_medicine_save", []), ("do_medicine_save", []),),
+                "effects": (
+                    ("do_medicine_save", []),
+                    ("do_medicine_save", []),
+                ),
                 "goodness": 3,
             },
             "Не спасать парня": {
@@ -4884,6 +4890,13 @@ Forward Only
 \n\n
 Разработка
 Ilya Faer
+
+Музыка
+Moloken
+Among Madness
+Yeruselem
+Квалиа
+
 \n\n\n\n\n\n\n\n
 Продолжение следует...
 """

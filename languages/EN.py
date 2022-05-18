@@ -80,7 +80,7 @@ new game start or loading)""",
     "Music",
 )
 
-KEYS_INFO = u"""
+KEYS_INFO = """
 Game controls:
 Mouse Left Button - choose character/rest zone
 Mouse Right Button - move character/set target
@@ -413,7 +413,10 @@ MECHANIC_DESC = {
                 "Number of unit cells on every part is limited."
             ),
         ),
-        "previews": ("characters1", "characters2",),
+        "previews": (
+            "characters1",
+            "characters2",
+        ),
     },
     "the Stench": {
         "descs": (
@@ -3993,7 +3996,10 @@ medicines your fighters lose 40 energy.
 While you've been saving the child, one of your
 sentries recorded a new encrypted message from
 Unterriff. Check the Journal to read it.""",
-                "effects": (("do_medicine_save", []), ("do_medicine_save", []),),
+                "effects": (
+                    ("do_medicine_save", []),
+                    ("do_medicine_save", []),
+                ),
                 "goodness": 3,
             },
             "Don't save the kid": {
@@ -4863,6 +4869,7 @@ Ilya Faer
 Music by
 Moloken
 Among Madness
+Yeruselem
 Квалиа
 
 \n\n\n\n\n\n\n\n

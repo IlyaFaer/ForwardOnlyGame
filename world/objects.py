@@ -55,10 +55,16 @@ class Barrier:
         self._rb_nodes = []
 
         self._prepare_physics(
-            id_, block, 0.07, y_coor,
+            id_,
+            block,
+            0.07,
+            y_coor,
         )
         self._prepare_physics(
-            id_, block, -0.07, y_coor,
+            id_,
+            block,
+            -0.07,
+            y_coor,
         )
 
     def _prepare_physics(self, id_, block, x_coor, y_coor):
@@ -154,7 +160,10 @@ class Rocket:
 
         base.train.explode_rocket(side)  # noqa: F821
         taskMgr.doMethodLater(  # noqa: F821
-            2, self._smoke.disable, "disable_rocket_smoke", extraArgs=[],
+            2,
+            self._smoke.disable,
+            "disable_rocket_smoke",
+            extraArgs=[],
         )
 
 
@@ -503,6 +512,12 @@ class SCPTrain:
         for part in base.train.parts.values():  # noqa: F821
             part.enemies = []
 
+        taskMgr.doMethodLater(  # noqa: F821
+            0.7,
+            base.world.drown_scp_music,  # noqa: F821
+            "drown_scp_music",
+        )
+
     def move_ray(self, diff, task):
         """Move the light ray along the Adjutant.
 
@@ -591,7 +606,9 @@ class SCPInstance(Shooter):
 
         y_pos = take_random(positions)
         self.model.setPos(
-            -0.065 if scp_train.side == "r" else 0.065, y_pos, 0.09,  # noqa: F821
+            -0.065 if scp_train.side == "r" else 0.065,
+            y_pos,
+            0.09,  # noqa: F821
         )
         if scp_train.side == "r":
             self.model.setH(90)
@@ -823,7 +840,8 @@ class VioletSun:
         """Explode the sun, doing damage to the Adjutant."""
         base.train.explode_rocket(self._sides[self._scp_train.side])  # noqa: F821
         Sequence(
-            LerpScaleInterval(self.model, 0.07, (0, 0, 0)), Func(self._die),
+            LerpScaleInterval(self.model, 0.07, (0, 0, 0)),
+            Func(self._die),
         ).start()
 
     def approach_train(self, factor):
