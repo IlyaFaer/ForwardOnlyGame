@@ -1086,8 +1086,7 @@ class World:
             )
             self._scp_music.play()
 
-        if self.meet_scp or self._block_num == 3:
-            self.meet_scp = True
+        if self.meet_scp:
             self._prev_block = self._loaded_blocks[-2].id
             self._cur_block = self._loaded_blocks[-1].id
 
