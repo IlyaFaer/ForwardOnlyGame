@@ -218,6 +218,7 @@ class Sun:
 
     def switch_to_night(self):
         """Switch day time to night in one moment."""
+        self._color_step = 0
         self._color = {
             "name": "night",
             "dir": Vec4(0.05, 0.05, 0.05, 1),
@@ -228,6 +229,10 @@ class Sun:
             "dir": Vec4(0.34, 0.45, 0.5, 1),
             "amb": Vec4(0.4, 0.4, 0.4, 1),
         }
+        self._color_vec = self._calc_color_vec(
+            self._color, self._next_color, self._day_part_duration
+        )
+
         self._dir_light.setColor(self._color["dir"])
         self._amb_light.setColor(self._color["amb"])
 
@@ -254,9 +259,9 @@ class Sun:
         vects = {}
         for field in ("dir", "amb"):
             vects[field] = Vec4(
-                (next_color[field][0] - color[field][0]) / steps,
-                (next_color[field][1] - color[field][1]) / steps,
-                (next_color[field][2] - color[field][2]) / steps,
+                (next_color[field][0] - color[field][0]) / (steps or 1),
+                (next_color[field][1] - color[field][1]) / (steps or 1),
+                (next_color[field][2] - color[field][2]) / (steps or 1),
                 1,
             )
         return vects

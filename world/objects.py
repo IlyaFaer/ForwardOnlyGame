@@ -626,7 +626,7 @@ class SCPInstance(Shooter):
     @property
     def damage(self):
         """Damage amount for one shot."""
-        return random.choice((2, 3))
+        return random.choice((1, 2))
 
     @property
     def shooting_speed(self):

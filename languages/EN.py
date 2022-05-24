@@ -1676,7 +1676,7 @@ living in that ancient hut...""",
         "results": (
             """You're commanding {name1}, {name2} and {name3}
 to gear up. People are taking their stuff and moving to the hut.
-Approaching to it they see that the house is long abandoned, but they
+Approaching it, they see that the house is long abandoned, but they
 moving into it for a lookup anyway. They splitting up: one person for
 one room. Finding nothing, but dust, within half of hour, almost without
 hope they open a floor basement entrance, and hooray! They see

@@ -280,9 +280,9 @@ class GrenadeLauncher:
         The method do damage to the enemy units, which
         were in the grenade explosion area.
         """
-        base.world.enemy.active_units[  # noqa: F821
-            event.getFromNodePath().getName()
-        ].get_damage(40)
+        name = event.getFromNodePath().getName()
+        if name in base.world.enemy.active_units:  # noqa: F821
+            base.world.enemy.active_units[name].get_damage(40)  # noqa: F821
 
     def _end_aiming(self):
         """Stop aiming and disable aiming GUI."""
@@ -333,7 +333,9 @@ class GrenadeLauncher:
             0.1, col_np.removeNode, "remove_grenade_solid", extraArgs=[]
         )
         taskMgr.doMethodLater(  # noqa: F821
-            4, self._return_hole_sprite, "hide_ground_hole",
+            4,
+            self._return_hole_sprite,
+            "hide_ground_hole",
         )
 
     def _return_hole_sprite(self, task):
@@ -564,7 +566,9 @@ class ClusterHowitzer:
             )
 
         Sequence(
-            move_par, Func(self._clear_grenades), Func(self._explode_grenades),
+            move_par,
+            Func(self._clear_grenades),
+            Func(self._explode_grenades),
         ).start()
 
     def _clear_grenades(self):
@@ -652,7 +656,9 @@ class ClusterHowitzer:
             0.1, self._clear_grenade_solids, "clear_grenade_solid", extraArgs=[col_nps]
         )
         taskMgr.doMethodLater(  # noqa: F821
-            4, self._return_hole_sprites, "hide_ground_hole",
+            4,
+            self._return_hole_sprites,
+            "hide_ground_hole",
         )
 
     def _return_hole_sprites(self, task):
