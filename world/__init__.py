@@ -780,7 +780,7 @@ class World:
         world_save["branches"] = self.branches
         world_save.close()
 
-    def load_location(self, num, enemy_score, disease_threshold, stench_step):
+    def load_location(self, num, enemy_score, disease_threshold, stench_step, meet_scp):
         """Load the given location from the last save.
 
         Args:
@@ -789,9 +789,11 @@ class World:
             disease_threshold (int): Disease activity score.
             stench_step (int):
                 Number of the block, where the Stench edge is located.
+            meet_scp (bool): A flag if the SCP train must be met.
         """
         self._disease_threshold = disease_threshold
         self._stench_step = stench_step
+        self.meet_scp = meet_scp
 
         self.outings_mgr = OutingsManager()
 

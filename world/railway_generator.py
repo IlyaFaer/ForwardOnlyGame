@@ -243,10 +243,12 @@ class RailwayGenerator:
         for side in ("l", "r"):
             cursor = 0
             while cursor < len(world_map):
-                range_ = (112, 140) if cursor == 0 else (182, 221)
+                range_ = (107, 135) if cursor == 0 else (187, 226)
                 try:
                     start = self.find_straight(
-                        world_map, branches, cursor + random.randint(*range_),
+                        world_map,
+                        branches,
+                        cursor + random.randint(*range_),
                     )
                 except IndexError:
                     break

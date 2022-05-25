@@ -324,6 +324,7 @@ class ForwardOnly(ShowBase):
             save["enemy_score"],
             save["disease_threshold"],
             save["stench_step"],
+            save["meet_scp"],
         )
         self.world.city_gui.visit_num = save["city_visit_num"]
 
@@ -427,6 +428,7 @@ class ForwardOnly(ShowBase):
         save["helped_children"] = self.helped_children
         save["decisions"] = self.decisions
         save["scp_pages"] = self.scp_pages
+        save["meet_scp"] = self.world.meet_scp
 
         save.close()
 
