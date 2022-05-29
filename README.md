@@ -30,6 +30,7 @@ The major features:
 **Subscribe**  
 [Discord](https://discord.gg/8UgFJAWsFx)  
 [YouTube](https://www.youtube.com/channel/UCKmtk9K6VkcQdOMiE7H-W9w)  
+[TikTok](https://www.tiktok.com/@forwardonlygame)  
 [IndieDB](https://www.indiedb.com/games/forward-only)  
 [Twitter](https://twitter.com/IlyaFaer)  
 [SourceForge](https://sourceforge.net/p/forwardonlygame/)
