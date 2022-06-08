@@ -7,7 +7,7 @@ The Europe is stroke by the terrible cataclysm called "the Stench". The only way
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot2.png?raw=true)
 ![image](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/preview/screenshot3.png?raw=true)
 
-The game represents a route-strategy with arcade fight blotches. Find an optimal way through the inimical Silewer before the fast spreading poisonous clouds of the Stench outrun you. Fights on move, locomotive upgrades, tough decisions, recruiting, diseases, resources searches and even more await you in the game.
+The game represents a route-strategy with arcade fight blotches. Find an optimal way through the inimical Silewer before the fast spreading poisonous clouds of the Stench outrun you. Fights on move, train upgrades, tough decisions, recruiting, diseases, resources searches and even more await you in the game.
 
 :cinema: See [gameplay trailer on YouTube](https://youtu.be/AjvDuXsIizs).
 
