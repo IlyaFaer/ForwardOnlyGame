@@ -64,6 +64,7 @@ class MainMenu:
         self._chosen_crew = None
         self._load_msg = None
         self._load_screen = None
+        self._not_welcome_img = None
         self._is_first_pause = True
         self._save_blocked_lab = None
         self._menu_music = loader.loadSfx(  # noqa: F821
@@ -1160,9 +1161,13 @@ class MainMenu:
         """
         if is_game_start:
             self.hide()
+            self._not_welcome_img = DirectFrame(
+                frameSize=(-2, 2, -1, 1),
+                frameTexture=GUI_PIC + "not_welcome.png",
+            )
             self._load_screen = DirectFrame(
                 frameSize=(-2, 2, -1, 1),
-                frameColor=(0.15, 0.15, 0.15, 1),
+                frameColor=(0.15, 0.15, 0.15, 0.8),
                 state=DGG.NORMAL,
             )
             DirectLabel(
@@ -1281,6 +1286,11 @@ class MainMenu:
             )
         )
         self._is_first_pause = False
+
+    def erase_bg(self):
+        """Hide the loading screen background image."""
+        self._not_welcome_img.destroy()
+        self._not_welcome_img = None
 
     def show_start_button(self):
         """Show a button to start a game on the loading screen."""

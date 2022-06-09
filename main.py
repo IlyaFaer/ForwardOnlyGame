@@ -256,6 +256,7 @@ class ForwardOnly(ShowBase):
         self.traits_gui = TraitsGUI()
 
         self.main_menu.hide()
+        self.main_menu.erase_bg()
         self.main_menu.stop_music()
         self.train.ctrl.start_move_sound()
         self.world.start_ambient_sound()
