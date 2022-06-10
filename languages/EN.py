@@ -27,7 +27,7 @@ MAIN_MENU = (
         "Their tactic is based mostly on a good\ndefence and locomotive "
         "upgrading, which can make the Train a real fortress.\n\n"
         "You'll start with 3 soldier males. "
-        "Prefered outings type: Enemy Camp."
+        "Preferred outings type: Enemy Camp."
     ),
     (
         "Raiders are accustomed to difficulties and can recover from "
@@ -35,7 +35,7 @@ MAIN_MENU = (
         "know how to find resources. Their tactic\nis based on getting "
         "and using expendable resources and fast recovering.\n\n"
         "You'll start with 2 male and 1 female raiders. "
-        "Prefered outings type: Looting."
+        "Preferred outings type: Looting."
     ),
     (
         "Anarchists are the force of nature! They build cohesion "
@@ -43,7 +43,7 @@ MAIN_MENU = (
         "them with. The tactic is based on\ngetting more people, "
         "tweaking their traits and using crew skills.\n\n"
         "You'll start with 2 male and 1 female anarchists. "
-        "Prefered outings type: Meet."
+        "Preferred outings type: Meet."
     ),
     "Main menu",
     "Save game",
@@ -1079,8 +1079,8 @@ Getting closer to the building, they hear music and see three people
 within. In the next moment from the other side of the station four
 skinheads with guns appear, with clear intent to attack the gas
 point. {name1} and {name2}, not yet detected by robbers, upper their
-guns and shooting off all of these cruds. The station dwellers moving
-outside the building to see what's happening, and understand that your
+guns and shoot off the cruds. The station dwellers moving outside
+the building to see what's happening, and understand that your
 people saved them from skinheads. They applaud {name1} and {name2},
 speaking of weird language unfamiliar to your messengers. {name1} and
 {name2} nod their heads, turning back to the Train, but one of the
@@ -2983,14 +2983,14 @@ snack is over." He gets up and leaves the deckhouse.
 Finished the awfully tasteless portion, you're walking to the
 lower level of the Adjutant. Before you pronounce a word,
 Kenneth rises his finger up, asking you to stay silent and
-listen. You're concentrating on the noises... "Hear that?"
-- the mechanic points to the left side of the room, and you
-understand what he's trying to say. Some metal screeching can
-be heard from the wall. "That's an axle box, something's
-acting up." - Kenneth explains silently. - "We need to check,
-it'll take time." You're trying to remember how far was
-the Stench frontier, when you last heard about it. "Our
-options?" Looking at you, Kenneth calculates something in his
+listen. You're concentrating on the noises of the dark and
+smelling with masut room... "Hear that?" - the mechanic points
+to the left wall, and you understand what he's trying to say.
+Some metal screeching can be heard from there. "The axle box,
+something's acting up." - Kenneth explains silently. - "We
+need to check, it'll take time." You're trying to remember
+how far was the Stench frontier, when you last heard of it.
+"Options?" Looking at you, Kenneth calculates something in his
 mind: "We need five hours long stop to deal with it." It's
 much. "Other options?" The mechanic seems to be not very
 pleasant to say it, but he does: "We can try to do it on move.
@@ -3242,12 +3242,13 @@ your business. The threatened family keeps silence, but you
 can feel with your skin that, seeing your gesture, they've
 lost the last hope for a better end. As if emptiness filled
 the part of the room, where they're sitting. Taking money
-from the officer, you exit the hut without a word... While
-walking back to the Adjutant, you're all trying to hear anything
-from the house side, but nothing happens. Turning your head
-back, you see one of the men standing near the door, looking
-at your crew. Seems like they are scared by themselves and
-doesn't believe you'll just leave. Still, you're leaving.
+from the officer, you exit the hut without a word...
+
+While walking back to the Adjutant, you're all trying to hear
+anything from the house side, but nothing happens. Turning
+your head back, you see one of the men standing near the door,
+looking at your crew. Seems like they are scared by themselves
+and doesn't believe you'll just leave. Still, you're leaving.
 Soon this will be happening everywhere - those, who has
 power and strength, will be using it to survive, destroying
 others if needed. And it will be needed. You can't save
@@ -4297,11 +4298,11 @@ was working on during the last several
 years. He know me as a daredevil and
 decided to call me first. I liked his
 idea and made a proposition to my
-workers. Some of them have families,
-so they refused to take part in this
-risky operation, but three of them
-and Kenneth, my old friend mechanic,
-agreed.
+workers. Some of them have families
+to care, so they refused to take part
+in this risky operation, but three of
+them and Kenneth, my old friend
+mechanic, agreed.
 
 Daren, the machinist, who proposed
 all of it, told us about the Adjutant

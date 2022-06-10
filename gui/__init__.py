@@ -1289,8 +1289,9 @@ class MainMenu:
 
     def erase_bg(self):
         """Hide the loading screen background image."""
-        self._not_welcome_img.destroy()
-        self._not_welcome_img = None
+        if self._not_welcome_img is not None:
+            self._not_welcome_img.destroy()
+            self._not_welcome_img = None
 
     def show_start_button(self):
         """Show a button to start a game on the loading screen."""
