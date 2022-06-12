@@ -91,9 +91,15 @@ class MainMenu:
         self.new_enemy_snd = loader.loadSfx("sounds/new_enemy.ogg")  # noqa: F821
         self.new_enemy_snd.setPlayRate(0.95)
 
+        self._main_font = DirectFrame(
+            frameSize=(-2, 2, -1, 1),
+            frameTexture=GUI_PIC + "Adjutant.png",
+        )
+        self._main_font.hide()
+
         self._main_fr = DirectFrame(
             frameSize=(-2, 2, -1, 1),
-            frameColor=(0.15, 0.15, 0.15, 1),
+            frameColor=(0.15, 0.15, 0.15, 0.8),
             state=DGG.NORMAL,
         )
         wids = self._show_authors_word()
@@ -335,6 +341,7 @@ class MainMenu:
         for wid in wids:
             wid.destroy()
 
+        self._main_font.show()
         self._menu_music.play()
         self._build()
 
@@ -1292,6 +1299,10 @@ class MainMenu:
         if self._not_welcome_img is not None:
             self._not_welcome_img.destroy()
             self._not_welcome_img = None
+
+        if self._main_font is not None:
+            self._main_font.destroy()
+            self._main_font = None
 
     def show_start_button(self):
         """Show a button to start a game on the loading screen."""
