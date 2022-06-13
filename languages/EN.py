@@ -2994,9 +2994,9 @@ how far was the Stench frontier, when you last heard of it.
 mind: "We need five hours long stop to deal with it." It's
 much. "Other options?" The mechanic seems to be not very
 pleasant to say it, but he does: "We can try to do it on move.
-But it's dangerous, complex and will require two men - me
-here and someone on the other side of the locomotive. The
-second guy can get injured, I warn you. Anyway not dealing with
+But it's dangerous and will require two men - me here and
+someone on the other side of the locomotive. The second
+guy can get injured, I warn you. Anyway not dealing with
 it can cause significant pace lose. Your call, Cap." """,
         "variants": {
             "Stop the Adjutant for a revision": {
@@ -3045,7 +3045,7 @@ in the same moment: "It's okay, it's okay! Small wound,
 but the axle box is fine now. Nothing serious!" Making a
 deep breath, you nod your head, trying to calm down. You
 knew the risks from the beginning, but it's still about
-your people safety. It's good that the helper didn't get
+your people safety. It's good the helper didn't get
 serious wounds. You better find them later to say thanks.
 
 One of your fighters getting -20 health

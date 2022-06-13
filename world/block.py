@@ -340,6 +340,9 @@ class Block:
             self._bonfire.reparentTo(mod)
             self._bonfire.start(mod, render)  # noqa: F821
 
+        if "snow_pile" == env_mod[0]:
+            base.world.sun.ignore_shadows(mod)
+
         mod.reparentTo(surf_mod)
         mod.setPos(env_mod[1])
         mod.setH(random.randint(1, 359))
@@ -464,7 +467,7 @@ class Block:
             rails_mod.reparentTo(self.rails_mod)
             rails_mod.setPos(0, -8, 0)
 
-        if chance(5):
+        if chance(6):
             mist = loader.loadModel(address("mist"))  # noqa: F821
             mist.reparentTo(self.rails_mod)
             mist.setPos(random.randint(-3, 3), 0, 0.07)
