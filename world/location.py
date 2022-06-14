@@ -23,7 +23,7 @@ LOCATION_CONF = {
     "ambient_sounds": ("meadow_noon", "meadow_night"),
     "with_quantity": (
         {"models": PLAINS_TREES, "quantity": (22, 30), "square": "wide"},
-        {"models": ("snow_pile",), "quantity": (3, 5), "square": "wide"},
+        {"models": ("snow_pile",), "quantity": (2, 4), "square": "wide"},
         {"models": ("small_tree1",), "quantity": (2, 4), "square": "wide"},
         {"models": ("stump1",), "quantity": (1, 4), "square": "wide"},
         {"models": PLAINS_GRASS, "quantity": (20, 35), "square": "wide"},

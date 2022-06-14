@@ -341,7 +341,7 @@ class Block:
             self._bonfire.start(mod, render)  # noqa: F821
 
         if "snow_pile" == env_mod[0]:
-            base.world.sun.ignore_shadows(mod)
+            base.world.sun.ignore_shadows(mod)  # noqa: F821
 
         mod.reparentTo(surf_mod)
         mod.setPos(env_mod[1])

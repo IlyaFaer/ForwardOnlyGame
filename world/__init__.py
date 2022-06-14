@@ -83,6 +83,7 @@ class World:
         self._prev_block = None
         self._cur_block = None
         self._exiting_et = False
+        self._near_fork = False
         self._cur_music = None
 
         self._surf_vertices = self._cache_warmup()
@@ -187,12 +188,7 @@ class World:
         Returns:
             bool: True if the Train is near a fork.
         """
-        if len(self._loaded_blocks) > 2:
-            return self._loaded_blocks[1].name in (
-                "r_fork",
-                "l_fork",
-                "exit_from_fork",
-            ) or self._loaded_blocks[0].name in ("r_fork", "l_fork", "exit_from_fork")
+        return self._near_fork
 
     @property
     def is_on_et(self):
@@ -969,17 +965,23 @@ class World:
             return
 
         if self._map[new_block].name in ("l_fork", "r_fork", "exit_from_fork"):
+            self._near_fork = True
             base.train.show_turning_ability(  # noqa: F821
                 self._map[new_block],
                 current_block.branch,
                 new_block < current_block.id,
             )
+            return
 
         if (
             current_block.name in ("l_fork", "r_fork", "exit_from_fork")
             or current_block.enemy_territory
         ):
             base.train.hide_turning_ability()  # noqa: F821
+            return
+
+        if self._loaded_blocks[0].name in ("l_fork", "r_fork", "exit_from_fork"):
+            self._near_fork = False
 
     def _load_hangar_scene(self, task):
         """Load the city hangar scene.

@@ -3182,14 +3182,12 @@ An SCP dossier page acquired. Press 0 to toggle.""",
 appears most of them would like to help orphans, but all
 understand that it'll take at least several hours. The Stench
 will not let you wait, so it makes sense to move faster.
-People know nothing about the cataclysm behavior, in theory
-it can accelerate or appear somewhere far from the supposed
-source in Germany. Overthinking it again, and again, you
-decide to ignore the teachers plea. The crew don't like the
-decision very much, but everyone mind the situation. A hard
-silence forms in the air. No one wants to go there and say
-those orphans that you're going to leave. "So, what?" - you
-ask quietly. - "Should we continue the road without the last
+Overthinking it again, and again, you decide to ignore
+the teachers plea. The crew don't like the decision very
+much, but everyone mind the situation. A hard silence
+forms in the air. No one wants to go there and say those
+orphans that you're going to leave. "So, what?" - you ask
+quietly. - "Should we continue the road without the last
 word? What's the point in it?" Your crewmates lower their
 eyes and nod their heads. Taking this as an answer, you give
 a command to go...
@@ -4143,7 +4141,7 @@ or a creepy thread we got used to,
 so no one took it serious first.
 Zoomers do have fun as usual. I
 thought the same, I must confess...
-But in some moment they started to
+But at some moment they started to
 find bodies, for real. Big news
 agencies picked up the story:
 people are dying right on a street,
@@ -4228,7 +4226,7 @@ a photo (smiles). The main point here
 is accuracy - our world consists of
 immeasurable number of events, which
 influence each other. We need
-Laplace's Demon to get results, as
+Laplace's Demon to get results -
 without high accuracy our data will
 be giving pretty unreliable
 predictions.
