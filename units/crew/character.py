@@ -323,7 +323,7 @@ class Character(Shooter, Unit):
             self._yeah_snds.append(yeah_snd1)
 
         if self.class_ == "soldier":
-            z = 0.064 if self.sex == "male" else 0.062
+            z = 0.063 if self.sex == "male" else 0.062
         elif self.class_ == "raider":
             z = 0.047
         elif self.class_ == "anarchist":
@@ -554,7 +554,10 @@ class Character(Shooter, Unit):
         self._col_node.stash()
 
         taskMgr.doMethodLater(  # noqa: F821
-            0.05, self._calm_down, self.id + "_calm_down", extraArgs=[True],
+            0.05,
+            self._calm_down,
+            self.id + "_calm_down",
+            extraArgs=[True],
         )
         taskMgr.doMethodLater(  # noqa: F821
             self.class_data["energy_gain"], self._gain_energy, self.id + "_gain_energy"
@@ -688,7 +691,10 @@ class Character(Shooter, Unit):
             and base.world.scp_train is None  # noqa: F821
         ):
             taskMgr.doMethodLater(  # noqa: F821
-                7, self._calm_down, self.id + "_calm_down", extraArgs=[False],
+                7,
+                self._calm_down,
+                self.id + "_calm_down",
+                extraArgs=[False],
             )
             return task.done
 

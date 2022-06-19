@@ -10,7 +10,7 @@ from direct.interval.IntervalGlobal import Parallel, Sequence
 from direct.interval.LerpInterval import LerpHprInterval, LerpPosInterval
 from panda3d.core import Vec3
 
-MAX_Z = 3
+MAX_Z = 2.95
 MAX_UP_MOVE = [1, None, 1.5]
 MAX_DOWN_MOVE = [2.5, None, 0.75]
 MAX_LEFT_MOVE = [None, -1.1, 0.9]
@@ -308,7 +308,7 @@ class CameraController:
 
         if 2 >= new_x >= 0.7:
             x = new_x
-        if 3 >= new_z >= 1.2:
+        if MAX_Z >= new_z >= 1.2:
             z = new_z
 
         self._zoom(x, z, 0.2)
@@ -338,7 +338,10 @@ class CameraController:
         self._move_int.append(
             Parallel(
                 LerpPosInterval(
-                    base.cam, 0.15, self._target, bakeInStart=False,  # noqa: F821
+                    base.cam,
+                    0.15,
+                    self._target,
+                    bakeInStart=False,  # noqa: F821
                 ),
                 LerpHprInterval(
                     self._np,
