@@ -1667,7 +1667,7 @@ You're getting 1 Medicine""",
         "desc": """Called by one of your crewmates, you're walking out of
 the cabin and in the same moment seeing an old hut not far from
 the railway. Putting binoculars to your eyes, you're looking at
-it with good feeling. The house seems to be very old, built
+it with good feelings. The house seems to be very old, built
 with dark ancient logs. No smoke rises from the chimney. Taking
 a few second to assess the prospects, you're thinking about
 sending three people to search the place for anything that can
@@ -1712,7 +1712,7 @@ stillness fills the air. {name2} and {name3} are moving into the house,
 while {name1} is standing outside on a watch. It takes a lot of time
 for {name3} to check all the broken furniture in the first room, but
 {heshe3} finds nothing. {name2} appears to become more lucky: {heshe2}
-managed to find 50$ within a lady's old bag. With such a results
+managed to find 50$ within a lady's old bag. With such results
 {name2} and {name3} are leaving the silent and dusty house, and
 joining {name1} to get back to Train and others.""",
             """You're asking {name1}, {name2} and {name3} to go for a
@@ -1990,7 +1990,7 @@ makes a step back: "No problem, we'll go". Not touching locals,
 your people making a slow turn around and heading back to you.""",
             """You're commanding {name1} and {name2} to go for a recon.
 Your crewmates are closing to the place, but four hulk rednecks with
-guns appearing towards them. {name1} and {name2} stopping, showing they
+guns appearing towards them. {name1} and {name2} stop, showing they
 are not attacking. An old man steps forward: "Aren't you folks, who
 came from abroad, and now killing skinheads all around?" {name1} and
 {name2} exchange gazes. "Sounds like us" - {name2} answers. "Benny,
@@ -3355,7 +3355,7 @@ interviewing. She was here not long ago! That's
 something should be read.
 
 You're going to give a command to start an engine, but
-suddenly you see the man, who was trying to get the last
+suddenly see the man, who was trying to get the last
 place in the motel. The one you forced to go - he walks
 from the Adjutant back in the motel direction. What does
 it mean? You ask the crew to check if everything is okay

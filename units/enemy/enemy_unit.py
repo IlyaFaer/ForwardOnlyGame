@@ -597,7 +597,13 @@ class DodgeShooter(EnemyUnit):
 
     def __init__(self, model, id_, y_positions, enemy_handler, class_data):
         EnemyUnit.__init__(
-            self, id_, "Gun Dodge", class_data, model, y_positions, enemy_handler,
+            self,
+            id_,
+            "Gun Dodge",
+            class_data,
+            model,
+            y_positions,
+            enemy_handler,
         )
 
         self._col_node = self._init_col_node(
@@ -628,7 +634,7 @@ class DodgeShooter(EnemyUnit):
         fire.reparentTo(self.model)
         fire.setScale(1, 0.0001, 1)
         if self._y_pos > 0:
-            fire.setPos(-0.055, -0.008, 0.076)
+            fire.setPos(-0.055, -0.01, 0.076)
             fire.setH(180)
         else:
             fire.setPos(0.065, -0.008, 0.076)
