@@ -43,6 +43,7 @@ class ItemChooser(metaclass=abc.ABCMeta):
             "text_fg": SILVER_COL,
             "frameColor": font,
             "scale": (0.075, 0, 0.075),
+            "clickSound": base.main_menu.click_snd,  # noqa: F821
         }
         DirectButton(pos=(0.15, 0, -0.015), text=">", command=self._next, **but_params)
         DirectButton(pos=(-0.15, 0, -0.015), text="<", command=self._prev, **but_params)

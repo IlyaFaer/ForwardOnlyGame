@@ -269,7 +269,7 @@ class RailwayGenerator:
 
             branch_blocks.append(branch["side"] + "_fork")
 
-            z_shift = random.randint(17, 21)
+            z_shift = random.randint(14, 18)
 
             # generate the part of the branch from
             # the fork start to the first turn

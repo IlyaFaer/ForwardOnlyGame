@@ -91,6 +91,8 @@ class MainMenu:
         self.new_enemy_snd = loader.loadSfx("sounds/new_enemy.ogg")  # noqa: F821
         self.new_enemy_snd.setPlayRate(0.95)
 
+        self._page_snd = loader.loadSfx("sounds/GUI/journal_page.ogg")  # noqa: F821
+
         self._main_font = DirectFrame(
             frameSize=(-2, 2, -1, 1),
             frameTexture=GUI_PIC + "Adjutant.png",
@@ -1354,6 +1356,7 @@ class MainMenu:
                 "gui/tex/" + base.scp_pages[self._scp_num]  # noqa: F821
             )
             self._scp_num += 1
+            self._page_snd.play()
         except IndexError:
             self._scp_frame.hide()
             self._scp_num = 0

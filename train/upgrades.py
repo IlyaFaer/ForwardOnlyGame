@@ -605,9 +605,11 @@ class ClusterHowitzer:
         The method do damage to the enemy units, which
         were in the grenade explosion area.
         """
-        base.world.enemy.active_units[  # noqa: F821
+        unit = base.world.enemy.active_units.get(  # noqa: F821
             event.getFromNodePath().getName()
-        ].get_damage(50)
+        )
+        if unit is not None:
+            unit.get_damage(50)
 
     def _explode_grenades(self):
         """Organize grenades explosion effects and damaging."""

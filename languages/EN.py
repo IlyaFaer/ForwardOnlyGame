@@ -929,7 +929,7 @@ guns, supplies or anything useful at all. Someone already looted the
 place clean. In disappointed mood {name1} returns back to the Train.""",
             """By your command, {name1} gears up and takes a direction to
 the square tent. First half of {hisher1} way {heshe1} runs fast,
-but then {name1} slows down hard, carefully looking under {hisher1}
+but then slows down hard, carefully looking under {hisher1}
 feet. You're staying sharp as it looks like there are traps there,
 and where traps - there people, who set them. Still, {name1}
 approaching the tent without any sign of a trouble. Taking an
@@ -1075,7 +1075,7 @@ be dangerous, just several people, who still lives here
 despite the End of Days, {name1} and {name2} deciding to
 leave them as they were and move along.""",
             """{name1} and {name2} moving to the gas station by your order.
-Getting closer to the building, they hear music and see three people
+Getting closer to the building, they hear music and see people
 within. In the next moment from the other side of the station four
 skinheads with guns appear, with clear intent to attack the gas
 point. {name1} and {name2}, not yet detected by robbers, upper their
@@ -1149,7 +1149,7 @@ and jumping to the ground. Right in this second all the trailers, except
 one, spurt away. In the remaining car your people hear some fuss.
 While they are getting closer to the vehicle, the window of it opens,
 and a gun barrel leans out, starting to shoot around without aiming.
-Making a circle movement around the trailer, your people open it and do
+Making a circle around the trailer, your people open it and do
 several shots inside. The rival gun silences. {name1} and {name2} enter
 the car for several seconds and walk out together, holding a big tool
 box. Lifting it onto the Train, {name2} puts {hisher2} hand in {hisher2} pocket and
@@ -1373,7 +1373,7 @@ out of the camp aside of the watch, {heshe1} runs to the locomotive
 and proudly enters the deck house with {hisher1} rich catch.
 All of your crewmates getting +20 health""",
             """{name1} becomes your messenger. Grabbing {hisher1} stuff,
-{heshe1} silently jumps down to the ground and moves into the camp.
+{heshe1} silently jumpsto the ground and moves into the camp.
 Only a couple of skinhead sentries lazily walk around the
 buildings, talking loudly. Without an effort {name1} sneaks
 into the camp and penetrates the wooden building, which looks
@@ -2982,11 +2982,11 @@ snack is over." He gets up and leaves the deckhouse.
 
 Finished the awfully tasteless portion, you're walking to the
 lower level of the Adjutant. Before you pronounce a word,
-Kenneth rises his finger up, asking you to stay silent and
-listen. You're concentrating on the noises of the dark and
-smelling with masut room... "Hear that?" - the mechanic points
-to the left wall, and you understand what he's trying to say.
-Some metal screeching can be heard from there. "The axle box,
+Kenneth rises his finger up, asking you to listen. You're
+concentrating on the noises of the dark and smelling with
+masut room... "Hear that?" - the mechanic points to the
+left wall, and you understand what he's trying to say. Some
+metal screeching can be heard from there. "The axle box,
 something's acting up." - Kenneth explains silently. - "We
 need to check, it'll take time." You're trying to remember
 how far was the Stench frontier, when you last heard of it.
@@ -3537,9 +3537,9 @@ Yeah, it's time people come out of Europe instead of
 moving into it, who'd knew. The spot of order,
 civilization and comfort became the most dangerous place
 in the World. An interesting question is: who will
-welcome new refugees? Looks like the answer to this
-is right in front of your eyes - the bus shotted from
-a machine gun. And this can be only a beginning! No one
+welcome new refugees? Looks like the answer is right
+in front of your eyes - the bus shotted with a
+machine gun. And this can be only a beginning! No one
 stopped the Stench yet, no one have any ideas about it
 actually. If it'll continue to grow, more people will
 left their homes and will go to the neighbour countries

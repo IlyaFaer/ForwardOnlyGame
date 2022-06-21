@@ -69,7 +69,7 @@ CLASSES = {
         {
             "class": Kamikaze,
             "model": "skinhead_kamikaze",
-            "score": 6,
+            "score": 5,
             "threshold": 19,
             "part": "side",
             "health": 50,
