@@ -99,7 +99,7 @@ class EffectsManager:
         Returns:
             Explosion: Explosion effect object.
         """
-        return Explosion(self._explosion_lights, parent, "explode_fire2", 1.9)
+        return Explosion(self._explosion_lights, parent, "explode_fire2", 2.1)
 
     def fade_in_screen(self, task):
         """Smoothly fill the screen with natural colors."""
