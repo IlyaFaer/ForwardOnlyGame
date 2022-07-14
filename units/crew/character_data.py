@@ -64,6 +64,7 @@ NAMES = {
         "Alex",
         "Alexis",
         "Antony",
+        "Armin",
         "Arnold",
         "Ben",
         "Bruce",

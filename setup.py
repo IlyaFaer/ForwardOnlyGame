@@ -2,9 +2,9 @@ from setuptools import setup
 
 setup(
     name="Forward Only",
-    version="0.88",
+    version="0.9",
     author="IlyaFaer",
-    author_email="gurovilya9@gmail.com",
+    author_email="ilya.faer.gurov@gmail.com",
     description="Forward Only - Seepage, the game",
     license="https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md",
     url="https://github.com/IlyaFaer/ForwardOnlyGame",

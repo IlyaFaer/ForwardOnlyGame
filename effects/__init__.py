@@ -88,7 +88,7 @@ class EffectsManager:
         Returns:
             Explosion: Explosion effect object.
         """
-        return Explosion(self._explosion_lights, parent, "explode_fire", 0.9)
+        return Explosion(self._explosion_lights, parent, "explode_fire", 1.5)
 
     def explosion_big(self, parent):
         """Prepare a big explosion effect for the given object.
@@ -186,6 +186,13 @@ class Explosion:
                 extraArgs=[light],
                 appendTask=True,
             )
+
+        taskMgr.doMethodLater(  # noqa: F821
+            0.8,
+            self._fire.softStop,
+            self._parent.id + "_disable_exlode_fire",
+            extraArgs=[],
+        )
 
         taskMgr.doMethodLater(  # noqa: F821
             self._length,
