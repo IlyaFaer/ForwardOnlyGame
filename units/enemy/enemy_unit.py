@@ -618,6 +618,18 @@ class DodgeShooter(EnemyUnit):
         self._explosion = base.effects_mgr.explosion_big(self)  # noqa: F821
         self._smoke = base.effects_mgr.burn_smoke(self)  # noqa: F821
 
+        self._piece1 = loader.loadModel(address("car_piece1"))  # noqa: F821
+        self._piece1.reparentTo(self.model)
+
+        self._piece2 = loader.loadModel(address("car_piece1"))  # noqa: F821
+        self._piece2.reparentTo(self.model)
+
+        self._piece3 = loader.loadModel(address("car_piece2"))  # noqa: F821
+        self._piece3.reparentTo(self.model)
+
+        self._piece4 = loader.loadModel(address("car_piece3"))  # noqa: F821
+        self._piece4.reparentTo(self.model)
+
     def _set_shoot_anim(self):
         """Prepare machine gun shooting animation for this unit.
 
@@ -735,9 +747,59 @@ class DodgeShooter(EnemyUnit):
         )
         self._rb_node.applyTorque(
             Vec3(
-                random.randint(-30, 30),
-                random.randint(-30, 30),
-                random.randint(-30, 30),
+                random.randint(-25, 25),
+                random.randint(-25, 25),
+                random.randint(-25, 25),
+            )
+        )
+
+        self._tear_off_part(
+            self._piece1, BulletBoxShape(Vec3(0.01, 0.01, 0.01)), 30, 3, "1"
+        )
+        self._tear_off_part(
+            self._piece2, BulletBoxShape(Vec3(0.01, 0.01, 0.01)), 30, 3, "2"
+        )
+        self._tear_off_part(
+            self._piece3, BulletBoxShape(Vec3(0.005, 0.005, 0.05)), 50, 2, "3"
+        )
+        self._tear_off_part(
+            self._piece4, BulletBoxShape(Vec3(0.005, 0.005, 0.05)), 50, 2, "4"
+        )
+
+    def _tear_off_part(self, model, shape, mass, torque, num):
+        """
+        Create a physical part of a car and "tear it off" the model.
+
+        Args:
+            model (panda3d.core.NodePath): Piece model.
+            shape (panda3d.bullet.BulletBoxShape): Physical shape for the piece.
+            mass (int): Mass of the piece.
+            torque (int): Torque impulse power.
+            num (str): Piece id.
+        """
+        rb_node = BulletRigidBodyNode(self.id + "_piece_physics" + num)
+        rb_node.setMass(mass)
+        rb_node.addShape(shape)
+        rb_node.deactivation_enabled = False
+
+        phys_node = self.node.attachNewNode(rb_node)  # noqa: F821
+        base.world.phys_mgr.attachRigidBody(rb_node)  # noqa: F821
+
+        model.reparentTo(phys_node)
+
+        rb_node.applyForce(
+            Vec3(
+                random.randint(15, 30),
+                random.randint(15, 30),
+                random.randint(15, 30),
+            ),
+            Point3(0, -0.1, 0),
+        )
+        rb_node.applyTorque(
+            Vec3(
+                random.randint(-torque, torque),
+                random.randint(-torque, torque),
+                random.randint(-torque, torque),
             )
         )
 
