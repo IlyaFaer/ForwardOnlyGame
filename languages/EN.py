@@ -487,8 +487,15 @@ MECHANIC_DESC = {
                 "among all, you can spend it in cities for repair,\n"
                 "healing, recruiting and upgrading the Adjutant."
             ),
+            (
+                "There is an active weapon on Adjutant - machine gun.\n"
+                "It enables during fight - press 2 to choose it,\n"
+                "aim at an enemy unit and hold left mouse button\n"
+                "to shoot. You can install more active weapons in a\n"
+                "city, but it'll require significant expenses."
+            ),
         ),
-        "previews": ("resources1",),
+        "previews": ("resources1", "machine_gun"),
     },
     "character status": {
         "descs": (
@@ -877,7 +884,7 @@ shoot to somewhere behind the column. {name3} grabs the first thing
 {heshe3} see and turns to the Train. {name1} takes few more seconds
 to shoot at those on the other side, but they fight back tough, so
 {heshe1} has to retreat. Returning fast, your people show the catch.
-You're getting 100$ and 1 stimulator
+You're getting $100 and 1 stimulator
 {name1} getting -15 health""",
         ),
     },
@@ -938,7 +945,7 @@ You're feeling little bit nervous, but several minutes passes,
 and {name1} walks out on the meadow. Carefully choosing the steps,
 {heshe1} returns back to the Train and shakes a bunch of dollars
 in {hisher1} left hand, showing it to you.
-You're getting 70$""",
+You're getting $70""",
             """You're sending {name1} for a small recon. Taking {hisher1} gun,
 {heshe1} moves fast to the tent, while you're tracking {hisher1} movement
 through the binoculars. At a few seconds {heshe1} closes to the spot from the
@@ -1010,7 +1017,7 @@ gang in the jeep, approaching fast, start to shoot, and you're opening
 fire back. {name1} and {name2}, using your cover shooting, are
 returning back to the Train with several banknotes, and you're
 deciding to move along before the bus beholders came too close.
-You're getting 80$""",
+You're getting $80""",
             """While you were deciding who to send for a search, several
 skinhead scums are jumped out of the bus. Your whole crew, seeing
 them, starts to shoot, and after six-eight seconds all of the rivals are
@@ -1085,7 +1092,7 @@ people saved them from skinheads. They applaud {name1} and {name2},
 speaking of weird language unfamiliar to your messengers. {name1} and
 {name2} nod their heads, turning back to the Train, but one of the
 dwellers stops them and gives them several dollar banknotes.
-You're getting 80$""",
+You're getting $80""",
             """{name1} and {name2} fastly moving to the gas station. Getting
 closer, they slow down, but after several seconds they see that the
 building is abandoned. The glass door is open, music is still playing,
@@ -1095,7 +1102,7 @@ splitting to check two places simultaneously: the cash and the storeroom.
 Cash machine, fortunately, is open, and {name2} finds a toolbox really
 fast. Energetically taking their lucky catches, {name1} and {name2} in
 a good mood returning back to the Train.
-You're getting 90$ and +100 Adjutant durability""",
+You're getting $90 and +100 Adjutant durability""",
         ),
     },
     {  # 4
@@ -1142,8 +1149,8 @@ they open it, and {name1} with {name3} are entering inside. It takes
 time for them to search through the car. Not much of lucky finds,
 mostly there is just an old useless stuff, like someone very old
 and a little bit mad was living in the truck, but at least {name3}
-finds 40$ in there. With this find your messengers return back.
-You're getting 40$""",
+finds $40 in there. With this find your messengers return back.
+You're getting $40""",
             """By your command, {name1}, {name2} and {name3} taking their gear
 and jumping to the ground. Right in this second all the trailers, except
 one, spurt away. In the remaining car your people hear some fuss.
@@ -1154,7 +1161,7 @@ several shots inside. The rival gun silences. {name1} and {name2} enter
 the car for several seconds and walk out together, holding a big tool
 box. Lifting it onto the Train, {name2} puts {hisher2} hand in {hisher2} pocket and
 gets out a bunch of dollar papers. "Plus to the filter" - {heshe2} smiles.
-You're getting 1 smoke filter and 60$""",
+You're getting 1 smoke filter and $60""",
             """{name1}, {name2} and {name3} energetically jump off the Train
 and take the direction to the trailers camp. After few seconds of
 silence they hear movement near the cars. Uppering their guns,
@@ -1165,7 +1172,7 @@ white powder, stinky vomit and one-three stoned to nearly death
 skinheads. "A drug party, ha?" - {name2} says. - "Let's take what
 is useful and leave them where they are." {name1} and {name3}
 agreeing on that, and they three start to collect things.
-You're getting 200$""",
+You're getting $200""",
         ),
     },
     {  # 5
@@ -1229,7 +1236,7 @@ skinhead." - {heshe1} pronounces surely. "Yes, yes!" - the guy answers. -
 - he gets his left hand into the pocket and throws several banknotes
 outside of it. "Don't touch me!". Raising the money, {name2} takes away
 {hisher2} gun as well and points others to the exit.
-You're getting 80$""",
+You're getting $80""",
             """{name1}, {name2} and {name3} jump off the Train and
 run to the construction site. Getting closer, they smell smoke, so,
 holding teamwise, they starting to move fast from one room to another,
@@ -1240,7 +1247,7 @@ Cleared the whole two-floored building in four minutes, they
 make a short pause, and then start to rummage through rival
 stuff. It doesn't look like a lot of useful things, but these
 guys definitely had some money.
-You're getting 130$""",
+You're getting $130""",
         ),
     },
     {  # 6
@@ -1264,7 +1271,7 @@ the Train. While they are getting closer, you're starting to suspect
 something wrong - too nervous is their behavior. "There was an ambush."
 - {name2} says, climbing to the Train. - "They've taken {name1} as a
 hostage and demanded ransom." {name1} climbs to the Train next:
-"Sorry!". {name2} continues: "I've gave them 90$ to free {himher1}.
+"Sorry!". {name2} continues: "I've gave them $90 to free {himher1}.
 Let's go before they wanted more."
 You losing 90$""",
             """You're sending {name1} and {name2} to see what is this
@@ -1312,7 +1319,7 @@ We decided to take it, as there is a couple of gnawed bodies
 there. Doesn't look like a good campers." Uppering the heavy
 box on to the Train, you're giving an order to start engine.
 With this catch you'll save some money on the next stop.
-You're getting 170$""",
+You're getting $170""",
         ),
     },
     {  # 7
@@ -1712,7 +1719,7 @@ stillness fills the air. {name2} and {name3} are moving into the house,
 while {name1} is standing outside on a watch. It takes a lot of time
 for {name3} to check all the broken furniture in the first room, but
 {heshe3} finds nothing. {name2} appears to become more lucky: {heshe2}
-managed to find 50$ within a lady's old bag. With such results
+managed to find $50 within a lady's old bag. With such results
 {name2} and {name3} are leaving the silent and dusty house, and
 joining {name1} to get back to Train and others.""",
             """You're asking {name1}, {name2} and {name3} to go for a
@@ -1995,11 +2002,11 @@ are not attacking. An old man steps forward: "Aren't you folks, who
 came from abroad, and now killing skinheads all around?" {name1} and
 {name2} exchange gazes. "Sounds like us" - {name2} answers. "Benny,
 give'em paper!" - old man shouts. Tall guy approaches your people and
-holds out a 50$ banknote. "Those bastards killed a lot of good folks
+holds out a $50 banknote. "Those bastards killed a lot of good folks
 here." - the old man pronounces loudly. - "Thanks for clearing the
 filth. Keep up the good work!" - he uppers his hand, and all the
 rednecks turn back to their place. In good mood your people return.
-You're getting +50$""",
+You're getting +$50""",
             """You're sending {name1} and {name2} to take a closer look
 at the place. Your messengers closing to the silo; silence meets them,
 so they entering inside the buildings. The lack of furniture or
@@ -2205,7 +2212,7 @@ in few meters from the hildcarriage. Getting to it, {heshe2}
 opens the thing and see several old soaked dollar papers.
 Well, if to dry them carefully, the recon can even turn
 successful. With such a catch you messengers go back.
-You're getting 70$""",
+You're getting $70""",
             """By your command, {name1} and {name2} take a direction to
 the white boat. While getting closer to it, they see that it's really
 ancient. Doesn't look like its owners left something behind, but your
@@ -2629,8 +2636,8 @@ your money disappeared! You fastly exit the deckhouse and start to
 gaze around. No one. Nothing. All of your fighter seem to be quiet
 and calm. Someone entered the locomotive, took some of your money
 and vanished! Converting the money, you see that not actually
-much of money was stolen, 40$ probably. Anyway, it's no good!
-You're losing 40$""",
+much of money was stolen, $40 probably. Anyway, it's no good!
+You're losing $40""",
             """You're leaving {name1}, {name2} and {name3} to keep the
 locomotive safe, and take a direction to the deer. Just several seconds
 passed, and your sentinels hear some fuss in the deckhouse. Opening
@@ -2655,7 +2662,7 @@ silently moves closer to him and raises a bunch of dollars.
 "Stealer!" - {heshe1} finalizes. Slapping the man's pockets,
 {heshe1} raises even more money. "Well, who came with a sword
 to us..." - {name2} says, getting closer to get rid of the body.
-You're getting 70$""",
+You're getting $70""",
             """You're taking your guns, but suddenly a kind of a grenade flies
 into the open window. Grey tear gas starts to spread around fast with
 a loud hiss. Pushing {name1} to the exit, you're grabing {name2}'s

@@ -463,6 +463,14 @@ class ForwardOnly(ShowBase):
         self.main_menu.show_start_button()
         self.dollars = 300
 
+        self.train.install_upgrade(
+            self.labels.UPGRADES_DESC[
+                "Machine Gun"
+                if "Machine Gun" in self.labels.UPGRADES_DESC
+                else "Пулемёт"
+            ]
+        )
+
         self.scenario = Scenario()
 
 
