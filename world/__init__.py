@@ -85,6 +85,7 @@ class World:
         self._exiting_et = False
         self._near_fork = False
         self._cur_music = None
+        self._cur_idle_music = None
 
         self._surf_vertices = self._cache_warmup()
         self._paths = self._load_motion_paths()
@@ -1061,12 +1062,14 @@ class World:
         if self._loaded_blocks:
             current_block = self._loaded_blocks[-1]
 
-            if current_block.id in (590, 591, 592, 593):
+            if current_block.id in (490, 491, 492, 493):
                 base.scenario.finish_game()  # noqa: F821
                 taskMgr.doMethodLater(  # noqa: F821
                     1, base.train.ctrl.stop, "stop_train"  # noqa: F821
                 )
                 base.train.ctrl.silence_move_snd()  # noqa: F821
+                if self._cur_idle_music is not None:
+                    self._cur_idle_music.stop()
 
         if self.meet_scp and self._et_blocks:
             self.sun.switch_to_night()
@@ -1095,6 +1098,11 @@ class World:
             self._cur_block = self._loaded_blocks[-1].id
 
             self._et_blocks = 60
+
+            self.enemy.is_cooldown = True
+            taskMgr.doMethodLater(  # noqa: F821
+                250, self.enemy.stop_cooldown, "stop_attack_cooldown"
+            )
 
         if self._et_blocks:
             self._exiting_et = False
@@ -1297,7 +1305,8 @@ class World:
 
     def _play_idle_music(self, task):
         """Play IDLE game music."""
-        random.choice(self._idle_music).play()
+        self._cur_idle_music = random.choice(self._idle_music)
+        self._cur_idle_music.play()
         return task.done
 
     def disease_activity(self, task):

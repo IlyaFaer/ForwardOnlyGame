@@ -121,7 +121,7 @@ class RailsScheme:
     def _fill_branches(self):
         """Paint railway branches on the railways scheme."""
         for branch in base.world.branches:  # noqa: F821
-            start = -0.96 + self._world_map[branch["start"]].id * 0.0032
+            start = -0.96 + self._world_map[branch["start"]].id * 0.00385
             self._temp_wids.append(
                 DirectFrame(
                     parent=self._scheme,
@@ -131,7 +131,7 @@ class RailsScheme:
                     pos=(start, 0, 0.1 if branch["side"] == "l" else -0.1),
                 )
             )
-            end = -0.96 + self._world_map[branch["end"]].id * 0.0032
+            end = -0.96 + self._world_map[branch["end"]].id * 0.00385
             self._temp_wids.append(
                 DirectFrame(
                     parent=self._scheme,
@@ -185,7 +185,7 @@ class RailsScheme:
 
         outs = None
         cities = 0
-        for block in self._world_map[:601]:
+        for block in self._world_map[:501]:
             if block.id % 100 == 0:
                 if outs:
                     self._temp_wids.append(
@@ -195,7 +195,7 @@ class RailsScheme:
                             text_scale=0.035,
                             text_bg=(0, 0, 0, 0),
                             frameColor=(0, 0, 0, 0),
-                            pos=(-0.96 + (block.id - 50) * 0.0032, 0, -0.1),
+                            pos=(-0.96 + (block.id - 50) * 0.00385, 0, -0.1),
                         )
                     )
                 outs = ""
@@ -212,7 +212,7 @@ class RailsScheme:
                         parent=self._scheme,
                         frameTexture="gui/tex/city.png",
                         frameSize=(-0.04, 0.04, -0.04, 0.04),
-                        pos=(-0.96 + block.id * 0.0032, 0, 0),
+                        pos=(-0.96 + block.id * 0.00385, 0, 0),
                     )
                 )
                 self._temp_wids.append(
@@ -223,7 +223,7 @@ class RailsScheme:
                         text_scale=0.032,
                         text_bg=(0, 0, 0, 0),
                         frameColor=(0, 0, 0, 0),
-                        pos=(-0.96 + block.id * 0.0032, 0, 0.1),
+                        pos=(-0.96 + block.id * 0.00385, 0, 0.1),
                     )
                 )
                 cities += 1
@@ -234,7 +234,7 @@ class RailsScheme:
                 frameColor=(0.71, 0.25, 0.05, 0.2),
                 frameSize=(
                     0,
-                    base.world.stench_step * 0.0032,  # noqa: F821
+                    base.world.stench_step * 0.00385,  # noqa: F821
                     -0.22,
                     0.22,
                 ),
@@ -254,8 +254,8 @@ class RailsScheme:
                 elif base.world.current_block.branch == "r":  # noqa: F821
                     z_shift = -0.295
 
-            if blocks[0] < 600:
-                x = -0.96 + blocks[0] * 0.0032
+            if blocks[0] < 500:
+                x = -0.96 + blocks[0] * 0.00385
             else:
                 x = self._arrow.getX()
 
@@ -266,7 +266,7 @@ class RailsScheme:
             else:
                 self._arrow["frameTexture"] = "gui/tex/train_dir_op.png"
 
-        task.delayTime = 5
+        task.delayTime = 3
         return task.again
 
     def show(self):

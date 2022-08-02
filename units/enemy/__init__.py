@@ -52,7 +52,7 @@ CLASSES = {
             "class": StunBombThrower,
             "model": "skinhead_thrower1",
             "score": 3,
-            "threshold": 10,
+            "threshold": 10.5,
             "part": "side",
             "health": 90,
             "transport_model": "moto2",
@@ -61,7 +61,7 @@ CLASSES = {
             "class": DodgeShooter,
             "model": "dodge_gun",
             "score": 5,
-            "threshold": 13,
+            "threshold": 13.5,
             "part": "side",
             "health": 100,
             "transport_model": "dodge",
@@ -70,7 +70,7 @@ CLASSES = {
             "class": Kamikaze,
             "model": "skinhead_kamikaze",
             "score": 5,
-            "threshold": 19,
+            "threshold": 19.5,
             "part": "side",
             "health": 50,
             "transport_model": "moto3",
@@ -97,7 +97,7 @@ class Enemy:
         self.score = 3
 
         self._unit_id = 0
-        self._is_cooldown = False
+        self.is_cooldown = False
         self._is_first_attack = True
         self._front_y_positions = []
         self._side_y_positions = []
@@ -151,9 +151,9 @@ class Enemy:
         enemy.node.reparentTo(train_mod)
         self.active_units[enemy.id] = enemy
 
-    def _stop_cooldown(self, task):
+    def stop_cooldown(self, task):
         """Ends enemy attack cool down period."""
-        self._is_cooldown = False
+        self.is_cooldown = False
         return task.done
 
     def capture_train(self):
@@ -176,7 +176,7 @@ class Enemy:
             EnemyDesc("MotoShooter")
 
         if (
-            self._is_cooldown
+            self.is_cooldown
             or base.world.is_in_city  # noqa: F821
             or base.train.smoke_filtered  # noqa: F821
             or base.world.is_near_fork  # noqa: F821
@@ -185,9 +185,9 @@ class Enemy:
             return False
 
         if chance(CLASSES["attack_chances"][day_part] + (15 if lights_on else 0)):
-            self._is_cooldown = True
+            self.is_cooldown = True
             taskMgr.doMethodLater(  # noqa: F821
-                290, self._stop_cooldown, "stop_attack_cooldown"
+                250, self.stop_cooldown, "stop_attack_cooldown"
             )
             return True
 
@@ -276,7 +276,7 @@ class Enemy:
 
     def stop_attack(self):
         """Make all the unit smoothly stop following the Train."""
-        self.score += 1
+        self.score += 1.5
         for enemy in self.active_units.values():
             enemy.stop()
 

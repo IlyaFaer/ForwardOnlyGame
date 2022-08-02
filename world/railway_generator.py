@@ -84,8 +84,8 @@ class RailwayGenerator:
         self._prev = 0
         self._step = random.uniform(0.025, 0.05) * random.choice((1, -1))
         self._current = self._step
-        self._station_threshold = 80
-        self._city_threshold = 215
+        self._station_threshold = 68
+        self._city_threshold = 180
 
         self._bounds = (
             Bound(-1, (0.08, 0.12), "r90_turn"),
@@ -127,11 +127,11 @@ class RailwayGenerator:
                     return model
 
         if self._station_threshold <= 0 and chance(30):
-            self._station_threshold = 83
+            self._station_threshold = 70
             return "station"
 
         if self._city_threshold <= 0 and chance(50):
-            self._city_threshold = 205
+            self._city_threshold = 170
             return "city"
 
         return random.choice(("rs", "ls")) if chance(10) else "direct"
@@ -144,7 +144,7 @@ class RailwayGenerator:
         self._station_threshold -= 1
 
         if self._station_threshold <= 0 and chance(30):
-            self._station_threshold = 93
+            self._station_threshold = 76
             return "station"
 
         return random.choice(("rs", "ls")) if chance(10) else "direct"
@@ -243,7 +243,7 @@ class RailwayGenerator:
         for side in ("l", "r"):
             cursor = 0
             while cursor < len(world_map):
-                range_ = (107, 135) if cursor == 0 else (187, 226)
+                range_ = (89, 112) if cursor == 0 else (150, 175)
                 try:
                     start = self.find_straight(
                         world_map,
@@ -255,7 +255,7 @@ class RailwayGenerator:
 
                 try:
                     end = self.find_straight(
-                        world_map, branches, start + random.randint(60, 70)
+                        world_map, branches, start + random.randint(49, 56)
                     )
                 except IndexError:
                     break
@@ -269,7 +269,7 @@ class RailwayGenerator:
 
             branch_blocks.append(branch["side"] + "_fork")
 
-            z_shift = random.randint(14, 18)
+            z_shift = random.randint(11, 14)
 
             # generate the part of the branch from
             # the fork start to the first turn

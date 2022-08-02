@@ -265,7 +265,7 @@ class ForwardOnly(ShowBase):
             self.game_config.tutorial_enabled and self.current_block.id > 18
         ):
             self.notes.start()
-            self.doMethodLater(26, self.world.make_stench_step, "stench_step")
+            self.doMethodLater(27, self.world.make_stench_step, "stench_step")
 
         self.doMethodLater(60, self.world.disease_activity, "disease")
         self.accept("block_finished", self._move_along_block)
@@ -453,7 +453,7 @@ class ForwardOnly(ShowBase):
 
         # build game world
         self.world = World()
-        self.world.generate_location(600, chosen_crew)
+        self.world.generate_location(500, chosen_crew)
         self.current_block = self.world.prepare_next_block()
 
         self.common_ctrl.set_controls()

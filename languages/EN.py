@@ -873,7 +873,7 @@ appearing near the jeeps. But to the moment they grabbed their
 guns and started to shoot, {name1}, {name2} and {name3} are
 jumping onto the Train. "No empty hands!" - {name2} proclaims
 and shows dollars on {hisher2} palm.
-You're getting 90$""",
+You're getting $90""",
             """{name1}, {name2} and {name3} are taking the direction to the jeeps
 column. {name2} and {name3} are opening two of the cars at once,
 while {name1} stands on the watch. You're seeing {name2} grabbing a
@@ -956,7 +956,7 @@ enters it. In the next second {heshe1} jumps out of it and runs back to the
 Train. "Skinhead scum!" - {heshe1} says, entering the Train cabin. - "Seems
 like he tried to shot me before he actually saw me. Missed." - {heshe1} adds,
 pointedly putting several banknotes onto the table.
-You're getting 100$""",
+You're getting $100""",
         ),
     },
     {  # 2
@@ -1028,7 +1028,7 @@ staying on the watch for case if more skinheads will come. Your
 people entering inside the car, and returning back into a field of
 view in less than thirty seconds. Getting back to the Train, they
 showing you a bunch of crumpled dollars.
-You're getting 100$""",
+You're getting $100""",
         ),
     },
     {  # 3
@@ -1273,7 +1273,7 @@ something wrong - too nervous is their behavior. "There was an ambush."
 hostage and demanded ransom." {name1} climbs to the Train next:
 "Sorry!". {name2} continues: "I've gave them $90 to free {himher1}.
 Let's go before they wanted more."
-You losing 90$""",
+You losing $90""",
             """You're sending {name1} and {name2} to see what is this
 piece of cloth is for. Your people run to the place fast, but in last
 thirty meters they slow down and start to move much more careful. The
@@ -1391,7 +1391,7 @@ skinheads are robbing everyone around and store the catch here. It's
 a pirate treasure! Hearing some kind of a fuss on the street,
 {name1} grabs several small things, lying closely, and silently
 exits the building to take a direction to the locomotive.
-You're getting 130$""",
+You're getting $130""",
         ),
     },
     {  # 8
@@ -1404,7 +1404,7 @@ Roller shutters are all closed, window glasses are intact
 - everything says the place is over watched by someone.
 It makes sense to send a scout to take a closer look
 at the building. It's an auto repair shop after all,
-meaning there should be tools, which can be used for
+there should be tools, which can be used for
 the locomotive maintenance.""",
         "results": (
             """You're sending {name1} to the auto repair shop for a closer look.
@@ -1501,7 +1501,7 @@ fighters, professionals. They took our money, but let us keep our guns."
 {name1} interrupts the speech: "Let's move before they decided to attack
 the train itself!". Weighing the information, you decide not to disturb
 the camp dwellers anymore. Forty professionals - it's too much.
-You're losing 50$""",
+You're losing $50""",
             """You're sending {name1}, {name2} and {name3} to take a closer
 look at the camp. Nothing promises troubles, the place stays quite,
 your people enter the concrete circle, and about ten minutes you
@@ -1535,7 +1535,7 @@ were a lot of armed guys, but they were mostly stoned bad. We've
 cleared the place and gathered some money." - {name1} reports and
 puts a bunch of dollars on your desk. - "Nothing more useful for
 us there." - {heshe1} finalizes. Well, that's still a victory!
-You're getting 120$""",
+You're getting $120""",
         ),
     },
     {  # 10
@@ -1854,7 +1854,7 @@ You're getting 1 stimulator""",
             """{name1} and {name2} take their guns and going to the damaged
 truck. Fastly closing to it, they see a lot of sleeves and shot
 holes - it's not just a crash, someone attacked the transport!
-No bodies around, but your people notice several big and dark
+No bodies around, but your people notice several big dark
 blood spots. They are exchanging their glances and starting
 to open plastic containers left right on the road one by
 one. Mostly they are empty, but in one of them {name1} finds
@@ -1931,7 +1931,7 @@ forest... After twenty minutes of hunting they getting a deer.
 Not very big, but it's even better - not a problem to get it to
 the Train. "With this meat we can save some proviant money!" -
 {name2} declares. - "Good job!"
-You're getting +50$""",
+You're getting $50""",
             """Leaded by your order, {name1}, {name2} and {name3} moving
 in the smoke column direction. Quickly getting to the place, they
 see a big military truck, exploded with rocket launcher a couple
@@ -2430,7 +2430,7 @@ money and vanished, like he never been there." Climbing up to
 the Train, your messengers moving each to their places. Well,
 the job is done, bad people stopped, and some money earned.
 Sounds like a lucky outing!
-You're getting 100$""",
+You're getting $100""",
             """{name1}, {name2} and {name3} following the hitman as a
 support. A couple of hours passes before you see your people again.
 From 200 meters you can see that their campaign was successful -
@@ -2441,7 +2441,7 @@ bastards in a second!" "We've been moving like a single one person."
 The hotly told history sounds to you like a battle to remember!
 Everyone done something, the vespiary burned to the ground, and
 every messenger is very impressed by the hitman skills.
-You're getting 100$
+You're getting $100
 Single character can get Fast hands""",
         ),
     },
@@ -2583,7 +2583,7 @@ goodbye to your people, you see that yes. While their cars
 start to move, {name1} and {name2} come closer to you, telling:
 "Positive guys! Transporting people away from the Stench.
 Asked for help and gave us this" - {name2} shows dollars.
-You're getting +90$
+You're getting $90
 One character can get Liberal""",
             """You're sending {name1} and {name2} to negotiate with the column
 guys. They carefully approaching the men, and starting to talk.
@@ -2810,7 +2810,7 @@ Lord will help those who will help themselves." - he explains,
 stretching out a dollar banknote. Not thinking too long, {name2}
 gives him {hisher2} excess pistol and takes money. Friendly
 smiling, the priest hides the gun under cassock and says goodbye.
-You're getting 50$""",
+You're getting $50""",
             """You decide to send {name1}, {name2} and {name3} to talk
 with the church beholders. Your people walk to the monks, and
 the dwellers meet them with an open arms. It appears they heard
@@ -2886,7 +2886,7 @@ me money. I've tried to reject, but they said they have a lot of
 money. Not sure if it is true, still, I wasn't able to convince
 them. Thus, we have some income." - {heshe1} puts a dollar paper
 on the metal table. You give a command to warm up the engine.
-You're getting 50$""",
+You're getting $50""",
             """You're sending {name1} to take a closer look at the lying carriage.
 Your crewmate gears up and runs to the place, and then disappears
 inside. After several seconds {heshe1} shows up and uppers {hisher1}
@@ -2939,7 +2939,7 @@ thirty meters, does a shot... Zilch. Gazing at you, {name1} changes the
 grenade, shots and... Zilch. "Whatta?!" - {name1} pronounces annoyed.
 Trying other shells, you understand that the gun doesn't work.
 Tricked! And the trader already got too far to get the bastard.
-You're losing 50$""",
+You're losing $50""",
             """{name1} becomes your messenger this time. With no delays {heshe1}
 approaches the trader, and you see them negotiating. Minute, two,
 five, ten - you notice that {name1} makes a step back toward the
@@ -3126,11 +3126,11 @@ enlivened, still, the road calls. Giving an order to start
 engine, you approach a couple of your crewmates, who are
 viewing some kind of an article on a smartphone. "Hey,
 Captain, you need to see this! Some of those children visited
-kinda scientist summit some time ago and took an interview
-there. The woman speaks about interesting things." Telling
-them that you're going to take a closer look at the article
-later, you go to the deckhouse to plan the route,
-considering the recent delay.
+kinda scientist summit and took an interview there. The
+woman speaks about interesting things." Telling them that
+you're going to take a closer look at the article later,
+you go to the deckhouse to plan the route, considering
+the recent delay.
 
 The Stench frontier came 20 miles closer to you
 
@@ -3361,7 +3361,7 @@ conversing about the same scientist those orphans were
 interviewing. She was here not long ago! That's
 something should be read.
 
-You're going to give a command to start an engine, but
+You're going to give a command to start engine, but
 suddenly see the man, who was trying to get the last
 place in the motel. The one you forced to go - he walks
 from the Adjutant back in the motel direction. What does
@@ -3733,7 +3733,7 @@ refugees." The officer seems to be overthinking your
 words. "The Stench is in just several hours from here.
 You'll have to leave the blockpost eventually, if you
 want to survive." The officer throws a glance at others,
-it looks like they understood what we're talking about.
+it looks like they understood what you're talking about.
 "Okay... We actually got it that we need to leave, it's
 just..." You nod your head in agreement gesture.
 
@@ -4128,7 +4128,7 @@ JOURNAL_PAGES = (
         "diary",
         "1. Panic",
         """Never wrote diaries earlier, but now
-I feel that I need to put all of my
+I feel that I need to put my
 thoughts down on paper and try to
 look at what happened recently,
 see a bigger picture...

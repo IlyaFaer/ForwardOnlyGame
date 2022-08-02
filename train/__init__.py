@@ -343,7 +343,10 @@ class Train:
         sparks.softStart()
 
         taskMgr.doMethodLater(  # noqa: F821
-            30, self._clear_brake, side + "_clear_brake", extraArgs=[side, brake],
+            30,
+            self._clear_brake,
+            side + "_clear_brake",
+            extraArgs=[side, brake],
         )
         if self.l_brake and self.r_brake:
             self.ctrl.max_speed = 0.5
@@ -491,7 +494,7 @@ class Train:
         self.ctrl.slow_down_to(target)
 
     def stop_urgent(self, place_of_interest=False):
-        """"Urgently stop the locomotive.
+        """Urgently stop the locomotive.
 
         Args:
             place_of_interest (bool): Optional. True, if the
@@ -918,7 +921,7 @@ class Train:
 
         for char in self.parts["part_left" if x_coor < 0 else "part_right"].chars:
             if abs(char.model.getY() - y_coor) < 0.11:
-                char.get_damage(4)
+                char.get_damage(3)
                 char.get_stunned()
 
     def use_smoke_filter(self):
@@ -939,7 +942,9 @@ class Train:
             1.6, self._clunk2_snd.play, "close_filter", extraArgs=[], appendTask=False
         )
         taskMgr.doMethodLater(  # noqa: F821
-            300, self._stop_filtering_smoke, "stop_filter_smoke",
+            300,
+            self._stop_filtering_smoke,
+            "stop_filter_smoke",
         )
         self._smoke_filter.setPlayRate(-1, "open")
         self._smoke_filter.show()
