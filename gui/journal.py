@@ -46,7 +46,7 @@ class Journal:
             canvasSize=(-0.31, 0.3, -3.3, 1.5),
             state=DGG.NORMAL,
             pos=(0, 0, -0.1),
-            verticalScroll_frameSize=(-0.003, 0.003, -0.5, 0.5),
+            verticalScroll_frameSize=(-0.004, 0.004, -0.5, 0.5),
             verticalScroll_frameColor=(0.46, 0.41, 0.37, 1),
             verticalScroll_thumb_frameColor=(0.31, 0.26, 0.22, 1),
             verticalScroll_incButton_relief=None,

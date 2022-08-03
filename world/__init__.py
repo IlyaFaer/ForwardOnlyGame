@@ -1051,7 +1051,9 @@ class World:
                 self.sun.day_part, base.train.lights_on  # noqa: F821
             )
         ):
-            self._prev_block = self._loaded_blocks[-2].id
+            if len(self._loaded_blocks) >= 2:
+                self._prev_block = self._loaded_blocks[-2].id
+
             self._cur_block = self._loaded_blocks[-1].id
 
             self._et_blocks = 30
@@ -1094,7 +1096,9 @@ class World:
             self._scp_music.play()
 
         if self.meet_scp:
-            self._prev_block = self._loaded_blocks[-2].id
+            if len(self._loaded_blocks) >= 2:
+                self._prev_block = self._loaded_blocks[-2].id
+
             self._cur_block = self._loaded_blocks[-1].id
 
             self._et_blocks = 60
@@ -1129,7 +1133,7 @@ class World:
                 # real blocks. Instead of enemy blocks - real blocks (which
                 # were loaded before the enemy territory) must be used.
                 if prev_block_num == -1:
-                    inverse = self._prev_block > self._cur_block
+                    inverse = (self._prev_block or 0) > self._cur_block
                     prev_block_num = self._prev_block
 
                     if not current_block.directions:

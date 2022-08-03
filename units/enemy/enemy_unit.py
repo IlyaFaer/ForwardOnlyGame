@@ -704,7 +704,7 @@ class DodgeShooter(EnemyUnit):
     def _do_damage_to_train(self, task):
         """Deal machine gun damage to the Train."""
         if self.current_part.is_covered:
-            if chance(40):
+            if chance(30):
                 base.train.get_damage(2)  # noqa: F821
         else:
             base.train.get_damage(2)  # noqa: F821
@@ -747,9 +747,9 @@ class DodgeShooter(EnemyUnit):
         )
         self._rb_node.applyTorque(
             Vec3(
-                random.randint(-20, 20),
-                random.randint(-20, 20),
-                random.randint(-20, 20),
+                random.randint(-15, 15),
+                random.randint(-15, 15),
+                random.randint(-15, 15),
             )
         )
 
