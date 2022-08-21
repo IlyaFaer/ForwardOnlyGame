@@ -3041,7 +3041,7 @@ and try to deal with the axle box on move. You see that the
 mechanic doesn't like your decision, but he still accepts
 the order. You're returning back to the deckhouse, and
 some time later see Kenneth taking one of the fighters
-with him to the lower level of the Adjutant. For several
+to the lower level of the Adjutant. For several
 long hours they slip out of your radars...
 
 Exiting on the fresh cool air, you incline above the railings

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="Forward Only",
-    version="0.9.1",
+    version="0.91",
     author="IlyaFaer",
     author_email="ilya.faer.gurov@gmail.com",
     description="Forward Only - Seepage, the game",
