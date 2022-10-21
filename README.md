@@ -11,9 +11,8 @@ The game represents a route-strategy with arcade fight blotches. Find an optimal
 :cinema: See [gameplay trailer on YouTube](https://youtu.be/AjvDuXsIizs).
 
 **The Project legal status**  
-The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).  
-It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.  
-Contributions to the project are allowed and welcomed. See the [CONTRIBUTING.md](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/CONTRIBUTING.md) for details.
+The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md). It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman. Contributions to the project are allowed and welcomed. See the [CONTRIBUTING.md](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/CONTRIBUTING.md) for details.  
+:triangular_flag_on_post: In case you have facilities to turn Forward Only into a full-scale game, feel free to reach the author (ilya.faer.gurov@gmail.com) for ownership transfering negotiations.
 
 **Current stage**  
 The Game active development is over, and it's now in the middle of a polishing stage.
