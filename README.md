@@ -1,5 +1,4 @@
 # Forward Only
-[на русском](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/README%20(RUS).md)
 
 The Europe is stroke by the terrible cataclysm called "the Stench". The only way to survive it is to flee and do it quickly, as death spreads irrepressibly. Fortunately, you have a locomotive that is still running, so gather your crew and travel through the Silewer - country full of skinheads, who struggle against the avalanche of refugees from Europe. 
 
@@ -13,7 +12,8 @@ The game represents a route-strategy with arcade fight blotches. Find an optimal
 
 **The Project legal status**  
 The Game is an author product, its use is regulated by [the License](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/LICENSE.md).  
-It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.
+It's developed on Python 3.7 and [Panda3D game engine](https://www.panda3d.org/), models are created with Blender and MakeHuman.  
+Contributions to the project are allowed and welcomed. See the [CONTRIBUTING.md](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/CONTRIBUTING.md) for details.
 
 **Current stage**  
 The Game active development is over, and it's now in the middle of a polishing stage.
@@ -33,7 +33,6 @@ The major features:
 [TikTok](https://www.tiktok.com/@forwardonlygame)  
 [IndieDB](https://www.indiedb.com/games/forward-only)  
 [Twitter](https://twitter.com/IlyaFaer)  
-[SourceForge](https://sourceforge.net/p/forwardonlygame/)
 
 
 **Music**  
@@ -50,4 +49,5 @@ Some details of the game SCP-4945 version may diverge from the original one in t
 
 **What's next**  
 [Download the last Game release](https://github.com/IlyaFaer/ForwardOnlyGame/releases)  
+[Contribute to the project](https://github.com/IlyaFaer/ForwardOnlyGame/blob/master/CONTRIBUTING.md)  
 [See Wiki for useful info](https://github.com/IlyaFaer/ForwardOnlyGame/wiki)  
